@@ -42,7 +42,7 @@ speech-ai/
 | Python | 3.10+ |
 | Node.js | 18+ |
 | npm | 9+ |
-| Gemini API Key | Use yours ;) |
+| Gemini API Key | user's|
 
 > **Java is only needed if you want LanguageTool (Layer 4 of GrammarGuard).** It's optional — the system works without it.
 
