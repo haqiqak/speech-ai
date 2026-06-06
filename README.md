@@ -163,6 +163,4 @@ The grammar layer uses NLTK POS tagging, which can misparse unusual sentence str
 
 ---
 
-## License
 
-MIT
