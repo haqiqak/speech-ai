@@ -1,27 +1,8 @@
-# speech-ai — Backend Python Dependencies
-# Install with:  pip install -r requirements.txt
-
-# ── Web framework ─────────────────────────────────────────────────────────────
-fastapi>=0.111.0
-uvicorn[standard]>=0.29.0
-pydantic>=2.7.0
-
-# ── Gemini AI SDK ─────────────────────────────────────────────────────────────
-google-genai>=0.7.0
-
-# ── NLP stack ────────────────────────────────────────────────────────────────
-nltk>=3.8.1
-numpy>=1.26.0
-
-# ── Semantic embeddings (optional but highly recommended) ─────────────────────
-# If installed, all-MiniLM-L6-v2 is used for semantic similarity.
-# If absent, the system falls back to TF-IDF cosine (weaker but functional).
-sentence-transformers>=2.7.0
-
-# ── Grammar layer (optional — enables LanguageTool Layer 4) ──────────────────
-# Requires Java 8+ on PATH.  If absent, that layer is silently skipped.
-# language_tool_python>=2.7.1
-
-# ── Utilities ─────────────────────────────────────────────────────────────────
-python-multipart>=0.0.9
-httpx>=0.27.0
+nltk>=3.8
+requests>=2.31
+wordfreq>=3.0
+streamlit>=1.35
+pyinflect>=0.5.1
+sentence-transformers>=2.2
+scikit-learn>=1.0
+numpy>=1.23
