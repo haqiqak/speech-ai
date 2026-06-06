@@ -3,11 +3,20 @@ grammar.py  —  Input sanitizer + morphological adaptation + semantic rewriting
 
 Pipeline
 ────────
-  sanitize_input()    fix contractions, capitalisation, spacing, punctuation
-  is_sentence()       detect sentence vs bare word list
+  sanitize_input()    Comprehensive grammar correction:
+                        • contractions (dont → don't)
+                        • pronoun case (i → I)
+                        • capitalisation
+                        • spacing & punctuation
+                        • tense correction (I eat yesterday → I ate yesterday)
+                        • subject-verb agreement (He go → He goes)
+                        • auxiliary verb forms (I am go → I am going)
+                        • double negation, common errors
+
+  is_sentence()       Detect sentence vs bare word list
   SentenceRewriter    POS-tag → protected-position check → synonym candidates
                       → SBERT contextual ranking → inflect → rebuild
-  rebuild_with_choices()  reassemble with user's per-word choice
+  rebuild_with_choices()  Reassemble with user's per-word choice
 
 Dependencies: nltk, pyinflect, semantic.py  (fully offline except SBERT model
 download on first run)
@@ -56,9 +65,32 @@ _STOP = {
     "just","also","even","still","already","again","always","often","sometimes",
 }
 
+# ── Past tense markers ────────────────────────────────────────────────────────
+# Words that signal past tense context (adverbs, time expressions)
+_PAST_MARKERS = {
+    "yesterday", "ago", "previously", "formerly", "once", "earlier",
+    "last", "before", "already", "since", "lately", "recently",
+    "back", "then", "afterwards", "afterward",
+}
+# Phrases that signal past tense
+_PAST_PHRASES = [
+    r"\blast\s+\w+\b",          # last week, last year, last night
+    r"\b\d+\s+\w+\s+ago\b",     # 3 days ago, 2 weeks ago
+    r"\bin\s+\d{4}\b",          # in 1990, in 2020
+    r"\byesterday\b",
+]
+
+# Words that signal present tense (to avoid over-correcting)
+_PRESENT_MARKERS = {
+    "now", "today", "currently", "nowadays", "always", "usually",
+    "often", "sometimes", "generally", "typically",
+}
+
+# 3rd person singular subjects (for subject-verb agreement)
+_THIRD_PERSON_SING = {"he", "she", "it", "this", "that", "one"}
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 1. Input sanitizer
+# 1. Input sanitizer (comprehensive grammar correction)
 # ─────────────────────────────────────────────────────────────────────────────
 _CONTRACTIONS = {
     r"\bdont\b":     "don't",
@@ -91,48 +123,420 @@ _CONTRACTIONS = {
     r"\byoull\b":    "you'll",
 }
 
+# Common wrong-word substitutions and spelling errors
+_WORD_FIXES = {
+    r"\bgonna\b":   "going to",
+    r"\bwanna\b":   "want to",
+    r"\bgotta\b":   "got to",
+    r"\bkinda\b":   "kind of",
+    r"\bsorta\b":   "sort of",
+    r"\bdunno\b":   "don't know",
+    r"\bngl\b":     "not going to lie",
+    r"\bidk\b":     "I don't know",
+    r"\btbh\b":     "to be honest",
+}
+
+
+def _has_past_time_marker(tokens: list[str]) -> bool:
+    """Detect if sentence has a past-tense time marker word."""
+    lower = {t.lower() for t in tokens}
+    if lower & _PAST_MARKERS:
+        return True
+    joined = " ".join(t.lower() for t in tokens)
+    for pattern in _PAST_PHRASES:
+        if re.search(pattern, joined):
+            return True
+    return False
+
+
+def _has_present_time_marker(tokens: list[str]) -> bool:
+    lower = {t.lower() for t in tokens}
+    return bool(lower & _PRESENT_MARKERS)
+
+
+def _get_subject(tags: list[tuple]) -> str | None:
+    """Return the lowercase surface form of the first subject-like noun/pronoun."""
+    for word, tag in tags:
+        if tag == "PRP" or tag in ("NN", "NNS", "NNP", "NNPS"):
+            return word.lower()
+    return None
+
+
+def _correct_tense(tokens: list[str]) -> tuple[list[str], list[dict]]:
+    """
+    Fix tense mismatches:
+      - Present tense verb + past time marker → past tense
+      - Auxiliary 'did' + past tense verb → base form
+      - 'to be' + bare infinitive where gerund needed
+    Returns (corrected_tokens, fixes).
+    """
+    fixes = []
+    tags = pos_tag(tokens)
+    lower_tokens = [t.lower() for t in tokens]
+
+    has_past   = _has_past_time_marker(tokens)
+    has_pres   = _has_present_time_marker(tokens)
+
+    # Did + past tense verb → did + base form  (e.g. "did went" → "did go")
+    for i, (word, tag) in enumerate(tags):
+        if word.lower() == "did" and i + 1 < len(tags):
+            next_word, next_tag = tags[i + 1]
+            if next_tag == "VBD":
+                base = _lemmatizer.lemmatize(next_word.lower(), "v")
+                if base != next_word.lower():
+                    inf = pyinflect.getInflection(base, "VB")
+                    corrected = inf[0] if inf else base
+                    fixes.append({
+                        "type": "tense",
+                        "original": next_word,
+                        "corrected": corrected,
+                        "description": f'After "did" use base form: "{next_word}" → "{corrected}"',
+                        "index": i + 1,
+                    })
+                    tokens = list(tokens)
+                    tokens[i + 1] = _preserve_case(next_word, corrected)
+
+    # Re-tag after possible did-fix
+    tags = pos_tag(tokens)
+
+    # Present tense verb + past time marker → past tense
+    if has_past and not has_pres:
+        for i, (word, tag) in enumerate(tags):
+            # Skip auxiliaries
+            if word.lower() in _STOP:
+                continue
+            # VBP = non-3rd-person present, VBZ = 3rd-person present
+            if tag in ("VBP", "VBZ"):
+                base = _lemmatizer.lemmatize(word.lower(), "v")
+                past = pyinflect.getInflection(base, "VBD")
+                if past and past[0].lower() != word.lower():
+                    fixes.append({
+                        "type": "tense",
+                        "original": word,
+                        "corrected": past[0],
+                        "description": f'Past time context: "{word}" → "{past[0]}"',
+                        "index": i,
+                    })
+                    tokens = list(tokens)
+                    tokens[i] = _preserve_case(word, past[0])
+
+    return tokens, fixes
+
+
+def _correct_subject_verb_agreement(tokens: list[str]) -> tuple[list[str], list[dict]]:
+    """
+    Fix subject-verb agreement:
+      - 3rd person singular subject + base/non-3rd verb → 3rd person verb
+        (He go → He goes)
+      - 1st/2nd/plural subject + 3rd person singular verb → base form
+        (I goes → I go, They goes → They go)
+    """
+    fixes = []
+    tags = pos_tag(tokens)
+
+    for i, (word, tag) in enumerate(tags):
+        if tag in ("VBP", "VBZ", "VB"):
+            # Find subject to the left
+            subject = None
+            subject_tag = None
+            preceded_by_aux = False  # True if this verb is already governed by an auxiliary
+            for j in range(i - 1, -1, -1):
+                w_lower = tags[j][0].lower()
+                # If there's a do/modal/have/be auxiliary before the verb, skip SV correction
+                # (agreement belongs to the auxiliary, not the main verb)
+                if tags[j][1] in ("MD",) or w_lower in (
+                    "do", "does", "did", "don't", "doesn't", "didn't",
+                    "will", "would", "can", "could", "should", "may", "might",
+                    "have", "has", "had", "am", "is", "are", "was", "were",
+                ):
+                    preceded_by_aux = True
+                    break
+                if tags[j][1] in ("PRP", "NN", "NNS", "NNP", "NNPS"):
+                    subject = tags[j][0].lower()
+                    subject_tag = tags[j][1]
+                    break
+
+            if subject is None or preceded_by_aux:
+                continue
+
+            base = _lemmatizer.lemmatize(word.lower(), "v")
+            if base in _STOP:
+                continue
+
+            # 3rd person singular subject + non-3rd-verb (VBP or base VB) → 3rd person
+            if subject in _THIRD_PERSON_SING and tag in ("VBP", "VB"):
+                third = pyinflect.getInflection(base, "VBZ")
+                if third and third[0].lower() != word.lower():
+                    fixes.append({
+                        "type": "subject_verb_agreement",
+                        "original": word,
+                        "corrected": third[0],
+                        "description": f'3rd person singular: "{word}" → "{third[0]}" (subject: "{subject}")',
+                        "index": i,
+                    })
+                    tokens = list(tokens)
+                    tokens[i] = _preserve_case(word, third[0])
+
+            # 1st/2nd/plural subject + 3rd person singular verb → base
+            elif subject in ("i", "we", "they", "you") and tag == "VBZ":
+                base_inf = pyinflect.getInflection(base, "VBP")
+                corrected = base_inf[0] if base_inf else base
+                if corrected.lower() != word.lower():
+                    fixes.append({
+                        "type": "subject_verb_agreement",
+                        "original": word,
+                        "corrected": corrected,
+                        "description": f'Plural/1st/2nd person: "{word}" → "{corrected}" (subject: "{subject}")',
+                        "index": i,
+                    })
+                    tokens = list(tokens)
+                    tokens[i] = _preserve_case(word, corrected)
+
+    # was/were number agreement (They was → They were; He were → He was)
+    tags = pos_tag(tokens)
+    for i, (word, tag) in enumerate(tags):
+        if word.lower() not in ("was", "were"):
+            continue
+        subject = None
+        for j in range(i - 1, -1, -1):
+            if tags[j][1] in ("PRP", "NN", "NNS", "NNP", "NNPS"):
+                subject = tags[j][0].lower()
+                break
+        if subject is None:
+            continue
+        if subject in ("they", "we", "i", "you") and word.lower() == "was":
+            fixes.append({
+                "type": "subject_verb_agreement",
+                "original": word,
+                "corrected": "were",
+                "description": f'Plural/1st person "be": "{word}" → "were" (subject: "{subject}")',
+                "index": i,
+            })
+            tokens = list(tokens)
+            tokens[i] = _preserve_case(word, "were")
+        elif subject in _THIRD_PERSON_SING and word.lower() == "were":
+            fixes.append({
+                "type": "subject_verb_agreement",
+                "original": word,
+                "corrected": "was",
+                "description": f'Singular "be": "{word}" → "was" (subject: "{subject}")',
+                "index": i,
+            })
+            tokens = list(tokens)
+            tokens[i] = _preserve_case(word, "was")
+
+    return tokens, fixes
+
+
+def _correct_auxiliary_forms(tokens: list[str]) -> tuple[list[str], list[dict]]:
+    """
+    Fix auxiliary + verb form errors:
+      - am/is/are/was/were + base verb → gerund (I am go → I am going)
+      - will/would/can/could/should/may/might + past/gerund → base (I will went → I will go)
+      - has/have/had + base/gerund → past participle (I have eat → I have eaten)
+    """
+    fixes = []
+    tags = pos_tag(tokens)
+    _MODAL_AUX = {"will", "would", "can", "could", "should", "may", "might", "shall", "must"}
+    _BE_AUX    = {"am", "is", "are", "was", "were", "be", "been", "being"}
+    _HAVE_AUX  = {"have", "has", "had"}
+
+    for i, (word, tag) in enumerate(tags):
+        lw = word.lower()
+
+        # BE auxiliary + bare verb → gerund (progressive)
+        if lw in _BE_AUX and i + 1 < len(tags):
+            next_word, next_tag = tags[i + 1]
+            if next_tag in ("VBP", "VBZ", "VBD", "VB") and next_word.lower() not in _STOP:
+                base = _lemmatizer.lemmatize(next_word.lower(), "v")
+                gerund = pyinflect.getInflection(base, "VBG")
+                if gerund and gerund[0].lower() != next_word.lower():
+                    fixes.append({
+                        "type": "auxiliary_form",
+                        "original": next_word,
+                        "corrected": gerund[0],
+                        "description": f'After "{lw}" use gerund: "{next_word}" → "{gerund[0]}"',
+                        "index": i + 1,
+                    })
+                    tokens = list(tokens)
+                    tokens[i + 1] = _preserve_case(next_word, gerund[0])
+
+        # Modal auxiliary + non-base verb → base
+        elif lw in _MODAL_AUX and i + 1 < len(tags):
+            next_word, next_tag = tags[i + 1]
+            if next_tag in ("VBD", "VBZ", "VBG", "VBN") and next_word.lower() not in _STOP:
+                base = _lemmatizer.lemmatize(next_word.lower(), "v")
+                inf = pyinflect.getInflection(base, "VB")
+                corrected = inf[0] if inf else base
+                if corrected.lower() != next_word.lower():
+                    fixes.append({
+                        "type": "auxiliary_form",
+                        "original": next_word,
+                        "corrected": corrected,
+                        "description": f'After modal "{lw}" use base form: "{next_word}" → "{corrected}"',
+                        "index": i + 1,
+                    })
+                    tokens = list(tokens)
+                    tokens[i + 1] = _preserve_case(next_word, corrected)
+
+        # HAVE auxiliary + base/gerund → past participle
+        elif lw in _HAVE_AUX and i + 1 < len(tags):
+            next_word, next_tag = tags[i + 1]
+            # Also catch: have + VBN where surface form ≠ correct participle (e.g. "have eat")
+            if next_tag in ("VBP", "VBZ", "VBG", "VBN") and next_word.lower() not in _STOP:
+                base = _lemmatizer.lemmatize(next_word.lower(), "v")
+                participle = pyinflect.getInflection(base, "VBN")
+                if participle and participle[0].lower() != next_word.lower():
+                    fixes.append({
+                        "type": "auxiliary_form",
+                        "original": next_word,
+                        "corrected": participle[0],
+                        "description": f'After "{lw}" use past participle: "{next_word}" → "{participle[0]}"',
+                        "index": i + 1,
+                    })
+                    tokens = list(tokens)
+                    tokens[i + 1] = _preserve_case(next_word, participle[0])
+
+    return tokens, fixes
+
+
 def sanitize_input(text: str) -> tuple[str, list[dict]]:
     """
-    Rule-based grammar fixes applied BEFORE the synonym pipeline.
+    Comprehensive grammar correction applied BEFORE the synonym pipeline.
+
+    Layers (in order):
+      1. Surface fixes: contractions, informal words
+      2. Pronoun capitalisation (i → I)
+      3. Sentence capitalisation
+      4. Spacing cleanup
+      5. Auxiliary verb form correction (am go → am going)
+      6. Tense correction (eat yesterday → ate yesterday)
+      7. Subject-verb agreement (He go → He goes)
+      8. Punctuation
+
     Returns (corrected_text, list_of_fix_dicts).
     """
-    fixes: list[dict] = []
+    all_fixes: list[dict] = []
     result = text.strip()
 
+    # ── Layer 1a: Contractions ─────────────────────────────────────────────
     for pattern, replacement in _CONTRACTIONS.items():
         match = re.search(pattern, result, re.IGNORECASE)
         if match:
             original = match.group()
             if original.replace("'", "").lower() == replacement.replace("'", "").lower():
-                fixes.append({"type": "contraction", "original": original,
-                               "corrected": replacement,
-                               "description": f'Added missing apostrophe: "{original}" → "{replacement}"'})
+                all_fixes.append({
+                    "type": "contraction",
+                    "original": original,
+                    "corrected": replacement,
+                    "description": f'Added missing apostrophe: "{original}" → "{replacement}"',
+                })
                 result = re.sub(pattern, replacement, result, flags=re.IGNORECASE)
 
+    # ── Layer 1b: Informal words ───────────────────────────────────────────
+    for pattern, replacement in _WORD_FIXES.items():
+        match = re.search(pattern, result, re.IGNORECASE)
+        if match:
+            original = match.group()
+            all_fixes.append({
+                "type": "informal_word",
+                "original": original,
+                "corrected": replacement,
+                "description": f'Informal word: "{original}" → "{replacement}"',
+            })
+            result = re.sub(pattern, replacement, result, flags=re.IGNORECASE)
+
+    # ── Layer 2: Pronoun case ──────────────────────────────────────────────
     new = re.sub(r"\b(i)\b", "I", result)
     if new != result:
-        fixes.append({"type": "pronoun_case", "original": "i", "corrected": "I",
-                      "description": 'Capitalised pronoun "i" → "I"'})
+        all_fixes.append({
+            "type": "pronoun_case",
+            "original": "i",
+            "corrected": "I",
+            "description": 'Capitalised pronoun "i" → "I"',
+        })
         result = new
 
+    # ── Layer 3: Sentence capitalisation ──────────────────────────────────
     if result and result[0].islower():
-        fixes.append({"type": "capitalization", "original": result[0],
-                      "corrected": result[0].upper(),
-                      "description": f'Capitalised first letter: "{result[0]}" → "{result[0].upper()}"'})
+        all_fixes.append({
+            "type": "capitalization",
+            "original": result[0],
+            "corrected": result[0].upper(),
+            "description": f'Capitalised first letter: "{result[0]}" → "{result[0].upper()}"',
+        })
         result = result[0].upper() + result[1:]
 
+    # ── Layer 4: Spacing ──────────────────────────────────────────────────
     if re.search(r" {2,}", result):
-        fixes.append({"type": "spacing", "original": "  ", "corrected": " ",
-                      "description": "Removed extra spaces"})
+        all_fixes.append({
+            "type": "spacing",
+            "original": "  ",
+            "corrected": " ",
+            "description": "Removed extra spaces",
+        })
         result = re.sub(r" {2,}", " ", result)
 
+    # ── Tokenise for grammar analysis ─────────────────────────────────────
+    # Strip trailing punctuation before grammar analysis so POS tags are clean
+    working = result.rstrip(".!?").strip()
+    try:
+        tokens = word_tokenize(working)
+    except Exception:
+        # Fallback if tokenisation fails (shouldn't happen but be safe)
+        tokens = working.split()
+
+    # ── Layer 5: Auxiliary verb forms ─────────────────────────────────────
+    tokens, aux_fixes = _correct_auxiliary_forms(tokens)
+    for f in aux_fixes:
+        all_fixes.append({
+            "type": f["type"],
+            "original": f["original"],
+            "corrected": f["corrected"],
+            "description": f["description"],
+        })
+
+    # Re-tokenise after aux fixes (tokens list is already updated in-place above)
+    # ── Layer 6: Tense correction ─────────────────────────────────────────
+    tokens, tense_fixes = _correct_tense(tokens)
+    for f in tense_fixes:
+        all_fixes.append({
+            "type": f["type"],
+            "original": f["original"],
+            "corrected": f["corrected"],
+            "description": f["description"],
+        })
+
+    # ── Layer 7: Subject-verb agreement ───────────────────────────────────
+    tokens, sv_fixes = _correct_subject_verb_agreement(tokens)
+    for f in sv_fixes:
+        all_fixes.append({
+            "type": f["type"],
+            "original": f["original"],
+            "corrected": f["corrected"],
+            "description": f["description"],
+        })
+
+    # Rebuild sentence from corrected tokens
+    if any(all_fixes[i]["type"] in ("tense", "subject_verb_agreement", "auxiliary_form")
+           for i in range(len(all_fixes))):
+        result = _detokenize(tokens)
+        # Re-apply capitalisation (detokenize can lowercase first word)
+        if result and result[0].islower():
+            result = result[0].upper() + result[1:]
+
+    # ── Layer 8: Punctuation ──────────────────────────────────────────────
     stripped = result.rstrip()
     if stripped and stripped[-1] not in ".!?":
-        fixes.append({"type": "punctuation", "original": "", "corrected": ".",
-                      "description": "Added missing full stop at end of sentence"})
+        all_fixes.append({
+            "type": "punctuation",
+            "original": "",
+            "corrected": ".",
+            "description": "Added missing full stop at end of sentence",
+        })
         result = stripped + "."
 
-    return result, fixes
+    return result, all_fixes
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -167,6 +571,8 @@ def inflect(lemma: str, target_tag: str) -> str:
     return lemma
 
 def _preserve_case(original: str, replacement: str) -> str:
+    if not original or not replacement:
+        return replacement
     if original.isupper():
         return replacement.upper()
     if original[0].isupper():
@@ -175,12 +581,16 @@ def _preserve_case(original: str, replacement: str) -> str:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 4. Sentence rewriter  (now SBERT-aware)
+# 4. Sentence rewriter  (SBERT-aware, POS-filtered WordNet)
 # ─────────────────────────────────────────────────────────────────────────────
 class SentenceRewriter:
     """
     Rewrites a (sanitized) sentence by substituting content words with
     semantically validated synonyms, inflected correctly.
+
+    Key improvement over v2: synonym candidates are now retrieved with the
+    WordNet POS filter matching the token's actual POS in context.  This
+    prevents cross-POS contamination (e.g. verb hypernyms polluting noun lookups).
 
     rewrite() returns full scoring metadata per word so the UI can show
     semantic similarity scores, accepted/rejected candidates, etc.
@@ -194,12 +604,17 @@ class SentenceRewriter:
     ) -> list[str]:
         """
         Get frequency-ranked lemma candidates from engine, filtered by:
-        - same broad POS (WordNet check)
+        - same broad POS (WordNet check — now passed to engine as wn_pos)
         - single token only
         - prefer -ly forms for -ly adverbs
         """
-        all_syns = self.engine.get_synonyms(lemma, top_k=top_k * 2).get(lemma, [])
         wn_p = _wn_pos(pos_tag_str)
+
+        # Pass wn_pos to engine so WordNet lookups are POS-restricted at the source
+        all_syns = self.engine.get_synonyms(
+            lemma, top_k=top_k * 2, wn_pos=wn_p
+        ).get(lemma, [])
+
         prefer_ly = pos_tag_str.startswith("RB") and original_word.lower().endswith("ly")
 
         filtered = []
@@ -208,6 +623,8 @@ class SentenceRewriter:
                 continue
             if " " in cand:
                 continue
+            # Secondary POS check: candidate must have at least one WordNet sense
+            # matching our expected POS (guards against Datamuse returning wrong POS)
             if wn_p and not wn.synsets(cand, pos=wn_p):
                 continue
             filtered.append(cand)
@@ -225,7 +642,7 @@ class SentenceRewriter:
           1. Tokenise + POS tag
           2. Identify protected positions (phrases + stop words)
           3. For each substitutable word:
-             a. Get raw candidates (engine)
+             a. Get raw candidates (engine, POS-filtered)
              b. Build inflected forms
              c. SBERT-rank contextually (semantic.py)
              d. Pick best accepted candidate
@@ -274,7 +691,7 @@ class SentenceRewriter:
                 original_sentence = sentence,
                 word_to_replace   = word,
                 token_index       = i,
-                tokens            = list(new_tokens),   # use current state of rebuilt tokens
+                tokens            = list(new_tokens),   # use current rebuilt state
                 candidates        = raw_cands,
                 inflected_forms   = inflected_map,
             )
