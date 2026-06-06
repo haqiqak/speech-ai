@@ -53,7 +53,7 @@ speech-ai/
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/speech-ai.git
+git clone https://github.com/haqiqak/speech-ai.git
 cd speech-ai
 ```
 
