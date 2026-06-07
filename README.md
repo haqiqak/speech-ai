@@ -68,7 +68,7 @@ speech-ai/
 
 ```bash
 # 1. Clone and enter the project
-git clone https://github.com/your-username/speech-ai.git
+git clone https://github.com/haqiqak/speech-ai.git
 cd speech-ai
 
 # 2. Create and activate a virtual environment
