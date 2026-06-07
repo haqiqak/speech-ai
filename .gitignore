@@ -23,11 +23,13 @@ build/
 # ── NLTK data (downloaded at runtime, not committed) ─────────────────────────
 nltk_data/
 
-# ── SBERT / sentence-transformers model cache ─────────────────────────────────
-# The ~80 MB model is downloaded to HuggingFace cache on first run.
-# Do NOT commit it — it is too large and regenerates automatically.
+# ── SBERT / sentence-transformers + all runtime model/data caches ─────────────
+# The SBERT model, torch hub, and NLTK data are downloaded to .cache/ on first
+# run.  Do NOT commit — too large and regenerates automatically.
 .cache/
-~/.cache/huggingface/
+
+# ── User preferences written at runtime ───────────────────────────────────────
+user_prefs.json
 
 # ── Streamlit ─────────────────────────────────────────────────────────────────
 .streamlit/secrets.toml

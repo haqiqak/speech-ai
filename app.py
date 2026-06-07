@@ -3,19 +3,79 @@ Synonym Finder — Streamlit UI v4
 Pipeline: Sanitize → SBERT Semantic Firewall → Inflect → User Picks → Output
 """
 
+import paths  # noqa: F401  — must precede nltk/SBERT imports; redirects caches into ./.cache
 import re
+import json
+from pathlib import Path
 import streamlit as st
 from nltk import word_tokenize
 from engine import SynonymEngine
 from grammar import sanitize_input, is_sentence, SentenceRewriter, inflect, _preserve_case
 import semantic as sem
+import phonetic as ph
+import freq
+
+# ── User preferences (stutter patterns + blocked words) persisted locally ─────
+_PREFS_PATH = Path(__file__).resolve().parent / "user_prefs.json"
+
+
+def load_prefs() -> tuple[list[str], list[str]]:
+    try:
+        with open(_PREFS_PATH, "r", encoding="utf-8") as f:
+            d = json.load(f)
+        return (list(d.get("stutter_patterns", [])),
+                list(d.get("blocked_words", [])))
+    except Exception:
+        return [], []
+
+
+def save_prefs(patterns: list[str], blocked: list[str]) -> None:
+    try:
+        with open(_PREFS_PATH, "w", encoding="utf-8") as f:
+            json.dump({"stutter_patterns": patterns, "blocked_words": blocked},
+                      f, indent=2)
+    except Exception:
+        pass
+
+
+def _parse_tokens(raw: str) -> list[str]:
+    """Split a comma/space separated field into a clean, de-duplicated list."""
+    out, seen = [], set()
+    for t in re.split(r"[\s,]+", raw.strip().lower()):
+        if t and t not in seen:
+            seen.add(t)
+            out.append(t)
+    return out
+
+
+def _content_words(sentence: str) -> list[str]:
+    return [t for t in word_tokenize(sentence) if re.search(r"[a-z]", t.lower())]
+
+
+def _risk_chips(sentence: str, patterns: list[str], blocked: set[str]) -> str:
+    """HTML chips colouring each content word by stutter risk."""
+    chips = []
+    for tok in _content_words(sentence):
+        low = tok.lower()
+        on_pattern = (low in blocked) or ph.matches_any(tok, patterns)
+        diff = ph.word_difficulty(tok)
+        if on_pattern:
+            cls = "risk-hi"
+        elif diff >= 0.55:
+            cls = "risk-mid"
+        else:
+            cls = "risk-lo"
+        onset = "".join(ph.onset(tok)) or "—"
+        chips.append(f'<span class="risk-chip {cls}" title="onset {onset} · '
+                     f'difficulty {diff:.2f}">{tok}</span>')
+    return '<div class="pill-wrap">' + "".join(chips) + "</div>"
 
 # ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="Synonym Finder",
     page_icon="🔤",
     layout="centered",
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="expanded",
 )
 
 # ── CSS ──────────────────────────────────────────────────────────────────────
@@ -72,6 +132,19 @@ div.stButton > button:hover { transform:translateY(-2px) !important; box-shadow:
 
 .no-syn-chip { display:inline-flex; align-items:center; gap:.4rem; background:#fdf7f3; border:1.2px dashed #f7c49a; border-radius:9px; padding:.24rem .68rem; font-size:.85rem; color:#a06030; margin:.12rem; }
 
+/* stutter risk chips */
+.risk-chip { display:inline-block; padding:.22rem .7rem; border-radius:20px; font-size:.85rem; font-weight:500; cursor:default; }
+.risk-hi  { background:#fef2f2; color:#9b1c1c; border:1.4px solid #f3b4b4; }
+.risk-mid { background:#fff8ed; color:#a06030; border:1.4px solid #f7c49a; }
+.risk-lo  { background:#edfaf2; color:#1a6b3c; border:1.4px solid #b6e6c9; }
+
+/* difficulty meter */
+.diff-meter { display:flex; align-items:center; gap:.7rem; margin-top:.35rem; }
+.diff-num { font-family:'DM Serif Display',serif; font-size:1.25rem; }
+.diff-track { flex:1; background:#eef4fb; border-radius:6px; height:10px; position:relative; overflow:hidden; }
+.diff-bar { height:10px; border-radius:6px; }
+.diff-down { color:#1a6b3c; } .diff-up { color:#9b1c1c; } .diff-same { color:#5a7096; }
+
 /* pipeline cards */
 .pipe-card { background:#fff; border:1.5px solid #d4e8f8; border-radius:16px; padding:.95rem 1.3rem .9rem; margin-bottom:.75rem; box-shadow:0 2px 12px rgba(75,145,220,.05); }
 .pipe-label { font-size:.68rem; font-weight:700; letter-spacing:.8px; text-transform:uppercase; color:#4b91dc; margin-bottom:.38rem; }
@@ -96,7 +169,7 @@ div.stButton > button:hover { transform:translateY(-2px) !important; box-shadow:
 .score-table th { text-align:left; font-weight:600; color:#4b91dc; padding:.28rem .45rem; border-bottom:1.5px solid #e4f0fb; font-size:.75rem; letter-spacing:.3px; text-transform:uppercase; }
 .score-table td { padding:.28rem .45rem; border-bottom:1px solid #f0f5fc; color:#2a3d58; }
 .score-table tr:last-child td { border-bottom:none; }
-.score-table tr.rejected td { color:#c0c8d8; }
+.score-table tr.rejected td { color:#a3afc2; }
 .score-table tr.chosen-row td { background:#fff8f2; }
 .bar-wrap { width:70px; display:inline-block; background:#eaf2fc; border-radius:4px; height:7px; vertical-align:middle; }
 .bar-fill { height:7px; border-radius:4px; background:linear-gradient(90deg,#4b91dc,#7ab8f0); display:block; }
@@ -152,10 +225,16 @@ engine   = load_engine()
 rewriter = load_rewriter(engine)
 sbert_ok, sbert_msg = init_sbert()
 
+# ── Load persisted stutter prefs into session state (once) ────────────────────
+if "stutter_patterns" not in st.session_state or "blocked_words" not in st.session_state:
+    _p, _b = load_prefs()
+    st.session_state.setdefault("stutter_patterns", _p)
+    st.session_state.setdefault("blocked_words", _b)
+
 # ── Sidebar: SBERT status + settings ─────────────────────────────────────────
 with st.sidebar:
     st.markdown("### ⚙️ Settings")
-    
+
     if sbert_ok:
         st.markdown(f"""
 <div class="sbert-on">
@@ -182,17 +261,20 @@ with st.sidebar:
     st.markdown("---")
     show_scores = st.toggle("Show scoring details", value=True,
         help="Show SBERT similarity scores and ranking for each word.")
-    
+
+    st.caption(f"Frequency wordlist: **{freq.active_wordlist()}**")
+
     st.markdown("---")
     st.markdown("""
-<div style="font-size:.75rem;color:#9bb3cc">
+<div style="font-size:.75rem;color:#6f87a6">
 <strong style="color:#4b91dc">Pipeline</strong><br>
 ① Sanitize input grammar<br>
 ② Get synonym candidates<br>
 ③ SBERT semantic filter<br>
 ④ Combined score ranking<br>
-⑤ Inflect + user picks<br>
-⑥ Rebuild sentence
+⑤ Phoneme firewall (stutter)<br>
+⑥ Inflect + user picks<br>
+⑦ Rebuild sentence
 </div>""", unsafe_allow_html=True)
 
 # ── Controls ──────────────────────────────────────────────────────────────────
@@ -204,7 +286,51 @@ with col1:
         label_visibility="visible",
     )
 with col2:
-    top_k = st.slider("Results", min_value=5, max_value=20, value=10, step=1)
+    top_k = st.slider(
+        "Synonyms / word", min_value=5, max_value=20, value=10, step=1,
+        help="How many synonym candidates to fetch and rank for each word "
+             "(higher = more options in the dropdown, slightly slower).",
+    )
+
+# ── Stutter assistance (the core feature — kept front-and-centre) ──────────────
+_has_stutter = bool(st.session_state.stutter_patterns or st.session_state.blocked_words)
+with st.expander("🗣️  Stutter assistance — set your trouble sounds", expanded=_has_stutter):
+    st.caption("Enter the **starting sounds** you stutter on (e.g. `str, pr, b`). "
+               "Suggestions are then offered only for words with those sounds, and "
+               "never replace them with a word that starts the same way.")
+    sc1, sc2 = st.columns(2)
+    with sc1:
+        patterns_raw = st.text_input(
+            "Stutter sounds",
+            value=", ".join(st.session_state.stutter_patterns),
+            placeholder="e.g.  str, pr, b",
+            help="Comma/space separated. 'bo' means the B sound; 'str' the /str/ cluster.",
+        )
+    with sc2:
+        blocked_raw = st.text_input(
+            "Words to always avoid",
+            value=", ".join(st.session_state.blocked_words),
+            placeholder="e.g.  particular, statistics",
+            help="Specific words you struggle with — flagged risky and never suggested.",
+        )
+    _new_patterns = _parse_tokens(patterns_raw)
+    _new_blocked  = _parse_tokens(blocked_raw)
+    if (_new_patterns != st.session_state.stutter_patterns
+            or _new_blocked != st.session_state.blocked_words):
+        st.session_state.stutter_patterns = _new_patterns
+        st.session_state.blocked_words    = _new_blocked
+        save_prefs(_new_patterns, _new_blocked)
+
+    if st.session_state.stutter_patterns:
+        onset_preview = " · ".join(
+            f"{p} → /{''.join(ph.normalize_pattern(p)) or '?'}/"
+            for p in st.session_state.stutter_patterns
+        )
+        st.markdown(
+            f'<div style="font-size:.8rem;color:#2d6aab;margin-top:.2rem">'
+            f'🔊 Active onsets: <strong>{onset_preview}</strong></div>',
+            unsafe_allow_html=True,
+        )
 
 _, btn_col, _ = st.columns([1.3, 1, 1.3])
 with btn_col:
@@ -226,6 +352,9 @@ if search_clicked and query.strip():
     st.session_state.last_query   = query.strip()
     st.session_state.sentence_mode = is_sentence(query.strip())
 
+    patterns = list(st.session_state.stutter_patterns)
+    blocked  = set(st.session_state.blocked_words)
+
     if not st.session_state.sentence_mode:
         # Word mode: just look up synonyms
         st.session_state.result    = None
@@ -240,7 +369,11 @@ if search_clicked and query.strip():
         with st.spinner("Analysing sentence, running semantic filter…"):
             # Pass threshold from sidebar to semantic module at call time
             sem.MIN_SEMANTIC = sem_threshold
-            result = rewriter.rewrite(sanitized, top_k=top_k)
+            result = rewriter.rewrite(
+                sanitized, top_k=top_k,
+                stutter_patterns=patterns,
+                blocked_words=blocked,
+            )
         st.session_state.result = result
 
 elif search_clicked and not query.strip():
@@ -248,7 +381,10 @@ elif search_clicked and not query.strip():
 
 # ── Render word mode ──────────────────────────────────────────────────────────
 if not st.session_state.sentence_mode and hasattr(st.session_state, "_word_results") and st.session_state._word_results:
-    results = st.session_state._word_results
+    results   = st.session_state._word_results
+    patterns  = list(st.session_state.stutter_patterns)
+    blocked   = set(st.session_state.blocked_words)
+    gating    = bool(patterns or blocked)
     st.markdown('<span class="mode-tag mode-word">📝 Word Mode</span>', unsafe_allow_html=True)
 
     no_syns  = [w for w, s in results.items() if not s]
@@ -262,15 +398,40 @@ if not st.session_state.sentence_mode and hasattr(st.session_state, "_word_resul
         st.markdown(f'<div style="margin-bottom:.7rem">{chips}</div>', unsafe_allow_html=True)
 
     for word, synonyms in has_syns.items():
+        # Gate B for word mode: drop synonyms sharing the user's stutter onset
+        if gating:
+            kept    = [s for s in synonyms
+                       if not (s.lower() in blocked or ph.matches_any(s, patterns))]
+            removed = len(synonyms) - len(kept)
+        else:
+            kept, removed = synonyms, 0
+
+        word_risky = gating and (word.lower() in blocked or ph.matches_any(word, patterns))
+        risk_badge = ('<span class="badge badge-red">⚠ stutter word</span>'
+                      if word_risky else
+                      ('<span class="badge badge-green">✓ safe onset</span>' if gating else ''))
+        filt_badge = (f'<span class="badge badge-gray">{removed} same-onset hidden</span>'
+                      if removed else '')
+
+        if not kept:
+            st.markdown(f"""
+<div class="word-card">
+  <div class="word-card-header">
+    <span class="word-title">{word.capitalize()}</span>{risk_badge}{filt_badge}
+  </div>
+  <div class="no-syn-chip">⊘ all synonyms share your stutter onset</div>
+</div>""", unsafe_allow_html=True)
+            continue
+
         pills = "".join(
             f'<span class="pill {"top" if i < 3 else "mid"}">{s}</span>'
-            for i, s in enumerate(synonyms)
+            for i, s in enumerate(kept)
         )
         st.markdown(f"""
 <div class="word-card">
   <div class="word-card-header">
     <span class="word-title">{word.capitalize()}</span>
-    <span class="badge badge-blue">{len(synonyms)} synonyms</span>
+    <span class="badge badge-blue">{len(kept)} synonyms</span>{risk_badge}{filt_badge}
   </div>
   <div class="pill-wrap">{pills}</div>
 </div>""", unsafe_allow_html=True)
@@ -280,6 +441,9 @@ if st.session_state.sentence_mode and st.session_state.result is not None:
     result    = st.session_state.result
     sanitized = st.session_state.sanitized
     fixes     = st.session_state.fixes
+    patterns  = list(st.session_state.stutter_patterns)
+    blocked   = set(st.session_state.blocked_words)
+    gating    = bool(patterns or blocked)
 
     st.markdown('<span class="mode-tag mode-sentence">✦ Sentence Mode — Semantic Pipeline</span>', unsafe_allow_html=True)
 
@@ -307,6 +471,18 @@ if st.session_state.sentence_mode and st.session_state.result is not None:
 <div class="pipe-card">
   <div class="pipe-label">① Input Grammar Correction</div>
   <div class="clean-sentence">✓ Input is grammatically clean — no corrections needed.</div>
+</div>""", unsafe_allow_html=True)
+
+    # ── Card ①·5: Stutter risk map (only when patterns/blocked are active) ─────
+    if gating:
+        st.markdown(f"""
+<div class="pipe-card">
+  <div class="pipe-label">◆ Stutter Risk Map</div>
+  <div style="font-size:.82rem;color:#5a7096;margin-bottom:.45rem">
+    Red = starts with one of your stutter sounds (or is on your avoid list);
+    amber = phonetically harder; green = easier onset.
+  </div>
+  {_risk_chips(sanitized, patterns, blocked)}
 </div>""", unsafe_allow_html=True)
 
     # ── Card ②: Semantic scoring table + picker ───────────────────────────────
@@ -366,8 +542,16 @@ if st.session_state.sentence_mode and st.session_state.result is not None:
                         rows_html = ""
                         for sc in sub["scored"][:8]:
                             is_chosen = sc["lemma"] == auto_lemma
-                            row_cls   = "chosen-row" if is_chosen else ("rejected" if not sc["accepted"] else "")
+                            phon_ok   = sc.get("phoneme_ok", True)
+                            dimmed    = (not sc["accepted"]) or (not phon_ok)
+                            row_cls   = "chosen-row" if is_chosen else ("rejected" if dimmed else "")
                             star      = "★ " if is_chosen else ""
+                            if not sc["accepted"]:
+                                status_cell = '✗ sem'
+                            elif not phon_ok:
+                                status_cell = '✗ onset'
+                            else:
+                                status_cell = '✓'
 
                             if sbert_ok and sc["semantic_sim"] is not None:
                                 sim_val = sc["semantic_sim"]
@@ -383,12 +567,11 @@ if st.session_state.sentence_mode and st.session_state.result is not None:
                                     f'<span class="bar-wrap" style="margin-left:4px"><span class="bar-fill" style="width:{freq_bar}px"></span></span>'
                                 )
                                 combined_cell = f'<strong>{sc["combined"]:.3f}</strong>'
-                                status_cell   = '✓' if sc["accepted"] else '✗'
                                 rows_html += f'<tr class="{row_cls}"><td>{star}{sc["inflected"]}</td><td>{sem_cell}</td><td>{freq_cell}</td><td>{combined_cell}</td><td>{status_cell}</td></tr>'
                             else:
                                 freq_bar = int(sc["freq_score"] * 60)
                                 freq_cell = f'{sc["freq_score"]:.2f}<span class="bar-wrap" style="margin-left:4px"><span class="bar-fill" style="width:{freq_bar}px"></span></span>'
-                                rows_html += f'<tr class="{row_cls}"><td>{star}{sc["inflected"]}</td><td>{freq_cell}</td><td>✓</td></tr>'
+                                rows_html += f'<tr class="{row_cls}"><td>{star}{sc["inflected"]}</td><td>{freq_cell}</td><td>{status_cell}</td></tr>'
 
                         if sbert_ok:
                             th = "<tr><th>Candidate</th><th>Semantic</th><th>Frequency</th><th>Combined</th><th></th></tr>"
@@ -397,14 +580,18 @@ if st.session_state.sentence_mode and st.session_state.result is not None:
                         st.markdown(f'<table class="score-table"><thead>{th}</thead><tbody>{rows_html}</tbody></table>', unsafe_allow_html=True)
 
         if result["skipped"]:
-            sk_html = " ".join(f'<span class="no-syn-chip">⊘ <strong>{w}</strong></span>' for w in result["skipped"])
-            st.markdown(f'<div style="margin-top:.5rem;font-size:.82rem;color:#9bb3cc">Kept unchanged (no valid synonym found): {sk_html}</div>', unsafe_allow_html=True)
+            sk_html = " ".join(
+                f'<span class="no-syn-chip">⊘ <strong>{s["word"]}</strong>'
+                f'<span style="opacity:.7"> — {s["reason"]}</span></span>'
+                for s in result["skipped"]
+            )
+            st.markdown(f'<div style="margin-top:.5rem;font-size:.82rem;color:#6f87a6">Kept unchanged: {sk_html}</div>', unsafe_allow_html=True)
 
     else:
         st.markdown("""
 <div class="pipe-card">
   <div class="pipe-label">② Synonym Candidates</div>
-  <div style="color:#9bb3cc;font-size:.9rem">No substitutable content words found in this sentence.</div>
+  <div style="color:#6f87a6;font-size:.9rem">No substitutable content words found in this sentence.</div>
 </div>""", unsafe_allow_html=True)
 
     # ── Rebuild with current user choices ─────────────────────────────────────
@@ -444,16 +631,39 @@ if st.session_state.sentence_mode and st.session_state.result is not None:
   <div class="diff-text">{highlighted}</div>
 </div>""", unsafe_allow_html=True)
 
-    # ── Card ⑤: Final output ──────────────────────────────────────────────────
+    # ── Card ⑤: Final output + stutter-difficulty before/after ────────────────
+    diff_before = ph.sentence_difficulty(_content_words(sanitized))
+    diff_after  = ph.sentence_difficulty(_content_words(rebuilt))
+    delta = diff_after - diff_before
+    if delta < -0.005:
+        d_cls, d_word, arrow, bar_col = "diff-down", "easier", "↓", "#7ddba5"
+    elif delta > 0.005:
+        d_cls, d_word, arrow, bar_col = "diff-up", "harder", "↑", "#f3b4b4"
+    else:
+        d_cls, d_word, arrow, bar_col = "diff-same", "no change", "→", "#b8d9f5"
+
     st.markdown(f"""
 <div class="pipe-card" style="border-color:#f0c090">
   <div class="pipe-label" style="color:#f57c2b">⑤ Final Sentence</div>
   <div class="output-box">{rebuilt}</div>
+  <div class="diff-meter">
+    <span class="diff-num {d_cls}">{diff_after:.2f}</span>
+    <div class="diff-track">
+      <div class="diff-bar" style="width:{int(diff_after*100)}%;background:{bar_col}"></div>
+    </div>
+  </div>
+  <div style="font-size:.78rem;color:#5a7096;margin-top:.2rem">
+    Stutter difficulty: <strong>{diff_before:.2f} → {diff_after:.2f}</strong>
+    <span class="{d_cls}">({arrow} {d_word})</span>
+  </div>
 </div>""", unsafe_allow_html=True)
+
+    st.caption("📋 Copy your sentence:")
+    st.code(rebuilt, language=None)
 
 # ── Footer ────────────────────────────────────────────────────────────────────
 st.markdown("""
-<div style="text-align:center;font-size:.74rem;color:#9bb3cc;margin-top:2.5rem">
+<div style="text-align:center;font-size:.74rem;color:#6f87a6;margin-top:2.5rem">
   Powered by
   <strong style="color:#4b91dc">SBERT all-MiniLM-L6-v2</strong> ·
   <strong style="color:#4b91dc">WordNet</strong> ·

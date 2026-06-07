@@ -1,0 +1,16 @@
+# Pin a consistent light theme so the custom CSS renders as designed for every
+# user, regardless of their system/browser dark-mode setting. (Switch base to
+# "dark" only if you also restyle the cards in app.py for dark backgrounds.)
+[theme]
+base = "light"
+primaryColor = "#f57c2b"
+backgroundColor = "#f7fbff"
+secondaryBackgroundColor = "#eef5fd"
+textColor = "#1a2740"
+font = "sans serif"
+
+[client]
+toolbarMode = "minimal"
+
+[browser]
+gatherUsageStats = false

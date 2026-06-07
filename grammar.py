@@ -22,6 +22,7 @@ Dependencies: nltk, pyinflect, semantic.py  (fully offline except SBERT model
 download on first run)
 """
 
+import paths  # noqa: F401  — must precede nltk import; redirects caches into ./.cache
 import re
 import nltk
 from nltk import pos_tag, word_tokenize
@@ -30,6 +31,7 @@ from nltk.stem import WordNetLemmatizer
 import pyinflect
 
 import semantic as sem
+import phonetic as ph
 
 for _pkg in ("averaged_perceptron_tagger_eng", "punkt_tab", "wordnet", "omw-1.4"):
     nltk.download(_pkg, quiet=True)
@@ -88,6 +90,64 @@ _PRESENT_MARKERS = {
 
 # 3rd person singular subjects (for subject-verb agreement)
 _THIRD_PERSON_SING = {"he", "she", "it", "this", "that", "one"}
+
+# Predicate complements after "be" that are commonly adjectives/adverbs even
+# though they also happen to be verb base forms.  Never treat these as a missing
+# gerund — protects "I am well", "she is free", "it is right", etc.
+_BE_COMPLEMENT_STOP = {
+    "well", "fine", "free", "right", "close", "clear", "fast", "sure", "present",
+    "last", "light", "clean", "complete", "content", "secure", "firm", "sound",
+    "warm", "cool", "calm", "open", "even", "fit", "level", "ready", "busy",
+    "slow", "square", "like", "worth", "fair", "plain", "wet", "dry", "blind",
+    "kind", "mean", "just", "past", "out", "up", "down", "off", "on", "over",
+}
+
+
+# Words that signal an action in progress — used to disambiguate "BE + verb"
+# for verbs whose past participle equals their base form (read, run, set, cut…),
+# where "is read" could be a passive OR a missing-progressive error.
+_PROGRESSIVE_CUES = {
+    "now", "currently", "right", "today", "tonight", "presently",
+    "nowadays", "still", "again", "constantly", "continually",
+}
+
+
+def _is_bare_verb(word: str) -> bool:
+    """
+    True if *word* is the base (lemma) form of a real verb — not an inflected
+    participle/adjective.
+
+    'run'/'go' → True;  'tired'/'broken'/'gone'/'running' → False, because their
+    verb lemma differs from the surface form.  This is what lets the auxiliary
+    fix correct "she is run" while leaving predicate participles untouched,
+    independent of how the POS tagger (mis)labels the word.
+    """
+    w = word.lower()
+    return _lemmatizer.lemmatize(w, "v") == w and bool(wn.synsets(w, pos=wn.VERB))
+
+
+_BE_FORMS = {"am", "is", "are", "was", "were", "be", "been", "being"}
+
+
+def _is_predicate_participle(tags: list[tuple], i: int) -> bool:
+    """
+    True if tags[i] is a past participle (VBN) acting as a predicate adjective
+    after a BE auxiliary — 'tired' in "she is tired", 'broken' in "the door is
+    broken".  Adverbs and 'not' between the auxiliary and the word are skipped.
+
+    The rewriter uses this to look up *adjective* synonyms for such words instead
+    of verb synonyms (so "tired" → weary/exhausted, not eaten/bore).
+    """
+    if tags[i][1] != "VBN":
+        return False
+    j = i - 1
+    while j >= 0:
+        w, t = tags[j]
+        if t.startswith("RB") or w.lower() in ("not", "n't"):
+            j -= 1
+            continue
+        return w.lower() in _BE_FORMS
+    return False
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 1. Input sanitizer (comprehensive grammar correction)
@@ -328,6 +388,45 @@ def _correct_subject_verb_agreement(tokens: list[str]) -> tuple[list[str], list[
     return tokens, fixes
 
 
+def _correct_existential_there(tokens: list[str]) -> tuple[list[str], list[dict]]:
+    """
+    Fix existential 'there is/was' before a plural noun:
+      "there is many problems" → "there are many problems"
+      "there was two cats"     → "there were two cats"
+    Only fires when the head noun after the verb is clearly plural (NNS/NNPS)
+    and no singular noun intervenes — conservative to avoid false edits.
+    """
+    fixes = []
+    tags  = pos_tag(tokens)
+    for i, (w, t) in enumerate(tags):
+        if w.lower() != "there" or i + 1 >= len(tags):
+            continue
+        vw = tags[i + 1][0]
+        if vw.lower() not in ("is", "was"):
+            continue
+        plural = None
+        for j in range(i + 2, min(i + 7, len(tags))):
+            if tags[j][1] in ("NN", "NNP"):
+                plural = False
+                break
+            if tags[j][1] in ("NNS", "NNPS"):
+                plural = True
+                break
+        if plural:
+            corrected = "are" if vw.lower() == "is" else "were"
+            fixes.append({
+                "type": "subject_verb_agreement",
+                "original": vw,
+                "corrected": corrected,
+                "description": f'Existential "there": plural subject → "{vw}" → "{corrected}"',
+                "index": i + 1,
+            })
+            tokens = list(tokens)
+            tokens[i + 1] = _preserve_case(vw, corrected)
+            tags = pos_tag(tokens)
+    return tokens, fixes
+
+
 def _correct_auxiliary_forms(tokens: list[str]) -> tuple[list[str], list[dict]]:
     """
     Fix auxiliary + verb form errors:
@@ -344,13 +443,34 @@ def _correct_auxiliary_forms(tokens: list[str]) -> tuple[list[str], list[dict]]:
     for i, (word, tag) in enumerate(tags):
         lw = word.lower()
 
-        # BE auxiliary + bare verb → gerund (progressive)
+        # BE auxiliary + stray base verb → gerund (progressive).
+        # Decide "is this a stray base verb?" from the verb lexicon + bare-form
+        # test, NOT from the POS tag — the tagger mislabels exactly these errors
+        # ("she is run" → run/VBN, "I am go" → go/RB).  The bare-form test also
+        # auto-protects predicate participles/adjectives (tired, broken, gone),
+        # and _BE_COMPLEMENT_STOP guards verb-also-adjective words (well, free…).
         if lw in _BE_AUX and i + 1 < len(tags):
-            next_word, next_tag = tags[i + 1]
-            if next_tag in ("VBP", "VBZ", "VBD", "VB") and next_word.lower() not in _STOP:
-                base = _lemmatizer.lemmatize(next_word.lower(), "v")
-                gerund = pyinflect.getInflection(base, "VBG")
-                if gerund and gerund[0].lower() != next_word.lower():
+            next_word = tags[i + 1][0]
+            nlw = next_word.lower()
+            if (nlw not in _STOP
+                    and nlw not in _BE_COMPLEMENT_STOP
+                    and _is_bare_verb(nlw)):
+                gerund     = pyinflect.getInflection(nlw, "VBG")
+                participle = pyinflect.getInflection(nlw, "VBN")
+                # Verbs whose participle == base form (read, run, set, cut, put,
+                # hit, shut…) make "BE + verb" indistinguishable from a real
+                # passive ("the book is read by many", "the race is run").  For
+                # these, only convert to progressive when there is a clear
+                # progressive cue AND no 'by'-agent — otherwise leave the
+                # (possibly passive) clause untouched.  Verbs with a distinct
+                # participle (go→gone, eat→eaten) are unambiguous and always fixed.
+                ambiguous = bool(participle) and participle[0].lower() == nlw
+                allow = True
+                if ambiguous:
+                    rest_lower = {t.lower() for t in tokens[i + 2:]}
+                    all_lower  = {t.lower() for t in tokens}
+                    allow = bool(all_lower & _PROGRESSIVE_CUES) and "by" not in rest_lower
+                if allow and gerund and gerund[0].lower() != nlw:
                     fixes.append({
                         "type": "auxiliary_form",
                         "original": next_word,
@@ -517,6 +637,16 @@ def sanitize_input(text: str) -> tuple[str, list[dict]]:
             "description": f["description"],
         })
 
+    # ── Layer 7b: Existential "there is/are" agreement ─────────────────────
+    tokens, there_fixes = _correct_existential_there(tokens)
+    for f in there_fixes:
+        all_fixes.append({
+            "type": f["type"],
+            "original": f["original"],
+            "corrected": f["corrected"],
+            "description": f["description"],
+        })
+
     # Rebuild sentence from corrected tokens
     if any(all_fixes[i]["type"] in ("tense", "subject_verb_agreement", "auxiliary_form")
            for i in range(len(all_fixes))):
@@ -636,21 +766,39 @@ class SentenceRewriter:
 
         return filtered[:top_k]
 
-    def rewrite(self, sentence: str, top_k: int = 10) -> dict:
+    def rewrite(
+        self,
+        sentence: str,
+        top_k: int = 10,
+        stutter_patterns: list[str] | None = None,
+        blocked_words: set[str] | None = None,
+    ) -> dict:
         """
         Full pipeline:
           1. Tokenise + POS tag
           2. Identify protected positions (phrases + stop words)
           3. For each substitutable word:
+             Gate A — if stutter patterns are active, only process words that
+                      START with a trouble onset (or are personally blocked)
              a. Get raw candidates (engine, POS-filtered)
              b. Build inflected forms
              c. SBERT-rank contextually (semantic.py)
-             d. Pick best accepted candidate
+             Gate B — drop candidates that share the user's stutter onset (or are
+                      blocked); ordering from the ranker is preserved
+             d. Pick best surviving candidate
           4. Rebuild sentence
           5. Grammar notes
 
+        stutter_patterns / blocked_words are the phoneme feature.  When BOTH are
+        empty (the default) Gate A and Gate B are exact no-ops, so the legacy
+        synonym behaviour is reproduced unchanged.
+
         Returns dict with full scoring metadata per substitution.
         """
+        patterns = [p for p in (stutter_patterns or []) if p and p.strip()]
+        blocked  = {w.lower() for w in (blocked_words or set()) if w and w.strip()}
+        gating   = bool(patterns or blocked)
+
         tokens = word_tokenize(sentence)
         tags   = pos_tag(tokens)
 
@@ -659,7 +807,7 @@ class SentenceRewriter:
 
         new_tokens    = list(tokens)
         substitutions = []
-        skipped       = []
+        skipped       = []   # list of {"word", "reason"}
 
         for i, (word, tag) in enumerate(tags):
             lower = word.lower()
@@ -672,17 +820,37 @@ class SentenceRewriter:
             if i in phrase_protected:        # protected phrase member
                 continue
 
-            base       = lemmatize(word, tag)
-            raw_cands  = self._raw_candidates(base, tag, word, top_k=top_k)
+            # ── Gate A: stutter targeting ─────────────────────────────────────
+            # Only when the user has supplied patterns/blocked words.  A word is
+            # "risky" if it is personally blocked or its onset matches a pattern.
+            # Non-risky words are left untouched and silently passed through.
+            if gating:
+                risky = (lower in blocked) or ph.matches_any(word, patterns)
+                if not risky:
+                    continue
+
+            # Predicate participle after BE ("she is tired") → treat as an
+            # adjective for synonym lookup, not a verb.  If it has no adjective
+            # sense, skip it rather than offer misleading verb synonyms.
+            eff_tag = tag
+            if _is_predicate_participle(tags, i):
+                if wn.synsets(lower, pos=wn.ADJ):
+                    eff_tag = "JJ"
+                else:
+                    skipped.append({"word": word, "reason": "predicate adjective — left as is"})
+                    continue
+
+            base       = lemmatize(word, eff_tag)
+            raw_cands  = self._raw_candidates(base, eff_tag, word, top_k=top_k)
 
             if not raw_cands:
-                skipped.append(word)
+                skipped.append({"word": word, "reason": "no synonyms found"})
                 continue
 
             # Build inflected form map  {lemma → inflected_surface}
             inflected_map: dict[str, str] = {}
             for lemma in raw_cands:
-                inf = inflect(lemma, tag)
+                inf = inflect(lemma, eff_tag)
                 inf = _preserve_case(word, inf)
                 inflected_map[lemma] = inf
 
@@ -696,32 +864,50 @@ class SentenceRewriter:
                 inflected_forms   = inflected_map,
             )
 
-            # Best accepted candidate
-            accepted = [s for s in scored if s["accepted"]]
-            if not accepted:
-                skipped.append(word)
+            # ── Gate B: phoneme firewall ──────────────────────────────────────
+            # Annotate each ranked candidate with phoneme_ok (avoids the user's
+            # stutter onset AND the blocked list).  Ranking order is untouched;
+            # we just skip past same-onset candidates.  No patterns/blocked =>
+            # phoneme_ok is always True, so this is a no-op.
+            for s in scored:
+                if not gating:
+                    s["phoneme_ok"] = True
+                    continue
+                cand_lemma = s["lemma"].lower()
+                bad = (cand_lemma in blocked
+                       or ph.matches_any(s["inflected"], patterns)
+                       or ph.matches_any(s["lemma"], patterns))
+                s["phoneme_ok"] = not bad
+
+            usable = [s for s in scored if s["accepted"] and s["phoneme_ok"]]
+            if not usable:
+                if gating and any(s["accepted"] for s in scored):
+                    reason = "all synonyms share your stutter onset"
+                else:
+                    reason = "no valid synonym"
+                skipped.append({"word": word, "reason": reason})
                 continue
 
-            best        = accepted[0]
+            best        = usable[0]
             new_tokens[i] = best["inflected"]
 
             substitutions.append({
                 "original_word": word,
                 "lemma":         base,
-                "tag":           tag,
+                "tag":           eff_tag,
                 "position":      i,
                 "chosen":        best["inflected"],
                 "chosen_lemma":  best["lemma"],
-                # Full scoring data for UI display
+                # Full scoring data for UI display (each entry carries phoneme_ok)
                 "scored":        scored,          # all candidates with scores
-                # Convenience: just the accepted lemma list for the dropdown
-                "candidates":    [s["lemma"] for s in scored if s["accepted"]],
+                # Convenience: surviving lemma list for the dropdown
+                "candidates":    [s["lemma"] for s in usable],
                 "all_candidates": [s["lemma"] for s in scored],
                 "sbert_active":  sem._sbert_ok,
             })
 
         rewritten     = _detokenize(new_tokens)
-        grammar_notes = _grammar_notes(sentence, rewritten, substitutions)
+        grammar_notes = _grammar_notes(new_tokens, substitutions)
 
         return {
             "original":      sentence,
@@ -767,19 +953,28 @@ def _detokenize(tokens: list[str]) -> str:
     return result
 
 
-def _grammar_notes(original: str, rewritten: str, subs: list[dict]) -> list[str]:
+def _grammar_notes(rewritten_tokens: list[str], subs: list[dict]) -> list[str]:
+    """
+    Sanity-check verb substitutions by re-tagging the rebuilt tokens and
+    comparing the tag AT EACH SUBSTITUTION POSITION (not by surface word — a
+    word can appear twice, which a word-keyed lookup would conflate).
+    """
     notes = []
     if not subs:
         return notes
-    rewr_tags = dict(pos_tag(word_tokenize(rewritten)))
+    tags = pos_tag(rewritten_tokens)
     for sub in subs:
-        if sub["tag"].startswith("VB"):
-            actual = rewr_tags.get(sub["chosen"].lower()) or rewr_tags.get(sub["chosen"])
-            if actual and actual != sub["tag"]:
-                notes.append(
-                    f'"{sub["chosen"]}" re-tagged as {actual} '
-                    f'(expected {sub["tag"]}) — check verb agreement.'
-                )
+        if not sub["tag"].startswith("VB"):
+            continue
+        pos = sub["position"]
+        if pos >= len(tags):
+            continue
+        actual = tags[pos][1]
+        if actual != sub["tag"]:
+            notes.append(
+                f'"{sub["chosen"]}" re-tagged as {actual} '
+                f'(expected {sub["tag"]}) — check verb agreement.'
+            )
     if subs and not notes:
         notes.append("Grammar check passed — all substitutions correctly inflected.")
     return notes

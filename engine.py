@@ -29,11 +29,14 @@ Quality filters (unchanged):
   - Words with Zipf < 2.0 dropped (too rare / archaic)
 """
 
+import paths  # noqa: F401  — must precede nltk import; redirects caches into ./.cache
+import os
 import re
+from functools import lru_cache
 import requests
 import nltk
 from nltk.corpus import wordnet as wn
-from wordfreq import zipf_frequency
+from freq import zipf_frequency   # memory-safe wrapper (falls back to 'small' wordlist)
 
 nltk.download("wordnet", quiet=True)
 nltk.download("omw-1.4", quiet=True)
@@ -44,8 +47,27 @@ _JUNK = {
 }
 
 
+@lru_cache(maxsize=4096)
+def _datamuse_fetch(word: str, timeout: float) -> tuple[str, ...]:
+    """
+    Cached Datamuse lookup (synonyms + meaning-like) for a single word.
+    Cached per (word, timeout) so repeated words within and across searches are
+    instant instead of re-hitting the network.  Returns a sorted tuple (hashable
+    so it can be cached); callers wrap it in a set.
+    """
+    syns: set[str] = set()
+    for endpoint in (f"rel_syn={word}", f"ml={word}&max=15"):
+        try:
+            url = f"https://api.datamuse.com/words?{endpoint}"
+            data = requests.get(url, timeout=timeout).json()
+            syns |= {item["word"].lower() for item in data}
+        except Exception:
+            pass
+    return tuple(sorted(syns))
+
+
 class SynonymEngine:
-    DATAMUSE_TIMEOUT = 4
+    DATAMUSE_TIMEOUT = 2.5
 
     def __init__(self, language: str = "en"):
         self.language = language
@@ -88,17 +110,12 @@ class SynonymEngine:
 
         return syns
 
-    # ── Source 2: Datamuse (synonyms + meaning-like) ────────────────────────
+    # ── Source 2: Datamuse (synonyms + meaning-like) — cached ───────────────
     def _datamuse_synonyms(self, word: str) -> set[str]:
-        syns: set[str] = set()
-        for endpoint in (f"rel_syn={word}", f"ml={word}&max=15"):
-            try:
-                url = f"https://api.datamuse.com/words?{endpoint}"
-                data = requests.get(url, timeout=self.DATAMUSE_TIMEOUT).json()
-                syns |= {item["word"].lower() for item in data}
-            except Exception:
-                pass
-        return syns
+        # Offline / deterministic switch: skip the network source entirely.
+        if os.environ.get("DISABLE_DATAMUSE") == "1":
+            return set()
+        return set(_datamuse_fetch(word, self.DATAMUSE_TIMEOUT))
 
     # ── Collection & cleaning ───────────────────────────────────────────────
     def _collect(self, word: str, wn_pos=None) -> set[str]:
@@ -128,11 +145,15 @@ class SynonymEngine:
 
     # ── Ranking ─────────────────────────────────────────────────────────────
     def _rank(self, words: list[str]) -> list[str]:
-        """Sort by Zipf frequency — higher = more natural in everyday English."""
+        """
+        Sort by Zipf frequency — higher = more natural in everyday English.
+        Alphabetical secondary key makes ties deterministic, so the same input
+        always yields the same order/auto-pick (candidates come from a set,
+        whose iteration order otherwise varies per process).
+        """
         return sorted(
             words,
-            key=lambda w: zipf_frequency(w, self.language),
-            reverse=True,
+            key=lambda w: (-zipf_frequency(w, self.language), w),
         )
 
     # ── Public API ──────────────────────────────────────────────────────────

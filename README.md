@@ -14,7 +14,8 @@ Built with **Python + Streamlit** (monorepo, single-process). No frontend framew
 4. It fetches synonym candidates from WordNet and Datamuse — filtered by the word's actual POS so verb synonyms never pollute noun lookups.
 5. SBERT (`all-MiniLM-L6-v2`) scores every candidate sentence against the original and rejects anything that shifts meaning.
 6. The best candidates are ranked by a combined score (65% semantic similarity + 35% word frequency).
-7. You pick your preferred synonym from a dropdown. The sentence rebuilds live with correct inflection.
+7. **Phoneme firewall (stutter assistance):** enter the starting sounds you stutter on (e.g. `str, pr, b`). The app then only suggests replacements for words that *start* with those sounds, and never offers a synonym that starts with the same sound (replacing *present* with *prestige* is useless — both start /pr/). Onsets come from the CMU Pronouncing Dictionary, so spelling traps are handled correctly (`knee`→/n/, `school`→/sk/).
+8. You pick your preferred synonym from a dropdown. The sentence rebuilds live with correct inflection, and a **before→after stutter-difficulty score** shows how much easier the sentence got.
 
 ---
 
@@ -22,13 +23,15 @@ Built with **Python + Streamlit** (monorepo, single-process). No frontend framew
 
 ```
 speech-ai/
-├── app.py          # Streamlit UI — all rendering, session state, sidebar controls
+├── app.py          # Streamlit UI — rendering, session state, sidebar, stutter prefs
 ├── engine.py       # SynonymEngine — WordNet + Datamuse retrieval, POS-filtered
-├── grammar.py      # sanitize_input() — 8-layer grammar correction
-│                   # SentenceRewriter — POS-tag, protect phrases, rewrite
-│                   # inflect(), lemmatize(), _detokenize()
-├── semantic.py     # SBERT loader, protected phrase detection,
-│                   # batch cosine scoring, combined score formula
+├── grammar.py      # sanitize_input() — grammar correction (base-form aux gate)
+│                   # SentenceRewriter — POS-tag, protect phrases, Gate A/B, rewrite
+├── semantic.py     # SBERT loader, protected phrases, batch cosine, combined score
+├── phonetic.py     # CMU-onset extraction, pattern parsing, phoneme gates, difficulty
+├── freq.py         # memory-safe wordfreq wrapper (auto-falls back to 'small' list)
+├── paths.py        # keeps ALL caches (NLTK / SBERT / torch) off C:, on the app dir
+├── tests/          # smoke.py (behaviour baseline) + app_test.py (headless UI smoke)
 └── requirements.txt
 ```
 
@@ -78,7 +81,7 @@ pip install -r requirements.txt
 
 ### 4. Download NLTK data (one-time, runs automatically on first launch)
 
-The app downloads the following NLTK packages on first run: `averaged_perceptron_tagger_eng`, `punkt_tab`, `wordnet`, `omw-1.4`. You need internet access for this step only.
+The app downloads these NLTK packages on first run: `averaged_perceptron_tagger_eng`, `punkt_tab`, `wordnet`, `omw-1.4`, `cmudict`. You need internet access for this step only.
 
 ### 5. Run
 
@@ -89,6 +92,15 @@ streamlit run app.py
 Open **http://localhost:8501** in your browser.
 
 On first run, SBERT (`all-MiniLM-L6-v2`, ~80 MB) downloads automatically and is cached locally. Subsequent runs are fully offline.
+
+> **Cache location:** `paths.py` automatically redirects NLTK data and the SBERT/torch
+> model caches into a project-local `./.cache/` folder (kept out of git), and caps BLAS
+> threads to keep startup memory low. Override any location with the standard env vars
+> (`NLTK_DATA`, `HF_HOME`, `SENTENCE_TRANSFORMERS_HOME`, `TORCH_HOME`).
+
+**Low-memory machines:** if `large` wordfreq or SBERT can't fit in RAM, the app degrades
+gracefully — `freq.py` falls back to the small wordlist and the pipeline drops to
+frequency-only ranking. Force low-memory mode up front with `WORDFREQ_LIST=small`.
 
 ---
 
@@ -106,14 +118,24 @@ On first run, SBERT (`all-MiniLM-L6-v2`, ~80 MB) downloads automatically and is 
 
 **Sidebar controls**
 
+- **Stutter sounds** — comma/space separated starting sounds you stutter on (e.g. `str, pr, b`). Activates the phoneme firewall (Gate A targets only these words; Gate B keeps same-onset synonyms out). Saved to `user_prefs.json` so they persist between sessions.
+- **Words to always avoid** — specific words you struggle with; always flagged risky and never suggested.
 - Semantic threshold slider (0.60–0.95) — lower = more permissive substitutions, higher = stricter meaning preservation.
-- Show scoring details toggle — reveals the full SBERT similarity score table per word.
+- Show scoring details toggle — reveals the full score table per word, including which candidates were rejected for sharing your stutter onset (`✗ onset`).
+
+With stutter sounds active you also get a **Stutter Risk Map** (each word colour-coded by onset risk) and a **before→after difficulty score** on the final sentence.
 
 ---
 
 ## Configuration
 
-No API keys required. No environment variables. Everything is local.
+No API keys required. Everything runs locally. A few optional environment variables:
+
+| Variable | Effect |
+|---|---|
+| `WORDFREQ_LIST` | `best` (default) / `large` / `small`. Force `small` on low-RAM machines. |
+| `DISABLE_DATAMUSE` | `1` = WordNet-only (offline / deterministic, skips the network source). |
+| `NLTK_DATA`, `HF_HOME`, `SENTENCE_TRANSFORMERS_HOME`, `TORCH_HOME` | Override cache locations (default: `./.cache/`). |
 
 The semantic threshold can also be changed in `semantic.py`:
 

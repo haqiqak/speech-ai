@@ -59,10 +59,11 @@ Key design decisions (with rationale)
 
 from __future__ import annotations
 
+import paths  # noqa: F401  — redirects HF/torch model caches into ./.cache
 import re
 from typing import Optional
 import numpy as np
-from wordfreq import zipf_frequency
+from freq import zipf_frequency   # memory-safe wrapper (falls back to 'small' wordlist)
 
 # ── Constants ────────────────────────────────────────────────────────────────
 
@@ -206,7 +207,7 @@ def rank_candidates_contextually(
     tokens:            list[str],
     candidates:        list[str],          # lemma-form candidates from engine
     inflected_forms:   dict[str, str],     # lemma → inflected form for this slot
-    min_semantic:      float = MIN_SEMANTIC,
+    min_semantic:      float | None = None,  # None → read module MIN_SEMANTIC at call time
     language:          str   = "en",
 ) -> list[dict]:
     """
@@ -234,6 +235,12 @@ def rank_candidates_contextually(
     """
     if not candidates:
         return []
+
+    # Resolve the threshold at call time so a runtime change to MIN_SEMANTIC
+    # (e.g. the sidebar slider doing `sem.MIN_SEMANTIC = x`) actually takes
+    # effect.  A bound default argument would freeze the import-time value.
+    if min_semantic is None:
+        min_semantic = MIN_SEMANTIC
 
     sbert_available = _sbert_ok and _sbert_model is not None
 
