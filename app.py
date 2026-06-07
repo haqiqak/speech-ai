@@ -4,16 +4,18 @@ Pipeline: Sanitize → SBERT Semantic Firewall → Inflect → User Picks → Ou
 """
 
 import paths  # noqa: F401  — must precede nltk/SBERT imports; redirects caches into ./.cache
+import html
 import re
 import json
 from pathlib import Path
 import streamlit as st
 from nltk import word_tokenize
 from engine import SynonymEngine
-from grammar import sanitize_input, is_sentence, SentenceRewriter, inflect, _preserve_case
+from grammar import sanitize_input, is_sentence, SentenceRewriter, inflect, _preserve_case, apply_grammar_fixes
 import semantic as sem
 import phonetic as ph
 import freq
+import grammar
 
 # ── User preferences (stutter patterns + blocked words) persisted locally ─────
 _PREFS_PATH = Path(__file__).resolve().parent / "user_prefs.json"
@@ -70,9 +72,52 @@ def _risk_chips(sentence: str, patterns: list[str], blocked: set[str]) -> str:
                      f'difficulty {diff:.2f}">{tok}</span>')
     return '<div class="pill-wrap">' + "".join(chips) + "</div>"
 
+
+def _fmt(text: object) -> str:
+    """Escape dynamic text before placing it inside custom HTML."""
+    return html.escape(str(text or ""))
+
+
+def _current_rebuilt_sentence() -> str | None:
+    if not st.session_state.get("sentence_mode") or st.session_state.get("result") is None:
+        return None
+    sanitized = st.session_state.get("sanitized") or ""
+    substitutions = st.session_state.result.get("substitutions", [])
+    return rewriter.rebuild_with_choices(
+        sanitized,
+        substitutions,
+        st.session_state.get("user_choices", {}),
+    )
+
+
+def _grammar_explanation() -> str:
+    fixes = st.session_state.get("grammar_fixes_applied", []) + st.session_state.get("fixes", [])
+    if not fixes:
+        if st.session_state.get("last_query"):
+            return "Grammar check passed. No automatic correction was needed before speech profiling."
+        return "Run the speech profile to correct grammar before synonym analysis."
+
+    rows = []
+    seen = set()
+    for fix in fixes:
+        original = fix.get("original", "") or "(missing)"
+        corrected = fix.get("corrected", "")
+        reason = fix.get("reason") or fix.get("description") or "Grammar cleanup"
+        sig = (original, corrected, reason)
+        if sig in seen:
+            continue
+        seen.add(sig)
+        rows.append(
+            f'<div class="fix-row {fix.get("type", "spacing")}">'
+            f'<span class="fix-before">{_fmt(original)}</span><span>&rarr;</span>'
+            f'<span class="fix-after">{_fmt(corrected)}</span>'
+            f'<span style="opacity:.62;font-size:.8rem">{_fmt(reason)}</span></div>'
+        )
+    return "".join(rows)
+
 # ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Synonym Finder",
+    page_title="Speech AI",
     page_icon="🔤",
     layout="centered",
     initial_sidebar_state="expanded",
@@ -100,6 +145,14 @@ div[data-testid="stTextInput"] input {
 }
 div[data-testid="stTextInput"] input:focus { border-color:#4b91dc !important; }
 div[data-testid="stTextInput"] label { font-size:.82rem !important; font-weight:600 !important; color:#3d6ea8 !important; }
+div[data-testid="stTextArea"] textarea {
+    min-height:150px !important; border:2px solid #c3daf7 !important; border-radius:16px !important;
+    background:#fff !important; font-family:'DM Sans',sans-serif !important;
+    font-size:1.06rem !important; line-height:1.6 !important; padding:.9rem 1rem !important;
+    color:#1a2740 !important; box-shadow:0 2px 12px rgba(75,145,220,.08) !important;
+}
+div[data-testid="stTextArea"] textarea:focus { border-color:#4b91dc !important; }
+div[data-testid="stTextArea"] label { font-size:.82rem !important; font-weight:600 !important; color:#3d6ea8 !important; }
 div[data-testid="stSlider"] label { font-size:.82rem !important; color:#3d6ea8 !important; font-weight:600 !important; }
 div[data-testid="stSelectbox"] label { font-size:.76rem !important; font-weight:600 !important; color:#3d6ea8 !important; }
 div[data-testid="stSelectbox"] > div > div { border:1.5px solid #c3daf7 !important; border-radius:10px !important; background:#fff !important; font-size:.9rem !important; }
@@ -115,6 +168,11 @@ div.stButton > button:hover { transform:translateY(-2px) !important; box-shadow:
 
 /* cards */
 .word-card { background:#fff; border:1.5px solid #d4e8f8; border-radius:16px; padding:1rem 1.3rem .9rem; margin-bottom:.75rem; box-shadow:0 2px 12px rgba(75,145,220,.06); }
+.profile-panel { background:#fff; border:1.5px solid #d4e8f8; border-radius:16px; padding:1rem 1.2rem .85rem; margin:.55rem 0 .9rem; box-shadow:0 2px 12px rgba(75,145,220,.05); }
+.analysis-note { background:#f8fbff; border:1.4px solid #d4e8f8; border-radius:12px; padding:.72rem .9rem; margin:.35rem 0 1rem; color:#2a3d58; font-size:.88rem; }
+.syn-grid-card { background:#fff; border:1.5px solid #d4e8f8; border-radius:14px; padding:.85rem .95rem .8rem; margin-bottom:.75rem; min-height:170px; box-shadow:0 2px 10px rgba(75,145,220,.05); }
+.syn-grid-card .pill-wrap { margin:.42rem 0 .55rem; }
+.section-kicker { font-size:.68rem; font-weight:700; letter-spacing:.8px; text-transform:uppercase; color:#4b91dc; margin:.9rem 0 .45rem; }
 .word-card-header { display:flex; align-items:center; gap:.5rem; margin-bottom:.5rem; }
 .word-title { font-family:'DM Serif Display',serif; font-size:1.2rem; color:#1a2740; }
 .badge { font-size:.67rem; font-weight:600; padding:.15rem .5rem; border-radius:20px; }
@@ -225,6 +283,16 @@ engine   = load_engine()
 rewriter = load_rewriter(engine)
 sbert_ok, sbert_msg = init_sbert()
 
+# ── Initialize session state (must be done before any access) ────────────────
+for key, default in [
+    ("result", None), ("sanitized", None), ("fixes", []),
+    ("user_choices", {}), ("last_query", ""), ("sentence_mode", False),
+    ("grammar_fixes_applied", []), ("correction_map", {}),
+    ("original_query", ""), ("corrected_query", ""), ("query_input", ""),
+]:
+    if key not in st.session_state:
+        st.session_state[key] = default
+
 # ── Load persisted stutter prefs into session state (once) ────────────────────
 if "stutter_patterns" not in st.session_state or "blocked_words" not in st.session_state:
     _p, _b = load_prefs()
@@ -233,7 +301,7 @@ if "stutter_patterns" not in st.session_state or "blocked_words" not in st.sessi
 
 # ── Sidebar: SBERT status + settings ─────────────────────────────────────────
 with st.sidebar:
-    st.markdown("### ⚙️ Settings")
+    st.markdown("### ⚙ Settings")
 
     if sbert_ok:
         st.markdown(f"""
@@ -252,11 +320,12 @@ with st.sidebar:
     st.markdown("---")
     sem_threshold = st.slider(
         "Semantic threshold",
-        min_value=0.60, max_value=0.95, value=0.72, step=0.01,
-        help="Candidates below this similarity score are rejected. Lower = more permissive.",
+        min_value=0.60, max_value=0.95, value=0.85, step=0.01,
+        help="Candidates below this similarity score are rejected. Higher = stricter (only excellent matches). "
+             "Recommended: 0.85 for meaning preservation.",
         disabled=not sbert_ok,
     )
-    st.caption("Only active when SBERT is loaded.")
+    st.caption("Only active when SBERT is loaded. **New default: 0.85** (stricter semantic gating).")
 
     st.markdown("---")
     show_scores = st.toggle("Show scoring details", value=True,
@@ -278,23 +347,47 @@ with st.sidebar:
 </div>""", unsafe_allow_html=True)
 
 # ── Controls ──────────────────────────────────────────────────────────────────
-col1, col2 = st.columns([3, 1])
-with col1:
-    query = st.text_input(
-        "Enter word(s) or a sentence",
-        placeholder="e.g.  happy, angry   or   The company is under stress.",
-        label_visibility="visible",
+rebuilt_preview = _current_rebuilt_sentence()
+show_modified = False
+if rebuilt_preview:
+    show_modified = st.toggle(
+        "Show modified text",
+        value=True,
+        help="Switch off to edit the original text again.",
     )
-with col2:
-    top_k = st.slider(
-        "Synonyms / word", min_value=5, max_value=20, value=10, step=1,
-        help="How many synonym candidates to fetch and rank for each word "
-             "(higher = more options in the dropdown, slightly slower).",
+
+if show_modified and rebuilt_preview:
+    query = st.text_area(
+        "Input sentence",
+        value=rebuilt_preview,
+        height=170,
+        disabled=True,
+        key="query_modified_preview",
+        help="This preview updates after grammar correction and synonym choices.",
     )
+    lookup_source = st.session_state.get("original_query") or st.session_state.get("last_query", "")
+else:
+    query = st.text_area(
+        "Input sentence",
+        value=st.session_state.get("query_input", ""),
+        placeholder="e.g. I have a special presentation today.",
+        height=170,
+        key="query_input",
+        help="Enter a word, a list of words, or a full sentence.",
+    )
+    lookup_source = query
+
+top_k = st.slider(
+    "Synonyms / word", min_value=5, max_value=20, value=10, step=1,
+    help="How many synonym candidates to fetch and rank for each word "
+         "(higher = more options in the dropdown, slightly slower).",
+)
 
 # ── Stutter assistance (the core feature — kept front-and-centre) ──────────────
 _has_stutter = bool(st.session_state.stutter_patterns or st.session_state.blocked_words)
-with st.expander("🗣️  Stutter assistance — set your trouble sounds", expanded=_has_stutter):
+with st.container():
+    st.markdown('<div class="profile-panel">', unsafe_allow_html=True)
+    st.markdown('<div class="pipe-label">Phoneme Profile for Stuttering Patterns</div>', unsafe_allow_html=True)
     st.caption("Enter the **starting sounds** you stutter on (e.g. `str, pr, b`). "
                "Suggestions are then offered only for words with those sounds, and "
                "never replace them with a word that starts the same way.")
@@ -332,38 +425,80 @@ with st.expander("🗣️  Stutter assistance — set your trouble sounds", expa
             unsafe_allow_html=True,
         )
 
-_, btn_col, _ = st.columns([1.3, 1, 1.3])
-with btn_col:
-    search_clicked = st.button("Find Synonyms", use_container_width=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+_, col1, col2, _ = st.columns([1, 1, 1, 1])
+with col1:
+    search_clicked = st.button("Run speech profile", use_container_width=True)
+with col2:
+    clear_clicked = st.button("Clear All", use_container_width=True)
 
-st.markdown("<hr>", unsafe_allow_html=True)
+# Auto-clear if text changed (new search)
+if lookup_source.strip() and lookup_source.strip() != st.session_state.get("last_query", ""):
+    if not search_clicked:  # Only auto-clear if user is typing new text, not when they click search
+        st.session_state.result = None
+        st.session_state.sanitized = None
+        st.session_state.fixes = []
+        st.session_state.user_choices = {}
+        st.session_state.grammar_fixes_applied = []
+        st.session_state.correction_map = {}
+        st.session_state._word_results = None
 
-# ── Session state ─────────────────────────────────────────────────────────────
-for key, default in [
-    ("result", None), ("sanitized", None), ("fixes", []),
-    ("user_choices", {}), ("last_query", ""), ("sentence_mode", False),
-]:
-    if key not in st.session_state:
-        st.session_state[key] = default
+if clear_clicked:
+    st.session_state.result = None
+    st.session_state.sanitized = None
+    st.session_state.fixes = []
+    st.session_state.user_choices = {}
+    st.session_state.grammar_fixes_applied = []
+    st.session_state.correction_map = {}
+    st.session_state._word_results = None
+    st.session_state.last_query = ""
+    st.session_state.sentence_mode = False
+    st.session_state.original_query = ""
+    st.session_state.corrected_query = ""
+    st.session_state.query_input = ""
+    st.rerun()
+
 
 # ── Process on button click ───────────────────────────────────────────────────
-if search_clicked and query.strip():
+source_text = lookup_source.strip()
+if search_clicked and source_text:
+    # Clear all previous results for fresh start
     st.session_state.user_choices = {}
-    st.session_state.last_query   = query.strip()
-    st.session_state.sentence_mode = is_sentence(query.strip())
+    st.session_state.result = None
+    st.session_state.sanitized = None
+    st.session_state.fixes = []
+    st.session_state.grammar_fixes_applied = []
+    st.session_state.correction_map = {}
+    st.session_state._word_results = None
+    
+    st.session_state.last_query   = source_text
+    st.session_state.sentence_mode = is_sentence(source_text)
+
+    # Auto-detect and apply grammar fixes
+    corrected_query, grammar_fixes = apply_grammar_fixes(source_text)
+    st.session_state.grammar_fixes_applied = grammar_fixes
+    st.session_state.original_query = source_text
+    st.session_state.corrected_query = corrected_query
+    
+    # Build a mapping of corrected words for reference during synonym picking
+    # Format: {corrected_word_lower: original_word}
+    correction_map = {}
+    for fix in grammar_fixes:
+        correction_map[fix["corrected"].lower()] = fix["original"]
+    st.session_state.correction_map = correction_map
+    
+    # Use corrected query for synonym lookup, but keep original for reference
+    lookup_query = corrected_query
 
     patterns = list(st.session_state.stutter_patterns)
     blocked  = set(st.session_state.blocked_words)
 
     if not st.session_state.sentence_mode:
         # Word mode: just look up synonyms
-        st.session_state.result    = None
-        st.session_state.sanitized = None
-        st.session_state.fixes     = []
         with st.spinner("Looking up synonyms…"):
-            st.session_state._word_results = engine.get_synonyms(query.strip(), top_k=top_k)
+            st.session_state._word_results = engine.get_synonyms(lookup_query, top_k=top_k)
     else:
-        sanitized, fixes = sanitize_input(query.strip())
+        sanitized, fixes = sanitize_input(lookup_query)
         st.session_state.sanitized = sanitized
         st.session_state.fixes     = fixes
         with st.spinner("Analysing sentence, running semantic filter…"):
@@ -375,9 +510,28 @@ if search_clicked and query.strip():
                 blocked_words=blocked,
             )
         st.session_state.result = result
+    st.rerun()
 
-elif search_clicked and not query.strip():
+elif search_clicked and not source_text:
     st.warning("Please enter a word or sentence.")
+
+if st.session_state.last_query.strip():
+    corrected = st.session_state.get("sanitized") or st.session_state.get("corrected_query", "")
+    if corrected and corrected != st.session_state.last_query.strip():
+        st.markdown(f"""
+<div class="analysis-note">
+  <strong style="color:#1a6b3c">Grammar corrected in the input box:</strong>
+  <span>{_fmt(corrected)}</span>
+  <div style="margin-top:.45rem">{_grammar_explanation()}</div>
+</div>""", unsafe_allow_html=True)
+    else:
+        st.markdown(f"""
+<div class="analysis-note">
+  <strong style="color:#1a6b3c">Grammar analysis:</strong>
+  <span>{_fmt(_grammar_explanation())}</span>
+</div>""", unsafe_allow_html=True)
+
+st.markdown("<hr>", unsafe_allow_html=True)
 
 # ── Render word mode ──────────────────────────────────────────────────────────
 if not st.session_state.sentence_mode and hasattr(st.session_state, "_word_results") and st.session_state._word_results:
@@ -385,7 +539,7 @@ if not st.session_state.sentence_mode and hasattr(st.session_state, "_word_resul
     patterns  = list(st.session_state.stutter_patterns)
     blocked   = set(st.session_state.blocked_words)
     gating    = bool(patterns or blocked)
-    st.markdown('<span class="mode-tag mode-word">📝 Word Mode</span>', unsafe_allow_html=True)
+    st.markdown('<span class="mode-tag mode-word"> Word Mode</span>', unsafe_allow_html=True)
 
     no_syns  = [w for w, s in results.items() if not s]
     has_syns = {w: s for w, s in results.items() if s}
@@ -413,28 +567,28 @@ if not st.session_state.sentence_mode and hasattr(st.session_state, "_word_resul
         filt_badge = (f'<span class="badge badge-gray">{removed} same-onset hidden</span>'
                       if removed else '')
 
-        if not kept:
-            st.markdown(f"""
-<div class="word-card">
-  <div class="word-card-header">
-    <span class="word-title">{word.capitalize()}</span>{risk_badge}{filt_badge}
-  </div>
-  <div class="no-syn-chip">⊘ all synonyms share your stutter onset</div>
-</div>""", unsafe_allow_html=True)
-            continue
-
         pills = "".join(
             f'<span class="pill {"top" if i < 3 else "mid"}">{s}</span>'
             for i, s in enumerate(kept)
-        )
+        ) if kept else ""
+        
         st.markdown(f"""
 <div class="word-card">
   <div class="word-card-header">
     <span class="word-title">{word.capitalize()}</span>
     <span class="badge badge-blue">{len(kept)} synonyms</span>{risk_badge}{filt_badge}
   </div>
-  <div class="pill-wrap">{pills}</div>
+  <div class="pill-wrap">{pills if pills else '<span class="no-syn-chip">⊘ all synonyms share your stutter onset</span>'}</div>
 </div>""", unsafe_allow_html=True)
+        
+        # Custom word input (always shown, even if no synonyms)
+        custom_input = st.text_input(
+            label=f"Or enter your own word for '{word}':",
+            value="",
+            placeholder="Type a word here...",
+            key=f"word_custom_{word}",
+            label_visibility="collapsed",
+        )
 
 # ── Render sentence mode ──────────────────────────────────────────────────────
 if st.session_state.sentence_mode and st.session_state.result is not None:
@@ -509,31 +663,101 @@ if st.session_state.sentence_mode and st.session_state.result is not None:
                 auto_lemma = sub["chosen_lemma"]
                 accepted   = sub["candidates"]        # accepted lemmas
                 all_cands  = sub["all_candidates"]    # all (including rejected)
+                correction_map = st.session_state.get("correction_map", {})
+                fallback_reason = sub.get("fallback_reason")
 
                 # Build display options
                 def disp(lemma, tag, orig):
                     inf = inflect(lemma, tag)
                     return _preserve_case(orig, inf)
 
-                options = accepted if accepted else [auto_lemma]
+                # Check if this word was corrected
+                word_lower = sub["original_word"].lower()
+                was_corrected = word_lower in correction_map
+                original_form = correction_map.get(word_lower) if was_corrected else None
+                
+                # Build options list with original word marked with star.
+                # If every synonym was rejected, keep the dropdown on the original
+                # and let the custom input provide the replacement path.
+                options = accepted
                 display_labels = [disp(o, sub["tag"], sub["original_word"]) for o in options]
                 label_to_lemma = {display_labels[i]: options[i] for i in range(len(options))}
+                
+                # Build all options: original with star, then synonyms
+                all_options = []
+                all_lemmas = {}
+                
+                # Option 1: Original word with star marker
+                original_display = f"{sub['original_word']}*"
+                all_options.append(original_display)
+                all_lemmas[original_display] = sub["original_word"]
+                
+                # Options 2+: Synonyms (auto_lemma will be selected by default)
+                all_options.extend(display_labels)
+                all_lemmas.update(label_to_lemma)
+                
+                # Find which index is the auto-chosen best synonym
+                default_index = 0  # Default to original
+                if auto_lemma in label_to_lemma.values():
+                    # Find the display label for auto_lemma
+                    for disp_label, lemma in label_to_lemma.items():
+                        if lemma == auto_lemma:
+                            default_index = all_options.index(disp_label)
+                            break
 
                 st.markdown(
                     f'<div class="picker-word-label">'
                     f'<strong>{sub["original_word"]}</strong>'
-                    f'<span class="tag-chip" style="margin-left:.3rem">{sub["tag"]}</span>'
-                    f'</div>',
+                    + (f'<span style="color:#f57c2b;font-size:.75rem;margin-left:.4rem">(corrected from {original_form})</span>' if was_corrected else '')
+                    + f'<span class="tag-chip" style="margin-left:.3rem">{sub["tag"]}</span>'
+                    + (f'<span class="badge badge-warn" style="margin-left:.35rem">{_fmt(fallback_reason)}</span>' if fallback_reason else '')
+                    + f'</div>',
                     unsafe_allow_html=True
                 )
+
+                scored_preview = sub.get("scored", [])[:6]
+                if scored_preview:
+                    chip_html = []
+                    for sc in scored_preview:
+                        word_label = _fmt(sc.get("inflected") or sc.get("lemma"))
+                        if sc.get("accepted") and sc.get("phoneme_ok", True):
+                            chip_html.append(f'<span class="pill top">{word_label}</span>')
+                        elif sc.get("accepted"):
+                            chip_html.append(f'<span class="no-syn-chip">{word_label} <span style="opacity:.65">onset</span></span>')
+                    if chip_html:
+                        st.markdown('<div class="pill-wrap">' + "".join(chip_html) + '</div>', unsafe_allow_html=True)
+                
+                # Synonym picker dropdown - defaults to best synonym, not original
                 chosen_display = st.selectbox(
                     label=sub["original_word"],
-                    options=display_labels,
-                    index=0,
+                    options=all_options,
+                    index=default_index,
                     key=f"pick_{sub['position']}",
                     label_visibility="collapsed",
                 )
-                st.session_state.user_choices[sub["position"]] = label_to_lemma[chosen_display]
+                st.session_state.user_choices[sub["position"]] = all_lemmas[chosen_display]
+                
+                # Custom replacement field (always shown)
+                custom_word = st.text_input(
+                    label=f"Or enter your own word:",
+                    value="",
+                    placeholder="Type a custom word here...",
+                    key=f"custom_{sub['position']}",
+                    label_visibility="collapsed",
+                )
+                
+                if custom_word.strip():
+                    is_valid, msg = grammar.validate_custom_word(
+                        custom_word.strip(), 
+                        sub["original_word"], 
+                        sub["tag"]
+                    )
+                    if is_valid:
+                        st.caption(f"✓ {msg}")
+                        # Use custom word if valid
+                        st.session_state.user_choices[sub["position"]] = custom_word.strip()
+                    else:
+                        st.caption(f"⚠ {msg}", help="Check spelling or try a different word.")
 
                 # Scoring table (collapsible per word)
                 if show_scores and sub.get("scored"):

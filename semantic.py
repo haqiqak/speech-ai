@@ -1,6 +1,19 @@
 """
 semantic.py  —  SBERT-based semantic firewall + contextual candidate ranking.
 
+UPDATED SCORING STRATEGY: STRICT SEMANTIC GATING (v2)
+───────────────────────────────────────────────────────
+The original 0.65 semantic / 0.35 frequency split allowed contextually weak
+words like "container", "side", or "trust" to survive due to popularity rather
+than meaning.  This update makes semantic similarity the PRIMARY GATEKEEPER,
+reducing frequency to only a weak naturalness signal.
+
+NEW THRESHOLDS & WEIGHTS:
+  • MIN_SEMANTIC threshold:     0.72 → 0.85   (strict gate)
+  • Semantic weight:             0.65 → 0.90   (primary signal)
+  • Frequency weight:            0.35 → 0.10   (weak naturalness only)
+  • Frequency normalisation:  raw zipf/7.0  →  log(1+z)/log(1+7)  (flattened)
+
 Architecture
 ────────────
                     Sentence
@@ -10,48 +23,56 @@ Architecture
            Candidate Sentence Builder
                        ↓
     ┌──────  SBERT Similarity Score  ──────┐
-    │                                      │
+    │        (0.85 threshold — strict!)     │
   Accept                                Reject
     │
-  Frequency Score  (wordfreq)
+  Log-Normalized Frequency Score (weak tiebreaker: 10% influence)
     │
-  Combined Score  =  0.65 × semantic  +  0.35 × freq
+  Combined Score  =  0.90 × semantic  +  0.10 × log_freq
     │
-  Ranked Candidate List
+  Ranked Candidate List  (semantic first, then naturalness)
                        ↓
             Grammar Check  (grammar.py)
                        ↓
                     Output
 
 Key design decisions (with rationale)
-───────────────────────────────────────
+───────────────────────────────────────────────────────
 1. SBERT (all-MiniLM-L6-v2), NOT raw BERT
    Raw BERT produces token-level embeddings, not sentence-level.  Averaging
    them ("mean pooling") works but is inferior.  SBERT is trained specifically
    for semantic textual similarity, making cosine distance directly meaningful.
 
-2. Semantic score weighted at 0.65, frequency at 0.35
-   Meaning preservation is more important than word commonness.
-   A rare but contextually correct word beats a common but drifting one.
-
-3. Semantic threshold = 0.72  (soft rejection)
+2. Strict semantic threshold (0.85) as PRIMARY GATEKEEPER
    Empirically:
-     ≥ 0.85  →  excellent substitution
-     0.72–0.85  →  acceptable (slight meaning shift)
-     < 0.72  →  rejected (semantic drift too large)
-   This is configurable — tighten to 0.80 for strict mode.
+     ≥ 0.85  →  excellent, safe substitution (THIS is the bar now)
+     0.72–0.85  →  likely semantic drift (REJECTED)
+     < 0.72  →  clear semantic drift (REJECTED)
+   This prevents popularity-bias from overriding meaning preservation.
 
-4. Protected words & phrases
+3. Frequency score is now WEAK NATURALNESS SIGNAL only (10% weight)
+   After semantic filtering, only among SEMANTICALLY EQUIVALENT candidates
+   do we prefer common, natural-sounding words over rare ones.  This eliminates
+   the scenario where "container" (high freq) beats "pot" (lower freq) even
+   though "container" shifts the meaning.
+
+4. Log-normalized frequency (not raw linear)
+   Raw Zipf leads to diminishing returns: going from freq=1 to freq=3 is huge,
+   but freq=6 to freq=8 barely moves the score.  Log-norm flattens this:
+   log(1+1)=0.69, log(1+3)=1.39, log(1+6)=1.95, log(1+8)=2.20.
+   Result: among semantically filtered candidates, frequency is a fair tiebreaker.
+
+5. Protected words & phrases
    Function words, auxiliaries, and fixed multi-word expressions
    (look forward to, according to, …) are never substituted regardless
    of synonym availability.  This prevents breaking idioms and collocations.
 
-5. Graceful degradation
+6. Graceful degradation
    If the SBERT model is not yet downloaded (first run) or unavailable,
    the engine falls back to pure frequency ranking with a clear warning.
    The rest of the pipeline continues normally.
 
-6. WSD (Word Sense Disambiguation) via SBERT
+7. WSD (Word Sense Disambiguation) via SBERT
    We do NOT run explicit WSD.  Instead, SBERT implicitly handles it:
    wrong-sense synonyms produce low sentence-level similarity and are
    filtered out automatically.  "He was eating lunch" + "damage" → 0.43 → reject.
@@ -68,9 +89,9 @@ from freq import zipf_frequency   # memory-safe wrapper (falls back to 'small' w
 # ── Constants ────────────────────────────────────────────────────────────────
 
 SBERT_MODEL    = "all-MiniLM-L6-v2"
-SEMANTIC_W     = 0.65    # weight for semantic similarity in final score
-FREQUENCY_W    = 0.35    # weight for word frequency in final score
-MIN_SEMANTIC   = 0.72    # candidates below this are rejected outright
+SEMANTIC_W     = 0.90    # weight for semantic similarity in final score (stricter: 0.65→0.90)
+FREQUENCY_W    = 0.10    # weight for word frequency in final score (reduced: 0.35→0.10)
+MIN_SEMANTIC   = 0.85    # candidates below this are rejected outright (stricter: 0.72→0.85)
 ZIPF_MAX       = 7.0     # normalisation ceiling for Zipf frequency scores
 
 # Protected multi-word phrases — positions covered by these are NEVER touched
@@ -192,9 +213,20 @@ def combined_score(
 ) -> float:
     """
     Final score used for ranking:
-      score = sem_w × semantic_sim + freq_w × (zipf / ZIPF_MAX)
+      score = sem_w × semantic_sim + freq_w × log_norm_freq(zipf)
+    
+    SEMANTIC SIMILARITY is now the PRIMARY GATEKEEPER (0.90 weight).
+    Frequency is only a weak naturalness signal (0.10 weight) to prefer
+    common, natural-sounding words among semantically equivalent candidates.
+    
+    Log-normalization prevents ultra-common words (e.g. "the", "thing")
+    from dominating the ranking once they clear semantic filtering.
     """
-    norm_freq = min(zipf_frequency(word, language) / ZIPF_MAX, 1.0)
+    import math
+    raw_zipf = zipf_frequency(word, language)
+    # Log-normalize: log(1 + z) / log(1 + ZIPF_MAX)
+    log_norm = math.log(1.0 + raw_zipf) / math.log(1.0 + ZIPF_MAX)
+    norm_freq = min(log_norm, 1.0)
     return sem_w * semantic_sim + freq_w * norm_freq
 
 
@@ -269,8 +301,11 @@ def rank_candidates_contextually(
         candidate_sentences,
         sims,
     ):
-        freq = zipf_frequency(lemma, language)
-        norm_freq = min(freq / ZIPF_MAX, 1.0)
+        import math
+        raw_zipf = zipf_frequency(lemma, language)
+        # Log-normalize frequency: log(1 + z) / log(1 + ZIPF_MAX)
+        log_norm = math.log(1.0 + raw_zipf) / math.log(1.0 + ZIPF_MAX)
+        norm_freq = min(log_norm, 1.0)
 
         if sim is not None:
             accepted = sim >= min_semantic
