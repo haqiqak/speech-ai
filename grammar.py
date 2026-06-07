@@ -89,7 +89,33 @@ _PRESENT_MARKERS = {
 }
 
 # 3rd person singular subjects (for subject-verb agreement)
-_THIRD_PERSON_SING = {"he", "she", "it", "this", "that", "one"}
+_THIRD_PERSON_SING  = {"he", "she", "it", "this", "that", "one"}
+_FIRST_PERSON_SING  = {"i"}
+_PLURAL_OR_2ND      = {"we", "they", "you"}
+_ALL_NON_THIRD_SING = _FIRST_PERSON_SING | _PLURAL_OR_2ND
+
+# BE-verb agreement table  (subject, tense) → correct form
+_BE_AGREE = {
+    ("i",    "present"): "am",
+    ("he",   "present"): "is",  ("she",  "present"): "is",
+    ("it",   "present"): "is",  ("this", "present"): "is",
+    ("that", "present"): "is",  ("one",  "present"): "is",
+    ("we",   "present"): "are", ("they", "present"): "are",
+    ("you",  "present"): "are",
+    ("i",    "past"):    "was",
+    ("he",   "past"):    "was",  ("she",  "past"):    "was",
+    ("it",   "past"):    "was",  ("this", "past"):    "was",
+    ("that", "past"):    "was",  ("one",  "past"):    "was",
+    ("we",   "past"):    "were", ("they", "past"):    "were",
+    ("you",  "past"):    "were",
+}
+
+# Correct contracted negation per subject
+_DO_NEG_PRESENT = {
+    "he": "doesn't", "she": "doesn't", "it": "doesn't",
+    "this": "doesn't", "that": "doesn't", "one": "doesn't",
+    "i": "don't", "we": "don't", "they": "don't", "you": "don't",
+}
 
 # Predicate complements after "be" that are commonly adjectives/adverbs even
 # though they also happen to be verb base forms.  Never treat these as a missing
@@ -222,6 +248,144 @@ def _get_subject(tags: list[tuple]) -> str | None:
     return None
 
 
+def _find_subject_left(tags: list[tuple], verb_index: int) -> tuple:
+    """
+    Scan LEFT from verb_index to find the closest subject pronoun or noun.
+    Stops at clause boundaries. Returns (subject_lower, pos_tag) or (None, None).
+    Much more accurate than _get_subject() for multi-clause sentences.
+    """
+    for j in range(verb_index - 1, -1, -1):
+        w_lower = tags[j][0].lower()
+        t = tags[j][1]
+        if t == "PRP":
+            return w_lower, t
+        if t in ("NN", "NNS", "NNP", "NNPS"):
+            return w_lower, t
+        if w_lower in (",", ";", ".", "because", "that", "which", "who", "when"):
+            break
+    return None, None
+
+
+def _is_governed_by_aux(tags: list[tuple], verb_index: int) -> bool:
+    """
+    True if there is a modal/auxiliary to the LEFT of verb_index that
+    already governs this verb — meaning we should NOT apply bare SVA to it.
+    """
+    _GOVERNING = {
+        "do", "does", "did", "don't", "doesn't", "didn't",
+        "will", "would", "can", "could", "should", "may", "might", "shall", "must",
+        "have", "has", "had", "am", "is", "are", "was", "were", "be", "been",
+    }
+    for j in range(verb_index - 1, -1, -1):
+        w_lower = tags[j][0].lower()
+        tag = tags[j][1]
+        if tag == "MD" or w_lower in _GOVERNING:
+            return True
+        if tag in ("PRP", "NN", "NNS", "NNP", "NNPS"):
+            break
+    return False
+
+
+def _correct_be_agreement(tokens: list[str]) -> tuple[list[str], list[dict]]:
+    """
+    Fix BE-verb number/person agreement:
+      "They is running"  → "They are running"
+      "He are tired"     → "He is tired"
+      "I is happy"       → "I am happy"
+      "We was there"     → "We were there"
+      "She were wrong"   → "She was wrong"
+    """
+    fixes  = []
+    tokens = list(tokens)
+    tags   = pos_tag(tokens)
+    BE_PRESENT = {"am", "is", "are"}
+    BE_PAST    = {"was", "were"}
+
+    for i, (word, tag) in enumerate(tags):
+        lw = word.lower()
+        if lw not in BE_PRESENT and lw not in BE_PAST:
+            continue
+        subj, stag = _find_subject_left(tags, i)
+        if subj is None:
+            continue
+        tense = "present" if lw in BE_PRESENT else "past"
+        correct = _BE_AGREE.get((subj, tense))
+        # Fallback for noun subjects not in table
+        if correct is None:
+            if stag in ("NNS", "NNPS"):
+                correct = "are" if tense == "present" else "were"
+            elif stag in ("NN", "NNP"):
+                correct = "is"  if tense == "present" else "was"
+        if correct and lw != correct:
+            fixes.append({
+                "type":        "subject_verb_agreement",
+                "original":    word,
+                "corrected":   correct,
+                "description": f'BE agreement: "{word}" → "{correct}" (subject: "{subj}")',
+                "index":       i,
+            })
+            tokens[i] = _preserve_case(word, correct)
+
+    return tokens, fixes
+
+
+def _correct_negation_agreement(tokens: list[str]) -> tuple[list[str], list[dict]]:
+    """
+    Fix do-negation contraction mismatches:
+      "She don't like"    → "She doesn't like"
+      "They doesn't go"   → "They don't go"
+      "He don't know"     → "He doesn't know"
+      "I doesn't care"    → "I don't care"
+    Also fixes uncontracted "do not" / "does not" mismatches.
+    """
+    fixes  = []
+    tokens = list(tokens)
+    tags   = pos_tag(tokens)
+
+    # Pass A: contracted forms
+    for i, (word, tag) in enumerate(tags):
+        lw = word.lower()
+        if lw not in ("don't", "doesn't"):
+            continue
+        subj, _ = _find_subject_left(tags, i)
+        if subj is None:
+            continue
+        correct_neg = _DO_NEG_PRESENT.get(subj)
+        if correct_neg and lw != correct_neg:
+            fixes.append({
+                "type":        "negation_agreement",
+                "original":    word,
+                "corrected":   correct_neg,
+                "description": f'Negation agreement: "{word}" → "{correct_neg}" (subject: "{subj}")',
+                "index":       i,
+            })
+            tokens[i] = _preserve_case(word, correct_neg)
+
+    # Re-tag then Pass B: uncontracted "do not" / "does not"
+    tags = pos_tag(tokens)
+    for i, (word, tag) in enumerate(tags):
+        lw = word.lower()
+        if lw not in ("do", "does") or i + 1 >= len(tags):
+            continue
+        if tags[i + 1][0].lower() != "not":
+            continue
+        subj, _ = _find_subject_left(tags, i)
+        if subj is None:
+            continue
+        correct_do = "does" if subj in _THIRD_PERSON_SING else "do"
+        if lw != correct_do:
+            fixes.append({
+                "type":        "negation_agreement",
+                "original":    word,
+                "corrected":   correct_do,
+                "description": f'Negation: "{word} not" → "{correct_do} not" (subject: "{subj}")',
+                "index":       i,
+            })
+            tokens[i] = _preserve_case(word, correct_do)
+
+    return tokens, fixes
+
+
 def _correct_tense(tokens: list[str]) -> tuple[list[str], list[dict]]:
     """
     Fix tense mismatches:
@@ -285,105 +449,96 @@ def _correct_tense(tokens: list[str]) -> tuple[list[str], list[dict]]:
 
 def _correct_subject_verb_agreement(tokens: list[str]) -> tuple[list[str], list[dict]]:
     """
-    Fix subject-verb agreement:
+    Fix subject-verb agreement for main (non-BE, non-auxiliary-governed) verbs:
       - 3rd person singular subject + base/non-3rd verb → 3rd person verb
-        (He go → He goes)
+        (He go → He goes, She run → She runs)
       - 1st/2nd/plural subject + 3rd person singular verb → base form
         (I goes → I go, They goes → They go)
+      - Singular/plural noun subjects also handled (The cat run → The cat runs)
+    Uses _find_subject_left() for accurate per-verb subject detection.
+    Uses _is_governed_by_aux() to skip verbs already controlled by an auxiliary.
+    BE-verb agreement is handled separately by _correct_be_agreement().
     """
-    fixes = []
-    tags = pos_tag(tokens)
+    fixes  = []
+    tokens = list(tokens)
+    tags   = pos_tag(tokens)
+
+    BE_SET = {"am", "is", "are", "was", "were", "be", "been", "being"}
 
     for i, (word, tag) in enumerate(tags):
-        if tag in ("VBP", "VBZ", "VB"):
-            # Find subject to the left
-            subject = None
-            subject_tag = None
-            preceded_by_aux = False  # True if this verb is already governed by an auxiliary
-            for j in range(i - 1, -1, -1):
-                w_lower = tags[j][0].lower()
-                # If there's a do/modal/have/be auxiliary before the verb, skip SV correction
-                # (agreement belongs to the auxiliary, not the main verb)
-                if tags[j][1] in ("MD",) or w_lower in (
-                    "do", "does", "did", "don't", "doesn't", "didn't",
-                    "will", "would", "can", "could", "should", "may", "might",
-                    "have", "has", "had", "am", "is", "are", "was", "were",
-                ):
-                    preceded_by_aux = True
-                    break
-                if tags[j][1] in ("PRP", "NN", "NNS", "NNP", "NNPS"):
-                    subject = tags[j][0].lower()
-                    subject_tag = tags[j][1]
-                    break
-
-            if subject is None or preceded_by_aux:
-                continue
-
-            base = _lemmatizer.lemmatize(word.lower(), "v")
-            if base in _STOP:
-                continue
-
-            # 3rd person singular subject + non-3rd-verb (VBP or base VB) → 3rd person
-            if subject in _THIRD_PERSON_SING and tag in ("VBP", "VB"):
-                third = pyinflect.getInflection(base, "VBZ")
-                if third and third[0].lower() != word.lower():
-                    fixes.append({
-                        "type": "subject_verb_agreement",
-                        "original": word,
-                        "corrected": third[0],
-                        "description": f'3rd person singular: "{word}" → "{third[0]}" (subject: "{subject}")',
-                        "index": i,
-                    })
-                    tokens = list(tokens)
-                    tokens[i] = _preserve_case(word, third[0])
-
-            # 1st/2nd/plural subject + 3rd person singular verb → base
-            elif subject in ("i", "we", "they", "you") and tag == "VBZ":
-                base_inf = pyinflect.getInflection(base, "VBP")
-                corrected = base_inf[0] if base_inf else base
-                if corrected.lower() != word.lower():
-                    fixes.append({
-                        "type": "subject_verb_agreement",
-                        "original": word,
-                        "corrected": corrected,
-                        "description": f'Plural/1st/2nd person: "{word}" → "{corrected}" (subject: "{subject}")',
-                        "index": i,
-                    })
-                    tokens = list(tokens)
-                    tokens[i] = _preserve_case(word, corrected)
-
-    # was/were number agreement (They was → They were; He were → He was)
-    tags = pos_tag(tokens)
-    for i, (word, tag) in enumerate(tags):
-        if word.lower() not in ("was", "were"):
+        if tag not in ("VBP", "VBZ", "VB"):
             continue
-        subject = None
-        for j in range(i - 1, -1, -1):
-            if tags[j][1] in ("PRP", "NN", "NNS", "NNP", "NNPS"):
-                subject = tags[j][0].lower()
-                break
-        if subject is None:
+        lw = word.lower()
+        if lw in _STOP or lw in BE_SET:
             continue
-        if subject in ("they", "we", "i", "you") and word.lower() == "was":
-            fixes.append({
-                "type": "subject_verb_agreement",
-                "original": word,
-                "corrected": "were",
-                "description": f'Plural/1st person "be": "{word}" → "were" (subject: "{subject}")',
-                "index": i,
-            })
-            tokens = list(tokens)
-            tokens[i] = _preserve_case(word, "were")
-        elif subject in _THIRD_PERSON_SING and word.lower() == "were":
-            fixes.append({
-                "type": "subject_verb_agreement",
-                "original": word,
-                "corrected": "was",
-                "description": f'Singular "be": "{word}" → "was" (subject: "{subject}")',
-                "index": i,
-            })
-            tokens = list(tokens)
-            tokens[i] = _preserve_case(word, "was")
+        if _is_governed_by_aux(tags, i):
+            continue
+
+        subj, stag = _find_subject_left(tags, i)
+        if subj is None:
+            continue
+
+        base = _lemmatizer.lemmatize(lw, "v")
+        if base in _STOP:
+            continue
+
+        # 3rd-person singular pronoun + VBP/VB → VBZ
+        if subj in _THIRD_PERSON_SING and tag in ("VBP", "VB"):
+            third = pyinflect.getInflection(base, "VBZ")
+            if third and third[0].lower() != lw:
+                fixes.append({
+                    "type": "subject_verb_agreement",
+                    "original": word,
+                    "corrected": third[0],
+                    "description": f'3rd person singular: "{word}" → "{third[0]}" (subject: "{subj}")',
+                    "index": i,
+                })
+                tokens = list(tokens)
+                tokens[i] = _preserve_case(word, third[0])
+
+        # 1st/2nd/plural pronoun + VBZ → base
+        elif subj in _ALL_NON_THIRD_SING and tag == "VBZ":
+            base_inf  = pyinflect.getInflection(base, "VBP")
+            corrected = base_inf[0] if base_inf else base
+            if corrected.lower() != lw:
+                fixes.append({
+                    "type": "subject_verb_agreement",
+                    "original": word,
+                    "corrected": corrected,
+                    "description": f'Plural/1st/2nd person: "{word}" → "{corrected}" (subject: "{subj}")',
+                    "index": i,
+                })
+                tokens = list(tokens)
+                tokens[i] = _preserve_case(word, corrected)
+
+        # Singular noun subject + VBP → VBZ
+        elif stag in ("NN", "NNP") and tag == "VBP":
+            third = pyinflect.getInflection(base, "VBZ")
+            if third and third[0].lower() != lw:
+                fixes.append({
+                    "type": "subject_verb_agreement",
+                    "original": word,
+                    "corrected": third[0],
+                    "description": f'Singular noun subject: "{word}" → "{third[0]}" (subject: "{subj}")',
+                    "index": i,
+                })
+                tokens = list(tokens)
+                tokens[i] = _preserve_case(word, third[0])
+
+        # Plural noun subject + VBZ → base
+        elif stag in ("NNS", "NNPS") and tag == "VBZ":
+            base_inf  = pyinflect.getInflection(base, "VBP")
+            corrected = base_inf[0] if base_inf else base
+            if corrected.lower() != lw:
+                fixes.append({
+                    "type": "subject_verb_agreement",
+                    "original": word,
+                    "corrected": corrected,
+                    "description": f'Plural noun subject: "{word}" → "{corrected}" (subject: "{subj}")',
+                    "index": i,
+                })
+                tokens = list(tokens)
+                tokens[i] = _preserve_case(word, corrected)
 
     return tokens, fixes
 
@@ -627,7 +782,17 @@ def sanitize_input(text: str) -> tuple[str, list[dict]]:
             "description": f["description"],
         })
 
-    # ── Layer 7: Subject-verb agreement ───────────────────────────────────
+    # ── Layer 7: BE-verb agreement (They is → They are) ───────────────────
+    tokens, be_fixes = _correct_be_agreement(tokens)
+    for f in be_fixes:
+        all_fixes.append({
+            "type": f["type"],
+            "original": f["original"],
+            "corrected": f["corrected"],
+            "description": f["description"],
+        })
+
+    # ── Layer 7b: Subject-verb agreement (main verbs) ─────────────────────
     tokens, sv_fixes = _correct_subject_verb_agreement(tokens)
     for f in sv_fixes:
         all_fixes.append({
@@ -637,7 +802,17 @@ def sanitize_input(text: str) -> tuple[str, list[dict]]:
             "description": f["description"],
         })
 
-    # ── Layer 7b: Existential "there is/are" agreement ─────────────────────
+    # ── Layer 7c: Negation agreement (She don't → She doesn't) ───────────
+    tokens, neg_fixes = _correct_negation_agreement(tokens)
+    for f in neg_fixes:
+        all_fixes.append({
+            "type": f["type"],
+            "original": f["original"],
+            "corrected": f["corrected"],
+            "description": f["description"],
+        })
+
+    # ── Layer 7d: Existential "there is/are" agreement ────────────────────
     tokens, there_fixes = _correct_existential_there(tokens)
     for f in there_fixes:
         all_fixes.append({
@@ -648,7 +823,8 @@ def sanitize_input(text: str) -> tuple[str, list[dict]]:
         })
 
     # Rebuild sentence from corrected tokens
-    if any(all_fixes[i]["type"] in ("tense", "subject_verb_agreement", "auxiliary_form")
+    _STRUCTURAL = {"tense", "subject_verb_agreement", "auxiliary_form", "negation_agreement"}
+    if any(all_fixes[i]["type"] in _STRUCTURAL
            for i in range(len(all_fixes))):
         result = _detokenize(tokens)
         # Re-apply capitalisation (detokenize can lowercase first word)
@@ -885,19 +1061,7 @@ class SentenceRewriter:
                     reason = "all synonyms share your stutter onset"
                 else:
                     reason = "no valid synonym"
-                substitutions.append({
-                    "original_word": word,
-                    "lemma":         base,
-                    "tag":           eff_tag,
-                    "position":      i,
-                    "chosen":        word,
-                    "chosen_lemma":  base,
-                    "scored":        scored,
-                    "candidates":    [],
-                    "all_candidates": [s["lemma"] for s in scored],
-                    "sbert_active":  sem._sbert_ok,
-                    "fallback_reason": reason,
-                })
+                skipped.append({"word": word, "reason": reason})
                 continue
 
             best        = usable[0]
@@ -990,360 +1154,3 @@ def _grammar_notes(rewritten_tokens: list[str], subs: list[dict]) -> list[str]:
     if subs and not notes:
         notes.append("Grammar check passed — all substitutions correctly inflected.")
     return notes
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# 5. Error Detection (for UI red-underlines + suggestions)
-# ─────────────────────────────────────────────────────────────────────────────
-
-def detect_grammar_errors(text: str) -> list[dict]:
-    """
-    Scan text for potential grammar errors WITHOUT auto-correcting.
-    Returns a list of error objects for UI red-underlines & suggestions.
-    
-    Each error dict contains:
-      "type":       error category (e.g. "subject_verb_agreement", "missing_contraction")
-      "position":   character offset in original text where error starts
-      "length":     length of error span
-      "word":       the erroneous word(s)
-      "suggestion": recommended correction
-      "severity":   "high" (clear error) or "low" (potential issue)
-      "explanation": human-readable reason
-    """
-    errors = []
-    
-    if not text.strip():
-        return errors
-    
-    # Tokenise and tag
-    try:
-        tokens = word_tokenize(text)
-        tags = pos_tag(tokens)
-    except Exception:
-        return errors
-    
-    # Rebuild character positions
-    char_pos = 0
-    token_positions = []  # [(token, tag, char_start)]
-    for tok, tag in tags:
-        idx = text.find(tok, char_pos)
-        if idx == -1:
-            idx = char_pos  # fallback
-        token_positions.append((tok, tag, idx))
-        char_pos = idx + len(tok)
-    
-    # Check 1: Missing contractions (dont → don't)
-    for pattern, replacement in _CONTRACTIONS.items():
-        for match in re.finditer(pattern, text, re.IGNORECASE):
-            orig = match.group()
-            errors.append({
-                "type": "missing_contraction",
-                "position": match.start(),
-                "length": len(orig),
-                "word": orig,
-                "suggestion": replacement,
-                "severity": "high",
-                "explanation": f'Missing apostrophe: "{orig}" should be "{replacement}"'
-            })
-    
-    # Check 2: Common informal words (gonna → going to)
-    for pattern, replacement in _WORD_FIXES.items():
-        for match in re.finditer(pattern, text, re.IGNORECASE):
-            orig = match.group()
-            errors.append({
-                "type": "informal_word",
-                "position": match.start(),
-                "length": len(orig),
-                "word": orig,
-                "suggestion": replacement,
-                "severity": "medium",
-                "explanation": f'Informal usage: "{orig}" → "{replacement}"'
-            })
-    
-    # Check 3: Lowercase "i"
-    for match in re.finditer(r"\b(i)\b", text):
-        errors.append({
-            "type": "pronoun_case",
-            "position": match.start(),
-            "length": 1,
-            "word": "i",
-            "suggestion": "I",
-            "severity": "high",
-            "explanation": 'The pronoun "i" should be capitalized: "I"'
-        })
-    
-    # Check 4: Subject-verb agreement errors (including special handling for "be" verbs)
-    for i, (word, tag) in enumerate(tags):
-        if tag in ("VBP", "VBZ", "VB"):
-            subject = None
-            subject_pos = None
-            for j in range(i - 1, -1, -1):
-                if tags[j][1] in ("PRP", "NN", "NNS", "NNP", "NNPS"):
-                    subject = tags[j][0].lower()
-                    subject_pos = j
-                    break
-            
-            if subject:
-                lw = word.lower()
-                base = _lemmatizer.lemmatize(lw, "v")
-                
-                # Special handling for "be" verbs (am, is, are, was, were, be)
-                if base == "be":
-                    # Determine what form should be used based on subject and tense context
-                    correct_form = None
-                    
-                    # Present tense detection (look ahead/back for temporal markers)
-                    is_present = True
-                    for t, tg in tags:
-                        if t.lower() in ("yesterday", "ago") or tg == "VBD":
-                            is_present = False
-                            break
-                    
-                    if is_present:
-                        # Present tense
-                        if subject == "i":
-                            correct_form = "am"
-                        elif subject in _THIRD_PERSON_SING:
-                            correct_form = "is"
-                        else:  # we, you, they, or plural
-                            correct_form = "are"
-                    else:
-                        # Past tense
-                        if subject in ("i", "he", "she", "it", "this", "that", "one"):
-                            correct_form = "was"
-                        else:
-                            correct_form = "were"
-                    
-                    if correct_form and lw != correct_form:
-                        pos = token_positions[i][2] if i < len(token_positions) else 0
-                        errors.append({
-                            "type": "subject_verb_agreement",
-                            "position": pos,
-                            "length": len(word),
-                            "word": word,
-                            "suggestion": correct_form,
-                            "severity": "high",
-                            "explanation": f'Subject "{subject}" requires form "{correct_form}", not "{lw}"'
-                        })
-                
-                # Regular verbs (not "be")
-                else:
-                    # 3rd person singular needs -s
-                    if subject in _THIRD_PERSON_SING and tag in ("VBP", "VB"):
-                        third = pyinflect.getInflection(base, "VBZ")
-                        if third and third[0].lower() != lw:
-                            pos = token_positions[i][2] if i < len(token_positions) else 0
-                            errors.append({
-                                "type": "subject_verb_agreement",
-                                "position": pos,
-                                "length": len(word),
-                                "word": word,
-                                "suggestion": third[0],
-                                "severity": "high",
-                                "explanation": f'3rd person singular subject "{subject}" needs form "{third[0]}", not "{word}"'
-                            })
-                    
-                    # Non-3rd person/plural shouldn't have -s
-                    elif subject in ("i", "we", "they", "you") and tag == "VBZ":
-                        base_form = pyinflect.getInflection(base, "VBP")
-                        corrected = base_form[0] if base_form else base
-                        if corrected.lower() != lw:
-                            pos = token_positions[i][2] if i < len(token_positions) else 0
-                            errors.append({
-                                "type": "subject_verb_agreement",
-                                "position": pos,
-                                "length": len(word),
-                                "word": word,
-                                "suggestion": corrected,
-                                "severity": "high",
-                                "explanation": f'Subject "{subject}" doesn\'t take "-s" form: use "{corrected}", not "{word}"'
-                            })
-    
-    # Check 5: was/were agreement
-    for i, (word, tag) in enumerate(tags):
-        if word.lower() in ("was", "were"):
-            subject = None
-            for j in range(i - 1, -1, -1):
-                if tags[j][1] in ("PRP", "NN", "NNS", "NNP", "NNPS"):
-                    subject = tags[j][0].lower()
-                    break
-            
-            if subject:
-                if subject in ("they", "we", "i", "you") and word.lower() == "was":
-                    pos = token_positions[i][2] if i < len(token_positions) else 0
-                    errors.append({
-                        "type": "was_were_agreement",
-                        "position": pos,
-                        "length": len(word),
-                        "word": word,
-                        "suggestion": "were",
-                        "severity": "high",
-                        "explanation": f'Plural/1st person subject "{subject}" uses "were", not "was"'
-                    })
-                elif subject in _THIRD_PERSON_SING and word.lower() == "were":
-                    pos = token_positions[i][2] if i < len(token_positions) else 0
-                    errors.append({
-                        "type": "was_were_agreement",
-                        "position": pos,
-                        "length": len(word),
-                        "word": word,
-                        "suggestion": "was",
-                        "severity": "high",
-                        "explanation": f'Singular subject "{subject}" uses "was", not "were"'
-                    })
-    
-    # Check 6: Auxiliary + verb form errors
-    _MODAL_AUX = {"will", "would", "can", "could", "should", "may", "might", "shall", "must"}
-    _BE_AUX    = {"am", "is", "are", "was", "were", "be", "been", "being"}
-    
-    for i, (word, tag) in enumerate(tags):
-        if i + 1 >= len(tags):
-            continue
-        
-        lw = word.lower()
-        next_word, next_tag = tags[i + 1]
-        
-        # Modal + non-base verb
-        if lw in _MODAL_AUX and next_tag in ("VBD", "VBZ", "VBG", "VBN"):
-            base = _lemmatizer.lemmatize(next_word.lower(), "v")
-            inf = pyinflect.getInflection(base, "VB")
-            corrected = inf[0] if inf else base
-            if corrected.lower() != next_word.lower():
-                pos = token_positions[i + 1][2] if i + 1 < len(token_positions) else 0
-                errors.append({
-                    "type": "auxiliary_form",
-                    "position": pos,
-                    "length": len(next_word),
-                    "word": next_word,
-                    "suggestion": corrected,
-                    "severity": "high",
-                    "explanation": f'After modal "{lw}" use base form "{corrected}", not "{next_word}"'
-                })
-        
-        # HAVE + non-participle
-        elif lw in ("have", "has", "had") and next_tag in ("VBP", "VBZ", "VBG"):
-            base = _lemmatizer.lemmatize(next_word.lower(), "v")
-            participle = pyinflect.getInflection(base, "VBN")
-            if participle and participle[0].lower() != next_word.lower():
-                pos = token_positions[i + 1][2] if i + 1 < len(token_positions) else 0
-                errors.append({
-                    "type": "auxiliary_form",
-                    "position": pos,
-                    "length": len(next_word),
-                    "word": next_word,
-                    "suggestion": participle[0],
-                    "severity": "high",
-                    "explanation": f'After "{lw}" use past participle "{participle[0]}", not "{next_word}"'
-                })
-    
-    # Check 7: Missing period at end
-    if text.strip() and text.rstrip()[-1] not in ".!?":
-        pos = len(text.rstrip())
-        errors.append({
-            "type": "missing_punctuation",
-            "position": pos,
-            "length": 0,
-            "word": "",
-            "suggestion": ".",
-            "severity": "low",
-            "explanation": "Sentence should end with a period, question mark, or exclamation mark"
-        })
-    
-    return errors
-
-
-def apply_grammar_fixes(text: str) -> tuple[str, list[dict]]:
-    """
-    Auto-apply detected grammar errors to fix the text.
-    Returns (corrected_text, list_of_fixes_applied)
-    
-    Each fix is a dict: {"original": word, "corrected": word, "reason": str}
-    """
-    errors = detect_grammar_errors(text)
-    if not errors:
-        return text, []
-    
-    # Sort errors by position (reverse) so we can replace from end to start
-    # This prevents position shifts during replacement
-    errors_sorted = sorted(errors, key=lambda e: e["position"], reverse=True)
-    
-    corrected = text
-    fixes = []
-    
-    for error in errors_sorted:
-        pos = error["position"]
-        length = error["length"]
-        old_word = error["word"]
-        new_word = error["suggestion"]
-        
-        # Skip if error is at end of text with no length (e.g., missing period)
-        if length == 0:
-            continue
-        
-        if pos < len(corrected) and corrected[pos:pos+length].lower() == old_word.lower():
-            # Preserve case if possible
-            if old_word and old_word[0].isupper() and new_word:
-                corrected_word = new_word[0].upper() + new_word[1:].lower()
-            else:
-                corrected_word = new_word
-            
-            corrected = corrected[:pos] + corrected_word + corrected[pos+length:]
-            fixes.append({
-                "original": old_word,
-                "corrected": corrected_word,
-                "reason": error["explanation"]
-            })
-    
-    return corrected, fixes
-
-
-def validate_custom_word(word: str, original_word: str, pos_tag_str: str) -> tuple[bool, str]:
-    """
-    Validate a custom replacement word provided by the user.
-    
-    Returns (is_valid, explanation).
-    """
-    word = word.strip()
-    
-    if not word:
-        return False, "Custom word cannot be empty."
-    
-    if len(word.split()) > 1:
-        return False, "Custom replacement must be a single word (no spaces)."
-    
-    # Check if it's a real English word (in WordNet)
-    if not wn.synsets(word.lower()):
-        return False, f'"{word}" is not recognized as an English word. Consider using a word from the dictionary.'
-    
-    # Check if POS is compatible
-    wn_p = _wn_pos(pos_tag_str)
-    if wn_p:
-        matching_synsets = wn.synsets(word.lower(), pos=wn_p)
-        if not matching_synsets:
-            return False, f'"{word}" exists but may not match the part-of-speech of "{original_word}" ({pos_tag_str}).'
-    
-    return True, f'✓ "{word}" is a valid {pos_tag_str} replacement.'
-
-
-def check_word_validity(word: str) -> tuple[bool, str | None]:
-    """
-    Quick spell/validity check for a word.
-    
-    Returns (is_valid, explanation).
-    explanation is None if valid, or a note if questionable.
-    """
-    word = word.strip().lower()
-    
-    if not word:
-        return False, "Empty word"
-    
-    if len(word) == 1 and word not in ("a", "i"):
-        return False, "Single character (except 'a' or 'i')"
-    
-    # Check WordNet
-    if wn.synsets(word):
-        return True, None
-    
-    # Check if it looks like a common misspelling
-    return False, f'"{word}" not found in dictionary'
-

@@ -1,0 +1,13 @@
+{
+  "username": "bobcat",
+  "password_hash": "3bfaf7682094d482efb878617e14b9a0326568bc7a64e024a31dfdc1d52a5744",
+  "phoneme_profile": {
+    "stutter_patterns": [
+      "b",
+      "c"
+    ],
+    "blocked_words": []
+  },
+  "custom_replacements": {},
+  "preferences": {}
+}

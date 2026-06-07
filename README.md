@@ -1,188 +1,220 @@
-# Speech-AI 🔤
+# 🎙️ Speech AI
 
-A **speech-fluency assistant** that reads text, identifies phonetically risky or hard-to-pronounce words, and replaces them with easier alternatives — while preserving meaning, tense, and grammatical correctness.
+**An accessibility-focused speech assistance system for people who stutter.**
 
-Built with **Python + Streamlit** (monorepo, single-process). No frontend framework required.
+Speech AI takes a sentence you struggle to say, corrects its grammar, identifies words that fall on your personal trouble sounds, and suggests semantically equivalent alternatives that are easier to pronounce — all in a clean, interactive Streamlit interface.
+
+Built at **NUST SEECS** as part of independent research into AI-assisted communication accessibility.
 
 ---
 
 ## What it does
 
-1. You paste or type a sentence.
-2. The system corrects grammar automatically (tense, subject-verb agreement, auxiliary forms, contractions, capitalisation).
-3. It identifies substitutable content words (nouns, verbs, adjectives, adverbs).
-4. It fetches synonym candidates from WordNet and Datamuse — filtered by the word's actual POS so verb synonyms never pollute noun lookups.
-5. SBERT (`all-MiniLM-L6-v2`) scores every candidate sentence against the original and rejects anything that shifts meaning.
-6. The best candidates are ranked by a combined score (65% semantic similarity + 35% word frequency).
-7. **Phoneme firewall (stutter assistance):** enter the starting sounds you stutter on (e.g. `str, pr, b`). The app then only suggests replacements for words that *start* with those sounds, and never offers a synonym that starts with the same sound (replacing *present* with *prestige* is useless — both start /pr/). Onsets come from the CMU Pronouncing Dictionary, so spelling traps are handled correctly (`knee`→/n/, `school`→/sk/).
-8. You pick your preferred synonym from a dropdown. The sentence rebuilds live with correct inflection, and a **before→after stutter-difficulty score** shows how much easier the sentence got.
+You type a sentence. Speech AI runs it through a seven-stage pipeline:
+
+1. **Grammar correction** — fixes contractions, tense, subject-verb agreement, auxiliary forms, negation, punctuation (8 distinct layers)
+2. **POS tagging** — identifies nouns, verbs, adjectives, adverbs that can be substituted
+3. **Synonym candidates** — fetches alternatives from WordNet, Datamuse, and wordfreq
+4. **SBERT semantic filter** — keeps only candidates whose meaning is close enough to the original (adjustable threshold)
+5. **Combined ranking** — scores by semantic similarity × word frequency
+6. **Phoneme firewall** — drops any candidate that starts with the same sound you stutter on
+7. **Inflection + rebuild** — morphologically inflects the chosen word and reassembles the sentence
+
+You see a colour-coded risk map of your sentence, pick synonyms from dropdowns (or type your own), and get the final easier sentence with a before/after stutter-difficulty score.
 
 ---
 
-## Project structure
+## Features
+
+- 🔐 **Multi-user auth** — Login / Register screen with per-user phoneme profiles stored in `users/`
+- 🧠 **SBERT semantic firewall** — `all-MiniLM-L6-v2` ensures replacements never drift from the original meaning
+- 🔊 **Phoneme-aware filtering** — uses the CMU Pronouncing Dictionary (ARPAbet) for onset detection, not spelling
+- 🎯 **Stutter profile** — enter the sounds you block on (`str`, `pr`, `b`) and words to always avoid
+- 📊 **Scoring transparency** — collapsible table showing semantic sim, frequency score, and gate status per candidate
+- ✏️ **Custom word input** — override any suggestion with your own word
+- 📝 **Grammar correction card** — shows every fix made to your input before synonym analysis
+- 📈 **Difficulty meter** — sentence-level stutter difficulty score before and after substitution
+
+---
+
+## Project Structure
 
 ```
 speech-ai/
-├── app.py          # Streamlit UI — rendering, session state, sidebar, stutter prefs
-├── engine.py       # SynonymEngine — WordNet + Datamuse retrieval, POS-filtered
-├── grammar.py      # sanitize_input() — grammar correction (base-form aux gate)
-│                   # SentenceRewriter — POS-tag, protect phrases, Gate A/B, rewrite
-├── semantic.py     # SBERT loader, protected phrases, batch cosine, combined score
-├── phonetic.py     # CMU-onset extraction, pattern parsing, phoneme gates, difficulty
-├── freq.py         # memory-safe wordfreq wrapper (auto-falls back to 'small' list)
-├── paths.py        # keeps ALL caches (NLTK / SBERT / torch) off C:, on the app dir
-├── tests/          # smoke.py (behaviour baseline) + app_test.py (headless UI smoke)
-└── requirements.txt
+│
+├── app.py              # Streamlit UI — main application
+├── auth.py             # Login / Register screen (guards the app)
+├── user_store.py       # File-based user storage layer
+│
+├── grammar.py          # 8-layer grammar correction + SentenceRewriter
+├── engine.py           # Multi-source synonym engine (WordNet + Datamuse)
+├── phonetic.py         # ARPAbet onset extraction + stutter difficulty
+├── semantic.py         # SBERT contextual re-ranking (sentence-transformers)
+├── freq.py             # Zipf frequency wrapper (wordfreq)
+├── paths.py            # Redirects NLTK / SBERT caches into .cache/
+│
+├── users/              # Per-user JSON files (gitignored)
+│   └── default.json    # Auto-migrated from user_prefs.json on first run
+│
+├── CHANGES.md          # Full version history
+└── README.md
 ```
-
----
-
-## Prerequisites
-
-| Tool | Version |
-|---|---|
-| Python | 3.10 or higher |
-| pip | any recent version |
-
-No Node.js, no Java, no GPU. Runs entirely on CPU.
 
 ---
 
 ## Setup
 
-### 1. Clone
+**Requirements:** Python 3.10+
 
 ```bash
-git clone https://github.com/haqiqak/speech-ai.git
+# 1. Clone and enter the project
+git clone https://github.com/your-username/speech-ai.git
 cd speech-ai
-```
 
-### 2. Create a virtual environment (recommended)
+# 2. Create and activate a virtual environment
+python -m venv venv
+venv\Scripts\activate        # Windows
+# source venv/bin/activate   # macOS / Linux
 
-```bash
-# macOS / Linux
-python3 -m venv .venv
-source .venv/bin/activate
+# 3. Install dependencies
+pip install streamlit nltk sentence-transformers pyinflect wordfreq requests
 
-# Windows (Command Prompt)
-python -m venv .venv
-.venv\Scripts\activate
-
-# Windows (PowerShell)
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-```
-
-### 3. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Download NLTK data (one-time, runs automatically on first launch)
-
-The app downloads these NLTK packages on first run: `averaged_perceptron_tagger_eng`, `punkt_tab`, `wordnet`, `omw-1.4`, `cmudict`. You need internet access for this step only.
-
-### 5. Run
-
-```bash
+# 4. Run
 streamlit run app.py
 ```
 
-Open **http://localhost:8501** in your browser.
-
-On first run, SBERT (`all-MiniLM-L6-v2`, ~80 MB) downloads automatically and is cached locally. Subsequent runs are fully offline.
-
-> **Cache location:** `paths.py` automatically redirects NLTK data and the SBERT/torch
-> model caches into a project-local `./.cache/` folder (kept out of git), and caps BLAS
-> threads to keep startup memory low. Override any location with the standard env vars
-> (`NLTK_DATA`, `HF_HOME`, `SENTENCE_TRANSFORMERS_HOME`, `TORCH_HOME`).
-
-**Low-memory machines:** if `large` wordfreq or SBERT can't fit in RAM, the app degrades
-gracefully — `freq.py` falls back to the small wordlist and the pipeline drops to
-frequency-only ranking. Force low-memory mode up front with `WORDFREQ_LIST=small`.
+On first run, NLTK will download its required corpora (`cmudict`, `averaged_perceptron_tagger_eng`, `punkt_tab`, `wordnet`) and SBERT will download the `all-MiniLM-L6-v2` model (~80 MB). Both are cached locally in `.cache/` after that.
 
 ---
 
-## Usage
+## First Login
 
-**Word mode** — type one or more comma-separated words (e.g. `happy, angry, stress`) to get a raw ranked synonym list.
+A `default` account is automatically created from any existing `user_prefs.json`, or as an empty profile if this is a fresh install.
 
-**Sentence mode** — type or paste a full sentence. The pipeline runs automatically:
+| Username | Password |
+|----------|----------|
+| `default` | `speech` |
 
-1. Grammar corrections are shown in card ①, with each fix explained.
-2. Synonym candidates appear in card ②. The auto-selected best match is highlighted. Use the dropdowns to pick a different synonym for any word.
-3. Card ③ shows a grammar check on the rewritten sentence.
-4. Card ④ shows a highlighted diff (original → new words marked in orange).
-5. Card ⑤ shows the final sentence ready to copy.
-
-**Sidebar controls**
-
-- **Stutter sounds** — comma/space separated starting sounds you stutter on (e.g. `str, pr, b`). Activates the phoneme firewall (Gate A targets only these words; Gate B keeps same-onset synonyms out). Saved to `user_prefs.json` so they persist between sessions.
-- **Words to always avoid** — specific words you struggle with; always flagged risky and never suggested.
-- Semantic threshold slider (0.60–0.95) — lower = more permissive substitutions, higher = stricter meaning preservation.
-- Show scoring details toggle — reveals the full score table per word, including which candidates were rejected for sharing your stutter onset (`✗ onset`).
-
-With stutter sounds active you also get a **Stutter Risk Map** (each word colour-coded by onset risk) and a **before→after difficulty score** on the final sentence.
+To create your own account, click **Register** on the login screen.
 
 ---
 
-## Configuration
+## User Profile
 
-No API keys required. Everything runs locally. A few optional environment variables:
+Each user's data lives in `users/<username>.json`:
 
-| Variable | Effect |
-|---|---|
-| `WORDFREQ_LIST` | `best` (default) / `large` / `small`. Force `small` on low-RAM machines. |
-| `DISABLE_DATAMUSE` | `1` = WordNet-only (offline / deterministic, skips the network source). |
-| `NLTK_DATA`, `HF_HOME`, `SENTENCE_TRANSFORMERS_HOME`, `TORCH_HOME` | Override cache locations (default: `./.cache/`). |
+```json
+{
+  "username": "alice",
+  "password_hash": "<sha256 hex>",
+  "phoneme_profile": {
+    "stutter_patterns": ["str", "pr", "b"],
+    "blocked_words":    ["present", "statistics"]
+  },
+  "custom_replacements": {},
+  "preferences": {}
+}
+```
 
-The semantic threshold can also be changed in `semantic.py`:
+**`stutter_patterns`** — the starting sounds you block on. Enter grapheme clusters like `str`, `pr`, `b`, `sp`. Speech AI converts these to ARPAbet onsets automatically, so spelling irregularities (`kn` → N, `ph` → F) are handled correctly.
+
+**`blocked_words`** — specific words you always want replaced, regardless of their onset.
+
+Changes made in the app are saved back to your profile in real time.
+
+---
+
+## The Phoneme Pipeline
+
+Speech AI uses the **CMU Pronouncing Dictionary** to extract phoneme onsets, not spelling. This matters because:
+
+- `"knight"` → onset `N` (not `K`)
+- `"psychology"` → onset `S` (not `P`)
+- `"school"` → onset `S K` (not `S C`)
+
+If a word isn't in CMU, a grapheme-to-ARPAbet rule table covers common patterns (digraphs `sh`, `ch`, `th`, `ph`; silent clusters `kn`, `wr`, `ps`; and all single consonants).
+
+Word difficulty is scored as:
+
+```
+difficulty = 0.4 × onset_cluster_length
+           + 0.3 × syllable_count
+           + 0.3 × rarity
+```
+
+Displayed in the UI as colour-coded chips: 🔴 high / 🟠 medium / 🟢 low risk.
+
+---
+
+## Semantic Threshold
+
+The **Semantic threshold** slider (sidebar, default `0.85`) controls how strictly SBERT gates synonym candidates. A candidate must score above this cosine similarity to be accepted.
+
+- **Higher (0.90+)** — only near-identical meanings pass. Fewer replacements offered.
+- **Lower (0.70–0.80)** — broader synonyms pass. More options, slightly looser meaning.
+
+If you're not seeing suggestions for some words, try lowering the threshold.
+
+---
+
+## Architecture Notes
+
+### Storage layer (`user_store.py`)
+The public API (`register_user`, `verify_user`, `load_profile`, `save_profile`) is intentionally thin. The file-based backend can be swapped for SQLite or PostgreSQL by replacing only the private `_read()` and `_write()` functions — nothing in `auth.py` or `app.py` changes.
+
+Password hashing currently uses SHA-256. To upgrade to bcrypt:
 
 ```python
-MIN_SEMANTIC = 0.72   # default — raise to 0.80 for strict mode
+import bcrypt
+def _hash_password(p):    return bcrypt.hashpw(p.encode(), bcrypt.gensalt()).decode()
+def _check_password(p, h): return bcrypt.checkpw(p.encode(), h.encode())
 ```
 
-The score weighting can be changed in `semantic.py`:
+### Grammar correction layers (`grammar.py`)
+`sanitize_input()` runs 8 sequential correction passes:
+1. Contractions (`dont` → `don't`)
+2. Informal words (`gonna` → `going to`)
+3. Pronoun case (`i` → `I`)
+4. Capitalisation
+5. Spacing and punctuation normalisation
+6. Tense correction (present verb + past time marker → past tense)
+7. Subject-verb agreement (BE verbs, main verbs, negation, existential *there*)
+8. Auxiliary form correction (`I am go` → `I am going`)
 
-```python
-SEMANTIC_W = 0.65   # weight for SBERT cosine similarity
-FREQUENCY_W = 0.35  # weight for word frequency (Zipf)
+---
+
+## .gitignore
+
+```
+users/
+user_prefs.json
+.cache/
+venv/
+__pycache__/
+*.pyc
 ```
 
 ---
 
-## Troubleshooting
+## Built With
 
-**`ModuleNotFoundError: No module named 'sentence_transformers'`**
-```bash
-pip install sentence-transformers
-```
-
-**SBERT shown as offline in the sidebar**
-The model hasn't been downloaded yet, or the download failed. Connect to the internet and restart. The app works without SBERT (frequency-only fallback) but synonym quality is lower.
-
-**Datamuse synonyms missing / slow**
-Datamuse is a free public API. If it times out, WordNet candidates are still used. The timeout is 4 seconds per request.
-
-**Wrong grammar corrections on valid text**
-The grammar layer uses NLTK POS tagging, which can misparse unusual sentence structures. If a correction is wrong, it shows in card ① — you can see exactly what changed and why. Future versions will add a "revert correction" button.
+| Library | Role |
+|---------|------|
+| [Streamlit](https://streamlit.io) | UI framework |
+| [sentence-transformers](https://www.sbert.net) | SBERT semantic similarity (`all-MiniLM-L6-v2`) |
+| [NLTK](https://www.nltk.org) | Tokenisation, POS tagging, WordNet, CMU dict |
+| [pyinflect](https://github.com/bjascob/pyInflect) | Morphological inflection |
+| [wordfreq](https://github.com/rspeer/wordfreq) | Zipf word frequency scores |
+| [Datamuse API](https://www.datamuse.com/api/) | Additional synonym candidates |
 
 ---
 
-## Dependencies
+## Academic Context
 
-| Package | Purpose |
-|---|---|
-| `streamlit` | Web UI |
-| `nltk` | Tokenisation, POS tagging, WordNet access, lemmatisation |
-| `sentence-transformers` | SBERT semantic similarity scoring |
-| `wordfreq` | Zipf frequency scores for ranking |
-| `pyinflect` | Morphological inflection (past tense, plurals, etc.) |
-| `requests` | Datamuse API calls |
-| `numpy` | Cosine similarity computation |
-| `scikit-learn` | (available for future use) |
+This project was developed at **NUST SEECS** (BS Data Science, cohort BSDS-02) as an independent research and software development project exploring:
 
----
+- Phoneme-aware synonym substitution for stutter assistance
+- Semantic integrity preservation via contextual SBERT re-ranking
+- Accessible NLP tooling built on lightweight, offline-capable components
 
-
+See `CHANGES.md` for the full development history.

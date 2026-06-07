@@ -1,43 +1,58 @@
 """
-Synonym Finder — Streamlit UI v4
+Speech AI — Streamlit UI v5
+Multi-user edition: Login / Register screen guards the full application.
 Pipeline: Sanitize → SBERT Semantic Firewall → Inflect → User Picks → Output
 """
 
 import paths  # noqa: F401  — must precede nltk/SBERT imports; redirects caches into ./.cache
 import html
 import re
-import json
 from pathlib import Path
 import streamlit as st
 from nltk import word_tokenize
 from engine import SynonymEngine
-from grammar import sanitize_input, is_sentence, SentenceRewriter, inflect, _preserve_case, apply_grammar_fixes
+from grammar import sanitize_input, is_sentence, SentenceRewriter, inflect, _preserve_case
 import semantic as sem
 import phonetic as ph
 import freq
-import grammar
 
-# ── User preferences (stutter patterns + blocked words) persisted locally ─────
-_PREFS_PATH = Path(__file__).resolve().parent / "user_prefs.json"
+# ── Storage / auth imports ────────────────────────────────────────────────────
+from user_store import save_profile, migrate_legacy_prefs
+from auth import require_auth
+
+# ── One-time migration of the legacy user_prefs.json (no-op if already done) ─
+_LEGACY_PREFS = Path(__file__).resolve().parent / "user_prefs.json"
+migrate_legacy_prefs(_LEGACY_PREFS)
+
+# ── Page config (MUST come before any other st calls) ────────────────────────
+st.set_page_config(
+    page_title="Speech AI",
+    page_icon="🎙️",
+    layout="centered",
+    initial_sidebar_state="expanded",
+)
+
+# ── Authentication gate — nothing below this line renders until login ─────────
+require_auth()
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Everything below is only reached after successful authentication.
+# st.session_state.current_user  is set.
+# st.session_state.stutter_patterns / blocked_words are pre-loaded.
+# ─────────────────────────────────────────────────────────────────────────────
 
 
-def load_prefs() -> tuple[list[str], list[str]]:
-    try:
-        with open(_PREFS_PATH, "r", encoding="utf-8") as f:
-            d = json.load(f)
-        return (list(d.get("stutter_patterns", [])),
-                list(d.get("blocked_words", [])))
-    except Exception:
-        return [], []
-
-
-def save_prefs(patterns: list[str], blocked: list[str]) -> None:
-    try:
-        with open(_PREFS_PATH, "w", encoding="utf-8") as f:
-            json.dump({"stutter_patterns": patterns, "blocked_words": blocked},
-                      f, indent=2)
-    except Exception:
-        pass
+def _save_current_user_prefs(patterns: list[str], blocked: list[str]) -> None:
+    """Persist phoneme profile back to the logged-in user's JSON file."""
+    user = st.session_state.get("current_user")
+    if user:
+        save_profile(
+            user,
+            patterns=patterns,
+            blocked=blocked,
+            custom_replacements=st.session_state.get("custom_replacements", {}),
+            preferences=st.session_state.get("preferences", {}),
+        )
 
 
 def _parse_tokens(raw: str) -> list[str]:
@@ -83,11 +98,12 @@ def _current_rebuilt_sentence() -> str | None:
         return None
     sanitized = st.session_state.get("sanitized") or ""
     substitutions = st.session_state.result.get("substitutions", [])
-    return rewriter.rebuild_with_choices(
+    rebuilt = rewriter.rebuild_with_choices(
         sanitized,
         substitutions,
         st.session_state.get("user_choices", {}),
     )
+    return rebuilt
 
 
 def _grammar_explanation() -> str:
@@ -115,13 +131,6 @@ def _grammar_explanation() -> str:
         )
     return "".join(rows)
 
-# ── Page config ──────────────────────────────────────────────────────────────
-st.set_page_config(
-    page_title="Speech AI",
-    page_icon="🔤",
-    layout="centered",
-    initial_sidebar_state="expanded",
-)
 
 # ── CSS ──────────────────────────────────────────────────────────────────────
 st.markdown("""
@@ -135,6 +144,14 @@ html, body, [class*="css"] { font-family:'DM Sans',sans-serif; background:#f7fbf
 .hero h1 { font-family:'DM Serif Display',serif; font-size:2.5rem; color:#1a2740; letter-spacing:-.5px; margin-bottom:.1rem; }
 .hero h1 span { color:#f57c2b; }
 .hero p { font-size:.95rem; color:#5a7096; font-weight:300; margin-top:.15rem; }
+
+/* user badge */
+.user-badge {
+    display:inline-flex; align-items:center; gap:.42rem;
+    background:#e8f2fc; border:1.4px solid #b8d9f5; border-radius:30px;
+    padding:.28rem .85rem; font-size:.8rem; font-weight:600; color:#2d6aab;
+    margin-bottom:.6rem;
+}
 
 /* inputs */
 div[data-testid="stTextInput"] input {
@@ -165,6 +182,13 @@ div.stButton > button {
     box-shadow:0 4px 14px rgba(245,124,43,.22) !important; transition:transform .15s,box-shadow .15s !important;
 }
 div.stButton > button:hover { transform:translateY(-2px) !important; box-shadow:0 6px 20px rgba(245,124,43,.33) !important; }
+
+/* logout button override — subtle */
+div.stButton > button[kind="secondary"] {
+    background:#f0f4f8 !important; color:#5a7096 !important;
+    box-shadow:none !important; font-size:.85rem !important; padding:.4rem 1rem !important;
+}
+div.stButton > button[kind="secondary"]:hover { background:#e4eaf2 !important; transform:none !important; }
 
 /* cards */
 .word-card { background:#fff; border:1.5px solid #d4e8f8; border-radius:16px; padding:1rem 1.3rem .9rem; margin-bottom:.75rem; box-shadow:0 2px 12px rgba(75,145,220,.06); }
@@ -213,6 +237,11 @@ div.stButton > button:hover { transform:translateY(-2px) !important; box-shadow:
 .fix-row.capitalization,.fix-row.pronoun_case { background:#f0f8ff; color:#2d6aab; }
 .fix-row.punctuation { background:#f0fdf4; color:#1a6b3c; }
 .fix-row.spacing { background:#fafafa; color:#5a7096; }
+.fix-row.tense { background:#fdf4ff; color:#7c3aaa; }
+.fix-row.subject_verb_agreement { background:#fff7ed; color:#b45309; }
+.fix-row.auxiliary_form { background:#f0f9ff; color:#0369a1; }
+.fix-row.negation_agreement { background:#fef2f2; color:#991b1b; }
+.fix-row.informal_word { background:#fefce8; color:#854d0e; }
 .fix-before { text-decoration:line-through; opacity:.55; font-style:italic; }
 .fix-after  { font-weight:600; }
 .corrected-sentence { font-size:1.02rem; color:#1a2740; background:#f0fdf6; border:1.4px solid #7ddba5; border-radius:11px; padding:.65rem .95rem; margin-top:.45rem; }
@@ -241,8 +270,9 @@ div.stButton > button:hover { transform:translateY(-2px) !important; box-shadow:
 .picker-word-label { font-size:.8rem; font-weight:600; color:#1a2740; margin-bottom:.06rem; }
 
 /* grammar / diff / output */
-.grammar-ok   { background:#edfaf2; border:1.4px solid #7ddba5; border-radius:11px; padding:.55rem .9rem; color:#1a6b3c; font-size:.88rem; }
-.grammar-warn { background:#fff8ed; border:1.4px solid #f7c49a; border-radius:11px; padding:.55rem .9rem; color:#a06030; font-size:.88rem; }
+.grammar-ok    { background:#edfaf2; border:1.4px solid #7ddba5; border-radius:11px; padding:.55rem .9rem; color:#1a6b3c; font-size:.88rem; }
+.grammar-warn  { background:#fff8ed; border:1.4px solid #f7c49a; border-radius:11px; padding:.55rem .9rem; color:#a06030; font-size:.88rem; }
+.grammar-error { background:#fef2f2; border:1.4px solid #fca5a5; border-radius:11px; padding:.55rem .9rem; color:#991b1b; font-size:.88rem; }
 .diff-text { font-size:1.03rem; color:#1a2740; line-height:1.75; }
 .orig-word { color:#b0c4d8; text-decoration:line-through; font-size:.87rem; margin-right:.08rem; }
 .new-word  { color:#f57c2b; font-weight:600; }
@@ -257,10 +287,11 @@ hr { border:none; border-top:1.5px solid #deeaf7; margin:1.2rem 0; }
 """, unsafe_allow_html=True)
 
 # ── Header ────────────────────────────────────────────────────────────────────
-st.markdown("""
+current_user = st.session_state.get("current_user", "")
+st.markdown(f"""
 <div class="hero">
-  <h1>Synonym <span>Finder</span></h1>
-  <p>Grammar correction · SBERT semantic firewall · Contextual ranking · User-controlled substitution</p>
+  <h1>Speech <span>AI</span></h1>
+  <p>Grammar correction · SBERT semantic firewall · Stutter assistance · Contextual synonym ranking</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -289,18 +320,26 @@ for key, default in [
     ("user_choices", {}), ("last_query", ""), ("sentence_mode", False),
     ("grammar_fixes_applied", []), ("correction_map", {}),
     ("original_query", ""), ("corrected_query", ""), ("query_input", ""),
+    ("stutter_patterns", []), ("blocked_words", []),
+    ("custom_replacements", {}), ("preferences", {}),
 ]:
     if key not in st.session_state:
         st.session_state[key] = default
 
-# ── Load persisted stutter prefs into session state (once) ────────────────────
-if "stutter_patterns" not in st.session_state or "blocked_words" not in st.session_state:
-    _p, _b = load_prefs()
-    st.session_state.setdefault("stutter_patterns", _p)
-    st.session_state.setdefault("blocked_words", _b)
-
-# ── Sidebar: SBERT status + settings ─────────────────────────────────────────
+# ── Sidebar: user info + logout + SBERT status + settings ────────────────────
 with st.sidebar:
+    # ── User info + logout ────────────────────────────────────────────────────
+    st.markdown(
+        f'<div class="user-badge">👤 {current_user}</div>',
+        unsafe_allow_html=True,
+    )
+    if st.button("Logout", key="logout_btn", type="secondary"):
+        # Clear auth state; preserve cache_resource (engine/SBERT)
+        for k in list(st.session_state.keys()):
+            del st.session_state[k]
+        st.rerun()
+
+    st.markdown("---")
     st.markdown("### ⚙ Settings")
 
     if sbert_ok:
@@ -326,6 +365,7 @@ with st.sidebar:
         disabled=not sbert_ok,
     )
     st.caption("Only active when SBERT is loaded. **New default: 0.85** (stricter semantic gating).")
+    st.caption("💡 Not seeing synonyms for some words? The threshold may be too strict — try lowering it.")
 
     st.markdown("---")
     show_scores = st.toggle("Show scoring details", value=True,
@@ -348,34 +388,60 @@ with st.sidebar:
 
 # ── Controls ──────────────────────────────────────────────────────────────────
 rebuilt_preview = _current_rebuilt_sentence()
+
+# Always show the editable original input
+query = st.text_area(
+    "Your sentence",
+    value=st.session_state.get("query_input", ""),
+    placeholder="e.g. I have a special presentation today.",
+    height=130,
+    key="query_input",
+    help="Enter a word, a list of words, or a full sentence.",
+)
+lookup_source = query
+
+# When a result exists, show the toggle + modified box below the input
 show_modified = False
 if rebuilt_preview:
     show_modified = st.toggle(
-        "Show modified text",
+        "▲ Show modified sentence",
         value=True,
-        help="Switch off to edit the original text again.",
+        key="show_modified_toggle",
+        help="Toggle to compare original input with the grammar-corrected + synonym-replaced sentence.",
     )
-
-if show_modified and rebuilt_preview:
-    query = st.text_area(
-        "Input sentence",
-        value=rebuilt_preview,
-        height=170,
-        disabled=True,
-        key="query_modified_preview",
-        help="This preview updates after grammar correction and synonym choices.",
-    )
-    lookup_source = st.session_state.get("original_query") or st.session_state.get("last_query", "")
-else:
-    query = st.text_area(
-        "Input sentence",
-        value=st.session_state.get("query_input", ""),
-        placeholder="e.g. I have a special presentation today.",
-        height=170,
-        key="query_input",
-        help="Enter a word, a list of words, or a full sentence.",
-    )
-    lookup_source = query
+    if show_modified:
+        orig_text = st.session_state.get("original_query") or st.session_state.get("last_query", "")
+        col_orig, col_mod = st.columns(2)
+        with col_orig:
+            st.markdown(
+                '<div style="font-size:.75rem;font-weight:700;color:#5a7096;'
+                'letter-spacing:.5px;text-transform:uppercase;margin-bottom:.3rem">'
+                '📄 Original</div>',
+                unsafe_allow_html=True,
+            )
+            st.text_area(
+                "original_display",
+                value=orig_text,
+                height=110,
+                disabled=True,
+                key="orig_display_box",
+                label_visibility="collapsed",
+            )
+        with col_mod:
+            st.markdown(
+                '<div style="font-size:.75rem;font-weight:700;color:#f57c2b;'
+                'letter-spacing:.5px;text-transform:uppercase;margin-bottom:.3rem">'
+                '✦ Modified</div>',
+                unsafe_allow_html=True,
+            )
+            st.text_area(
+                "modified_display",
+                value=rebuilt_preview,
+                height=110,
+                disabled=True,
+                key="mod_display_box",
+                label_visibility="collapsed",
+            )
 
 top_k = st.slider(
     "Synonyms / word", min_value=5, max_value=20, value=10, step=1,
@@ -412,7 +478,8 @@ with st.container():
             or _new_blocked != st.session_state.blocked_words):
         st.session_state.stutter_patterns = _new_patterns
         st.session_state.blocked_words    = _new_blocked
-        save_prefs(_new_patterns, _new_blocked)
+        # ← save to THIS user's file (not a global prefs file)
+        _save_current_user_prefs(_new_patterns, _new_blocked)
 
     if st.session_state.stutter_patterns:
         onset_preview = " · ".join(
@@ -426,15 +493,13 @@ with st.container():
         )
 
     st.markdown('</div>', unsafe_allow_html=True)
-_, col1, col2, _ = st.columns([1, 1, 1, 1])
+_, col1, _ = st.columns([1, 2, 1])
 with col1:
     search_clicked = st.button("Run speech profile", use_container_width=True)
-with col2:
-    clear_clicked = st.button("Clear All", use_container_width=True)
 
-# Auto-clear if text changed (new search)
+# Auto-clear results when the user types a new sentence
 if lookup_source.strip() and lookup_source.strip() != st.session_state.get("last_query", ""):
-    if not search_clicked:  # Only auto-clear if user is typing new text, not when they click search
+    if not search_clicked:
         st.session_state.result = None
         st.session_state.sanitized = None
         st.session_state.fixes = []
@@ -443,26 +508,10 @@ if lookup_source.strip() and lookup_source.strip() != st.session_state.get("last
         st.session_state.correction_map = {}
         st.session_state._word_results = None
 
-if clear_clicked:
-    st.session_state.result = None
-    st.session_state.sanitized = None
-    st.session_state.fixes = []
-    st.session_state.user_choices = {}
-    st.session_state.grammar_fixes_applied = []
-    st.session_state.correction_map = {}
-    st.session_state._word_results = None
-    st.session_state.last_query = ""
-    st.session_state.sentence_mode = False
-    st.session_state.original_query = ""
-    st.session_state.corrected_query = ""
-    st.session_state.query_input = ""
-    st.rerun()
-
 
 # ── Process on button click ───────────────────────────────────────────────────
 source_text = lookup_source.strip()
 if search_clicked and source_text:
-    # Clear all previous results for fresh start
     st.session_state.user_choices = {}
     st.session_state.result = None
     st.session_state.sanitized = None
@@ -470,31 +519,29 @@ if search_clicked and source_text:
     st.session_state.grammar_fixes_applied = []
     st.session_state.correction_map = {}
     st.session_state._word_results = None
-    
+
     st.session_state.last_query   = source_text
     st.session_state.sentence_mode = is_sentence(source_text)
 
-    # Auto-detect and apply grammar fixes
-    corrected_query, grammar_fixes = apply_grammar_fixes(source_text)
+    corrected_query, grammar_fixes = sanitize_input(source_text)
     st.session_state.grammar_fixes_applied = grammar_fixes
     st.session_state.original_query = source_text
     st.session_state.corrected_query = corrected_query
-    
-    # Build a mapping of corrected words for reference during synonym picking
-    # Format: {corrected_word_lower: original_word}
+
     correction_map = {}
     for fix in grammar_fixes:
-        correction_map[fix["corrected"].lower()] = fix["original"]
+        orig = fix.get("original", "")
+        corr = fix.get("corrected", "")
+        if orig and corr:
+            correction_map[corr.lower()] = orig
     st.session_state.correction_map = correction_map
-    
-    # Use corrected query for synonym lookup, but keep original for reference
+
     lookup_query = corrected_query
 
     patterns = list(st.session_state.stutter_patterns)
     blocked  = set(st.session_state.blocked_words)
 
     if not st.session_state.sentence_mode:
-        # Word mode: just look up synonyms
         with st.spinner("Looking up synonyms…"):
             st.session_state._word_results = engine.get_synonyms(lookup_query, top_k=top_k)
     else:
@@ -502,7 +549,6 @@ if search_clicked and source_text:
         st.session_state.sanitized = sanitized
         st.session_state.fixes     = fixes
         with st.spinner("Analysing sentence, running semantic filter…"):
-            # Pass threshold from sidebar to semantic module at call time
             sem.MIN_SEMANTIC = sem_threshold
             result = rewriter.rewrite(
                 sanitized, top_k=top_k,
@@ -524,284 +570,243 @@ if st.session_state.last_query.strip():
   <span>{_fmt(corrected)}</span>
   <div style="margin-top:.45rem">{_grammar_explanation()}</div>
 </div>""", unsafe_allow_html=True)
-    else:
-        st.markdown(f"""
-<div class="analysis-note">
-  <strong style="color:#1a6b3c">Grammar analysis:</strong>
-  <span>{_fmt(_grammar_explanation())}</span>
-</div>""", unsafe_allow_html=True)
 
-st.markdown("<hr>", unsafe_allow_html=True)
+# ── Word mode results ─────────────────────────────────────────────────────────
+if not st.session_state.sentence_mode and st.session_state.get("_word_results"):
+    word_results = st.session_state._word_results
+    patterns = list(st.session_state.stutter_patterns)
+    blocked  = set(st.session_state.blocked_words)
 
-# ── Render word mode ──────────────────────────────────────────────────────────
-if not st.session_state.sentence_mode and hasattr(st.session_state, "_word_results") and st.session_state._word_results:
-    results   = st.session_state._word_results
-    patterns  = list(st.session_state.stutter_patterns)
-    blocked   = set(st.session_state.blocked_words)
-    gating    = bool(patterns or blocked)
-    st.markdown('<span class="mode-tag mode-word"> Word Mode</span>', unsafe_allow_html=True)
+    st.markdown(
+        f'<span class="mode-tag mode-word">🔤 Word / Multi-word Mode</span>',
+        unsafe_allow_html=True,
+    )
 
-    no_syns  = [w for w, s in results.items() if not s]
-    has_syns = {w: s for w, s in results.items() if s}
+    for word, data in word_results.items():
+        syns = data.get("synonyms") or []
+        tag  = data.get("pos", "?")
+        diff = ph.word_difficulty(word)
+        onset_str = "/".join(ph.onset(word)) or "—"
+        on_pat    = (word.lower() in blocked) or ph.matches_any(word, patterns)
+        tag_color = "badge-warn" if on_pat else "badge-blue"
 
-    if no_syns:
-        chips = " ".join(
-            f'<span class="no-syn-chip">⊘ <strong>{w}</strong> — no synonyms</span>'
-            for w in no_syns
-        )
-        st.markdown(f'<div style="margin-bottom:.7rem">{chips}</div>', unsafe_allow_html=True)
-
-    for word, synonyms in has_syns.items():
-        # Gate B for word mode: drop synonyms sharing the user's stutter onset
-        if gating:
-            kept    = [s for s in synonyms
-                       if not (s.lower() in blocked or ph.matches_any(s, patterns))]
-            removed = len(synonyms) - len(kept)
-        else:
-            kept, removed = synonyms, 0
-
-        word_risky = gating and (word.lower() in blocked or ph.matches_any(word, patterns))
-        risk_badge = ('<span class="badge badge-red">⚠ stutter word</span>'
-                      if word_risky else
-                      ('<span class="badge badge-green">✓ safe onset</span>' if gating else ''))
-        filt_badge = (f'<span class="badge badge-gray">{removed} same-onset hidden</span>'
-                      if removed else '')
-
-        pills = "".join(
-            f'<span class="pill {"top" if i < 3 else "mid"}">{s}</span>'
-            for i, s in enumerate(kept)
-        ) if kept else ""
-        
         st.markdown(f"""
 <div class="word-card">
   <div class="word-card-header">
-    <span class="word-title">{word.capitalize()}</span>
-    <span class="badge badge-blue">{len(kept)} synonyms</span>{risk_badge}{filt_badge}
-  </div>
-  <div class="pill-wrap">{pills if pills else '<span class="no-syn-chip">⊘ all synonyms share your stutter onset</span>'}</div>
-</div>""", unsafe_allow_html=True)
-        
-        # Custom word input (always shown, even if no synonyms)
-        custom_input = st.text_input(
-            label=f"Or enter your own word for '{word}':",
-            value="",
-            placeholder="Type a word here...",
-            key=f"word_custom_{word}",
-            label_visibility="collapsed",
-        )
+    <span class="word-title">{_fmt(word)}</span>
+    <span class="badge badge-gray">{tag}</span>
+    <span class="badge {tag_color}">onset /{onset_str}/</span>
+    <span class="badge badge-gray">diff {diff:.2f}</span>
+    {"<span class='badge badge-red'>⚠ stutter risk</span>" if on_pat else ""}
+  </div>""", unsafe_allow_html=True)
 
-# ── Render sentence mode ──────────────────────────────────────────────────────
+        if syns:
+            top_syns  = [s for s in syns[:3]]
+            rest_syns = [s for s in syns[3:8]]
+
+            st.markdown('<div class="pill-wrap">', unsafe_allow_html=True)
+            for s in top_syns:
+                infl = inflect(s["lemma"], tag)
+                phon_ok = not ph.matches_any(s["lemma"], patterns) and s["lemma"].lower() not in blocked
+                cls = "top" if phon_ok else "mid"
+                freq_val = s.get("freq_score", 0)
+                st.markdown(
+                    f'<span class="pill {cls}" title="freq {freq_val:.2f}">'
+                    f'{_fmt(infl)}</span>',
+                    unsafe_allow_html=True,
+                )
+            for s in rest_syns:
+                infl = inflect(s["lemma"], tag)
+                phon_ok = not ph.matches_any(s["lemma"], patterns) and s["lemma"].lower() not in blocked
+                cls = "mid"
+                freq_val = s.get("freq_score", 0)
+                st.markdown(
+                    f'<span class="pill {cls}" title="freq {freq_val:.2f}">'
+                    f'{_fmt(infl)}</span>',
+                    unsafe_allow_html=True,
+                )
+            st.markdown("</div>", unsafe_allow_html=True)
+        else:
+            st.markdown(
+                '<span class="badge badge-gray">No synonyms found</span>',
+                unsafe_allow_html=True,
+            )
+
+        st.markdown("</div>", unsafe_allow_html=True)
+
+# ── Sentence mode results ─────────────────────────────────────────────────────
 if st.session_state.sentence_mode and st.session_state.result is not None:
     result    = st.session_state.result
-    sanitized = st.session_state.sanitized
-    fixes     = st.session_state.fixes
+    sanitized = st.session_state.sanitized or st.session_state.last_query
     patterns  = list(st.session_state.stutter_patterns)
     blocked   = set(st.session_state.blocked_words)
-    gating    = bool(patterns or blocked)
 
-    st.markdown('<span class="mode-tag mode-sentence">✦ Sentence Mode — Semantic Pipeline</span>', unsafe_allow_html=True)
+    st.markdown(
+        f'<span class="mode-tag mode-sentence">📝 Sentence Mode</span>',
+        unsafe_allow_html=True,
+    )
 
-    # ── SBERT status banner ───────────────────────────────────────────────────
-    if sbert_ok:
-        st.markdown(f'<div class="sbert-on">🧠 <strong>SBERT active</strong> — candidates ranked by semantic similarity + frequency (threshold: {sem_threshold:.2f})</div>', unsafe_allow_html=True)
-    else:
-        st.markdown('<div class="sbert-off">⚠ <strong>SBERT offline</strong> — running frequency-only ranking. Download model (~80 MB) on first internet run.</div>', unsafe_allow_html=True)
-
-    # ── Card ①: Input sanitizer ───────────────────────────────────────────────
-    if fixes:
-        fix_rows = ""
-        icons = {"contraction":"✎","capitalization":"Aa","pronoun_case":"Aa","punctuation":"·","spacing":"⎵"}
-        for f in fixes:
-            icon = icons.get(f["type"], "✎")
-            fix_rows += f'<div class="fix-row {f["type"]}"><span>{icon}</span><span class="fix-before">{f["original"] or "(none)"}</span><span>→</span><span class="fix-after">{f["corrected"]}</span><span style="opacity:.55;font-size:.8rem">— {f["description"]}</span></div>'
-        st.markdown(f"""
+    # ── Card ①: Risk analysis ─────────────────────────────────────────────────
+    chips_html = _risk_chips(sanitized, patterns, blocked)
+    st.markdown(f"""
 <div class="pipe-card">
-  <div class="pipe-label">① Input Grammar Correction</div>
-  {fix_rows}
-  <div class="corrected-sentence">✓ Corrected: <strong>{sanitized}</strong></div>
-</div>""", unsafe_allow_html=True)
-    else:
-        st.markdown(f"""
-<div class="pipe-card">
-  <div class="pipe-label">① Input Grammar Correction</div>
-  <div class="clean-sentence">✓ Input is grammatically clean — no corrections needed.</div>
-</div>""", unsafe_allow_html=True)
-
-    # ── Card ①·5: Stutter risk map (only when patterns/blocked are active) ─────
-    if gating:
-        st.markdown(f"""
-<div class="pipe-card">
-  <div class="pipe-label">◆ Stutter Risk Map</div>
-  <div style="font-size:.82rem;color:#5a7096;margin-bottom:.45rem">
-    Red = starts with one of your stutter sounds (or is on your avoid list);
-    amber = phonetically harder; green = easier onset.
+  <div class="pipe-label">① Word Risk Analysis</div>
+  {chips_html}
+  <div style="font-size:.75rem;color:#6f87a6;margin-top:.42rem">
+    <span class="risk-chip risk-hi" style="font-size:.72rem;padding:.15rem .5rem">high</span> onset match / blocked &nbsp;
+    <span class="risk-chip risk-mid" style="font-size:.72rem;padding:.15rem .5rem">medium</span> difficulty ≥ 0.55 &nbsp;
+    <span class="risk-chip risk-lo" style="font-size:.72rem;padding:.15rem .5rem">low</span> clear onset
   </div>
-  {_risk_chips(sanitized, patterns, blocked)}
 </div>""", unsafe_allow_html=True)
 
-    # ── Card ②: Semantic scoring table + picker ───────────────────────────────
+    # ── Card ②: Synonym pickers ───────────────────────────────────────────────
     if result["substitutions"]:
-        st.markdown('<div class="pipe-card">', unsafe_allow_html=True)
-        st.markdown('<div class="pipe-label">② Synonym Candidates — Semantic Scores &amp; Your Choice</div>', unsafe_allow_html=True)
-        st.markdown(
-            '<div style="font-size:.84rem;color:#5a7096;margin-bottom:.7rem">'
-            'The <strong style="color:#f57c2b">orange</strong> row is the auto-selected best match. '
-            'Use the dropdown to choose a different synonym for any word.'
-            + (' Scores show SBERT cosine similarity vs the original sentence.' if sbert_ok else ' Scores show frequency only (SBERT offline).')
-            + '</div>',
-            unsafe_allow_html=True
-        )
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown("""
+<div class="pipe-card">
+  <div class="pipe-label">② Synonym Candidates</div>""", unsafe_allow_html=True)
 
-        subs = result["substitutions"]
-        n_cols = min(len(subs), 3)
-        cols   = st.columns(n_cols)
+        if "user_choices" not in st.session_state:
+            st.session_state.user_choices = {}
 
-        for idx, sub in enumerate(subs):
-            col = cols[idx % n_cols]
-            with col:
-                auto_lemma = sub["chosen_lemma"]
-                accepted   = sub["candidates"]        # accepted lemmas
-                all_cands  = sub["all_candidates"]    # all (including rejected)
-                correction_map = st.session_state.get("correction_map", {})
-                fallback_reason = sub.get("fallback_reason")
+        for sub in result["substitutions"]:
+            word     = sub["original_word"]
+            tag      = sub["tag"]
+            pos_key  = sub["position"]
+            on_pat   = (word.lower() in blocked) or ph.matches_any(word, patterns)
+            diff     = ph.word_difficulty(word)
+            onset_str = "/".join(ph.onset(word)) or "—"
 
-                # Build display options
-                def disp(lemma, tag, orig):
-                    inf = inflect(lemma, tag)
-                    return _preserve_case(orig, inf)
+            tag_cls  = "badge-warn" if on_pat else "badge-blue"
+            tag_warn = "<span class='badge badge-red'>⚠ stutter risk</span>" if on_pat else ""
 
-                # Check if this word was corrected
-                word_lower = sub["original_word"].lower()
-                was_corrected = word_lower in correction_map
-                original_form = correction_map.get(word_lower) if was_corrected else None
-                
-                # Build options list with original word marked with star.
-                # If every synonym was rejected, keep the dropdown on the original
-                # and let the custom input provide the replacement path.
-                options = accepted
-                display_labels = [disp(o, sub["tag"], sub["original_word"]) for o in options]
-                label_to_lemma = {display_labels[i]: options[i] for i in range(len(options))}
-                
-                # Build all options: original with star, then synonyms
-                all_options = []
-                all_lemmas = {}
-                
-                # Option 1: Original word with star marker
-                original_display = f"{sub['original_word']}*"
-                all_options.append(original_display)
-                all_lemmas[original_display] = sub["original_word"]
-                
-                # Options 2+: Synonyms (auto_lemma will be selected by default)
-                all_options.extend(display_labels)
-                all_lemmas.update(label_to_lemma)
-                
-                # Find which index is the auto-chosen best synonym
-                default_index = 0  # Default to original
-                if auto_lemma in label_to_lemma.values():
-                    # Find the display label for auto_lemma
-                    for disp_label, lemma in label_to_lemma.items():
-                        if lemma == auto_lemma:
-                            default_index = all_options.index(disp_label)
-                            break
+            accepted_syns = [
+                s for s in sub.get("scored", [])
+                if s["accepted"] and s.get("phoneme_ok", True)
+            ]
+            # ── auto-pick: best accepted synonym or original ──────────────────
+            if accepted_syns:
+                best_lemma = accepted_syns[0]["lemma"]
+                best_infl  = accepted_syns[0]["inflected"]
+            else:
+                best_lemma = word.lower()
+                best_infl  = word
 
-                st.markdown(
-                    f'<div class="picker-word-label">'
-                    f'<strong>{sub["original_word"]}</strong>'
-                    + (f'<span style="color:#f57c2b;font-size:.75rem;margin-left:.4rem">(corrected from {original_form})</span>' if was_corrected else '')
-                    + f'<span class="tag-chip" style="margin-left:.3rem">{sub["tag"]}</span>'
-                    + (f'<span class="badge badge-warn" style="margin-left:.35rem">{_fmt(fallback_reason)}</span>' if fallback_reason else '')
-                    + f'</div>',
-                    unsafe_allow_html=True
+            auto_lemma = best_lemma
+
+            # build dropdown options
+            options = [word]
+            for s in accepted_syns[:8]:
+                if s["inflected"] not in options:
+                    options.append(s["inflected"])
+
+            # default = first accepted synonym (not the original word) if available
+            default_idx = 1 if len(options) > 1 else 0
+
+            # if user already made a choice, honour it
+            prior = st.session_state.user_choices.get(pos_key)
+            if prior and prior in options:
+                default_idx = options.index(prior)
+            elif prior and prior not in options:
+                options.append(prior)
+                default_idx = len(options) - 1
+
+            st.markdown(f"""
+<div class="syn-grid-card">
+  <div class="word-card-header">
+    <span class="word-title">{_fmt(word)}</span>
+    <span class="badge badge-gray">{tag}</span>
+    <span class="badge {tag_cls}">onset /{onset_str}/</span>
+    <span class="badge badge-gray">diff {diff:.2f}</span>
+    {tag_warn}
+  </div>""", unsafe_allow_html=True)
+
+            # pill preview
+            pill_html = '<div class="pill-wrap">'
+            for s in accepted_syns[:5]:
+                is_best = s["lemma"] == auto_lemma
+                cls = "top" if is_best else "mid"
+                sim_val = s.get("semantic_sim") or 0
+                freq_val = s["freq_score"]
+                pill_html += (
+                    f'<span class="pill {cls}" '
+                    f'title="sim {sim_val:.2f} · freq {freq_val:.2f}">'
+                    f'{_fmt(s["inflected"])}</span>'
                 )
+            pill_html += "</div>"
+            st.markdown(pill_html, unsafe_allow_html=True)
+            st.markdown("</div>", unsafe_allow_html=True)
 
-                scored_preview = sub.get("scored", [])[:6]
-                if scored_preview:
-                    chip_html = []
-                    for sc in scored_preview:
-                        word_label = _fmt(sc.get("inflected") or sc.get("lemma"))
-                        if sc.get("accepted") and sc.get("phoneme_ok", True):
-                            chip_html.append(f'<span class="pill top">{word_label}</span>')
-                        elif sc.get("accepted"):
-                            chip_html.append(f'<span class="no-syn-chip">{word_label} <span style="opacity:.65">onset</span></span>')
-                    if chip_html:
-                        st.markdown('<div class="pill-wrap">' + "".join(chip_html) + '</div>', unsafe_allow_html=True)
-                
-                # Synonym picker dropdown - defaults to best synonym, not original
-                chosen_display = st.selectbox(
-                    label=sub["original_word"],
-                    options=all_options,
-                    index=default_index,
-                    key=f"pick_{sub['position']}",
-                    label_visibility="collapsed",
-                )
-                st.session_state.user_choices[sub["position"]] = all_lemmas[chosen_display]
-                
-                # Custom replacement field (always shown)
-                custom_word = st.text_input(
-                    label=f"Or enter your own word:",
-                    value="",
-                    placeholder="Type a custom word here...",
-                    key=f"custom_{sub['position']}",
-                    label_visibility="collapsed",
-                )
-                
-                if custom_word.strip():
-                    is_valid, msg = grammar.validate_custom_word(
-                        custom_word.strip(), 
-                        sub["original_word"], 
-                        sub["tag"]
-                    )
-                    if is_valid:
-                        st.caption(f"✓ {msg}")
-                        # Use custom word if valid
-                        st.session_state.user_choices[sub["position"]] = custom_word.strip()
-                    else:
-                        st.caption(f"⚠ {msg}", help="Check spelling or try a different word.")
+            # dropdown picker
+            st.markdown(f'<div class="picker-word-label">Pick replacement for <em>{word}</em>:</div>', unsafe_allow_html=True)
+            chosen = st.selectbox(
+                f"Replace '{word}'",
+                options=options,
+                index=default_idx,
+                key=f"pick_{pos_key}",
+                label_visibility="collapsed",
+            )
+            st.session_state.user_choices[pos_key] = chosen
 
-                # Scoring table (collapsible per word)
-                if show_scores and sub.get("scored"):
-                    with st.expander(f"📊 Scores for '{sub['original_word']}'", expanded=False):
-                        header = "Candidate · Semantic · Freq · Score · Status" if sbert_ok else "Candidate · Freq · Status"
-                        rows_html = ""
-                        for sc in sub["scored"][:8]:
-                            is_chosen = sc["lemma"] == auto_lemma
-                            phon_ok   = sc.get("phoneme_ok", True)
-                            dimmed    = (not sc["accepted"]) or (not phon_ok)
-                            row_cls   = "chosen-row" if is_chosen else ("rejected" if dimmed else "")
-                            star      = "★ " if is_chosen else ""
-                            if not sc["accepted"]:
-                                status_cell = '✗ sem'
-                            elif not phon_ok:
-                                status_cell = '✗ onset'
-                            else:
-                                status_cell = '✓'
+            # custom word input
+            custom_word = st.text_input(
+                f"Or type your own word for '{word}':",
+                key=f"custom_{pos_key}",
+                placeholder="Type any word…",
+                label_visibility="visible",
+            )
 
-                            if sbert_ok and sc["semantic_sim"] is not None:
-                                sim_val = sc["semantic_sim"]
-                                sim_cls = "sim-accept" if sc["accepted"] else "sim-reject"
-                                bar_w   = int(sim_val * 60)
-                                sem_cell = (
-                                    f'<span class="sim-tag {sim_cls}">{sim_val:.2f}</span>'
-                                    f'<span class="bar-wrap"><span class="bar-fill orange" style="width:{bar_w}px"></span></span>'
-                                )
-                                freq_bar = int(sc["freq_score"] * 60)
-                                freq_cell = (
-                                    f'{sc["freq_score"]:.2f}'
-                                    f'<span class="bar-wrap" style="margin-left:4px"><span class="bar-fill" style="width:{freq_bar}px"></span></span>'
-                                )
-                                combined_cell = f'<strong>{sc["combined"]:.3f}</strong>'
-                                rows_html += f'<tr class="{row_cls}"><td>{star}{sc["inflected"]}</td><td>{sem_cell}</td><td>{freq_cell}</td><td>{combined_cell}</td><td>{status_cell}</td></tr>'
-                            else:
-                                freq_bar = int(sc["freq_score"] * 60)
-                                freq_cell = f'{sc["freq_score"]:.2f}<span class="bar-wrap" style="margin-left:4px"><span class="bar-fill" style="width:{freq_bar}px"></span></span>'
-                                rows_html += f'<tr class="{row_cls}"><td>{star}{sc["inflected"]}</td><td>{freq_cell}</td><td>{status_cell}</td></tr>'
+            if custom_word.strip():
+                cw = custom_word.strip()
+                # Simple inline validation: non-empty alphabetic word
+                if re.match(r"^[a-zA-Z\-']+$", cw):
+                    st.caption(f"✓ Using custom word: {cw}")
+                    st.session_state.user_choices[sub["position"]] = cw
+                else:
+                    st.caption("⚠ Custom word should contain only letters.", help="Check spelling or try a different word.")
 
-                        if sbert_ok:
-                            th = "<tr><th>Candidate</th><th>Semantic</th><th>Frequency</th><th>Combined</th><th></th></tr>"
+            # Scoring table (collapsible per word)
+            if show_scores and sub.get("scored"):
+                with st.expander(f"📊 Scores for '{sub['original_word']}'", expanded=False):
+                    header = "Candidate · Semantic · Freq · Score · Status" if sbert_ok else "Candidate · Freq · Status"
+                    rows_html = ""
+                    for sc in sub["scored"][:8]:
+                        is_chosen = sc["lemma"] == auto_lemma
+                        phon_ok   = sc.get("phoneme_ok", True)
+                        dimmed    = (not sc["accepted"]) or (not phon_ok)
+                        row_cls   = "chosen-row" if is_chosen else ("rejected" if dimmed else "")
+                        star      = "★ " if is_chosen else ""
+                        if not sc["accepted"]:
+                            status_cell = '✗ sem'
+                        elif not phon_ok:
+                            status_cell = '✗ onset'
                         else:
-                            th = "<tr><th>Candidate</th><th>Frequency</th><th></th></tr>"
-                        st.markdown(f'<table class="score-table"><thead>{th}</thead><tbody>{rows_html}</tbody></table>', unsafe_allow_html=True)
+                            status_cell = '✓'
+
+                        if sbert_ok and sc["semantic_sim"] is not None:
+                            sim_val = sc["semantic_sim"]
+                            sim_cls = "sim-accept" if sc["accepted"] else "sim-reject"
+                            bar_w   = int(sim_val * 60)
+                            sem_cell = (
+                                f'<span class="sim-tag {sim_cls}">{sim_val:.2f}</span>'
+                                f'<span class="bar-wrap"><span class="bar-fill orange" style="width:{bar_w}px"></span></span>'
+                            )
+                            freq_bar = int(sc["freq_score"] * 60)
+                            freq_cell = (
+                                f'{sc["freq_score"]:.2f}'
+                                f'<span class="bar-wrap" style="margin-left:4px"><span class="bar-fill" style="width:{freq_bar}px"></span></span>'
+                            )
+                            combined_cell = f'<strong>{sc["combined"]:.3f}</strong>'
+                            rows_html += f'<tr class="{row_cls}"><td>{star}{sc["inflected"]}</td><td>{sem_cell}</td><td>{freq_cell}</td><td>{combined_cell}</td><td>{status_cell}</td></tr>'
+                        else:
+                            freq_bar = int(sc["freq_score"] * 60)
+                            freq_cell = f'{sc["freq_score"]:.2f}<span class="bar-wrap" style="margin-left:4px"><span class="bar-fill" style="width:{freq_bar}px"></span></span>'
+                            rows_html += f'<tr class="{row_cls}"><td>{star}{sc["inflected"]}</td><td>{freq_cell}</td><td>{status_cell}</td></tr>'
+
+                    if sbert_ok:
+                        th = "<tr><th>Candidate</th><th>Semantic</th><th>Frequency</th><th>Combined</th><th></th></tr>"
+                    else:
+                        th = "<tr><th>Candidate</th><th>Frequency</th><th></th></tr>"
+                    st.markdown(f'<table class="score-table"><thead>{th}</thead><tbody>{rows_html}</tbody></table>', unsafe_allow_html=True)
 
         if result["skipped"]:
             sk_html = " ".join(
@@ -820,17 +825,47 @@ if st.session_state.sentence_mode and st.session_state.result is not None:
 
     # ── Rebuild with current user choices ─────────────────────────────────────
     user_choices = st.session_state.user_choices
-    rebuilt = rewriter.rebuild_with_choices(sanitized, result["substitutions"], user_choices)
+    rebuilt = rewriter.rebuild_with_choices(
+        sanitized, result["substitutions"], user_choices
+    )
+    # Run grammar validation on the rebuilt sentence for post-check
+    post_issues = []
+    try:
+        from nltk import pos_tag, word_tokenize as _wt
+        _rb_tokens = _wt(rebuilt)
+        _rb_tags = pos_tag(_rb_tokens)
+        # Check for obvious SVA issues: 3rd-person singular pronoun + base verb
+        _THIRD = {"he", "she", "it"}
+        for _idx, (_w, _t) in enumerate(_rb_tags):
+            if _w.lower() in _THIRD and _idx + 1 < len(_rb_tags):
+                _nw, _nt = _rb_tags[_idx + 1]
+                if _nt == "VBP":  # non-3rd present = agreement mismatch
+                    post_issues.append(
+                        f'Possible agreement issue: "{_w} {_nw}" — check verb form.'
+                    )
+    except Exception:
+        pass
 
     # ── Card ③: Grammar check ─────────────────────────────────────────────────
-    notes = result["grammar_notes"]
-    if notes and "passed" in notes[0].lower():
-        grammar_html = f'<div class="grammar-ok">✓ {notes[0]}</div>'
-    elif notes:
-        items = "".join(f"<li>{n}</li>" for n in notes)
-        grammar_html = f'<div class="grammar-warn">⚠ Notes:<ul style="margin:.28rem 0 0 1rem;padding:0">{items}</ul></div>'
+    pipeline_notes = [n for n in result.get("grammar_notes", []) if "passed" not in n.lower()]
+
+    if post_issues:
+        items = "".join(f"<li>{_fmt(i)}</li>" for i in post_issues)
+        grammar_html = (
+            f'<div class="grammar-error">'
+            f'⚠ <strong>Grammar issues in rebuilt sentence:</strong>'
+            f'<ul style="margin:.3rem 0 0 1rem;padding:0">{items}</ul>'
+            f'</div>'
+        )
+    elif pipeline_notes:
+        items = "".join(f"<li>{_fmt(n)}</li>" for n in pipeline_notes)
+        grammar_html = (
+            f'<div class="grammar-warn">'
+            f'⚠ Notes:<ul style="margin:.28rem 0 0 1rem;padding:0">{items}</ul>'
+            f'</div>'
+        )
     else:
-        grammar_html = '<div class="grammar-ok">✓ No grammar issues detected.</div>'
+        grammar_html = '<div class="grammar-ok">✓ Grammar check passed — rebuilt sentence is grammatically valid.</div>'
 
     st.markdown(f"""
 <div class="pipe-card">
