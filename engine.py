@@ -143,7 +143,7 @@ class SynonymEngine:
         Datamuse ml= results are now POS-gated via WordNet when wn_pos is set —
         rel_syn= results are closer to true synonyms so they bypass the gate.
         """
-        word = word.strip().lower()
+        word = re.sub(r"^[^a-z]+|[^a-z]+$", "", word.strip().lower())
         synonyms: set[str] = set()
         synonyms |= self._wordnet_synonyms(word, wn_pos=wn_pos)
 
@@ -203,9 +203,17 @@ class SynonymEngine:
         wn_pos: WordNet POS constant (wn.NOUN, wn.VERB, wn.ADJ, wn.ADV)
                 to restrict WordNet lookups.  Pass None for word-mode (all senses).
         """
-        tokens = [t.strip() for t in re.split(r"[\s,]+", query) if t.strip()]
+        # Strip edge punctuation and lowercase each token so a trailing period
+        # from sanitize_input ("Happy.") never reaches wn.synsets() (which would
+        # return 0 candidates). No-op for clean single-word lemmas (rewriter path).
+        tokens = [
+            re.sub(r"^[^a-z]+|[^a-z]+$", "", t.strip().lower())
+            for t in re.split(r"[\s,]+", query) if t.strip()
+        ]
         results: dict[str, list[str]] = {}
         for word in tokens:
+            if not word:
+                continue
             raw = self._collect(word, wn_pos=wn_pos)
             ranked = self._rank(list(raw))
             results[word] = ranked[:top_k]
