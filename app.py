@@ -144,7 +144,7 @@ def _full_rebuilt_paragraph() -> str | None:
     parts = []
     for sid, sr in enumerate(st.session_state.ms_results):
         if sr.get("is_sentence"):
-            parts.append(_rebuild_sentence(sr, sid))
+            parts.append(_rebuild_sentence(sr, sid + 1))
         else:
             parts.append(sr["sanitized"])
     return " ".join(parts)
