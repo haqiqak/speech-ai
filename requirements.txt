@@ -1,1 +1,18 @@
-streamlit>=1.58.0nltk>=3.8requests>=2.31wordfreq>=3.0pyinflect>=0.5.1sentence-transformers>=2.2transformers>=4.40torch>=2.0torchvision>=0.15scikit-learn>=1.0numpy>=1.23pyspellchecker>=0.9.0language-tool-python>=3.4.0
+streamlit>=1.58.0
+
+nltk>=3.8
+requests>=2.31
+wordfreq>=3.0
+
+pyinflect>=0.5.1
+sentence-transformers>=2.2
+transformers>=4.40
+
+torch>=2.0
+torchvision>=0.15
+
+scikit-learn>=1.0
+numpy>=1.23
+
+pyspellchecker>=0.9.0
+language-tool-python>=3.4.0
