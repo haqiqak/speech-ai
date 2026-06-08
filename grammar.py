@@ -657,6 +657,23 @@ def _correct_auxiliary_forms(tokens: list[str]) -> tuple[list[str], list[dict]]:
       - am/is/are/was/were + base verb → gerund (I am go → I am going)
       - will/would/can/could/should/may/might + past/gerund → base (I will went → I will go)
       - has/have/had + base/gerund → past participle (I have eat → I have eaten)
+
+    BE + word guard (Issue 2):
+      We must NOT convert predicate adjectives even when they are also valid verb
+      base forms — "The box is empty", "The water is dirty", "That film is boring".
+      _BE_COMPLEMENT_STOP is belt-and-suspenders but can't enumerate every case.
+      The definitive test: fire the gerund fix only when the word has NO WordNet
+      adjective sense OR (it has one but the tagger labelled it as a verb, not JJ*).
+      This mirrors the philosophy of _is_bare_verb: use the unreliable tagger only
+      as a tie-breaker among adjective-capable words, never as the primary gate.
+
+      Verified hold cases  : empty, dirty, cool, calm, slow, light, clear, busy,
+                             boring, interesting, open, clean, flat, level, firm
+      Verified fix cases   : go, eat, run, play, sleep, write, process, walk,
+                             cook, study, talk — none have a WordNet adjective sense
+      Edge cases preserved : go/clean/open have adj senses but are almost always
+                             tagged VB/RB/VBP in the error context, so they still
+                             get fixed.
     """
     fixes = []
     tags = pos_tag(tokens)
@@ -675,10 +692,26 @@ def _correct_auxiliary_forms(tokens: list[str]) -> tuple[list[str], list[dict]]:
         # and _BE_COMPLEMENT_STOP guards verb-also-adjective words (well, free…).
         if lw in _BE_AUX and i + 1 < len(tags):
             next_word = tags[i + 1][0]
-            nlw = next_word.lower()
+            nlw       = next_word.lower()
+            next_tag  = tags[i + 1][1]
+
             if (nlw not in _STOP
                     and nlw not in _BE_COMPLEMENT_STOP
                     and _is_bare_verb(nlw)):
+
+                # ── Adjective-sense tie-breaker (Issue 2 fix) ─────────────────
+                # If the word has a WordNet adjective sense it is probably a
+                # predicate adjective here, NOT a misplaced bare verb.
+                # Exception: if the tagger labelled it as a verb form (VB/VBP/VBZ/
+                # VBD/VBG/VBN/RB) we trust the tagger and still apply the fix,
+                # because the erroneous "I am go" pattern consistently produces
+                # non-JJ tags even for open/clean which have adjective senses.
+                has_adj_sense = bool(wn.synsets(nlw, pos=wn.ADJ))
+                tagged_as_adj = next_tag.startswith("JJ")
+                if has_adj_sense and tagged_as_adj:
+                    # Word looks like a predicate adjective in this context — skip.
+                    continue
+
                 gerund     = pyinflect.getInflection(nlw, "VBG")
                 participle = pyinflect.getInflection(nlw, "VBN")
                 # Verbs whose participle == base form (read, run, set, cut, put,

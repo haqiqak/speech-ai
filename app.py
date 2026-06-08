@@ -593,7 +593,11 @@ if search_clicked and source_text:
                 st.session_state._word_results = engine.get_synonyms(
                     corrected_query, top_k=top_k)
         else:
-            sanitized, fixes = sanitize_input(corrected_query)
+            # Re-use the already-sanitized corrected_query — no second pass needed.
+            # sanitize_input was already called above; calling it again on its own
+            # output wastes two full POS-tag passes and can produce duplicate fix entries.
+            sanitized = corrected_query
+            fixes     = grammar_fixes          # same list, already stored above
             st.session_state.sanitized = sanitized
             st.session_state.fixes     = fixes
             with st.spinner("Analysing sentence, running semantic filter…"):
@@ -718,7 +722,20 @@ def _render_word_pickers(result: dict, sanitized: str, sid: int,
         if custom_word.strip():
             cw = custom_word.strip()
             if re.match(r"^[a-zA-Z\-']+$", cw):
-                st.caption(f"✓ Using custom word: {cw}")
+                # ── Issue 6 fix: phoneme firewall on custom words ──────────────
+                # Warn if the custom word starts with one of the user's stutter
+                # onsets or is on their blocked list — same check Gate B applies
+                # to engine candidates.  We warn but still allow, because the
+                # user may be deliberately overriding for a specific reason.
+                cw_onset_hit = (cw.lower() in blocked) or ph.matches_any(cw, patterns)
+                if cw_onset_hit and patterns:
+                    onset_str_cw = "/".join(ph.onset(cw)) or cw[0].upper()
+                    st.caption(
+                        f"⚠ '{cw}' starts with your stutter onset (/{onset_str_cw}/) "
+                        f"— it may be difficult to say. You can still use it."
+                    )
+                else:
+                    st.caption(f"✓ Using custom word: {cw}")
                 choices[pos_key] = cw
             else:
                 st.caption("⚠ Custom word should contain only letters.")
@@ -991,6 +1008,24 @@ if not st.session_state.get("multi_mode"):
             on_pat    = (word.lower() in blocked) or ph.matches_any(word, patterns)
             tag_color = "badge-warn" if on_pat else "badge-blue"
 
+            # Defensive normalisation: engine.get_synonyms() may return either
+            #   flat list  : ["synonym1", "synonym2", ...]          (current shape)
+            #   rich dict  : {"pos": "NN", "synonyms": [{...}, ...]} (future shape)
+            # Normalise both to a flat list of strings so the renderer never crashes.
+            if isinstance(syns, dict):
+                raw_syns = syns.get("synonyms", [])
+                syn_strings = [
+                    s["lemma"] if isinstance(s, dict) else str(s)
+                    for s in raw_syns
+                ]
+            elif isinstance(syns, list):
+                syn_strings = [
+                    s["lemma"] if isinstance(s, dict) else str(s)
+                    for s in syns
+                ]
+            else:
+                syn_strings = []
+
             st.markdown(f"""
 <div class="word-card">
   <div class="word-card-header">
@@ -1000,9 +1035,9 @@ if not st.session_state.get("multi_mode"):
     {"<span class='badge badge-red'>⚠ stutter risk</span>" if on_pat else ""}
   </div>""", unsafe_allow_html=True)
 
-            if syns:
+            if syn_strings:
                 st.markdown('<div class="pill-wrap">', unsafe_allow_html=True)
-                for s in syns[:8]:
+                for s in syn_strings[:8]:
                     phon_ok = (not ph.matches_any(s, patterns)
                                and s.lower() not in blocked)
                     cls = "top" if phon_ok else "mid"
