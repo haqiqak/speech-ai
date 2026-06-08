@@ -561,7 +561,7 @@ if search_clicked and source_text:
                     result = rewriter.rewrite(
                         sanitized, top_k=top_k,
                         stutter_patterns=patterns,
-                        blocked_words=blocked | allowlisted,  # allowlist locks words
+                        blocked_words=blocked, allowlist=allowlisted,  # allowlist locks words
                     )
                 ms_results.append({
                     "raw": raw_sent,
@@ -604,7 +604,7 @@ if search_clicked and source_text:
                 result = rewriter.rewrite(
                     sanitized, top_k=top_k,
                     stutter_patterns=patterns,
-                    blocked_words=blocked | allowlisted,
+                    blocked_words=blocked, allowlist=allowlisted,
                 )
             st.session_state.result = result
 

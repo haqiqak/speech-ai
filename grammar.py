@@ -1380,6 +1380,7 @@ class SentenceRewriter:
         top_k: int = 10,
         stutter_patterns: list[str] | None = None,
         blocked_words: set[str] | None = None,
+        allowlist: set[str] | None = None,
     ) -> dict:
         """
         Full pipeline:
@@ -1405,6 +1406,7 @@ class SentenceRewriter:
         """
         patterns = [p for p in (stutter_patterns or []) if p and p.strip()]
         blocked  = {w.lower() for w in (blocked_words or set()) if w and w.strip()}
+        allow    = {w.lower() for w in (allowlist or set()) if w and w.strip()}
         gating   = bool(patterns or blocked)
 
         tokens = word_tokenize(sentence)
@@ -1419,6 +1421,10 @@ class SentenceRewriter:
 
         for i, (word, tag) in enumerate(tags):
             lower = word.lower()
+            # Allowlist: words the user locked in place — never substituted.
+            if lower in allow:
+                skipped.append({"word": word, "reason": "allowlisted — locked"})
+                continue
             if not re.match(r"[a-z]", lower):
                 continue
             if tag not in _SUBSTITUTABLE:
