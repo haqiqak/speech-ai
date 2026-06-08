@@ -1,0 +1,6 @@
+accelerate>=0.30
+datasets>=2.19
+evaluate>=0.4
+peft>=0.11
+sentencepiece>=0.2
+transformers>=4.40
