@@ -1,6 +1,6 @@
 # Speech AI — Multi-User Auth
 
-## New files
+## User Authentication files
 
 | File | Purpose |
 |------|---------|
