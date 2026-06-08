@@ -1,18 +1,20 @@
 """
 tests/smoke.py — behavioural baseline / regression net (not shipped, dev-only).
 
-Run BEFORE and AFTER changes and diff the output:
+Run BEFORE and AFTER changes and diff the output.  DISABLE_DATAMUSE=1 is REQUIRED
+for deterministic output (it skips the network synonym source):
 
-    python tests/smoke.py > tests/baseline.txt   # before a change
-    python tests/smoke.py > tests/after.txt       # after a change
-    diff tests/baseline.txt tests/after.txt       # (use fc on Windows)
+    DISABLE_DATAMUSE=1 python tests/smoke.py > tests/after_sbert.txt
+    diff tests/baseline_sbert.txt tests/after_sbert.txt     # (use fc on Windows)
 
-Output is deterministic (SBERT encode is deterministic) so a clean diff means
-the synonym pipeline did not regress.  Grammar lines are EXPECTED to change for
-the broken-grammar cases once the hardened correction lands — that is the point.
+Committed reference baselines:
+  • tests/baseline_sbert.txt  — PRIMARY reference (SBERT-on; DISABLE_DATAMUSE=1)
+  • tests/baseline.txt        — frequency-only (DISABLE_DATAMUSE=1 SMOKE_SKIP_SBERT=1)
 
-Optional 2nd arg = comma/space separated stutter patterns to exercise the
-phoneme gates (after they are implemented); omit for the legacy baseline.
+Set SMOKE_SKIP_SBERT=1 to force frequency-only mode on RAM-constrained machines.
+The WORD MODE section mirrors the app (sanitize_input first, then get_synonyms),
+so it would catch the trailing-punctuation class of bug.  Optional 2nd arg =
+comma/space separated stutter patterns to exercise the phoneme gates.
 """
 import sys
 import os
@@ -52,6 +54,10 @@ SENTENCES = [
     "it is done",
     "he is gone",
     "I am well",
+    # adjective-after-BE guards (must NOT receive an auxiliary_form/gerund fix)
+    "The box is empty",
+    "The water is dirty",
+    "That movie is boring",
     # tense + informal
     "i dont eat pizza yesterday",
     # general sentence
@@ -107,11 +113,14 @@ def main():
         print(f"  SKIPPED:   {norm_skip}")
 
     print("\n" + "=" * 78)
-    print("WORD MODE")
+    print("WORD MODE  (mirrors the app: sanitize_input first, then get_synonyms)")
     print("=" * 78)
     for w in WORDS:
-        res = engine.get_synonyms(w)
-        print(f"  {w!r:12} -> {res.get(w, [])}")
+        sanitized, _ = sanitize_input(w)
+        res = engine.get_synonyms(sanitized)
+        print(f"  {w!r:12} sanitized={sanitized!r}")
+        for k, syns in res.items():
+            print(f"    [{k}] -> {syns}")
 
 
 if __name__ == "__main__":

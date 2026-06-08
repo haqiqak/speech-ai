@@ -1,0 +1,137 @@
+==============================================================================
+SMOKE BASELINE   sbert=True   patterns=(none)
+==============================================================================
+
+------------------------------------------------------------------------------
+INPUT:     'The committee reached an important decision today.'
+SANITIZED: 'The committee reached an important decision today.'
+  SUB 'reached'      (VBD) -> 'came'   accepted=['come', 'give', 'hand', 'win', 'hit', 'touch', 'pass', 'contact', 'drive', 'move']
+  SUB 'important'    (JJ) -> 'key'   accepted=['key', 'main', 'big', 'great', 'large']
+  SKIPPED:   ['committee:no valid synonym', 'decision:no valid synonym', 'today:no valid synonym']
+
+------------------------------------------------------------------------------
+INPUT:     'The company is under stress.'
+SANITIZED: 'The company is under stress.'
+  SKIPPED:   ['company:no valid synonym', 'stress:no valid synonym']
+
+------------------------------------------------------------------------------
+INPUT:     'He was eating lunch at the restaurant.'
+SANITIZED: 'He was eating lunch at the restaurant.'
+  SUB 'eating'       (VBG) -> 'consuming'   accepted=['consume', 'take', 'feed', 'spend', 'expend']
+  SUB 'lunch'        (NN) -> 'luncheon'   accepted=['luncheon']
+  SKIPPED:   ['restaurant:no valid synonym']
+
+------------------------------------------------------------------------------
+INPUT:     'I look forward to the meeting.'
+SANITIZED: 'I look forward to the meeting.'
+  SKIPPED:   ['meeting:no valid synonym']
+
+------------------------------------------------------------------------------
+INPUT:     'He go to school every day.'
+SANITIZED: 'He goes to school every day.'
+  FIX [subject_verb_agreement] 'go' -> 'goes'
+  SUB 'goes'         (VBZ) -> 'takes'   accepted=['take', 'work', 'live', 'start', 'become', 'end', 'run', 'last', 'stop']
+  SUB 'school'       (NN) -> 'schooling'   accepted=['schooling']
+  SKIPPED:   ['day:no valid synonym']
+
+------------------------------------------------------------------------------
+INPUT:     'she is run right now'
+SANITIZED: 'She is running right now.'
+  FIX [capitalization] 's' -> 'S'
+  FIX [auxiliary_form] 'run' -> 'running'
+  FIX [punctuation] '' -> '.'
+  SUB 'right'        (RB) -> 'properly'   accepted=['properly', 'correctly', 'justly', 'aright', 'decently', 'mightily']
+  SUB 'now'          (RB) -> 'today'   accepted=['today']
+  SKIPPED:   ['running:no valid synonym']
+
+------------------------------------------------------------------------------
+INPUT:     'I am go now'
+SANITIZED: 'I am going now.'
+  FIX [auxiliary_form] 'go' -> 'going'
+  FIX [punctuation] '' -> '.'
+  SKIPPED:   ['going:no valid synonym', 'now:no valid synonym']
+
+------------------------------------------------------------------------------
+INPUT:     'she is tired now'
+SANITIZED: 'She is tired now.'
+  FIX [capitalization] 's' -> 'S'
+  FIX [punctuation] '' -> '.'
+  SUB 'now'          (RB) -> 'today'   accepted=['today', 'nowadays', 'immediately', 'directly', 'forthwith']
+  SKIPPED:   ['tired:no valid synonym']
+
+------------------------------------------------------------------------------
+INPUT:     'the door is broken'
+SANITIZED: 'The door is broken.'
+  FIX [capitalization] 't' -> 'T'
+  FIX [punctuation] '' -> '.'
+  SUB 'door'         (NN) -> 'doorway'   accepted=['doorway']
+  SKIPPED:   ['broken:no valid synonym']
+
+------------------------------------------------------------------------------
+INPUT:     'it is done'
+SANITIZED: 'It is done.'
+  FIX [capitalization] 'i' -> 'I'
+  FIX [punctuation] '' -> '.'
+  SKIPPED:   ['done:no valid synonym']
+
+------------------------------------------------------------------------------
+INPUT:     'he is gone'
+SANITIZED: 'He is gone.'
+  FIX [capitalization] 'h' -> 'H'
+  FIX [punctuation] '' -> '.'
+  SKIPPED:   ['gone:no valid synonym']
+
+------------------------------------------------------------------------------
+INPUT:     'I am well'
+SANITIZED: 'I am well.'
+  FIX [punctuation] '' -> '.'
+  SKIPPED:   ['well:no valid synonym']
+
+------------------------------------------------------------------------------
+INPUT:     'The box is empty'
+SANITIZED: 'The box is empty.'
+  FIX [punctuation] '' -> '.'
+  SUB 'empty'        (JJ) -> 'blank'   accepted=['blank']
+  SKIPPED:   ['box:no valid synonym']
+
+------------------------------------------------------------------------------
+INPUT:     'The water is dirty'
+SANITIZED: 'The water is dirty.'
+  FIX [punctuation] '' -> '.'
+  SUB 'dirty'        (JJ) -> 'dirty-faced'   accepted=['dirty-faced']
+  SKIPPED:   ['water:no valid synonym']
+
+------------------------------------------------------------------------------
+INPUT:     'That movie is boring'
+SANITIZED: 'That movie is boring.'
+  FIX [punctuation] '' -> '.'
+  SUB 'movie'        (NN) -> 'film'   accepted=['film']
+  SKIPPED:   ['boring:no valid synonym']
+
+------------------------------------------------------------------------------
+INPUT:     'i dont eat pizza yesterday'
+SANITIZED: "I don't eat pizza yesterday."
+  FIX [spelling] 'dont' -> "don't"
+  FIX [pronoun_case] 'i' -> 'I'
+  FIX [punctuation] '' -> '.'
+  SUB 'eat'          (VB) -> 'consume'   accepted=['consume', 'take', 'feed', 'spend', 'expend']
+  SKIPPED:   ["n't:no synonyms found", 'pizza:no valid synonym', 'yesterday:no valid synonym']
+
+------------------------------------------------------------------------------
+INPUT:     'The quick brown fox jumps over the lazy dog.'
+SANITIZED: 'The quick brown fox jumps over the lazy dog.'
+  SUB 'quick'        (JJ) -> 'fast'   accepted=['fast', 'immediate', 'ready', 'speedy', 'active', 'flying', 'warm', 'agile', 'intelligent', 'prompt']
+  SUB 'jumps'        (VBZ) -> 'moves'   accepted=['move', 'go', 'start', 'drop', 'travel', 'look']
+  SKIPPED:   ['brown:no synonyms found', 'fox:no valid synonym', 'lazy:no valid synonym', 'dog:no valid synonym']
+
+==============================================================================
+WORD MODE  (mirrors the app: sanitize_input first, then get_synonyms)
+==============================================================================
+  'happy'      sanitized='Happy.'
+    [happy] -> ['content', 'glad', 'willing', 'golden', 'bright', 'laughing', 'well-chosen', 'happiness', 'blessed', 'fortunate', 'cheerful', 'prosperous', 'joyful', 'felicity', 'joyous']
+  'present'    sanitized='Present.'
+    [present] -> ['time', 'here', 'say', 'state', 'give', 'show', 'tell', 'face', 'talk', 'stage', 'ever-present', 'speak', 'award', 'mouth', 're-create']
+  'street'     sanitized='Street.'
+    [street] -> ['chance', 'opportunity', 'environment', 'neighborhood', 'neighbourhood', 'thoroughfare']
+  'strong'     sanitized='Strong.'
+    [strong] -> ['hard', 'well-set', 'sound', 'effective', 'powerful', 'fresh', 'strength', 'firm', 'tough', 'solid', 'warm', 'secure', 'severe', 'weapons-grade', 'industrial-strength']

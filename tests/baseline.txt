@@ -16,30 +16,29 @@ SANITIZED: 'The committee reached an important decision today.'
 INPUT:     'The company is under stress.'
 SANITIZED: 'The company is under stress.'
   SUB 'company'      (NN) -> 'lot'   accepted=['lot', 'set', 'party', 'society', 'unit', 'band', 'organization', 'circle', 'establishment', 'institution']
-  SUB 'stress'       (NN) -> 'force'   accepted=['force', 'focus', 'difficulty', 'tension', 'emphasis', 'strain', 'accent']
+  SUB 'stress'       (NN) -> 'force'   accepted=['force', 'focus', 'difficulty', 'tension', 'emphasis', 'strain', 'accent', 'inflection', 'prosody']
   SKIPPED:   []
 
 ------------------------------------------------------------------------------
 INPUT:     'He was eating lunch at the restaurant.'
 SANITIZED: 'He was eating lunch at the restaurant.'
-  SUB 'eating'       (VBG) -> 'taking'   accepted=['take', 'drop', 'spend', 'damage', 'worry', 'feed', 'consume', 'exhaust', 'rust']
-  SUB 'lunch'        (NN) -> 'meal'   accepted=['meal', 'luncheon']
-  SUB 'restaurant'   (NN) -> 'building'   accepted=['building']
+  SUB 'eating'       (VBG) -> 'taking'   accepted=['take', 'drop', 'spend', 'damage', 'worry', 'feed', 'consume', 'exhaust', 'rust', 'expend']
+  SUB 'lunch'        (NN) -> 'meal'   accepted=['meal', 'luncheon', 'tiffin']
+  SUB 'restaurant'   (NN) -> 'building'   accepted=['building', 'edifice', 'eatery']
   SKIPPED:   []
 
 ------------------------------------------------------------------------------
 INPUT:     'I look forward to the meeting.'
 SANITIZED: 'I look forward to the meeting.'
-  SUB 'meeting'      (NN) -> 'assembly'   accepted=['assembly', 'encounter', 'gathering', 'convergence', 'merging', 'confluence']
+  SUB 'meeting'      (NN) -> 'assembly'   accepted=['assembly', 'encounter', 'gathering', 'convergence', 'merging', 'confluence', 'assemblage', 'converging']
   SKIPPED:   []
 
 ------------------------------------------------------------------------------
 INPUT:     'He go to school every day.'
 SANITIZED: 'He goes to school every day.'
   FIX [subject_verb_agreement] 'go' -> 'goes'
-  FIX [punctuation] '' -> '.'
   SUB 'goes'         (VBZ) -> 'works'   accepted=['work', 'take', 'last', 'end', 'start', 'change', 'live', 'stop', 'run', 'become']
-  SUB 'school'       (NN) -> 'body'   accepted=['body', 'building', 'education', 'period', 'schooling']
+  SUB 'school'       (NN) -> 'body'   accepted=['body', 'building', 'education', 'period', 'schooling', 'edifice', 'shoal', 'schoolhouse']
   SUB 'day'          (NN) -> 'time'   accepted=['time', 'chance', 'period', 'opportunity', 'era', 'daylight', 'daytime', 'epoch']
   SKIPPED:   []
 
@@ -50,8 +49,8 @@ SANITIZED: 'She is running right now.'
   FIX [auxiliary_form] 'run' -> 'running'
   FIX [punctuation] '' -> '.'
   SUB 'running'      (VBG) -> 'going'   accepted=['go', 'work', 'last', 'free', 'play', 'change', 'course', 'become', 'win', 'move']
-  SUB 'right'        (RB) -> 'powerful'   accepted=['powerful', 'properly', 'decent', 'correctly', 'mighty', 'flop']
-  SUB 'now'          (RB) -> 'today'   accepted=['today', 'immediately', 'directly', 'instantly', 'nowadays']
+  SUB 'right'        (RB) -> 'powerful'   accepted=['powerful', 'properly', 'decent', 'correctly', 'mighty', 'flop', 'decently', 'justly', 'mightily', 'aright']
+  SUB 'now'          (RB) -> 'today'   accepted=['today', 'immediately', 'directly', 'instantly', 'nowadays', 'forthwith', 'straightaway']
   SKIPPED:   []
 
 ------------------------------------------------------------------------------
@@ -60,7 +59,7 @@ SANITIZED: 'I am going now.'
   FIX [auxiliary_form] 'go' -> 'going'
   FIX [punctuation] '' -> '.'
   SUB 'going'        (VBG) -> 'working'   accepted=['work', 'take', 'last', 'end', 'start', 'change', 'live', 'stop', 'run', 'become']
-  SUB 'now'          (RB) -> 'today'   accepted=['today', 'immediately', 'directly', 'instantly', 'nowadays']
+  SUB 'now'          (RB) -> 'today'   accepted=['today', 'immediately', 'directly', 'instantly', 'nowadays', 'forthwith', 'straightaway']
   SKIPPED:   []
 
 ------------------------------------------------------------------------------
@@ -69,7 +68,7 @@ SANITIZED: 'She is tired now.'
   FIX [capitalization] 's' -> 'S'
   FIX [punctuation] '' -> '.'
   SUB 'tired'        (JJ) -> 'dead'   accepted=['dead', 'spent', 'beat', 'stock', 'dog-tired', 'drawn', 'old-hat', 'burned-out', 'worn', 'worn-out']
-  SUB 'now'          (RB) -> 'today'   accepted=['today', 'immediately', 'directly', 'instantly', 'nowadays']
+  SUB 'now'          (RB) -> 'today'   accepted=['today', 'immediately', 'directly', 'instantly', 'nowadays', 'forthwith', 'straightaway']
   SKIPPED:   []
 
 ------------------------------------------------------------------------------
@@ -94,41 +93,69 @@ INPUT:     'he is gone'
 SANITIZED: 'He is gone.'
   FIX [capitalization] 'h' -> 'H'
   FIX [punctuation] '' -> '.'
-  SUB 'gone'         (JJ) -> 'lost'   accepted=['lost', 'past', 'dead', 'destroyed', 'asleep', 'deceased', 'departed']
+  SUB 'gone'         (JJ) -> 'lost'   accepted=['lost', 'past', 'dead', 'destroyed', 'asleep', 'deceased', 'departed', 'bygone', 'foregone', 'kaput']
   SKIPPED:   []
 
 ------------------------------------------------------------------------------
 INPUT:     'I am well'
 SANITIZED: 'I am well.'
   FIX [punctuation] '' -> '.'
-  SUB 'well'         (RB) -> 'good'   accepted=['good', 'easily', 'considerably', 'substantially', 'comfortably', 'intimately']
+  SUB 'well'         (RB) -> 'good'   accepted=['good', 'easily', 'considerably', 'substantially', 'comfortably', 'intimately', 'advantageously']
+  SKIPPED:   []
+
+------------------------------------------------------------------------------
+INPUT:     'The box is empty'
+SANITIZED: 'The box is empty.'
+  FIX [punctuation] '' -> '.'
+  SUB 'box'          (NN) -> 'area'   accepted=['area', 'seat', 'corner', 'blow', 'bush', 'container', 'compartment', 'plight', 'predicament', 'rectangle']
+  SUB 'empty'        (JJ) -> 'white'   accepted=['white', 'clean', 'hungry', 'empty-handed', 'bare', 'blank', 'void', 'hollow', 'stripped', 'vacant']
+  SKIPPED:   []
+
+------------------------------------------------------------------------------
+INPUT:     'The water is dirty'
+SANITIZED: 'The water is dirty.'
+  FIX [punctuation] '' -> '.'
+  SUB 'water'        (NN) -> 'thing'   accepted=['thing', 'food', 'facility', 'element', 'liquid', 'piss', 'installation', 'pee', 'urine', 'nutrient']
+  SUB 'dirty'        (JJ) -> 'black'   accepted=['black', 'blue', 'off-color', 'illegal', 'marked-up', 'awful', 'ill-gotten', 'dirty-faced', 'nasty', 'cheating']
+  SKIPPED:   []
+
+------------------------------------------------------------------------------
+INPUT:     'That movie is boring'
+SANITIZED: 'That movie is boring.'
+  FIX [punctuation] '' -> '.'
+  SUB 'movie'        (NN) -> 'show'   accepted=['show', 'film', 'production', 'picture', 'product', 'pic', 'flick']
+  SUB 'boring'       (JJ) -> 'slow'   accepted=['slow', 'dull', 'ho-hum', 'tedious', 'tiresome', 'uninteresting', 'irksome', 'deadening']
   SKIPPED:   []
 
 ------------------------------------------------------------------------------
 INPUT:     'i dont eat pizza yesterday'
 SANITIZED: "I don't eat pizza yesterday."
-  FIX [contraction] 'dont' -> "don't"
+  FIX [spelling] 'dont' -> "don't"
   FIX [pronoun_case] 'i' -> 'I'
   FIX [punctuation] '' -> '.'
-  SUB 'eat'          (VB) -> 'take'   accepted=['take', 'drop', 'spend', 'damage', 'worry', 'feed', 'consume', 'exhaust', 'rust']
+  SUB 'eat'          (VB) -> 'take'   accepted=['take', 'drop', 'spend', 'damage', 'worry', 'feed', 'consume', 'exhaust', 'rust', 'expend']
   SUB 'pizza'        (NN) -> 'dish'   accepted=['dish']
-  SUB 'yesterday'    (NN) -> 'day'   accepted=['day', 'past']
+  SUB 'yesterday'    (NN) -> 'day'   accepted=['day', 'past', 'yesteryear']
   SKIPPED:   ["n't:no synonyms found"]
 
 ------------------------------------------------------------------------------
 INPUT:     'The quick brown fox jumps over the lazy dog.'
 SANITIZED: 'The quick brown fox jumps over the lazy dog.'
   SUB 'quick'        (JJ) -> 'ready'   accepted=['ready', 'fast', 'active', 'flying', 'warm', 'immediate', 'intelligent', 'prompt', 'speedy', 'agile']
-  SUB 'fox'          (NN) -> 'cheat'   accepted=['cheat', 'fur', 'canine', 'dodger', 'cheater']
+  SUB 'fox'          (NN) -> 'cheat'   accepted=['cheat', 'fur', 'canine', 'dodger', 'cheater', 'pelt', 'trickster', 'algonquin', 'deceiver', 'slicker']
   SUB 'jumps'        (VBZ) -> 'goes'   accepted=['go', 'look', 'start', 'change', 'move', 'miss', 'attack', 'seem', 'travel', 'drop']
-  SUB 'lazy'         (JJ) -> 'slow'   accepted=['slow', 'work-shy', 'idle']
+  SUB 'lazy'         (JJ) -> 'slow'   accepted=['slow', 'work-shy', 'idle', 'indolent']
   SUB 'dog'          (NN) -> 'support'   accepted=['support', 'stop', 'catch', 'click', 'fellow', 'frank', 'dog-iron', 'lad', 'villain', 'heel']
   SKIPPED:   ['brown:no synonyms found']
 
 ==============================================================================
-WORD MODE
+WORD MODE  (mirrors the app: sanitize_input first, then get_synonyms)
 ==============================================================================
-  'happy'      -> ['content', 'glad', 'willing', 'golden', 'bright', 'laughing', 'well-chosen', 'happiness', 'blessed', 'fortunate', 'cheerful', 'prosperous', 'joyful', 'felicity', 'joyous']
-  'present'    -> ['time', 'here', 'say', 'state', 'give', 'show', 'tell', 'face', 'talk', 'stage', 'ever-present', 'speak', 'award', 'mouth', 're-create']
-  'street'     -> ['chance', 'opportunity', 'environment', 'neighborhood', 'neighbourhood']
-  'strong'     -> ['hard', 'well-set', 'sound', 'effective', 'powerful', 'fresh', 'strength', 'firm', 'tough', 'solid', 'warm', 'secure', 'severe', 'weapons-grade', 'industrial-strength']
+  'happy'      sanitized='Happy.'
+    [happy] -> ['content', 'glad', 'willing', 'golden', 'bright', 'laughing', 'well-chosen', 'happiness', 'blessed', 'fortunate', 'cheerful', 'prosperous', 'joyful', 'felicity', 'joyous']
+  'present'    sanitized='Present.'
+    [present] -> ['time', 'here', 'say', 'state', 'give', 'show', 'tell', 'face', 'talk', 'stage', 'ever-present', 'speak', 'award', 'mouth', 're-create']
+  'street'     sanitized='Street.'
+    [street] -> ['chance', 'opportunity', 'environment', 'neighborhood', 'neighbourhood', 'thoroughfare']
+  'strong'     sanitized='Strong.'
+    [strong] -> ['hard', 'well-set', 'sound', 'effective', 'powerful', 'fresh', 'strength', 'firm', 'tough', 'solid', 'warm', 'secure', 'severe', 'weapons-grade', 'industrial-strength']
