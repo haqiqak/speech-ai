@@ -118,16 +118,54 @@ class SynonymEngine:
         return set(_datamuse_fetch(word, self.DATAMUSE_TIMEOUT))
 
     # ── Collection & cleaning ───────────────────────────────────────────────
+    def _filter_datamuse_by_pos(self, candidates: set[str], wn_pos) -> set[str]:
+        """
+        When wn_pos is given, discard Datamuse candidates that have NO WordNet
+        synset matching that POS.  Words absent from WordNet entirely are kept
+        (they may be valid but just not in WN).  This gates the ml= endpoint
+        which is POS-agnostic by design, preventing e.g. 'pressurize' (verb)
+        from appearing in a noun synonym list for 'stress'.
+        """
+        if wn_pos is None:
+            return candidates
+        filtered: set[str] = set()
+        for word in candidates:
+            synsets = wn.synsets(word, pos=wn_pos)
+            # Keep if it has at least one same-POS sense, OR if it's not in WN at all
+            if synsets or not wn.synsets(word):
+                filtered.add(word)
+        return filtered
+
     def _collect(self, word: str, wn_pos=None) -> set[str]:
         """
         Gather candidates from all sources.
         wn_pos filters WordNet to a specific POS (prevents cross-POS leak).
-        Datamuse is unfiltered (it has its own relevance ranking).
+        Datamuse ml= results are now POS-gated via WordNet when wn_pos is set —
+        rel_syn= results are closer to true synonyms so they bypass the gate.
         """
         word = word.strip().lower()
         synonyms: set[str] = set()
         synonyms |= self._wordnet_synonyms(word, wn_pos=wn_pos)
-        synonyms |= self._datamuse_synonyms(word)
+
+        # Split Datamuse: rel_syn= is already POS-appropriate (kept as-is);
+        # ml= is meaning-like but POS-agnostic (gate it when we know the POS).
+        raw_datamuse = self._datamuse_synonyms(word)
+        if wn_pos is not None:
+            # Fetch rel_syn separately to protect it from POS gating
+            rel_syn_only: set[str] = set()
+            if os.environ.get("DISABLE_DATAMUSE") != "1":
+                try:
+                    url = f"https://api.datamuse.com/words?rel_syn={word}"
+                    data = requests.get(url, timeout=self.DATAMUSE_TIMEOUT).json()
+                    rel_syn_only = {item["word"].lower() for item in data}
+                except Exception:
+                    pass
+            ml_only = raw_datamuse - rel_syn_only
+            ml_filtered = self._filter_datamuse_by_pos(ml_only, wn_pos)
+            synonyms |= rel_syn_only
+            synonyms |= ml_filtered
+        else:
+            synonyms |= raw_datamuse
 
         # Remove the query word and clearly junk entries
         synonyms.discard(word)

@@ -182,16 +182,28 @@ def _syllable_count(word: str) -> int:
 def word_difficulty(word: str) -> float:
     """
     Heuristic stutter difficulty in [0,1] for a single word:
-        0.4 * onset-cluster size  +  0.3 * syllable load  +  0.3 * rarity
-    Longer onsets, more syllables, and rarer words are harder.
+
+        base  = 0.4 × onset_cluster_length  +  0.3 × syllable_load  +  0.3 × rarity
+        bonus = +0.15 if onset starts with a plosive or affricate
+
+    Plosives (P B T D K G) and affricates (CH JH) are the phoneme classes most
+    associated with stuttering blocks — a single-phoneme onset /p/ is harder
+    to initiate than a single-phoneme fricative /s/ or sonorant /m/.
+    The bonus is capped so the total never exceeds 1.0.
     """
+    _PLOSIVE_AFFRICATE = {"P", "B", "T", "D", "K", "G", "CH", "JH"}
+
     w = word.strip().lower()
     if not w or not re.search(r"[a-z]", w):
         return 0.0
-    onset_score = min(len(onset(w)) / 3.0, 1.0)
-    syll_score  = min(_syllable_count(w) / 4.0, 1.0)
-    rarity      = 1.0 - min(zipf_frequency(w, "en") / 7.0, 1.0)
-    return round(0.4 * onset_score + 0.3 * syll_score + 0.3 * rarity, 4)
+    word_onset     = onset(w)
+    onset_score    = min(len(word_onset) / 3.0, 1.0)
+    syll_score     = min(_syllable_count(w) / 4.0, 1.0)
+    rarity         = 1.0 - min(zipf_frequency(w, "en") / 7.0, 1.0)
+    base           = 0.4 * onset_score + 0.3 * syll_score + 0.3 * rarity
+    # Plosive/affricate penalty: first phoneme in the onset cluster
+    plosive_bonus  = 0.15 if (word_onset and word_onset[0] in _PLOSIVE_AFFRICATE) else 0.0
+    return round(min(base + plosive_bonus, 1.0), 4)
 
 
 def sentence_difficulty(words) -> float:

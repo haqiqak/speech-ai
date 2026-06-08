@@ -4,7 +4,8 @@
   "phoneme_profile": {
     "stutter_patterns": [
       "b",
-      "c"
+      "c",
+      "g"
     ],
     "blocked_words": []
   },

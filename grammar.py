@@ -36,6 +36,35 @@ import phonetic as ph
 for _pkg in ("averaged_perceptron_tagger_eng", "punkt_tab", "wordnet", "omw-1.4"):
     nltk.download(_pkg, quiet=True)
 
+# ── Spelling correction (pyspellchecker — fast, fully offline) ────────────────
+try:
+    from spellchecker import SpellChecker as _SpellChecker
+    _spell = _SpellChecker()
+    _SPELL_OK = True
+except ImportError:
+    _spell = None
+    _SPELL_OK = False
+
+# ── LanguageTool integration (optional; requires Java 8+) ─────────────────────
+# Loaded lazily on first use so startup time is not affected if Java is absent.
+_lt_tool = None
+_LT_OK   = False   # set True once the tool loads successfully
+
+def _get_lt_tool():
+    """Return a (cached) LanguageTool instance, or None if unavailable."""
+    global _lt_tool, _LT_OK
+    if _LT_OK:
+        return _lt_tool
+    if _lt_tool is not None:   # already tried and failed
+        return None
+    try:
+        import language_tool_python as _ltp
+        _lt_tool = _ltp.LanguageTool("en-US")
+        _LT_OK   = True
+    except Exception:
+        _lt_tool = None   # sentinel — don't retry
+    return _lt_tool
+
 _lemmatizer = WordNetLemmatizer()
 
 # ── POS constants ─────────────────────────────────────────────────────────────
@@ -194,13 +223,16 @@ _CONTRACTIONS = {
     r"\bhasnt\b":    "hasn't",
     r"\bhadnt\b":    "hadn't",
     r"\bdidnt\b":    "didn't",
-    r"\bim\b":       "I'm",
+    # "im" → "I'm" only when followed by a letter-word (not end-of-line/punct)
+    r"\bim\b(?=\s+[a-zA-Z])": "I'm",
     r"\bive\b":      "I've",
     r"\bill\b":      "I'll",
     r"\bthats\b":    "that's",
     r"\bwhats\b":    "what's",
     r"\bwhos\b":     "who's",
-    r"\bits\b":      "it's",
+    # "its" → "it's": handled below by _fix_its_contraction() after POS tagging
+    # (the regex r"\bits\b" cannot distinguish possessive from contraction)
+    r"\btheyre\b":   "they're",
     r"\btheyre\b":   "they're",
     r"\btheyve\b":   "they've",
     r"\btheyll\b":   "they'll",
@@ -337,29 +369,57 @@ def _correct_negation_agreement(tokens: list[str]) -> tuple[list[str], list[dict
       "He don't know"     → "He doesn't know"
       "I doesn't care"    → "I don't care"
     Also fixes uncontracted "do not" / "does not" mismatches.
+    Handles both surface forms: "don't" and the tokenized split "do" + "n't".
     """
     fixes  = []
     tokens = list(tokens)
     tags   = pos_tag(tokens)
 
-    # Pass A: contracted forms
-    for i, (word, tag) in enumerate(tags):
+    # Pass A: contracted forms — handle "don't"/"doesn't" AND tokenized "do/does" + "n't"
+    i = 0
+    while i < len(tags):
+        word, tag = tags[i]
         lw = word.lower()
-        if lw not in ("don't", "doesn't"):
+
+        # Case 1: single token "don't" or "doesn't"
+        if lw in ("don't", "doesn't"):
+            subj, _ = _find_subject_left(tags, i)
+            if subj is not None:
+                correct_neg = _DO_NEG_PRESENT.get(subj)
+                if correct_neg and lw != correct_neg:
+                    fixes.append({
+                        "type":        "negation_agreement",
+                        "original":    word,
+                        "corrected":   correct_neg,
+                        "description": f'Negation agreement: "{word}" → "{correct_neg}" (subject: "{subj}")',
+                        "index":       i,
+                    })
+                    tokens[i] = _preserve_case(word, correct_neg)
+            i += 1
             continue
-        subj, _ = _find_subject_left(tags, i)
-        if subj is None:
+
+        # Case 2: tokenized "do"/"does" + "n't"
+        if lw in ("do", "does") and i + 1 < len(tags) and tags[i + 1][0].lower() == "n't":
+            subj, _ = _find_subject_left(tags, i)
+            if subj is not None:
+                # Determine what the contracted form should be
+                correct_neg = _DO_NEG_PRESENT.get(subj)  # e.g. "doesn't" or "don't"
+                if correct_neg:
+                    # The expected "do/does" part before "n't"
+                    correct_do = "does" if subj in _THIRD_PERSON_SING else "do"
+                    if lw != correct_do:
+                        fixes.append({
+                            "type":        "negation_agreement",
+                            "original":    word,
+                            "corrected":   correct_do,
+                            "description": f'Negation agreement: "{word} n\'t" → "{correct_do} n\'t" (subject: "{subj}")',
+                            "index":       i,
+                        })
+                        tokens[i] = _preserve_case(word, correct_do)
+            i += 1
             continue
-        correct_neg = _DO_NEG_PRESENT.get(subj)
-        if correct_neg and lw != correct_neg:
-            fixes.append({
-                "type":        "negation_agreement",
-                "original":    word,
-                "corrected":   correct_neg,
-                "description": f'Negation agreement: "{word}" → "{correct_neg}" (subject: "{subj}")',
-                "index":       i,
-            })
-            tokens[i] = _preserve_case(word, correct_neg)
+
+        i += 1
 
     # Re-tag then Pass B: uncontracted "do not" / "does not"
     tags = pos_tag(tokens)
@@ -391,17 +451,22 @@ def _correct_tense(tokens: list[str]) -> tuple[list[str], list[dict]]:
     Fix tense mismatches:
       - Present tense verb + past time marker → past tense
       - Auxiliary 'did' + past tense verb → base form
-      - 'to be' + bare infinitive where gerund needed
     Returns (corrected_tokens, fixes).
+
+    Bug fix (v2): after each individual token mutation we update `tokens`
+    in-place AND re-derive `tags` before continuing, so a sentence with
+    multiple present-tense verbs and a past marker has every verb corrected,
+    not just the first one.
     """
-    fixes = []
-    tags = pos_tag(tokens)
-    lower_tokens = [t.lower() for t in tokens]
+    fixes  = []
+    tokens = list(tokens)   # own copy; mutations are to this list throughout
+    tags   = pos_tag(tokens)
 
-    has_past   = _has_past_time_marker(tokens)
-    has_pres   = _has_present_time_marker(tokens)
+    has_past = _has_past_time_marker(tokens)
+    has_pres = _has_present_time_marker(tokens)
 
-    # Did + past tense verb → did + base form  (e.g. "did went" → "did go")
+    # ── Pass A: did + past-tense verb → base form ("did went" → "did go") ──
+    changed = False
     for i, (word, tag) in enumerate(tags):
         if word.lower() == "did" and i + 1 < len(tags):
             next_word, next_tag = tags[i + 1]
@@ -417,19 +482,21 @@ def _correct_tense(tokens: list[str]) -> tuple[list[str], list[dict]]:
                         "description": f'After "did" use base form: "{next_word}" → "{corrected}"',
                         "index": i + 1,
                     })
-                    tokens = list(tokens)
                     tokens[i + 1] = _preserve_case(next_word, corrected)
+                    changed = True
 
-    # Re-tag after possible did-fix
-    tags = pos_tag(tokens)
+    # Re-tag once after all did-fixes before the next pass
+    if changed:
+        tags = pos_tag(tokens)
 
-    # Present tense verb + past time marker → past tense
+    # ── Pass B: present verb + past time marker → past tense ───────────────
+    # Re-tag after EVERY individual fix so subsequent verbs in the same
+    # sentence are evaluated against the already-corrected token list.
     if has_past and not has_pres:
-        for i, (word, tag) in enumerate(tags):
-            # Skip auxiliaries
+        for i in range(len(tokens)):
+            word, tag = tokens[i], pos_tag([tokens[i]])[0][1]
             if word.lower() in _STOP:
                 continue
-            # VBP = non-3rd-person present, VBZ = 3rd-person present
             if tag in ("VBP", "VBZ"):
                 base = _lemmatizer.lemmatize(word.lower(), "v")
                 past = pyinflect.getInflection(base, "VBD")
@@ -441,8 +508,10 @@ def _correct_tense(tokens: list[str]) -> tuple[list[str], list[dict]]:
                         "description": f'Past time context: "{word}" → "{past[0]}"',
                         "index": i,
                     })
-                    tokens = list(tokens)
                     tokens[i] = _preserve_case(word, past[0])
+                    # No need to re-tag the full sentence after each fix;
+                    # per-token tagging above is sufficient since we iterate
+                    # by position, not by the cached tags list.
 
     return tokens, fixes
 
@@ -675,24 +744,304 @@ def _correct_auxiliary_forms(tokens: list[str]) -> tuple[list[str], list[dict]]:
     return tokens, fixes
 
 
+def _fix_its_contraction(text: str) -> tuple[str, list[dict]]:
+    """
+    POS-aware "its" → "it's" fix.
+
+    "its" is possessive when followed by a NOUN (NN/NNS/NNP/NNPS) or
+    determiner/adjective that precedes a noun — i.e. "its policy", "its own".
+    "its" is a contraction error when followed by a VERB, ADJ, or ADV —
+    i.e. "its going well", "its great", "its been done".
+
+    We tokenize a tiny window around each occurrence and POS-tag only that
+    window to keep this fast.
+    """
+    fixes = []
+    # Find all occurrences of bare "its" (case-insensitive, no apostrophe)
+    for m in list(re.finditer(r"\bits\b", text, re.IGNORECASE)):
+        # Grab the word that follows (skip whitespace)
+        after = text[m.end():].lstrip()
+        if not after:
+            continue
+        next_word = re.match(r"[a-zA-Z']+", after)
+        if not next_word:
+            continue
+        nw = next_word.group()
+        # POS-tag just the next word in isolation — cheap and sufficient
+        nw_tag = pos_tag([nw])[0][1]
+        # Possessive: next word is a noun, determiner, number, or adjective
+        # that commonly precedes a noun.  These tags → keep "its" as-is.
+        _POSSESSIVE_NEXT = {"NN", "NNS", "NNP", "NNPS", "DT", "PRP$", "CD", "JJ", "JJR", "JJS", "WP$"}
+        if nw_tag in _POSSESSIVE_NEXT:
+            continue  # correct possessive — do not touch
+        # Otherwise the next word is a verb/adverb/particle → contraction error
+        original = m.group()
+        corrected = "it's" if original[0].islower() else "It's"
+        fixes.append({
+            "type": "contraction",
+            "original": original,
+            "corrected": corrected,
+            "description": f'Added missing apostrophe: "{original}" → "{corrected}"',
+        })
+        # Replace only this specific occurrence by offset
+        text = text[:m.start()] + corrected + text[m.end():]
+    return text, fixes
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Spelling correction  (pyspellchecker)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Words that look "wrong" to the spell-checker but are intentional:
+# proper names, technical terms, abbreviations, already-handled contractions.
+_SPELL_WHITELIST: set[str] = {
+    # pronouns / particles that the checker flags
+    "i", "i'm", "i've", "i'll", "i'd",
+    # common abbreviations
+    "mr", "mrs", "ms", "dr", "prof", "vs",
+    # project-domain tokens
+    "sbert", "nltk", "pos", "nlp",
+}
+
+# POS tags whose words we never try to spell-correct (names, places, brands …)
+_SPELL_SKIP_TAGS = {"NNP", "NNPS", "CD", "FW", "LS", "SYM", "$", "``", "''",
+                    ":", ",", ".", "-LRB-", "-RRB-"}
+
+def _correct_spelling(tokens: list[str], tags: list[tuple]) -> tuple[list[str], list[dict]]:
+    """
+    Spell-check every non-proper, non-punctuation token.
+
+    Strategy
+    --------
+    1. Collect all alphabetic tokens that are NOT whitelisted and NOT tagged as
+       proper nouns / punctuation.
+    2. Ask pyspellchecker which ones are unknown (misspelled).
+    3. For each unknown token take the single best correction.  Accept only if:
+       - The correction is different from the original.
+       - The correction is not an empty string.
+       - The Levenshtein distance (approximated by length ratio) is not too large,
+         to avoid wild replacements for very short tokens.
+    4. Return corrected token list + fix dicts compatible with the rest of the
+       pipeline.
+
+    Falls back silently when pyspellchecker is not installed.
+    """
+    if not _SPELL_OK or _spell is None:
+        return tokens, []
+
+    fixes  = []
+    tokens = list(tokens)
+
+    # Gather candidate (index, word) pairs
+    candidates: list[tuple[int, str]] = []
+    for i, (word, tag) in enumerate(tags):
+        if tag in _SPELL_SKIP_TAGS:
+            continue
+        if not re.match(r"^[a-zA-Z]+$", word):  # skip punctuation / hyphenated
+            continue
+        if word.lower() in _SPELL_WHITELIST:
+            continue
+        candidates.append((i, word))
+
+    if not candidates:
+        return tokens, []
+
+    # Batch-check
+    words_only = [w for _, w in candidates]
+    unknown    = _spell.unknown(words_only)
+
+    for i, word in candidates:
+        if word.lower() not in unknown:
+            continue  # correctly spelled
+
+        correction = _spell.correction(word.lower())
+        if not correction or correction == word.lower():
+            continue
+
+        # Sanity gate: reject if correction is more than 60 % different in length
+        # (catches cases where a very short typo maps to an unrelated word).
+        ratio = len(correction) / max(len(word), 1)
+        if ratio < 0.4 or ratio > 2.5:
+            continue
+
+        corrected = _preserve_case(word, correction)
+        fixes.append({
+            "type":        "spelling",
+            "original":    word,
+            "corrected":   corrected,
+            "description": f'Spelling: "{word}" → "{corrected}"',
+            "index":       i,
+        })
+        tokens[i] = corrected
+
+    return tokens, fixes
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Article correction  ("a" / "an" before vowel / consonant sounds)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Words starting with a consonant letter but a vowel sound → need "an"
+_VOWEL_SOUND_EXCEPTIONS: set[str] = {
+    "hour", "honest", "honour", "honor", "heir", "herb",
+    "homage", "hors",
+}
+# Words starting with a vowel letter but a consonant sound → need "a"
+_CONSONANT_SOUND_EXCEPTIONS: set[str] = {
+    "unicorn", "uniform", "unique", "united", "unity", "university",
+    "universe", "union", "unit", "universal", "user", "use", "used",
+    "useful", "usual", "utility", "utensil", "european", "eulogy",
+    "euphemism", "ewe", "ewok", "one",
+}
+
+def _needs_an(next_word: str) -> bool:
+    """Return True if the article before *next_word* should be 'an'."""
+    nw = next_word.lower().rstrip(".,!?;:")
+    if not nw:
+        return False
+    if nw in _CONSONANT_SOUND_EXCEPTIONS:
+        return False
+    if nw in _VOWEL_SOUND_EXCEPTIONS:
+        return True
+    return nw[0] in "aeiou"
+
+
+def _correct_articles(tokens: list[str]) -> tuple[list[str], list[dict]]:
+    """
+    Fix 'a/an' article errors:
+      "a apple"       → "an apple"
+      "an cat"        → "a cat"
+      "an university" → "a university"
+      "a hour"        → "an hour"
+    Only fires when the very next token is an ordinary word (not punctuation).
+    """
+    fixes  = []
+    tokens = list(tokens)
+    for i, word in enumerate(tokens):
+        lw = word.lower()
+        if lw not in ("a", "an"):
+            continue
+        if i + 1 >= len(tokens):
+            continue
+        next_tok = tokens[i + 1]
+        if not re.match(r"[a-zA-Z]", next_tok):
+            continue  # skip if next token is punctuation
+
+        should_be_an = _needs_an(next_tok)
+        correct = "an" if should_be_an else "a"
+        if lw != correct:
+            corrected = _preserve_case(word, correct)
+            fixes.append({
+                "type":        "article",
+                "original":    word,
+                "corrected":   corrected,
+                "description": f'Article: "{word}" → "{corrected}" before "{next_tok}"',
+                "index":       i,
+            })
+            tokens[i] = corrected
+
+    return tokens, fixes
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# LanguageTool layer  (optional deep-check; requires Java)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Rule IDs we intentionally skip because our own pipeline already handles them
+# (or because they produce too many false positives for stutter-aid text).
+_LT_SKIP_RULES: set[str] = {
+    "UPPERCASE_SENTENCE_START",    # handled by our capitalisation layer
+    "COMMA_PARENTHESIS_WHITESPACE",
+    "WHITESPACE_RULE",
+    "EN_QUOTES",
+    "DASH_RULE",
+    "WORD_CONTAINS_UNDERSCORE",
+    # SVA rules — our own engine is more conservative and already covers these
+    "SUBJECT_VERB_AGREEMENT",
+    "HE_VERB_AGR",
+    "NON_STANDARD_VERB_FORM",
+}
+
+def _correct_with_languagetool(text: str) -> tuple[str, list[dict]]:
+    """
+    Run LanguageTool over *text* and apply all non-skipped suggestions.
+
+    - Applies corrections from right to left so character offsets stay valid.
+    - Returns (corrected_text, list_of_fix_dicts).
+    - If LanguageTool is unavailable, returns (text, []) silently.
+    """
+    tool = _get_lt_tool()
+    if tool is None:
+        return text, []
+
+    try:
+        matches = tool.check(text)
+    except Exception:
+        return text, []
+
+    fixes   = []
+    matches = [m for m in matches
+               if m.ruleId not in _LT_SKIP_RULES
+               and m.replacements]          # only actionable matches
+
+    # Apply right-to-left so earlier offsets remain valid
+    for m in sorted(matches, key=lambda x: x.offset, reverse=True):
+        suggestion = m.replacements[0]
+        original   = text[m.offset: m.offset + m.errorLength]
+        if original == suggestion:
+            continue
+        fixes.append({
+            "type":        "languagetool",
+            "original":    original,
+            "corrected":   suggestion,
+            "description": f'[{m.ruleId}] {m.message}: "{original}" → "{suggestion}"',
+        })
+        text = text[: m.offset] + suggestion + text[m.offset + m.errorLength :]
+
+    return text, list(reversed(fixes))   # restore left-to-right order for display
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 1. Input sanitizer (comprehensive grammar correction)
+# ─────────────────────────────────────────────────────────────────────────────
 def sanitize_input(text: str) -> tuple[str, list[dict]]:
     """
     Comprehensive grammar correction applied BEFORE the synonym pipeline.
 
     Layers (in order):
-      1. Surface fixes: contractions, informal words
-      2. Pronoun capitalisation (i → I)
+      0. Spelling correction      (pyspellchecker — fast, offline)
+      1. Surface fixes            contractions (POS-safe "its"), informal words
+      2. Pronoun capitalisation   (i → I)
       3. Sentence capitalisation
       4. Spacing cleanup
-      5. Auxiliary verb form correction (am go → am going)
-      6. Tense correction (eat yesterday → ate yesterday)
-      7. Subject-verb agreement (He go → He goes)
-      8. Punctuation
+      5. Article correction       (a/an agreement)
+      6. Auxiliary verb forms     (am go → am going)
+      7. Tense correction         (eat yesterday → ate yesterday)
+      8. Subject-verb agreement   (He go → He goes)
+      9. Punctuation
+     10. LanguageTool deep-check  (optional; requires Java — skipped gracefully)
 
     Returns (corrected_text, list_of_fix_dicts).
     """
     all_fixes: list[dict] = []
     result = text.strip()
+
+    # ── Layer 0: Spelling correction ──────────────────────────────────────
+    # Run BEFORE contraction/grammar fixes so downstream layers see correctly
+    # spelled words.  We tokenise a scratch copy, spell-check, then rebuild
+    # the string — the contraction layers work on the rebuilt string.
+    if _SPELL_OK:
+        try:
+            _sp_tokens = word_tokenize(result)
+            _sp_tags   = pos_tag(_sp_tokens)
+            _sp_tokens, sp_fixes = _correct_spelling(_sp_tokens, _sp_tags)
+            if sp_fixes:
+                all_fixes.extend(sp_fixes)
+                # Rebuild from corrected tokens (simple join — contractions
+                # re-tokenise later anyway)
+                result = _detokenize(_sp_tokens)
+        except Exception:
+            pass   # never break the pipeline
 
     # ── Layer 1a: Contractions ─────────────────────────────────────────────
     for pattern, replacement in _CONTRACTIONS.items():
@@ -707,6 +1056,10 @@ def sanitize_input(text: str) -> tuple[str, list[dict]]:
                     "description": f'Added missing apostrophe: "{original}" → "{replacement}"',
                 })
                 result = re.sub(pattern, replacement, result, flags=re.IGNORECASE)
+
+    # POS-aware "its" → "it's" (cannot be done with a bare regex — see helper)
+    result, its_fixes = _fix_its_contraction(result)
+    all_fixes.extend(its_fixes)
 
     # ── Layer 1b: Informal words ───────────────────────────────────────────
     for pattern, replacement in _WORD_FIXES.items():
@@ -752,13 +1105,26 @@ def sanitize_input(text: str) -> tuple[str, list[dict]]:
         })
         result = re.sub(r" {2,}", " ", result)
 
+    # ── Layer 4b: Article correction (a/an) ───────────────────────────────
+    try:
+        _art_tokens = word_tokenize(result)
+        _art_tokens, art_fixes = _correct_articles(_art_tokens)
+        if art_fixes:
+            all_fixes.extend(art_fixes)
+            result = _detokenize(_art_tokens)
+    except Exception:
+        pass
+
     # ── Tokenise for grammar analysis ─────────────────────────────────────
-    # Strip trailing punctuation before grammar analysis so POS tags are clean
-    working = result.rstrip(".!?").strip()
+    # Preserve trailing punctuation (.!?) so it survives the token rebuild.
+    # We strip it from the *working copy* only — for clean POS tags — then
+    # re-attach the original punctuation after _detokenize().
+    _trail_m = re.search(r"([.!?]+)\s*$", result)
+    _trailing_punct = _trail_m.group(1) if _trail_m else ""
+    working = result[:_trail_m.start()].strip() if _trail_m else result.strip()
     try:
         tokens = word_tokenize(working)
     except Exception:
-        # Fallback if tokenisation fails (shouldn't happen but be safe)
         tokens = working.split()
 
     # ── Layer 5: Auxiliary verb forms ─────────────────────────────────────
@@ -830,6 +1196,15 @@ def sanitize_input(text: str) -> tuple[str, list[dict]]:
         # Re-apply capitalisation (detokenize can lowercase first word)
         if result and result[0].islower():
             result = result[0].upper() + result[1:]
+        # Re-attach the trailing punctuation we stripped before tokenising.
+        # _detokenize() won't have it because we didn't put it in the token list.
+        if _trailing_punct and not result.endswith(_trailing_punct):
+            result = result.rstrip(".!?") + _trailing_punct
+    else:
+        # No structural fix rebuilt the sentence — but we still need to
+        # restore the trailing punctuation if it got eaten by rstrip earlier.
+        if _trailing_punct and not result.rstrip().endswith(_trailing_punct[-1]):
+            result = result.rstrip(".!?") + _trailing_punct
 
     # ── Layer 8: Punctuation ──────────────────────────────────────────────
     stripped = result.rstrip()
@@ -841,6 +1216,26 @@ def sanitize_input(text: str) -> tuple[str, list[dict]]:
             "description": "Added missing full stop at end of sentence",
         })
         result = stripped + "."
+
+    # ── Layer 10: LanguageTool deep-check (optional) ──────────────────────
+    # Only runs if Java is available.  Catches things our rule-based layers
+    # miss: punctuation nuances, preposition errors, word repetition, complex
+    # article/determiner mistakes, etc.
+    # We strip the terminal period we just added before passing to LT (LT
+    # adds its own end-of-sentence analysis) then re-add it afterwards.
+    try:
+        _lt_input = result
+        _had_period = _lt_input.endswith(".")
+        if _had_period:
+            _lt_input = _lt_input[:-1].rstrip()
+        _lt_result, lt_fixes = _correct_with_languagetool(_lt_input)
+        if lt_fixes:
+            all_fixes.extend(lt_fixes)
+            result = _lt_result
+            if _had_period and not result.rstrip().endswith("."):
+                result = result.rstrip() + "."
+    except Exception:
+        pass   # never let LT break the core pipeline
 
     return result, all_fixes
 
@@ -930,8 +1325,12 @@ class SentenceRewriter:
             if " " in cand:
                 continue
             # Secondary POS check: candidate must have at least one WordNet sense
-            # matching our expected POS (guards against Datamuse returning wrong POS)
-            if wn_p and not wn.synsets(cand, pos=wn_p):
+            # matching our expected POS — guards against Datamuse returning wrong POS.
+            # EXCEPTION: skip this check for adverbs (RB/RBR/RBS) because WordNet
+            # severely underrepresents adverbs — valid words like "rapidly", "broadly",
+            # "merely" have no WN adverb synset but are perfect substitutes.
+            is_adverb = pos_tag_str.startswith("RB")
+            if wn_p and not is_adverb and not wn.synsets(cand, pos=wn_p):
                 continue
             filtered.append(cand)
 

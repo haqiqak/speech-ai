@@ -146,22 +146,53 @@ def sbert_status() -> tuple[bool, str]:
 
 # ── Protected position detection ─────────────────────────────────────────────
 
+# Single-token protected words — mirrors grammar._STOP exactly so that
+# protected_positions() is the single source of truth for the UI/semantic layer.
+# These are auxiliaries, pronouns, determiners, prepositions, and discourse
+# particles that must never be substituted.
+_PROTECTED_SINGLE: frozenset[str] = frozenset({
+    "be", "is", "are", "was", "were", "am", "been", "being",
+    "have", "has", "had", "do", "does", "did",
+    "will", "would", "could", "should", "may", "might", "shall", "can", "must", "need", "dare",
+    "to", "of", "in", "on", "at", "by", "for", "with", "into", "from", "about", "over", "under",
+    "it", "its", "this", "that", "these", "those",
+    "i", "me", "my", "we", "us", "our", "you", "your", "he", "him", "his", "she", "her", "they", "them", "their",
+    "a", "an", "the",
+    "and", "but", "or", "nor", "so", "yet", "both",
+    "not", "no", "never",
+    "just", "also", "even", "still", "already", "again", "always", "often", "sometimes",
+})
+
+
 def protected_positions(tokens: list[str]) -> set[int]:
     """
-    Return the set of token indices that belong to a protected phrase
-    or are themselves protected auxiliary/function words.
-    These positions must never be substituted.
+    Return the set of token indices that must never be substituted.
+
+    Covers two categories:
+      1. Multi-word protected phrases (PROTECTED_PHRASES list above).
+      2. Single-token stop words: auxiliaries, pronouns, determiners,
+         prepositions, and discourse particles (_PROTECTED_SINGLE).
+
+    Keeping both in one function means the grammar layer (_STOP) and the
+    semantic/UI layer stay in sync — there is no longer a risk of protected
+    single words being left exposed when phrase matching misses them.
     """
     protected: set[int] = set()
 
-    # 1. Multi-word protected phrases
     lower_tokens = [t.lower() for t in tokens]
+
+    # 1. Multi-word protected phrases
     for phrase in PROTECTED_PHRASES:
         words = phrase.split()
         n = len(words)
         for i in range(len(lower_tokens) - n + 1):
             if lower_tokens[i : i + n] == words:
                 protected.update(range(i, i + n))
+
+    # 2. Single-token stop words
+    for i, lt in enumerate(lower_tokens):
+        if lt in _PROTECTED_SINGLE:
+            protected.add(i)
 
     return protected
 
