@@ -135,11 +135,14 @@ def load_profile(username: str) -> dict:
     """
     record = _read(username) or {}
     pp = record.get("phoneme_profile", {})
+    preferences = dict(record.get("preferences", {}))
+    preferences.setdefault("allowlist_words", [])
+    preferences.setdefault("rephrase_enabled", False)
     return {
         "stutter_patterns": list(pp.get("stutter_patterns", [])),
         "blocked_words":    list(pp.get("blocked_words", [])),
         "custom_replacements": dict(record.get("custom_replacements", {})),
-        "preferences":         dict(record.get("preferences", {})),
+        "preferences":         preferences,
     }
 
 

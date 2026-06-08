@@ -36,12 +36,16 @@ require_auth()
 def _save_prefs(patterns: list[str], blocked: list[str]) -> None:
     user = st.session_state.get("current_user")
     if user:
+        preferences = dict(st.session_state.get("preferences", {}))
+        preferences["allowlist_words"] = list(st.session_state.get("allowlist_words", []))
+        preferences["rephrase_enabled"] = bool(st.session_state.get("rephrase_enabled", False))
+        st.session_state.preferences = preferences
         save_profile(
             user,
             patterns=patterns,
             blocked=blocked,
             custom_replacements=st.session_state.get("custom_replacements", {}),
-            preferences=st.session_state.get("preferences", {}),
+            preferences=preferences,
         )
 
 
@@ -390,6 +394,7 @@ with st.sidebar:
     if prefs.get("rephrase_enabled") != rephrase_enabled:
         prefs["rephrase_enabled"] = rephrase_enabled
         st.session_state.preferences = prefs
+        _save_prefs(st.session_state.stutter_patterns, st.session_state.blocked_words)
     if rephrase_enabled:
         import rephrase as _rephrase
         _rp_ok, _rp_msg = _rephrase.rephrase_status()
@@ -520,6 +525,8 @@ with st.expander("📋 Blocklist & Allowlist — word-level overrides", expanded
             word = al_input.strip().lower()
             if word and word not in st.session_state.allowlist_words:
                 st.session_state.allowlist_words.append(word)
+                _save_prefs(st.session_state.stutter_patterns,
+                            st.session_state.blocked_words)
                 st.rerun()
 
         if st.session_state.allowlist_words:
@@ -533,6 +540,8 @@ with st.expander("📋 Blocklist & Allowlist — word-level overrides", expanded
                     if st.button("✕", key=f"al_rm_{aw}", type="secondary",
                                  help=f"Remove '{aw}' from allowlist"):
                         st.session_state.allowlist_words.remove(aw)
+                        _save_prefs(st.session_state.stutter_patterns,
+                                    st.session_state.blocked_words)
                         st.rerun()
             st.markdown("</div>", unsafe_allow_html=True)
         else:

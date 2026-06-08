@@ -103,10 +103,15 @@ def _inject_fonts() -> None:
 def _load_user_into_session(username: str) -> None:
     """Pull the user's phoneme profile into session state after login."""
     profile = load_profile(username)
+    prefs = dict(profile["preferences"])
+    prefs.setdefault("allowlist_words", [])
+    prefs.setdefault("rephrase_enabled", False)
     st.session_state.stutter_patterns    = profile["stutter_patterns"]
     st.session_state.blocked_words       = profile["blocked_words"]
     st.session_state.custom_replacements = profile["custom_replacements"]
-    st.session_state.preferences         = profile["preferences"]
+    st.session_state.preferences         = prefs
+    st.session_state.allowlist_words     = list(prefs.get("allowlist_words", []))
+    st.session_state.rephrase_enabled    = bool(prefs.get("rephrase_enabled", False))
 
 
 # ── public entry point ────────────────────────────────────────────────────────

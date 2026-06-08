@@ -19,6 +19,7 @@ except Exception:  # pragma: no cover
     load_profile = None
 
 APP = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "app.py")
+ROOT = os.path.dirname(APP)
 QUERY_LABEL = "Your sentence or paragraph"
 RUN_LABEL   = "Run speech profile"
 REPHRASE_LABEL = "Fluency rephrase (beta)"
@@ -44,6 +45,7 @@ def _seed(at):
     at.session_state["allowlist_words"]  = allow
     at.session_state["preferences"]      = prefs
     at.session_state["custom_replacements"] = custom
+    at.session_state["rephrase_enabled"] = bool(prefs.get("rephrase_enabled", False))
     return at
 
 
@@ -102,61 +104,79 @@ def _empty_profile(at):
     at.session_state["stutter_patterns"] = []
     at.session_state["blocked_words"] = []
     at.session_state["allowlist_words"] = []
+    at.session_state["rephrase_enabled"] = False
+    try:
+        prefs = dict(at.session_state["preferences"])
+    except Exception:
+        prefs = {}
+    prefs["allowlist_words"] = []
+    prefs["rephrase_enabled"] = False
+    at.session_state["preferences"] = prefs
 
 
 def run():
+    default_profile = os.path.join(ROOT, "users", "default.json")
+    snapshot = None
+    if os.path.exists(default_profile):
+        with open(default_profile, "rb") as f:
+            snapshot = f.read()
     ok = True
+    try:
 
-    # 1) Default load reaches the main UI (Phoneme Profile panel visible)
-    at = _fresh().run()
-    ok &= _check(at, "default load")
-    cond = "Phoneme Profile" in _md(at)
-    print("     Phoneme Profile panel present:", cond); ok &= cond
+        # 1) Default load reaches the main UI (Phoneme Profile panel visible)
+        at = _fresh().run()
+        ok &= _check(at, "default load")
+        cond = "Phoneme Profile" in _md(at)
+        print("     Phoneme Profile panel present:", cond); ok &= cond
 
-    # 2) Sentence mode, no patterns → final output contains the grammar fix 'running'
-    at = _fresh()
-    _empty_profile(at)
-    at.run()
-    ok &= _set_text(at, QUERY_LABEL, "she is run right now"); at.run()
-    ok &= _click_run(at); at.run()
-    ok &= _check(at, "sentence mode, no patterns")
-    md = _md(at)
-    cond = "running" in md.lower()
-    print("     final contains 'running':", cond); ok &= cond
-    cond = "Word Risk Analysis" in md
-    print("     Word Risk Analysis panel present:", cond); ok &= cond
-    cond = "Fluency Rephrase" not in md
-    print("     rephrase card absent when toggle off:", cond); ok &= cond
+        # 2) Sentence mode, no patterns → final output contains the grammar fix 'running'
+        at = _fresh()
+        _empty_profile(at)
+        at.run()
+        ok &= _set_text(at, QUERY_LABEL, "she is run right now"); at.run()
+        ok &= _click_run(at); at.run()
+        ok &= _check(at, "sentence mode, no patterns")
+        md = _md(at)
+        cond = "running" in md.lower()
+        print("     final contains 'running':", cond); ok &= cond
+        cond = "Word Risk Analysis" in md
+        print("     Word Risk Analysis panel present:", cond); ok &= cond
+        cond = "Fluency Rephrase" not in md
+        print("     rephrase card absent when toggle off:", cond); ok &= cond
 
-    # 3) Word mode 'present, happy' with pattern 'pr' → pills, NOT 'No synonyms found'
-    at = _fresh()
-    _empty_profile(at)
-    at.session_state["stutter_patterns"] = ["pr"]
-    at.run()
-    ok &= _set_text(at, "Stutter sounds", "pr"); at.run()
-    ok &= _set_text(at, QUERY_LABEL, "present, happy"); at.run()
-    ok &= _click_run(at); at.run()
-    ok &= _check(at, "word mode, pattern pr")
-    md = _md(at)
-    pill_count = md.count('class="pill ')
-    cond = pill_count >= 2
-    print("     synonym pills rendered:", pill_count); ok &= cond
-    cond = "No synonyms found" not in md
-    print("     no 'No synonyms found' for present/happy:", cond); ok &= cond
+        # 3) Word mode 'present, happy' with pattern 'pr' → pills, NOT 'No synonyms found'
+        at = _fresh()
+        _empty_profile(at)
+        at.session_state["stutter_patterns"] = ["pr"]
+        at.run()
+        ok &= _set_text(at, "Stutter sounds", "pr"); at.run()
+        ok &= _set_text(at, QUERY_LABEL, "present, happy"); at.run()
+        ok &= _click_run(at); at.run()
+        ok &= _check(at, "word mode, pattern pr")
+        md = _md(at)
+        pill_count = md.count('class="pill ')
+        cond = pill_count >= 2
+        print("     synonym pills rendered:", pill_count); ok &= cond
+        cond = "No synonyms found" not in md
+        print("     no 'No synonyms found' for present/happy:", cond); ok &= cond
 
-    # 4) Toggle-on rephrase path renders the optional card or graceful no-op
-    at = _fresh()
-    _empty_profile(at)
-    at.run()
-    ok &= _set_toggle(at, REPHRASE_LABEL, True); at.run()
-    ok &= _set_text(at, QUERY_LABEL, "she is run right now"); at.run()
-    ok &= _click_run(at); at.run()
-    ok &= _check(at, "rephrase toggle on")
-    md = _md(at)
-    cond = "Fluency Rephrase" in md
-    print("     rephrase card present:", cond); ok &= cond
-    cond = ("No rephrase applied" in md) or ("Similarity:" in md)
-    print("     rephrase status rendered:", cond); ok &= cond
+        # 4) Toggle-on rephrase path renders the optional card or graceful no-op
+        at = _fresh()
+        _empty_profile(at)
+        at.run()
+        ok &= _set_toggle(at, REPHRASE_LABEL, True); at.run()
+        ok &= _set_text(at, QUERY_LABEL, "she is run right now"); at.run()
+        ok &= _click_run(at); at.run()
+        ok &= _check(at, "rephrase toggle on")
+        md = _md(at)
+        cond = "Fluency Rephrase" in md
+        print("     rephrase card present:", cond); ok &= cond
+        cond = ("No rephrase applied" in md) or ("Similarity:" in md)
+        print("     rephrase status rendered:", cond); ok &= cond
+    finally:
+        if snapshot is not None:
+            with open(default_profile, "wb") as f:
+                f.write(snapshot)
 
     print("\nRESULT:", "ALL PASS" if ok else "FAILURES")
     return 0 if ok else 1
