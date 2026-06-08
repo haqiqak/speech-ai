@@ -334,6 +334,10 @@ for key, default in [
     ("_word_results", None),
     # allowlist
     ("allowlist_words", []),
+    # optional rephrase layer (default off)
+    ("rephrase_enabled", False),
+    ("rephrase_single_sig", None), ("rephrase_single_result", None), ("rephrase_single_use", False),
+    ("rephrase_paragraph_sig", None), ("rephrase_paragraph_result", None), ("rephrase_paragraph_use", False),
 ]:
     if key not in st.session_state:
         st.session_state[key] = default
@@ -369,6 +373,29 @@ with st.sidebar:
     st.markdown("---")
     show_scores = st.toggle("Show scoring details", value=True,
         help="Show SBERT similarity scores per word.")
+
+    prefs = dict(st.session_state.get("preferences", {}))
+    pref_rephrase = bool(prefs.get("rephrase_enabled", False))
+    if "rephrase_enabled" not in st.session_state:
+        st.session_state.rephrase_enabled = pref_rephrase
+    rephrase_enabled = st.toggle(
+        "Fluency rephrase (beta)",
+        value=bool(st.session_state.get("rephrase_enabled", pref_rephrase)),
+        help=(
+            "Proposes a more fluent rewrite that still avoids your stutter sounds. "
+            "First use downloads a T5 model (~hundreds of MB); CPU inference can take a few seconds."
+        ),
+    )
+    st.session_state.rephrase_enabled = rephrase_enabled
+    if prefs.get("rephrase_enabled") != rephrase_enabled:
+        prefs["rephrase_enabled"] = rephrase_enabled
+        st.session_state.preferences = prefs
+    if rephrase_enabled:
+        import rephrase as _rephrase
+        _rp_ok, _rp_msg = _rephrase.rephrase_status()
+        st.caption(("🟢 " if _rp_ok else "🟡 ") + _rp_msg)
+    else:
+        st.caption("Fluency rephrase off.")
 
     st.caption(f"Frequency wordlist: **{freq.active_wordlist()}**")
 
@@ -521,11 +548,15 @@ if lookup_source.strip() and lookup_source.strip() != st.session_state.get("last
     if not search_clicked:
         for k in ("result", "sanitized", "fixes", "user_choices",
                   "grammar_fixes_applied", "correction_map", "_word_results",
-                  "ms_results", "ms_choices", "multi_mode"):
+                  "ms_results", "ms_choices", "multi_mode",
+                  "rephrase_single_sig", "rephrase_single_result", "rephrase_single_use",
+                  "rephrase_paragraph_sig", "rephrase_paragraph_result", "rephrase_paragraph_use"):
             st.session_state[k] = {} if "choices" in k else ([] if k in ("fixes","grammar_fixes_applied","ms_results") else None)
         st.session_state.user_choices  = {}
         st.session_state.ms_choices    = {}
         st.session_state.ms_results    = []
+        st.session_state.rephrase_single_use = False
+        st.session_state.rephrase_paragraph_use = False
 
 # ── Process on click ───────────────────────────────────────────────────────────
 source_text = lookup_source.strip()
@@ -537,6 +568,8 @@ if search_clicked and source_text:
         "grammar_fixes_applied": [], "correction_map": {},
         "_word_results": None, "last_query": source_text,
         "original_query": source_text, "multi_mode": False,
+        "rephrase_single_sig": None, "rephrase_single_result": None, "rephrase_single_use": False,
+        "rephrase_paragraph_sig": None, "rephrase_paragraph_result": None, "rephrase_paragraph_use": False,
     })
 
     sem.MIN_SEMANTIC = sem_threshold
@@ -847,6 +880,97 @@ def _render_final_card(sanitized: str, rebuilt: str, prefix: str = "⑤") -> Non
     st.code(rebuilt, language=None)
 
 
+def _rephrase_signature(original: str, rebuilt: str, patterns, blocked) -> tuple:
+    return (
+        original,
+        rebuilt,
+        tuple(patterns or []),
+        tuple(sorted(blocked or [])),
+    )
+
+
+def _combine_rephrase_results(original: str, rebuilt: str, rows: list[dict]) -> dict:
+    rephrased = " ".join(r.get("rephrased", "") for r in rows).strip() or rebuilt
+    sims = [r.get("sim") for r in rows if r.get("sim") is not None]
+    sim = round(sum(sims) / len(sims), 4) if sims else None
+    return {
+        "rephrased": rephrased,
+        "applied": any(r.get("applied") for r in rows),
+        "sim": sim,
+        "violations": sum(int(r.get("violations") or 0) for r in rows),
+        "difficulty": ph.sentence_difficulty(_content_words(rephrased)),
+        "candidates": [c for r in rows for c in r.get("candidates", [])],
+        "original": original,
+    }
+
+
+def _get_rephrase_result(scope: str, original: str, rebuilt: str,
+                         patterns, blocked, sentence_pairs=None) -> dict | None:
+    if not st.session_state.get("rephrase_enabled"):
+        return None
+    import rephrase as _rephrase
+
+    sig = _rephrase_signature(original, rebuilt, patterns, blocked)
+    sig_key = f"rephrase_{scope}_sig"
+    result_key = f"rephrase_{scope}_result"
+    use_key = f"rephrase_{scope}_use"
+
+    if st.session_state.get(sig_key) != sig:
+        with st.spinner("Preparing optional fluency rephrase..."):
+            if sentence_pairs:
+                rows = [
+                    _rephrase.choose_best(orig, built, patterns, blocked)
+                    for orig, built in sentence_pairs
+                ]
+                result = _combine_rephrase_results(original, rebuilt, rows)
+            else:
+                result = _rephrase.choose_best(original, rebuilt, patterns, blocked)
+        st.session_state[sig_key] = sig
+        st.session_state[result_key] = result
+        st.session_state[use_key] = False
+
+    return st.session_state.get(result_key)
+
+
+def _render_rephrase_card(scope: str, original: str, rebuilt: str,
+                          patterns, blocked, sentence_pairs=None) -> str:
+    result = _get_rephrase_result(scope, original, rebuilt, patterns, blocked, sentence_pairs)
+    if result is None:
+        return rebuilt
+
+    use_key = f"rephrase_{scope}_use"
+    proposed = result.get("rephrased") or rebuilt
+    diff_before = ph.sentence_difficulty(_content_words(rebuilt))
+    diff_after = result.get("difficulty")
+    if diff_after is None:
+        diff_after = ph.sentence_difficulty(_content_words(proposed))
+    sim_text = "n/a" if result.get("sim") is None else f"{result['sim']:.2f}"
+    applied = bool(result.get("applied"))
+
+    note = "" if applied else '<div style="font-size:.86rem;color:#6f87a6;margin-top:.45rem">No rephrase applied.</div>'
+    st.markdown(f"""
+<div class="pipe-card" style="border-color:#b8d9f5">
+  <div class="pipe-label">⑥ Fluency Rephrase (optional)</div>
+  <div class="output-box">{_fmt(proposed)}</div>
+  <div style="font-size:.78rem;color:#5a7096;margin-top:.55rem">
+    Similarity: <strong>{sim_text}</strong> · onset violations:
+    <strong>{int(result.get("violations") or 0)}</strong> · difficulty:
+    <strong>{diff_before:.2f} → {diff_after:.2f}</strong>
+  </div>
+  {note}
+</div>""", unsafe_allow_html=True)
+
+    if applied:
+        col_use, _ = st.columns([1, 2])
+        with col_use:
+            if st.button("Use this rephrase", key=f"use_rephrase_{scope}", type="secondary"):
+                st.session_state[use_key] = True
+        if st.session_state.get(use_key):
+            st.caption("Using fluency rephrase for the final output.")
+
+    return proposed if st.session_state.get(use_key) else rebuilt
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # MULTI-SENTENCE RESULTS
 # ─────────────────────────────────────────────────────────────────────────────
@@ -930,21 +1054,32 @@ if st.session_state.get("multi_mode") and st.session_state.ms_results:
     if full_rebuilt:
         st.markdown("---")
         st.markdown("### ✦ Rebuilt Paragraph")
-
-        # Difficulty
-        all_words_before = []
-        all_words_after  = []
+        rephrase_pairs = []
         for sid, sr in enumerate(ms_results):
-            all_words_before.extend(_content_words(sr["sanitized"]))
             if sr["is_sentence"] and sr.get("result"):
                 rb = rewriter.rebuild_with_choices(
                     sr["sanitized"],
                     sr["result"]["substitutions"],
                     st.session_state.ms_choices.get(sid + 1, {}),
                 )
-                all_words_after.extend(_content_words(rb))
             else:
-                all_words_after.extend(_content_words(sr["sanitized"]))
+                rb = sr["sanitized"]
+            rephrase_pairs.append((sr["sanitized"], rb))
+        original_paragraph = " ".join(orig for orig, _ in rephrase_pairs)
+        display_rebuilt = _render_rephrase_card(
+            "paragraph",
+            original_paragraph,
+            full_rebuilt,
+            patterns,
+            blocked,
+            sentence_pairs=rephrase_pairs,
+        )
+
+        # Difficulty
+        all_words_before = []
+        all_words_after  = _content_words(display_rebuilt)
+        for sid, sr in enumerate(ms_results):
+            all_words_before.extend(_content_words(sr["sanitized"]))
 
         diff_before = ph.sentence_difficulty(all_words_before)
         diff_after  = ph.sentence_difficulty(all_words_after)
@@ -959,7 +1094,7 @@ if st.session_state.get("multi_mode") and st.session_state.ms_results:
         st.markdown(f"""
 <div class="pipe-card" style="border-color:#f0c090">
   <div class="pipe-label" style="color:#f57c2b">📄 Full Paragraph Output</div>
-  <div class="output-box">{_fmt(full_rebuilt)}</div>
+  <div class="output-box">{_fmt(display_rebuilt)}</div>
   <div style="font-size:.78rem;color:#5a7096;margin-top:.55rem">
     Paragraph stutter difficulty: <strong>{diff_before:.2f} → {diff_after:.2f}</strong>
     <span class="{d_cls}">({arrow} {d_word})</span>
@@ -967,13 +1102,13 @@ if st.session_state.get("multi_mode") and st.session_state.ms_results:
 </div>""", unsafe_allow_html=True)
 
         st.caption("📋 Copy paragraph:")
-        st.code(full_rebuilt, language=None)
+        st.code(display_rebuilt, language=None)
 
         # Add to session history
         if st.button("💾 Save to session history", key="save_ms_hist", type="secondary"):
             st.session_state.session_history.append({
                 "original": st.session_state.original_query,
-                "rebuilt":  full_rebuilt,
+                "rebuilt":  display_rebuilt,
             })
             st.success("Saved to session history.")
 
@@ -1147,14 +1282,22 @@ if not st.session_state.get("multi_mode"):
   <div class="diff-text">{highlighted}</div>
 </div>""", unsafe_allow_html=True)
 
+        final_rebuilt = _render_rephrase_card(
+            "single",
+            sanitized,
+            rebuilt,
+            patterns,
+            blocked,
+        )
+
         # ⑤ Final output
-        _render_final_card(sanitized, rebuilt)
+        _render_final_card(sanitized, final_rebuilt)
 
         # Save to session history
         if st.button("💾 Save to session history", key="save_single_hist", type="secondary"):
             st.session_state.session_history.append({
                 "original": st.session_state.original_query,
-                "rebuilt":  rebuilt,
+                "rebuilt":  final_rebuilt,
             })
             st.success("Saved!")
 

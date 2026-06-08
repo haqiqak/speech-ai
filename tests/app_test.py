@@ -21,6 +21,7 @@ except Exception:  # pragma: no cover
 APP = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "app.py")
 QUERY_LABEL = "Your sentence or paragraph"
 RUN_LABEL   = "Run speech profile"
+REPHRASE_LABEL = "Fluency rephrase (beta)"
 
 
 def _seed(at):
@@ -84,6 +85,15 @@ def _click_run(at):
     return False
 
 
+def _set_toggle(at, label, value):
+    for tg in at.toggle:
+        if tg.label == label:
+            tg.set_value(value)
+            return True
+    print(f"     [warn] toggle not found: {label!r}")
+    return False
+
+
 def _md(at):
     return " ".join(m.value for m in at.markdown)
 
@@ -115,6 +125,8 @@ def run():
     print("     final contains 'running':", cond); ok &= cond
     cond = "Word Risk Analysis" in md
     print("     Word Risk Analysis panel present:", cond); ok &= cond
+    cond = "Fluency Rephrase" not in md
+    print("     rephrase card absent when toggle off:", cond); ok &= cond
 
     # 3) Word mode 'present, happy' with pattern 'pr' → pills, NOT 'No synonyms found'
     at = _fresh()
@@ -131,6 +143,20 @@ def run():
     print("     synonym pills rendered:", pill_count); ok &= cond
     cond = "No synonyms found" not in md
     print("     no 'No synonyms found' for present/happy:", cond); ok &= cond
+
+    # 4) Toggle-on rephrase path renders the optional card or graceful no-op
+    at = _fresh()
+    _empty_profile(at)
+    at.run()
+    ok &= _set_toggle(at, REPHRASE_LABEL, True); at.run()
+    ok &= _set_text(at, QUERY_LABEL, "she is run right now"); at.run()
+    ok &= _click_run(at); at.run()
+    ok &= _check(at, "rephrase toggle on")
+    md = _md(at)
+    cond = "Fluency Rephrase" in md
+    print("     rephrase card present:", cond); ok &= cond
+    cond = ("No rephrase applied" in md) or ("Similarity:" in md)
+    print("     rephrase status rendered:", cond); ok &= cond
 
     print("\nRESULT:", "ALL PASS" if ok else "FAILURES")
     return 0 if ok else 1
