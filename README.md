@@ -4,7 +4,7 @@
 
 You type a sentence. Speech AI identifies words that fall on your personal trouble sounds, corrects grammar, and suggests semantically equivalent alternatives that are easier to pronounce — all in a clean, interactive Streamlit interface.
 
-Built at **NUST SEECS** (BS Data Science, BSDS-02) as independent research into AI-assisted communication accessibility.
+Built at **NUST SEECS** as independent research into AI-assisted communication accessibility.
 
 ---
 
