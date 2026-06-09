@@ -35,7 +35,7 @@ except Exception as exc:  # pragma: no cover - depends on local environment
 
 
 REPHRASE_MODEL = os.environ.get("REPHRASE_MODEL", "Vamsi/T5_Paraphrase_Paws")
-REPHRASE_PREFIX = os.environ.get("REPHRASE_PREFIX", "paraphrase: ")
+REPHRASE_PREFIX = os.environ.get("REPHRASE_PREFIX", "paraphrase: ") 
 REPHRASE_DEVICE = os.environ.get("REPHRASE_DEVICE", "cpu")
 REPHRASE_CACHE = Path(__file__).resolve().parent / ".cache" / "hf" / "rephrase"
 REPHRASE_CACHE.mkdir(parents=True, exist_ok=True)

@@ -20,12 +20,17 @@ Speech AI runs your sentence through a seven-stage pipeline:
 6. **Phoneme firewall** — drops candidates that start with the same sound you stutter on (ARPAbet onset matching)
 7. **Inflection + rebuild** — morphologically inflects the chosen word and reassembles the sentence
 
-You see a colour-coded risk map of your sentence, pick synonyms from dropdowns (or type your own), and get a final easier sentence with a before/after stutter-difficulty score.
+It also allows **Speech-to-text transcription** — converts spoken input into editable text.
+
+You see a colour-coded risk map of your sentence, pick synonyms from dropdowns (or type your own), and get a final easier sentence with a before/after 
+stutter-difficulty score.
 
 ---
 
 ## Features
 
+- 🎤 **Voice Input (Speech-to-Text)** — dictate sentences directly instead of typing
+- 🔊 **Voice Output (Text-to-Speech)** — listen to the final sentence with a single click
 - 🔐 **Multi-user auth** — login/register with per-user phoneme profiles stored in `users/`
 - 🧠 **SBERT semantic firewall** — `all-MiniLM-L6-v2` ensures replacements never drift from the original meaning
 - 🔊 **Phoneme-aware filtering** — CMU Pronouncing Dictionary (ARPAbet) for onset detection, not spelling
@@ -34,6 +39,7 @@ You see a colour-coded risk map of your sentence, pick synonyms from dropdowns (
 - ✏️ **Custom word input** — override any suggestion with your own word
 - 📝 **Grammar correction card** — shows every fix made before synonym analysis
 - 📈 **Difficulty meter** — sentence-level stutter difficulty score before and after substitution
+
 
 ---
 
@@ -201,6 +207,25 @@ def _check_password(p, h): return bcrypt.checkpw(p.encode(), h.encode())
 ```
 
 ---
+
+## Voice Accessibility
+
+Speech AI supports both directions of spoken communication.
+
+### Speech-to-Text
+
+Users can click **Start Speaking** and dictate their sentence directly into the application. The transcribed text appears in the editor for review and further processing.
+
+### Text-to-Speech
+
+After grammar correction and synonym substitution, users can optionally click **Speak Output** to hear the final sentence read aloud.
+
+This makes the system useful for users who:
+
+- Prefer speaking over typing
+- Want to verify pronunciation before speaking
+- Need audio feedback while practicing communication
+- Benefit from multimodal accessibility support
 
 ## Known Limitations
 
