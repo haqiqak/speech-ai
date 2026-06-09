@@ -2,6 +2,28 @@
 
 ---
 
+## v5.1.0 — Stability fixes, optional Fluency Rephrase, teammate setup
+*2026-06-09*
+
+### Fixes
+- **Word mode** "No synonyms found" — `engine.get_synonyms` now strips trailing punctuation/case, so sanitized words like `Happy.` resolve correctly.
+- **Allowlist** now *locks* words in place (never substituted) instead of forcing their replacement — `SentenceRewriter.rewrite(..., allowlist=...)`.
+- **Paragraph mode** dropdown off-by-one fixed, so per-sentence synonym picks apply on rebuild.
+- `requirements.txt` line endings repaired (was a single unusable line).
+
+### New (optional, default OFF)
+- **`rephrase.py`** — "Fluency Rephrase" layer: a T5 paraphraser + reranker that smooths the synonym sentence while preserving meaning (SBERT gate) and avoiding your stutter onsets. Wired as **Stage ⑥** behind the **"Fluency rephrase (beta)"** sidebar toggle; it **never auto-replaces** (you click "Use this rephrase").
+- Dev/research: `tests/threshold_sweep.py`, `tests/evaluate.py` (+ `eval_corpus.txt`/`eval_results.csv`), and `scripts/` LoRA fine-tuning scaffolding (optional — not required; the stock model + reranker are sufficient).
+
+### Teammate setup (clone → test)
+1. `pip install -r requirements.txt` — now includes `sentencepiece` + `tiktoken` (needed by the rephrase tokenizer).
+2. `streamlit run app.py` → **log in with `default` / `speech`**.
+3. First run auto-downloads NLTK data + the SBERT model into `./.cache/` (one-time; needs internet).
+4. **Fluency Rephrase is optional**: turning the toggle on downloads a ~0.9 GB T5 model on first use and needs **~1.8 GB free RAM** (SBERT + model together). If memory is tight it safely shows "No rephrase applied" — the rest of the app is unaffected.
+5. Optional: LanguageTool grammar needs Java; if absent it degrades gracefully.
+
+---
+
 ## v5.0.0 — Multi-User Authentication System
 *2026-06-07*
 

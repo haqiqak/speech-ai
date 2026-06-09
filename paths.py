@@ -38,6 +38,10 @@ for _var, _path in _TARGETS.items():
 
 # Quiet, offline-friendly HF behaviour
 os.environ.setdefault("HF_HUB_DISABLE_TELEMETRY", "1")
+# hf-xet's transfer backend can silently hang on large model downloads on some
+# networks (seen with the rephrase model on a fresh clone).  Fall back to plain
+# HTTP so first-run downloads complete reliably.  Override by setting the var.
+os.environ.setdefault("HF_HUB_DISABLE_XET", "1")
 
 # Ensure nltk searches the project data dir first (covers data already there).
 try:
