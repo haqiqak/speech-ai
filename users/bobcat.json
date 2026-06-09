@@ -5,10 +5,14 @@
     "stutter_patterns": [
       "b",
       "c",
-      "g"
+      "g",
+      "p"
     ],
     "blocked_words": []
   },
   "custom_replacements": {},
-  "preferences": {}
+  "preferences": {
+    "allowlist_words": [],
+    "rephrase_enabled": true
+  }
 }
