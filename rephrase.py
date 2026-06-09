@@ -34,8 +34,13 @@ except Exception as exc:  # pragma: no cover - depends on local environment
     _STACK_ERROR = f"{exc.__class__.__name__}: {exc}"
 
 
+# Current model is Vamsi/T5, however we can also use this code with humarin/chatgpt_paraphraser_on_T5_base if desired by replacing these 2 lines below.
+#REPHRASE_MODEL = os.environ.get("REPHRASE_MODEL", "humarin/chatgpt_paraphraser_on_T5_base")
+#REPHRASE_PREFIX = os.environ.get("REPHRASE_PREFIX", "")
+
 REPHRASE_MODEL = os.environ.get("REPHRASE_MODEL", "Vamsi/T5_Paraphrase_Paws")
 REPHRASE_PREFIX = os.environ.get("REPHRASE_PREFIX", "paraphrase: ") 
+
 REPHRASE_DEVICE = os.environ.get("REPHRASE_DEVICE", "cpu")
 REPHRASE_CACHE = Path(__file__).resolve().parent / ".cache" / "hf" / "rephrase"
 REPHRASE_CACHE.mkdir(parents=True, exist_ok=True)
