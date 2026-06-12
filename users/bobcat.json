@@ -10,5 +10,9 @@
     "blocked_words": []
   },
   "custom_replacements": {},
-  "preferences": {}
+  "preferences": {
+    "allowlist_words": [],
+    "rephrase_enabled": true,
+    "profile_rewrite_enabled": true
+  }
 }
