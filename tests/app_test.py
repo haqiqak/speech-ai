@@ -46,6 +46,7 @@ def _seed(at):
     at.session_state["preferences"]      = prefs
     at.session_state["custom_replacements"] = custom
     at.session_state["rephrase_enabled"] = bool(prefs.get("rephrase_enabled", False))
+    at.session_state["profile_rewrite_enabled"] = bool(prefs.get("profile_rewrite_enabled", True))
     return at
 
 
@@ -105,12 +106,14 @@ def _empty_profile(at):
     at.session_state["blocked_words"] = []
     at.session_state["allowlist_words"] = []
     at.session_state["rephrase_enabled"] = False
+    at.session_state["profile_rewrite_enabled"] = False
     try:
         prefs = dict(at.session_state["preferences"])
     except Exception:
         prefs = {}
     prefs["allowlist_words"] = []
     prefs["rephrase_enabled"] = False
+    prefs["profile_rewrite_enabled"] = False
     at.session_state["preferences"] = prefs
 
 

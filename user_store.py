@@ -138,6 +138,7 @@ def load_profile(username: str) -> dict:
     preferences = dict(record.get("preferences", {}))
     preferences.setdefault("allowlist_words", [])
     preferences.setdefault("rephrase_enabled", False)
+    preferences.setdefault("profile_rewrite_enabled", True)
     return {
         "stutter_patterns": list(pp.get("stutter_patterns", [])),
         "blocked_words":    list(pp.get("blocked_words", [])),
