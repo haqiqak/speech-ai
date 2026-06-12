@@ -20,6 +20,8 @@ Speech AI runs your sentence through a seven-stage pipeline:
 6. **Phoneme firewall** — drops candidates that start with the same sound you stutter on (ARPAbet onset matching)
 7. **Inflection + rebuild** — morphologically inflects the chosen word and reassembles the sentence
 
+The roadmap implementation also adds a profile-aware soft rewrite layer: it learns a multi-factor difficulty profile from self-report and observed disfluencies, then ranks alternatives by meaning, candidate difficulty, and word frequency instead of only hard-blocking onsets.
+
 You see a colour-coded risk map of your sentence, pick synonyms from dropdowns (or type your own), and get a final easier sentence with a before/after stutter-difficulty score.
 
 ---
@@ -34,6 +36,9 @@ You see a colour-coded risk map of your sentence, pick synonyms from dropdowns (
 - ✏️ **Custom word input** — override any suggestion with your own word
 - 📝 **Grammar correction card** — shows every fix made before synonym analysis
 - 📈 **Difficulty meter** — sentence-level stutter difficulty score before and after substitution
+- **Multi-factor fluency profile** — onset risk, syllable length, word frequency, and grammatical class with EWMA session updates
+- **Profile-aware rewrite card** — per-change accept/reject controls with transparent difficulty and similarity details
+- **Research harness** — automatic metrics, lambda trade-off sweeps, profile AUC evaluation, and study CSV scaffolding
 
 ---
 
@@ -52,6 +57,11 @@ speech-ai/
 ├── semantic.py         # SBERT contextual re-ranking (sentence-transformers)
 ├── freq.py             # Zipf frequency wrapper (wordfreq)
 ├── paths.py            # Redirects NLTK / SBERT caches into .cache/
+├── config.yaml         # Profiling, rewrite, and eval knobs
+│
+├── profiling/          # CrisperWhisper wrapper, detector, cold start, difficulty profile
+├── rewrite/            # Soft-constraint profile-aware rewrite engine
+├── eval/               # Automatic metrics and user-study harness
 │
 ├── users/              # Per-user JSON files (gitignored)
 │   └── default.json    # Auto-migrated from user_prefs.json on first run
@@ -77,7 +87,7 @@ venv\Scripts\activate        # Windows
 # source venv/bin/activate   # macOS / Linux
 
 # 3. Install dependencies
-pip install streamlit nltk sentence-transformers pyinflect wordfreq requests
+pip install -r requirements.txt
 
 # 4. Run
 streamlit run app.py
@@ -122,6 +132,8 @@ Each user's data lives in `users/<username>.json`:
 - **`blocked_words`** — specific words to always replace, regardless of their onset.
 
 Changes made in the app are saved back to your profile in real time.
+
+The longitudinal fluency profile is stored separately as `users/<username>.fluency_profile.json` at runtime and is ignored by git.
 
 ---
 
@@ -188,6 +200,18 @@ Retrieves candidates from WordNet (POS-filtered) and Datamuse (`rel_syn=` + `ml=
 
 For each candidate, builds a candidate sentence, batch-encodes it alongside the original, and computes cosine similarity. Protected phrases (33 multi-word fixed expressions like `look forward to`, `in order to`, `as well as`) are never substituted. Falls back gracefully to frequency-only ranking if SBERT fails to load.
 
+### Multi-factor profile (`profiling/`)
+
+`profiling/asr.py` wraps CrisperWhisper for verbatim tokens; `profiling/detect.py` flags repetitions, blocks, prolongations, fillers, and stutter markers; `profiling/profile.py` stores a per-speaker word-difficulty model seeded by self-report and population priors, then updated with EWMA session events.
+
+### Profile-aware rewrite (`rewrite/`)
+
+`rewrite/rewriter.py` proposes meaning-preserving substitutions using the roadmap score `similarity - lambda * difficulty + mu * frequency`. Protected words and the user's always-keep list are never replaced, and the Streamlit card lets each proposed change be accepted or rejected.
+
+### Evaluation harness (`eval/`)
+
+`eval/metrics.py` computes meaning preservation, difficulty-onset reduction, substitution rate, and lambda trade-offs. `eval/profile_eval.py` compares self-report-only, observed-only, and fused profile AUC. `eval/study/` contains CSV helpers for counterbalanced three-condition user studies.
+
 ### Storage layer (`user_store.py`)
 
 The public API (`register_user`, `verify_user`, `load_profile`, `save_profile`) is intentionally thin. The file-based backend can be swapped for SQLite or PostgreSQL by replacing only the private `_read()` and `_write()` functions — nothing in `auth.py` or `app.py` changes.
@@ -207,7 +231,7 @@ def _check_password(p, h): return bcrypt.checkpw(p.encode(), h.encode())
 - Grammar correction depends on NLTK POS tagging, which can misfire on very short or broken sentences.
 - Datamuse `ml=` results are not guaranteed to match POS; SBERT acts as the final filter for these.
 - Protected phrases are hard-coded (33 total); idiomatic coverage is incomplete.
-- No memory between sessions — closing the browser loses all choices.
+- UI choices are session-local, while fluency profiles persist per user.
 - Subject-verb agreement detection looks left for the nearest subject, which fails in relative clauses.
 - Grammar correction runs before synonym substitution; a corrected form may shift the target lemma.
 
