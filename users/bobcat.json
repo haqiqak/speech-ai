@@ -5,7 +5,8 @@
     "stutter_patterns": [
       "b",
       "c",
-      "g"
+      "g",
+      "p"
     ],
     "blocked_words": []
   },

@@ -21,6 +21,15 @@ from rewrite.rewriter import DifficultyAwareRewriter
 
 from user_store import save_profile, migrate_legacy_prefs
 from auth import require_auth
+from voice import render_voice_input, render_tts_button, render_stop_button, render_voice_settings
+
+# st_autorefresh polls for the live-STT query-param update every 1.5 s.
+# Gracefully skipped if the package is not installed (no hard crash).
+try:
+    from streamlit_autorefresh import st_autorefresh as _st_autorefresh
+    _HAS_AUTOREFRESH = True
+except ImportError:
+    _HAS_AUTOREFRESH = False
 
 _LEGACY_PREFS = Path(__file__).resolve().parent / "user_prefs.json"
 migrate_legacy_prefs(_LEGACY_PREFS)
@@ -419,6 +428,8 @@ for key, default in [
     ("rephrase_enabled", False),
     ("rephrase_single_sig", None), ("rephrase_single_result", None), ("rephrase_single_use", False),
     ("rephrase_paragraph_sig", None), ("rephrase_paragraph_result", None), ("rephrase_paragraph_use", False),
+    # voice
+    ("tts_rate", 0.90), ("tts_voice_index", 0),
 ]:
     if key not in st.session_state:
         st.session_state[key] = default
@@ -503,7 +514,25 @@ with st.sidebar:
 ⑤ Phoneme firewall<br>⑥ Inflect + user picks<br>⑦ Rebuild sentence
 </div>""", unsafe_allow_html=True)
 
+    st.markdown("---")
+    render_voice_settings(location=st.sidebar)
+
 # ── Main controls ──────────────────────────────────────────────────────────────
+
+# Poll every 1.5 s so that when the JS live-STT widget writes the final
+# transcript into the URL query-param, Streamlit picks it up automatically
+# without the user needing to click anything.  The counter returned by
+# st_autorefresh is intentionally ignored — we only care about the side-effect.
+if _HAS_AUTOREFRESH:
+    _st_autorefresh(interval=1500, limit=None, key="stt_poll")
+
+# Voice input: renders the live-preview mic widget; transcript pre-fills
+# the text area below once the user stops speaking.
+_voice_transcript = render_voice_input(key="voice_input", language="en-US", live_preview=True)
+if _voice_transcript and _voice_transcript != st.session_state.get("query_input", ""):
+    st.session_state["query_input"] = _voice_transcript
+    st.rerun()
+
 query = st.text_area(
     "Your sentence or paragraph",
     value=st.session_state.get("query_input", ""),
@@ -1345,6 +1374,13 @@ if st.session_state.get("multi_mode") and st.session_state.ms_results:
         st.caption("📋 Copy paragraph:")
         st.code(display_rebuilt, language=None)
 
+        # TTS: speak the rebuilt paragraph
+        tts_col_ms, stop_col_ms, _ = st.columns([2, 1, 4])
+        with tts_col_ms:
+            render_tts_button(display_rebuilt, key="tts_multi", label="🔊 Speak paragraph")
+        with stop_col_ms:
+            render_stop_button(key="tts_stop_multi")
+
         # Add to session history
         if st.button("💾 Save to session history", key="save_ms_hist", type="secondary"):
             st.session_state.session_history.append({
@@ -1542,6 +1578,13 @@ if not st.session_state.get("multi_mode"):
 
         # ⑤ Final output
         _render_final_card(sanitized, final_rebuilt)
+
+        # TTS: speak the final rebuilt sentence
+        tts_col, stop_col, _ = st.columns([2, 1, 4])
+        with tts_col:
+            render_tts_button(final_rebuilt, key="tts_single", label="🔊 Speak rebuilt sentence")
+        with stop_col:
+            render_stop_button(key="tts_stop_single")
 
         # Save to session history
         if st.button("💾 Save to session history", key="save_single_hist", type="secondary"):
