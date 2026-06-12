@@ -30,6 +30,7 @@ nltk_data/
 
 # ── User preferences written at runtime ───────────────────────────────────────
 user_prefs.json
+users/*.fluency_profile.json
 
 # ── Streamlit ─────────────────────────────────────────────────────────────────
 .streamlit/secrets.toml

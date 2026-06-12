@@ -2,6 +2,26 @@
 
 ---
 
+## v6.0.0 - Fluency rewrite roadmap implementation
+*2026-06-12*
+
+### New
+- Added `profiling/` with a CrisperWhisper verbatim ASR wrapper, rule-based disfluency detector, cold-start priors, and a longitudinal multi-factor speaker difficulty profile.
+- Added `rewrite/` with soft-constraint candidate ranking: `similarity - lambda * difficulty + mu * frequency`, protected-word handling, per-change logs, and before/after metrics.
+- Added `eval/` with automatic meaning/difficulty/substitution metrics, lambda trade-off output, profile AUC comparison, and study CSV/statistics scaffolding.
+- Added `config.yaml` as the shared tuning point for detection thresholds, EWMA alpha, profile weights, rewrite gates, and lambda sweeps.
+
+### UI
+- Added a multi-factor profile chart to the Streamlit profile panel.
+- Added the **Profile-aware rewrite** sidebar toggle and a result card with per-change accept/reject controls.
+- Persisted the new toggle in user preferences and ignored runtime `users/*.fluency_profile.json` files.
+
+### Tests
+- Added `tests/roadmap_test.py` for detector, profile update, longitudinal behavior, protected words, and non-increasing risk counts.
+- Updated `tests/app_test.py` to seed the new profile-aware toggle cleanly.
+
+---
+
 ## v5.1.0 — Stability fixes, optional Fluency Rephrase, teammate setup
 *2026-06-09*
 
