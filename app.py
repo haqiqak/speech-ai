@@ -14,6 +14,10 @@ from grammar import sanitize_input, is_sentence, SentenceRewriter, inflect, _pre
 import semantic as sem
 import phonetic as ph
 import freq
+from profiling.profile import SpeakerDifficultyProfile
+from profiling.asr import CrisperWhisperASR
+from profiling.detect import detect_disfluencies
+from rewrite.rewriter import DifficultyAwareRewriter
 
 from user_store import save_profile, migrate_legacy_prefs
 from auth import require_auth
@@ -39,6 +43,9 @@ def _save_prefs(patterns: list[str], blocked: list[str]) -> None:
         preferences = dict(st.session_state.get("preferences", {}))
         preferences["allowlist_words"] = list(st.session_state.get("allowlist_words", []))
         preferences["rephrase_enabled"] = bool(st.session_state.get("rephrase_enabled", False))
+        preferences["profile_rewrite_enabled"] = bool(
+            st.session_state.get("profile_rewrite_enabled", True)
+        )
         st.session_state.preferences = preferences
         save_profile(
             user,
@@ -165,6 +172,61 @@ def _single_rebuilt() -> str | None:
     )
 
 
+def _fluency_profile() -> SpeakerDifficultyProfile:
+    """Load the current user's longitudinal multi-factor profile."""
+    user = st.session_state.get("current_user", "default")
+    profile = SpeakerDifficultyProfile.load(user)
+    profile.onboarding(st.session_state.get("stutter_patterns", []))
+    return profile
+
+
+def _profile_chart_html(profile: SpeakerDifficultyProfile) -> str:
+    rows = profile.top_onsets(8)
+    if not rows:
+        return ""
+    out = ['<div class="profile-bars">']
+    for onset, score in rows:
+        width = max(4, int(float(score) * 100))
+        out.append(
+            f'<div class="profile-bar-row">'
+            f'<span class="profile-bar-label">/{_fmt(onset.replace(" ", ""))}/</span>'
+            f'<span class="profile-bar-track"><span style="width:{width}%"></span></span>'
+            f'<span class="profile-bar-score">{float(score):.2f}</span>'
+            f'</div>'
+        )
+    out.append("</div>")
+    return "".join(out)
+
+
+def _friendly_rephrase_status(message: str) -> str:
+    low = (message or "").lower()
+    if "no module named 'torch'" in low or "no module named \"torch\"" in low:
+        return "Optional T5 rephrase needs PyTorch. Profile-aware rewrite still works without it."
+    if "rephrase unavailable" in low:
+        return message.replace("Rephrase unavailable", "Optional T5 rephrase unavailable")
+    return message
+
+
+def _safe_upload_name(name: str) -> str:
+    return re.sub(r"[^A-Za-z0-9_.-]", "_", name or "sample")
+
+
+def _process_profile_upload(uploaded_file) -> tuple[list[dict], list[dict]]:
+    upload_dir = Path(__file__).resolve().parent / ".cache" / "uploads"
+    upload_dir.mkdir(parents=True, exist_ok=True)
+    target = upload_dir / _safe_upload_name(uploaded_file.name)
+    target.write_bytes(uploaded_file.getvalue())
+
+    asr = CrisperWhisperASR()
+    tokens = asr.transcribe(target)
+    events = detect_disfluencies(tokens)
+    if events:
+        profile = _fluency_profile()
+        profile.update(events)
+        profile.save()
+    return tokens, events
+
+
 # ── CSS ────────────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
@@ -197,6 +259,12 @@ div.stButton>button[kind="secondary"]:hover{background:#e4eaf2!important;transfo
 
 .word-card{background:#fff;border:1.5px solid #d4e8f8;border-radius:16px;padding:1rem 1.3rem .9rem;margin-bottom:.75rem;box-shadow:0 2px 12px rgba(75,145,220,.06)}
 .profile-panel{background:#fff;border:1.5px solid #d4e8f8;border-radius:16px;padding:1rem 1.2rem .85rem;margin:.55rem 0 .9rem;box-shadow:0 2px 12px rgba(75,145,220,.05)}
+.profile-bars{margin-top:.55rem;display:grid;gap:.28rem}
+.profile-bar-row{display:grid;grid-template-columns:48px 1fr 38px;align-items:center;gap:.45rem;font-size:.76rem;color:#5a7096}
+.profile-bar-label{font-weight:700;color:#2d6aab}
+.profile-bar-track{height:8px;background:#eef4fb;border-radius:5px;overflow:hidden}
+.profile-bar-track span{display:block;height:8px;background:linear-gradient(90deg,#4b91dc,#f4a461);border-radius:5px}
+.profile-bar-score{text-align:right;font-variant-numeric:tabular-nums}
 .analysis-note{background:#f8fbff;border:1.4px solid #d4e8f8;border-radius:12px;padding:.72rem .9rem;margin:.35rem 0 1rem;color:#2a3d58;font-size:.88rem}
 .syn-grid-card{background:#fff;border:1.5px solid #d4e8f8;border-radius:14px;padding:.85rem .95rem .8rem;margin-bottom:.75rem;min-height:170px;box-shadow:0 2px 10px rgba(75,145,220,.05)}
 .section-kicker{font-size:.68rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#4b91dc;margin:.9rem 0 .45rem}
@@ -314,12 +382,17 @@ def load_rewriter(_engine):
     return SentenceRewriter(_engine)
 
 @st.cache_resource
+def load_profile_rewriter(_engine):
+    return DifficultyAwareRewriter(_engine)
+
+@st.cache_resource
 def init_sbert():
     ok = sem.load_sbert()
     return sem.sbert_status()
 
 engine   = load_engine()
 rewriter = load_rewriter(engine)
+profile_rewriter = load_profile_rewriter(engine)
 sbert_ok, sbert_msg = init_sbert()
 
 # ── Session state defaults ─────────────────────────────────────────────────────
@@ -338,6 +411,10 @@ for key, default in [
     ("_word_results", None),
     # allowlist
     ("allowlist_words", []),
+    # profile-aware soft rewrite layer
+    ("profile_rewrite_enabled", True),
+    ("profile_rewrite_single_sig", None), ("profile_rewrite_single_result", None),
+    ("profile_rewrite_paragraph_sig", None), ("profile_rewrite_paragraph_result", None),
     # optional rephrase layer (default off)
     ("rephrase_enabled", False),
     ("rephrase_single_sig", None), ("rephrase_single_result", None), ("rephrase_single_use", False),
@@ -379,6 +456,20 @@ with st.sidebar:
         help="Show SBERT similarity scores per word.")
 
     prefs = dict(st.session_state.get("preferences", {}))
+    pref_profile_rewrite = bool(prefs.get("profile_rewrite_enabled", True))
+    if "profile_rewrite_enabled" not in st.session_state:
+        st.session_state.profile_rewrite_enabled = pref_profile_rewrite
+    profile_rewrite_enabled = st.toggle(
+        "Profile-aware rewrite",
+        value=bool(st.session_state.get("profile_rewrite_enabled", pref_profile_rewrite)),
+        help="Uses the multi-factor difficulty profile as a soft rewrite constraint.",
+    )
+    st.session_state.profile_rewrite_enabled = profile_rewrite_enabled
+    if prefs.get("profile_rewrite_enabled") != profile_rewrite_enabled:
+        prefs["profile_rewrite_enabled"] = profile_rewrite_enabled
+        st.session_state.preferences = prefs
+        _save_prefs(st.session_state.stutter_patterns, st.session_state.blocked_words)
+
     pref_rephrase = bool(prefs.get("rephrase_enabled", False))
     if "rephrase_enabled" not in st.session_state:
         st.session_state.rephrase_enabled = pref_rephrase
@@ -398,7 +489,7 @@ with st.sidebar:
     if rephrase_enabled:
         import rephrase as _rephrase
         _rp_ok, _rp_msg = _rephrase.rephrase_status()
-        st.caption(("🟢 " if _rp_ok else "🟡 ") + _rp_msg)
+        st.caption(("🟢 " if _rp_ok else "🟡 ") + _friendly_rephrase_status(_rp_msg))
     else:
         st.caption("Fluency rephrase off.")
 
@@ -469,7 +560,44 @@ with st.container():
             f'🔊 Active onsets: <strong>{onset_preview}</strong></div>',
             unsafe_allow_html=True,
         )
+    fluency_profile = _fluency_profile()
+    fluency_profile.save()
+    profile_html = _profile_chart_html(fluency_profile)
+    if profile_html:
+        st.markdown(
+            '<div class="pipe-label" style="margin-top:.7rem">Multi-factor profile</div>'
+            + profile_html,
+            unsafe_allow_html=True,
+        )
     st.markdown("</div>", unsafe_allow_html=True)
+
+# ── Voice / transcript profile update ─────────────────────────────────────────
+with st.expander("Voice / transcript profile update", expanded=False):
+    st.caption(
+        "Upload a CrisperWhisper-style token JSON, a rough transcript TXT, or audio. "
+        "Audio uses the CrisperWhisper wrapper when the ASR dependencies/model are installed."
+    )
+    profile_sample = st.file_uploader(
+        "Voice or transcript sample",
+        type=["json", "txt", "transcript", "wav", "mp3", "m4a", "flac"],
+        help=(
+            "JSON can contain {'tokens': [{'word': 'b-', 'start': 0.2, 'end': 0.4}, ...]}. "
+            "Audio requires the CrisperWhisper model stack."
+        ),
+    )
+    if st.button("Update profile from sample", type="secondary", disabled=profile_sample is None):
+        try:
+            tokens, events = _process_profile_upload(profile_sample)
+            if events:
+                st.success(f"Updated profile from {len(events)} detected disfluency event(s).")
+                st.dataframe(events, use_container_width=True)
+            else:
+                st.info(f"Parsed {len(tokens)} token(s), but no disfluency events were detected.")
+        except Exception as exc:
+            st.warning(
+                "Could not process this sample. For real audio, install the CrisperWhisper "
+                f"ASR stack first. Details: {exc.__class__.__name__}: {exc}"
+            )
 
 # ── Blocklist / Allowlist UI ───────────────────────────────────────────────────
 with st.expander("📋 Blocklist & Allowlist — word-level overrides", expanded=False):
@@ -558,6 +686,8 @@ if lookup_source.strip() and lookup_source.strip() != st.session_state.get("last
         for k in ("result", "sanitized", "fixes", "user_choices",
                   "grammar_fixes_applied", "correction_map", "_word_results",
                   "ms_results", "ms_choices", "multi_mode",
+                  "profile_rewrite_single_sig", "profile_rewrite_single_result",
+                  "profile_rewrite_paragraph_sig", "profile_rewrite_paragraph_result",
                   "rephrase_single_sig", "rephrase_single_result", "rephrase_single_use",
                   "rephrase_paragraph_sig", "rephrase_paragraph_result", "rephrase_paragraph_use"):
             st.session_state[k] = {} if "choices" in k else ([] if k in ("fixes","grammar_fixes_applied","ms_results") else None)
@@ -577,6 +707,8 @@ if search_clicked and source_text:
         "grammar_fixes_applied": [], "correction_map": {},
         "_word_results": None, "last_query": source_text,
         "original_query": source_text, "multi_mode": False,
+        "profile_rewrite_single_sig": None, "profile_rewrite_single_result": None,
+        "profile_rewrite_paragraph_sig": None, "profile_rewrite_paragraph_result": None,
         "rephrase_single_sig": None, "rephrase_single_result": None, "rephrase_single_use": False,
         "rephrase_paragraph_sig": None, "rephrase_paragraph_result": None, "rephrase_paragraph_use": False,
     })
@@ -980,6 +1112,99 @@ def _render_rephrase_card(scope: str, original: str, rebuilt: str,
     return proposed if st.session_state.get(use_key) else rebuilt
 
 
+def _profile_rewrite_signature(base_text: str, patterns, blocked, allowlisted) -> tuple:
+    profile = _fluency_profile()
+    return (
+        base_text,
+        tuple(patterns or []),
+        tuple(sorted(blocked or [])),
+        tuple(sorted(allowlisted or [])),
+        profile.event_count,
+        tuple(profile.top_onsets(20)),
+    )
+
+
+def _get_profile_rewrite_result(scope: str, base_text: str,
+                                patterns, blocked, allowlisted) -> dict | None:
+    if not st.session_state.get("profile_rewrite_enabled", True):
+        return None
+
+    sig = _profile_rewrite_signature(base_text, patterns, blocked, allowlisted)
+    sig_key = f"profile_rewrite_{scope}_sig"
+    result_key = f"profile_rewrite_{scope}_result"
+
+    if st.session_state.get(sig_key) != sig:
+        profile = _fluency_profile()
+        with st.spinner("Preparing profile-aware rewrite..."):
+            result = profile_rewriter.rewrite_paragraph(
+                base_text,
+                profile,
+                always_keep=allowlisted,
+                always_replace=blocked,
+            )
+        st.session_state[sig_key] = sig
+        st.session_state[result_key] = result
+
+    return st.session_state.get(result_key)
+
+
+def _render_profile_rewrite_card(scope: str, base_text: str,
+                                 patterns, blocked, allowlisted) -> str:
+    result = _get_profile_rewrite_result(scope, base_text, patterns, blocked, allowlisted)
+    if result is None:
+        return base_text
+
+    profile = _fluency_profile()
+    changes = list(result.get("change_log", []))
+    if not changes:
+        metrics = result.get("metrics", {})
+        st.markdown(f"""
+<div class="pipe-card" style="border-color:#b8d9f5">
+  <div class="pipe-label">Profile-Aware Rewrite</div>
+  <div style="color:#6f87a6;font-size:.9rem">No profile-aware changes proposed.</div>
+  <div style="font-size:.78rem;color:#5a7096;margin-top:.45rem">
+    Difficulty: <strong>{metrics.get("difficulty_before", 0):.2f} → {metrics.get("difficulty_after", 0):.2f}</strong>
+  </div>
+</div>""", unsafe_allow_html=True)
+        return base_text
+
+    st.markdown("""
+<div class="pipe-card" style="border-color:#b8d9f5">
+  <div class="pipe-label">Profile-Aware Rewrite</div>
+</div>""", unsafe_allow_html=True)
+
+    accepted_ids = []
+    for change in changes:
+        change_id = change["id"]
+        key = f"profile_rewrite_{scope}_accept_{abs(hash(change_id))}"
+        if key not in st.session_state:
+            st.session_state[key] = True
+        label = (
+            f"{change['orig']} -> {change['replacement']} "
+            f"(diff {change['difficulty_before']:.2f} to {change['difficulty_after']:.2f})"
+        )
+        if st.checkbox(label, value=bool(st.session_state[key]), key=key):
+            accepted_ids.append(change_id)
+        sim_text = "n/a" if change.get("sim") is None else f"{change['sim']:.2f}"
+        st.markdown(
+            f'<div style="font-size:.78rem;color:#5a7096;margin:-.2rem 0 .45rem .2rem">'
+            f'{_fmt(change.get("reason"))} · sim {sim_text} · score {change.get("score", 0):.2f}</div>',
+            unsafe_allow_html=True,
+        )
+
+    final_text = profile_rewriter.render_with_decisions(result, accepted_ids)
+    metrics = profile_rewriter.metrics(base_text, final_text, profile)
+    st.markdown(f"""
+<div class="pipe-card" style="border-color:#b8d9f5">
+  <div class="output-box">{_fmt(final_text)}</div>
+  <div style="font-size:.78rem;color:#5a7096;margin-top:.55rem">
+    Difficulty: <strong>{metrics.get("difficulty_before", 0):.2f} → {metrics.get("difficulty_after", 0):.2f}</strong>
+    · risk words: <strong>{metrics.get("difficulty_onset_before", 0)} → {metrics.get("difficulty_onset_after", 0)}</strong>
+  </div>
+</div>""", unsafe_allow_html=True)
+    return final_text
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # MULTI-SENTENCE RESULTS
 # ─────────────────────────────────────────────────────────────────────────────
@@ -987,6 +1212,7 @@ if st.session_state.get("multi_mode") and st.session_state.ms_results:
     ms_results = st.session_state.ms_results
     patterns   = list(st.session_state.stutter_patterns)
     blocked    = set(st.session_state.blocked_words)
+    allowlisted = set(st.session_state.get("allowlist_words", []))
 
     st.markdown(
         '<span class="mode-tag mode-multi">📄 Paragraph Mode — '
@@ -1075,13 +1301,19 @@ if st.session_state.get("multi_mode") and st.session_state.ms_results:
                 rb = sr["sanitized"]
             rephrase_pairs.append((sr["sanitized"], rb))
         original_paragraph = " ".join(orig for orig, _ in rephrase_pairs)
-        display_rebuilt = _render_rephrase_card(
+        profile_rebuilt = _render_profile_rewrite_card(
             "paragraph",
-            original_paragraph,
             full_rebuilt,
             patterns,
             blocked,
-            sentence_pairs=rephrase_pairs,
+            allowlisted,
+        )
+        display_rebuilt = _render_rephrase_card(
+            "paragraph",
+            original_paragraph,
+            profile_rebuilt,
+            patterns,
+            blocked,
         )
 
         # Difficulty
@@ -1200,6 +1432,7 @@ if not st.session_state.get("multi_mode"):
         sanitized = st.session_state.sanitized or st.session_state.last_query
         patterns  = list(st.session_state.stutter_patterns)
         blocked   = set(st.session_state.blocked_words)
+        allowlisted = set(st.session_state.get("allowlist_words", []))
 
         st.markdown('<span class="mode-tag mode-sentence">📝 Sentence Mode</span>',
                     unsafe_allow_html=True)
@@ -1291,10 +1524,18 @@ if not st.session_state.get("multi_mode"):
   <div class="diff-text">{highlighted}</div>
 </div>""", unsafe_allow_html=True)
 
+        profile_rebuilt = _render_profile_rewrite_card(
+            "single",
+            rebuilt,
+            patterns,
+            blocked,
+            allowlisted,
+        )
+
         final_rebuilt = _render_rephrase_card(
             "single",
             sanitized,
-            rebuilt,
+            profile_rebuilt,
             patterns,
             blocked,
         )
