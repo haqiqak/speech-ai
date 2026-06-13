@@ -2,22 +2,13 @@
   "username": "default",
   "password_hash": "05fb617ad543807c0c3fe7ae9d1f33aa8928236e85adb7c0e3b186f5084e2e19",
   "phoneme_profile": {
-    "stutter_patterns": [
-      "str",
-      "pr",
-      "b",
-      "tr",
-      "l",
-      "k",
-      "f",
-      "m",
-      "sp"
-    ],
-    "blocked_words": [
-      "present",
-      "varsity"
-    ]
+    "stutter_patterns": [],
+    "blocked_words": []
   },
   "custom_replacements": {},
-  "preferences": {}
+  "preferences": {
+    "allowlist_words": [],
+    "rephrase_enabled": true,
+    "profile_rewrite_enabled": false
+  }
 }

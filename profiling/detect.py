@@ -20,6 +20,8 @@ def _as_dict(token: Any) -> dict[str, Any]:
         "end": getattr(token, "end", None),
         "is_filler": getattr(token, "is_filler", False),
         "is_stutter": getattr(token, "is_stutter", False),
+        "source": getattr(token, "source", None),
+        "profile_safe": getattr(token, "profile_safe", True),
     }
 
 
@@ -80,17 +82,20 @@ def detect_disfluencies(
         if key in seen:
             return
         seen.add(key)
-        events.append(
-            {
-                "word": rows[index].get("word", ""),
-                "index": index,
-                "start": rows[index].get("start"),
-                "end": rows[index].get("end"),
-                "type": kind,
-                "confidence": round(confidence, 3),
-                "evidence": evidence,
-            }
-        )
+        event = {
+            "word": rows[index].get("word", ""),
+            "index": index,
+            "start": rows[index].get("start"),
+            "end": rows[index].get("end"),
+            "type": kind,
+            "confidence": round(confidence, 3),
+            "evidence": evidence,
+        }
+        if rows[index].get("source"):
+            event["source"] = rows[index].get("source")
+        if rows[index].get("profile_safe") is False:
+            event["profile_safe"] = False
+        events.append(event)
 
     for i, token in enumerate(rows):
         word = str(token.get("word", ""))

@@ -209,8 +209,12 @@ def _profile_chart_html(profile: SpeakerDifficultyProfile) -> str:
 
 def _friendly_rephrase_status(message: str) -> str:
     low = (message or "").lower()
+    if "model not loaded" in low:
+        return "Ready to load on first rewrite. First use may download the T5 model."
     if "no module named 'torch'" in low or "no module named \"torch\"" in low:
         return "Optional T5 rephrase needs PyTorch. Profile-aware rewrite still works without it."
+    if "no module named 'transformers'" in low or "no module named \"transformers\"" in low:
+        return "Optional T5 rephrase needs Transformers/PyTorch. Profile-aware rewrite still works without it."
     if "rephrase unavailable" in low:
         return message.replace("Rephrase unavailable", "Optional T5 rephrase unavailable")
     return message
@@ -220,20 +224,54 @@ def _safe_upload_name(name: str) -> str:
     return re.sub(r"[^A-Za-z0-9_.-]", "_", name or "sample")
 
 
+def _profile_safe_events(events: list[dict]) -> list[dict]:
+    return [event for event in events if event.get("profile_safe", True)]
+
+
 def _process_profile_upload(uploaded_file) -> tuple[list[dict], list[dict]]:
     upload_dir = Path(__file__).resolve().parent / ".cache" / "uploads"
     upload_dir.mkdir(parents=True, exist_ok=True)
-    target = upload_dir / _safe_upload_name(uploaded_file.name)
+    safe_name = _safe_upload_name(getattr(uploaded_file, "name", "") or "microphone.wav")
+    upload_type = str(getattr(uploaded_file, "type", "") or "").lower()
+    if "." not in safe_name and "wav" in upload_type:
+        safe_name += ".wav"
+    target = upload_dir / safe_name
     target.write_bytes(uploaded_file.getvalue())
 
     asr = CrisperWhisperASR()
     tokens = asr.transcribe(target)
     events = detect_disfluencies(tokens)
-    if events:
+    profile_events = _profile_safe_events(events)
+    if profile_events:
         profile = _fluency_profile()
-        profile.update(events)
+        profile.update(profile_events)
         profile.save()
     return tokens, events
+
+
+def _render_profile_update_result(tokens: list[dict], events: list[dict]) -> None:
+    transcript = " ".join(str(tok.get("word", "")).strip() for tok in tokens).strip()
+    if transcript:
+        st.caption("Detected transcript:")
+        st.code(transcript, language=None)
+    profile_events = _profile_safe_events(events)
+    if events:
+        if profile_events:
+            st.success(f"Updated profile from {len(profile_events)} detected disfluency event(s).")
+        else:
+            st.info(
+                "Detected timing-only disfluency events from the recording. "
+                "Exact word/onset profile updates need the CrisperWhisper ASR stack, "
+                "or a JSON/TXT transcript with words."
+            )
+        if len(profile_events) != len(events):
+            st.caption(
+                f"{len(events) - len(profile_events)} timing-only event(s) were shown "
+                "but not used for word-level profile learning."
+            )
+        st.dataframe(events, use_container_width=True)
+    else:
+        st.info(f"Parsed {len(tokens)} token(s), but no disfluency events were detected.")
 
 
 # ── CSS ────────────────────────────────────────────────────────────────────────
@@ -499,7 +537,9 @@ with st.sidebar:
         _save_prefs(st.session_state.stutter_patterns, st.session_state.blocked_words)
     if rephrase_enabled:
         import rephrase as _rephrase
-        _rp_ok, _rp_msg = _rephrase.rephrase_status()
+        _rp_ok, _rp_msg = _rephrase.rephrase_status(
+            load=not bool(getattr(_rephrase, "_STACK_OK", False))
+        )
         st.caption(("🟢 " if _rp_ok else "🟡 ") + _friendly_rephrase_status(_rp_msg))
     else:
         st.caption("Fluency rephrase off.")
@@ -603,11 +643,29 @@ with st.container():
 # ── Voice / transcript profile update ─────────────────────────────────────────
 with st.expander("Voice / transcript profile update", expanded=False):
     st.caption(
-        "Upload a CrisperWhisper-style token JSON, a rough transcript TXT, or audio. "
-        "Audio uses the CrisperWhisper wrapper when the ASR dependencies/model are installed."
+        "Record a short speech sample from the mic, or upload a CrisperWhisper-style "
+        "token JSON / transcript / audio file. WAV mic recordings use a lightweight "
+        "timing fallback when CrisperWhisper is not installed; exact words need the "
+        "ASR dependencies/model."
     )
+    mic_sample = st.audio_input(
+        "Record from microphone",
+        help="Press record, read your prepared sentence, stop, then update the profile from the recording.",
+    ) if hasattr(st, "audio_input") else None
+    if st.button("Update profile from microphone", type="secondary", disabled=mic_sample is None):
+        try:
+            tokens, events = _process_profile_upload(mic_sample)
+            _render_profile_update_result(tokens, events)
+        except Exception as exc:
+            st.warning(
+                "Could not process this microphone audio. Try a shorter WAV recording, "
+                "or install the CrisperWhisper ASR stack for full transcription. "
+                f"Details: {exc.__class__.__name__}: {exc}"
+            )
+
+    st.markdown("---")
     profile_sample = st.file_uploader(
-        "Voice or transcript sample",
+        "Upload voice or transcript sample",
         type=["json", "txt", "transcript", "wav", "mp3", "m4a", "flac"],
         help=(
             "JSON can contain {'tokens': [{'word': 'b-', 'start': 0.2, 'end': 0.4}, ...]}. "
@@ -617,11 +675,7 @@ with st.expander("Voice / transcript profile update", expanded=False):
     if st.button("Update profile from sample", type="secondary", disabled=profile_sample is None):
         try:
             tokens, events = _process_profile_upload(profile_sample)
-            if events:
-                st.success(f"Updated profile from {len(events)} detected disfluency event(s).")
-                st.dataframe(events, use_container_width=True)
-            else:
-                st.info(f"Parsed {len(tokens)} token(s), but no disfluency events were detected.")
+            _render_profile_update_result(tokens, events)
         except Exception as exc:
             st.warning(
                 "Could not process this sample. For real audio, install the CrisperWhisper "

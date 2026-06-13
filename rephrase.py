@@ -73,6 +73,10 @@ def _load_model() -> bool:
         _model = AutoModelForSeq2SeqLM.from_pretrained(
             REPHRASE_MODEL,
             cache_dir=str(REPHRASE_CACHE),
+            # Incremental, meta-device loading avoids the transient 2x weight
+            # allocation (init full model + load state dict) that OOMs / segfaults
+            # on low-RAM machines. Requires `accelerate`.
+            low_cpu_mem_usage=True,
         )
         device = REPHRASE_DEVICE
         if device != "cpu" and torch is not None and not torch.cuda.is_available():

@@ -8,10 +8,12 @@ __pycache__/
 
 # ── Virtual environments ──────────────────────────────────────────────────────
 .venv/
+.venv*/
 venv/
 env/
 ENV/
 .env/
+.vendor/
 
 # ── Distribution / packaging ──────────────────────────────────────────────────
 dist/

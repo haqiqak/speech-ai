@@ -42,6 +42,8 @@ You see a colour-coded risk map of your sentence, pick synonyms from dropdowns (
 - 📈 **Difficulty meter** — sentence-level stutter difficulty score before and after substitution
 - **Multi-factor fluency profile** — onset risk, syllable length, word frequency, and grammatical class with EWMA session updates
 - **Profile-aware rewrite card** — per-change accept/reject controls with transparent difficulty and similarity details
+- ✨ **Fluency rephrase (beta)** — optional T5 paraphrase pass (`rephrase.py`) that proposes a smoother full-sentence rewrite which avoids your blocked words/onsets while preserving meaning. Loads lazily on first use; degrades to passthrough if the model/stack is unavailable
+- 🎙️ **Microphone profiling** — record a sample (or upload CrisperWhisper token JSON / transcript / audio) to update your fluency profile. Real audio uses CrisperWhisper when installed; WAV mic recordings fall back to a lightweight timing detector (pauses/prolongations) when it isn't
 - **Research harness** — automatic metrics, lambda trade-off sweeps, profile AUC evaluation, and study CSV scaffolding
 
 
@@ -98,9 +100,30 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-On first run, NLTK downloads `cmudict`, `averaged_perceptron_tagger_eng`, `punkt_tab`, and `wordnet`. SBERT downloads `all-MiniLM-L6-v2` (~80 MB). Both are cached in `.cache/` after that.
+On first run, NLTK downloads `cmudict`, `averaged_perceptron_tagger_eng`, `punkt_tab`, and `wordnet`. SBERT downloads `all-MiniLM-L6-v2` (~80 MB). Everything is cached under the project-local `.cache/` (NLTK, HuggingFace, torch, and the LanguageTool JAR are all redirected there by `paths.py` — nothing is written to your home/system cache).
 
 **No external API keys required. Runs fully offline after first model download.**
+
+### Optional models (downloaded lazily, only when you use the feature)
+
+| Feature | Model | Size | When it downloads |
+|---------|-------|------|-------------------|
+| Fluency rephrase (beta) | `Vamsi/T5_Paraphrase_Paws` | ~890 MB | First time you run a rephrase with the toggle on |
+| Microphone / audio transcription | `nyrahealth/CrisperWhisper` | ~3 GB | First time you transcribe real audio |
+| Grammar deep-check | LanguageTool JAR | ~200 MB | First grammar correction (needs Java 8+) |
+
+If a model can't be downloaded or loaded, the app degrades gracefully — rephrase falls back to passthrough, and mic recordings fall back to the timing detector. None of them are required for the core synonym pipeline.
+
+### Memory note (important for low-RAM machines)
+
+`accelerate` is in `requirements.txt` and is **required** for loading the transformer models on machines with limited RAM. Without it, `from_pretrained` does a transient double allocation of the weights that can crash (segfault) on tight memory. The rephrase model (~220 M params) loads comfortably with a few GB free; **CrisperWhisper (~1.5 B params) needs several GB free** and may not load on an 8 GB laptop while a browser/IDE is open.
+
+On a tight-RAM machine, run the app from a **plain terminal** (not inside an IDE) to free ~1 GB. A convenience launcher is included:
+
+```powershell
+# Windows — close your IDE first, then from any PowerShell window:
+L:\speech-ai\run_app.ps1
+```
 
 ---
 
@@ -213,6 +236,14 @@ For each candidate, builds a candidate sentence, batch-encodes it alongside the 
 
 `rewrite/rewriter.py` proposes meaning-preserving substitutions using the roadmap score `similarity - lambda * difficulty + mu * frequency`. Protected words and the user's always-keep list are never replaced, and the Streamlit card lets each proposed change be accepted or rejected.
 
+### Fluency rephrase (`rephrase.py`)
+
+A standalone, optional layer that proposes a smoother full-sentence rewrite. It generates paraphrase candidates with a T5 model (`Vamsi/T5_Paraphrase_Paws`), blocks the user's trouble words via `bad_words_ids`, then scores each candidate by `w_sim·similarity − w_diff·difficulty − w_viol·violations − w_edit·edit-distance` and keeps the best one that clears a semantic-similarity gate. It is never imported by `grammar.py` or `engine.py`, loads the model lazily on first use (with `low_cpu_mem_usage=True` so it fits on low-RAM machines), and degrades to returning the input sentence unchanged if the stack or weights are unavailable.
+
+### ASR / microphone profiling (`profiling/asr.py`)
+
+`CrisperWhisperASR` produces verbatim tokens. It deliberately refuses vanilla Whisper model ids (which delete disfluencies) and defaults to CrisperWhisper. It accepts JSON token fixtures and transcripts for offline development, and for WAV recordings without the ASR model it falls back to `tokens_from_audio_timing` — an energy-based voice-activity detector that marks speech/pause regions (relative to the clip's own noise floor and peak) so the detector can still find blocks and prolongations without knowing the words.
+
 ### Evaluation harness (`eval/`)
 
 `eval/metrics.py` computes meaning preservation, difficulty-onset reduction, substitution rate, and lambda trade-offs. `eval/profile_eval.py` compares self-report-only, observed-only, and fused profile AUC. `eval/study/` contains CSV helpers for counterbalanced three-condition user studies.
@@ -290,6 +321,9 @@ This makes the system useful for users who:
 | [pyinflect](https://github.com/bjascob/pyInflect) | Morphological inflection |
 | [wordfreq](https://github.com/rspeer/wordfreq) | Zipf word frequency scores |
 | [Datamuse API](https://www.datamuse.com/api/) | Additional synonym candidates |
+| [transformers](https://github.com/huggingface/transformers) + [torch](https://pytorch.org) + [accelerate](https://github.com/huggingface/accelerate) | T5 fluency rephrase + CrisperWhisper ASR, low-memory model loading |
+| [CrisperWhisper](https://huggingface.co/nyrahealth/CrisperWhisper) | Verbatim (disfluency-preserving) speech transcription |
+| [language-tool-python](https://github.com/jxmorris12/language_tool_python) | Optional grammar deep-check (requires Java) |
 
 ---
 

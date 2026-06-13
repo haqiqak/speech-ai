@@ -131,6 +131,12 @@ def run():
         ok &= _check(at, "default load")
         cond = "Phoneme Profile" in _md(at)
         print("     Phoneme Profile panel present:", cond); ok &= cond
+        button_labels = [b.label for b in at.button]
+        uploader_labels = [getattr(u, "label", "") for u in at.file_uploader]
+        cond = "Update profile from microphone" in button_labels
+        print("     microphone profile update present:", cond); ok &= cond
+        cond = "Upload voice or transcript sample" in uploader_labels
+        print("     upload profile update present:", cond); ok &= cond
 
         # 2) Sentence mode, no patterns → final output contains the grammar fix 'running'
         at = _fresh()

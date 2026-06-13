@@ -13,6 +13,7 @@ tiktoken>=0.7.0
 
 torch>=2.0
 torchvision>=0.15
+accelerate>=0.26      # enables low_cpu_mem_usage model loading (low-RAM machines)
 
 scikit-learn>=1.0
 numpy>=1.23

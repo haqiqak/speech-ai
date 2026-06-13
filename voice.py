@@ -3,7 +3,7 @@ voice.py — Browser-native Voice-In (STT) and Voice-Out (TTS) for Speech AI.
 
 Design decisions
 ─────────────────
-STT: Web Speech API called directly via st.components.v1.html with
+STT: Web Speech API called directly via st.iframe with
      interimResults=true for live word-by-word display.  The component
      renders its own Start / Stop buttons, shows interim text inside a
      live textarea, then pushes the final transcript back to Streamlit
@@ -13,7 +13,7 @@ STT: Web Speech API called directly via st.components.v1.html with
      Legacy streamlit-mic-recorder path is kept as a fallback when
      render_voice_input() is called with live_preview=False.
 
-TTS: window.speechSynthesis injected via st.components.v1.html.
+TTS: window.speechSynthesis injected via st.iframe.
      Lets the browser pick from its local neural voices (Chrome/Edge ship
      high-quality ones). User can choose voice + rate.  Zero cost, zero
      server load, no temp files.
@@ -38,7 +38,6 @@ Public API
 from __future__ import annotations
 
 import streamlit as st
-import streamlit.components.v1 as components
 
 
 # ── helpers ──────────────────────────────────────────────────────────────────
@@ -311,10 +310,9 @@ def render_voice_input(
 
     # ── live-preview path ────────────────────────────────────────────────────
     # 1. Render the self-contained HTML widget
-    components.html(
+    st.iframe(
         _live_stt_html(component_key=key, language=language),
         height=height,
-        scrolling=False,
     )
 
     # 2. Read back the final transcript that the JS wrote into query params
@@ -474,17 +472,16 @@ def render_tts_button(
 
     if st.session_state[ctr_key] > 0:
         component_key = f"{key}_{st.session_state[ctr_key]}"
-        components.html(
+        st.iframe(
             _tts_html(text, rate, voice_index, component_key),
             height=0,
-            scrolling=False,
         )
 
 
 def render_stop_button(key: str = "tts_stop") -> None:
     """Inject a JS snippet to stop any ongoing speech."""
     if st.button("⏹ Stop", key=key, help="Stop speaking"):
-        components.html(
+        st.iframe(
             "<script>window.speechSynthesis && window.speechSynthesis.cancel();</script>"
             '<div style="height:0"></div>',
             height=0,
@@ -552,7 +549,7 @@ def render_voice_settings(location=None) -> None:
         )
 
         st.caption("Available voices on your device:")
-        components.html(_VOICE_LOADER_HTML, height=80, scrolling=False)
+        st.iframe(_VOICE_LOADER_HTML, height=80)
 
         st.session_state.tts_voice_index = st.number_input(
             "Voice index (from list above)",

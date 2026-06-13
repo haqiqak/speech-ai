@@ -13,9 +13,14 @@ by a launcher or CI) always wins.
 """
 import os
 from pathlib import Path
+import sys
 
 _ROOT  = Path(__file__).resolve().parent          # project root
 _CACHE = _ROOT / ".cache"
+_VENDOR = _ROOT / ".vendor" / f"python{sys.version_info.major}{sys.version_info.minor}"
+
+if _VENDOR.exists():
+    sys.path.insert(0, str(_VENDOR))
 
 # Cap BLAS/OpenMP threads BEFORE numpy/torch import.  OpenBLAS otherwise
 # pre-allocates per-thread buffers sized for every CPU core, a large upfront
@@ -30,6 +35,9 @@ _TARGETS = {
     "HF_HOME":                    _CACHE / "hf",
     "SENTENCE_TRANSFORMERS_HOME": _CACHE / "hf" / "sbert",
     "TORCH_HOME":                 _CACHE / "torch",
+    # language_tool_python otherwise downloads its ~200 MB JAR to
+    # ~/.cache/language_tool_python on C:. Keep it on the project drive too.
+    "LTP_PATH":                   _CACHE / "language_tool",
 }
 
 for _var, _path in _TARGETS.items():
