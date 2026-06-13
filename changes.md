@@ -2,6 +2,29 @@
 
 ---
 
+## v6.0.1 — Model-loading reliability + low-RAM support
+*2026-06-13*
+
+### Fixed
+- **Fluency rephrase "model not loaded" / segfault** — loading the T5 paraphraser crashed (segfault, exit 139) on low-RAM machines because `from_pretrained` transiently allocates the weights twice (build model + load state dict). Now loads with `low_cpu_mem_usage=True`, and **`accelerate` is added to `requirements.txt`** (required for the incremental/meta-device load path). The model now loads and generates correctly.
+- **Microphone "Could not process / transformers required" error** — the WAV audio-timing fallback used a threshold of `max(0.012, median*3.5, p90*0.20)`; `median*3.5` exceeds the peak RMS whenever speech dominates the clip (i.e. every normal mic recording), so it detected **zero** segments and surfaced a misleading error. Threshold is now anchored to the clip's own noise floor and peak (`p15`/`p95`), so speech-dominated recordings produce timing tokens as intended.
+- Gave the CrisperWhisper ASR pipeline the same `low_cpu_mem_usage` loading path for a better chance of loading on modest machines.
+
+### Changed
+- **`paths.py`** now redirects the LanguageTool JAR cache to the project-local `.cache/` via `LTP_PATH` (it previously downloaded ~200 MB to `~/.cache` on C:). All runtime caches (NLTK, HuggingFace, torch, LanguageTool) now stay inside the project.
+- Stopped tracking compiled `__pycache__/*.pyc`; `.gitignore` now also ignores `.venv*/`.
+
+### New
+- **`run_app.ps1`** — convenience launcher to run the app from a plain PowerShell terminal (frees ~1 GB vs running inside an IDE — needed for the heavier ASR model on tight-RAM machines).
+
+### Docs
+- README: added the **Fluency rephrase (beta)** and **microphone profiling** features, an optional-models table (T5 ~890 MB, CrisperWhisper ~3 GB, LanguageTool ~200 MB), the `accelerate`/low-RAM memory note, the `run_app.ps1` launcher, and architecture subsections for `rephrase.py` and `profiling/asr.py`.
+
+### Tests
+- `tests/app_test.py`, `tests/roadmap_test.py` (6), `tests/persistence_test.py`, and `tests/smoke.py` all pass, including the rephrase-toggle and WAV audio-fallback paths.
+
+---
+
 ## v6.0.0 - Fluency rewrite roadmap implementation
 *2026-06-12*
 
