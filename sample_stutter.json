@@ -1,0 +1,15 @@
+{
+  "tokens": [
+    {"word": "I",       "start": 0.00, "end": 0.20},
+    {"word": "I",       "start": 0.25, "end": 0.45},
+    {"word": "uh",      "start": 0.50, "end": 0.72, "is_filler": true},
+    {"word": "w-",      "start": 0.85, "end": 1.00, "is_stutter": true},
+    {"word": "want",    "start": 1.05, "end": 1.30},
+    {"word": "to",      "start": 1.35, "end": 1.50},
+    {"word": "p-",      "start": 1.60, "end": 1.78, "is_stutter": true},
+    {"word": "present", "start": 1.82, "end": 2.45},
+    {"word": "my",      "start": 3.20, "end": 3.40},
+    {"word": "p-",      "start": 3.50, "end": 3.66, "is_stutter": true},
+    {"word": "project", "start": 3.70, "end": 4.70}
+  ]
+}
