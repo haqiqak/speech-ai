@@ -127,26 +127,28 @@ def _grammar_explanation(fixes: list[dict]) -> str:
 
 
 def _split_sentences(text: str) -> list[str]:
-    abbreviations = {
-        "Mr.", "Mrs.", "Ms.", "Dr.", "Prof.",
-        "Sr.", "Jr.", "vs.", "etc.", "approx.",
-        "fig.", "vol.", "no."
+    """Canonical sentence splitter shared with rewrite/rewriter.py.
+
+    Handles common abbreviations so they don't trigger a false sentence boundary.
+    Keeps all whitespace-delimited words in one pass to avoid position drift
+    that the simpler regex approach in rewriter.py could cause.
+    """
+    _ABBREVS = {
+        "mr.", "mrs.", "ms.", "dr.", "prof.",
+        "sr.", "jr.", "vs.", "etc.", "approx.",
+        "fig.", "vol.", "no.", "dept.", "est.",
+        "p.m.", "a.m.", "u.s.", "u.k.",
     }
-
-    sentences = []
-    current = []
-
+    sentences: list[str] = []
+    current: list[str] = []
     for word in text.split():
         current.append(word)
-
-        if word.endswith((".", "!", "?")) and word not in abbreviations:
+        if word.endswith((".", "!", "?")) and word.lower() not in _ABBREVS:
             sentences.append(" ".join(current))
             current = []
-
     if current:
         sentences.append(" ".join(current))
-
-    return sentences
+    return [s for s in sentences if s.strip()]
 
 
 def _rebuild_sentence(sent_result: dict, sid: int) -> str:
@@ -229,6 +231,19 @@ def _profile_safe_events(events: list[dict]) -> list[dict]:
 
 
 def _process_profile_upload(uploaded_file) -> tuple[list[dict], list[dict]]:
+    """Process an uploaded audio/JSON/text file and update the speaker profile.
+
+    Audio files (WAV etc.) go through CrisperWhisperASR.  When the full ASR
+    stack is not installed the lightweight ``tokens_from_audio_timing`` fallback
+    is used instead, which only detects *when* speech occurs — it cannot recover
+    word text or phoneme onsets.  Those timing-only tokens are marked
+    ``profile_safe=False`` by the ASR layer and are filtered out before the
+    profile is updated, so the word-level difficulty model is never polluted with
+    placeholder token names like ``speech_a``, ``speech_b``, etc.
+
+    JSON fixtures that include ``word`` fields *do* go through the normal
+    profile update path and are always ``profile_safe=True``.
+    """
     upload_dir = Path(__file__).resolve().parent / ".cache" / "uploads"
     upload_dir.mkdir(parents=True, exist_ok=True)
     safe_name = _safe_upload_name(getattr(uploaded_file, "name", "") or "microphone.wav")
@@ -246,6 +261,7 @@ def _process_profile_upload(uploaded_file) -> tuple[list[dict], list[dict]]:
         profile = _fluency_profile()
         profile.update(profile_events)
         profile.save()
+        st.session_state["profile_needs_save"] = False  # just saved directly
     return tokens, events
 
 
@@ -565,6 +581,11 @@ with st.sidebar:
 # st_autorefresh is intentionally ignored — we only care about the side-effect.
 if _HAS_AUTOREFRESH:
     _st_autorefresh(interval=1500, limit=None, key="stt_poll")
+else:
+    st.caption(
+        "⚠️ Live voice-to-text auto-polling requires **streamlit-autorefresh**. "
+        "Add `streamlit-autorefresh` to `requirements.txt` for automatic transcript capture."
+    )
 
 # Voice input: renders the live-preview mic widget; transcript pre-fills
 # the text area below once the user stops speaking.
@@ -630,7 +651,9 @@ with st.container():
             unsafe_allow_html=True,
         )
     fluency_profile = _fluency_profile()
-    fluency_profile.save()
+    # Bug 6 fix: only save when the profile needs updating, not on every render.
+    if st.session_state.pop("profile_needs_save", False):
+        fluency_profile.save()
     profile_html = _profile_chart_html(fluency_profile)
     if profile_html:
         st.markdown(
@@ -648,10 +671,18 @@ with st.expander("Voice / transcript profile update", expanded=False):
         "timing fallback when CrisperWhisper is not installed; exact words need the "
         "ASR dependencies/model."
     )
-    mic_sample = st.audio_input(
-        "Record from microphone",
-        help="Press record, read your prepared sentence, stop, then update the profile from the recording.",
-    ) if hasattr(st, "audio_input") else None
+    if hasattr(st, "audio_input"):
+        mic_sample = st.audio_input(
+            "Record from microphone",
+            help="Press record, read your prepared sentence, stop, then update the profile from the recording.",
+        )
+    else:
+        st.info(
+            "🎙️ Microphone recording requires **Streamlit ≥ 1.32**. "
+            "Run `pip install --upgrade streamlit` to enable it.",
+            icon="ℹ️",
+        )
+        mic_sample = None
     if st.button("Update profile from microphone", type="secondary", disabled=mic_sample is None):
         try:
             tokens, events = _process_profile_upload(mic_sample)
@@ -1244,7 +1275,8 @@ def _render_profile_rewrite_card(scope: str, base_text: str,
         st.markdown(f"""
 <div class="pipe-card" style="border-color:#b8d9f5">
   <div class="pipe-label">Profile-Aware Rewrite</div>
-  <div style="color:#6f87a6;font-size:.9rem">No profile-aware changes proposed.</div>
+  <div class="output-box">{_fmt(base_text)}</div>
+  <div style="color:#6f87a6;font-size:.9rem;margin-top:.38rem">No high-risk words found — sentence kept as-is.</div>
   <div style="font-size:.78rem;color:#5a7096;margin-top:.45rem">
     Difficulty: <strong>{metrics.get("difficulty_before", 0):.2f} → {metrics.get("difficulty_after", 0):.2f}</strong>
   </div>

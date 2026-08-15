@@ -315,6 +315,35 @@ def render_voice_input(
         height=height,
     )
 
+    # Bug 1 fix: inject a postMessage listener into the *parent* Streamlit
+    # frame.  The STT widget already calls window.parent.postMessage when it
+    # has a final transcript.  Here we receive that message and write the text
+    # into the Streamlit query-param the same way replaceState would — but
+    # without needing cross-origin access.  This makes voice work reliably
+    # even when the component iframe is sandboxed (Streamlit Cloud / HF Spaces).
+    _listener_html = f"""
+<script>
+(function() {{
+  if (window.__sttListenerAttached_{key}) return;
+  window.__sttListenerAttached_{key} = true;
+  window.addEventListener("message", function(evt) {{
+    if (!evt.data || evt.data.type !== "stt_final") return;
+    if (evt.data.key !== "{key}") return;
+    var text = evt.data.text || "";
+    if (!text.trim()) return;
+    // Write into the URL query-param so Streamlit picks it up on next poll
+    try {{
+      var url = new URL(window.location.href);
+      url.searchParams.set("{key}", encodeURIComponent(text));
+      window.history.replaceState(null, "", url.toString());
+    }} catch(e) {{}}
+  }});
+}})();
+</script>
+<div style="height:0;overflow:hidden"></div>
+"""
+    st.iframe(_listener_html, height=1)
+
     # 2. Read back the final transcript that the JS wrote into query params
     #    (the JS does window.parent.history.replaceState with ?key=encoded_text)
     params = st.query_params

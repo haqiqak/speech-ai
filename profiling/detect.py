@@ -114,7 +114,7 @@ def detect_disfluencies(
             prev_word = str(rows[i - 1].get("word", ""))
             if low and prev_low and low == prev_low:
                 add(i, "repetition", 0.92, "same token repeated back-to-back")
-            if prev_word.endswith("-") and low.startswith(prev_low[:1]):
+            if prev_word.endswith("-") and prev_low and low.startswith(prev_low):
                 add(i, "repetition", 0.86, "sub-word fragment before this word")
 
             prev_end = rows[i - 1].get("end")

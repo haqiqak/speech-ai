@@ -17,8 +17,29 @@ from .rank import rank_candidates
 
 
 def _split_sentences(text: str) -> list[str]:
-    parts = re.findall(r"[^.!?]+[.!?]?", text or "")
-    return [p.strip() for p in parts if p.strip()] or ([text.strip()] if text.strip() else [])
+    """Canonical sentence splitter — must stay in sync with app.py's version.
+
+    Uses word-by-word scanning with an abbreviation list so abbreviations like
+    Dr., Mr., U.S. don't create false sentence breaks. This matches the splitter
+    in app.py exactly so token positions computed here correspond to what the UI
+    displays.
+    """
+    _ABBREVS = {
+        "mr.", "mrs.", "ms.", "dr.", "prof.",
+        "sr.", "jr.", "vs.", "etc.", "approx.",
+        "fig.", "vol.", "no.", "dept.", "est.",
+        "p.m.", "a.m.", "u.s.", "u.k.",
+    }
+    sentences: list[str] = []
+    current: list[str] = []
+    for word in (text or "").split():
+        current.append(word)
+        if word.endswith((".", "!", "?")) and word.lower() not in _ABBREVS:
+            sentences.append(" ".join(current))
+            current = []
+    if current:
+        sentences.append(" ".join(current))
+    return [s for s in sentences if s.strip()]
 
 
 def _words(text: str) -> list[str]:
@@ -82,6 +103,12 @@ class DifficultyAwareRewriter:
         original_sentences = _split_sentences(text)
         changes: list[dict] = []
         skipped: list[dict] = []
+        # Bug 7 fix: snapshot the initial token list for each sentence BEFORE any
+        # substitutions are made. render_with_decisions uses these snapshots so it
+        # replays accepted changes onto the same token positions that were used
+        # during rewriting — not a fresh retokenisation of original_text which
+        # could have different positions after earlier substitutions.
+        original_token_snapshots: list[list[str]] = []
 
         for sid, sentence in enumerate(original_sentences):
             protected = detect_protected_words(sentence, always_keep=always_keep_set)
@@ -92,6 +119,7 @@ class DifficultyAwareRewriter:
                 engine=self.engine,
             )
             current_tokens = list(tokens)
+            original_token_snapshots.append(list(tokens))  # snapshot before mutation
 
             for slot in slots:
                 original_word = current_tokens[slot.position]
@@ -158,6 +186,8 @@ class DifficultyAwareRewriter:
             "skipped": skipped,
             "metrics": metrics,
             "settings": {"lambda": lam, "mu": mu_val, "tau": tau_val},
+            # Bug 7 fix: pre-computed token snapshots for render_with_decisions
+            "_token_snapshots": original_token_snapshots,
         }
 
     def metrics(self, original: str, rewritten: str, profile: SpeakerDifficultyProfile) -> dict:
@@ -184,8 +214,19 @@ class DifficultyAwareRewriter:
 
     def render_with_decisions(self, result: dict, accepted_change_ids: Iterable[str]) -> str:
         accepted = set(accepted_change_ids)
-        sentences = _split_sentences(result.get("original_text", ""))
-        token_rows = [safe_word_tokenize(sentence) for sentence in sentences]
+        # Bug 7 fix: use the pre-computed token snapshots stored during rewriting.
+        # These capture the exact token list at the start of each sentence's pass,
+        # so position indices in the change_log map correctly. Falling back to
+        # retokenizing original_text is wrong when earlier substitutions shifted
+        # positions in the running current_tokens list.
+        snapshots = result.get("_token_snapshots")
+        if snapshots is not None:
+            token_rows = [list(snap) for snap in snapshots]
+        else:
+            # legacy fallback: no snapshots (old cached result) — retokenize
+            sentences = _split_sentences(result.get("original_text", ""))
+            token_rows = [safe_word_tokenize(sentence) for sentence in sentences]
+
         for change in result.get("change_log", []):
             if change.get("id") not in accepted:
                 continue

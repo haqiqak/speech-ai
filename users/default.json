@@ -9,6 +9,6 @@
   "preferences": {
     "allowlist_words": [],
     "rephrase_enabled": true,
-    "profile_rewrite_enabled": false
+    "profile_rewrite_enabled": true
   }
 }

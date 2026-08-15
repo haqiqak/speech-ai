@@ -147,7 +147,13 @@ class SpeakerDifficultyProfile:
         return float(self.config.get("profiling", {}).get("ewma_alpha", 0.35))
 
     def onboarding(self, self_reported_sounds: Iterable[str]) -> None:
-        """Seed or refresh the cold-start prior from self-report."""
+        """Seed or refresh the cold-start prior from self-report.
+
+        Only seeds onsets that have *no* observed data yet (onset_observations
+        is empty for that key).  For onsets that already have real session
+        data, the cold-start value is ignored so we never inflate a
+        trained-down risk score back toward the self-report prior.
+        """
 
         sounds = []
         seen = set()
@@ -164,7 +170,11 @@ class SpeakerDifficultyProfile:
             confidence_events=int(self.config.get("profiling", {}).get("confidence_events", 30)),
         )
         for onset, value in seed.items():
-            self.onset_risk[onset] = max(float(self.onset_risk.get(onset, 0.0)), float(value))
+            # Only apply the seed if we have no real observations for this onset.
+            # If onset_observations has data, the real EWMA value takes precedence.
+            if onset not in self.onset_observations:
+                self.onset_risk[onset] = max(float(self.onset_risk.get(onset, 0.0)), float(value))
+            # else: real session data already trained this onset — leave it alone.
 
     def update(
         self,
@@ -184,13 +194,25 @@ class SpeakerDifficultyProfile:
         saved_events: list[dict[str, Any]] = []
 
         for event in session_events or []:
+            # Skip timing-only fallback events that have no reliable word/onset
+            # data. These are marked profile_safe=False by the ASR layer.
+            if event.get("profile_safe") is False:
+                continue
             word = str(event.get("word", "")).strip()
             if not word:
                 continue
             onset = _onset_key(word)
             if not onset:
                 continue
-            disfluent = bool(event.get("disfluent", event.get("type") is not None))
+            # An event is disfluent if:
+            #   • it has an explicit "disfluent" key (bool), OR
+            #   • it comes from detect.py and has a "type" field (all detect events
+            #     represent disfluencies), OR
+            #   • neither key is present → default True (detector-only path)
+            if "disfluent" in event:
+                disfluent = bool(event["disfluent"])
+            else:
+                disfluent = event.get("type") is not None
             value = 1.0 if disfluent else 0.0
             buckets.setdefault(onset, []).append(value)
             saved_events.append(
@@ -270,12 +292,13 @@ class SpeakerDifficultyProfile:
         if not onset:
             return 0.0
         parts = onset.split()
+        # Try the full onset first, then progressively shorter prefixes.
+        # e.g. "S T R" -> tries "S T R", "S T", "S" in order.
         candidates = [" ".join(parts[:i]) for i in range(len(parts), 0, -1)]
         for key in candidates:
             if key in self.onset_risk:
                 return float(self.onset_risk[key])
-        if parts and parts[0] in self.onset_risk:
-            return float(self.onset_risk[parts[0]])
+        # No match found — fall back to population prior for the first phoneme.
         return float(self.population_priors.get(parts[0], 0.18 if parts else 0.0))
 
     def sentence_difficulty(self, text_or_words: str | Iterable[str]) -> float:
