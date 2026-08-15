@@ -43,7 +43,16 @@ stands"** (verified by reading the code during this review, 2026-08-08):
 **Hypothesis / unvalidated** (do not treat as settled):
 - That fixed phoneme-onset matching is the right primary predictor of
   spoken difficulty for this population (Practice.md §7's own open
-  question).
+  question). **Update, 2026-08-15:** the literature pass called for by §7
+  has now been run — see `RESEARCH.md` §1.2/§5.4. Short answer: onset
+  phoneme class is a real, clinically-grounded factor, but not obviously
+  the *dominant* one, and the current formula's shape is a simplification
+  relative to what speech-motor-control literature suggests actually drives
+  articulatory difficulty. This is a literature-grounded reinforcement of
+  the existing "unfitted weights" limitation, not a resolution of it — the
+  formula still hasn't been validated against real speaker data (blocked on
+  the Audio Module, per `ROADMAP.md` R2), which is a separate, still-open
+  gap.
 - That the difficulty formula's specific coefficients
   (`0.4/0.3/0.3` and the profiling-layer `0.45/0.25/0.20/0.10`) are
   well-calibrated. They are stated in code/config as defaults, not as
@@ -157,8 +166,8 @@ and the SBERT model (~80 MB) into project-local `.cache/`. Login with
    core pipeline is built on
 8. `profiling/` then `rewrite/` — the persistent-profile "soft" pipeline
 9. `rephrase.py` — optional, isolated layer
-10. `DECISION_LOG.md`, `VALIDATION.md`, `ROADMAP.md` — the evidence record
-    and what's next
+10. `DECISION_LOG.md`, `VALIDATION.md`, `RESEARCH.md`, `ROADMAP.md` — the
+    evidence record, the literature grounding, and what's next
 
 **Not in this reading order:** `out_of_scope/` (archived audio/ASR/voice
 code — read `out_of_scope/README.md` only if you're picking up the Audio

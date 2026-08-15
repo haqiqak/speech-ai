@@ -6,6 +6,13 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-15** docs: add `RESEARCH.md` — literature/technical-approach
+  review across paraphrase generation, lexical substitution, simplification,
+  semantic-preservation evaluation, controlled generation, phoneme-aware
+  NLP/speech accessibility, and personalization, plus a component-by-
+  component critical assessment of this repo's implementation against it.
+  Closes `ROADMAP.md` R3; adds R8–R11. No implementation changed. →
+  `DECISION_LOG.md` 2026-08-15-B.
 - **2026-08-15** repo: narrow scope to the text reformulation module —
   move `voice.py`, `profiling/asr.py`, `profiling/detect.py`,
   `sample_stutter.json` to `out_of_scope/`; strip the corresponding UI from

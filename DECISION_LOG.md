@@ -284,3 +284,50 @@ either way — see `VALIDATION.md`, still unchanged by this entry).
     the repo (grepped, zero hits) — but this predates and is unrelated to
     the audio/text boundary, so it was left alone rather than pruned as
     part of this pass.
+
+---
+
+### 2026-08-15-B — Stage 3 literature/research pass completed; `RESEARCH.md` added
+**What was done:** Per an explicit user-directed research stage, conducted a
+literature/technical-approach review across paraphrase generation, lexical
+substitution, sentence simplification, semantic-preservation evaluation,
+controlled/constrained generation, phoneme-aware NLP and speech
+accessibility, and personalized generation — then used those findings to
+critically re-assess this repository's own implementation, component by
+component, including the two-pipeline duplication question (`ROADMAP.md`
+R5) and the fundamental-weakness questions the user posed directly. Recorded
+as `RESEARCH.md`. This closes `ROADMAP.md` R3 ("run the literature pass
+called for in §7") — see that file's updated status.
+**Alternatives considered:** N/A — this is itself an evidence-gathering step,
+per Practice.md §19 steps 1–8, not a decision between alternatives.
+**Why:** The repository's own `VALIDATION.md` (§5, "explicit non-findings")
+already named this literature pass as the single most overdue gap in the
+project's evidence base — several load-bearing constants (`MIN_SEMANTIC`,
+the difficulty formula's weights) had been defended by in-code argument
+rather than either measurement or literature grounding. This pass supplies
+the literature grounding half of that gap (measurement against real speaker
+data remains blocked on the Audio Module, per `ROADMAP.md` R2 — unchanged by
+this entry).
+**Measured result:** N/A in the Practice.md §8 sense — this is a literature
+review, not an experiment with a reportable outcome. What it *did* produce:
+one directly-comparable prior system (`Fluent`, ASSETS 2021) whose problem
+framing matches this project's closely enough to be a genuine, checkable
+reference point (see `RESEARCH.md` §2.F), and several literature-grounded
+reasons — not just code-elegance ones — to treat specific existing components
+as sound (the phoneme filter's position in the pipeline, POS-gated WordNet
+retrieval, the profile's interpretable-score design) versus genuinely
+under-evidenced (the SBERT threshold, the difficulty formula's weights and
+functional form, the assumption that substitution-in-place is always
+sufficient).
+**Category:** Research/evidence-gathering, explicitly **not** an
+engineering decision — no threshold, weight, model, or algorithm changed as
+a result of this entry, per the user's explicit Stage 3 restriction. Per
+§19, this authorizes nothing; Stage 4 (or a future session) is where any of
+`RESEARCH.md`'s recommendations would become an actual decision, against
+this evidence, with the user.
+**Note:** `RESEARCH.md` distinguishes established literature findings from
+this project's own interpretation of them, from untested hypotheses, from
+forward-looking architecture recommendations — see that file's legend. Cite
+individual claims from it with that distinction intact rather than flattening
+"the research says X" when the honest label is "we interpreted the research
+to suggest X for our specific case."

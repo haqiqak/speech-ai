@@ -12,8 +12,12 @@ only to tell you where to go next.
 3. `DOCS.md` — one line per file in the repo, so you know what to open
 4. `DECISION_LOG.md` — the append-only record of why things are the way they are
 5. `VALIDATION.md` — what has actually been measured, and its named limitations
-6. `ROADMAP.md` — what's next, and the finding or gap that justifies each item
-7. `CHANGELOG.md` — fast-scan index into the decision log
+6. `RESEARCH.md` — the literature/technical-approach review (Practice.md §7's
+   literature pass) and the resulting critical assessment of this repo's own
+   implementation, component by component — read before proposing any
+   architecture change
+7. `ROADMAP.md` — what's next, and the finding or gap that justifies each item
+8. `CHANGELOG.md` — fast-scan index into the decision log
 
 ## The handful of standing rules (from Practice.md, restated briefly)
 

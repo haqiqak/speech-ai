@@ -27,6 +27,7 @@ recording this decision.
 | `VALIDATION.md` | Pre-registered protocols, results, ablations, named limitations | Every real evaluation run | New, this pass — currently documents *what evaluation machinery exists*, not a completed pre-registered result, because none exists yet (see §12 proxy-metric warning inside the file). |
 | `ROADMAP.md` | Priority-ordered, evidence-linked forward plan | As evidence changes priorities | New, this pass — seeded from README's existing "Roadmap" section plus gaps this review surfaced. |
 | `CHANGELOG.md` | One line per change, reverse-chronological, points into decision log | Every commit that closes a decision-log entry | New, this pass — backfilled from `git log`. |
+| `RESEARCH.md` | Stage 3 literature/technical-approach review (paraphrase generation, lexical substitution, simplification, semantic-preservation evaluation, controlled generation, phoneme-aware NLP, personalization) plus a component-by-component critical assessment of this repo's own implementation against that literature. Satisfies `ROADMAP.md` R3. | On the next research pass, or when new evidence changes the assessment | New (2026-08-15). Every claim tagged `[FINDING]`/`[INTERPRETATION]`/`[HYPOTHESIS]`/`[LIMITATION]`/`[FUTURE WORK]`/`[RECOMMENDATION]` per its own legend — read the legend before citing a specific claim from it. Explicitly a research pass, not an implementation change: nothing in the repo's behavior changed while producing it. |
 
 ## Live application path (the app depends on these; keep lean)
 

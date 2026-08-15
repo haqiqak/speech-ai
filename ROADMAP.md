@@ -65,16 +65,27 @@ predict difficulty comparably to or better than onset alone.
 Audio Module — not actionable today, but should not silently drop off
 the list once that data exists.
 
-### R3. Run the literature pass called for in §7
+### R3. Run the literature pass called for in §7 — **DONE, 2026-08-15**
 **Linked finding:** `VALIDATION.md` §5 — this review did not perform it.
 **What this roadmap item actually is:** A dedicated literature review
 (speech-language pathology, lexical-substitution/paraphrase NLP,
 stutter-therapy/AAC research, readability/simplification literature),
 written as its own document per §7's format, addressing specifically
 whether fixed onset-matching is the right primary signal.
+**Status:** Completed — see `RESEARCH.md` and `DECISION_LOG.md` 2026-08-15-B.
+Headline answer to "is fixed onset-matching the right primary signal":
+**partially** — onset phoneme class is a real, clinically-grounded factor,
+but the speech-motor-control literature indicates articulatory difficulty is
+richer than onset-cluster-length alone, and word frequency (used as a
+secondary signal in both current difficulty formulas) is a better-evidenced
+proxy for *lexical access* ease than for *articulatory/motor* ease — the
+mechanism most relevant to stuttering specifically. See `RESEARCH.md` §1.2
+and §5.4 for the full argument and citations. This is a literature-grounded
+**reinforcement** of `VALIDATION.md`'s existing "unfitted weights" limitation,
+not a new, separate problem.
 **Labeled as:** Directly named by Practice.md itself as a concrete,
-overdue gap — not a hypothesis this review is proposing, but a
-prerequisite the methodology already flags.
+overdue gap — closed by this pass, not a hypothesis this review is
+proposing.
 
 ### R4. Confirm or run the human-judgment study (`eval/study/`)
 **Linked finding:** `VALIDATION.md` §1/§2 — the one piece of evaluation
@@ -100,24 +111,93 @@ re-implement protected-word detection, POS-filtering, and inflection.
 **What this roadmap item actually is:** This is explicitly **not** a
 recommendation to delete either path — per Practice.md §3, neither
 "simpler/older" nor "more sophisticated/newer" gets automatic priority.
-The actual next step is R11 below (an ablation comparing the two paths on
+The actual next step is R6 below (an ablation comparing the two paths on
 the same objective), and only once that comparison exists does a
 consolidation decision have evidence behind it. Filed here as the
 maintenance-risk observation that motivates running that comparison sooner
 rather than later, not as a pre-decided outcome.
+**Update from the literature pass (`RESEARCH.md` §6, 2026-08-15):** the
+literature's actual argument for keeping multiple pipeline components is
+*complementary failure modes* (a generator paired with an independent
+verifier). Pipeline A and B don't fit that pattern — they attack the same
+sub-problem with the same candidate source and a similarly-shaped score,
+differing mainly in binary-vs-continuous difficulty gating. This is
+evidence *for* running the R6 ablation sooner rather than later (there's
+now a literature-grounded reason to expect consolidation is the right
+outcome), but it is still **not** itself the ablation — `RESEARCH.md`
+explicitly declines to make this a decision, per the Stage 3 restriction
+against redesigning based on research alone.
 **Labeled as:** Observation (duplication is real and confirmed by reading
-both code paths) driving a **future** evidence-gathering step, not an
-implementation decision.
+both code paths), now with literature-grounded reasoning behind it, driving
+a **future** evidence-gathering step, not an implementation decision.
 
-### R6. Ablation: does the phoneme-onset gate change accepted candidates?
+### R6. Ablation: does the phoneme-onset gate change accepted candidates, and does Pipeline A or B produce better output?
 **Linked finding:** Practice.md §11, applied directly — named as a
-Speech-AI-shaped candidate ablation once a benchmark exists.
+Speech-AI-shaped candidate ablation once a benchmark exists. Scope widened
+slightly during the Stage 3 research pass to explicitly include the A-vs-B
+comparison R5 is blocked on, since both are the same class of question
+(does this specific gating/scoring choice change what gets accepted).
 **Labeled as:** Future work, blocked on R1–R4 producing a usable benchmark
 first.
 
 ### R7. Ablation: is the frequency term in the ranking formula doing real work?
 **Linked finding:** Practice.md §11, same source as R6.
 **Labeled as:** Future work, same blocking condition as R6.
+
+### R8. Add a second, orthogonal semantic-preservation signal (NLI/bidirectional entailment) alongside SBERT
+**Linked finding:** `RESEARCH.md` §2.D/§5.3 — SBERT-family sentence
+embeddings have a documented, specific blind spot for negation/antonym
+drift, driven by high lexical overlap suppressing the similarity score's
+sensitivity to the one word that changed. Nothing in the current pipeline
+catches this failure mode.
+**What this roadmap item actually is:** Prototype an NLI-based
+bidirectional-entailment check as an *additional* gate alongside (not
+replacing) the existing SBERT threshold, and measure whether it changes
+acceptance decisions on cases the current gate gets wrong.
+**Labeled as:** Literature-grounded future work — the gap is a documented
+finding, whether closing it changes real outcomes for our candidate
+distribution (which skews toward true synonyms, not antonyms, by
+construction of the WordNet/Datamuse retrieval step) is untested.
+
+### R9. Prototype a feedback loop from accept/reject decisions into the difficulty profile
+**Linked finding:** `RESEARCH.md` §2.F/§5.5 — the closest known prior system
+(`Fluent`, ASSETS 2021) uses an active-learning loop where user accept/
+reject signal on suggestions directly trains the difficulty classifier.
+Our `SpeakerDifficultyProfile.update()` already accepts arbitrary events but
+nothing in `app.py`/`rewrite/` wires the UI's accept/reject clicks back into
+it — the profile currently only updates from disfluency *events* (which, in
+this narrowed repo, come from self-report, not observed data).
+**What this roadmap item actually is:** Wire the existing accept/reject UI
+signal into `profile.update()` as a new event type, and evaluate whether it
+measurably improves suggestion quality over a session.
+**Labeled as:** Directly transferable idea from the closest comparable prior
+system, not yet implemented or validated in this codebase.
+
+### R10. Investigate a restructuring/escalation path for when substitution has no valid candidate
+**Linked finding:** `RESEARCH.md` §5.6/§7 — the single largest capability
+gap this pass surfaced. Neither pipeline can restructure a clause; both
+report "no valid synonym" and leave the word untouched when substitution
+fails, even though the user's own original problem statement named
+"syntactic restructuring... clause restructuring... sentence-level
+paraphrasing" as in-scope capabilities.
+**What this roadmap item actually is:** Investigate `rephrase.py`'s
+existing constrained-T5 layer as a fallback specifically for this failure
+case (escalate to generation only when substitution provably fails),
+following the generate-then-verify pattern `RESEARCH.md` §2.E/§6 identifies
+as the field's preferred architecture for this kind of problem, rather than
+running rephrase as an independent, always-optional toggle.
+**Labeled as:** The clearest architecture recommendation to come out of the
+research pass (`RESEARCH.md` §8) — still a recommendation, not a decision;
+needs Stage 4 to actually evaluate it against alternatives.
+
+### R11. Design a "naturalness of intervention" metric
+**Linked finding:** `RESEARCH.md` §4 — none of our current metrics, and
+none found in the literature search, cleanly distinguish "this edit was
+necessary" from "this edit was correct." `substitution_rate` (already
+computed) is the closest existing proxy and conflates the two.
+**Labeled as:** Open evaluation-methodology gap, future work — no
+literature answer found, flagged as a genuine open question in
+`RESEARCH.md` §9 rather than assigned a false solution.
 
 ---
 
@@ -180,3 +260,20 @@ comparison §15 asks for, not as an argument that README's roadmap is
 wrong — product polish and research validation are not mutually
 exclusive, and prioritizing between them is a decision this document does
 not make on its own.
+
+**2026-08-15 — second reassessment, post-literature-pass.** Asked the same
+question again, now with `RESEARCH.md` available: what is the
+highest-leverage next step? Answer: **R6** (the A-vs-B ablation, widened
+this pass) moved up in practical urgency, because the research pass supplied
+a *reason to expect* consolidation is right (§6's complementary-failure-
+modes argument) where previously R5 only had "this is duplicated code" as
+its justification — evidence-strength changed, not just item count. R10
+(the restructuring-escalation path) is new since the last reassessment and
+answers the same kind of question R2/R3/R4 were chasing: not "is the
+current system polished" but "does the current system actually have the
+capability the research objective claims" — and per `RESEARCH.md` §7, the
+honest answer today is that it doesn't, for a real subset of cases. Recorded
+here as the comparison §15 asks for; this does not reorder R0–R4 (the
+credential exposure and the still-unresolved threshold/data/study gaps are
+unaffected by the literature pass and remain ahead of R6/R10 in practical
+terms).
