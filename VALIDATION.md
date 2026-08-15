@@ -46,8 +46,9 @@ stated as an explicit, named limitation — not folded silently into
   §6 asks to be stated precisely rather than swept into "known issues."
 - **`eval/profile_eval.py`'s AUC comparison** is the closest thing in the
   repo to validating the profile itself against an outcome — but the
-  "outcome" it checks against is `profiling/detect.py`'s own rule-based
-  disfluency labels, which are themselves a proxy (a rule-based labeler,
+  "outcome" it checks against is (the now-archived) `out_of_scope/profiling/
+  detect.py`'s own rule-based disfluency labels, which are themselves a proxy
+  (a rule-based labeler,
   not ground-truth clinician or self-report data at the event level for
   most of the pipeline's real users). This is a second-order instance of
   the same trap: the profile is validated against a proxy for the thing

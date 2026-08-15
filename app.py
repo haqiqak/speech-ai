@@ -15,21 +15,10 @@ import semantic as sem
 import phonetic as ph
 import freq
 from profiling.profile import SpeakerDifficultyProfile
-from profiling.asr import CrisperWhisperASR
-from profiling.detect import detect_disfluencies
 from rewrite.rewriter import DifficultyAwareRewriter
 
 from user_store import save_profile, migrate_legacy_prefs
 from auth import require_auth
-from voice import render_voice_input, render_tts_button, render_stop_button, render_voice_settings
-
-# st_autorefresh polls for the live-STT query-param update every 1.5 s.
-# Gracefully skipped if the package is not installed (no hard crash).
-try:
-    from streamlit_autorefresh import st_autorefresh as _st_autorefresh
-    _HAS_AUTOREFRESH = True
-except ImportError:
-    _HAS_AUTOREFRESH = False
 
 _LEGACY_PREFS = Path(__file__).resolve().parent / "user_prefs.json"
 migrate_legacy_prefs(_LEGACY_PREFS)
@@ -220,74 +209,6 @@ def _friendly_rephrase_status(message: str) -> str:
     if "rephrase unavailable" in low:
         return message.replace("Rephrase unavailable", "Optional T5 rephrase unavailable")
     return message
-
-
-def _safe_upload_name(name: str) -> str:
-    return re.sub(r"[^A-Za-z0-9_.-]", "_", name or "sample")
-
-
-def _profile_safe_events(events: list[dict]) -> list[dict]:
-    return [event for event in events if event.get("profile_safe", True)]
-
-
-def _process_profile_upload(uploaded_file) -> tuple[list[dict], list[dict]]:
-    """Process an uploaded audio/JSON/text file and update the speaker profile.
-
-    Audio files (WAV etc.) go through CrisperWhisperASR.  When the full ASR
-    stack is not installed the lightweight ``tokens_from_audio_timing`` fallback
-    is used instead, which only detects *when* speech occurs — it cannot recover
-    word text or phoneme onsets.  Those timing-only tokens are marked
-    ``profile_safe=False`` by the ASR layer and are filtered out before the
-    profile is updated, so the word-level difficulty model is never polluted with
-    placeholder token names like ``speech_a``, ``speech_b``, etc.
-
-    JSON fixtures that include ``word`` fields *do* go through the normal
-    profile update path and are always ``profile_safe=True``.
-    """
-    upload_dir = Path(__file__).resolve().parent / ".cache" / "uploads"
-    upload_dir.mkdir(parents=True, exist_ok=True)
-    safe_name = _safe_upload_name(getattr(uploaded_file, "name", "") or "microphone.wav")
-    upload_type = str(getattr(uploaded_file, "type", "") or "").lower()
-    if "." not in safe_name and "wav" in upload_type:
-        safe_name += ".wav"
-    target = upload_dir / safe_name
-    target.write_bytes(uploaded_file.getvalue())
-
-    asr = CrisperWhisperASR()
-    tokens = asr.transcribe(target)
-    events = detect_disfluencies(tokens)
-    profile_events = _profile_safe_events(events)
-    if profile_events:
-        profile = _fluency_profile()
-        profile.update(profile_events)
-        profile.save()
-        st.session_state["profile_needs_save"] = False  # just saved directly
-    return tokens, events
-
-
-def _render_profile_update_result(tokens: list[dict], events: list[dict]) -> None:
-    transcript = " ".join(str(tok.get("word", "")).strip() for tok in tokens).strip()
-    if transcript:
-        st.caption("Detected transcript:")
-        st.code(transcript, language=None)
-    profile_events = _profile_safe_events(events)
-    if events:
-        if profile_events:
-            st.success(f"Updated profile from {len(profile_events)} detected disfluency event(s).")
-        else:
-            st.info(
-                "Detected timing-only disfluency events from the recording. "
-                "Exact word/onset profile updates need the CrisperWhisper ASR stack, "
-                "or a JSON/TXT transcript with words."
-            )
-        if len(profile_events) != len(events):
-            st.caption(
-                f"{len(events) - len(profile_events)} timing-only event(s) were shown "
-                "but not used for word-level profile learning."
-            )
-        st.dataframe(events, use_container_width=True)
-    else:
-        st.info(f"Parsed {len(tokens)} token(s), but no disfluency events were detected.")
 
 
 # ── CSS ────────────────────────────────────────────────────────────────────────
@@ -482,8 +403,6 @@ for key, default in [
     ("rephrase_enabled", False),
     ("rephrase_single_sig", None), ("rephrase_single_result", None), ("rephrase_single_use", False),
     ("rephrase_paragraph_sig", None), ("rephrase_paragraph_result", None), ("rephrase_paragraph_use", False),
-    # voice
-    ("tts_rate", 0.90), ("tts_voice_index", 0),
 ]:
     if key not in st.session_state:
         st.session_state[key] = default
@@ -570,29 +489,7 @@ with st.sidebar:
 ⑤ Phoneme firewall<br>⑥ Inflect + user picks<br>⑦ Rebuild sentence
 </div>""", unsafe_allow_html=True)
 
-    st.markdown("---")
-    render_voice_settings(location=st.sidebar)
-
 # ── Main controls ──────────────────────────────────────────────────────────────
-
-# Poll every 1.5 s so that when the JS live-STT widget writes the final
-# transcript into the URL query-param, Streamlit picks it up automatically
-# without the user needing to click anything.  The counter returned by
-# st_autorefresh is intentionally ignored — we only care about the side-effect.
-if _HAS_AUTOREFRESH:
-    _st_autorefresh(interval=1500, limit=None, key="stt_poll")
-else:
-    st.caption(
-        "⚠️ Live voice-to-text auto-polling requires **streamlit-autorefresh**. "
-        "Add `streamlit-autorefresh` to `requirements.txt` for automatic transcript capture."
-    )
-
-# Voice input: renders the live-preview mic widget; transcript pre-fills
-# the text area below once the user stops speaking.
-_voice_transcript = render_voice_input(key="voice_input", language="en-US", live_preview=True)
-if _voice_transcript and _voice_transcript != st.session_state.get("query_input", ""):
-    st.session_state["query_input"] = _voice_transcript
-    st.rerun()
 
 query = st.text_area(
     "Your sentence or paragraph",
@@ -662,56 +559,6 @@ with st.container():
             unsafe_allow_html=True,
         )
     st.markdown("</div>", unsafe_allow_html=True)
-
-# ── Voice / transcript profile update ─────────────────────────────────────────
-with st.expander("Voice / transcript profile update", expanded=False):
-    st.caption(
-        "Record a short speech sample from the mic, or upload a CrisperWhisper-style "
-        "token JSON / transcript / audio file. WAV mic recordings use a lightweight "
-        "timing fallback when CrisperWhisper is not installed; exact words need the "
-        "ASR dependencies/model."
-    )
-    if hasattr(st, "audio_input"):
-        mic_sample = st.audio_input(
-            "Record from microphone",
-            help="Press record, read your prepared sentence, stop, then update the profile from the recording.",
-        )
-    else:
-        st.info(
-            "🎙️ Microphone recording requires **Streamlit ≥ 1.32**. "
-            "Run `pip install --upgrade streamlit` to enable it.",
-            icon="ℹ️",
-        )
-        mic_sample = None
-    if st.button("Update profile from microphone", type="secondary", disabled=mic_sample is None):
-        try:
-            tokens, events = _process_profile_upload(mic_sample)
-            _render_profile_update_result(tokens, events)
-        except Exception as exc:
-            st.warning(
-                "Could not process this microphone audio. Try a shorter WAV recording, "
-                "or install the CrisperWhisper ASR stack for full transcription. "
-                f"Details: {exc.__class__.__name__}: {exc}"
-            )
-
-    st.markdown("---")
-    profile_sample = st.file_uploader(
-        "Upload voice or transcript sample",
-        type=["json", "txt", "transcript", "wav", "mp3", "m4a", "flac"],
-        help=(
-            "JSON can contain {'tokens': [{'word': 'b-', 'start': 0.2, 'end': 0.4}, ...]}. "
-            "Audio requires the CrisperWhisper model stack."
-        ),
-    )
-    if st.button("Update profile from sample", type="secondary", disabled=profile_sample is None):
-        try:
-            tokens, events = _process_profile_upload(profile_sample)
-            _render_profile_update_result(tokens, events)
-        except Exception as exc:
-            st.warning(
-                "Could not process this sample. For real audio, install the CrisperWhisper "
-                f"ASR stack first. Details: {exc.__class__.__name__}: {exc}"
-            )
 
 # ── Blocklist / Allowlist UI ───────────────────────────────────────────────────
 with st.expander("📋 Blocklist & Allowlist — word-level overrides", expanded=False):
@@ -1460,13 +1307,6 @@ if st.session_state.get("multi_mode") and st.session_state.ms_results:
         st.caption("📋 Copy paragraph:")
         st.code(display_rebuilt, language=None)
 
-        # TTS: speak the rebuilt paragraph
-        tts_col_ms, stop_col_ms, _ = st.columns([2, 1, 4])
-        with tts_col_ms:
-            render_tts_button(display_rebuilt, key="tts_multi", label="🔊 Speak paragraph")
-        with stop_col_ms:
-            render_stop_button(key="tts_stop_multi")
-
         # Add to session history
         if st.button("💾 Save to session history", key="save_ms_hist", type="secondary"):
             st.session_state.session_history.append({
@@ -1664,13 +1504,6 @@ if not st.session_state.get("multi_mode"):
 
         # ⑤ Final output
         _render_final_card(sanitized, final_rebuilt)
-
-        # TTS: speak the final rebuilt sentence
-        tts_col, stop_col, _ = st.columns([2, 1, 4])
-        with tts_col:
-            render_tts_button(final_rebuilt, key="tts_single", label="🔊 Speak rebuilt sentence")
-        with stop_col:
-            render_stop_button(key="tts_stop_single")
 
         # Save to session history
         if st.button("💾 Save to session history", key="save_single_hist", type="secondary"):

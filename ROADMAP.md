@@ -128,11 +128,17 @@ with a brief rationale precisely so they're legible as hypotheses, not
 smuggled in as decisions:
 
 ### H1 (hypothesis). `st.iframe` in `voice.py` may not be a valid Streamlit API call
+**Status update (Stage 2, 2026-08-15):** `voice.py` moved to
+`out_of_scope/voice.py` — it's no longer part of this repository's live app
+(see `out_of_scope/README.md`). This item stays on the record as-is because
+the code itself wasn't touched, just relocated; it becomes relevant again
+only if/when someone builds the separate Audio Module from this starting
+point, not for further work in this repo.
 **Rationale:** No documented Streamlit API by that exact name was found
-during this review's reading of `voice.py` against the pinned
+during the original review's reading of `voice.py` against the pinned
 `streamlit>=1.58.0` requirement; the conventional call is
 `st.components.v1.iframe`/`.html`. This is a plausible bug, not a
-confirmed one — this review did not execute the app.
+confirmed one — that review did not execute the app.
 **Cheapest test:** Run the app and exercise the voice-input/voice-output
 UI paths; if `st.iframe` raises, this graduates from hypothesis to a
 confirmed bug with a one-line fix.

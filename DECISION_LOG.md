@@ -207,3 +207,80 @@ question. Recorded here per §14's discipline (record it, don't fix it
 silently) — remediation itself belongs to whoever owns repository
 access, and is out of scope for a documentation pass under §19's protocol
 (step 9, "implementation," is explicitly deferred by that protocol).
+
+---
+
+### 2026-08-15-A — Repository narrowed to the text reformulation module; audio/ASR/voice code moved to `out_of_scope/`
+**What was done:** Per an explicit user-directed scoping pass (not a
+research decision — a repository-organization one), everything specific to
+audio capture, ASR, and audio-timing-based disfluency detection was moved
+out of the live import graph:
+  - `voice.py` (browser STT/TTS UI) → `out_of_scope/voice.py`
+  - `profiling/asr.py` (`CrisperWhisperASR`) → `out_of_scope/profiling/asr.py`
+  - `profiling/detect.py` (rule-based ASR-timing disfluency detector) →
+    `out_of_scope/profiling/detect.py`
+  - `sample_stutter.json` (a test fixture for the above) →
+    `out_of_scope/sample_stutter.json`
+
+  `app.py` had its voice-input widget, TTS "speak" buttons, live-STT
+  autorefresh polling, and the "Voice / transcript profile update"
+  microphone/upload expander removed, along with the four helper functions
+  that backed that expander (`_process_profile_upload`,
+  `_render_profile_update_result`, `_safe_upload_name`,
+  `_profile_safe_events`). `profiling/__init__.py` no longer re-exports
+  `CrisperWhisperASR`/`VerbatimToken`/`detect_disfluencies`.
+  `tests/roadmap_test.py` was split: its three ASR/detector tests moved to
+  `out_of_scope/tests/roadmap_test_audio.py` (re-pointed at the archived
+  package via `sys.path`, confirmed still runnable); its three
+  `SpeakerDifficultyProfile`/`DifficultyAwareRewriter` tests stayed.
+  `tests/app_test.py` had its two assertions for the now-removed
+  microphone/upload UI elements dropped. `streamlit-mic-recorder` was
+  removed from `requirements.txt` (its only caller was `voice.py`).
+  `README.md` and `DOCS.md` were rewritten to describe the narrowed scope,
+  state Speech-AI-the-project vs. this-repo-the-module explicitly, and fix
+  the pre-existing `0.65/0.35` vs. actual `0.90/0.10` semantic-weight drift
+  (`DECISION_LOG.md` 2026-06-08-C) while already touching that section.
+**Alternatives considered:** Deleting the audio-facing files outright
+instead of archiving them. Rejected per the user's explicit instruction not
+to destroy historical implementation work — `out_of_scope/` preserves both
+the code and its test coverage, with a README explaining why it's there and
+that it's the natural starting point for a separate Audio Module repo.
+**Why:** This repository's stated scope (per `CLAUDE.md`/`HANDOFF.md`) is the
+text reformulation module of a two-repository system; the audio-facing code
+had accreted here anyway during earlier feature work (see 2026-06-13's
+`profiling`/mic-related commits in `CHANGELOG.md`). Narrowing the repo to its
+actual scope is an organizational decision, explicitly **not** a technical
+redesign: no rewrite algorithm, semantic threshold, difficulty formula, or
+scoring weight was changed as part of this entry — the drift fix above
+corrects a *documentation* number to match code that was already there,
+not a code change.
+**Measured result:** `tests/roadmap_test.py` (narrowed) — 3/3 pass.
+`out_of_scope/tests/roadmap_test_audio.py` (extracted) — runnable standalone
+against the archived package (not re-verified line-for-line against its
+pre-move behavior, but unmodified other than the sys.path adjustment).
+`tests/app_test.py` — all scenarios pass. `tests/smoke.py` output is
+byte-identical to the committed `tests/baseline_sbert.txt` — confirms the
+core rewrite pipeline's behavior is unchanged by this pass.
+**Category:** Engineering/organizational decision, directly instructed and
+scoped by the user, with before/after test parity as the measured check
+rather than a quality claim (this pass makes no claim about rewrite quality
+either way — see `VALIDATION.md`, still unchanged by this entry).
+**Left deliberately untouched, flagged as ambiguous — see next session:**
+  - `users/default.json` / `users/bobcat.json` remaining committed
+    credential material (2026-06-13-A / `ROADMAP.md` R0) — a security
+    remediation, not a scoping question; out of this entry's scope.
+  - `auth.py` / `user_store.py` / `users/` — multi-user account
+    infrastructure. Not audio-related, so not moved, but also not obviously
+    "text reformulation" either; it's cross-cutting infra this module
+    happens to depend on for per-speaker profiles. Left in place; whether it
+    belongs in this repo long-term is a question for the user, not decided
+    here.
+  - `config.yaml`'s `profiling.detection` sub-block (repetition/prolongation/
+    block/filler thresholds) is now dead weight in the live config — it's
+    only consumed by the archived detector. Left in place rather than
+    pruning `config.yaml`'s structure, to avoid touching a shared config
+    file beyond the scope of a pure move.
+  - `torchvision` in `requirements.txt` appears unused by any `.py` file in
+    the repo (grepped, zero hits) — but this predates and is unrelated to
+    the audio/text boundary, so it was left alone rather than pruned as
+    part of this pass.

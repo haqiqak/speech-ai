@@ -1,10 +1,54 @@
-# 🎙️ Speech AI
+# 🎙️ Speech AI — Text Reformulation Module
 
 **An accessibility-focused speech assistance system for people who stutter.**
 
-You type a sentence. Speech AI identifies words that fall on your personal trouble sounds, corrects grammar, and suggests semantically equivalent alternatives that are easier to pronounce — all in a clean, interactive Streamlit interface.
+---
 
-Built at **NUST SEECS** as independent research into AI-assisted communication accessibility.
+## The Speech-AI project
+
+Speech-AI, as a whole, is meant to work as a pipeline:
+
+```
+Speaker audio
+   → ASR transcription + acoustic/voice disfluency analysis   (Audio Module)
+   → identified problematic phonemes / words
+   → text reformulation                                        (this repository)
+   → an alternative formulation that is easier for that speaker to say,
+     with meaning and context preserved
+```
+
+**This repository is not the whole system.** It implements only the
+**text reformulation ("word") module** — the second half of that pipeline.
+Everything upstream of "already-transcribed text plus problem-word
+information" (recording audio, running ASR, analyzing acoustic disfluency
+signals such as blocks/prolongations/repetitions from the waveform itself)
+belongs to a separate **Audio Module** and is out of scope here. See
+[`out_of_scope/README.md`](out_of_scope/README.md) for code that used to live
+in this repo but belongs to that boundary instead.
+
+## This repository: the text reformulation module
+
+**Input:** transcribed or typed text, plus problematic phoneme/word
+information for the speaker (either typed in directly — "the sounds I block
+on" — or, in the full system, supplied by the Audio Module's disfluency
+detection).
+
+**Output:** an alternative formulation of that text — same meaning, same
+context, same speaker intent — chosen to be easier for *that specific
+speaker* to say.
+
+**What it does NOT do:** record or process audio, run speech recognition,
+extract acoustic features, or detect disfluencies from a waveform. It treats
+"what's difficult for this speaker" as an input it consumes, not something it
+derives from sound.
+
+You type (or paste in) a sentence or paragraph. Speech AI identifies words
+that fall on the speaker's personal trouble sounds, corrects grammar, and
+suggests semantically equivalent alternatives that are easier to pronounce —
+all in a clean, interactive Streamlit interface.
+
+Built at **NUST SEECS** as independent research into AI-assisted
+communication accessibility.
 
 ---
 
@@ -12,26 +56,33 @@ Built at **NUST SEECS** as independent research into AI-assisted communication a
 
 Speech AI runs your sentence through a seven-stage pipeline:
 
-1. **Grammar correction** — 8-layer rule-based pipeline (contractions, tense, subject-verb agreement, auxiliary forms, punctuation)
+1. **Grammar correction** — multi-layer rule-based pipeline (spelling, contractions, tense, subject-verb agreement, auxiliary forms, article agreement, punctuation)
 2. **POS tagging** — identifies nouns, verbs, adjectives, adverbs eligible for substitution
 3. **Synonym candidates** — fetches alternatives from WordNet, Datamuse, and wordfreq
-4. **SBERT semantic filter** — keeps only candidates whose meaning stays close to the original (adjustable threshold)
-5. **Combined ranking** — scores by `0.65 × semantic similarity + 0.35 × word frequency`
+4. **SBERT semantic filter** — keeps only candidates whose meaning stays close to the original (adjustable threshold, default `0.85`)
+5. **Combined ranking** — scores by `0.90 × semantic similarity + 0.10 × log-normalized word frequency` (semantic similarity is the primary gate; frequency only breaks ties among candidates that already passed it — see `semantic.py`)
 6. **Phoneme firewall** — drops candidates that start with the same sound you stutter on (ARPAbet onset matching)
 7. **Inflection + rebuild** — morphologically inflects the chosen word and reassembles the sentence
 
-The roadmap implementation also adds a profile-aware soft rewrite layer: it learns a multi-factor difficulty profile from self-report and observed disfluencies, then ranks alternatives by meaning, candidate difficulty, and word frequency instead of only hard-blocking onsets.
+A second, parallel implementation adds a **profile-aware soft rewrite layer**
+(`rewrite/`): it learns a persistent, multi-factor difficulty profile per
+speaker (onset risk, syllable length, word frequency, grammatical class),
+seeded from self-report and updated over time, then ranks alternatives by
+`similarity − λ·difficulty + μ·frequency` instead of hard-blocking onsets.
+The two pipelines are independently implemented and not yet compared against
+each other — see `DECISION_LOG.md` / `ROADMAP.md` R5.
 
-It also allows **Speech-to-text transcription** — converts spoken input into editable text.
+An optional third layer (`rephrase.py`) proposes a smoother full-sentence
+paraphrase (T5) on top of either pipeline's output.
 
-You see a colour-coded risk map of your sentence, pick synonyms from dropdowns (or type your own), and get a final easier sentence with a before/after stutter-difficulty score.
+You see a colour-coded risk map of your sentence, pick synonyms from
+dropdowns (or type your own), and get a final easier sentence with a
+before/after stutter-difficulty score.
 
 ---
 
 ## Features
 
-- 🎤 **Voice Input (Speech-to-Text)** — dictate sentences directly instead of typing
-- 🔊 **Voice Output (Text-to-Speech)** — listen to the final sentence with a single click
 - 🔐 **Multi-user auth** — login/register with per-user phoneme profiles stored in `users/`
 - 🧠 **SBERT semantic firewall** — `all-MiniLM-L6-v2` ensures replacements never drift from the original meaning
 - 🔊 **Phoneme-aware filtering** — CMU Pronouncing Dictionary (ARPAbet) for onset detection, not spelling
@@ -43,9 +94,11 @@ You see a colour-coded risk map of your sentence, pick synonyms from dropdowns (
 - **Multi-factor fluency profile** — onset risk, syllable length, word frequency, and grammatical class with EWMA session updates
 - **Profile-aware rewrite card** — per-change accept/reject controls with transparent difficulty and similarity details
 - ✨ **Fluency rephrase (beta)** — optional T5 paraphrase pass (`rephrase.py`) that proposes a smoother full-sentence rewrite which avoids your blocked words/onsets while preserving meaning. Loads lazily on first use; degrades to passthrough if the model/stack is unavailable
-- 🎙️ **Microphone profiling** — record a sample (or upload CrisperWhisper token JSON / transcript / audio) to update your fluency profile. Real audio uses CrisperWhisper when installed; WAV mic recordings fall back to a lightweight timing detector (pauses/prolongations) when it isn't
 - **Research harness** — automatic metrics, lambda trade-off sweeps, profile AUC evaluation, and study CSV scaffolding
 
+*(Voice input/output and microphone-based profile updates were part of this
+repo in earlier versions; they've moved to [`out_of_scope/`](out_of_scope/)
+as audio-module functionality — see below.)*
 
 ---
 
@@ -54,26 +107,34 @@ You see a colour-coded risk map of your sentence, pick synonyms from dropdowns (
 ```
 speech-ai/
 │
-├── app.py              # Streamlit UI — main application
+├── app.py              # Streamlit UI — main application (text in, reformulated text out)
 ├── auth.py             # Login / Register screen
 ├── user_store.py       # File-based user storage layer
 │
-├── grammar.py          # 8-layer grammar correction + SentenceRewriter
-├── engine.py           # Multi-source synonym engine (WordNet + Datamuse) — v3
-├── phonetic.py         # ARPAbet onset extraction + stutter difficulty scoring
-├── semantic.py         # SBERT contextual re-ranking (sentence-transformers)
-├── freq.py             # Zipf frequency wrapper (wordfreq)
-├── paths.py            # Redirects NLTK / SBERT caches into .cache/
-├── config.yaml         # Profiling, rewrite, and eval knobs
+├── grammar.py          # Grammar correction + SentenceRewriter (the "hard" onset-gated pipeline)
+├── engine.py            # Multi-source synonym engine (WordNet + Datamuse) — v3
+├── phonetic.py          # ARPAbet onset extraction + stutter difficulty scoring
+├── semantic.py          # SBERT contextual re-ranking (sentence-transformers)
+├── freq.py              # Zipf frequency wrapper (wordfreq)
+├── paths.py             # Redirects NLTK / SBERT caches into .cache/
+├── rephrase.py          # Optional T5 fluency-rephrase layer
+├── config.yaml          # Profiling, rewrite, and eval knobs
 │
-├── profiling/          # CrisperWhisper wrapper, detector, cold start, difficulty profile
-├── rewrite/            # Soft-constraint profile-aware rewrite engine
-├── eval/               # Automatic metrics and user-study harness
+├── profiling/           # Speaker difficulty profile: profile.py, coldstart.py, config.py
+├── rewrite/              # Soft-constraint profile-aware rewrite engine (the "soft" pipeline)
+├── eval/                # Automatic metrics and user-study harness
 │
-├── users/              # Per-user JSON files (gitignored)
-│   └── default.json    # Auto-migrated from user_prefs.json on first run
+├── users/               # Per-user JSON files
+│   └── default.json     # Auto-migrated from user_prefs.json on first run
 │
-├── CHANGES.md          # Full version history
+├── out_of_scope/        # Archived audio/ASR/voice code — see out_of_scope/README.md
+│
+├── tests/                # Regression + smoke tests for the text-reformulation pipeline
+├── scripts/              # Offline dataset-building / fine-tuning scaffolding for rephrase.py
+│
+├── CLAUDE.md, HANDOFF.md, DOCS.md, DECISION_LOG.md,
+├── VALIDATION.md, ROADMAP.md, CHANGELOG.md   # Living documentation set — see below
+├── changes.md            # Full narrative version history
 └── README.md
 ```
 
@@ -109,14 +170,13 @@ On first run, NLTK downloads `cmudict`, `averaged_perceptron_tagger_eng`, `punkt
 | Feature | Model | Size | When it downloads |
 |---------|-------|------|-------------------|
 | Fluency rephrase (beta) | `Vamsi/T5_Paraphrase_Paws` | ~890 MB | First time you run a rephrase with the toggle on |
-| Microphone / audio transcription | `nyrahealth/CrisperWhisper` | ~3 GB | First time you transcribe real audio |
 | Grammar deep-check | LanguageTool JAR | ~200 MB | First grammar correction (needs Java 8+) |
 
-If a model can't be downloaded or loaded, the app degrades gracefully — rephrase falls back to passthrough, and mic recordings fall back to the timing detector. None of them are required for the core synonym pipeline.
+If a model can't be downloaded or loaded, the app degrades gracefully — rephrase falls back to passthrough. Neither is required for the core synonym pipeline.
 
 ### Memory note (important for low-RAM machines)
 
-`accelerate` is in `requirements.txt` and is **required** for loading the transformer models on machines with limited RAM. Without it, `from_pretrained` does a transient double allocation of the weights that can crash (segfault) on tight memory. The rephrase model (~220 M params) loads comfortably with a few GB free; **CrisperWhisper (~1.5 B params) needs several GB free** and may not load on an 8 GB laptop while a browser/IDE is open.
+`accelerate` is in `requirements.txt` and is **required** for loading the transformer model on machines with limited RAM. Without it, `from_pretrained` does a transient double allocation of the weights that can crash (segfault) on tight memory. The rephrase model (~220 M params) loads comfortably with a few GB free.
 
 On a tight-RAM machine, run the app from a **plain terminal** (not inside an IDE) to free ~1 GB. A convenience launcher is included:
 
@@ -161,7 +221,7 @@ Each user's data lives in `users/<username>.json`:
 
 Changes made in the app are saved back to your profile in real time.
 
-The longitudinal fluency profile is stored separately as `users/<username>.fluency_profile.json` at runtime and is ignored by git.
+The longitudinal fluency profile is stored separately as `users/<username>.fluency_profile.json` at runtime.
 
 ---
 
@@ -177,15 +237,20 @@ Speech AI uses the **CMU Pronouncing Dictionary** to extract phoneme onsets from
 
 If a word isn't in CMU, a grapheme-to-ARPAbet rule table covers common patterns (digraphs `sh`, `ch`, `th`, `ph`; silent clusters `kn`, `wr`, `ps`; all single consonants).
 
-Word difficulty is scored as:
+Word difficulty (`phonetic.word_difficulty()`) is scored as:
 
 ```
 difficulty = 0.4 × onset_cluster_length
            + 0.3 × syllable_count
            + 0.3 × rarity
+           (+ 0.15 plosive/affricate bonus)
 ```
 
 Displayed in the UI as colour-coded chips: 🔴 high / 🟠 medium / 🟢 low risk.
+
+These coefficients are hand-picked engineering defaults, not fitted against
+real speaker data — see `VALIDATION.md` for the honest status of this and the
+profile's own (differently-weighted) difficulty formula.
 
 ---
 
@@ -206,19 +271,7 @@ If you're not seeing suggestions for some words, try lowering the threshold.
 
 ### Grammar correction (`grammar.py`)
 
-`sanitize_input()` runs 8 sequential correction passes before synonym substitution:
-
-| Layer | What it fixes | Example |
-|-------|---------------|---------|
-| 1a | Contractions | `dont` → `don't` |
-| 1b | Informal words | `gonna` → `going to` |
-| 2 | Pronoun case | `i` → `I` |
-| 3 | Sentence capitalisation | `the cat...` → `The cat...` |
-| 4 | Extra spaces | `word  word` → `word word` |
-| 5 | Auxiliary verb form | `I am go` → `I am going` |
-| 6 | Tense correction | `I eat yesterday` → `I ate yesterday` |
-| 7 | Subject-verb agreement | `He go` → `He goes` |
-| 8 | Punctuation | adds trailing `.` if missing |
+`sanitize_input()` runs multiple sequential correction passes before synonym substitution: spelling, contractions, informal words, pronoun case, sentence capitalisation, spacing, article agreement, auxiliary verb forms, tense correction, subject-verb agreement (BE and main verbs), negation agreement, existential-there agreement, punctuation, and an optional LanguageTool deep-check.
 
 ### Synonym engine (`engine.py` — v3)
 
@@ -226,27 +279,23 @@ Retrieves candidates from WordNet (POS-filtered) and Datamuse (`rel_syn=` + `ml=
 
 ### SBERT firewall (`semantic.py`)
 
-For each candidate, builds a candidate sentence, batch-encodes it alongside the original, and computes cosine similarity. Protected phrases (33 multi-word fixed expressions like `look forward to`, `in order to`, `as well as`) are never substituted. Falls back gracefully to frequency-only ranking if SBERT fails to load.
+For each candidate, builds a candidate sentence, batch-encodes it alongside the original, and computes cosine similarity. Protected phrases (multi-word fixed expressions like `look forward to`, `in order to`, `as well as`) are never substituted. Falls back gracefully to frequency-only ranking if SBERT fails to load.
 
-### Multi-factor profile (`profiling/`)
+### Speaker difficulty profile (`profiling/`)
 
-`profiling/asr.py` wraps CrisperWhisper for verbatim tokens; `profiling/detect.py` flags repetitions, blocks, prolongations, fillers, and stutter markers; `profiling/profile.py` stores a per-speaker word-difficulty model seeded by self-report and population priors, then updated with EWMA session events.
+`profiling/profile.py` stores a per-speaker, multi-factor word-difficulty model (onset risk, syllable length, frequency, grammatical class), seeded by self-report and population priors (`profiling/coldstart.py`), then updated with EWMA session events. The profile's `update()` method accepts a list of disfluency events — in the full Speech-AI system, those events come from the Audio Module; in this repo, the profile is currently seeded purely from the user's typed self-report.
 
 ### Profile-aware rewrite (`rewrite/`)
 
-`rewrite/rewriter.py` proposes meaning-preserving substitutions using the roadmap score `similarity - lambda * difficulty + mu * frequency`. Protected words and the user's always-keep list are never replaced, and the Streamlit card lets each proposed change be accepted or rejected.
+`rewrite/rewriter.py` proposes meaning-preserving substitutions using the score `similarity - lambda * difficulty + mu * frequency`. Protected words and the user's always-keep list are never replaced, and the Streamlit card lets each proposed change be accepted or rejected.
 
 ### Fluency rephrase (`rephrase.py`)
 
 A standalone, optional layer that proposes a smoother full-sentence rewrite. It generates paraphrase candidates with a T5 model (`Vamsi/T5_Paraphrase_Paws`), blocks the user's trouble words via `bad_words_ids`, then scores each candidate by `w_sim·similarity − w_diff·difficulty − w_viol·violations − w_edit·edit-distance` and keeps the best one that clears a semantic-similarity gate. It is never imported by `grammar.py` or `engine.py`, loads the model lazily on first use (with `low_cpu_mem_usage=True` so it fits on low-RAM machines), and degrades to returning the input sentence unchanged if the stack or weights are unavailable.
 
-### ASR / microphone profiling (`profiling/asr.py`)
-
-`CrisperWhisperASR` produces verbatim tokens. It deliberately refuses vanilla Whisper model ids (which delete disfluencies) and defaults to CrisperWhisper. It accepts JSON token fixtures and transcripts for offline development, and for WAV recordings without the ASR model it falls back to `tokens_from_audio_timing` — an energy-based voice-activity detector that marks speech/pause regions (relative to the clip's own noise floor and peak) so the detector can still find blocks and prolongations without knowing the words.
-
 ### Evaluation harness (`eval/`)
 
-`eval/metrics.py` computes meaning preservation, difficulty-onset reduction, substitution rate, and lambda trade-offs. `eval/profile_eval.py` compares self-report-only, observed-only, and fused profile AUC. `eval/study/` contains CSV helpers for counterbalanced three-condition user studies.
+`eval/metrics.py` computes meaning preservation, difficulty-onset reduction, substitution rate, and lambda trade-offs. `eval/profile_eval.py` compares self-report-only, observed-only, and fused profile AUC. `eval/study/` contains CSV helpers for a counterbalanced three-condition **human** study comparing reformulated-text conditions — no audio involved, it's about how readers/listeners judge the *text* output.
 
 ### Storage layer (`user_store.py`)
 
@@ -262,52 +311,50 @@ def _check_password(p, h): return bcrypt.checkpw(p.encode(), h.encode())
 
 ---
 
-## Voice Accessibility
+## Out of scope for this repository
 
-Speech AI supports both directions of spoken communication.
-
-### Speech-to-Text
-
-Users can click **Start Speaking** and dictate their sentence directly into the application. The transcribed text appears in the editor for review and further processing.
-
-### Text-to-Speech
-
-After grammar correction and synonym substitution, users can optionally click **Speak Output** to hear the final sentence read aloud.
-
-This makes the system useful for users who:
-
-- Prefer speaking over typing
-- Want to verify pronunciation before speaking
-- Need audio feedback while practicing communication
-- Benefit from multimodal accessibility support
+Audio recording, speech recognition (ASR), acoustic feature extraction, voice
+I/O, and audio-based disfluency detection are **not** implemented here — they
+belong to the Audio Module, a separate part of the Speech-AI system. Code
+that used to live in this repo for those concerns (a CrisperWhisper ASR
+wrapper, a rule-based detector over ASR word timings, and a browser
+Speech-to-Text/Text-to-Speech UI layer) has been moved to
+[`out_of_scope/`](out_of_scope/), preserved as-is for reference rather than
+deleted. See [`out_of_scope/README.md`](out_of_scope/README.md) for details
+and [`changes.md`](changes.md) / [`DECISION_LOG.md`](DECISION_LOG.md) for the
+history of how it got there.
 
 ## Known Limitations
 
+*(of the text reformulation module specifically)*
+
 - Grammar correction depends on NLTK POS tagging, which can misfire on very short or broken sentences.
 - Datamuse `ml=` results are not guaranteed to match POS; SBERT acts as the final filter for these.
-- Protected phrases are hard-coded (33 total); idiomatic coverage is incomplete.
+- Protected phrases are hard-coded (~35 total); idiomatic coverage is incomplete.
 - UI choices are session-local, while fluency profiles persist per user.
 - Subject-verb agreement detection looks left for the nearest subject, which fails in relative clauses.
 - Grammar correction runs before synonym substitution; a corrected form may shift the target lemma.
+- The two rewrite pipelines (`grammar.py`'s hard onset gate and `rewrite/`'s soft difficulty penalty) duplicate logic and have not been compared against each other.
+- The difficulty formulas and semantic threshold are hand-picked, not validated against real speaker data or human judgment — see `VALIDATION.md`.
 
 ---
 
-## Roadmap
+## Documentation set
 
-**Near-term (high impact)**
-- Datamuse POS filtering — explicitly gate `ml=` results through WordNet POS check
-- Revert button — undo individual grammar fixes from the correction card
-- Sentence-level phoneme scoring — before/after comparison of full sentence difficulty
+This README covers the product surface. For methodology, architecture
+rationale, decision history, and evaluation status, see the living
+documentation set at the repo root:
 
-**Medium-term**
-- Multi-sentence input — split, process, and rejoin on `.!?`
-- User blocklist/allowlist — persistent per-user word overrides
-- Export / copy button — one-click copy of the final sentence
-
-**Longer-term**
-- Optional LLM re-ranking layer (Gemini / local Ollama) for naturalness scoring
-- Live speech input via `streamlit-webrtc` + Whisper transcription
-- Fine-tune SBERT on speech-fluency sentence pairs
+| File | What it's for |
+|---|---|
+| `CLAUDE.md` | Orientation — where to start, standing rules |
+| `HANDOFF.md` | What's proven vs. hypothesis, how to run things, known pitfalls |
+| `DOCS.md` | One line per file — what it's for, drift status |
+| `DECISION_LOG.md` | Append-only record of why things are the way they are |
+| `VALIDATION.md` | What has actually been measured, and its named limitations |
+| `ROADMAP.md` | What's next, and the finding/gap that justifies each item |
+| `CHANGELOG.md` | Fast-scan index into the decision log |
+| `changes.md` | Full narrative version history (pre-dates the living doc set) |
 
 ---
 
@@ -321,8 +368,7 @@ This makes the system useful for users who:
 | [pyinflect](https://github.com/bjascob/pyInflect) | Morphological inflection |
 | [wordfreq](https://github.com/rspeer/wordfreq) | Zipf word frequency scores |
 | [Datamuse API](https://www.datamuse.com/api/) | Additional synonym candidates |
-| [transformers](https://github.com/huggingface/transformers) + [torch](https://pytorch.org) + [accelerate](https://github.com/huggingface/accelerate) | T5 fluency rephrase + CrisperWhisper ASR, low-memory model loading |
-| [CrisperWhisper](https://huggingface.co/nyrahealth/CrisperWhisper) | Verbatim (disfluency-preserving) speech transcription |
+| [transformers](https://github.com/huggingface/transformers) + [torch](https://pytorch.org) + [accelerate](https://github.com/huggingface/accelerate) | T5 fluency rephrase, low-memory model loading |
 | [language-tool-python](https://github.com/jxmorris12/language_tool_python) | Optional grammar deep-check (requires Java) |
 
 ---
@@ -330,7 +376,7 @@ This makes the system useful for users who:
 ## .gitignore
 
 ```
-users/
+users/*.fluency_profile.json
 user_prefs.json
 .cache/
 venv/
@@ -344,4 +390,4 @@ __pycache__/
 
 Developed at **NUST SEECS** as an independent research project exploring phoneme-aware synonym substitution for stutter assistance, semantic integrity preservation via SBERT re-ranking, and accessible NLP tooling built on lightweight, offline-capable components.
 
-See `CHANGES.md` for the full development history.
+See `changes.md` for the full development history and `DECISION_LOG.md` for why specific choices were made.

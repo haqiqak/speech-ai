@@ -6,6 +6,12 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-15** repo: narrow scope to the text reformulation module —
+  move `voice.py`, `profiling/asr.py`, `profiling/detect.py`,
+  `sample_stutter.json` to `out_of_scope/`; strip the corresponding UI from
+  `app.py`; split `tests/roadmap_test.py`; fix README's stale `0.65/0.35`
+  semantic-weight description. No rewrite algorithm/threshold/weight
+  changed. → `DECISION_LOG.md` 2026-08-15-A.
 - **2026-06-13** `11ef678` test: add `sample_stutter.json` fixture for
   profile-update testing without CrisperWhisper.
 - **2026-06-13** `7abfe97` docs: v6.0.1 changelog (model-loading

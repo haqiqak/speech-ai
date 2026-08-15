@@ -16,6 +16,16 @@ See Practice.md §1 for the precise, citable statement of the research
 objective — that sentence is the actual yardstick, not "does the app
 work."
 
+**Scope note (added 2026-08-15, Stage 2 narrowing pass):** this repo used to
+also contain a CrisperWhisper ASR wrapper, a rule-based ASR-timing disfluency
+detector, and a browser voice-input/voice-output UI layer — code that
+anticipated the Audio Module rather than being part of it. That code moved to
+`out_of_scope/` and is no longer imported by `app.py`. Everything below that
+predates this pass may still mention those files by their old location;
+where it does, treat `out_of_scope/<old path>` as the current location. No
+reformulation algorithm, weight, or threshold changed in this pass — see
+`DECISION_LOG.md` for the entry recording exactly what moved and why.
+
 ## What's proven vs. still a hypothesis (read this before trusting a claim elsewhere)
 
 **Proven / fact-level, in the sense of "verifiably true of the code as it
@@ -109,9 +119,12 @@ and the SBERT model (~80 MB) into project-local `.cache/`. Login with
   if memory pressure was transient. Fine for a single Streamlit process;
   would misbehave if this code were ever imported into a longer-lived
   multi-tenant service.
-- **`st.iframe` in `voice.py` is unverified against the pinned Streamlit
-  version** — see `ROADMAP.md` H1. Don't assume the voice UI works
-  without actually exercising it; this review did not run the app.
+- **`st.iframe` in `voice.py` was unverified against the pinned Streamlit
+  version** — see `ROADMAP.md` H1. This is now moot for *this* repo: as of
+  the Stage 2 scope-narrowing pass, `voice.py` (and the CrisperWhisper/ASR
+  detector code) moved to `out_of_scope/` and is no longer imported by
+  `app.py`. The open question still applies to whoever picks the file up
+  for the separate Audio Module — see `out_of_scope/README.md`.
 - **Documentation drift is real and already happened twice** (README's
   stale scoring numbers, AUTH_README's incorrect `.gitignore` claim) —
   verify against running code before citing a `.md` file's specific
@@ -143,6 +156,10 @@ and the SBERT model (~80 MB) into project-local `.cache/`. Login with
 7. `semantic.py`, `engine.py`, `phonetic.py`, `freq.py` — the signals the
    core pipeline is built on
 8. `profiling/` then `rewrite/` — the persistent-profile "soft" pipeline
-9. `rephrase.py`, `voice.py` — optional, isolated layers
+9. `rephrase.py` — optional, isolated layer
 10. `DECISION_LOG.md`, `VALIDATION.md`, `ROADMAP.md` — the evidence record
     and what's next
+
+**Not in this reading order:** `out_of_scope/` (archived audio/ASR/voice
+code — read `out_of_scope/README.md` only if you're picking up the Audio
+Module, not for work on this repository's reformulation pipeline).
