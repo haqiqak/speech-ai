@@ -175,6 +175,21 @@ ablation as the literal first item to implement, ahead of every other
 Stage 5 recommendation — everything else (NLI signal, difficulty-formula
 terms, the escalation path) is easier to evaluate correctly once this
 ablation's answer is known, not before.
+**Update (Stage 6, 2026-08-16) — superseded by an actual three-way
+comparison, not the originally-planned two-way ablation.** `VALIDATION.md`
+§6 ran `reformulate.py` against both `SentenceRewriter` and
+`DifficultyAwareRewriter` on an 18-case corpus with uniform metrics —
+`reformulate.py` shows higher meaning preservation (0.979 vs. 0.938/0.929)
+and smaller edits (0.068 vs. 0.147/0.143) but a lower reformulation rate
+(0.556 vs. 0.889/0.833), entirely explained by a 0/4 escalation-path
+success rate (root-caused into two separate findings — a fixable
+case-sensitivity bug in `rephrase.py::_bad_words_ids()`, and a deeper
+model-choice mismatch between T5's meaning-preserving paraphrase
+objective and this task's phoneme-avoidance requirement). This item's
+original question (does the phoneme-onset gate change what's accepted) is
+now subsumed by the broader comparison — closing this as originally
+scoped; see `VALIDATION.md` §6 for the actual numbers rather than
+restating them here.
 
 ### R7. Ablation: is the frequency term in the ranking formula doing real work?
 **Linked finding:** Practice.md §11, same source as R6.
@@ -416,6 +431,42 @@ component (e.g. an MLM-based contextual candidate generator, per
 declaration; building the storage for it first would be speculative.
 **Labeled as:** Explicitly named out-of-scope future work, not a near-term
 item — blocked on reformulation-engine capability that doesn't exist yet.
+
+### R17. Fix `rephrase.py::_bad_words_ids()`'s case-sensitivity gap
+**Linked finding:** `VALIDATION.md` §6.3, Cause A — directly measured, not
+inferred: blocking `"researcher"` does not block `"Researcher"`, confirmed
+by tokenizing both (different token IDs) and by a controlled
+`_model.generate()` repro showing the lowercase form never leaks (0/6
+beams) while the capitalized form leaks in 5/6. Contributed to 2 of the
+4 escalation failures observed in Stage 6's evaluation corpus.
+**What this roadmap item actually is:** Encode capitalized/title-case
+(and plausibly all-caps) variants of each blocked word in
+`_bad_words_ids()`, not just the form passed in. Small, mechanical,
+low-risk — does not touch the escalation trigger logic, the verification
+gates, or any scoring formula.
+**Labeled as:** A confirmed bug with root-cause evidence, not a
+hypothesis — explicitly not fixed during Stage 6 per that stage's
+no-tuning boundary. Next concrete implementation candidate.
+
+### R18. Escalation-model mismatch: T5 paraphrase objective vs. phoneme-avoidance requirement
+**Linked finding:** `VALIDATION.md` §6.3, Cause B — the deeper of the two
+escalation-failure causes. `Vamsi/T5_Paraphrase_Paws` is trained to
+produce near-identical-meaning paraphrases, which tends to preserve the
+original vocabulary's semantic field — so when the flagged phoneme
+cluster is semantically central to the sentence (e.g. "struggle"/
+"stress"/"strategy" all sharing STR), paraphrasing tends to reintroduce
+the same sound via unblocked synonyms/inflections, even with perfect
+word-level blocking. This confirms, with concrete evidence for the first
+time, the limitation `REFORMULATION_RESEARCH.md` §24.E only theorized.
+**What this roadmap item actually is:** An open research question, not a
+scoped fix — possible directions (none evaluated yet): a different/
+fine-tuned paraphrase model with phoneme-awareness; a hybrid approach that
+also swaps individual words within the T5 candidate post-hoc; accepting
+this as a hard limit and improving the honesty of the "could not safely
+reformulate" messaging instead of chasing a fix. Needs its own research
+pass before any implementation decision, consistent with §6/§9's
+"be willing to discard, but verify before you replace" discipline.
+**Labeled as:** Confirmed limitation (not fixed here), future work.
 
 ---
 
