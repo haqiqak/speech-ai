@@ -268,6 +268,13 @@ def _render_difficulty_category(
                     extra = f' <span style="opacity:.55;font-size:.78rem">/{" ".join(entry.pronunciation)}/</span>'
                 elif category == "sound" and entry.normalized:
                     extra = f' <span style="opacity:.55;font-size:.78rem">/{entry.normalized.replace(" ", "")}/</span>'
+                if category == "sound" and entry.meta.get("legacy_bridge_unreliable"):
+                    extra += (
+                        ' <span style="opacity:.85;font-size:.74rem;color:#b3541e" '
+                        'title="This exact sound may not be fully enforced by the current '
+                        'rewrite engine yet — a known limitation, not a bug in your entry.">'
+                        '⚠️ not fully enforced yet</span>'
+                    )
                 st.markdown(
                     f'<span class="blocklist-item">🚫 {_fmt(entry.value)}</span>{extra}',
                     unsafe_allow_html=True,
@@ -319,6 +326,13 @@ def _render_words_category(profile: DifficultyProfile) -> None:
                 extra += (
                     f' <span style="opacity:.8;font-size:.76rem;color:#c2660f">'
                     f'— specifically: {_fmt(", ".join(entry.problem_phones))}</span>'
+                )
+            if entry.meta.get("has_alternate_pronunciations"):
+                extra += (
+                    ' <span style="opacity:.85;font-size:.74rem;color:#b3541e" '
+                    'title="This word has more than one pronunciation (e.g. different tenses or senses). '
+                    'The sounds shown are for the most common one and may not match what you meant.">'
+                    '⚠️ has multiple pronunciations</span>'
                 )
             st.markdown(
                 f'<span class="blocklist-item">🚫 {_fmt(entry.value)}</span>{extra}',
@@ -390,6 +404,12 @@ def _render_pattern_editor(profile: DifficultyProfile, entry) -> None:
         "Optional — leave nothing selected to keep this as a whole-word "
         "difficulty. Check only the sound(s) that are specifically the problem."
     )
+    if len(set(entry.pronunciation)) != len(entry.pronunciation):
+        st.caption(
+            "This word repeats a sound — checking one occurrence marks that "
+            "sound as the problem *anywhere it appears in this word*, not "
+            "just that one spot."
+        )
 
     already = set(entry.problem_phones or ())
     selected: list[str] = []

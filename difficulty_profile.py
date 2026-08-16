@@ -8,7 +8,14 @@ Design summary (full rationale in PROBLEM_FORMULATION.md)
 Four explicitly separate concepts — none of these implies any other:
 
     sounds          — GLOBAL phoneme-level: "I have trouble with this sound,
-                       generally, wherever it occurs."
+                       generally, wherever it occurs." Specifically an
+                       ONSET pattern (word-initial phones only) — inherited
+                       from phonetic.matches_any(), the only phoneme
+                       matching the existing reformulation engine does.
+                       Not a schema field because there is currently no
+                       second value it could take; recorded here because
+                       nothing else in the schema states it (audit,
+                       PROBLEM_FORMULATION.md §11.1).
     words           — lexical: "This specific word is difficult for me,"
                        with no claim about *why*.
     phrases         — multi-word: "This specific phrase is difficult for me
@@ -18,6 +25,13 @@ Four explicitly separate concepts — none of these implies any other:
                        difficult part." Stored as an attribute of the word
                        entry it belongs to, not as its own top-level list —
                        it's meaningless without the word it's scoped to.
+                       Identifies phone CLASSES within the word, not
+                       specific occurrences — a word with a repeated phone
+                       (e.g. "level" -> L EH V AH L) can't represent "only
+                       the second L," by design (PROBLEM_FORMULATION.md
+                       §11.1): the reformulation engine's use of this
+                       (avoid the phone near this word) doesn't change
+                       based on which occurrence was meant.
 
 Flagging "three" as difficult NEVER creates a global "TH" or "R" sounds
 entry by itself — that would silently convert "this one word is hard" into
@@ -212,11 +226,29 @@ class DifficultyProfile:
         for existing in self.sounds:
             if existing.normalized == normalized:
                 return existing, "duplicate"
+
+        value = "-".join(p.strip().upper() for p in phones)
+        meta: dict[str, Any] = {}
+        # `sound_values()` -> `.value` is what actually reaches the existing
+        # reformulation pipeline today (via the legacy stutter_patterns
+        # mirror), which re-derives an ARPAbet key from `.value` by GUESSING
+        # from spelling (phonetic.normalize_pattern), not by reading
+        # `.normalized` directly — that's how it already worked for
+        # user-typed cues like "str", and touching that contract is out of
+        # scope here. For most promoted phone combos the guess round-trips
+        # correctly (e.g. "TH-R" -> TH, R), but not all ARPAbet phones have
+        # a spelling that decodes correctly (e.g. "ZH" decodes as Z + HH).
+        # Detect that mismatch here so it's a recorded fact, not a silent
+        # failure discovered later.
+        if phonetic.normalize_pattern(value.lower()) != tuple(p.strip().upper() for p in phones):
+            meta["legacy_bridge_unreliable"] = True
+
         entry = DifficultyEntry(
-            value="-".join(p.strip().upper() for p in phones),
+            value=value,
             normalized=normalized,
             category="sound",
             source=source,
+            meta=meta,
         )
         self.sounds.append(entry)
         return entry, "added"
@@ -252,12 +284,23 @@ class DifficultyProfile:
                 if existing.normalized == normalized:
                     return existing, "duplicate"
 
+        meta: dict[str, Any] = {}
+        if category == "word" and phonetic.pronunciation_variant_count(normalized) > 1:
+            # A real, silent ambiguity otherwise: full_pronunciation() always
+            # picks CMU's first-listed variant (e.g. "read" -> present tense),
+            # which may not be the sense the user meant. We can't resolve
+            # *which* variant without sentence context this module doesn't
+            # have (see PROBLEM_FORMULATION.md's audit) — recording that the
+            # ambiguity exists is the honest, minimal thing to do here.
+            meta["has_alternate_pronunciations"] = True
+
         entry = DifficultyEntry(
             value=raw_text.strip(),
             normalized=normalized,
             category=category,
             source=source,
             pronunciation=pronunciation,
+            meta=meta,
         )
         bucket.append(entry)
         return entry, "added"

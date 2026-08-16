@@ -172,6 +172,30 @@ def full_pronunciation(word: str) -> tuple[str, ...] | None:
     return None
 
 
+def pronunciation_variant_count(word: str) -> int:
+    """
+    How many distinct CMU pronunciation entries *word* has — e.g. 'read' has
+    2 (present/past tense), 'the' has 3. `full_pronunciation()` always uses
+    the first ([0]) regardless of this count, which is a real, silent
+    simplification: for a heteronym, the shown/selectable pronunciation may
+    not be the sense the user meant.
+
+    This function exists so a caller can *detect and record* that ambiguity
+    (see difficulty_profile.py) rather than the ambiguity going unnoticed.
+    It does not resolve which variant is intended — that would require
+    sentence context this module doesn't have. Returns 0 for OOV words
+    (informational only; 0 does not mean "0 pronunciations exist", it means
+    "not in CMU dict, see full_pronunciation()'s own OOV handling").
+    """
+    w = (word or "").strip().lower()
+    if not w:
+        return 0
+    cmu = _cmu()
+    if cmu and w in cmu:
+        return len(cmu[w])
+    return 0
+
+
 # ── Friendly phone labels (for showing pronunciation to non-technical users) ──
 # Research finding (see PROBLEM_FORMULATION.md, Stage 4A refinement): dictionaries
 # aimed at general readers use "pronunciation respelling" — a familiar reference

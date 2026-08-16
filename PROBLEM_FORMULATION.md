@@ -1,12 +1,14 @@
 # PROBLEM_FORMULATION.md — The Text-Only Problem and Its Foundation
 
 Covers Stage 4A (2026-08-15: the initial sounds/words/phrases profile
-foundation) and its refinement (2026-08-16: word-specific sound patterns,
-single-default-profile architecture). This is a living design document, not
-an append-only log — where the refinement changed a Stage 4A decision, this
-file states the **current** design and reasoning; it does not preserve the
-superseded version as if it were still accurate. The append-only record of
-*that something changed and why* lives in `DECISION_LOG.md`.
+foundation), its refinement (2026-08-16: word-specific sound patterns,
+single-default-profile architecture), and a foundation audit (2026-08-16,
+same day: checking the result for ambiguity before treating it as settled —
+see §11). This is a living design document, not an append-only log — where
+a later pass changed an earlier decision, this file states the **current**
+design and reasoning; it does not preserve the superseded version as if it
+were still accurate. The append-only record of *that something changed and
+why* lives in `DECISION_LOG.md`.
 
 Every claim is labeled per the legend: `[FINDING]` (literature/documented,
 cited) / `[INTERPRETATION]` (our reasoning from a finding) / `[HYPOTHESIS]`
@@ -417,3 +419,170 @@ scoring, NLI verification, candidate ranking, or LLM/T5 generation change.
 No phrase-matching logic. No consumption of `problem_phones` by any
 scoring/gating code. The reformulation engine's behavior, verified by
 `tests/smoke.py`, is unchanged by either pass.
+
+---
+
+## 11. Foundation audit (2026-08-16, same day as the refinement)
+
+Before treating the schema above as settled, it was checked directly
+against real data (CMU dict lookups, actual round-trips through
+`phonetic.normalize_pattern`), not just reasoned about abstractly. Two real
+issues were found and fixed; several other questions were checked and found
+already handled correctly; a few are named as genuinely out of scope for a
+foundation pass.
+
+### 11.1 Can every entry be unambiguously interpreted? — checked per category
+
+- **Global sound.** Unambiguous *given* one fact that wasn't previously
+  stated explicitly anywhere: a `sounds` entry is always an **onset**
+  pattern (matches word-initial phones only), because that's the only kind
+  of phoneme matching the existing, unmodified reformulation engine
+  (`phonetic.matches_any`) does. This was always true — it's inherited from
+  Stage 1 — but the new profile schema doesn't self-document it (no
+  `sounds` entry says "onset-only" anywhere in its fields). **Resolved by
+  documentation, not a schema field**: adding a `position` field with only
+  one possible value (`"onset"`) would be speculative — there's no second
+  value it could take yet, and Practice.md §3/§6's evidence-constrained
+  principle argues against adding structure for a distinction that doesn't
+  exist in the code yet. Recorded here and in `difficulty_profile.py`'s
+  docstring instead.
+- **Difficult word.** Unambiguous as "this spelling, case/punctuation-
+  normalized, is difficult" — *except* for the CMU heteronym case, §11.3.
+- **Difficult phrase.** Unambiguous as declared text. Matching it against
+  future input text is explicitly deferred (§3.5, `ROADMAP.md` R13) — not
+  an ambiguity in the *storage*, a gap in the (not-yet-built) consumer.
+- **Word-specific pattern.** Unambiguous once one deliberate simplification
+  is stated explicitly (it wasn't, until this audit): `problem_phones`
+  identifies **phone classes within the word, not specific occurrences**.
+  A word with a repeated phone (`"level"` → `L EH V AH L`, `L` at positions
+  0 and 4) cannot represent "only the second L is the problem" — checking
+  either checkbox marks that phone as difficult everywhere it occurs in
+  that word. **Kept as-is, not changed to position-tracking**: for the
+  reformulation engine's actual purpose (avoid this phone when picking a
+  substitute near this word), *which* occurrence was intended doesn't
+  change what the engine should do with the information — tracking
+  position would be real added complexity for a distinction that doesn't
+  change downstream behavior. The UI now says so explicitly when a word
+  has a repeated phone, so this reads as a decision, not an unexplained
+  quirk when someone reopens the editor and sees a sibling checkbox
+  pre-checked.
+
+### 11.2 Can the future reformulation engine consume this cleanly?
+
+**What it will actually receive today** (via the one bridge that exists,
+§6): two flat lists of strings, `stutter_patterns` and `blocked_words`,
+exactly as before this stage — `problem_phones` and `phrases` are not
+wired to anything yet (§10, unchanged). **What it would receive if/when a
+later stage consumes `difficulty_profile` directly** (not built yet): the
+schema in §2, which is self-contained per entry — no entry requires
+resolving a reference to another entry to be interpreted, except the
+already-acknowledged word ↔ its own `problem_phones` (which is intrinsic,
+not cross-entry).
+
+**A concrete, previously-undetected bridge bug, found by testing (not
+assumed) and fixed this pass:** `add_sound_from_phones()` (used when a
+word-specific pattern is promoted to a global sound) builds a display
+`value` like `"TH-R"`. The *existing* bridge re-derives an ARPAbet key from
+that string by **spelling guess** (`phonetic.normalize_pattern`), the same
+mechanism used for user-typed cues like `"str"` — because that mechanism
+is what the unmodified `grammar.py`/`phonetic.py` contract expects, and
+touching that contract is out of scope this stage. Verified directly:
+`normalize_pattern("th-r".lower())` → `('TH','R')` (correct, most phones
+round-trip fine), but `normalize_pattern("zh".lower())` → `('Z','HH')`
+(**wrong** — ZH has no English onset spelling that decodes back to ZH,
+because ZH essentially never starts an English word). **Fixed**:
+`add_sound_from_phones()` now checks its own round-trip fidelity at
+creation time and records `meta["legacy_bridge_unreliable"] = True` when
+it fails, and the UI shows "⚠️ not fully enforced yet" on that entry rather
+than silently accepting it as if it worked. Not fixed at the root, because
+the root (the spelling-based bridge) is explicitly temporary — `ROADMAP.md`
+R10/R12 already call for replacing it when the reformulation engine is
+redesigned; patching around it further would be effort spent on code
+that's slated for removal. Tested:
+`test_promoted_sound_with_lossy_roundtrip_is_flagged` plus an end-to-end
+`tests/app_test.py` scenario that promotes ZH from a real word ("measure")
+through the actual UI and confirms the warning renders.
+
+### 11.3 Missed cases, checked one at a time
+
+- **Multiple pronunciations.** Real and common — checked against live CMU
+  data: `"read"` has 2 variants (present/past tense), `"the"` has 3,
+  `"object"`, `"often"`, `"route"` each have 2. `full_pronunciation()`
+  silently uses CMU's first-listed variant, which is not guaranteed to be
+  the sense the user meant. **Fixed, minimally**: a new
+  `phonetic.pronunciation_variant_count()` detects this, and adding a word
+  with more than one variant now sets `meta["has_alternate_pronunciations"]
+  = True`, shown in the UI as "⚠️ has multiple pronunciations." **Not
+  fixed further** — letting the user pick *which* variant they meant needs
+  a variant-picker UI (more widgets, more tests) and arguably needs
+  sentence context to resolve automatically; that's a real feature, not a
+  one-line adjustment, and is named as future work rather than built here.
+- **Same word, different contexts** (e.g. "read" present vs. past is
+  actually the multi-pronunciation case above; a subtler version is a word
+  that's spelled and pronounced identically but has different *difficulty*
+  in different grammatical roles). **Not addressed, named as genuinely out
+  of scope**: distinguishing *which occurrence* of a word in a sentence a
+  difficulty applies to would require capturing sentence context at
+  flag-time and matching it later — full word-sense disambiguation, which
+  `RESEARCH.md` §2.B/§7 already identifies as a real, unsolved problem for
+  the *reformulation engine*, not something a profile foundation should
+  attempt to solve on its own.
+- **Repeated words** (the same word appears twice in one input). No new
+  issue: `extract_candidate_words()` already dedups for the quick-pick
+  list, and word difficulty is intentionally a type-level declaration (one
+  entry covers every occurrence) — this is the same underlying question as
+  "same word, different contexts," not a separate gap.
+- **Phrases containing difficult words** (e.g. "research" is a difficult
+  word and also appears inside the difficult phrase "through the
+  research"). Checked: the two facts are stored independently and neither
+  entry references the other. **This is intentional, not a gap** — the
+  profile records independent facts; checking for overlap between a phrase
+  and the words it contains is a computation the *consumer* (the future
+  reformulation engine) does over the whole profile, not something the
+  storage layer should pre-compute or cross-link. Documented here so a
+  future engine implementer doesn't assume the profile already did this.
+- **Overlapping difficulties in general** (a word's `problem_phones`
+  happens to match a separately-declared global sound; a word is both
+  difficulty-flagged and separately allowlisted). Checked: redundant-but-
+  consistent overlap (word pattern + matching global sound) is harmless —
+  both signals just reinforce each other, no conflict to resolve.
+  Word-vs-allowlist overlap is a real potential tension between two
+  *different, both-untouched* features, but it's already resolved
+  correctly by existing, unmodified code: `grammar.py`'s allowlist check is
+  a hard lock that's checked before any substitution logic runs
+  (`DECISION_LOG.md` 2026-06-08-D) — a word that's both difficulty-flagged
+  and allowlisted is never substituted, consistent with "allowlist always
+  wins," which is the sensible precedent (a hard-to-say word the user
+  explicitly never wants changed — e.g. their own name — is a legitimate
+  combination, not a contradiction to reject).
+- **A word flagged difficult with no stated reason.** Already correctly
+  supported and already covered by an existing test
+  (`test_leaving_word_as_plain_difficulty_without_a_pattern`) — confirmed
+  again during this audit, not a gap.
+
+### 11.4 Is anything over-engineered?
+
+Checked deliberately, not just assumed absent. `meta: {}` and the reserved
+`system_observed` source value were re-examined given they're unused right
+now — kept, because they're zero-cost reservations (an empty dict, one
+unused enum value) against an explicitly planned future integration (the
+Audio Module), not speculative building-ahead of an undefined need.
+`add_sound_from_phones()` as a method separate from `add_sound()` was
+re-examined too — keeping them separate turned out to be load-bearing, not
+redundant: collapsing them would mean routing known-correct ARPAbet phones
+back through the same spelling-guess path that causes the ZH bug in
+§11.2. The one genuine (very minor) redundancy found: `_add_raw()` and
+`add_sound_from_phones()` each implement their own short dedup-scan loop;
+left as-is (a four-line duplication, not worth the indirection a shared
+helper would add for this little repetition).
+
+### 11.5 Verdict: does the data model need a final adjustment?
+
+Two small, targeted, tested additions (§11.2, §11.3's fixed items) — not a
+schema redesign. Both are informational (`meta` flags surfaced in the UI),
+neither changes what the four core categories mean or how they're stored.
+Everything else in this section was either confirmed already correct
+(word-without-a-reason, phrase/word independence, allowlist precedence) or
+named explicitly as future work too large for a foundation adjustment
+(variant-picker UI, phrase-matching logic, word-sense disambiguation) —
+listed again, with links, in `ROADMAP.md`.

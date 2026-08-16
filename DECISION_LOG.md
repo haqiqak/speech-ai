@@ -523,3 +523,102 @@ log is append-only) but should be read with this correction in mind.
     by this entry — rewriting published git history is a separate,
     deliberate action this entry does not take without explicit
     authorization; only new writes are affected.
+
+---
+
+### 2026-08-16-B — Foundation audit: two real ambiguities found and fixed by testing, not just review
+**What was done:** Before treating the Stage 4A + refinement profile
+schema as a finished foundation, checked it directly against real data
+(CMU dict lookups, actual round-trips through `phonetic.normalize_pattern`)
+for every question in the user's audit request — unambiguous
+interpretation per category, cross-entry ambiguities, missed cases
+(multiple pronunciations, same-word-different-context, repeated words,
+phrase/word overlap, allowlist overlap, reason-less word flags), and
+over-engineering. Two real, previously-undetected issues were confirmed
+with actual test data and fixed; the rest were checked and either already
+correct (verified, not assumed) or named as genuinely out of scope.
+
+*Fix 1 — heteronym ambiguity.* `phonetic.full_pronunciation()` always uses
+CMU dict's first-listed pronunciation variant. Verified directly this is a
+real, common case, not a rare one: `cmu["read"]` has 2 variants,
+`cmu["the"]` has 3, `cmu["object"]`/`cmu["often"]`/`cmu["route"]` each have
+2. New `phonetic.pronunciation_variant_count()` detects this;
+`DifficultyProfile._add_raw()` now sets
+`meta["has_alternate_pronunciations"] = True` on a word entry when it
+applies, surfaced in `app.py` as "⚠️ has multiple pronunciations."
+
+*Fix 2 — a bridge round-trip bug in `add_sound_from_phones()`.* Verified by
+direct testing, not assumed: `phonetic.normalize_pattern("th-r".lower())`
+correctly returns `('TH','R')`, but `phonetic.normalize_pattern("zh".lower())`
+returns `('Z','HH')` — wrong, because ZH has no natural English onset
+spelling. This matters because `add_sound_from_phones()`'s output `value`
+string is what the *existing, unmodified* legacy bridge
+(`sound_values()` → `stutter_patterns` → `grammar.py`'s
+`ph.matches_any()`) re-derives an ARPAbet key from, by spelling guess — the
+same mechanism that's always been used for user-typed cues, which this
+stage cannot change. `add_sound_from_phones()` now checks its own
+round-trip fidelity at creation time and sets
+`meta["legacy_bridge_unreliable"] = True` when it fails; `app.py` shows
+"⚠️ not fully enforced yet" on such an entry instead of silently accepting
+it as fully working.
+**Alternatives considered:**
+  - Fixing the round-trip properly by changing what flows through the
+    legacy bridge, or extending `phonetic.py`'s grapheme tables to cover
+    every ARPAbet phone. Rejected — the bridge itself is explicitly
+    temporary (`ROADMAP.md` R10/R12 already call for replacing it when the
+    reformulation engine is redesigned), and not every ARPAbet phone has a
+    natural English spelling to add a rule for (ZH essentially never
+    starts an English word) — the honest fix is recording the limitation
+    where it occurs, not patching around a bridge slated for removal.
+  - Adding position-tracking to `problem_phones` (storing *which*
+    occurrence of a repeated phone was selected, not just the phone
+    value). Rejected after explicit consideration: the reformulation
+    engine's actual use of this data (avoid a phone near this word)
+    doesn't change based on which occurrence was meant, so tracking
+    position would be real added complexity for a distinction that
+    wouldn't change downstream behavior. The UI now states this design
+    choice explicitly when a word has a repeated phone, so it reads as a
+    decision rather than an unexplained quirk.
+  - Building a pronunciation-variant picker UI (let the user choose which
+    CMU variant they meant). Rejected as too large for an audit
+    adjustment — real new UI, real new tests, and arguably needs sentence
+    context to resolve automatically rather than ask the user every time;
+    named as future work instead (`ROADMAP.md`).
+  - Adding a `position: "onset"` field to sound entries to make the
+    onset-only scope self-documenting in the schema. Rejected — there is
+    currently no second value that field could take, so adding it now
+    would be speculative structure ahead of an actual need; documented in
+    prose (`difficulty_profile.py`'s docstring, `PROBLEM_FORMULATION.md`
+    §11.1) instead.
+**Why:** Directly requested — an explicit audit pass before treating the
+profile foundation as settled, specifically asking whether the schema is
+unambiguous, cleanly consumable, and free of missed cases or
+over-engineering, with instructions to fix what's small and name what's
+too big rather than silently letting either kind of finding go unrecorded.
+**Measured result:** `tests/difficulty_profile_test.py` grew from 38 to 44
+tests (6 new: heteronym detection and persistence, clean vs. lossy
+round-trip detection for promoted sounds). `tests/app_test.py` grew to 7
+scenarios, including one that promotes ZH from a real word ("measure")
+through the actual UI widgets and confirms the warning renders, and a
+negative control (a clean sound shows no false-positive warning). All
+pass. `tests/roadmap_test.py` (3/3) and `tests/smoke.py` (byte-identical to
+baseline) confirm — again — that none of this touched the reformulation
+engine.
+**Category:** Engineering decision, directly requested by the user as an
+audit rather than new-feature work. Both fixes are informational (`meta`
+flags + UI warnings) — neither changes what the four core categories mean,
+how `add_word`/`add_sound`/`add_phrase`/`set_word_pattern` are called, or
+any existing entry's `normalized` dedup key.
+**Left explicitly out of scope, named as future work — see `ROADMAP.md`:**
+  - A pronunciation-variant picker (let the user choose which CMU
+    pronunciation they meant for a heteronym) — real new UI/feature, not
+    an adjustment.
+  - Word-sense-specific difficulty (the same spelling being difficult in
+    one grammatical role/sense but not another) — a word-sense
+    disambiguation problem, already named in `RESEARCH.md` §2.B/§7 as a
+    real, unsolved problem for the reformulation engine generally, not
+    something a profile foundation should solve unilaterally.
+  - Phrase-matching logic and the phrase/word-overlap computation both
+    remain the future reformulation engine's job, confirmed (not just
+    assumed) during this audit to be correctly un-precomputed by the
+    profile layer.

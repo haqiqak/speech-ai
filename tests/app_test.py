@@ -260,6 +260,53 @@ def run():
         print("     word-specific pattern shown on the word entry:", cond); ok &= cond
         cond = at.session_state["stutter_patterns"] == []
         print("     NO global sound created from the word pattern:", cond); ok &= cond
+
+        # 7) Audit-driven warnings (2026-08-16): a heteronym word shows the
+        # "multiple pronunciations" caveat; a promoted sound whose spelling
+        # doesn't round-trip cleanly (ZH) shows the "not fully enforced" one.
+        _reset_default_profile()
+        at = _fresh()
+        at.run()
+        ok &= _fill(at, "dp_word_add_input", "read"); at.run()
+        ok &= _click(at, "dp_word_add_btn"); at.run()
+        ok &= _check(at, "flag heteronym 'read'")
+        md = _md(at)
+        cond = "has multiple pronunciations" in md
+        print("     heteronym warning shown:", cond); ok &= cond
+
+        _reset_default_profile()
+        at = _fresh()
+        at.run()
+        ok &= _fill(at, "dp_sound_add_input", "sh"); at.run()  # clean round-trip, no warning expected
+        ok &= _click(at, "dp_sound_add_btn"); at.run()
+        md = _md(at)
+        cond = "not fully enforced yet" not in md
+        print("     clean sound shows no false-positive warning:", cond); ok &= cond
+
+        # Positive case: promote ZH (from "measure": M EH ZH ER) to global —
+        # ZH has no English onset spelling that decodes back correctly, so
+        # the promoted entry must carry the warning.
+        _reset_default_profile()
+        at = _fresh()
+        at.run()
+        ok &= _fill(at, "dp_word_add_input", "measure"); at.run()
+        ok &= _click(at, "dp_word_add_btn"); at.run()
+        zh_found = False
+        for cb in at.checkbox:
+            if cb.key == "dp_pattern_phone_measure_2":  # M(0) EH(1) ZH(2) ER(3)
+                cb.set_value(True)
+                zh_found = True
+        print("     ZH checkbox found on 'measure':", zh_found); ok &= zh_found
+        at.run()
+        for cb in at.checkbox:
+            if cb.key == "dp_pattern_promote_measure":
+                cb.set_value(True)
+        at.run()
+        ok &= _click(at, "dp_pattern_save_measure"); at.run()
+        ok &= _check(at, "promote ZH to global sound")
+        md = _md(at)
+        cond = "not fully enforced yet" in md
+        print("     lossy round-trip warning shown for promoted ZH:", cond); ok &= cond
     finally:
         if snapshot is not None:
             with open(default_profile, "wb") as f:

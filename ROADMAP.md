@@ -284,6 +284,37 @@ having a reliable one.
 not a fresh unknown, an implementation task deferred for a verifiability
 reason, stated as such in `PROBLEM_FORMULATION.md` §7.2.
 
+### R15. Build a pronunciation-variant picker for heteronyms
+**Linked finding:** `PROBLEM_FORMULATION.md` §11.3, `DECISION_LOG.md`
+2026-08-16-B — confirmed against real CMU data, not hypothetical:
+`"read"` has 2 pronunciation variants, `"the"` has 3, `"object"`/`"often"`/
+`"route"` each have 2. `full_pronunciation()` silently uses the first-listed
+one; a word entry now flags `meta["has_alternate_pronunciations"]` when
+this applies (fixed, 2026-08-16), but nothing yet lets the user say *which*
+variant they meant.
+**What this roadmap item actually is:** Design and build a small UI (e.g. a
+selectbox of the CMU variants, each rendered via `friendly_phone_label()`)
+that appears when `has_alternate_pronunciations` is set, letting the user
+pick the intended pronunciation; store the choice (which CMU list index,
+or the resolved phone tuple) on the entry.
+**Labeled as:** Future work — real new UI and tests, correctly out of scope
+for the audit adjustment that found the gap; not started.
+
+### R16. Word-sense-specific difficulty (same spelling, different context)
+**Linked finding:** `PROBLEM_FORMULATION.md` §11.3 — a word that's
+difficult in one grammatical sense/role but not another (a deeper version
+of the heteronym case above) cannot be represented today; the profile is
+type-level (one entry per spelling), not occurrence- or sense-level.
+**What this roadmap item actually is:** This is word-sense disambiguation,
+already named as a real, unsolved problem for the reformulation engine
+generally in `RESEARCH.md` §2.B/§7 — not a profile-schema gap to close in
+isolation. Revisit only once the reformulation engine has some WSD-capable
+component (e.g. an MLM-based contextual candidate generator, per
+`RESEARCH.md` §2.B) to actually make use of a sense-scoped difficulty
+declaration; building the storage for it first would be speculative.
+**Labeled as:** Explicitly named out-of-scope future work, not a near-term
+item — blocked on reformulation-engine capability that doesn't exist yet.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

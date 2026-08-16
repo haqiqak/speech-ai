@@ -6,6 +6,16 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-16** fix: foundation audit found and fixed two real ambiguities,
+  verified against live CMU data — heteronym words (`"read"`, `"the"`, etc.)
+  silently used only the first CMU pronunciation variant, now flagged
+  (`has_alternate_pronunciations`); `add_sound_from_phones()`'s promoted
+  entries could silently fail to round-trip through the legacy matching
+  bridge for phones with no natural English spelling (e.g. ZH), now flagged
+  (`legacy_bridge_unreliable`). Both surfaced as UI warnings, not silent
+  gaps. `tests/difficulty_profile_test.py` 38→44, `tests/app_test.py`
+  6→7 scenarios. → `DECISION_LOG.md` 2026-08-16-B; `PROBLEM_FORMULATION.md`
+  §11; `ROADMAP.md` R15/R16.
 - **2026-08-16** feat: word-specific sound patterns (`problem_phones` on word
   entries — "three" difficult ≠ "TH"/"R" globally difficult, unless
   explicitly promoted) via a new inline pattern-editor panel in `app.py`,

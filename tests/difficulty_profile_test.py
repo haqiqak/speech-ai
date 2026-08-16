@@ -204,6 +204,58 @@ class PronunciationDerivationTest(unittest.TestCase):
         # unknown code degrades to the bare code rather than raising
         self.assertEqual(phonetic.friendly_phone_label("ZZZ"), "ZZZ")
 
+    def test_variant_count_detects_heteronyms(self):
+        # 'read' (present/past) and 'the' both have real CMU alternates;
+        # 'three' does not. OOV words report 0, not 1.
+        self.assertGreater(phonetic.pronunciation_variant_count("read"), 1)
+        self.assertEqual(phonetic.pronunciation_variant_count("three"), 1)
+        self.assertEqual(phonetic.pronunciation_variant_count("zxqvblorp"), 0)
+
+
+class AmbiguityAuditTest(unittest.TestCase):
+    """Findings from the post-Stage-4A-refinement audit (2026-08-16): two
+    real, silent ambiguities the foundation must not hide. Both are now
+    recorded as explicit `meta` flags rather than left undetectable."""
+
+    def setUp(self):
+        _fresh_profile()
+
+    def tearDown(self):
+        _cleanup()
+
+    def test_heteronym_word_flags_alternate_pronunciation_ambiguity(self):
+        p = DifficultyProfile.load(TEMP_PROFILE)
+        entry, _ = p.add_word("read")
+        self.assertTrue(entry.meta.get("has_alternate_pronunciations"))
+
+    def test_unambiguous_word_does_not_get_the_flag(self):
+        p = DifficultyProfile.load(TEMP_PROFILE)
+        entry, _ = p.add_word("three")
+        self.assertNotIn("has_alternate_pronunciations", entry.meta)
+
+    def test_ambiguity_flag_persists_across_reload(self):
+        p = DifficultyProfile.load(TEMP_PROFILE)
+        p.add_word("read")
+        p.save()
+        reloaded = DifficultyProfile.load(TEMP_PROFILE)
+        self.assertTrue(reloaded.find_word("read").meta.get("has_alternate_pronunciations"))
+
+    def test_promoted_sound_with_clean_roundtrip_has_no_warning(self):
+        p = DifficultyProfile.load(TEMP_PROFILE)
+        entry, status = p.add_sound_from_phones(["TH", "R"])
+        self.assertEqual(status, "added")
+        self.assertNotIn("legacy_bridge_unreliable", entry.meta)
+
+    def test_promoted_sound_with_lossy_roundtrip_is_flagged(self):
+        """ZH has no English onset spelling that phonetic.normalize_pattern
+        can decode back correctly (it degrades to Z + HH) — this must be a
+        recorded, visible fact, not a silent gap in the legacy bridge that
+        feeds the existing (unmodified) reformulation pipeline."""
+        p = DifficultyProfile.load(TEMP_PROFILE)
+        entry, status = p.add_sound_from_phones(["ZH"])
+        self.assertEqual(status, "added")
+        self.assertTrue(entry.meta.get("legacy_bridge_unreliable"))
+
 
 class WordSpecificPatternTest(unittest.TestCase):
     """The Stage 4A refinement's central new concept: a word being flagged
