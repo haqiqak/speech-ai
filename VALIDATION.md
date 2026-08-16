@@ -464,3 +464,91 @@ strategy.
 the `rephrase.py` fix described in `DECISION_LOG.md` 2026-08-16-H. No
 profile touched disk during this run (verified via `git status` on
 `users/`).
+
+### 6.9 Escalation-trigger rate on ordinary text (executed, 2026-08-16, follow-up)
+
+§6.7's own limitation said the 0/4 escalation success rate "should not be
+read as the escalation path fails most of the time in typical use," since
+Stage 6's corpus was built failure-mode-dense by design. This subsection
+answers that directly rather than leaving it as a caveat.
+
+**Methodology:** a new corpus, `tests/reformulation_ordinary_corpus.json`
+— 36 already-committed, unmodified sentences from `tests/eval_corpus.txt`
+(ordinary, not written for this evaluation) plus 6 ordinary multi-sentence
+paragraphs (weather, a new job, a recipe, a work report, a museum visit,
+a hobby — written for this corpus but not tailored to hit any profile),
+crossed against 5 **realistic** profiles designed to represent what a
+speaker might plausibly declare — not engineered around any specific
+sentence: a light single-sound profile (`/s/`), a moderate two-plosive
+profile (`/p/,/b/`), a consonant-cluster profile (`str/pr/bl`), a
+words-only profile (five ordinary workplace words), and a mixed profile
+modeled directly on the shape of this repo's own real
+`users/default.json` (one sound, two words, one phrase). 210
+(text × profile) cases, harness `eval/reformulation_escalation_rate.py`,
+`reformulate.py` only (the retained legacy pipelines have no escalation
+concept, so this question doesn't apply to them).
+
+**[FINDING] Escalation is not rare in ordinary use, and its success rate
+there is far higher than Stage 6's corpus suggested.** 72/210 cases
+(34.3%) had at least one flagged word under a realistic profile. Of those
+72, 44 (61%) were resolved by substitution alone — escalation was never
+needed. Of the 270 total sentences processed, escalation triggered for
+28 (10.4%) — **and succeeded for 12 of those 28 (42.9%)**, not 0%.
+
+| Profile | Escalations triggered | Escalations succeeded |
+|---|---|---|
+| `moderate_two_plosive` | 13 | 5 |
+| `light_single_sound` | 8 | 2 |
+| `consonant_clusters` | 4 | 2 |
+| `words_only` | 3 | 3 |
+| `typical_mixed` (real-profile-shaped) | 0 | 0 |
+
+**[FINDING] The most realistic profile (modeled on this repo's own real
+user data) never reached escalation at all across all 42 texts.** This is
+consistent with — and helps explain — Stage 6's result: escalation is
+disproportionately triggered by profiles with several onsets or several
+declared words at once, which a lightly-populated real profile mostly
+isn't, on ordinary (non-adversarial) sentences.
+
+**[FINDING] Concrete examples of both outcomes, for texture beyond the
+aggregate:** `"The manager confirmed the schedule this morning."`
+(sound=`/s/`) → `"The manager confirmed the **time** this morning."`
+(escalation succeeded — clean, natural). `"The chef cooked pasta for the
+family."` (sounds=`/p/,/b/`) → `"The chef cooked **spaghetti** for the
+family."` (succeeded). `"The student practiced the speech before class."`
+(sound=`/s/`) → unchanged, `could_not_safely_reformulate` (two `/s/`-onset
+words — `student`, `speech` — and no candidate T5 produced cleared both
+the phoneme veto and the semantic gate). `"The company prepared a
+practical project plan."` (sounds=`/p/,/b/`) → unchanged, "profile too
+restrictive for this sentence" (four `/p/`-onset words in one short
+sentence: `prepared`, `practical`, `project`, `plan`).
+
+**[INTERPRETATION]** Stage 6's 0/4 was a real, correctly-measured result
+on the corpus it used, but that corpus was constructed specifically to
+stress-test the escalation path (§17's failure modes), and this follow-up
+confirms it does not generalize to ordinary usage. On ordinary text with
+realistic profiles, escalation is a real but secondary path (triggered
+for roughly 1 in 10 sentences that reach `reformulate.py` under a
+moderately-populated profile, essentially never under a lightly-populated
+one) and it succeeds close to half the time it's reached — a materially
+different picture than "the escalation path doesn't work."
+
+**[LIMITATION]** This still isn't a claim about speaker suitability, and
+5 profiles × 42 texts is a sample, not a census — a different set of
+realistic profiles or a different sentence source could shift these
+percentages. It also doesn't resolve R18 (Cause B): the 12 successes are
+still just successes at clearing the SBERT/phoneme gates, not evidence
+that a real speaker would find the restructured sentence easier to say.
+What it does establish is that Cause B, while real (`fm_restructuring_needed`
+and `fm_negation_forces_escalation` in Stage 6's corpus remain genuine,
+reproducible failures), is not universal — it dominates specifically when
+several instances of the same onset are semantically load-bearing in one
+sentence, a real but not typical condition in ordinary text.
+
+**[RECOMMENDATION — proposed, not applied]** R18 is still worth
+investigating (the failure mode it names is real and reproducible), but
+this result lowers its urgency relative to other open items —
+`ROADMAP.md` R9 (wiring the review UI's keep/revert signal into the
+profile) or the still-never-run human-judgment study are no longer
+obviously lower priority than R18 by comparison. That prioritization
+call is left to the next planning step, not decided here.
