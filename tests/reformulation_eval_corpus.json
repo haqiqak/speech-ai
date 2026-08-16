@@ -1,0 +1,163 @@
+{
+  "_doc": [
+    "tests/reformulation_eval_corpus.json - Stage 6 evaluation corpus.",
+    "Covers REFORMULATION_RESEARCH.md §17's eight constructed failure-mode",
+    "cases (fm_*), plus ordinary/control sentences, multi-sentence inputs, and",
+    "varied difficulty-profile combinations (ctl_*). Each case carries its own",
+    "profile rather than sharing one global profile (tests/eval_corpus.txt's",
+    "convention), because §17's cases specifically need per-case profiles to",
+    "be meaningful. Phonetic claims in each case's 'notes' (onsets, shared",
+    "sounds) were verified against phonetic.py's live CMU-backed output before",
+    "being written here, not assumed from spelling.",
+    "'profile' fields map directly onto DifficultyProfile: sounds/words/",
+    "phrases are grapheme strings exactly as a user would type them;",
+    "'patterns' maps a word already in 'words' to a word-specific",
+    "problem_phones list (ARPAbet), applied via set_word_pattern()."
+  ],
+  "cases": [
+    {
+      "id": "fm_multiple_difficult_words",
+      "category": "failure_mode",
+      "source": "REFORMULATION_RESEARCH.md §17 row 1",
+      "text": "I thoroughly reviewed three reports and carefully examined the results.",
+      "profile": {"sounds": [], "words": ["reviewed", "examined"], "phrases": []},
+      "notes": "Two unrelated flagged words (different onsets: reviewed=R, examined=no onset/vowel-initial) in one sentence. §17: 'no interaction modeling' is named as a persisting limitation, not solved by D′ - this case checks whether the two substitutions are still handled independently."
+    },
+    {
+      "id": "fm_phoneme_in_many_words",
+      "category": "failure_mode",
+      "source": "REFORMULATION_RESEARCH.md §17 row 2",
+      "text": "The researcher reported the results.",
+      "profile": {"sounds": ["r"], "words": [], "phrases": []},
+      "notes": "researcher/reported/results all have onset R (verified via phonetic.onset). The failure mode named in §17 is 'heavily-altered, obviously edited' output from touching every R-onset word independently. D′'s count-threshold escalation trigger (default >2 flagged content words) should fire here (3 flagged words) and restructure the whole sentence instead."
+    },
+    {
+      "id": "fm_negation_forces_escalation",
+      "category": "failure_mode",
+      "source": "REFORMULATION_RESEARCH.md §17 row 3",
+      "text": "I did not strongly agree with the stressful strategy.",
+      "profile": {"sounds": ["str"], "words": [], "phrases": []},
+      "notes": "strongly/stressful/strategy all onset S-T-R (verified). Forces restructuring escalation (3 flagged words). §17's concern: 'SBERT alone would likely accept a candidate that drops or flips not'. This is the direct test of semantic.negation_consistent() on a real generated restructuring, not a mocked candidate."
+    },
+    {
+      "id": "fm_ambiguous_word_verb_sense",
+      "category": "failure_mode",
+      "source": "REFORMULATION_RESEARCH.md §17 row 4",
+      "text": "I will present the object to the committee.",
+      "profile": {"sounds": [], "words": ["present"], "phrases": []},
+      "notes": "'present' is a heteronym: verb (pri-ZENT, give/show) vs noun (PREZ-ent, gift) - flagged in difficulty_profile_test.py too. Verb sense here. Tests whether POS-gated WordNet lookup keeps candidates in the verb sense (e.g. 'introduce', 'submit') rather than contaminating with noun-sense synonyms ('gift')."
+    },
+    {
+      "id": "fm_ambiguous_word_noun_sense",
+      "category": "failure_mode",
+      "source": "REFORMULATION_RESEARCH.md §17 row 4 (companion case)",
+      "text": "The gift was a wonderful present.",
+      "profile": {"sounds": [], "words": ["present"], "phrases": []},
+      "notes": "Same flagged word as fm_ambiguous_word_verb_sense, noun sense here. Direct comparison pair: does the same declared-difficult word get a sense-appropriate candidate in both sentences, or does one sense leak into the other?"
+    },
+    {
+      "id": "fm_context_dependent_substitution",
+      "category": "failure_mode",
+      "source": "REFORMULATION_RESEARCH.md §17 row 5",
+      "text": "He runs the company every morning before he runs three miles.",
+      "profile": {"sounds": [], "words": ["runs"], "phrases": []},
+      "notes": "'runs' appears twice in one sentence with two different senses (manages vs. jogs), same POS tag (VBZ) both times - POS tagging alone cannot disambiguate. Tests whether both occurrences get the same (POS-tag-driven, sense-blind) candidate treatment or something more context-sensitive."
+    },
+    {
+      "id": "fm_proper_nouns_technical_terms",
+      "category": "failure_mode",
+      "source": "REFORMULATION_RESEARCH.md §17 row 6",
+      "text": "Sarah Johnson uses TensorFlow for machine learning research.",
+      "profile": {"sounds": ["t"], "words": ["johnson"], "phrases": []},
+      "notes": "'Johnson' explicitly flagged as a word, and sound 't' matches TensorFlow's onset - both are proper nouns (NNP), which _SUBSTITUTABLE excludes regardless of profile match. This checks the protection actually holds under direct profile pressure, not just default indifference."
+    },
+    {
+      "id": "fm_multi_sentence_transcript",
+      "category": "failure_mode",
+      "source": "REFORMULATION_RESEARCH.md §17 row 7",
+      "text": "Maria studies computer science at the local university. She particularly enjoys algorithms and data structures. Her research increasingly focuses on natural language processing.",
+      "profile": {"sounds": ["str"], "words": [], "phrases": []},
+      "notes": "Three sentences; 'structures' (2nd sentence) is the only str-onset word - cross-sentence pronoun reference ('She', 'Her' referring to Maria) is not modeled by any of the three systems under test, named as an explicit, unaddressed limitation in §17/§22. This checks each sentence is still processed independently and correctly, not that cross-sentence context is handled (it structurally isn't)."
+    },
+    {
+      "id": "fm_restructuring_needed",
+      "category": "failure_mode",
+      "source": "REFORMULATION_RESEARCH.md §17 row 8",
+      "text": "The struggling student felt strongly stressed about the stressful strategy.",
+      "profile": {"sounds": ["str"], "words": [], "phrases": []},
+      "notes": "struggling/strongly/stressed/stressful/strategy all onset S-T-R (5 flagged words; 'student' onsets S-T only, verified NOT to match 'str'). §17: 'cannot restructure at all today - reports no valid synonym, leaves the word untouched' for the old pipelines; this is D′'s escalation path's clearest positive test case."
+    },
+    {
+      "id": "ctl_no_flags",
+      "category": "control",
+      "source": "n/a - ordinary sentence, no profile match",
+      "text": "The weather was pleasant during our walk yesterday afternoon.",
+      "profile": {"sounds": [], "words": [], "phrases": []},
+      "notes": "No sound/word in this sentence matches an empty profile. Expected: no_change_needed status, byte-identical output, across all three systems."
+    },
+    {
+      "id": "ctl_single_clean_substitution",
+      "category": "control",
+      "source": "n/a - baseline single-word case",
+      "text": "The team reached a strong decision after the meeting.",
+      "profile": {"sounds": ["str"], "words": [], "phrases": []},
+      "notes": "Exactly one str-onset word ('strong'). Simplest possible positive case - a clean, well-below-threshold single substitution, the case every system should handle well."
+    },
+    {
+      "id": "ctl_very_short_input",
+      "category": "control",
+      "source": "n/a - edge case",
+      "text": "Yes, absolutely.",
+      "profile": {"sounds": ["b"], "words": [], "phrases": []},
+      "notes": "Very short input, one flagged onset ('absolutely' onset AH not B - actually no match expected; kept as a robustness/no-crash edge case rather than a guaranteed-positive one)."
+    },
+    {
+      "id": "ctl_degenerate_dense_profile",
+      "category": "control",
+      "source": "REFORMULATION_RESEARCH.md §24.F - degenerate/over-restrictive profile",
+      "text": "The manager carefully reviewed the printed report before the morning meeting.",
+      "profile": {"sounds": ["m", "r", "p"], "words": [], "phrases": []},
+      "notes": "Three onsets chosen to hit most content words in the sentence (manager=M, carefully=K not flagged, reviewed=R, printed=P, report=R, before=B not flagged, morning=M, meeting=M) - deliberately close to or over D′'s degenerate-fraction pre-trigger (>0.6 of content words flagged). Tests the 'could not safely reformulate' path and whether it's reached gracefully rather than crashing or silently ignoring the density."
+    },
+    {
+      "id": "ctl_word_specific_pattern_only",
+      "category": "control",
+      "source": "PROBLEM_FORMULATION.md - word-specific problem_phones, D′-unique capability",
+      "text": "I have a particular preference for the third option.",
+      "profile": {"sounds": [], "words": ["particular"], "phrases": [], "patterns": {"particular": ["P"]}},
+      "notes": "'particular' flagged with problem_phones=['P'] (the word-initial P specifically), NOT promoted to a global sound. Neither grammar.py::SentenceRewriter nor rewrite/rewriter.py::DifficultyAwareRewriter has any concept of a word-specific sub-pattern - this case structurally cannot be represented in their profile inputs (only the word itself can be passed as blocked/always_replace), so it directly tests a capability gap between architectures, not just a quality difference."
+    },
+    {
+      "id": "ctl_multi_sentence_mixed",
+      "category": "control",
+      "source": "n/a - mixed flagged/unflagged multi-sentence input",
+      "text": "The weather was pleasant today. The strong wind made the strenuous hike difficult. We returned home before sunset.",
+      "profile": {"sounds": ["str"], "words": [], "phrases": []},
+      "notes": "Three sentences, only the middle one contains str-onset words (strong, strenuous). Tests that unflagged sentences pass through unchanged while the flagged one is handled, within one multi-sentence input."
+    },
+    {
+      "id": "ctl_phrase_only_profile",
+      "category": "control",
+      "source": "ROADMAP.md R13 - phrases declared but not consumed by any of the three systems",
+      "text": "We need to think outside the box for this particular challenge.",
+      "profile": {"sounds": [], "words": [], "phrases": ["outside the box"]},
+      "notes": "Only a phrase is declared, no sound/word. Expected (and this is the point of the case): no_change_needed / fully unaffected output from ALL THREE systems, since none of them currently consume difficulty_profile.phrases operationally - a known, already-documented gap, checked empirically here rather than just asserted in docs."
+    },
+    {
+      "id": "ctl_antonym_guard",
+      "category": "control",
+      "source": "semantic.is_known_antonym() - D′-unique safety mechanism",
+      "text": "She felt happy about the news from her sister.",
+      "profile": {"sounds": [], "words": ["happy"], "phrases": []},
+      "notes": "'happy' flagged. D′ has a WordNet antonym guard specifically to prevent 'happy'->'sad'/'unhappy'. Neither legacy pipeline has this guard - this checks whether the risk is real (do the legacy pipelines actually propose an antonym here) or purely theoretical."
+    },
+    {
+      "id": "ctl_informal_grammar_interaction",
+      "category": "control",
+      "source": "n/a - sanitize_input + reformulation interaction",
+      "text": "i dont think we shoud of presented the report that way, it wasnt very strong.",
+      "profile": {"sounds": ["str"], "words": [], "phrases": []},
+      "notes": "Informal, lower-case, contraction/spelling-error-laden input ('dont', 'shoud of', missing capitalization). grammar.py::sanitize_input() runs before all three systems in this evaluation (matching app.py's actual pipeline) - tests that grammar correction and reformulation compose sensibly, and that the flagged word ('strong') survives correction and still gets substituted."
+    }
+  ]
+}
