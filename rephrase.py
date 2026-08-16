@@ -102,6 +102,19 @@ def rephrase_status(load: bool = False) -> tuple[bool, str]:
 
 
 def _bad_words_ids(blocked_words) -> list[list[int]] | None:
+    """
+    Block each word regardless of case. T5's SentencePiece tokenizer
+    assigns different token IDs to "researcher" vs "Researcher" (verified
+    directly — VALIDATION.md §6.3 Cause A), so encoding only the form the
+    caller happened to pass in left every other-cased occurrence of the
+    same word free to generate — confirmed empirically: with only the
+    lowercase form blocked, the lowercase token leaked in 0/6 beam
+    outputs while the capitalized form of the identical word leaked in
+    5/6. Encoding the lowercase and capitalized forms (each with and
+    without a leading space, since a leading space frequently changes the
+    token boundary for this tokenizer) closes that gap without touching
+    anything else about generation.
+    """
     if _tokenizer is None or not blocked_words:
         return None
     ids: list[list[int]] = []
@@ -110,13 +123,15 @@ def _bad_words_ids(blocked_words) -> list[list[int]] | None:
         word = str(raw or "").strip()
         if not word:
             continue
-        for form in (word, " " + word):
-            encoded = _tokenizer.encode(form, add_special_tokens=False)
-            if encoded:
-                sig = tuple(encoded)
-                if sig not in seen:
-                    seen.add(sig)
-                    ids.append(encoded)
+        variants = {word, word.lower(), word.capitalize()}
+        for variant in variants:
+            for form in (variant, " " + variant):
+                encoded = _tokenizer.encode(form, add_special_tokens=False)
+                if encoded:
+                    sig = tuple(encoded)
+                    if sig not in seen:
+                        seen.add(sig)
+                        ids.append(encoded)
     return ids or None
 
 
