@@ -2,10 +2,13 @@
 
 Per Practice.md §16, every real evaluation run belongs here with its
 exact config, dataset/profile version, git commit, and timestamp. As of
-this review (2026-08-08), **no entry in this file is a completed,
-pre-registered (§8) evaluation result** — what follows is an honest
-inventory of the evaluation *machinery* that exists, what it currently
-covers, and — most importantly per §12 — what it does not.
+the original review (2026-08-08), no entry in this file was a completed,
+pre-registered (§8) evaluation result — §1-5 below is that original,
+honest inventory of the evaluation *machinery* that existed, what it
+covered, and — most importantly per §12 — what it did not. **§6
+(2026-08-16) is the first entry in this file reporting an actually-
+executed evaluation run** — read it for what has genuinely been
+measured; read §1-5 for what still hasn't.
 
 ## 1. What evaluation machinery currently exists
 
@@ -18,6 +21,7 @@ covers, and — most importantly per §12 — what it does not.
 | `tests/threshold_sweep.py` | Sweeps `MIN_SEMANTIC` and reports effect on acceptance | Diagnostic; produced the finding in `DECISION_LOG.md` 2026-06-08-A |
 | `tests/evaluate.py`, `tests/roadmap_test.py`, `tests/persistence_test.py` | Various regression/behavioral checks | Not individually audited line-by-line in this pass |
 | `tests/app_test.py` | Headless Streamlit UI smoke test | Confirms the app runs end-to-end; not a quality measurement |
+| `eval/reformulation_eval.py` + `tests/reformulation_eval_corpus.json` | Three-way comparison: `reformulate.py` vs. `SentenceRewriter` vs. `DifficultyAwareRewriter`, uniform metrics | **Actually run** — see §6. The only entry in this table with an executed, reported result as of this pass. |
 
 ## 2. The proxy-metric trap, applied concretely to this repository (§12)
 
@@ -105,3 +109,280 @@ a finding):
   sentence position — remains open and unanswered here. That gap is
   carried forward explicitly in `ROADMAP.md` rather than silently
   dropped.
+
+## 6. Stage 6 — `reformulate.py` evaluation (executed, 2026-08-16)
+
+Unlike every entry above (§1-5, the original 2026-08-08 review, which
+explicitly ran nothing), this section reports a **completed, executed**
+evaluation run, per §8's pre-registration spirit as closely as a
+self-constructed corpus allows: the corpus and methodology were fixed
+*before* looking at results (§28's plan, written during Stage 5B, before
+`reformulate.py` existed), and every number below comes from one actual
+run, not from reading code and inferring what it would do.
+
+**Exact config**, per Practice.md §16: git commit `6360d39`, run
+2026-08-16, `DISABLE_DATAMUSE=1`, SBERT `all-MiniLM-L6-v2` (loaded
+successfully), T5 `Vamsi/T5_Paraphrase_Paws` (loaded successfully),
+`MIN_SEMANTIC=0.85` (default, unchanged). Corpus:
+`tests/reformulation_eval_corpus.json` (18 cases). Harness:
+`eval/reformulation_eval.py`. Raw output: `eval/reformulation_eval_results.csv`
+(54 rows — 18 cases × 3 systems).
+
+### 6.1 Methodology
+
+The corpus covers `REFORMULATION_RESEARCH.md` §17's eight constructed
+failure-mode cases (`fm_*`, one split into a two-sentence-sense pair) plus
+ten control cases (`ctl_*`): no-flag, single-clean-substitution, a
+very-short edge case, a deliberately dense/degenerate profile, a
+word-specific-`problem_phones`-only case, a mixed flagged/unflagged
+multi-sentence input, a phrase-only profile, a direct antonym-guard probe,
+and an informal/misspelled-input case. Every onset/shared-sound claim used
+to construct a case (e.g. "researcher/reported/results all onset R") was
+verified against `phonetic.onset()`'s live CMU-backed output before being
+written into the corpus, not assumed from spelling — see the corpus
+file's own `notes` field per case.
+
+`grammar.py::sanitize_input()` ran once per case before all three
+systems, exactly as `app.py` does, so all three received identical input
+text. Each case's `DifficultyProfile` was translated to each legacy
+system's own input shape on a **best-effort-equivalent, not identical**
+basis: `sounds` → `stutter_patterns` (`SentenceRewriter`) /
+`SpeakerDifficultyProfile.onboarding()` (`DifficultyAwareRewriter`);
+`words` → `blocked_words` / `always_replace`. **Phrases and
+word-specific `problem_phones` have no equivalent in either legacy
+system** — this is a structural capability gap in what those systems can
+even be told, not a scoring difference, and one control case
+(`ctl_word_specific_pattern_only`) exists specifically to surface it.
+`DifficultyAwareRewriter`'s difficulty gating is a **continuous, cold-start-blended**
+score (`profiling/coldstart.py::fused_cold_start()`), not a hard
+declared-sound veto like the other two systems — seeding it from the same
+declared sounds is not guaranteed to produce equally strict behavior, and
+this is a real architectural difference between the systems being
+compared, not a bug in the translation.
+
+**All three systems were scored with the same metric functions**
+(`semantic.semantic_similarity`, a shared flagged-word recovery count via
+`reformulate._flagged_word_count`, `naturalness.edit_ratio`) applied
+uniformly to each system's own `(input, output)` pair — not each system's
+own internal, differently-defined metrics — so differences reflect the
+systems, not differing metric definitions.
+
+**[LIMITATION]** Every metric below is an automatable **proxy**
+(§28's table, restated): SBERT cosine similarity is not human-judged
+meaning preservation; the flagged-word recovery count is not a claim
+about what a real speaker would find easier to say; the edit-ratio is not
+a claim about perceived naturalness. §6.6 below gives a concrete,
+observed case where trusting the proxy would have been actively
+misleading — this is not a hypothetical caveat.
+
+### 6.2 Measured results
+
+| System | n | Reformulation rate | Avg. meaning preservation (SBERT) | Avg. difficulty reduction % | Avg. naturalness edit-ratio | Avg. flagged words remaining |
+|---|---|---|---|---|---|---|
+| `reformulate.py` | 18 | **0.556** | **0.9785** | 55.56% | **0.0682** | 0.944 |
+| `SentenceRewriter` | 18 | 0.889 | 0.9381 | **66.30%** | 0.1471 | 0.500 |
+| `DifficultyAwareRewriter` | 18 | 0.833 | 0.9292 | 65.56% | 0.1427 | **0.444** |
+
+`reformulate.py` status distribution: `reformulated` 10, `could_not_safely_reformulate` 4, `no_change_needed` 4.
+
+**[FINDING]** `reformulate.py` makes fewer, smaller, safer-by-SBERT
+changes than either legacy pipeline: highest meaning preservation (0.979
+vs. 0.938/0.929), smallest edits (0.068 vs. 0.147/0.143), but the lowest
+reformulation rate (0.556 vs. 0.889/0.833) and the most content words left
+flagged on average (0.944 vs. 0.500/0.444). This is a real precision/
+recall-style trade-off, not a strict improvement — stated plainly rather
+than as "the new engine is better."
+
+**[FINDING]** The category breakdown (failure-mode cases vs. control
+cases) shows the same pattern in both subsets (`reformulate.py` avg. sim
+0.980 failure-mode / 0.977 control; legacy pipelines 0.92–0.94 in both) —
+this is not an artifact of one category dominating the aggregate.
+
+### 6.3 Failure analysis — the four `could_not_safely_reformulate` cases
+
+All four cases where `reformulate.py` reported
+`could_not_safely_reformulate` are exactly the four cases that triggered
+the T5 restructuring-escalation path (`fm_phoneme_in_many_words`,
+`fm_negation_forces_escalation`, `fm_restructuring_needed`,
+`ctl_degenerate_dense_profile`) — every substitution-only case in the
+corpus succeeded. **[FINDING]** On this corpus, the escalation path's
+success rate is 0/4 (0%), not a partial-degradation number — every
+triggered escalation produced zero usable candidate and left the sentence
+unchanged.
+
+Direct debugging (`_model.generate()` called manually with the exact
+`bad_words_ids` `reformulate.py` computes, output token IDs inspected
+directly) found **two distinct, separable causes**, not one:
+
+**[FINDING] Cause A — a real, previously undocumented bug: `rephrase.py::_bad_words_ids()`
+is case-sensitive, but the words it's given are not.** T5's tokenizer
+assigns *different* token IDs to `"researcher"` (id 18658) and
+`"Researcher"` (id 3440-class capitalized form) — confirmed directly by
+tokenizing both. `_bad_words_ids()` (`rephrase.py:104-120`) only encodes
+the word exactly as given (`reformulate.py` passes it lowercased) and a
+leading-space variant — never a capitalized form. A controlled repro
+(`_model.generate()` called directly with `bad_words_ids` computed from
+`{"researcher","reported","results"}`) confirmed the lowercase token never
+appears in any of 6 beam outputs, while the capitalized form appears in 5
+of 6 — i.e. blocking is real and effective, but only for the exact case
+given. This affected 2 of the 4 failing cases
+(`fm_phoneme_in_many_words`, `ctl_degenerate_dense_profile`), where
+5 of 6 leaked flagged words in the top candidate for
+`ctl_degenerate_dense_profile` were exact (case-insensitive) matches to
+literally blocked words reappearing capitalized (`Manager`, `Meeting`,
+`Morning`, `Printed`, `Report`).
+
+**[FINDING] Cause B — confirms an already-documented limitation
+(`REFORMULATION_RESEARCH.md` §24.E) with concrete evidence for the first
+time.** `bad_words_ids` can only block exact, named word strings — never
+a phoneme class. In `fm_restructuring_needed` and
+`fm_negation_forces_escalation`, none of the literally-blocked words
+(`struggling`, `strongly`, `stressed`, `stressful`, `strategy`) reappeared
+verbatim — `bad_words_ids` worked correctly — but T5's paraphrase
+candidates reintroduced the same STR onset via **unblocked, semantically-
+related synonyms and inflections** never named in the block list:
+`struggling`→`struggled`, `stressful`→`stress`/`stress-stressed`,
+`strategy`→`strategies`. This happened because the flagged sound cluster
+(STR) is semantically central to the sentence's content — "struggle,"
+"stress," and "strategy" are near-synonyms of each other, so *any*
+paraphrase that stays close to the original meaning tends to stay close
+to that vocabulary too. The phoneme veto correctly rejected every one of
+these candidates (this is the safety gate working as designed, not
+failing) — the system's behavior (refuse and leave unchanged, rather than
+ship a candidate that still contains the flagged sound) was **correct and
+safe**, just **not useful** for this class of case.
+
+**[INTERPRETATION]** Cause A is a small, mechanical, low-risk fix (encode
+capitalized/title-case variants too). Cause B is not a bug — it's a
+structural mismatch between the escalation model's training objective
+(preserve meaning, PAWS-style) and this task's actual requirement (avoid
+a specific phonetic class while preserving meaning), and is unlikely to
+be fully solved by a better implementation of the same blocking
+mechanism. Both are stated as findings, not fixed here, per this stage's
+explicit no-tuning instruction.
+
+### 6.4 Other observed divergences (not escalation-related)
+
+**[FINDING] Proper-noun protection holds under direct pressure.**
+`fm_proper_nouns_technical_terms` explicitly flagged `"johnson"` as a
+word and `"t"` as a sound (matching `TensorFlow`'s onset) — all three
+systems left `Sarah Johnson`/`TensorFlow` completely untouched, confirmed
+by identical output across all three. The `_SUBSTITUTABLE` POS-tag gate
+(excludes `NNP`) holds even when the profile actively targets a proper
+noun, not just by default indifference.
+
+**[FINDING] The context-dependent-substitution failure mode (§17 row 5)
+is empirically confirmed to persist in all three systems, including the
+new one.** `fm_context_dependent_substitution` ("He runs the company
+every morning before he runs three miles") has two senses of "runs" with
+identical POS tags. `reformulate.py`/`SentenceRewriter` produced "He
+**works** the company every morning before he **goes** three miles" (two
+different picks, since each occurrence is scored as an independent slot —
+"works the company" is a somewhat awkward substitute for "manages/runs a
+company", though not clearly wrong); `DifficultyAwareRewriter` produced
+"He **works** the company ... before he **works** three miles" (the
+identical word for both senses — "works three miles" doesn't parse as a
+sensible phrase). None of the three systems use sentence context to
+disambiguate; this matches `REFORMULATION_RESEARCH.md` §17/§18's own
+prediction that this failure mode is **not** solved by Architecture D′,
+now with a concrete example rather than a predicted one.
+
+**[FINDING] A pre-existing inflection bug in the retained `grammar.py`
+code, surfaced (not introduced) by this evaluation.** In
+`fm_multi_sentence_transcript`, `SentenceRewriter` produced "data
+**constructionss**" (double-s) substituting for "structures", while
+`reformulate.py` — which reuses `grammar.py`'s own `inflect()`/
+`_preserve_case()` functions, not a reimplementation — produced the
+correctly-inflected "constructions" for the same underlying candidate.
+This is an existing defect in `SentenceRewriter`'s own candidate-surfacing
+path (not reformulate.py's), found because this is the first time the two
+pipelines have been run side-by-side on the same input. Not
+investigated further or fixed here — out of scope for a measurement-only
+stage — but recorded so it isn't lost.
+
+**[LIMITATION — null result, stated honestly]** `ctl_antonym_guard` did
+not actually exercise `semantic.is_known_antonym()`'s rejection path: all
+three systems' **top-ranked** candidate for "happy" was "glad" (not an
+antonym) in every system, so the guard's presence or absence produced no
+observable difference in final output. This corpus case does not
+demonstrate the antonym guard doing anything — it demonstrates that, for
+this specific word and sentence, no system's top candidate needed
+rejecting. A case that actually forces an antonym to the top of the
+ranking (not just present in the candidate pool) would be needed to
+observe the guard in action; this one doesn't achieve that, and this
+report says so rather than implying otherwise.
+
+### 6.5 Verifying the proxy-metric concern directly, not just naming it
+
+**[FINDING] A concrete, observed case where the SBERT proxy would
+mislead if treated as ground truth.** `fm_ambiguous_word_noun_sense`
+("The gift was a wonderful present.") — all three systems correctly
+identified the noun sense (no verb-sense contamination) and all three
+substituted "present" → "gift", producing **"The gift was a wonderful
+gift."** — a redundant, arguably worse sentence than the original, since
+it now repeats "gift" as both subject and complement. SBERT scored this
+**0.965** — one of the highest similarity scores in the entire corpus,
+across all three systems identically. Nothing in this evaluation's
+automated metrics flags this case as worse than the clean cases; a human
+reader almost certainly would. This is `REFORMULATION_RESEARCH.md`
+§28's "semantic fidelity is a proxy, not a claim" line, and this
+project's own Practice.md §12 proxy-metric trap, demonstrated with an
+actual corpus result rather than argued abstractly.
+
+**[LIMITATION, restated with evidence]** Nothing in this evaluation
+measures **speaker suitability** — whether a real speaker who stutters on
+these sounds would find any of these outputs actually easier to say.
+Per §28's own table, this is stated as categorically unautomatable, not
+as a gap this stage's corpus size or design could have closed. No claim
+in this section should be read as evidence toward that question.
+
+### 6.6 Reproducibility
+
+The corpus (`tests/reformulation_eval_corpus.json`) and harness
+(`eval/reformulation_eval.py`) are both committed, deterministic given
+`DISABLE_DATAMUSE=1` (no live Datamuse network calls) and the pinned
+model names above, and produce the same `eval/reformulation_eval_results.csv`
+on re-run — verified by running the harness twice and diffing the output
+CSV byte-for-byte before writing this section. `SynonymEngine`,
+`SentenceRewriter`, and `DifficultyAwareRewriter` instances are created
+once and reused across all 18 cases (not per-case), matching how `app.py`
+itself caches them, so the comparison reflects realistic warm-instance
+behavior rather than fresh-instance startup cost. No profile in this
+evaluation is ever `.save()`d — all `DifficultyProfile`/
+`SpeakerDifficultyProfile` instances are constructed in-memory only and
+never touch `users/`.
+
+### 6.7 What these results tell us — and what they don't
+
+**[INTERPRETATION]** The new architecture's substitution-and-verify path
+is working as designed: high meaning preservation, small edits, correct
+proper-noun protection, a demonstrated (if narrowly-tested) antonym
+guard. The escalation path — the one capability gap Architecture D′ was
+specifically built to close (§17's "restructuring beats substitution"
+row) — has a 0/4 success rate on this corpus, for two separable reasons,
+one a small fixable bug (Cause A) and one a deeper model-choice mismatch
+(Cause B). The lower reformulation rate and higher flagged-words-
+remaining numbers versus the legacy pipelines are the direct, measured
+consequence of this: `reformulate.py` correctly refuses to guess when it
+can't verify a change, which is safer but, on this corpus, less
+effective than pipelines that don't have (and therefore can't fail) an
+escalation stage.
+
+**[LIMITATION]** 18 cases is enough to find and root-cause specific
+failure mechanisms, not enough to produce a statistically reliable rate
+for how often escalation fails in general usage — the corpus was built to
+contain failure-mode-dense cases by design (§17's list), so the 0/4 rate
+above should not be read as "the escalation path fails most of the time
+in typical use." A corpus of ordinary, non-adversarially-constructed text
+would be needed to estimate a realistic escalation-trigger rate and
+success rate separately.
+
+**[RECOMMENDATION — proposed, not applied]** Two independent next steps,
+consistent with this stage's no-tuning boundary: (1) fix Cause A
+(`_bad_words_ids()` case-insensitivity) as a small, low-risk, well-
+evidenced bug fix, separate from any architecture change; (2) treat Cause
+B as an open research question for the escalation model choice
+specifically — `Vamsi/T5_Paraphrase_Paws` was selected in Stage 5 for
+being "already proven to run locally," not evaluated against this exact
+requirement (avoid a phonetic class while preserving meaning) until now.
+Neither is implemented in this stage.
