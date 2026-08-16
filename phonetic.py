@@ -172,6 +172,39 @@ def full_pronunciation(word: str) -> tuple[str, ...] | None:
     return None
 
 
+# ── Friendly phone labels (for showing pronunciation to non-technical users) ──
+# Research finding (see PROBLEM_FORMULATION.md, Stage 4A refinement): dictionaries
+# aimed at general readers use "pronunciation respelling" — a familiar reference
+# word per sound — rather than raw IPA/ARPAbet, specifically because most readers
+# aren't trained in either notation. This table is that respelling anchor: one
+# common, unambiguous example word per ARPAbet phone, all 39 CMU phones covered.
+# Never used for scoring/gating — display only.
+ARPABET_EXAMPLE_WORD: dict[str, str] = {
+    # vowels & diphthongs
+    "AA": "father", "AE": "cat", "AH": "cup", "AO": "dog", "AW": "cow",
+    "AY": "my", "EH": "bed", "ER": "her", "EY": "day", "IH": "sit",
+    "IY": "see", "OW": "go", "OY": "boy", "UH": "book", "UW": "blue",
+    # consonants
+    "B": "boy", "CH": "chip", "D": "dog", "DH": "this", "F": "fun",
+    "G": "go", "HH": "hat", "JH": "job", "K": "cat", "L": "let",
+    "M": "man", "N": "no", "NG": "sing", "P": "pen", "R": "red",
+    "S": "sun", "SH": "she", "T": "top", "TH": "think", "V": "van",
+    "W": "we", "Y": "yes", "Z": "zoo", "ZH": "measure",
+}
+
+
+def friendly_phone_label(phone: str) -> str:
+    """
+    '<PHONE>' -> 'TH (as in "think")', for showing a phone to a user who
+    doesn't know ARPAbet or IPA. Falls back to the bare phone code for
+    anything not in the table (shouldn't happen for CMU-derived phones,
+    but never raises on an unexpected value).
+    """
+    p = (phone or "").strip().upper()
+    example = ARPABET_EXAMPLE_WORD.get(p)
+    return f'{p} (as in "{example}")' if example else p
+
+
 def matches_any(word: str, patterns) -> bool:
     """
     True if *word*'s onset begins with the onset of ANY pattern in *patterns*.
