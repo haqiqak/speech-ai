@@ -1,0 +1,101 @@
+{
+  "_doc": [
+    "tests/reformulation_ordinary_corpus.json - escalation-trigger-rate corpus.",
+    "Built to answer a question Stage 6 (VALIDATION.md §6) explicitly could NOT",
+    "answer: how often does reformulate.py's T5 restructuring-escalation path",
+    "actually trigger, and how often does it succeed, on ORDINARY text — as",
+    "opposed to Stage 6's corpus, which was deliberately built failure-mode-",
+    "dense (REFORMULATION_RESEARCH.md §17) and is not representative of",
+    "typical usage.",
+    "",
+    "Texts: all 36 sentences from tests/eval_corpus.txt (already-committed,",
+    "ordinary, non-adversarial — used unmodified, not reworded to hit any",
+    "profile), plus 6 ordinary multi-sentence paragraphs written for this",
+    "corpus on everyday topics (weather, work, cooking, a museum visit, a",
+    "hobby) with no attempt to cluster any particular sound or word.",
+    "",
+    "Profiles: five profiles representative of what a real speaker might",
+    "plausibly declare over time — a light single-sound profile, a moderate",
+    "two-sound profile, a consonant-cluster profile (clinically documented as",
+    "harder than singleton consonants), a words-only profile, and a mixed",
+    "profile modeled on the shape of the actual users/default.json seen in",
+    "this repo (a small number of sounds + words + one phrase). None of the",
+    "42 texts were chosen or altered to make any profile hit harder or",
+    "softer than it naturally would.",
+    "",
+    "Every text x profile combination is run once through reformulate.py",
+    "only (not the three-way legacy comparison — this question is specific",
+    "to the escalation path, which only reformulate.py has)."
+  ],
+  "profiles": [
+    {
+      "name": "light_single_sound",
+      "rationale": "A single common sibilant onset — the lightest plausible declared profile, e.g. a speaker who mainly blocks on /s/.",
+      "sounds": ["s"], "words": [], "phrases": []
+    },
+    {
+      "name": "moderate_two_plosive",
+      "rationale": "Two plosive onsets — plosives are a commonly cited stutter-prone class in the disfluency literature (RESEARCH.md §1.2).",
+      "sounds": ["p", "b"], "words": [], "phrases": []
+    },
+    {
+      "name": "consonant_clusters",
+      "rationale": "Three consonant-cluster onsets, clinically documented as harder than singleton consonants — a plausible profile for a speaker whose difficulty is specifically blend-related.",
+      "sounds": ["str", "pr", "bl"], "words": [], "phrases": []
+    },
+    {
+      "name": "words_only",
+      "rationale": "No sounds at all — five ordinary, plausible workplace/everyday words a speaker might specifically flag, independent of any shared onset.",
+      "sounds": [], "words": ["report", "meeting", "project", "problem", "schedule"], "phrases": []
+    },
+    {
+      "name": "typical_mixed",
+      "rationale": "Modeled on the shape of this repo's own users/default.json (one sound, a handful of words, one phrase) — the closest thing to 'what a real populated profile looks like after a few weeks of use'.",
+      "sounds": ["th"], "words": ["particular", "comfortable"], "phrases": ["as well as"]
+    }
+  ],
+  "texts": [
+    "The committee reached an important decision today.",
+    "The company prepared a practical project plan.",
+    "My friend brought fresh bread to breakfast.",
+    "The local team started training before sunrise.",
+    "Please bring the printed report to the meeting.",
+    "The teacher explained the difficult chapter clearly.",
+    "The family planned a quiet trip to the lake.",
+    "The manager confirmed the schedule this morning.",
+    "The student practiced the speech before class.",
+    "The market opened early on Friday.",
+    "The client requested a brief progress update.",
+    "The library closed after the final lecture.",
+    "The customer found a comfortable blue jacket.",
+    "The group discussed a strong proposal.",
+    "The speaker presented the main problem carefully.",
+    "The delivery truck stopped near the front gate.",
+    "The baker prepared a fresh pastry for lunch.",
+    "The nurse checked the medication list twice.",
+    "The programmer fixed a small problem in the script.",
+    "The photographer captured a bright landscape.",
+    "The coach praised the team's steady progress.",
+    "The train arrived late because of traffic.",
+    "The musician played a familiar melody.",
+    "The florist arranged pink flowers by the window.",
+    "The mechanic replaced the broken cable.",
+    "The planner booked a private room for dinner.",
+    "The child carried a small backpack to school.",
+    "The researcher measured the sample carefully.",
+    "The chef cooked pasta for the family.",
+    "The visitor asked for a simple map.",
+    "The analyst compared the monthly figures.",
+    "The pilot checked the landing procedure.",
+    "The farmer stored fresh corn in the barn.",
+    "The designer chose a clean layout for the poster.",
+    "The assistant printed the final contract.",
+    "The class practiced speaking in small groups.",
+    "The weather has been quite pleasant this week. We went for a long walk in the park yesterday. Today we plan to visit the local market for fresh vegetables.",
+    "My sister started a new job last month. She works as a project coordinator for a marketing firm. The commute takes about thirty minutes each way.",
+    "The recipe calls for three cups of flour and two eggs. First you mix the dry ingredients together. Then you slowly add the wet ingredients while stirring.",
+    "Our team finished the quarterly report ahead of schedule. The manager was pleased with the overall quality. We celebrated with a small lunch on Friday.",
+    "The museum recently opened a new exhibit on ancient history. Visitors can explore artifacts from several different civilizations. Guided tours are available every hour.",
+    "I have been learning to play the guitar for six months now. Practice sessions usually last about thirty minutes. My teacher says my progress has been steady."
+  ]
+}
