@@ -1027,3 +1027,50 @@ is the actual blocker on this corpus's escalation success rate, and adds
 one new consideration for whoever picks up R18: naively blocking *more*
 terms as a fix risks trading a phoneme-veto rejection for a
 semantic-gate rejection rather than producing an actual pass.
+
+---
+
+### 2026-08-16-I — Escalation-trigger/success rate measured on ordinary text: Stage 6's 0/4 does not generalize
+**What was done:** Built `tests/reformulation_ordinary_corpus.json` (36
+already-committed `tests/eval_corpus.txt` sentences, unmodified, + 6
+ordinary multi-sentence paragraphs written for this corpus without regard
+to any profile) crossed against 5 realistic, non-adversarial difficulty
+profiles (light single-sound, moderate two-plosive, consonant-cluster,
+words-only, and one modeled directly on this repo's own real
+`users/default.json`) — 210 cases. Ran `eval/reformulation_escalation_rate.py`
+(`reformulate.py` only — the retained legacy pipelines have no escalation
+concept) and classified each sentence's outcome directly from
+`reformulate.py`'s own result structure (a `"restructuring"`-sourced
+change = escalation triggered and succeeded; a `skipped` entry = escalation
+triggered and failed — verified these are the only two ways a sentence
+reaches either list, not assumed).
+**Measured result:** 72/210 cases (34.3%) had at least one flagged word
+under a realistic profile; 44 of those (61%) resolved by substitution
+alone. Escalation triggered for 28 of 270 total sentences (10.4%) and
+**succeeded for 12 of those 28 (42.9%)** — not the 0% Stage 6's corpus
+showed. Per-profile: `moderate_two_plosive` 13 triggered/5 succeeded,
+`light_single_sound` 8/2, `consonant_clusters` 4/2, `words_only` 3/3,
+and the real-profile-shaped `typical_mixed` **0 triggered across all 42
+texts**.
+**Category:** Measurement only, directly answering a limitation
+`VALIDATION.md` §6.7 explicitly flagged as unresolved rather than leaving
+it as a caveat indefinitely. No code changed.
+**Verification performed:** Concrete examples pulled and manually
+inspected (not just aggregate counts) — two clean escalation successes
+("The manager confirmed the schedule this morning." → "...confirmed the
+time this morning."; "cooked pasta" → "cooked spaghetti") and two
+genuine failures, confirming the aggregate numbers reflect real,
+readable outcomes, not an artifact of the counting method.
+**Category — what this changes:** Re-prioritizes, does not close, R18 —
+Cause B is real and reproducible on Stage 6's own cases, but this result
+shows it's not representative of ordinary usage, specifically because it
+requires several instances of one onset to be semantically load-bearing
+in a single sentence, a real but non-typical condition. R9 (wire the
+review UI's keep/revert into the profile) and the never-run human-
+judgment study are, by this result, no longer obviously lower priority
+than R18 — left for the next planning step to decide.
+**Not established:** speaker suitability, still, for the same reason as
+2026-08-16-G. Also not established: whether these 5 specific profiles are
+representative of real speaker profiles generally — they were built to be
+*plausible*, not sourced from real users, since this repo has none beyond
+its own single default profile.
