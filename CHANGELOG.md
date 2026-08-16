@@ -6,6 +6,26 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-16** feat: implement Architecture D′ (`reformulate.py`) and
+  redesign `app.py` (v7 → v8) around it — one linear workflow (text →
+  difficulty profile → Reformulate → changes/skipped/verification review
+  with per-change Keep/revert) replacing the old dual-pipeline UI (word
+  pickers, separate word/sentence/multi-sentence modes, profile-rewrite
+  card, rephrase card, allowlist panel, the onset-risk chart, which was
+  quietly re-displaying declared sounds as if learned from sessions that
+  no longer exist in this module's scope). New `naturalness.py`
+  (edit-ratio metric, R11). `semantic.py` extended additively
+  (`is_known_antonym`, `negation_consistent`). Two real bugs found via
+  live smoke tests, not unit tests, and fixed before shipping: escalation
+  wrongly rejected everything when SBERT was offline (contradicted
+  `semantic.py`'s own documented fallback); escalation's word-block set
+  included non-substitutable words (numerals), guaranteeing failure
+  whenever one was present. `grammar.py::SentenceRewriter` and
+  `rewrite/rewriter.py::DifficultyAwareRewriter` untouched, just no longer
+  called. `tests/smoke.py` byte-identical to `baseline_sbert.txt`. New
+  `tests/reformulate_test.py` (12 tests); `tests/app_test.py` rewritten
+  for the new UI (all scenarios pass). → `DECISION_LOG.md` 2026-08-16-E;
+  `ROADMAP.md` R5/R6/R9/R10/R11/R12/R13.
 - **2026-08-16** docs: append Stage 5B critical review (§24–31) to
   `REFORMULATION_RESEARCH.md` — challenged and revised Stage 5's
   recommendation (tiered semantic verification instead of flat NLI, MLM

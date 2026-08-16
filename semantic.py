@@ -84,6 +84,7 @@ import paths  # noqa: F401  — redirects HF/torch model caches into ./.cache
 import re
 from typing import Optional
 import numpy as np
+from nltk.corpus import wordnet as wn
 from freq import zipf_frequency   # memory-safe wrapper (falls back to 'small' wordlist)
 
 # ── Constants ────────────────────────────────────────────────────────────────
@@ -357,6 +358,72 @@ def rank_candidates_contextually(
     # Sort: accepted first, then by combined score descending
     scored.sort(key=lambda x: (not x["accepted"], -x["combined"]))
     return scored
+
+
+# ── Antonym check (REFORMULATION_RESEARCH.md §24.A tier 1 — free, zero-model) ──
+# The rest of this module's checks (SBERT, and NLI when it's added) are proxies
+# that can miss a candidate whose surface form is fine but whose meaning is the
+# opposite of the original word — WordNet's own antonym relation catches the
+# specific, named case (RESEARCH.md §2.D's negation/antonym finding) at zero
+# cost, with no model inference at all. Deliberately narrow: it only rejects a
+# *direct*, dictionary-listed antonym relationship, not general "too different"
+# meaning drift (that's what the SBERT gate downstream is for).
+
+def is_known_antonym(original_lemma: str, candidate_lemma: str, wn_pos=None) -> bool:
+    """
+    True if WordNet lists *candidate_lemma* as a direct antonym of any sense
+    of *original_lemma* (optionally restricted to a POS). Checked in both
+    directions since WordNet's antonym links aren't guaranteed symmetric in
+    practice for every sense.
+    """
+    a = (original_lemma or "").strip().lower()
+    b = (candidate_lemma or "").strip().lower()
+    if not a or not b or a == b:
+        return False
+    for synset in wn.synsets(a, pos=wn_pos):
+        for lemma in synset.lemmas():
+            if lemma.name().replace("_", " ").lower() != a:
+                continue
+            for ant in lemma.antonyms():
+                if ant.name().replace("_", " ").lower() == b:
+                    return True
+    # Reverse direction — candidate's synsets listing the original as an antonym.
+    for synset in wn.synsets(b, pos=wn_pos):
+        for lemma in synset.lemmas():
+            if lemma.name().replace("_", " ").lower() != b:
+                continue
+            for ant in lemma.antonyms():
+                if ant.name().replace("_", " ").lower() == a:
+                    return True
+    return False
+
+
+# ── Sentence-level negation-consistency check (for the T5 escalation path) ────
+# bad_words_ids/antonym-lookup both operate at the single-word level and don't
+# apply to a freely-generated paraphrase candidate. This is the cheap,
+# sentence-level analogue used there instead: a paraphrase that drops or adds
+# a negation marker relative to the original is exactly the failure mode
+# RESEARCH.md §2.D names (SBERT alone can miss it), so check it directly rather
+# than trusting SBERT similarity alone for this one specific pattern.
+_NEGATION_MARKERS = frozenset({
+    "not", "n't", "never", "no", "none", "nobody", "nothing", "nowhere",
+    "neither", "nor", "cannot", "can't", "won't", "isn't", "aren't",
+    "wasn't", "weren't", "don't", "doesn't", "didn't", "hasn't", "haven't",
+    "hadn't", "shouldn't", "wouldn't", "couldn't",
+})
+
+
+def negation_marker_count(text: str) -> int:
+    tokens = re.findall(r"[A-Za-z']+", (text or "").lower())
+    return sum(1 for t in tokens if t in _NEGATION_MARKERS)
+
+
+def negation_consistent(original_text: str, candidate_text: str) -> bool:
+    """True if the candidate has the same negation-marker count as the
+    original — a cheap, sentence-level proxy for 'this paraphrase didn't
+    flip or drop a negation,' the specific failure mode a raw SBERT score
+    can miss (RESEARCH.md §2.D)."""
+    return negation_marker_count(original_text) == negation_marker_count(candidate_text)
 
 
 # ── Helper (mirrors grammar._detokenize to avoid circular import) ─────────────

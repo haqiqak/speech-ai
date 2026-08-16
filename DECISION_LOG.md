@@ -724,3 +724,90 @@ showing only `REFORMULATION_RESEARCH.md` changed, not just asserted.
 (`REFORMULATION_RESEARCH.md` §31). Implementation itself is a separate,
 not-yet-taken decision — this entry authorizes planning, not code changes,
 per Practice.md §0.2.
+
+---
+
+### 2026-08-16-E — Architecture D′ implemented (`reformulate.py`); UI redesigned around it
+**What was done:** Built `reformulate.py`, the consolidated engine
+`REFORMULATION_RESEARCH.md` §24–31 declared implementation-ready: tag
+(profile-flagged positions) → per-sentence escalation decision
+(count-threshold / degenerate-fraction pre-triggers, §24.D/F) →
+all-or-nothing substitute-and-rank per sentence (antonym check via the new
+`semantic.is_known_antonym()` → SBERT → phoneme veto) → T5 restructuring
+escalation via `rephrase.py` unchanged, generate-then-verify (SBERT +
+`semantic.negation_consistent()` + phoneme veto on the actual generated
+text, since `bad_words_ids` can't block a phoneme class) → final
+re-verification by re-running the flagging check on the assembled output
+(the "recovery rate" idea, independently landed on, matching SpeechAgent
+§2.2) → metrics (meaning preservation, difficulty reduction, naturalness,
+substitution rate) reported separately per Practice.md §10, never blended.
+`naturalness.py` (word-level `difflib` edit-ratio, R11) built as a shared
+dependency. `app.py` rewritten (v7 → v8): the old dual-pipeline UI (word-
+picker dropdowns, separate word/sentence/multi-sentence modes, profile-
+rewrite card, rephrase card, allowlist panel, the "learned" onset-risk
+chart) is gone, replaced by one linear flow — text → difficulty profile →
+Reformulate → changes/skipped/verification review with a per-change
+Keep/revert toggle. `grammar.py::SentenceRewriter` and
+`rewrite/rewriter.py::DifficultyAwareRewriter` are untouched and still
+importable, just no longer called from `app.py`, per the migration plan.
+**Two real bugs found and fixed during build, not left for later:**
+(1) the T5 escalation path rejected every candidate whenever SBERT was
+unavailable, contradicting `semantic.rank_candidates_contextually`'s own
+documented fallback ("SBERT unavailable → don't gate on it, fall back to
+accepting") — found by running the escalation path live with SBERT
+offline, not by inspection. (2) escalation's word-block set was the full
+declared-word list, which included non-substitutable words (numerals,
+etc. — anything `_SUBSTITUTABLE` excludes); since neither substitution nor
+T5 restructuring can act on those, this guaranteed escalation always
+failed whenever such a word was present in the sentence. Fixed by scoping
+the block set to the words actually flagged as substitutable in that
+sentence. Both caught by live smoke tests against the real CMU/WordNet/T5
+stack, not unit tests with mocked dependencies.
+**Scope decisions made, not silently dropped:**
+  - The old allowlist ("never substitute this word") feature was cut, not
+    ported. The new per-change review UI (Keep/revert per change) serves
+    the same protective purpose after the fact, which fits the requested
+    workflow ("reviewing changes") better than a pre-emptive block list —
+    but this is a real capability change, stated here rather than left for
+    someone to notice later.
+  - The "learned" `SpeakerDifficultyProfile` onset-risk chart was dropped
+    from the UI, not merely deprioritized: with the audio/ASR pipeline out
+    of scope (`out_of_scope/`), `onset_observations` never receives real
+    session data, so `onboarding()` seeds `onset_risk` purely from the
+    same declared sounds the Speaker Difficulty Profile panel already
+    shows. The chart was labeled "learned from observed sessions" while
+    actually just re-displaying declared input — a mislabeled duplicate,
+    not a decorative-but-harmless feature, which is why it was removed
+    rather than kept. `profiling/profile.py` itself is untouched.
+  - `difficulty_profile.phrases` still has no consumer in the new engine
+    (ROADMAP.md R13 stays open for phrases specifically) — `problem_phones`
+    now does (via `_trigger_reasons`), but multi-word phrase detection
+    needs a different mechanism than the current single-word-substitution /
+    whole-sentence-restructuring model supports, and was not built here
+    without a separate go-ahead.
+**Verification performed:** Every function signature this module calls
+(`semantic.rank_candidates_contextually`, `engine.SynonymEngine.get_synonyms`,
+`phonetic.matches_any`, `rephrase.generate_candidates`,
+`DifficultyProfile.find_word`/`word_values`/`sound_values`, `grammar`'s
+lemmatize/inflect/_preserve_case/_detokenize/_wn_pos) was read from the
+live code via `inspect.signature`, not assumed from memory, before being
+called. `tests/reformulate_test.py` (12 tests, all paths: no-change,
+substitution, antonym guard, word-specific-pattern isolation, count-
+threshold and all-or-nothing escalation, cannot-safely-reformulate,
+multi-sentence pass-through, metrics bounds) and `tests/app_test.py`
+(rewritten for the new UI) both pass against the real CMU/WordNet/SBERT/T5
+stack, not mocks, except where a test deliberately mocks one dependency to
+force a specific edge case. `tests/smoke.py` output is byte-identical to
+`tests/baseline_sbert.txt` — the existing pipeline (`grammar.py`/
+`engine.py`/`semantic.py`'s pre-existing functions) is unchanged. The app
+was run live under `streamlit run` (HTTP 200) in addition to `AppTest`;
+no browser-automation tool was available in this environment to capture a
+screenshot, which is stated here rather than silently skipped.
+**Category:** Engineering decision + implementation. Zero changes to
+`grammar.py`, `engine.py`, `rewrite/`; `semantic.py` extended additively
+only (two new functions, nothing existing altered).
+**Not done here, left open:** the R9 accept/reject → profile feedback
+loop (the UI now *has* an accept/reject signal to wire, but it isn't
+wired into the profile yet); phrase-level detection (R13, above); Strong-
+tier NLI verification (§27); MLM candidate generation (§24.B, deferred
+pending measurement per Stage 5B).

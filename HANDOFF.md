@@ -47,6 +47,22 @@ default profile automatically via `profile_store.py`, no login. No
 reformulation algorithm, weight, or threshold changed in either pass;
 verified via `tests/smoke.py` being byte-identical to baseline both times.
 
+**Scope note (2026-08-16, Architecture D′ implemented — read this before
+trusting the pipeline description below, which predates it):** `app.py`
+no longer calls `grammar.py::SentenceRewriter` or
+`rewrite/rewriter.py::DifficultyAwareRewriter` — both remain in the repo,
+unmodified, but the live reformulation entry point is now `reformulate.py`
+(Architecture D′, `REFORMULATION_RESEARCH.md` §24–31; what it does and why,
+including two bugs found and fixed during the build, is in
+`DECISION_LOG.md` 2026-08-16-E). `app.py`'s `_sync_legacy_session_from_profile()`
+and the `stutter_patterns`/`blocked_words` in-memory mirror described below
+no longer exist — `reformulate.py` reads the `DifficultyProfile` object
+directly. The UI was rewritten around the new engine: one linear flow
+(text → difficulty profile → Reformulate → review), the old word-picker/
+multi-mode/allowlist/onset-risk-chart UI removed. R12 (below) is resolved
+for the reformulation engine specifically: it reads only the declared
+`DifficultyProfile`, not `SpeakerDifficultyProfile`.
+
 ## What's proven vs. still a hypothesis (read this before trusting a claim elsewhere)
 
 **Proven / fact-level, in the sense of "verifiably true of the code as it

@@ -1,28 +1,39 @@
 """
-Speech AI — Streamlit UI v7
-Single default speaker profile (no login) · Speaker Difficulty Profile with
-word-specific sound patterns · Datamuse POS gate (engine.py v3.1)
+Speech AI — Streamlit UI v8
 
-Stage 4A refinement (2026-08-16): the multi-user auth layer (auth.py,
-user_store.py) was removed — see DECISION_LOG.md and PROBLEM_FORMULATION.md.
-The app now loads one persistent default profile automatically; there is no
-login screen and nothing here gates rendering on authentication anymore.
+Redesigned around the consolidated reformulation engine (reformulate.py,
+Architecture D', REFORMULATION_RESEARCH.md SS24-31). Replaces the old
+dual-pipeline UI (word-picker dropdowns, separate word/sentence/multi-
+sentence modes, profile-rewrite card, rephrase card, allowlist panel) with
+a single linear workflow:
+
+    enter/paste text -> view your difficulty profile -> Reformulate ->
+    review changes, skipped spans, and verification
+
+grammar.py::SentenceRewriter and rewrite/rewriter.py::DifficultyAwareRewriter
+are kept in the repo (not deleted — see REFORMULATION_RESEARCH.md SS30's
+migration plan) but are no longer imported here. The learned, session-based
+SpeakerDifficultyProfile chart is also dropped from this UI: with the
+audio/ASR pipeline out of scope (out_of_scope/), onset_observations never
+receives real data, so that chart was silently just re-displaying the same
+declared sounds already shown in the Speaker Difficulty Profile panel below
+— duplicate, not learned, and worth removing rather than keeping as
+decoration.
 """
 
 import paths  # noqa: F401
 import html
 import re
+
 import streamlit as st
 from nltk import word_tokenize
-from engine import SynonymEngine
-from grammar import sanitize_input, is_sentence, SentenceRewriter, inflect, _preserve_case
+
+from grammar import sanitize_input, _detokenize
 import semantic as sem
 import phonetic as ph
-import freq
-from profiling.profile import SpeakerDifficultyProfile
-from rewrite.rewriter import DifficultyAwareRewriter
 from difficulty_profile import DifficultyProfile, extract_candidate_words
 import profile_store
+import reformulate
 
 st.set_page_config(
     page_title="Speech AI",
@@ -34,210 +45,26 @@ st.set_page_config(
 CURRENT_PROFILE = profile_store.DEFAULT_PROFILE
 
 
-def _load_default_profile_into_session() -> None:
-    """Single-profile equivalent of the old auth.py::_load_user_into_session
-    — runs once per session (guarded below), no login step involved."""
-    prefs_data = profile_store.load_preferences(CURRENT_PROFILE)
-    prefs = dict(prefs_data["preferences"])
-    st.session_state.custom_replacements = dict(prefs_data["custom_replacements"])
-    st.session_state.preferences = prefs
-    st.session_state.allowlist_words = list(prefs.get("allowlist_words", []))
-    st.session_state.rephrase_enabled = bool(prefs.get("rephrase_enabled", False))
-    st.session_state.profile_rewrite_enabled = bool(prefs.get("profile_rewrite_enabled", True))
-
-
-if not st.session_state.get("_profile_loaded"):
-    _load_default_profile_into_session()
-    st.session_state["_profile_loaded"] = True
-
-
-# ── Helpers ────────────────────────────────────────────────────────────────────
-
-def _save_prefs(*_ignored) -> None:
-    """Persist preferences (allowlist, rephrase/profile-rewrite toggles) for
-    the default profile. Takes no arguments — patterns/blocked_words are no
-    longer independently settable here; they're always derived from the
-    Speaker Difficulty Profile (see _sync_legacy_session_from_profile), so
-    saving them separately would risk exactly the drift problem
-    DECISION_LOG.md 2026-08-15-C already resolved once. Accepts and ignores
-    stray positional args so existing call sites don't need touching."""
-    preferences = dict(st.session_state.get("preferences", {}))
-    preferences["allowlist_words"] = list(st.session_state.get("allowlist_words", []))
-    preferences["rephrase_enabled"] = bool(st.session_state.get("rephrase_enabled", False))
-    preferences["profile_rewrite_enabled"] = bool(
-        st.session_state.get("profile_rewrite_enabled", True)
-    )
-    st.session_state.preferences = preferences
-    profile_store.save_preferences(
-        CURRENT_PROFILE,
-        preferences,
-        custom_replacements=st.session_state.get("custom_replacements", {}),
-    )
-
-
-def _content_words(sentence: str) -> list[str]:
-    return [t for t in word_tokenize(sentence) if re.search(r"[a-z]", t.lower())]
-
-
-def _risk_chips(sentence: str, patterns: list[str], blocked: set[str]) -> str:
-    chips = []
-    for tok in _content_words(sentence):
-        low = tok.lower()
-        on_pattern = (low in blocked) or ph.matches_any(tok, patterns)
-        diff = ph.word_difficulty(tok)
-        if on_pattern:
-            cls = "risk-hi"
-        elif diff >= 0.55:
-            cls = "risk-mid"
-        else:
-            cls = "risk-lo"
-        onset = "".join(ph.onset(tok)) or "—"
-        chips.append(
-            f'<span class="risk-chip {cls}" title="onset {onset} · difficulty {diff:.2f}">'
-            f'{tok}</span>'
-        )
-    return '<div class="pill-wrap">' + "".join(chips) + "</div>"
-
+# ── Helpers ──────────────────────────────────────────────────────────────────
 
 def _fmt(text: object) -> str:
     return html.escape(str(text or ""))
 
 
-def _grammar_explanation(fixes: list[dict]) -> str:
-    if not fixes:
-        return "Grammar check passed — no corrections needed."
-    rows = []
-    seen = set()
-    for fix in fixes:
-        original  = fix.get("original", "") or "(missing)"
-        corrected = fix.get("corrected", "")
-        reason    = fix.get("reason") or fix.get("description") or "Grammar cleanup"
-        sig = (original, corrected, reason)
-        if sig in seen:
-            continue
-        seen.add(sig)
-        rows.append(
-            f'<div class="fix-row {fix.get("type","spacing")}">'
-            f'<span class="fix-before">{_fmt(original)}</span>'
-            f'<span>&rarr;</span>'
-            f'<span class="fix-after">{_fmt(corrected)}</span>'
-            f'<span style="opacity:.62;font-size:.8rem">{_fmt(reason)}</span>'
-            f'</div>'
-        )
-    return "".join(rows)
-
-
-def _split_sentences(text: str) -> list[str]:
-    """Canonical sentence splitter shared with rewrite/rewriter.py.
-
-    Handles common abbreviations so they don't trigger a false sentence boundary.
-    Keeps all whitespace-delimited words in one pass to avoid position drift
-    that the simpler regex approach in rewriter.py could cause.
-    """
-    _ABBREVS = {
-        "mr.", "mrs.", "ms.", "dr.", "prof.",
-        "sr.", "jr.", "vs.", "etc.", "approx.",
-        "fig.", "vol.", "no.", "dept.", "est.",
-        "p.m.", "a.m.", "u.s.", "u.k.",
-    }
-    sentences: list[str] = []
-    current: list[str] = []
-    for word in text.split():
-        current.append(word)
-        if word.endswith((".", "!", "?")) and word.lower() not in _ABBREVS:
-            sentences.append(" ".join(current))
-            current = []
-    if current:
-        sentences.append(" ".join(current))
-    return [s for s in sentences if s.strip()]
-
-
-def _rebuild_sentence(sent_result: dict, sid: int) -> str:
-    """Rebuild one sentence using current user choices for that sentence."""
-    sanitized     = sent_result["sanitized"]
-    substitutions = sent_result["result"]["substitutions"]
-    choices       = st.session_state.ms_choices.get(sid, {})
-    return rewriter.rebuild_with_choices(sanitized, substitutions, choices)
-
-
-def _full_rebuilt_paragraph() -> str | None:
-    """Join all sentences from multi-sentence results into one paragraph."""
-    if not st.session_state.get("ms_results"):
-        return None
-    parts = []
-    for sid, sr in enumerate(st.session_state.ms_results):
-        if sr.get("is_sentence"):
-            parts.append(_rebuild_sentence(sr, sid + 1))
-        else:
-            parts.append(sr["sanitized"])
-    return " ".join(parts)
-
-
-def _single_rebuilt() -> str | None:
-    """Rebuilt sentence for single-sentence mode."""
-    if not st.session_state.get("sentence_mode") or st.session_state.get("result") is None:
-        return None
-    return rewriter.rebuild_with_choices(
-        st.session_state.sanitized or "",
-        st.session_state.result.get("substitutions", []),
-        st.session_state.get("user_choices", {}),
-    )
-
-
-def _fluency_profile() -> SpeakerDifficultyProfile:
-    """Load the default profile's longitudinal multi-factor profile."""
-    profile = SpeakerDifficultyProfile.load(CURRENT_PROFILE)
-    profile.onboarding(st.session_state.get("stutter_patterns", []))
-    return profile
-
-
-def _profile_chart_html(profile: SpeakerDifficultyProfile) -> str:
-    rows = profile.top_onsets(8)
-    if not rows:
-        return ""
-    out = ['<div class="profile-bars">']
-    for onset, score in rows:
-        width = max(4, int(float(score) * 100))
-        out.append(
-            f'<div class="profile-bar-row">'
-            f'<span class="profile-bar-label">/{_fmt(onset.replace(" ", ""))}/</span>'
-            f'<span class="profile-bar-track"><span style="width:{width}%"></span></span>'
-            f'<span class="profile-bar-score">{float(score):.2f}</span>'
-            f'</div>'
-        )
-    out.append("</div>")
-    return "".join(out)
-
-
 def _difficulty_profile() -> DifficultyProfile:
-    """Load (once per session, cached) the default profile's persistent,
-    user-declared difficulty profile — Stage 4A foundation. Separate from
-    (and unrelated to) the longitudinal, EWMA-scored SpeakerDifficultyProfile
-    above: this one is a flat, user-declared sounds/words/phrases list; that
-    one is a learned, continuous onset-risk model consumed by rewrite/.
-    """
+    """Load (once per session, cached) the persistent, user-declared
+    difficulty profile — sounds/words/phrases, kept explicitly independent
+    of the reformulation engine's internals."""
     cached = st.session_state.get("difficulty_profile")
     if cached is not None and getattr(cached, "profile_name", None) == CURRENT_PROFILE:
         return cached
     profile = DifficultyProfile.load(CURRENT_PROFILE)
     st.session_state.difficulty_profile = profile
-    _sync_legacy_session_from_profile(profile)
     return profile
-
-
-def _sync_legacy_session_from_profile(profile: DifficultyProfile) -> None:
-    """Mirror the new profile into session_state.stutter_patterns/.blocked_words
-    — the exact, unchanged inputs the existing reformulation pipeline
-    (grammar.py, rewrite/) already reads. This is the only point of contact
-    between the new foundation and the old pipeline; nothing in grammar.py,
-    engine.py, semantic.py, or rewrite/ changed to support it."""
-    st.session_state.stutter_patterns = profile.sound_values()
-    st.session_state.blocked_words = profile.word_values()
 
 
 def _save_difficulty_profile(profile: DifficultyProfile) -> None:
     profile.save()
-    _sync_legacy_session_from_profile(profile)
 
 
 _DIFFICULTY_ADDERS = {
@@ -255,10 +82,8 @@ def _render_difficulty_category(
     add_help: str,
     key_prefix: str,
 ) -> None:
-    """Render one category (sounds / words / phrases) of the difficulty
-    profile: existing entries with a remove button each, then an add
-    text-input + button. Mirrors the already-working Blocklist/Allowlist
-    add/remove pattern rather than inventing a new one."""
+    """Render one category (sounds / words / phrases): existing entries with
+    a remove button each, then an add text-input + button."""
     if entries:
         for entry in entries:
             col_item, col_rm = st.columns([4, 1])
@@ -272,7 +97,7 @@ def _render_difficulty_category(
                     extra += (
                         ' <span style="opacity:.85;font-size:.74rem;color:#b3541e" '
                         'title="This exact sound may not be fully enforced by the current '
-                        'rewrite engine yet — a known limitation, not a bug in your entry.">'
+                        'engine yet — a known limitation, not a bug in your entry.">'
                         '⚠️ not fully enforced yet</span>'
                     )
                 st.markdown(
@@ -311,10 +136,10 @@ def _render_words_category(profile: DifficultyProfile) -> None:
     """Words column: same add/remove pattern as sounds/phrases, plus a
     per-entry 'what's specifically difficult about this word?' toggle.
 
-    Flagging a word never implies every sound in it is difficult (see
-    PROBLEM_FORMULATION.md's refinement) — the toggle lets the user
-    optionally narrow down to a specific sound/pattern *within this word*,
-    scoped to the word, never auto-promoted to a global sound difficulty.
+    Flagging a word never implies every sound in it is difficult — the
+    toggle lets the user optionally narrow down to a specific sound/pattern
+    *within this word*, scoped to the word, never auto-promoted to a global
+    sound difficulty unless explicitly checked.
     """
     for entry in profile.words:
         col_item, col_pattern, col_rm = st.columns([3, 1, 1])
@@ -383,12 +208,11 @@ def _render_words_category(profile: DifficultyProfile) -> None:
 def _render_pattern_editor(profile: DifficultyProfile, entry) -> None:
     """Full-width, inline 'what's difficult about this word?' panel.
 
-    Deliberately NOT st.dialog: Streamlit's AppTest has a documented,
-    open bug where button clicks inside an st.dialog never execute during
-    testing (streamlit/streamlit#9786) — this project's testing standard
-    (established in Stage 4A) is to not ship an interaction that can't
-    actually be verified. A plain inline panel, toggled by session state,
-    tests exactly like every other widget in this app.
+    Deliberately NOT st.dialog: Streamlit's AppTest has a documented, open
+    bug where button clicks inside an st.dialog never execute during
+    testing (streamlit/streamlit#9786) — this project tests every shipped
+    interaction, so a plain inline panel toggled by session state is used
+    instead.
     """
     if not entry.pronunciation:
         st.info(f'Pronunciation unknown for "{entry.value}" — can\'t pick a specific sound.')
@@ -457,20 +281,53 @@ def _render_pattern_editor(profile: DifficultyProfile, entry) -> None:
     st.markdown("</div>", unsafe_allow_html=True)
 
 
-def _friendly_rephrase_status(message: str) -> str:
-    low = (message or "").lower()
-    if "model not loaded" in low:
-        return "Ready to load on first rewrite. First use may download the T5 model."
-    if "no module named 'torch'" in low or "no module named \"torch\"" in low:
-        return "Optional T5 rephrase needs PyTorch. Profile-aware rewrite still works without it."
-    if "no module named 'transformers'" in low or "no module named \"transformers\"" in low:
-        return "Optional T5 rephrase needs Transformers/PyTorch. Profile-aware rewrite still works without it."
-    if "rephrase unavailable" in low:
-        return message.replace("Rephrase unavailable", "Optional T5 rephrase unavailable")
-    return message
+def _risk_preview(text: str, profile: DifficultyProfile) -> str:
+    """Cheap, regex-tokenized (no POS tagging) preview of which words in
+    the current text are flagged by the profile right now — shown before
+    Reformulate is clicked so the workflow's step 2 -> step 3 connection is
+    visible, not just implied."""
+    words = re.findall(r"[A-Za-z][A-Za-z'-]*", text)
+    if not words:
+        return ""
+    sounds = profile.sound_values()
+    blocked = set(profile.word_values())
+    chips = []
+    for w in words:
+        flagged = (w.lower() in blocked) or ph.matches_any(w, sounds)
+        cls = "risk-hi" if flagged else "risk-lo"
+        chips.append(f'<span class="risk-chip {cls}">{_fmt(w)}</span>')
+    return '<div class="pill-wrap">' + "".join(chips) + "</div>"
 
 
-# ── CSS ────────────────────────────────────────────────────────────────────────
+def _apply_change_choices(result: dict, choices: dict[int, bool]) -> str:
+    """Rebuild the final text from result['original_text'], honoring which
+    changes the user has kept vs. reverted. `choices[i]` is True (keep,
+    the default) or False (revert this one change to its original)."""
+    sentences = reformulate.split_sentences(result["original_text"])
+    by_sentence: dict[int, list[tuple[int, dict]]] = {}
+    for i, change in enumerate(result["changes"]):
+        by_sentence.setdefault(change["sentence_index"], []).append((i, change))
+
+    rebuilt = []
+    for sid, original_sentence in enumerate(sentences):
+        sentence_changes = by_sentence.get(sid)
+        if not sentence_changes:
+            rebuilt.append(original_sentence)
+            continue
+        if sentence_changes[0][1]["source"] == "restructuring":
+            i, change = sentence_changes[0]
+            keep = choices.get(i, True)
+            rebuilt.append(change["replacement"] if keep else change["original"])
+            continue
+        tokens = word_tokenize(original_sentence)
+        for i, change in sentence_changes:
+            if choices.get(i, True):
+                tokens[change["position"]] = change["replacement"]
+        rebuilt.append(_detokenize(tokens))
+    return " ".join(rebuilt)
+
+
+# ── CSS ──────────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap');
@@ -483,313 +340,159 @@ html,body,[class*="css"]{font-family:'DM Sans',sans-serif;background:#f7fbff;col
 .hero h1 span{color:#f57c2b}
 .hero p{font-size:.95rem;color:#5a7096;font-weight:300;margin-top:.15rem}
 
+.step-kicker{font-size:.68rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#4b91dc;margin:1.1rem 0 .45rem}
+
 div[data-testid="stTextInput"] input{border:2px solid #c3daf7!important;border-radius:14px!important;background:#fff!important;font-family:'DM Sans',sans-serif!important;font-size:1.05rem!important;padding:.66rem 1rem!important;color:#1a2740!important;box-shadow:0 2px 10px rgba(75,145,220,.07)!important}
 div[data-testid="stTextInput"] input:focus{border-color:#4b91dc!important}
 div[data-testid="stTextInput"] label{font-size:.82rem!important;font-weight:600!important;color:#3d6ea8!important}
-div[data-testid="stTextArea"] textarea{min-height:120px!important;border:2px solid #c3daf7!important;border-radius:16px!important;background:#fff!important;font-family:'DM Sans',sans-serif!important;font-size:1.06rem!important;line-height:1.6!important;padding:.9rem 1rem!important;color:#1a2740!important;box-shadow:0 2px 12px rgba(75,145,220,.08)!important}
+div[data-testid="stTextArea"] textarea{min-height:130px!important;border:2px solid #c3daf7!important;border-radius:16px!important;background:#fff!important;font-family:'DM Sans',sans-serif!important;font-size:1.06rem!important;line-height:1.6!important;padding:.9rem 1rem!important;color:#1a2740!important;box-shadow:0 2px 12px rgba(75,145,220,.08)!important}
 div[data-testid="stTextArea"] textarea:focus{border-color:#4b91dc!important}
 div[data-testid="stTextArea"] label{font-size:.82rem!important;font-weight:600!important;color:#3d6ea8!important}
 div[data-testid="stSlider"] label{font-size:.82rem!important;color:#3d6ea8!important;font-weight:600!important}
-div[data-testid="stSelectbox"] label{font-size:.76rem!important;font-weight:600!important;color:#3d6ea8!important}
-div[data-testid="stSelectbox"]>div>div{border:1.5px solid #c3daf7!important;border-radius:10px!important;background:#fff!important;font-size:.9rem!important}
 
 div.stButton>button{background:linear-gradient(135deg,#f57c2b,#f4a461)!important;color:#fff!important;border:none!important;border-radius:12px!important;font-family:'DM Sans',sans-serif!important;font-size:1rem!important;font-weight:600!important;padding:.6rem 2rem!important;box-shadow:0 4px 14px rgba(245,124,43,.22)!important;transition:transform .15s,box-shadow .15s!important}
 div.stButton>button:hover{transform:translateY(-2px)!important;box-shadow:0 6px 20px rgba(245,124,43,.33)!important}
 div.stButton>button[kind="secondary"]{background:#f0f4f8!important;color:#5a7096!important;box-shadow:none!important;font-size:.85rem!important;padding:.4rem 1rem!important}
 div.stButton>button[kind="secondary"]:hover{background:#e4eaf2!important;transform:none!important}
 
-.word-card{background:#fff;border:1.5px solid #d4e8f8;border-radius:16px;padding:1rem 1.3rem .9rem;margin-bottom:.75rem;box-shadow:0 2px 12px rgba(75,145,220,.06)}
 .profile-panel{background:#fff;border:1.5px solid #d4e8f8;border-radius:16px;padding:1rem 1.2rem .85rem;margin:.55rem 0 .9rem;box-shadow:0 2px 12px rgba(75,145,220,.05)}
-.profile-bars{margin-top:.55rem;display:grid;gap:.28rem}
-.profile-bar-row{display:grid;grid-template-columns:48px 1fr 38px;align-items:center;gap:.45rem;font-size:.76rem;color:#5a7096}
-.profile-bar-label{font-weight:700;color:#2d6aab}
-.profile-bar-track{height:8px;background:#eef4fb;border-radius:5px;overflow:hidden}
-.profile-bar-track span{display:block;height:8px;background:linear-gradient(90deg,#4b91dc,#f4a461);border-radius:5px}
-.profile-bar-score{text-align:right;font-variant-numeric:tabular-nums}
-.analysis-note{background:#f8fbff;border:1.4px solid #d4e8f8;border-radius:12px;padding:.72rem .9rem;margin:.35rem 0 1rem;color:#2a3d58;font-size:.88rem}
-.syn-grid-card{background:#fff;border:1.5px solid #d4e8f8;border-radius:14px;padding:.85rem .95rem .8rem;margin-bottom:.75rem;min-height:170px;box-shadow:0 2px 10px rgba(75,145,220,.05)}
-.section-kicker{font-size:.68rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#4b91dc;margin:.9rem 0 .45rem}
-.word-card-header{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem}
-.word-title{font-family:'DM Serif Display',serif;font-size:1.2rem;color:#1a2740}
-.badge{font-size:.67rem;font-weight:600;padding:.15rem .5rem;border-radius:20px}
-.badge-blue{color:#2d6aab;background:#e8f2fc}
-.badge-warn{color:#b06030;background:#fff2e8}
-.badge-green{color:#1a6b3c;background:#edfaf2}
-.badge-gray{color:#5a7096;background:#f0f4f8}
-.badge-red{color:#9b1c1c;background:#fef2f2}
-
-.pill-wrap{display:flex;flex-wrap:wrap;gap:.35rem}
-.pill{display:inline-block;padding:.25rem .75rem;border-radius:20px;font-size:.85rem;font-weight:500;transition:transform .12s}
-.pill:hover{transform:translateY(-2px)}
-.pill.top{background:#fff2e8;color:#c85d14;border:1.4px solid #f7c49a}
-.pill.mid{background:#ebf4fd;color:#2d6aab;border:1.4px solid #b8d9f5}
-
-.no-syn-chip{display:inline-flex;align-items:center;gap:.4rem;background:#fdf7f3;border:1.2px dashed #f7c49a;border-radius:9px;padding:.24rem .68rem;font-size:.85rem;color:#a06030;margin:.12rem}
-
-.risk-chip{display:inline-block;padding:.22rem .7rem;border-radius:20px;font-size:.85rem;font-weight:500;cursor:default}
-.risk-hi{background:#fef2f2;color:#9b1c1c;border:1.4px solid #f3b4b4}
-.risk-mid{background:#fff8ed;color:#a06030;border:1.4px solid #f7c49a}
-.risk-lo{background:#edfaf2;color:#1a6b3c;border:1.4px solid #b6e6c9}
-
-.diff-meter{display:flex;align-items:center;gap:.7rem;margin-top:.35rem}
-.diff-num{font-family:'DM Serif Display',serif;font-size:1.25rem}
-.diff-track{flex:1;background:#eef4fb;border-radius:6px;height:10px;position:relative;overflow:hidden}
-.diff-bar{height:10px;border-radius:6px}
-.diff-down{color:#1a6b3c}.diff-up{color:#9b1c1c}.diff-same{color:#5a7096}
-
 .pipe-card{background:#fff;border:1.5px solid #d4e8f8;border-radius:16px;padding:.95rem 1.3rem .9rem;margin-bottom:.75rem;box-shadow:0 2px 12px rgba(75,145,220,.05)}
 .pipe-label{font-size:.68rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#4b91dc;margin-bottom:.38rem}
 
-/* multi-sentence */
-.sent-card{background:#fff;border:1.5px solid #d4e8f8;border-radius:16px;padding:.9rem 1.2rem;margin-bottom:1rem;box-shadow:0 2px 12px rgba(75,145,220,.05)}
-.sent-header{display:flex;align-items:center;gap:.55rem;margin-bottom:.6rem}
-.sent-num{font-family:'DM Serif Display',serif;font-size:.95rem;color:#4b91dc;font-weight:700;min-width:24px}
-.revert-hint{font-size:.74rem;color:#7da4c8;font-style:italic;margin-left:auto}
+.pill-wrap{display:flex;flex-wrap:wrap;gap:.35rem}
+.risk-chip{display:inline-block;padding:.22rem .7rem;border-radius:20px;font-size:.85rem;font-weight:500;cursor:default}
+.risk-hi{background:#fef2f2;color:#9b1c1c;border:1.4px solid #f3b4b4}
+.risk-lo{background:#edfaf2;color:#1a6b3c;border:1.4px solid #b6e6c9}
 
-.fix-row{display:flex;align-items:center;gap:.48rem;font-size:.87rem;padding:.28rem .48rem;border-radius:8px;margin-bottom:.22rem}
-.fix-row.contraction{background:#fff8f0;color:#c85d14}
-.fix-row.capitalization,.fix-row.pronoun_case{background:#f0f8ff;color:#2d6aab}
-.fix-row.punctuation{background:#f0fdf4;color:#1a6b3c}
-.fix-row.spacing{background:#fafafa;color:#5a7096}
-.fix-row.tense{background:#fdf4ff;color:#7c3aaa}
-.fix-row.subject_verb_agreement{background:#fff7ed;color:#b45309}
-.fix-row.auxiliary_form{background:#f0f9ff;color:#0369a1}
-.fix-row.negation_agreement{background:#fef2f2;color:#991b1b}
-.fix-row.informal_word{background:#fefce8;color:#854d0e}
-.fix-row.spelling{background:#fdf4ff;color:#6b21a8;border-left:3px solid #a855f7}
-.fix-row.article{background:#f0fdf4;color:#166534;border-left:3px solid #22c55e}
-.fix-row.languagetool{background:#f0f4ff;color:#1e40af;border-left:3px solid #3b82f6}
-.fix-before{text-decoration:line-through;opacity:.55;font-style:italic}
-.fix-after{font-weight:600}
-.corrected-sentence,.clean-sentence{font-size:1.02rem;color:#1a6b3c;background:#f0fdf6;border:1.4px solid #7ddba5;border-radius:11px;padding:.65rem .95rem;margin-top:.45rem}
+.blocklist-item{display:inline-flex;align-items:center;gap:.3rem;background:#fff2e8;border:1.2px solid #f7c49a;border-radius:20px;padding:.2rem .65rem;font-size:.85rem;color:#c85d14;margin:.15rem}
+.pattern-editor{background:#fbf6ec;border:1.4px solid #f0dcae;border-radius:12px;padding:.7rem .9rem;margin:.5rem 0}
+
+.status-banner{border-radius:12px;padding:.75rem 1rem;font-size:.92rem;margin:.6rem 0;font-weight:500}
+.status-ok{background:#edfaf2;border:1.4px solid #7ddba5;color:#1a6b3c}
+.status-warn{background:#fff8ed;border:1.4px solid #f7c49a;color:#a06030}
+.status-error{background:#fef2f2;border:1.4px solid #fca5a5;color:#991b1b}
+
+.output-box{background:linear-gradient(135deg,#fff8f2,#f0f7ff);border:2px solid #f0c090;border-radius:16px;padding:1.05rem 1.35rem;font-size:1.12rem;color:#1a2740;line-height:1.75;font-family:'DM Serif Display',serif}
+
+.change-card{background:#fff;border:1.5px solid #d4e8f8;border-radius:14px;padding:.8rem 1rem;margin-bottom:.6rem}
+.change-arrow{display:flex;align-items:center;gap:.5rem;font-size:1.02rem;flex-wrap:wrap}
+.change-before{color:#9b1c1c;text-decoration:line-through;opacity:.7}
+.change-after{color:#1a6b3c;font-weight:600}
+.change-tag{font-size:.68rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:.14rem .5rem;border-radius:12px;background:#e8f2fc;color:#2d6aab}
+.change-tag.restructuring{background:#fff2e8;color:#c85d14}
+
+.skip-chip{display:inline-flex;align-items:center;gap:.35rem;background:#fdf7f3;border:1.2px dashed #f7c49a;border-radius:9px;padding:.3rem .7rem;font-size:.85rem;color:#a06030;margin:.15rem 0}
+
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.6rem;margin-top:.5rem}
+.metric-box{background:#f8fbff;border:1.4px solid #d4e8f8;border-radius:12px;padding:.6rem .8rem;text-align:center}
+.metric-num{font-family:'DM Serif Display',serif;font-size:1.35rem;color:#1a2740}
+.metric-label{font-size:.72rem;color:#5a7096;text-transform:uppercase;letter-spacing:.4px;margin-top:.1rem}
 
 .sbert-on{background:#edfaf2;border:1.4px solid #7ddba5;border-radius:11px;padding:.55rem .9rem;color:#1a6b3c;font-size:.88rem;margin-bottom:.6rem}
 .sbert-off{background:#fff8ed;border:1.4px solid #f7c49a;border-radius:11px;padding:.55rem .9rem;color:#a06030;font-size:.88rem;margin-bottom:.6rem}
 
-.score-table{width:100%;border-collapse:collapse;font-size:.83rem;margin-top:.4rem}
-.score-table th{text-align:left;font-weight:600;color:#4b91dc;padding:.28rem .45rem;border-bottom:1.5px solid #e4f0fb;font-size:.75rem;letter-spacing:.3px;text-transform:uppercase}
-.score-table td{padding:.28rem .45rem;border-bottom:1px solid #f0f5fc;color:#2a3d58}
-.score-table tr:last-child td{border-bottom:none}
-.score-table tr.rejected td{color:#a3afc2}
-.score-table tr.chosen-row td{background:#fff8f2}
-.bar-wrap{width:70px;display:inline-block;background:#eaf2fc;border-radius:4px;height:7px;vertical-align:middle}
-.bar-fill{height:7px;border-radius:4px;background:linear-gradient(90deg,#4b91dc,#7ab8f0);display:block}
-.bar-fill.orange{background:linear-gradient(90deg,#f57c2b,#f4a461)}
-.sim-tag{font-size:.7rem;padding:.08rem .35rem;border-radius:5px;font-weight:600}
-.sim-accept{background:#edfaf2;color:#1a6b3c}
-.sim-reject{background:#fef2f2;color:#9b1c1c}
-
-.grammar-ok{background:#edfaf2;border:1.4px solid #7ddba5;border-radius:11px;padding:.55rem .9rem;color:#1a6b3c;font-size:.88rem}
-.grammar-warn{background:#fff8ed;border:1.4px solid #f7c49a;border-radius:11px;padding:.55rem .9rem;color:#a06030;font-size:.88rem}
-.grammar-error{background:#fef2f2;border:1.4px solid #fca5a5;border-radius:11px;padding:.55rem .9rem;color:#991b1b;font-size:.88rem}
-.diff-text{font-size:1.03rem;color:#1a2740;line-height:1.75}
-.orig-word{color:#b0c4d8;text-decoration:line-through;font-size:.87rem;margin-right:.08rem}
-.new-word{color:#f57c2b;font-weight:600}
-.output-box{background:linear-gradient(135deg,#fff8f2,#f0f7ff);border:2px solid #f0c090;border-radius:16px;padding:1.05rem 1.35rem;font-size:1.12rem;color:#1a2740;line-height:1.75;font-family:'DM Serif Display',serif}
-
-.mode-tag{display:inline-flex;align-items:center;gap:.28rem;font-size:.73rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:.26rem .78rem;border-radius:20px;margin-bottom:.8rem}
-.mode-word{background:#e8f2fc;color:#2d6aab}
-.mode-sentence{background:#fff2e8;color:#c85d14}
-.mode-multi{background:#edfaf2;color:#1a6b3c}
-
-/* blocklist panel */
-.blocklist-panel{background:#fffbf7;border:1.4px solid #f7c49a;border-radius:14px;padding:.85rem 1rem;margin:.45rem 0}
-.blocklist-item{display:inline-flex;align-items:center;gap:.3rem;background:#fff2e8;border:1.2px solid #f7c49a;border-radius:20px;padding:.2rem .65rem;font-size:.85rem;color:#c85d14;margin:.15rem}
-.allowlist-item{display:inline-flex;align-items:center;gap:.3rem;background:#edfaf2;border:1.2px solid #7ddba5;border-radius:20px;padding:.2rem .65rem;font-size:.85rem;color:#1a6b3c;margin:.15rem}
-.pattern-editor{background:#fbf6ec;border:1.4px solid #f0dcae;border-radius:12px;padding:.7rem .9rem;margin:.5rem 0}
-
-/* copy box */
 .copy-box{background:#f8fbff;border:1.5px solid #b8d9f5;border-radius:12px;padding:.75rem 1rem;font-size:1rem;color:#1a2740;line-height:1.7;font-family:'DM Serif Display',serif;margin-top:.4rem}
 
 hr{border:none;border-top:1.5px solid #deeaf7;margin:1.2rem 0}
 </style>
 """, unsafe_allow_html=True)
 
-# ── Header ─────────────────────────────────────────────────────────────────────
-st.markdown(f"""
+# ── Header ───────────────────────────────────────────────────────────────────
+st.markdown("""
 <div class="hero">
   <h1>Speech <span>AI</span></h1>
-  <p>Spelling &amp; grammar correction · SBERT semantic firewall · Stutter assistance · Contextual synonym ranking</p>
+  <p>Rewrites your text to be easier for you to say — without changing what it means</p>
 </div>
 """, unsafe_allow_html=True)
 
-# ── Engine & SBERT init ────────────────────────────────────────────────────────
-@st.cache_resource
-def load_engine():
-    return SynonymEngine()
-
-@st.cache_resource
-def load_rewriter(_engine):
-    return SentenceRewriter(_engine)
-
-@st.cache_resource
-def load_profile_rewriter(_engine):
-    return DifficultyAwareRewriter(_engine)
-
+# ── SBERT init ─────────────────────────────────────────────────────────────────
 @st.cache_resource
 def init_sbert():
-    ok = sem.load_sbert()
+    sem.load_sbert()
     return sem.sbert_status()
 
-engine   = load_engine()
-rewriter = load_rewriter(engine)
-profile_rewriter = load_profile_rewriter(engine)
 sbert_ok, sbert_msg = init_sbert()
 
-# ── Session state defaults ─────────────────────────────────────────────────────
+# ── Session state defaults ──────────────────────────────────────────────────
 for key, default in [
-    ("result", None), ("sanitized", None), ("fixes", []),
-    ("user_choices", {}), ("last_query", ""), ("sentence_mode", False),
-    ("grammar_fixes_applied", []), ("correction_map", {}),
-    ("original_query", ""), ("corrected_query", ""), ("query_input", ""),
-    ("stutter_patterns", []), ("blocked_words", []),
-    ("custom_replacements", {}), ("preferences", {}),
-    # multi-sentence
-    ("ms_results", []), ("ms_choices", {}), ("multi_mode", False),
-    # session history
-    ("session_history", []),
-    # word mode
-    ("_word_results", None),
-    # allowlist
-    ("allowlist_words", []),
-    # profile-aware soft rewrite layer
-    ("profile_rewrite_enabled", True),
-    ("profile_rewrite_single_sig", None), ("profile_rewrite_single_result", None),
-    ("profile_rewrite_paragraph_sig", None), ("profile_rewrite_paragraph_result", None),
-    # optional rephrase layer (default off)
-    ("rephrase_enabled", False),
-    ("rephrase_single_sig", None), ("rephrase_single_result", None), ("rephrase_single_use", False),
-    ("rephrase_paragraph_sig", None), ("rephrase_paragraph_result", None), ("rephrase_paragraph_use", False),
+    ("query_input", ""), ("reformulate_result", None),
+    ("reformulate_source_text", None), ("change_choices", {}),
+    ("grammar_fixes", []), ("session_history", []),
 ]:
     if key not in st.session_state:
         st.session_state[key] = default
 
-# ── Sidebar ────────────────────────────────────────────────────────────────────
+# ── Sidebar ──────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("### ⚙ Settings")
-
     if sbert_ok:
-        st.markdown("""<div class="sbert-on"><strong>🧠 SBERT Active</strong><br>
-<span style="font-size:.82rem">Semantic filtering ON · all-MiniLM-L6-v2</span></div>""",
+        st.markdown("""<div class="sbert-on"><strong>🧠 Meaning check active</strong><br>
+<span style="font-size:.82rem">SBERT semantic similarity is verifying every change.</span></div>""",
             unsafe_allow_html=True)
     else:
-        st.markdown("""<div class="sbert-off"><strong>⚠ SBERT Offline</strong><br>
-<span style="font-size:.82rem">Frequency-only mode. Run once online to download (~80 MB).</span></div>""",
+        st.markdown("""<div class="sbert-off"><strong>⚠ Meaning check offline</strong><br>
+<span style="font-size:.82rem">SBERT unavailable — changes aren't verified for meaning right now.</span></div>""",
             unsafe_allow_html=True)
 
-    st.markdown("---")
-    sem_threshold = st.slider(
-        "Semantic threshold", min_value=0.60, max_value=0.95,
-        value=0.85, step=0.01, disabled=not sbert_ok,
-        help="Candidates below this similarity are rejected. 0.85 = strict. Lower if you see few suggestions.",
-    )
-    st.caption("💡 Not seeing synonyms? Try lowering the threshold.")
-
-    st.markdown("---")
-    show_scores = st.toggle("Show scoring details", value=True,
-        help="Show SBERT similarity scores per word.")
-
-    prefs = dict(st.session_state.get("preferences", {}))
-    pref_profile_rewrite = bool(prefs.get("profile_rewrite_enabled", True))
-    if "profile_rewrite_enabled" not in st.session_state:
-        st.session_state.profile_rewrite_enabled = pref_profile_rewrite
-    profile_rewrite_enabled = st.toggle(
-        "Profile-aware rewrite",
-        value=bool(st.session_state.get("profile_rewrite_enabled", pref_profile_rewrite)),
-        help="Uses the multi-factor difficulty profile as a soft rewrite constraint.",
-    )
-    st.session_state.profile_rewrite_enabled = profile_rewrite_enabled
-    if prefs.get("profile_rewrite_enabled") != profile_rewrite_enabled:
-        prefs["profile_rewrite_enabled"] = profile_rewrite_enabled
-        st.session_state.preferences = prefs
-        _save_prefs()
-
-    pref_rephrase = bool(prefs.get("rephrase_enabled", False))
-    if "rephrase_enabled" not in st.session_state:
-        st.session_state.rephrase_enabled = pref_rephrase
-    rephrase_enabled = st.toggle(
-        "Fluency rephrase (beta)",
-        value=bool(st.session_state.get("rephrase_enabled", pref_rephrase)),
-        help=(
-            "Proposes a more fluent rewrite that still avoids your stutter sounds. "
-            "First use downloads a T5 model (~hundreds of MB); CPU inference can take a few seconds."
-        ),
-    )
-    st.session_state.rephrase_enabled = rephrase_enabled
-    if prefs.get("rephrase_enabled") != rephrase_enabled:
-        prefs["rephrase_enabled"] = rephrase_enabled
-        st.session_state.preferences = prefs
-        _save_prefs()
-    if rephrase_enabled:
-        import rephrase as _rephrase
-        _rp_ok, _rp_msg = _rephrase.rephrase_status(
-            load=not bool(getattr(_rephrase, "_STACK_OK", False))
+    with st.expander("Advanced", expanded=False):
+        sem_threshold = st.slider(
+            "Meaning-preservation strictness", min_value=0.60, max_value=0.95,
+            value=0.85, step=0.01, disabled=not sbert_ok,
+            help="How similar a reformulation must stay to your original meaning. "
+                 "Lower this if changes seem too conservative.",
         )
-        st.caption(("🟢 " if _rp_ok else "🟡 ") + _friendly_rephrase_status(_rp_msg))
-    else:
-        st.caption("Fluency rephrase off.")
-
-    st.caption(f"Frequency wordlist: **{freq.active_wordlist()}**")
+        top_k = st.slider(
+            "Candidates considered per word", min_value=5, max_value=20, value=10, step=1,
+        )
 
     st.markdown("---")
     st.markdown("""<div style="font-size:.75rem;color:#6f87a6">
-<strong style="color:#4b91dc">Pipeline</strong><br>
-① Grammar correction<br>② Synonym candidates (POS-gated)<br>
-③ SBERT semantic filter<br>④ Combined score ranking<br>
-⑤ Phoneme firewall<br>⑥ Inflect + user picks<br>⑦ Rebuild sentence
+<strong style="color:#4b91dc">How it works</strong><br>
+Words and sounds you've flagged get replaced with easier alternatives that
+keep your meaning (checked with SBERT) and avoid antonyms (checked with
+WordNet). If a sentence has too many flagged spots to patch word-by-word,
+the whole sentence is reworded instead and re-checked the same way. If
+nothing passes verification, that part is left unchanged rather than
+guessed at.
 </div>""", unsafe_allow_html=True)
 
-# ── Main controls ──────────────────────────────────────────────────────────────
-
+# ── Step 1: text entry ───────────────────────────────────────────────────────
+st.markdown('<div class="step-kicker">Step 1 · Your text</div>', unsafe_allow_html=True)
 query = st.text_area(
-    "Your sentence or paragraph",
+    "Enter or paste text",
     value=st.session_state.get("query_input", ""),
-    placeholder="Type one sentence, or paste a whole paragraph — Speech AI handles both.",
-    height=130,
+    placeholder="Type a sentence or paste a paragraph — Speech AI handles both.",
     key="query_input",
-    help="Single sentence → full pipeline with dropdown pickers. "
-         "Multiple sentences → each processed separately, paragraph rebuilt at the end.",
-)
-lookup_source = query
-
-top_k = st.slider(
-    "Synonyms / word", min_value=5, max_value=20, value=10, step=1,
-    help="Number of synonym candidates to fetch per word.",
+    label_visibility="collapsed",
 )
 
-# ── Speaker Difficulty Profile (Stage 4A foundation) ────────────────────────────
+# ── Step 2: difficulty profile ───────────────────────────────────────────────
+st.markdown('<div class="step-kicker">Step 2 · Your difficulty profile</div>', unsafe_allow_html=True)
 with st.container():
     st.markdown('<div class="profile-panel">', unsafe_allow_html=True)
-    st.markdown('<div class="pipe-label">🗣️ Speaker Difficulty Profile</div>',
-                unsafe_allow_html=True)
     st.caption(
-        "What's difficult for you, declared once and reused every time — this "
-        "already-existing profile loads automatically; entering new text below "
-        "never resets it. Sounds, words, and phrases are tracked **separately**: "
-        "flagging a word difficult does not assume every sound in it is "
-        "difficult too."
+        "What's difficult for you, declared once and reused every time. Sounds, "
+        "words, and phrases are tracked **separately** — flagging a word doesn't "
+        "assume every sound in it is difficult too."
     )
     difficulty_profile = _difficulty_profile()
 
     dp_sounds, dp_words, dp_phrases = st.columns(3)
-
     with dp_sounds:
         st.markdown("**🔊 Sounds** *(starting sound)*")
         _render_difficulty_category(
             difficulty_profile, "sound", difficulty_profile.sounds,
             add_placeholder="e.g. str, pr, b",
-            add_help="A starting-sound cue, not a whole word — converted to its "
-                     "ARPAbet onset internally (pronunciation, not spelling: "
-                     "'c' and 'k' count as the same sound).",
+            add_help="A starting-sound cue, not a whole word — matched by "
+                     "pronunciation, not spelling ('c' and 'k' count the same).",
             key_prefix="dp_sound",
         )
-
     with dp_words:
         st.markdown("**📝 Words** *(specific words)*")
         _render_words_category(difficulty_profile)
-        _candidates = extract_candidate_words(st.session_state.get("query_input", ""))
+        _candidates = extract_candidate_words(query)
         if _candidates:
-            st.caption("Or pick a word from your text below:")
+            st.caption("Or pick a word from your text:")
             _pick_col, _btn_col = st.columns([3, 1])
             with _pick_col:
                 _picked = st.selectbox(
@@ -806,961 +509,180 @@ with st.container():
                         st.rerun()
                     elif status == "duplicate":
                         st.info(f'"{_picked}" is already flagged.')
-
     with dp_phrases:
         st.markdown("**💬 Phrases** *(multi-word)*")
         _render_difficulty_category(
             difficulty_profile, "phrase", difficulty_profile.phrases,
             add_placeholder="e.g. through the research",
             add_help="A multi-word phrase that's difficult as a whole, even if "
-                     "no single word in it is individually flagged. Type it, "
-                     "or select-and-copy it from the text box above.",
+                     "no single word in it is individually flagged.",
             key_prefix="dp_phrase",
         )
 
-    # Full-width word-specific pattern editor — deliberately rendered outside
-    # the 3-column layout above (a checkbox list with friendly labels like
-    # 'TH (as in "think")' needs more than a third of the panel's width).
     _pattern_target = st.session_state.get("dp_pattern_target")
     if _pattern_target:
         _pattern_entry = difficulty_profile.find_word(_pattern_target)
         if _pattern_entry is not None:
             _render_pattern_editor(difficulty_profile, _pattern_entry)
         else:
-            st.session_state["dp_pattern_target"] = None  # stale target (word since removed)
+            st.session_state["dp_pattern_target"] = None
 
-    fluency_profile = _fluency_profile()
-    # Bug 6 fix: only save when the profile needs updating, not on every render.
-    if st.session_state.pop("profile_needs_save", False):
-        fluency_profile.save()
-    profile_html = _profile_chart_html(fluency_profile)
-    if profile_html:
-        st.markdown(
-            '<div class="pipe-label" style="margin-top:.7rem">Multi-factor profile '
-            '<span style="font-weight:400;opacity:.7">(learned from observed sessions)</span></div>'
-            + profile_html,
-            unsafe_allow_html=True,
-        )
-    st.markdown("</div>", unsafe_allow_html=True)
-
-# ── Allowlist UI ─────────────────────────────────────────────────────────────────
-with st.expander("✅ Allowlist — words that must never be substituted", expanded=False):
-    st.caption(
-        "Locked in place regardless of difficulty — the opposite of the "
-        "difficulty profile above. Useful for names, terms, or phrasing you "
-        "always want kept exactly as written."
-    )
-    al_input = st.text_input(
-        "Add to allowlist",
-        key="al_add_input",
-        placeholder="e.g. conference",
-        label_visibility="collapsed",
-    )
-    if st.button("Add", key="al_add_btn", type="secondary"):
-        word = al_input.strip().lower()
-        if word and word not in st.session_state.allowlist_words:
-            st.session_state.allowlist_words.append(word)
-            _save_prefs()
-            st.rerun()
-
-    if st.session_state.allowlist_words:
-        st.markdown('<div class="blocklist-panel">', unsafe_allow_html=True)
-        for aw in list(st.session_state.allowlist_words):
-            col_word, col_rm = st.columns([4, 1])
-            with col_word:
-                st.markdown(f'<span class="allowlist-item">✅ {_fmt(aw)}</span>',
-                            unsafe_allow_html=True)
-            with col_rm:
-                if st.button("✕", key=f"al_rm_{aw}", type="secondary",
-                             help=f"Remove '{aw}' from allowlist"):
-                    st.session_state.allowlist_words.remove(aw)
-                    _save_prefs()
-                    st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
-    else:
-        st.caption("No allowlisted words yet.")
-
-# ── Run button ─────────────────────────────────────────────────────────────────
-_, col1, _ = st.columns([1, 2, 1])
-with col1:
-    search_clicked = st.button("Run speech profile", use_container_width=True)
-
-# Auto-clear on new input
-if lookup_source.strip() and lookup_source.strip() != st.session_state.get("last_query", ""):
-    if not search_clicked:
-        for k in ("result", "sanitized", "fixes", "user_choices",
-                  "grammar_fixes_applied", "correction_map", "_word_results",
-                  "ms_results", "ms_choices", "multi_mode",
-                  "profile_rewrite_single_sig", "profile_rewrite_single_result",
-                  "profile_rewrite_paragraph_sig", "profile_rewrite_paragraph_result",
-                  "rephrase_single_sig", "rephrase_single_result", "rephrase_single_use",
-                  "rephrase_paragraph_sig", "rephrase_paragraph_result", "rephrase_paragraph_use"):
-            st.session_state[k] = {} if "choices" in k else ([] if k in ("fixes","grammar_fixes_applied","ms_results") else None)
-        st.session_state.user_choices  = {}
-        st.session_state.ms_choices    = {}
-        st.session_state.ms_results    = []
-        st.session_state.rephrase_single_use = False
-        st.session_state.rephrase_paragraph_use = False
-
-# ── Process on click ───────────────────────────────────────────────────────────
-source_text = lookup_source.strip()
-if search_clicked and source_text:
-    # Reset everything
-    st.session_state.update({
-        "user_choices": {}, "ms_choices": {}, "ms_results": [],
-        "result": None, "sanitized": None, "fixes": [],
-        "grammar_fixes_applied": [], "correction_map": {},
-        "_word_results": None, "last_query": source_text,
-        "original_query": source_text, "multi_mode": False,
-        "profile_rewrite_single_sig": None, "profile_rewrite_single_result": None,
-        "profile_rewrite_paragraph_sig": None, "profile_rewrite_paragraph_result": None,
-        "rephrase_single_sig": None, "rephrase_single_result": None, "rephrase_single_use": False,
-        "rephrase_paragraph_sig": None, "rephrase_paragraph_result": None, "rephrase_paragraph_use": False,
-    })
-
-    sem.MIN_SEMANTIC = sem_threshold
-    patterns = list(st.session_state.stutter_patterns)
-    blocked  = set(st.session_state.blocked_words)
-    # allowlist → treat as protected (we skip substitution on these words in rewrite)
-    allowlisted = set(st.session_state.get("allowlist_words", []))
-
-    # ── Detect multi-sentence ──────────────────────────────────────────────────
-    sentences = _split_sentences(source_text)
-    is_multi  = len(sentences) > 1
-
-    if is_multi:
-        st.session_state.multi_mode = True
-        ms_results = []
-        with st.spinner(f"Processing {len(sentences)} sentence{'s' if len(sentences)>1 else ''}…"):
-            for raw_sent in sentences:
-                sanitized, fixes = sanitize_input(raw_sent)
-                sent_is_sentence = is_sentence(sanitized)
-                result = None
-                if sent_is_sentence:
-                    result = rewriter.rewrite(
-                        sanitized, top_k=top_k,
-                        stutter_patterns=patterns,
-                        blocked_words=blocked, allowlist=allowlisted,  # allowlist locks words
-                    )
-                ms_results.append({
-                    "raw": raw_sent,
-                    "sanitized": sanitized,
-                    "fixes": fixes,
-                    "is_sentence": sent_is_sentence,
-                    "result": result,
-                })
-        st.session_state.ms_results = ms_results
-
-    else:
-        # Single sentence / word mode
-        corrected_query, grammar_fixes = sanitize_input(source_text)
-        st.session_state.grammar_fixes_applied = grammar_fixes
-        st.session_state.corrected_query = corrected_query
-
-        correction_map = {}
-        for fix in grammar_fixes:
-            orig = fix.get("original", "")
-            corr = fix.get("corrected", "")
-            if orig and corr:
-                correction_map[corr.lower()] = orig
-        st.session_state.correction_map = correction_map
-
-        st.session_state.sentence_mode = is_sentence(corrected_query)
-
-        if not st.session_state.sentence_mode:
-            with st.spinner("Looking up synonyms…"):
-                st.session_state._word_results = engine.get_synonyms(
-                    corrected_query, top_k=top_k)
-        else:
-            # Re-use the already-sanitized corrected_query — no second pass needed.
-            # sanitize_input was already called above; calling it again on its own
-            # output wastes two full POS-tag passes and can produce duplicate fix entries.
-            sanitized = corrected_query
-            fixes     = grammar_fixes          # same list, already stored above
-            st.session_state.sanitized = sanitized
-            st.session_state.fixes     = fixes
-            with st.spinner("Analysing sentence, running semantic filter…"):
-                result = rewriter.rewrite(
-                    sanitized, top_k=top_k,
-                    stutter_patterns=patterns,
-                    blocked_words=blocked, allowlist=allowlisted,
-                )
-            st.session_state.result = result
-
-    st.rerun()
-
-elif search_clicked and not source_text:
-    st.warning("Please enter a word or sentence.")
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# RENDER HELPERS — shared between single and multi-sentence modes
-# ─────────────────────────────────────────────────────────────────────────────
-
-def _render_word_pickers(result: dict, sanitized: str, sid: int,
-                         patterns, blocked, sbert_ok, show_scores) -> str:
-    """
-    Render synonym picker cards for one sentence.
-    sid = sentence index (0 for single mode).
-    Returns the rebuilt sentence string.
-    """
-    choices_key = sid  # int key into ms_choices / 0 for single
-
-    for sub in result["substitutions"]:
-        word      = sub["original_word"]
-        tag       = sub["tag"]
-        pos_key   = sub["position"]
-        on_pat    = (word.lower() in blocked) or ph.matches_any(word, patterns)
-        diff      = ph.word_difficulty(word)
-        onset_str = "/".join(ph.onset(word)) or "—"
-        tag_warn  = "<span class='badge badge-red'>⚠ stutter risk</span>" if on_pat else ""
-        tag_cls   = "badge-warn" if on_pat else "badge-blue"
-
-        accepted_syns = [
-            s for s in sub.get("scored", [])
-            if s["accepted"] and s.get("phoneme_ok", True)
-        ]
-        best_lemma = accepted_syns[0]["lemma"]  if accepted_syns else word.lower()
-        best_infl  = accepted_syns[0]["inflected"] if accepted_syns else word
-        auto_lemma = best_lemma
-
-        options     = [word]
-        for s in accepted_syns[:8]:
-            if s["inflected"] not in options:
-                options.append(s["inflected"])
-
-        default_idx = 1 if len(options) > 1 else 0
-        # Per-sentence per-position choices
-        if sid == 0:
-            choices = st.session_state.user_choices
-        else:
-            choices = st.session_state.ms_choices.setdefault(sid, {})
-
-        prior = choices.get(pos_key)
-        if prior and prior in options:
-            default_idx = options.index(prior)
-        elif prior and prior not in options:
-            options.append(prior)
-            default_idx = len(options) - 1
-
-        st.markdown(f"""
-<div class="syn-grid-card">
-  <div class="word-card-header">
-    <span class="word-title">{_fmt(word)}</span>
-    <span class="badge badge-gray">{tag}</span>
-    <span class="badge {tag_cls}">onset /{onset_str}/</span>
-    <span class="badge badge-gray">diff {diff:.2f}</span>
-    {tag_warn}
-  </div>""", unsafe_allow_html=True)
-
-        pill_html = '<div class="pill-wrap">'
-        for s in accepted_syns[:5]:
-            is_best  = s["lemma"] == auto_lemma
-            cls      = "top" if is_best else "mid"
-            sim_val  = s.get("semantic_sim") or 0
-            freq_val = s["freq_score"]
-            pill_html += (
-                f'<span class="pill {cls}" '
-                f'title="sim {sim_val:.2f} · freq {freq_val:.2f}">'
-                f'{_fmt(s["inflected"])}</span>'
-            )
-        pill_html += "</div>"
-        st.markdown(pill_html, unsafe_allow_html=True)
-        st.markdown("</div>", unsafe_allow_html=True)
-
-        # Selectbox + revert button on same row
-        scol1, scol2 = st.columns([5, 1])
-        with scol1:
+    if query.strip():
+        preview_html = _risk_preview(query, difficulty_profile)
+        if preview_html:
             st.markdown(
-                f'<div class="picker-word-label">Pick replacement for <em>{word}</em>:</div>',
+                '<div class="pipe-label" style="margin-top:.7rem">In your text right now</div>'
+                + preview_html,
                 unsafe_allow_html=True,
             )
-            chosen = st.selectbox(
-                f"Replace '{word}' (s{sid})",
-                options=options,
-                index=default_idx,
-                key=f"pick_s{sid}_{pos_key}",
-                label_visibility="collapsed",
-            )
-            choices[pos_key] = chosen
+    st.markdown("</div>", unsafe_allow_html=True)
 
-        with scol2:
-            st.markdown("<div style='padding-top:1.55rem'>", unsafe_allow_html=True)
-            if st.button("↺", key=f"revert_s{sid}_{pos_key}", type="secondary",
-                         help=f"Revert '{word}' to the original"):
-                choices[pos_key] = word
-                st.rerun()
-            st.markdown("</div>", unsafe_allow_html=True)
+# ── Step 3: reformulate ──────────────────────────────────────────────────────
+st.markdown('<div class="step-kicker">Step 3 · Reformulate</div>', unsafe_allow_html=True)
+_, col1, _ = st.columns([1, 2, 1])
+with col1:
+    reformulate_clicked = st.button("Reformulate", use_container_width=True)
 
-        # Custom word input
-        custom_word = st.text_input(
-            f"Or type your own word for '{word}':",
-            key=f"custom_s{sid}_{pos_key}",
-            placeholder="Type any word…",
+if reformulate_clicked and not query.strip():
+    st.warning("Enter some text first.")
+
+if reformulate_clicked and query.strip():
+    sem.MIN_SEMANTIC = sem_threshold
+    corrected_text, grammar_fixes = sanitize_input(query.strip())
+    settings = reformulate.ReformulateSettings(
+        sbert_threshold=sem_threshold, top_k=top_k,
+    )
+    with st.spinner("Reformulating…"):
+        result = reformulate.reformulate(corrected_text, difficulty_profile, settings)
+    st.session_state.reformulate_result = result
+    st.session_state.reformulate_source_text = query.strip()
+    st.session_state.grammar_fixes = [
+        f for f in grammar_fixes if f.get("original") != f.get("corrected")
+    ]
+    st.session_state.change_choices = {}
+    st.rerun()
+
+# ── Step 4: review ────────────────────────────────────────────────────────────
+result = st.session_state.get("reformulate_result")
+if result is not None:
+    st.markdown('<div class="step-kicker">Step 4 · Review</div>', unsafe_allow_html=True)
+
+    if query.strip() != st.session_state.get("reformulate_source_text"):
+        st.markdown(
+            '<div class="status-banner status-warn">Your text has changed since this '
+            'result was generated — click Reformulate again to update it.</div>',
+            unsafe_allow_html=True,
         )
-        if custom_word.strip():
-            cw = custom_word.strip()
-            if re.match(r"^[a-zA-Z\-']+$", cw):
-                # ── Issue 6 fix: phoneme firewall on custom words ──────────────
-                # Warn if the custom word starts with one of the user's stutter
-                # onsets or is on their blocked list — same check Gate B applies
-                # to engine candidates.  We warn but still allow, because the
-                # user may be deliberately overriding for a specific reason.
-                cw_onset_hit = (cw.lower() in blocked) or ph.matches_any(cw, patterns)
-                if cw_onset_hit and patterns:
-                    onset_str_cw = "/".join(ph.onset(cw)) or cw[0].upper()
-                    st.caption(
-                        f"⚠ '{cw}' starts with your stutter onset (/{onset_str_cw}/) "
-                        f"— it may be difficult to say. You can still use it."
-                    )
-                else:
-                    st.caption(f"✓ Using custom word: {cw}")
-                choices[pos_key] = cw
-            else:
-                st.caption("⚠ Custom word should contain only letters.")
 
-        # Scoring table
-        if show_scores and sub.get("scored"):
-            with st.expander(f"📊 Scores for '{sub['original_word']}'", expanded=False):
-                rows_html = ""
-                for sc in sub["scored"][:8]:
-                    is_chosen = sc["lemma"] == auto_lemma
-                    phon_ok   = sc.get("phoneme_ok", True)
-                    dimmed    = (not sc["accepted"]) or (not phon_ok)
-                    row_cls   = "chosen-row" if is_chosen else ("rejected" if dimmed else "")
-                    star      = "★ " if is_chosen else ""
-                    if not sc["accepted"]:
-                        status_cell = "✗ sem"
-                    elif not phon_ok:
-                        status_cell = "✗ onset"
-                    else:
-                        status_cell = "✓"
-
-                    if sbert_ok and sc["semantic_sim"] is not None:
-                        sim_val  = sc["semantic_sim"]
-                        sim_cls  = "sim-accept" if sc["accepted"] else "sim-reject"
-                        bar_w    = int(sim_val * 60)
-                        freq_bar = int(sc["freq_score"] * 60)
-                        rows_html += (
-                            f'<tr class="{row_cls}">'
-                            f'<td>{star}{sc["inflected"]}</td>'
-                            f'<td><span class="sim-tag {sim_cls}">{sim_val:.2f}</span>'
-                            f'<span class="bar-wrap"><span class="bar-fill orange" style="width:{bar_w}px"></span></span></td>'
-                            f'<td>{sc["freq_score"]:.2f}'
-                            f'<span class="bar-wrap" style="margin-left:4px"><span class="bar-fill" style="width:{freq_bar}px"></span></span></td>'
-                            f'<td><strong>{sc["combined"]:.3f}</strong></td>'
-                            f'<td>{status_cell}</td></tr>'
-                        )
-                    else:
-                        freq_bar = int(sc["freq_score"] * 60)
-                        rows_html += (
-                            f'<tr class="{row_cls}">'
-                            f'<td>{star}{sc["inflected"]}</td>'
-                            f'<td>{sc["freq_score"]:.2f}'
-                            f'<span class="bar-wrap" style="margin-left:4px"><span class="bar-fill" style="width:{freq_bar}px"></span></span></td>'
-                            f'<td>{status_cell}</td></tr>'
-                        )
-
-                if sbert_ok:
-                    th = "<tr><th>Candidate</th><th>Semantic</th><th>Freq</th><th>Score</th><th></th></tr>"
-                else:
-                    th = "<tr><th>Candidate</th><th>Freq</th><th></th></tr>"
+    if st.session_state.grammar_fixes:
+        with st.expander(f"✏️ Spelling/grammar fixes applied ({len(st.session_state.grammar_fixes)})",
+                          expanded=False):
+            for fix in st.session_state.grammar_fixes:
                 st.markdown(
-                    f'<table class="score-table"><thead>{th}</thead><tbody>{rows_html}</tbody></table>',
+                    f'<span style="text-decoration:line-through;opacity:.55">{_fmt(fix.get("original"))}</span> '
+                    f'&rarr; <strong>{_fmt(fix.get("corrected"))}</strong> '
+                    f'<span style="opacity:.6;font-size:.82rem">— {_fmt(fix.get("reason") or fix.get("description") or "")}</span>',
                     unsafe_allow_html=True,
                 )
 
-    # skipped words
-    if result.get("skipped"):
-        sk_html = " ".join(
-            f'<span class="no-syn-chip">⊘ <strong>{s["word"]}</strong>'
-            f'<span style="opacity:.7"> — {s["reason"]}</span></span>'
-            for s in result["skipped"]
-        )
+    status = result["status"]
+    if status == "no_change_needed":
         st.markdown(
-            f'<div style="margin-top:.5rem;font-size:.82rem;color:#6f87a6">'
-            f'Kept unchanged: {sk_html}</div>',
+            '<div class="status-banner status-ok">✓ Nothing in this text matched your '
+            'difficulty profile — no changes needed.</div>', unsafe_allow_html=True,
+        )
+    elif status == "reformulated":
+        st.markdown(
+            '<div class="status-banner status-ok">✓ Reformulated — review the changes below.</div>',
             unsafe_allow_html=True,
         )
-
-    # return the rebuilt sentence with current choices
-    if sid == 0:
-        return rewriter.rebuild_with_choices(
-            sanitized, result["substitutions"], st.session_state.user_choices)
     else:
-        return rewriter.rebuild_with_choices(
-            sanitized, result["substitutions"],
-            st.session_state.ms_choices.get(sid, {}))
-
-
-def _render_final_card(sanitized: str, rebuilt: str, prefix: str = "⑤") -> None:
-    """Render the final output card with difficulty meter + copy area."""
-    from nltk import word_tokenize as _wt
-    diff_before = ph.sentence_difficulty(_content_words(sanitized))
-    diff_after  = ph.sentence_difficulty(_content_words(rebuilt))
-    delta = diff_after - diff_before
-    if delta < -0.005:
-        d_cls, d_word, arrow, bar_col = "diff-down", "easier", "↓", "#7ddba5"
-    elif delta > 0.005:
-        d_cls, d_word, arrow, bar_col = "diff-up", "harder", "↑", "#f3b4b4"
-    else:
-        d_cls, d_word, arrow, bar_col = "diff-same", "no change", "→", "#b8d9f5"
-
-    st.markdown(f"""
-<div class="pipe-card" style="border-color:#f0c090">
-  <div class="pipe-label" style="color:#f57c2b">{prefix} Final Sentence</div>
-  <div class="output-box">{_fmt(rebuilt)}</div>
-  <div class="diff-meter">
-    <span class="diff-num {d_cls}">{diff_after:.2f}</span>
-    <div class="diff-track">
-      <div class="diff-bar" style="width:{int(diff_after*100)}%;background:{bar_col}"></div>
-    </div>
-  </div>
-  <div style="font-size:.78rem;color:#5a7096;margin-top:.2rem">
-    Stutter difficulty: <strong>{diff_before:.2f} → {diff_after:.2f}</strong>
-    <span class="{d_cls}">({arrow} {d_word})</span>
-  </div>
-</div>""", unsafe_allow_html=True)
-
-    st.caption("📋 Copy sentence:")
-    st.code(rebuilt, language=None)
-
-
-def _rephrase_signature(original: str, rebuilt: str, patterns, blocked) -> tuple:
-    return (
-        original,
-        rebuilt,
-        tuple(patterns or []),
-        tuple(sorted(blocked or [])),
-    )
-
-
-def _combine_rephrase_results(original: str, rebuilt: str, rows: list[dict]) -> dict:
-    rephrased = " ".join(r.get("rephrased", "") for r in rows).strip() or rebuilt
-    sims = [r.get("sim") for r in rows if r.get("sim") is not None]
-    sim = round(sum(sims) / len(sims), 4) if sims else None
-    return {
-        "rephrased": rephrased,
-        "applied": any(r.get("applied") for r in rows),
-        "sim": sim,
-        "violations": sum(int(r.get("violations") or 0) for r in rows),
-        "difficulty": ph.sentence_difficulty(_content_words(rephrased)),
-        "candidates": [c for r in rows for c in r.get("candidates", [])],
-        "original": original,
-    }
-
-
-def _get_rephrase_result(scope: str, original: str, rebuilt: str,
-                         patterns, blocked, sentence_pairs=None) -> dict | None:
-    if not st.session_state.get("rephrase_enabled"):
-        return None
-    import rephrase as _rephrase
-
-    sig = _rephrase_signature(original, rebuilt, patterns, blocked)
-    sig_key = f"rephrase_{scope}_sig"
-    result_key = f"rephrase_{scope}_result"
-    use_key = f"rephrase_{scope}_use"
-
-    if st.session_state.get(sig_key) != sig:
-        with st.spinner("Preparing optional fluency rephrase..."):
-            if sentence_pairs:
-                rows = [
-                    _rephrase.choose_best(orig, built, patterns, blocked)
-                    for orig, built in sentence_pairs
-                ]
-                result = _combine_rephrase_results(original, rebuilt, rows)
-            else:
-                result = _rephrase.choose_best(original, rebuilt, patterns, blocked)
-        st.session_state[sig_key] = sig
-        st.session_state[result_key] = result
-        st.session_state[use_key] = False
-
-    return st.session_state.get(result_key)
-
-
-def _render_rephrase_card(scope: str, original: str, rebuilt: str,
-                          patterns, blocked, sentence_pairs=None) -> str:
-    result = _get_rephrase_result(scope, original, rebuilt, patterns, blocked, sentence_pairs)
-    if result is None:
-        return rebuilt
-
-    use_key = f"rephrase_{scope}_use"
-    proposed = result.get("rephrased") or rebuilt
-    diff_before = ph.sentence_difficulty(_content_words(rebuilt))
-    diff_after = result.get("difficulty")
-    if diff_after is None:
-        diff_after = ph.sentence_difficulty(_content_words(proposed))
-    sim_text = "n/a" if result.get("sim") is None else f"{result['sim']:.2f}"
-    applied = bool(result.get("applied"))
-
-    note = "" if applied else '<div style="font-size:.86rem;color:#6f87a6;margin-top:.45rem">No rephrase applied.</div>'
-    st.markdown(f"""
-<div class="pipe-card" style="border-color:#b8d9f5">
-  <div class="pipe-label">⑥ Fluency Rephrase (optional)</div>
-  <div class="output-box">{_fmt(proposed)}</div>
-  <div style="font-size:.78rem;color:#5a7096;margin-top:.55rem">
-    Similarity: <strong>{sim_text}</strong> · onset violations:
-    <strong>{int(result.get("violations") or 0)}</strong> · difficulty:
-    <strong>{diff_before:.2f} → {diff_after:.2f}</strong>
-  </div>
-  {note}
-</div>""", unsafe_allow_html=True)
-
-    if applied:
-        col_use, _ = st.columns([1, 2])
-        with col_use:
-            if st.button("Use this rephrase", key=f"use_rephrase_{scope}", type="secondary"):
-                st.session_state[use_key] = True
-        if st.session_state.get(use_key):
-            st.caption("Using fluency rephrase for the final output.")
-
-    return proposed if st.session_state.get(use_key) else rebuilt
-
-
-def _profile_rewrite_signature(base_text: str, patterns, blocked, allowlisted) -> tuple:
-    profile = _fluency_profile()
-    return (
-        base_text,
-        tuple(patterns or []),
-        tuple(sorted(blocked or [])),
-        tuple(sorted(allowlisted or [])),
-        profile.event_count,
-        tuple(profile.top_onsets(20)),
-    )
-
-
-def _get_profile_rewrite_result(scope: str, base_text: str,
-                                patterns, blocked, allowlisted) -> dict | None:
-    if not st.session_state.get("profile_rewrite_enabled", True):
-        return None
-
-    sig = _profile_rewrite_signature(base_text, patterns, blocked, allowlisted)
-    sig_key = f"profile_rewrite_{scope}_sig"
-    result_key = f"profile_rewrite_{scope}_result"
-
-    if st.session_state.get(sig_key) != sig:
-        profile = _fluency_profile()
-        with st.spinner("Preparing profile-aware rewrite..."):
-            result = profile_rewriter.rewrite_paragraph(
-                base_text,
-                profile,
-                always_keep=allowlisted,
-                always_replace=blocked,
-            )
-        st.session_state[sig_key] = sig
-        st.session_state[result_key] = result
-
-    return st.session_state.get(result_key)
-
-
-def _render_profile_rewrite_card(scope: str, base_text: str,
-                                 patterns, blocked, allowlisted) -> str:
-    result = _get_profile_rewrite_result(scope, base_text, patterns, blocked, allowlisted)
-    if result is None:
-        return base_text
-
-    profile = _fluency_profile()
-    changes = list(result.get("change_log", []))
-    if not changes:
-        metrics = result.get("metrics", {})
-        st.markdown(f"""
-<div class="pipe-card" style="border-color:#b8d9f5">
-  <div class="pipe-label">Profile-Aware Rewrite</div>
-  <div class="output-box">{_fmt(base_text)}</div>
-  <div style="color:#6f87a6;font-size:.9rem;margin-top:.38rem">No high-risk words found — sentence kept as-is.</div>
-  <div style="font-size:.78rem;color:#5a7096;margin-top:.45rem">
-    Difficulty: <strong>{metrics.get("difficulty_before", 0):.2f} → {metrics.get("difficulty_after", 0):.2f}</strong>
-  </div>
-</div>""", unsafe_allow_html=True)
-        return base_text
-
-    st.markdown("""
-<div class="pipe-card" style="border-color:#b8d9f5">
-  <div class="pipe-label">Profile-Aware Rewrite</div>
-</div>""", unsafe_allow_html=True)
-
-    accepted_ids = []
-    for change in changes:
-        change_id = change["id"]
-        key = f"profile_rewrite_{scope}_accept_{abs(hash(change_id))}"
-        if key not in st.session_state:
-            st.session_state[key] = True
-        label = (
-            f"{change['orig']} -> {change['replacement']} "
-            f"(diff {change['difficulty_before']:.2f} to {change['difficulty_after']:.2f})"
-        )
-        if st.checkbox(label, value=bool(st.session_state[key]), key=key):
-            accepted_ids.append(change_id)
-        sim_text = "n/a" if change.get("sim") is None else f"{change['sim']:.2f}"
         st.markdown(
-            f'<div style="font-size:.78rem;color:#5a7096;margin:-.2rem 0 .45rem .2rem">'
-            f'{_fmt(change.get("reason"))} · sim {sim_text} · score {change.get("score", 0):.2f}</div>',
+            '<div class="status-banner status-error">⚠ Some parts of this text matched your '
+            'difficulty profile, but no change could be made without risking the meaning. '
+            'Those parts were left as written — see "Left unchanged" below.</div>',
             unsafe_allow_html=True,
         )
 
-    final_text = profile_rewriter.render_with_decisions(result, accepted_ids)
-    metrics = profile_rewriter.metrics(base_text, final_text, profile)
-    st.markdown(f"""
-<div class="pipe-card" style="border-color:#b8d9f5">
-  <div class="output-box">{_fmt(final_text)}</div>
-  <div style="font-size:.78rem;color:#5a7096;margin-top:.55rem">
-    Difficulty: <strong>{metrics.get("difficulty_before", 0):.2f} → {metrics.get("difficulty_after", 0):.2f}</strong>
-    · risk words: <strong>{metrics.get("difficulty_onset_before", 0)} → {metrics.get("difficulty_onset_after", 0)}</strong>
-  </div>
-</div>""", unsafe_allow_html=True)
-    return final_text
+    final_text = _apply_change_choices(result, st.session_state.change_choices) if result["changes"] else result["reformulated_text"]
 
+    st.markdown(f'<div class="output-box">{_fmt(final_text)}</div>', unsafe_allow_html=True)
+    st.caption("📋 Copy:")
+    st.code(final_text, language=None)
 
-# ─────────────────────────────────────────────────────────────────────────────
-# MULTI-SENTENCE RESULTS
-# ─────────────────────────────────────────────────────────────────────────────
-if st.session_state.get("multi_mode") and st.session_state.ms_results:
-    ms_results = st.session_state.ms_results
-    patterns   = list(st.session_state.stutter_patterns)
-    blocked    = set(st.session_state.blocked_words)
-    allowlisted = set(st.session_state.get("allowlist_words", []))
+    if result["changes"]:
+        st.markdown("#### Changes")
+        for i, change in enumerate(result["changes"]):
+            keep = st.session_state.change_choices.get(i, True)
+            tag_cls = "restructuring" if change["source"] == "restructuring" else ""
+            col_text, col_toggle = st.columns([5, 1])
+            with col_text:
+                st.markdown(
+                    f'<div class="change-card">'
+                    f'<span class="change-tag {tag_cls}">{change["source"]}</span> '
+                    f'<div class="change-arrow">'
+                    f'<span class="change-before">{_fmt(change["original"])}</span>'
+                    f'<span>&rarr;</span>'
+                    f'<span class="change-after">{_fmt(change["replacement"])}</span>'
+                    f'</div></div>',
+                    unsafe_allow_html=True,
+                )
+            with col_toggle:
+                new_keep = st.checkbox("Keep", value=keep, key=f"change_keep_{i}")
+                if new_keep != keep:
+                    st.session_state.change_choices[i] = new_keep
+                    st.rerun()
 
-    st.markdown(
-        '<span class="mode-tag mode-multi">📄 Paragraph Mode — '
-        f'{len(ms_results)} sentences</span>',
-        unsafe_allow_html=True,
-    )
+            v = change["verification"]
+            with st.expander("Why this change / verification", expanded=False):
+                st.markdown(
+                    f"- Triggered by: **{', '.join(change['triggered_by'])}**\n"
+                    f"- Meaning similarity (SBERT): **{v['sbert_sim'] if v['sbert_sim'] is not None else 'n/a'}**\n"
+                    f"- Antonym check: **{v['antonym_check']}**\n"
+                    f"- Difficulty score: **{v['difficulty_before']} → {v['difficulty_after']}**"
+                )
 
-    # Grammar note (all fixes across sentences)
-    all_fixes = []
-    for sr in ms_results:
-        all_fixes.extend(sr.get("fixes", []))
-    if all_fixes:
-        with st.expander("📝 Grammar corrections applied", expanded=False):
-            st.markdown(_grammar_explanation(all_fixes), unsafe_allow_html=True)
-
-    for sid, sr in enumerate(ms_results):
-        sent_sanitized = sr["sanitized"]
-        sent_result    = sr.get("result")
-
-        st.markdown(
-            f'<div class="sent-card">'
-            f'<div class="sent-header">'
-            f'<span class="sent-num">#{sid + 1}</span>'
-            f'<span class="badge badge-gray" style="font-size:.72rem">'
-            f'{"sentence" if sr["is_sentence"] else "phrase"}</span>'
-            f'</div>',
-            unsafe_allow_html=True,
-        )
-
-        # Risk chips
-        chips_html = _risk_chips(sent_sanitized, patterns, blocked)
-        st.markdown(
-            f'<div style="margin-bottom:.5rem">{chips_html}</div>',
-            unsafe_allow_html=True,
-        )
-
-        if sr["is_sentence"] and sent_result and sent_result.get("substitutions"):
-            st.markdown("**Synonym pickers:**")
-            rebuilt_sent = _render_word_pickers(
-                sent_result, sent_sanitized, sid + 1,
-                patterns, blocked, sbert_ok, show_scores,
-            )
-
-            # Diff highlight for this sentence
-            from nltk import word_tokenize as _wt
-            orig_tok  = _wt(sent_sanitized)
-            reblt_tok = _wt(rebuilt_sent)
-            diff_parts = []
-            for ot, rt in zip(orig_tok, reblt_tok):
-                if ot.lower() != rt.lower() and re.match(r"[a-zA-Z]", ot):
-                    diff_parts.append(
-                        f'<span class="orig-word">{ot}</span>'
-                        f'<span class="new-word">{rt}</span>'
-                    )
-                else:
-                    diff_parts.append(rt)
-            highlighted = " ".join(diff_parts)
+    if result["skipped"]:
+        st.markdown("#### Left unchanged")
+        for s in result["skipped"]:
             st.markdown(
-                f'<div class="diff-text" style="margin-top:.4rem">{highlighted}</div>',
-                unsafe_allow_html=True,
-            )
-        else:
-            st.markdown(
-                f'<div style="color:#5a7096;font-size:.9rem">'
-                f'{_fmt(sent_sanitized)}'
-                f'<span style="opacity:.5;font-size:.8rem"> — no substitutions</span></div>',
+                f'<div class="skip-chip">⊘ <strong>{_fmt(s["word"])}</strong>'
+                f'<span style="opacity:.75"> — {_fmt(s["reason"])}</span></div>',
                 unsafe_allow_html=True,
             )
 
-        st.markdown("</div>", unsafe_allow_html=True)
-
-    # ── Full paragraph final output ────────────────────────────────────────────
-    full_rebuilt = _full_rebuilt_paragraph()
-    if full_rebuilt:
-        st.markdown("---")
-        st.markdown("### ✦ Rebuilt Paragraph")
-        rephrase_pairs = []
-        for sid, sr in enumerate(ms_results):
-            if sr["is_sentence"] and sr.get("result"):
-                rb = rewriter.rebuild_with_choices(
-                    sr["sanitized"],
-                    sr["result"]["substitutions"],
-                    st.session_state.ms_choices.get(sid + 1, {}),
-                )
-            else:
-                rb = sr["sanitized"]
-            rephrase_pairs.append((sr["sanitized"], rb))
-        original_paragraph = " ".join(orig for orig, _ in rephrase_pairs)
-        profile_rebuilt = _render_profile_rewrite_card(
-            "paragraph",
-            full_rebuilt,
-            patterns,
-            blocked,
-            allowlisted,
-        )
-        display_rebuilt = _render_rephrase_card(
-            "paragraph",
-            original_paragraph,
-            profile_rebuilt,
-            patterns,
-            blocked,
-        )
-
-        # Difficulty
-        all_words_before = []
-        all_words_after  = _content_words(display_rebuilt)
-        for sid, sr in enumerate(ms_results):
-            all_words_before.extend(_content_words(sr["sanitized"]))
-
-        diff_before = ph.sentence_difficulty(all_words_before)
-        diff_after  = ph.sentence_difficulty(all_words_after)
-        delta = diff_after - diff_before
-        if delta < -0.005:
-            d_cls, d_word, arrow = "diff-down", "easier", "↓"
-        elif delta > 0.005:
-            d_cls, d_word, arrow = "diff-up", "harder", "↑"
-        else:
-            d_cls, d_word, arrow = "diff-same", "no change", "→"
-
-        st.markdown(f"""
-<div class="pipe-card" style="border-color:#f0c090">
-  <div class="pipe-label" style="color:#f57c2b">📄 Full Paragraph Output</div>
-  <div class="output-box">{_fmt(display_rebuilt)}</div>
-  <div style="font-size:.78rem;color:#5a7096;margin-top:.55rem">
-    Paragraph stutter difficulty: <strong>{diff_before:.2f} → {diff_after:.2f}</strong>
-    <span class="{d_cls}">({arrow} {d_word})</span>
+    m = result["metrics"]
+    fv = result["final_verification"]
+    st.markdown("#### Verification")
+    mp = m["meaning_preservation"]
+    st.markdown(f"""
+<div class="metric-grid">
+  <div class="metric-box">
+    <div class="metric-num">{f"{mp:.0%}" if mp is not None else "n/a"}</div>
+    <div class="metric-label">Meaning kept</div>
+  </div>
+  <div class="metric-box">
+    <div class="metric-num">{m['difficulty_reduction_pct']:.0f}%</div>
+    <div class="metric-label">Difficulty reduced</div>
+  </div>
+  <div class="metric-box">
+    <div class="metric-num">{m['naturalness_edit_ratio']:.0%}</div>
+    <div class="metric-label">Text changed</div>
+  </div>
+  <div class="metric-box">
+    <div class="metric-num">{"✓" if fv["passed"] else "⚠"}</div>
+    <div class="metric-label">Final check</div>
   </div>
 </div>""", unsafe_allow_html=True)
 
-        st.caption("📋 Copy paragraph:")
-        st.code(display_rebuilt, language=None)
+    if st.button("💾 Save to session history", key="save_hist", type="secondary"):
+        st.session_state.session_history.append({
+            "original": result["original_text"],
+            "reformulated": final_text,
+        })
+        st.success("Saved!")
 
-        # Add to session history
-        if st.button("💾 Save to session history", key="save_ms_hist", type="secondary"):
-            st.session_state.session_history.append({
-                "original": st.session_state.original_query,
-                "rebuilt":  display_rebuilt,
-            })
-            st.success("Saved to session history.")
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# SINGLE-SENTENCE RESULTS
-# ─────────────────────────────────────────────────────────────────────────────
-if not st.session_state.get("multi_mode"):
-    # Grammar correction note
-    if st.session_state.last_query.strip():
-        corrected = st.session_state.get("sanitized") or st.session_state.get("corrected_query", "")
-        if corrected and corrected.strip() != st.session_state.last_query.strip():
-            st.markdown(f"""
-<div class="analysis-note">
-  <strong style="color:#1a6b3c">Grammar corrected:</strong>
-  <span>{_fmt(corrected)}</span>
-  <div style="margin-top:.45rem">{_grammar_explanation(st.session_state.get("grammar_fixes_applied", []))}</div>
-</div>""", unsafe_allow_html=True)
-
-    # ── Word mode ─────────────────────────────────────────────────────────────
-    if not st.session_state.sentence_mode and st.session_state.get("_word_results"):
-        word_results = st.session_state._word_results
-        patterns = list(st.session_state.stutter_patterns)
-        blocked  = set(st.session_state.blocked_words)
-
-        st.markdown('<span class="mode-tag mode-word">🔤 Word / Multi-word Mode</span>',
-                    unsafe_allow_html=True)
-
-        for word, syns in word_results.items():
-            diff      = ph.word_difficulty(word)
-            onset_str = "/".join(ph.onset(word)) or "—"
-            on_pat    = (word.lower() in blocked) or ph.matches_any(word, patterns)
-            tag_color = "badge-warn" if on_pat else "badge-blue"
-
-            # Defensive normalisation: engine.get_synonyms() may return either
-            #   flat list  : ["synonym1", "synonym2", ...]          (current shape)
-            #   rich dict  : {"pos": "NN", "synonyms": [{...}, ...]} (future shape)
-            # Normalise both to a flat list of strings so the renderer never crashes.
-            if isinstance(syns, dict):
-                raw_syns = syns.get("synonyms", [])
-                syn_strings = [
-                    s["lemma"] if isinstance(s, dict) else str(s)
-                    for s in raw_syns
-                ]
-            elif isinstance(syns, list):
-                syn_strings = [
-                    s["lemma"] if isinstance(s, dict) else str(s)
-                    for s in syns
-                ]
-            else:
-                syn_strings = []
-
-            st.markdown(f"""
-<div class="word-card">
-  <div class="word-card-header">
-    <span class="word-title">{_fmt(word)}</span>
-    <span class="badge {tag_color}">onset /{onset_str}/</span>
-    <span class="badge badge-gray">diff {diff:.2f}</span>
-    {"<span class='badge badge-red'>⚠ stutter risk</span>" if on_pat else ""}
-  </div>""", unsafe_allow_html=True)
-
-            if syn_strings:
-                st.markdown('<div class="pill-wrap">', unsafe_allow_html=True)
-                for s in syn_strings[:8]:
-                    phon_ok = (not ph.matches_any(s, patterns)
-                               and s.lower() not in blocked)
-                    cls = "top" if phon_ok else "mid"
-                    st.markdown(f'<span class="pill {cls}">{_fmt(s)}</span>',
-                                unsafe_allow_html=True)
-                st.markdown("</div>", unsafe_allow_html=True)
-            else:
-                st.markdown('<span class="badge badge-gray">No synonyms found</span>',
-                            unsafe_allow_html=True)
-
-            st.markdown("</div>", unsafe_allow_html=True)
-
-    # ── Sentence mode ─────────────────────────────────────────────────────────
-    if st.session_state.sentence_mode and st.session_state.result is not None:
-        result    = st.session_state.result
-        sanitized = st.session_state.sanitized or st.session_state.last_query
-        patterns  = list(st.session_state.stutter_patterns)
-        blocked   = set(st.session_state.blocked_words)
-        allowlisted = set(st.session_state.get("allowlist_words", []))
-
-        st.markdown('<span class="mode-tag mode-sentence">📝 Sentence Mode</span>',
-                    unsafe_allow_html=True)
-
-        # ① Risk analysis
-        chips_html = _risk_chips(sanitized, patterns, blocked)
-        st.markdown(f"""
-<div class="pipe-card">
-  <div class="pipe-label">① Word Risk Analysis</div>
-  {chips_html}
-  <div style="font-size:.75rem;color:#6f87a6;margin-top:.42rem">
-    <span class="risk-chip risk-hi" style="font-size:.72rem;padding:.15rem .5rem">high</span> onset match/blocked &nbsp;
-    <span class="risk-chip risk-mid" style="font-size:.72rem;padding:.15rem .5rem">medium</span> difficulty ≥ 0.55 &nbsp;
-    <span class="risk-chip risk-lo" style="font-size:.72rem;padding:.15rem .5rem">low</span> clear
-  </div>
-</div>""", unsafe_allow_html=True)
-
-        # ② Synonym pickers
-        if result["substitutions"]:
-            st.markdown("""
-<div class="pipe-card">
-  <div class="pipe-label">② Synonym Candidates</div>""", unsafe_allow_html=True)
-
-            rebuilt = _render_word_pickers(
-                result, sanitized, 0,
-                patterns, blocked, sbert_ok, show_scores,
-            )
-
-            st.markdown("</div>", unsafe_allow_html=True)
-        else:
-            st.markdown("""
-<div class="pipe-card">
-  <div class="pipe-label">② Synonym Candidates</div>
-  <div style="color:#6f87a6;font-size:.9rem">No substitutable content words found.</div>
-</div>""", unsafe_allow_html=True)
-            rebuilt = sanitized
-
-        # ③ Grammar check on rebuilt
-        try:
-            from nltk import pos_tag as _pt, word_tokenize as _wt
-            _rb_tags  = _pt(_wt(rebuilt))
-            _THIRD    = {"he", "she", "it"}
-            post_issues = []
-            for _idx, (_w, _t) in enumerate(_rb_tags):
-                if _w.lower() in _THIRD and _idx + 1 < len(_rb_tags):
-                    if _rb_tags[_idx + 1][1] == "VBP":
-                        post_issues.append(
-                            f'Possible agreement issue: "{_w} {_rb_tags[_idx+1][0]}"')
-        except Exception:
-            post_issues = []
-
-        pipeline_notes = [n for n in result.get("grammar_notes", [])
-                          if "passed" not in n.lower()]
-
-        if post_issues:
-            items = "".join(f"<li>{_fmt(i)}</li>" for i in post_issues)
-            grammar_html = (f'<div class="grammar-error">⚠ <strong>Grammar issues:</strong>'
-                            f'<ul style="margin:.3rem 0 0 1rem;padding:0">{items}</ul></div>')
-        elif pipeline_notes:
-            items = "".join(f"<li>{_fmt(n)}</li>" for n in pipeline_notes)
-            grammar_html = (f'<div class="grammar-warn">⚠ Notes:'
-                            f'<ul style="margin:.28rem 0 0 1rem;padding:0">{items}</ul></div>')
-        else:
-            grammar_html = '<div class="grammar-ok">✓ Grammar check passed.</div>'
-
-        st.markdown(f"""
-<div class="pipe-card">
-  <div class="pipe-label">③ Grammar Check</div>
-  {grammar_html}
-</div>""", unsafe_allow_html=True)
-
-        # ④ Diff highlight
-        from nltk import word_tokenize as _wt
-        orig_tok  = _wt(sanitized)
-        reblt_tok = _wt(rebuilt)
-        diff_parts = []
-        for ot, rt in zip(orig_tok, reblt_tok):
-            if ot.lower() != rt.lower() and re.match(r"[a-zA-Z]", ot):
-                diff_parts.append(
-                    f'<span class="orig-word">{ot}</span>'
-                    f'<span class="new-word">{rt}</span>'
-                )
-            else:
-                diff_parts.append(rt)
-        highlighted = " ".join(diff_parts)
-        st.markdown(f"""
-<div class="pipe-card">
-  <div class="pipe-label">④ Highlighted Changes</div>
-  <div class="diff-text">{highlighted}</div>
-</div>""", unsafe_allow_html=True)
-
-        profile_rebuilt = _render_profile_rewrite_card(
-            "single",
-            rebuilt,
-            patterns,
-            blocked,
-            allowlisted,
-        )
-
-        final_rebuilt = _render_rephrase_card(
-            "single",
-            sanitized,
-            profile_rebuilt,
-            patterns,
-            blocked,
-        )
-
-        # ⑤ Final output
-        _render_final_card(sanitized, final_rebuilt)
-
-        # Save to session history
-        if st.button("💾 Save to session history", key="save_single_hist", type="secondary"):
-            st.session_state.session_history.append({
-                "original": st.session_state.original_query,
-                "rebuilt":  final_rebuilt,
-            })
-            st.success("Saved!")
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# SESSION HISTORY
-# ─────────────────────────────────────────────────────────────────────────────
+# ── Session history ────────────────────────────────────────────────────────
 if st.session_state.get("session_history"):
     st.markdown("---")
     with st.expander(f"🕘 Session history ({len(st.session_state.session_history)} saved)",
@@ -1774,18 +696,15 @@ if st.session_state.get("session_history"):
                 st.markdown(f'<div class="copy-box">{_fmt(entry["original"])}</div>',
                             unsafe_allow_html=True)
             with col_b:
-                st.caption("Rebuilt")
-                st.markdown(f'<div class="copy-box">{_fmt(entry["rebuilt"])}</div>',
+                st.caption("Reformulated")
+                st.markdown(f'<div class="copy-box">{_fmt(entry["reformulated"])}</div>',
                             unsafe_allow_html=True)
-            st.code(entry["rebuilt"], language=None)
             st.markdown("---")
-
         if st.button("🗑 Clear history", key="clear_hist", type="secondary"):
             st.session_state.session_history = []
             st.rerun()
 
-
-# ── Footer ─────────────────────────────────────────────────────────────────────
+# ── Footer ─────────────────────────────────────────────────────────────────
 st.markdown("""
 <div style="text-align:center;font-size:.74rem;color:#6f87a6;margin-top:2.5rem">
   Powered by
@@ -1794,7 +713,7 @@ st.markdown("""
   <strong style="color:#4b91dc">Datamuse</strong> ·
   <strong style="color:#4b91dc">wordfreq</strong> ·
   <strong style="color:#4b91dc">pyinflect</strong> ·
-  <strong style="color:#4b91dc">NLTK</strong> ·
+  <strong style="color:#4b91dc">T5 (Vamsi/T5_Paraphrase_Paws)</strong> ·
   <strong style="color:#a855f7">pyspellchecker</strong> ·
   <strong style="color:#3b82f6">LanguageTool</strong>
 </div>

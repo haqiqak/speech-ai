@@ -154,6 +154,13 @@ against redesigning based on research alone.
 **Labeled as:** Observation (duplication is real and confirmed by reading
 both code paths), now with literature-grounded reasoning behind it, driving
 a **future** evidence-gathering step, not an implementation decision.
+**Update (2026-08-16) — resolved, not by ablation:** `reformulate.py`
+(`DECISION_LOG.md` 2026-08-16-E) supersedes both paths with a single new
+engine per the Stage 5B blueprint, rather than picking a winner between
+them via the R6 ablation below. `grammar.py::SentenceRewriter` and
+`rewrite/rewriter.py::DifficultyAwareRewriter` remain in the repo,
+untouched, but `app.py` no longer calls either — closing the duplication
+concern this item named, without needing the ablation to have run first.
 
 ### R6. Ablation: does the phoneme-onset gate change accepted candidates, and does Pipeline A or B produce better output?
 **Linked finding:** Practice.md §11, applied directly — named as a
@@ -224,6 +231,11 @@ neural network required at our data scale. Explicitly flagged there as an
 papers target much larger-scale systems). Still sequenced after the core
 substitution/escalation pipeline (R6/R10) — there must be something to
 accept or reject before this is buildable.
+**Update (2026-08-16) — prerequisite now exists, wiring still doesn't.**
+`app.py`'s new review UI has a real per-change Keep/revert signal
+(`DECISION_LOG.md` 2026-08-16-E) — the "something to accept or reject"
+this item was blocked on. Nothing yet feeds that signal back into
+`difficulty_profile.py` or a bandit-style weighting; this item stays open.
 
 ### R10. Investigate a restructuring/escalation path for when substitution has no valid candidate
 **Linked finding:** `RESEARCH.md` §5.6/§7 — the single largest capability
@@ -259,6 +271,11 @@ for this task, and synthesizing it from our own rule-based outputs would
 just teach a model to imitate rules we already have (`REFORMULATION_RESEARCH.md`
 §6). Filed as future work only if real speaker-reformulation-pair data
 ever exists (same blocking condition as R2).
+**Update (2026-08-16) — DONE.** Built in `reformulate.py::_try_escalation`
+(`DECISION_LOG.md` 2026-08-16-E): triggered by the count-threshold/
+degenerate-fraction pre-check or by any substitution failure within a
+sentence (all-or-nothing, never a partial patchwork), using `rephrase.py`
+unchanged, generate-then-verify against the original sentence.
 
 ### R11. Design a "naturalness of intervention" metric
 **Linked finding:** `RESEARCH.md` §4 — none of our current metrics, and
@@ -279,6 +296,11 @@ answer to the *how-much-changed* half of the metric. Sequenced second in
 `REFORMULATION_RESEARCH.md` §22's implementation order — needed as a
 shared before/after baseline before R6's ablation or R8's NLI addition can
 be meaningfully compared.
+**Update (2026-08-16) — DONE.** Built as `naturalness.py`
+(`edit_ratio`/`changed_word_count`, word-level `difflib.SequenceMatcher`)
+and wired into `reformulate.py`'s metrics output as
+`naturalness_edit_ratio`, reported separately from meaning-preservation
+and difficulty-reduction, never blended into one score (Practice.md §10).
 
 ---
 
@@ -309,6 +331,16 @@ open question, it sharpens this one: whatever reconciliation R12 designs
 needs to account for three granularities (learned continuous onset risk,
 declared global sounds/words/phrases, and declared word-specific patterns),
 not two. See `PROBLEM_FORMULATION.md` §1/§2/§6.
+**Update (2026-08-16) — resolved for the reformulation engine specifically.**
+`reformulate.py` consumes only the declared `DifficultyProfile` (sounds,
+words, and word-specific patterns — phrases still have no consumer, see
+R13) — the learned `SpeakerDifficultyProfile`
+is not read by the new engine at all, and its onset-risk chart was removed
+from `app.py` (`DECISION_LOG.md` 2026-08-16-E) since, with no audio/ASR
+pipeline in scope, it had no real learned data to show. This resolves the
+reconciliation by *not* combining the two signals rather than by merging
+them — `profiling/profile.py` remains in the repo, untouched, in case
+audio input returns to scope later.
 
 ### R13. Give `difficulty_profile.phrases` (and now `problem_phones`) a consumer
 **Linked finding:** `PROBLEM_FORMULATION.md` §6/§10 — phrases and (as of
@@ -325,6 +357,15 @@ word-specific pattern should change substitution candidate scoring
 differently than a plain word-level flag would.
 **Labeled as:** Future work, explicitly deferred by Stage 4A's own scope
 restriction, not overlooked.
+**Update (2026-08-16) — half done.** `problem_phones` now has a consumer:
+`reformulate.py::_flagged_positions`/`_trigger_reasons` reads a word's
+`problem_phones` and surfaces it as the `word_specific_pattern` trigger
+reason (`DECISION_LOG.md` 2026-08-16-E), resolving part (b) above by
+treating a word-specific pattern the same as a whole-word flag for
+*triggering* substitution (it doesn't yet narrow candidate scoring
+differently than a plain word-level flag would — that finer distinction
+is still open). Part (a), phrase matching, is untouched — `phrase_values()`
+is not called anywhere in `reformulate.py`. Still open.
 
 ### R14. Build and browser-verify the inline text-selection flagging component
 **Linked finding:** `PROBLEM_FORMULATION.md` §7 — a true "select text
