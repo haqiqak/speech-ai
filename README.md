@@ -54,51 +54,46 @@ communication accessibility.
 
 ## What It Does
 
-Speech AI runs your sentence through a seven-stage pipeline:
+Speech AI is built around one linear workflow:
 
-1. **Grammar correction** — multi-layer rule-based pipeline (spelling, contractions, tense, subject-verb agreement, auxiliary forms, article agreement, punctuation)
-2. **POS tagging** — identifies nouns, verbs, adjectives, adverbs eligible for substitution
-3. **Synonym candidates** — fetches alternatives from WordNet, Datamuse, and wordfreq
-4. **SBERT semantic filter** — keeps only candidates whose meaning stays close to the original (adjustable threshold, default `0.85`)
-5. **Combined ranking** — scores by `0.90 × semantic similarity + 0.10 × log-normalized word frequency` (semantic similarity is the primary gate; frequency only breaks ties among candidates that already passed it — see `semantic.py`)
-6. **Phoneme firewall** — drops candidates that start with the same sound you stutter on (ARPAbet onset matching)
-7. **Inflection + rebuild** — morphologically inflects the chosen word and reassembles the sentence
+```
+enter/paste text → view & edit your difficulty profile → Reformulate →
+review proposed changes → keep/revert each one → final text
+```
 
-A second, parallel implementation adds a **profile-aware soft rewrite layer**
-(`rewrite/`): it learns a persistent, multi-factor difficulty profile per
-speaker (onset risk, syllable length, word frequency, grammatical class),
-seeded from self-report and updated over time, then ranks alternatives by
-`similarity − λ·difficulty + μ·frequency` instead of hard-blocking onsets.
-The two pipelines are independently implemented and not yet compared against
-each other — see `DECISION_LOG.md` / `ROADMAP.md` R5.
+The reformulation engine (`reformulate.py`, Architecture D′ —
+`REFORMULATION_RESEARCH.md` §24–31) that runs on "Reformulate":
 
-An optional third layer (`rephrase.py`) proposes a smoother full-sentence
-paraphrase (T5) on top of either pipeline's output.
+1. **Tag** — find which words/sounds in your text match your declared difficulty profile (a global sound, a flagged word, or a word-specific sound pattern).
+2. **Substitute-and-rank** — for a sentence with a manageable number of flagged spots, try a same-meaning replacement for each: WordNet/Datamuse candidates, ranked by SBERT semantic similarity, filtered through a WordNet antonym guard and the phoneme firewall. All-or-nothing per sentence — if any flagged word can't be safely replaced, the whole sentence escalates rather than shipping a half-fixed patchwork.
+3. **Escalate to restructuring** — when a sentence has too many flagged spots to patch word-by-word (or word-by-word substitution couldn't clear every gate), a T5 model (`rephrase.py`) proposes a reworded sentence instead, which is re-checked with the same semantic and phoneme gates plus a negation-consistency check.
+4. **Verify** — the actual output is re-scanned against your profile to confirm it improved, not just assumed to have.
+5. **Report** — meaning preservation, difficulty reduction, and how much text changed are reported as separate numbers, never blended into one score, alongside anything left unchanged and why.
 
-You see a colour-coded risk map of your sentence, pick synonyms from
-dropdowns (or type your own), and get a final easier sentence with a
-before/after stutter-difficulty score.
+You review every change in a compact list — each one shows what triggered it and its verification details — and can revert any individual change back to the original wording before copying the final text.
 
 ---
 
 ## Features
 
-- 🧠 **SBERT semantic firewall** — `all-MiniLM-L6-v2` ensures replacements never drift from the original meaning
+- 🧠 **SBERT semantic firewall** — `all-MiniLM-L6-v2` ensures replacements never drift from the original meaning, plus a WordNet antonym guard and a negation-consistency check for full-sentence rewrites
 - 🔊 **Phoneme-aware filtering** — CMU Pronouncing Dictionary (ARPAbet) for onset detection, not spelling
 - 🎯 **Speaker Difficulty Profile** — one persistent, default speaker profile (no login) recording difficult sounds, words, and phrases, each declared and tracked separately; editable from a dedicated panel or by picking a word straight out of your entered text — see `PROBLEM_FORMULATION.md`
 - 🔍 **Word-specific sound patterns** — optionally narrow a difficult word down to the exact sound(s) that make it hard (e.g. "three" → specifically the TH→R transition) without assuming every occurrence of that sound elsewhere is difficult too
-- 📊 **Scoring transparency** — collapsible table showing semantic similarity, frequency score, and gate status per candidate
-- ✏️ **Custom word input** — override any suggestion with your own word
-- 📝 **Grammar correction card** — shows every fix made before synonym analysis
-- 📈 **Difficulty meter** — sentence-level stutter difficulty score before and after substitution
-- **Multi-factor fluency profile** — onset risk, syllable length, word frequency, and grammatical class with EWMA session updates
-- **Profile-aware rewrite card** — per-change accept/reject controls with transparent difficulty and similarity details
-- ✨ **Fluency rephrase (beta)** — optional T5 paraphrase pass (`rephrase.py`) that proposes a smoother full-sentence rewrite which avoids your blocked words/onsets while preserving meaning. Loads lazily on first use; degrades to passthrough if the model/stack is unavailable
-- **Research harness** — automatic metrics, lambda trade-off sweeps, profile AUC evaluation, and study CSV scaffolding
+- 🔁 **Restructuring escalation** — when word-level substitution can't safely fix a sentence, a T5 paraphrase pass proposes a reworded sentence instead, generate-then-verify against the same gates
+- ✅ **Change review with keep/revert** — every proposed change is shown with why it was made and its verification details; revert any single one back to the original wording
+- 📈 **Separate, honest metrics** — meaning preservation, difficulty reduction, and amount of text changed reported as distinct numbers, not combined into one score
+- ⚠️ **Explicit "left unchanged" reporting** — if nothing can be safely changed, that's shown, not silently guessed at
 
 *(Voice input/output and microphone-based profile updates were part of this
 repo in earlier versions; they've moved to [`out_of_scope/`](out_of_scope/)
-as audio-module functionality — see below.)*
+as audio-module functionality — see below. The older dual-pipeline UI —
+word-picker dropdowns, a profile-rewrite card and a separate rephrase-toggle
+card, an allowlist panel, a "learned" onset-risk chart — was replaced by the
+workflow above; `grammar.py::SentenceRewriter` and
+`rewrite/rewriter.py::DifficultyAwareRewriter` remain in the repo for
+comparison but are no longer called from `app.py` — see `DECISION_LOG.md`
+2026-08-16-E.)*
 
 ---
 
@@ -107,22 +102,26 @@ as audio-module functionality — see below.)*
 ```
 speech-ai/
 │
-├── app.py              # Streamlit UI — main application (text in, reformulated text out)
+├── app.py              # Streamlit UI (v8) — text → profile → Reformulate → review workflow
+├── reformulate.py       # The live reformulation engine (Architecture D′) — app.py's only entry point
+├── naturalness.py       # "Naturalness of intervention" edit-ratio metric, used by reformulate.py
 ├── difficulty_profile.py  # Speaker Difficulty Profile: sounds/words/phrases + word-specific patterns
 ├── profile_store.py     # Single default-profile storage (no accounts/login)
 │
-├── grammar.py          # Grammar correction + SentenceRewriter (the "hard" onset-gated pipeline)
-├── engine.py            # Multi-source synonym engine (WordNet + Datamuse) — v3
+├── grammar.py          # Grammar correction (still live, called by app.py) + SentenceRewriter
+│                        #   (retained for comparison, no longer called by app.py)
+├── engine.py            # Multi-source synonym engine (WordNet + Datamuse) — used by reformulate.py
 ├── phonetic.py          # ARPAbet onset extraction + stutter difficulty scoring + friendly phone labels
-├── semantic.py          # SBERT contextual re-ranking (sentence-transformers)
+├── semantic.py          # SBERT contextual re-ranking + antonym/negation checks (sentence-transformers)
 ├── freq.py              # Zipf frequency wrapper (wordfreq)
 ├── paths.py             # Redirects NLTK / SBERT caches into .cache/
-├── rephrase.py          # Optional T5 fluency-rephrase layer
-├── config.yaml          # Profiling, rewrite, and eval knobs
+├── rephrase.py          # T5 layer — reformulate.py's restructuring-escalation step
+├── config.yaml          # Profiling, rewrite, and eval knobs (consumed by the retained rewrite/ path)
 │
-├── profiling/           # Longitudinal learned difficulty model: profile.py, coldstart.py, config.py
-├── rewrite/              # Soft-constraint profile-aware rewrite engine (the "soft" pipeline)
-├── eval/                # Automatic metrics and user-study harness
+├── profiling/           # Longitudinal learned difficulty model — retained, only used by rewrite/
+├── rewrite/              # Soft-constraint profile-aware rewrite engine — retained for comparison,
+│                        #   no longer called by app.py
+├── eval/                # Automatic metrics and user-study harness (for the retained rewrite/ path)
 │
 ├── users/               # Per-profile JSON (directory name predates the removed multi-user
 │   └── default.json     #   system — see PROBLEM_FORMULATION.md §5.3 for why it wasn't renamed)
@@ -133,7 +132,8 @@ speech-ai/
 ├── scripts/              # Offline dataset-building / fine-tuning scaffolding for rephrase.py
 │
 ├── CLAUDE.md, HANDOFF.md, DOCS.md, DECISION_LOG.md, VALIDATION.md,
-├── RESEARCH.md, PROBLEM_FORMULATION.md, ROADMAP.md, CHANGELOG.md   # Living documentation set
+├── RESEARCH.md, PROBLEM_FORMULATION.md, REFORMULATION_RESEARCH.md,
+├── ROADMAP.md, CHANGELOG.md   # Living documentation set
 ├── changes.md            # Full narrative version history
 └── README.md
 ```
@@ -169,21 +169,16 @@ On first run, NLTK downloads `cmudict`, `averaged_perceptron_tagger_eng`, `punkt
 
 | Feature | Model | Size | When it downloads |
 |---------|-------|------|-------------------|
-| Fluency rephrase (beta) | `Vamsi/T5_Paraphrase_Paws` | ~890 MB | First time you run a rephrase with the toggle on |
+| Restructuring escalation | `Vamsi/T5_Paraphrase_Paws` | ~890 MB | First time `reformulate.py` needs to restructure a sentence |
 | Grammar deep-check | LanguageTool JAR | ~200 MB | First grammar correction (needs Java 8+) |
 
-If a model can't be downloaded or loaded, the app degrades gracefully — rephrase falls back to passthrough. Neither is required for the core synonym pipeline.
+If a model can't be downloaded or loaded, the app degrades gracefully — restructuring escalation is skipped (that sentence is reported as left unchanged, not silently guessed at) and grammar correction still runs its other layers. Neither is required for word-level substitution.
 
 ### Memory note (important for low-RAM machines)
 
-`accelerate` is in `requirements.txt` and is **required** for loading the transformer model on machines with limited RAM. Without it, `from_pretrained` does a transient double allocation of the weights that can crash (segfault) on tight memory. The rephrase model (~220 M params) loads comfortably with a few GB free.
+`accelerate` is in `requirements.txt` and is **required** for loading the T5 restructuring model (`rephrase.py`, used by `reformulate.py`'s escalation step) on machines with limited RAM. Without it, `from_pretrained` does a transient double allocation of the weights that can crash (segfault) on tight memory. The model (~220 M params) loads comfortably with a few GB free.
 
-On a tight-RAM machine, run the app from a **plain terminal** (not inside an IDE) to free ~1 GB. A convenience launcher is included:
-
-```powershell
-# Windows — close your IDE first, then from any PowerShell window:
-L:\speech-ai\run_app.ps1
-```
+On a tight-RAM machine, running the app from a plain terminal (not inside an IDE) frees up some RAM.
 
 ---
 
@@ -222,9 +217,7 @@ distinct from a claim that those sounds are difficult everywhere:
        "pronunciation": ["TH","R","IY"], "problem_phones": ["TH","R"], "added_at": "...", "meta": {}}
     ],
     "phrases": []
-  },
-  "custom_replacements": {},
-  "preferences": {}
+  }
 }
 ```
 
@@ -238,9 +231,13 @@ distinct from a claim that those sounds are difficult everywhere:
   `problem_phones` pattern within that word — shown as friendly labels
   (e.g. "TH (as in 'think')"), never raw phonetic notation, and **never
   automatically added to the global `sounds` list** unless you explicitly
-  check "Also add ... as a GLOBAL difficulty."
+  check "Also add ... as a GLOBAL difficulty." `reformulate.py` reads
+  `problem_phones` as a trigger reason for that one word.
 - **`difficulty_profile.phrases`** — multi-word phrases difficult as a
-  whole; not yet consumed by the reformulation pipeline.
+  whole; declared and editable in the UI, but still not consumed by
+  `reformulate.py` — phrase-level matching needs a different detection
+  mechanism than the current word-substitution/sentence-restructuring
+  model supports (`ROADMAP.md` R13).
 
 See `PROBLEM_FORMULATION.md` for the full schema rationale, the ARPAbet-vs-IPA,
 respelling, and JSON-vs-SQLite research behind these choices, and why word
@@ -284,75 +281,98 @@ profile's own (differently-weighted) difficulty formula.
 
 ---
 
-## Semantic Threshold
+## Meaning-Preservation Strictness
 
-The **Semantic threshold** slider (sidebar, default `0.85`) controls how strictly SBERT gates synonym candidates. A candidate must score above this cosine similarity to pass.
+Under **Advanced** in the sidebar, the **meaning-preservation strictness**
+slider (default `0.85`) controls how strictly SBERT gates both word-level
+substitutions and full-sentence restructurings. A candidate must score
+above this cosine similarity to pass.
 
 | Range | Effect |
 |-------|--------|
-| 0.90+ | Only near-identical meanings pass. Fewer replacements. |
-| 0.70–0.80 | Broader synonyms pass. More options, slightly looser meaning. |
+| 0.90+ | Only near-identical meanings pass. Fewer changes. |
+| 0.70–0.80 | Broader rewrites pass. More changes, slightly looser meaning. |
 
-If you're not seeing suggestions for some words, try lowering the threshold.
+If Reformulate is leaving more unchanged than expected, try lowering this.
 
 ---
 
 ## Architecture Notes
 
+### The reformulation engine (`reformulate.py`) — app.py's only entry point
+
+Architecture D′ (`REFORMULATION_RESEARCH.md` §24–31): tag flagged words →
+per-sentence escalation decision → all-or-nothing substitute-and-rank
+(antonym check → SBERT → phoneme veto) → T5 restructuring escalation
+(generate-then-verify) → re-verify the actual output → separately-reported
+metrics. Built on top of the library modules below rather than
+reimplementing candidate generation or scoring — see `DECISION_LOG.md`
+2026-08-16-E for the full build record, including two bugs found and fixed
+via live testing.
+
 ### Grammar correction (`grammar.py`)
 
-`sanitize_input()` runs multiple sequential correction passes before synonym substitution: spelling, contractions, informal words, pronoun case, sentence capitalisation, spacing, article agreement, auxiliary verb forms, tense correction, subject-verb agreement (BE and main verbs), negation agreement, existential-there agreement, punctuation, and an optional LanguageTool deep-check.
+`sanitize_input()` — called by `app.py` before every reformulation — runs multiple sequential correction passes: spelling, contractions, informal words, pronoun case, sentence capitalisation, spacing, article agreement, auxiliary verb forms, tense correction, subject-verb agreement (BE and main verbs), negation agreement, existential-there agreement, punctuation, and an optional LanguageTool deep-check.
+
+`grammar.py` also contains `SentenceRewriter`, the original hard onset-gated substitution pipeline. **Retained for comparison, not called by `app.py`** — `reformulate.py` reuses its lower-level helpers (lemmatize/inflect/case-preservation/detokenize) directly rather than the class itself.
 
 ### Synonym engine (`engine.py` — v3)
 
-Retrieves candidates from WordNet (POS-filtered) and Datamuse (`rel_syn=` + `ml=` endpoints), then ranks by Zipf frequency. Key fix in v3: WordNet hypernym traversal is gated by POS to prevent cross-POS contamination (e.g. `stress` as a noun no longer pulls in verb hypernyms like `say` or `pronounce`).
+Retrieves candidates from WordNet (POS-filtered) and Datamuse (`rel_syn=` + `ml=` endpoints), then ranks by Zipf frequency. Key fix in v3: WordNet hypernym traversal is gated by POS to prevent cross-POS contamination (e.g. `stress` as a noun no longer pulls in verb hypernyms like `say` or `pronounce`). Used directly by `reformulate.py`.
 
-### SBERT firewall (`semantic.py`)
+### SBERT firewall + antonym/negation guards (`semantic.py`)
 
-For each candidate, builds a candidate sentence, batch-encodes it alongside the original, and computes cosine similarity. Protected phrases (multi-word fixed expressions like `look forward to`, `in order to`, `as well as`) are never substituted. Falls back gracefully to frequency-only ranking if SBERT fails to load.
+For each candidate, builds a candidate sentence, batch-encodes it alongside the original, and computes cosine similarity. Protected phrases (multi-word fixed expressions like `look forward to`, `in order to`, `as well as`) are never substituted. Falls back gracefully to frequency-only ranking if SBERT fails to load. Extended for `reformulate.py` with `is_known_antonym()` (WordNet-based, rejects a candidate that's a direct antonym of the original) and `negation_consistent()` (rejects a full-sentence restructuring that changed the number of negation markers).
 
 ### Speaker Difficulty Profile — declared (`difficulty_profile.py`)
 
 The user-facing "Speaker Difficulty Profile" panel described above. Three
 independent, user-declared lists (sounds/words/phrases) plus optional
-word-specific sound patterns, persisted via `profile_store.py`. Deliberately
-kept separate from the *learned* profile below rather than merged into it —
-see `PROBLEM_FORMULATION.md` §5–6 for the reasoning and `ROADMAP.md` R12
-for why reconciling the two is still open, not yet decided.
+word-specific sound patterns, persisted via `profile_store.py`, read
+directly by `reformulate.py`. Deliberately kept separate from the
+*learned* profile below rather than merged into it — `ROADMAP.md` R12
+resolves this for the reformulation engine specifically: it reads only
+this declared profile, not the learned one below.
 
-### Longitudinal difficulty model — learned (`profiling/`)
+### Longitudinal difficulty model — learned, retained for `rewrite/` only (`profiling/`)
 
 Not the same system as above, despite the similar name. `profiling/profile.py`'s
 `SpeakerDifficultyProfile` stores a per-speaker, multi-factor word-difficulty
 *model* (onset risk, syllable length, frequency, grammatical class), seeded
 by self-report and population priors (`profiling/coldstart.py`), then
-updated continuously via EWMA from session events. The profile's `update()`
-method accepts a list of disfluency events — in the full Speech-AI system,
-those events come from the Audio Module; in this repo, the profile is
-currently seeded purely from the user's typed self-report.
+updated continuously via EWMA from session events. **Not read by
+`reformulate.py` or `app.py`** — its only remaining consumer is the
+retained `rewrite/` pipeline below. With no Audio Module in scope, this
+profile is only ever seeded from typed self-report, never from real
+session data — the UI no longer shows a chart for it, since that chart
+would otherwise imply learned data that doesn't exist here.
 
-### Profile-aware rewrite (`rewrite/`)
+### Profile-aware rewrite (`rewrite/`) — retained for comparison
 
-`rewrite/rewriter.py` proposes meaning-preserving substitutions using the score `similarity - lambda * difficulty + mu * frequency`. Protected words and the user's always-keep list are never replaced, and the Streamlit card lets each proposed change be accepted or rejected.
+`rewrite/rewriter.py`'s `DifficultyAwareRewriter` proposes meaning-preserving substitutions using the score `similarity - lambda * difficulty + mu * frequency`. **Retained for comparison against `reformulate.py`, not called by `app.py`.**
 
-### Fluency rephrase (`rephrase.py`)
+### Restructuring escalation (`rephrase.py`)
 
-A standalone, optional layer that proposes a smoother full-sentence rewrite. It generates paraphrase candidates with a T5 model (`Vamsi/T5_Paraphrase_Paws`), blocks the user's trouble words via `bad_words_ids`, then scores each candidate by `w_sim·similarity − w_diff·difficulty − w_viol·violations − w_edit·edit-distance` and keeps the best one that clears a semantic-similarity gate. It is never imported by `grammar.py` or `engine.py`, loads the model lazily on first use (with `low_cpu_mem_usage=True` so it fits on low-RAM machines), and degrades to returning the input sentence unchanged if the stack or weights are unavailable.
+`reformulate.py`'s restructuring-escalation step, used when word-level substitution can't safely fix a sentence. Generates paraphrase candidates with a T5 model (`Vamsi/T5_Paraphrase_Paws`), blocks the user's flagged words via `bad_words_ids` (word-level only — phoneme-level constraints are enforced by re-checking each generated candidate, not by constraining generation, since `bad_words_ids` can't block a phoneme class), then `reformulate.py` re-verifies each candidate against the SBERT/antonym-equivalent/phoneme gates and keeps the best one that passes. Never imported by `grammar.py` or `engine.py`, loads the model lazily on first use (with `low_cpu_mem_usage=True` so it fits on low-RAM machines), and degrades to no restructuring available (that sentence is reported as left unchanged) if the stack or weights are unavailable.
 
-### Evaluation harness (`eval/`)
+### Evaluation harness (`eval/`) — for the retained `rewrite/` path
 
-`eval/metrics.py` computes meaning preservation, difficulty-onset reduction, substitution rate, and lambda trade-offs. `eval/profile_eval.py` compares self-report-only, observed-only, and fused profile AUC. `eval/study/` contains CSV helpers for a counterbalanced three-condition **human** study comparing reformulated-text conditions — no audio involved, it's about how readers/listeners judge the *text* output.
+`eval/metrics.py` computes meaning preservation, difficulty-onset reduction, substitution rate, and lambda trade-offs against `rewrite/`'s `DifficultyAwareRewriter` and the learned `SpeakerDifficultyProfile`. `eval/profile_eval.py` compares self-report-only, observed-only, and fused profile AUC. `eval/study/` contains CSV helpers for a counterbalanced three-condition **human** study comparing reformulated-text conditions — no audio involved, it's about how readers/listeners judge the *text* output. Not yet extended to evaluate `reformulate.py` — that's the next stage.
 
 ### Storage layer (`profile_store.py`)
 
 Single-default-profile, file-based storage — replaces the earlier
 `user_store.py`/`auth.py` account layer (removed 2026-08-16; see
 `DECISION_LOG.md` 2026-08-16-A). The public API
-(`load_difficulty_profile`, `save_difficulty_profile`, `load_preferences`,
-`save_preferences`) takes a `profile_name` parameter everywhere, defaulting
-to `"default"` — kept parameterized rather than hardcoded so multi-profile
-support can be reintroduced later without a storage-layer rewrite, even
-though there's no UI for it today. No passwords are stored anywhere.
+(`load_difficulty_profile`, `save_difficulty_profile`) takes a
+`profile_name` parameter everywhere, defaulting to `"default"` — kept
+parameterized rather than hardcoded so multi-profile support can be
+reintroduced later without a storage-layer rewrite, even though there's no
+UI for it today. No passwords are stored anywhere. (The `preferences`/
+`custom_replacements` fields from the pre-`reformulate.py` UI — an
+allowlist, rephrase/profile-rewrite toggles — were removed in the
+2026-08-16 cleanup pass once the UI controls that set them were gone; see
+`DECISION_LOG.md`.)
 
 ---
 
@@ -376,11 +396,12 @@ history of how it got there.
 - Grammar correction depends on NLTK POS tagging, which can misfire on very short or broken sentences.
 - Datamuse `ml=` results are not guaranteed to match POS; SBERT acts as the final filter for these.
 - Protected phrases are hard-coded (~35 total); idiomatic coverage is incomplete.
-- UI choices are session-local, while fluency profiles persist per user.
 - Subject-verb agreement detection looks left for the nearest subject, which fails in relative clauses.
 - Grammar correction runs before synonym substitution; a corrected form may shift the target lemma.
-- The two rewrite pipelines (`grammar.py`'s hard onset gate and `rewrite/`'s soft difficulty penalty) duplicate logic and have not been compared against each other.
+- Declared phrase-level difficulty (`difficulty_profile.phrases`) is editable in the UI but not yet consumed by `reformulate.py` — see `ROADMAP.md` R13.
+- Per-change keep/revert in the review panel doesn't yet feed back into the difficulty profile — see `ROADMAP.md` R9.
 - The difficulty formulas and semantic threshold are hand-picked, not validated against real speaker data or human judgment — see `VALIDATION.md`.
+- `reformulate.py` hasn't yet been measured against the retained `rewrite/`/`grammar.py` pipelines on a shared evaluation corpus — that comparison is the next stage, not yet run.
 
 ---
 
@@ -424,7 +445,6 @@ documentation set at the repo root:
 
 ```
 users/*.fluency_profile.json
-user_prefs.json
 .cache/
 venv/
 __pycache__/
