@@ -386,3 +386,81 @@ specifically — `Vamsi/T5_Paraphrase_Paws` was selected in Stage 5 for
 being "already proven to run locally," not evaluated against this exact
 requirement (avoid a phonetic class while preserving meaning) until now.
 Neither is implemented in this stage.
+
+### 6.8 R17 fix verification (executed, 2026-08-16, follow-up)
+
+`ROADMAP.md` R17 (Cause A — `rephrase.py::_bad_words_ids()`'s case-
+sensitivity gap) was fixed: the function now encodes each blocked word's
+lowercase and capitalized forms (each with and without a leading space),
+not just the form passed in. Full record: `DECISION_LOG.md` 2026-08-16-H.
+
+**[FINDING] The fix works correctly at the unit level, confirmed by both
+regression tests and a live re-run of the exact repro that found the
+bug.** 8 new tests in `tests/rephrase_test.py` (all pass): `_bad_words_ids`
+now returns both the lowercase and capitalized token sequences for a word
+verified to tokenize differently by case; a leading-space variant of both
+forms is still included (no regression there); an already-mixed-case
+input word (e.g. `"TensorFlow"`) still has its exact form blocked; two
+end-to-end generation tests (`generate_candidates`) confirm a blocked
+word does not leak in either a mid-sentence lowercase context or a
+sentence-initial capitalized context, for words verified not to have the
+alternate-tokenization escape below. The original repro (`"manager"`
+sentence, `_model.generate()` called directly) that previously produced
+5/6 capitalized-form leaks now produces zero literal leaks of any case,
+with genuinely different vocabulary (`"supervisor"`, `"management"`,
+`"inspected"`) instead of the flagged words reappearing capitalized.
+
+**[FINDING] The fix did NOT recover any of the 4 `could_not_safely_reformulate`
+cases end-to-end.** Re-ran the identical `eval/reformulation_eval.py` /
+`tests/reformulation_eval_corpus.json` corpus after the fix. Every
+aggregate number is unchanged: `reformulate.py` reformulation rate still
+0.556, status distribution still `{reformulated: 10,
+could_not_safely_reformulate: 4, no_change_needed: 4}` — the same four
+cases (`fm_phoneme_in_many_words`, `fm_negation_forces_escalation`,
+`fm_restructuring_needed`, `ctl_degenerate_dense_profile`), byte-identical
+final output to the pre-fix run.
+
+**[INTERPRETATION] Why the recovery didn't happen, traced directly, not
+guessed:** re-running `rephrase.generate_candidates()` on the
+`ctl_degenerate_dense_profile` sentence with the *post-fix* blocking
+confirmed zero literal word leaks (matching the isolated repro above) —
+but every remaining candidate still failed for one of two other reasons:
+(a) the candidate still contained a *different* word sharing the same
+flagged phoneme class (`"management"`, `"matinee"` both onset M — Cause
+B, unchanged, exactly as predicted), or (b) blocking more of the model's
+preferred token paths pushed beam search toward substantially different,
+**lower-similarity** paraphrases (observed SBERT similarity 0.49-0.61 on
+the post-fix candidates, vs. 0.81-0.91 pre-fix) that now fail the
+semantic gate instead of — or in addition to — the phoneme gate. This is
+a genuinely new observation, not predicted in Stage 6: **blocking more
+token forms doesn't just close the literal-word leak, it also shrinks the
+model's usable search space, and the paraphrases that survive the tighter
+constraint tend to drift further from the original meaning.** Net effect
+on this corpus: the specific failure reason shifted (literal-word-leak →
+phoneme-class-match and/or low-similarity), but the outcome (no usable
+candidate, sentence left unchanged) did not.
+
+**[LIMITATION]** This means Cause A, while a real and now-fixed bug, was
+not the dominant contributor to escalation failures on this corpus — Cause
+B (and this newly-observed similarity-narrowing side effect) accounts for
+the entire remaining 4/4 failure rate. The R18 (`ROADMAP.md`) research
+question — whether a different escalation model or strategy is needed —
+remains fully open and, if anything, is now better evidenced: a cleaner
+implementation of word-level blocking alone cannot solve this class of
+case.
+
+**[RECOMMENDATION — proposed, not applied]** R17 should still be kept —
+it is a correct, tested, low-risk fix that closes a real leak and may
+matter more on corpora with less phonetically-entangled vocabulary than
+this one. But it should not be treated as progress on the escalation
+success rate itself; R18 remains the open question that actually gates
+further improvement here, and this fix's side effect (tighter blocking →
+lower-similarity candidates) is worth keeping in mind if R18 is pursued
+by adding still more blocked terms rather than changing the model/
+strategy.
+
+**Reproducibility of this follow-up:** same corpus, same harness, same
+`DISABLE_DATAMUSE=1`/model versions as §6.1's exact config, run against
+the `rephrase.py` fix described in `DECISION_LOG.md` 2026-08-16-H. No
+profile touched disk during this run (verified via `git status` on
+`users/`).
