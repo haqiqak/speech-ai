@@ -22,7 +22,19 @@ in what the repository presents as a public project. Practice.md's
 evidence-driven prioritization logic (§15) is about *research* priorities;
 this item sits outside that logic entirely and should not wait for a
 roadmap-blind reassessment to surface it.
-**Status:** Documented, not remediated (per §19's scope for this pass).
+**Status update (Stage 4A refinement, 2026-08-16):** Partially addressed
+going forward, not remediated retroactively — see `DECISION_LOG.md`
+2026-08-16-A. The multi-user auth system was removed entirely (`auth.py`,
+`user_store.py` deleted); no password is hashed or stored anywhere anymore,
+and the current `users/default.json` was rewritten to a schema with no
+`password_hash` field. `users/bobcat.json` (a second test account, no
+longer meaningful under a single-profile design) was deleted outright. What
+this does **not** do: purge the old password hashes from git *history* —
+those commits still exist and are still fetchable by anyone with repo
+access. Rewriting published history (force-push, coordination with anyone
+else who may have cloned) is a separate, deliberate action, not taken here
+without explicit authorization. **Status: exposure surface reduced to zero
+for new activity; historical exposure unchanged — still open.**
 
 ---
 
@@ -229,15 +241,27 @@ kind of consolidation question, now with a second data source added to it.
 **Labeled as:** Directly evidence-linked (not a fresh hypothesis) — the
 duplication is a stated, deliberate, and named limitation of Stage 4A's own
 design, not a newly-discovered problem.
+**Update (Stage 4A refinement, 2026-08-16):** A third difficulty signal now
+exists alongside the two named above — word-specific `problem_phones`
+(`DifficultyEntry`, per-word sound patterns). This doesn't add a new
+open question, it sharpens this one: whatever reconciliation R12 designs
+needs to account for three granularities (learned continuous onset risk,
+declared global sounds/words/phrases, and declared word-specific patterns),
+not two. See `PROBLEM_FORMULATION.md` §1/§2/§6.
 
-### R13. Give `difficulty_profile.phrases` a consumer
-**Linked finding:** `PROBLEM_FORMULATION.md` §6/§12 — phrases are declared
-and persisted but nothing in the current reformulation pipeline (which
-Stage 4A did not touch) accepts or acts on a phrase-level constraint.
+### R13. Give `difficulty_profile.phrases` (and now `problem_phones`) a consumer
+**Linked finding:** `PROBLEM_FORMULATION.md` §6/§10 — phrases and (as of
+the Stage 4A refinement) word-specific `problem_phones` are declared and
+persisted but nothing in the current reformulation pipeline accepts or acts
+on either. `problem_phones` is arguably the higher-value of the two once a
+redesigned engine exists — it's a more precise signal than a whole-word
+block, but currently degrades to exactly whole-word blocking today.
 **What this roadmap item actually is:** Once the reformulation engine is
-being redesigned, decide how a stored phrase gets matched against new input
-text (exact substring vs. fuzzy/reordered vs. partial overlap — genuinely
-undecided, per `PROBLEM_FORMULATION.md` §3.4) and wire it in.
+being redesigned, decide (a) how a stored phrase gets matched against new
+input text (exact substring vs. fuzzy/reordered vs. partial overlap —
+genuinely undecided, per `PROBLEM_FORMULATION.md` §3.5), and (b) how a
+word-specific pattern should change substitution candidate scoring
+differently than a plain word-level flag would.
 **Labeled as:** Future work, explicitly deferred by Stage 4A's own scope
 restriction, not overlooked.
 
@@ -351,3 +375,16 @@ only one of two now-existing difficulty signals would be answering a
 narrower question than it appears to. This doesn't change R0–R4's priority
 ordering; it means R12 should be resolved before, or alongside, R5/R6/R2
 rather than strictly after them as the numbering alone would suggest.
+
+**2026-08-16 — fourth reassessment, post-Stage-4A-refinement.** R0's
+practical urgency dropped for *new* activity (no auth layer left to leak
+credentials from) but stays open in the log because historical git
+exposure is unchanged — recorded as a status update on R0 itself rather
+than a reordering. R12 is now sharper, not new: three difficulty
+granularities (learned continuous, declared global, declared word-specific)
+exist where the last reassessment counted two. No item moved priority tier
+as a result of this pass — the highest-leverage next step remains the same
+one two reassessments ago: closing the proxy-metric gap (R2/R3/R4) and
+running the pipeline ablation (R6/R12) before any reformulation redesign
+decision is made, now with a slightly richer input layer to design that
+redesign against.

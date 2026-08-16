@@ -6,6 +6,21 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-16** feat: word-specific sound patterns (`problem_phones` on word
+  entries — "three" difficult ≠ "TH"/"R" globally difficult, unless
+  explicitly promoted) via a new inline pattern-editor panel in `app.py`,
+  phone display via a new `phonetic.friendly_phone_label()` respelling
+  table. Multi-user system removed: `auth.py`/`user_store.py` deleted, new
+  `profile_store.py` loads one default profile automatically (no login),
+  keeping a `profile_name` parameter throughout for future extensibility.
+  `users/bobcat.json` deleted; `users/default.json` rewritten with no
+  `password_hash`/`phoneme_profile` fields. Zero changes to
+  `grammar.py`/`engine.py`/`semantic.py`/`rewrite/`/`rephrase.py`/
+  `profiling/profile.py` — `tests/smoke.py` byte-identical to baseline.
+  Tests: `tests/difficulty_profile_test.py` 38/38 (12 new);
+  `tests/app_test.py` extended to 6 scenarios; `tests/persistence_test.py`
+  rewritten against `profile_store.py`. → `DECISION_LOG.md` 2026-08-16-A;
+  `PROBLEM_FORMULATION.md` (rewritten in place); `ROADMAP.md` R0/R12/R13.
 - **2026-08-15** feat: add `difficulty_profile.py` — persistent, user-declared
   speaker difficulty profile (sounds/words/phrases, kept explicitly
   independent). New `app.py` "Speaker Difficulty Profile" panel replaces the

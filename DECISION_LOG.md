@@ -416,3 +416,110 @@ preceding implementation per the task's own required workflow order.
   - `phrases` has no consumer anywhere in the current pipeline — declared
     and persisted, not yet matched against or acted on by anything.
   - The inline text-selection interaction remains unbuilt, specified only.
+
+---
+
+### 2026-08-16-A — Stage 4A refinement: word-specific sound patterns; multi-user system removed
+**What was done:** Two changes, requested together, both to the profile
+foundation only (reformulation engine untouched).
+
+*(1) Word-specific sound patterns.* `DifficultyEntry` gained a
+`problem_phones` field (words only) — a user-selected subset of the word's
+own `pronunciation`, representing "within THIS word specifically, these
+sounds are the problem," distinct from both word-level difficulty (no claim
+about why) and global sound difficulty (applies everywhere). New
+`DifficultyProfile` methods: `set_word_pattern()` (validates the phones are
+actually a subset of the word's real pronunciation — never trusts the
+caller), `clear_word_pattern()`, `add_sound_from_phones()` (the *only* path
+from a word pattern to a global `sounds` entry, always an explicit,
+separate call). New `app.py` UI: a 🔍 toggle per word entry opens an inline
+panel (`_render_pattern_editor`) listing the word's phones as individually
+keyed checkboxes, each labeled with a friendly gloss via a new
+`phonetic.friendly_phone_label()` / `ARPABET_EXAMPLE_WORD` table (all 39 CMU
+phones) — researched against real dictionary "pronunciation respelling"
+practice, not invented. `st.dialog` was considered for this panel and
+rejected: AppTest has a documented, open bug (streamlit/streamlit#9786)
+where button clicks inside a dialog don't execute during automated testing,
+which would have meant shipping an unverifiable interaction — this
+project's standing rule since Stage 4A's original text-selection decision.
+
+*(2) Multi-user system removed.* `auth.py` and `user_store.py` deleted
+(`git rm`). The app now loads one persistent default profile automatically
+— no login screen, no registration, no account switching, no sidebar user
+badge/logout. New `profile_store.py` replaces `user_store.py`'s storage
+role, keeping a `profile_name` parameter (defaulting to `DEFAULT_PROFILE =
+"default"`) everywhere rather than hardcoding single-user-ness away, per
+the task's explicit instruction that future multi-profile support must stay
+possible. The on-disk schema dropped `password_hash` (no auth = meaningless)
+and `phoneme_profile` (see below) — `users/default.json` and the now-removed
+`users/bobcat.json` were rewritten to the clean schema as part of this
+change (bobcat, a second test account with no purpose under a single-profile
+design, was deleted outright, `git rm`).
+
+*(3) A consequence of (2) that changed (1)'s original design, not just
+removed code around it:* Stage 4A's `phoneme_profile` mirror existed
+specifically to be read by `auth.py::_load_user_into_session()` at login
+time. With no login step, that mirror has no reader left to serve, so it
+was removed entirely (not renamed, not kept "just in case") —
+`stutter_patterns`/`blocked_words` are now derived **purely in memory**,
+once per session, directly from the loaded `DifficultyProfile`, by
+`app.py`'s own `_sync_legacy_session_from_profile()` (unchanged from Stage
+4A) — one fewer persisted field that could drift from the profile it
+mirrors.
+**Alternatives considered:**
+  - Archiving `auth.py`/`user_store.py` into an `out_of_scope/`-style
+    folder instead of deleting. Rejected — that folder represents
+    audio/ASR/voice concerns specifically (Stage 2's own definition); an
+    auth layer doesn't belong there, and git history already preserves the
+    files without needing an in-tree copy — keeping one would be exactly
+    the "unnecessary compatibility layer" the task instructs against.
+  - `st.multiselect` for phone selection instead of per-position
+    checkboxes. Rejected — a word with a repeated phone (same ARPAbet code
+    at two positions) produces colliding/ambiguous multiselect options;
+    checkboxes keyed by position have no such collision.
+  - Auto-creating a global sound entry whenever `problem_phones` is set.
+    Rejected outright — this is precisely the conflation the task's central
+    new requirement exists to prevent.
+  - Hardcoding `DEFAULT_PROFILE` with no parameter anywhere (simpler code,
+    fewer function arguments). Rejected — the task is explicit that
+    removing the *auth UI* must not make reintroducing multi-profile
+    support later a data-model change.
+**Why:** Per the task's own framing: a word being flagged difficult does
+not tell the system *what* about it is difficult, and the previous design
+had no way to capture that distinction — a genuine, named gap in Stage 4A's
+own foundation, not a hypothetical one. The multi-user removal was
+independently requested (development/testing did not need it) but the task
+was explicit that removing it must not foreclose reintroducing it later,
+which shaped `profile_store.py`'s API design directly.
+**Measured result:** `tests/difficulty_profile_test.py` — 38/38 pass (26
+carried over + 12 new, covering pattern set/clear/validate/promote/persist
+and that no global sound is ever created implicitly). `tests/app_test.py` —
+extended to 6 scenarios, including one that clicks the actual phone
+checkboxes by widget key, saves, and asserts
+`st.session_state.stutter_patterns` is still empty afterward (i.e., no
+global sound leaked from a word-specific selection) — all pass.
+`tests/persistence_test.py` — rewritten (its only path depended on the
+deleted `auth.py`) to test `profile_store.py` directly; passes.
+`tests/roadmap_test.py` (3/3, unmodified) and `tests/smoke.py`
+(byte-identical to `tests/baseline_sbert.txt`) confirm the reformulation
+pipeline's behavior is still completely unaffected.
+**Category:** Engineering decision, directly scoped and instructed by the
+user. Supersedes the parts of `DECISION_LOG.md` 2026-08-15-C describing the
+`phoneme_profile` mirror as persisted/kept-in-sync-on-disk — as of this
+entry, it no longer exists on disk at all; that entry is not edited (this
+log is append-only) but should be read with this correction in mind.
+**Left deliberately unresolved, flagged for the next stage — see
+`ROADMAP.md`:**
+  - Reconciling the new `DifficultyProfile` with the old, learned
+    `SpeakerDifficultyProfile` remains open (unchanged from 2026-08-15-C) —
+    if anything, slightly more consequential now that word-specific
+    patterns add a third kind of difficulty signal alongside the two
+    profiles' existing ones.
+  - `problem_phones`, like `phrases` before it, has no consumer in the
+    reformulation pipeline — declared and persisted, not yet acted on.
+  - Committed credential material from *before* this change (old git
+    history containing `users/default.json`/`users/bobcat.json` with
+    password hashes, `DECISION_LOG.md` 2026-06-13-A) is **not** remediated
+    by this entry — rewriting published git history is a separate,
+    deliberate action this entry does not take without explicit
+    authorization; only new writes are affected.

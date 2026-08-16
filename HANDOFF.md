@@ -26,18 +26,26 @@ where it does, treat `out_of_scope/<old path>` as the current location. No
 reformulation algorithm, weight, or threshold changed in this pass — see
 `DECISION_LOG.md` for the entry recording exactly what moved and why.
 
-**Scope note (added 2026-08-15, Stage 4A foundation pass):** a new,
-persistent, user-declared speaker difficulty profile now exists
-(`difficulty_profile.py` — sounds/words/phrases, explicitly independent
-categories; full design record in `PROBLEM_FORMULATION.md`). It is **not**
-the same thing as the `SpeakerDifficultyProfile` mentioned throughout this
-file (`profiling/profile.py`, the learned/EWMA one) — the two are
-deliberately separate for now, reconciling them is `ROADMAP.md` R12. The new
-profile reaches the existing, unmodified reformulation pipeline only through
-an auto-derived mirror into the legacy `phoneme_profile.stutter_patterns`/
-`.blocked_words` fields — see `DECISION_LOG.md` 2026-08-15-C. No
-reformulation algorithm, weight, or threshold changed in this pass either;
-verified via `tests/smoke.py` being byte-identical to baseline.
+**Scope note (2026-08-15/16, Stage 4A + refinement — read this before
+touching the profile layer):** a new, persistent, user-declared speaker
+difficulty profile exists (`difficulty_profile.py` — sounds/words/phrases,
+explicitly independent categories, plus word-specific `problem_phones`
+patterns as of the 2026-08-16 refinement; full design record in
+`PROBLEM_FORMULATION.md`). It is **not** the same thing as the
+`SpeakerDifficultyProfile` mentioned throughout this file
+(`profiling/profile.py`, the learned/EWMA one) — the two are deliberately
+separate for now, reconciling them is `ROADMAP.md` R12. The new profile
+reaches the existing, unmodified reformulation pipeline through
+`app.py`'s `_sync_legacy_session_from_profile()`, which derives
+`st.session_state.stutter_patterns`/`.blocked_words` **in memory** — there
+is no longer an on-disk `phoneme_profile` mirror (Stage 4A originally
+persisted one; it was removed in the 2026-08-16 refinement once the
+login step it existed to serve was removed — see `DECISION_LOG.md`
+2026-08-16-A). Also as of 2026-08-16: **the multi-user auth system is
+gone** — `auth.py` and `user_store.py` were deleted; the app loads one
+default profile automatically via `profile_store.py`, no login. No
+reformulation algorithm, weight, or threshold changed in either pass;
+verified via `tests/smoke.py` being byte-identical to baseline both times.
 
 ## What's proven vs. still a hypothesis (read this before trusting a claim elsewhere)
 
@@ -118,8 +126,9 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 First run downloads NLTK data (`cmudict`, tagger, `punkt_tab`, `wordnet`)
-and the SBERT model (~80 MB) into project-local `.cache/`. Login with
-`default` / `speech` (auto-migrated account) or register a new one.
+and the SBERT model (~80 MB) into project-local `.cache/`. No login as of
+2026-08-16 — the app opens directly into the single default speaker
+profile (`users/default.json`, auto-created on first save if missing).
 
 ## Pitfalls already hit (concrete, so the next session doesn't rediscover them)
 
@@ -169,8 +178,9 @@ and the SBERT model (~80 MB) into project-local `.cache/`. Login with
 1. `Practice.md` (methodology)
 2. This file
 3. `DOCS.md` (file map)
-4. `README.md` + `AUTH_README.md` (product-level description — read
-   *with* the drift warnings in `DOCS.md` in mind)
+4. `README.md` (product-level description — read *with* the drift warnings
+   in `DOCS.md` in mind; `AUTH_README.md` was removed 2026-08-16 along with
+   the auth system it documented — see `DECISION_LOG.md` 2026-08-16-A)
 5. `app.py` top-to-bottom structurally (it's the orchestrator; everything
    else is a library it calls)
 6. `grammar.py` (`sanitize_input`, `SentenceRewriter`) — the core "hard"

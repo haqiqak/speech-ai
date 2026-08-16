@@ -83,10 +83,10 @@ before/after stutter-difficulty score.
 
 ## Features
 
-- 🔐 **Multi-user auth** — login/register with per-user phoneme profiles stored in `users/`
 - 🧠 **SBERT semantic firewall** — `all-MiniLM-L6-v2` ensures replacements never drift from the original meaning
 - 🔊 **Phoneme-aware filtering** — CMU Pronouncing Dictionary (ARPAbet) for onset detection, not spelling
-- 🎯 **Speaker Difficulty Profile** — persistent, per-user record of difficult sounds, words, and phrases (each declared and tracked separately — see `PROBLEM_FORMULATION.md`), editable from a dedicated panel or by picking a word straight out of your entered text
+- 🎯 **Speaker Difficulty Profile** — one persistent, default speaker profile (no login) recording difficult sounds, words, and phrases, each declared and tracked separately; editable from a dedicated panel or by picking a word straight out of your entered text — see `PROBLEM_FORMULATION.md`
+- 🔍 **Word-specific sound patterns** — optionally narrow a difficult word down to the exact sound(s) that make it hard (e.g. "three" → specifically the TH→R transition) without assuming every occurrence of that sound elsewhere is difficult too
 - 📊 **Scoring transparency** — collapsible table showing semantic similarity, frequency score, and gate status per candidate
 - ✏️ **Custom word input** — override any suggestion with your own word
 - 📝 **Grammar correction card** — shows every fix made before synonym analysis
@@ -108,32 +108,32 @@ as audio-module functionality — see below.)*
 speech-ai/
 │
 ├── app.py              # Streamlit UI — main application (text in, reformulated text out)
-├── auth.py             # Login / Register screen
-├── user_store.py       # File-based user storage layer
+├── difficulty_profile.py  # Speaker Difficulty Profile: sounds/words/phrases + word-specific patterns
+├── profile_store.py     # Single default-profile storage (no accounts/login)
 │
 ├── grammar.py          # Grammar correction + SentenceRewriter (the "hard" onset-gated pipeline)
 ├── engine.py            # Multi-source synonym engine (WordNet + Datamuse) — v3
-├── phonetic.py          # ARPAbet onset extraction + stutter difficulty scoring
+├── phonetic.py          # ARPAbet onset extraction + stutter difficulty scoring + friendly phone labels
 ├── semantic.py          # SBERT contextual re-ranking (sentence-transformers)
 ├── freq.py              # Zipf frequency wrapper (wordfreq)
 ├── paths.py             # Redirects NLTK / SBERT caches into .cache/
 ├── rephrase.py          # Optional T5 fluency-rephrase layer
 ├── config.yaml          # Profiling, rewrite, and eval knobs
 │
-├── profiling/           # Speaker difficulty profile: profile.py, coldstart.py, config.py
+├── profiling/           # Longitudinal learned difficulty model: profile.py, coldstart.py, config.py
 ├── rewrite/              # Soft-constraint profile-aware rewrite engine (the "soft" pipeline)
 ├── eval/                # Automatic metrics and user-study harness
 │
-├── users/               # Per-user JSON files
-│   └── default.json     # Auto-migrated from user_prefs.json on first run
+├── users/               # Per-profile JSON (directory name predates the removed multi-user
+│   └── default.json     #   system — see PROBLEM_FORMULATION.md §5.3 for why it wasn't renamed)
 │
 ├── out_of_scope/        # Archived audio/ASR/voice code — see out_of_scope/README.md
 │
 ├── tests/                # Regression + smoke tests for the text-reformulation pipeline
 ├── scripts/              # Offline dataset-building / fine-tuning scaffolding for rephrase.py
 │
-├── CLAUDE.md, HANDOFF.md, DOCS.md, DECISION_LOG.md,
-├── VALIDATION.md, ROADMAP.md, CHANGELOG.md   # Living documentation set — see below
+├── CLAUDE.md, HANDOFF.md, DOCS.md, DECISION_LOG.md, VALIDATION.md,
+├── RESEARCH.md, PROBLEM_FORMULATION.md, ROADMAP.md, CHANGELOG.md   # Living documentation set
 ├── changes.md            # Full narrative version history
 └── README.md
 ```
@@ -187,40 +187,40 @@ L:\speech-ai\run_app.ps1
 
 ---
 
-## First Login
+## No login — one default speaker profile
 
-A `default` account is automatically created from any existing `user_prefs.json`, or as an empty profile on a fresh install.
-
-| Username | Password |
-|----------|----------|
-| `default` | `speech` |
-
-Click **Register** on the login screen to create your own account.
+Speech AI opens directly into a single, persistent default profile — no
+account, no password, no registration screen. This is a deliberate
+simplification for development/testing (removed 2026-08-16; see
+`DECISION_LOG.md` 2026-08-16-A and `PROBLEM_FORMULATION.md` §5), not an
+accident: the previous multi-user login layer is gone, but the storage API
+underneath (`profile_store.py`) still takes a profile-name parameter
+everywhere, so reintroducing multiple named profiles later doesn't require
+a data-model change — just UI.
 
 ---
 
-## User Profile
+## Speaker Difficulty Profile
 
-Each user's data lives in `users/<username>.json`. As of the Stage 4A
-foundation, the canonical, structured record of what's difficult for a
-speaker is `difficulty_profile` — three independent lists (`sounds`,
-`words`, `phrases`), each entry carrying its source, when it was added, and
-(for words) a best-effort derived pronunciation. `phoneme_profile` still
-exists alongside it as an auto-derived, always-in-sync mirror — it's what
-the existing reformulation pipeline (`grammar.py`, `rewrite/`) reads, and
-you never edit it directly:
+The default profile's data lives in `users/default.json`. The canonical
+record of what's difficult for the speaker is `difficulty_profile` — three
+independent lists (`sounds`, `words`, `phrases`), each entry carrying its
+source and when it was added. Word entries additionally carry a best-effort
+derived pronunciation and, optionally, a **word-specific pattern** —
+exactly which sound(s) within that one word are the actual problem,
+distinct from a claim that those sounds are difficult everywhere:
 
 ```json
 {
-  "username": "alice",
-  "password_hash": "<sha256 hex>",
-  "phoneme_profile": {
-    "stutter_patterns": ["str", "pr"],
-    "blocked_words":    ["particular"]
-  },
+  "profile_name": "default",
   "difficulty_profile": {
     "sounds":  [{"value": "str", "normalized": "S T R", "source": "user_typed", "added_at": "...", "meta": {}}],
-    "words":   [{"value": "particular", "normalized": "particular", "source": "user_typed", "pronunciation": ["P","ER","T","IH","K","Y","AH","L","ER"], "added_at": "...", "meta": {}}],
+    "words":   [
+      {"value": "particular", "normalized": "particular", "source": "user_typed",
+       "pronunciation": ["P","ER","T","IH","K","Y","AH","L","ER"], "problem_phones": null, "added_at": "...", "meta": {}},
+      {"value": "three", "normalized": "three", "source": "user_selected_from_text",
+       "pronunciation": ["TH","R","IY"], "problem_phones": ["TH","R"], "added_at": "...", "meta": {}}
+    ],
     "phrases": []
   },
   "custom_replacements": {},
@@ -228,24 +228,30 @@ you never edit it directly:
 }
 ```
 
-- **`difficulty_profile.sounds`** — starting sounds you block on. Enter
-  grapheme clusters like `str`, `pr`, `b`, `sp`; Speech AI converts these to
-  ARPAbet onsets automatically (pronunciation, not spelling — `c` and `k`
-  dedup as the same sound), so spelling irregularities (`kn` → N, `ph` → F)
-  are handled correctly.
+- **`difficulty_profile.sounds`** — starting sounds you block on, **always
+  and everywhere**. Enter grapheme clusters like `str`, `pr`, `b`, `sp`;
+  Speech AI converts these to ARPAbet onsets automatically (pronunciation,
+  not spelling — `c` and `k` dedup as the same sound).
 - **`difficulty_profile.words`** — specific words difficult for you,
-  independent of whether their sounds are separately flagged.
+  independent of whether their sounds are separately flagged. Click 🔍 next
+  to a flagged word to optionally narrow it down to a specific
+  `problem_phones` pattern within that word — shown as friendly labels
+  (e.g. "TH (as in 'think')"), never raw phonetic notation, and **never
+  automatically added to the global `sounds` list** unless you explicitly
+  check "Also add ... as a GLOBAL difficulty."
 - **`difficulty_profile.phrases`** — multi-word phrases difficult as a
-  whole; not yet consumed by the reformulation pipeline (see
-  `PROBLEM_FORMULATION.md`).
+  whole; not yet consumed by the reformulation pipeline.
 
-See `PROBLEM_FORMULATION.md` for the full schema rationale, the ARPAbet-vs-IPA
-and JSON-vs-SQLite research behind these choices, and why word difficulty
-and sound difficulty are deliberately never conflated.
+See `PROBLEM_FORMULATION.md` for the full schema rationale, the ARPAbet-vs-IPA,
+respelling, and JSON-vs-SQLite research behind these choices, and why word
+difficulty, word-specific sound patterns, and global sound difficulty are
+deliberately never conflated with each other.
 
-Changes made in the app are saved back to your profile in real time.
+Changes made in the app are saved back to the profile in real time.
 
-The longitudinal fluency profile is stored separately as `users/<username>.fluency_profile.json` at runtime.
+The longitudinal, learned fluency profile (a separate, older system —
+onset risk scored continuously from observed sessions rather than declared
+by the user) is stored separately as `users/default.fluency_profile.json`.
 
 ---
 
@@ -305,9 +311,25 @@ Retrieves candidates from WordNet (POS-filtered) and Datamuse (`rel_syn=` + `ml=
 
 For each candidate, builds a candidate sentence, batch-encodes it alongside the original, and computes cosine similarity. Protected phrases (multi-word fixed expressions like `look forward to`, `in order to`, `as well as`) are never substituted. Falls back gracefully to frequency-only ranking if SBERT fails to load.
 
-### Speaker difficulty profile (`profiling/`)
+### Speaker Difficulty Profile — declared (`difficulty_profile.py`)
 
-`profiling/profile.py` stores a per-speaker, multi-factor word-difficulty model (onset risk, syllable length, frequency, grammatical class), seeded by self-report and population priors (`profiling/coldstart.py`), then updated with EWMA session events. The profile's `update()` method accepts a list of disfluency events — in the full Speech-AI system, those events come from the Audio Module; in this repo, the profile is currently seeded purely from the user's typed self-report.
+The user-facing "Speaker Difficulty Profile" panel described above. Three
+independent, user-declared lists (sounds/words/phrases) plus optional
+word-specific sound patterns, persisted via `profile_store.py`. Deliberately
+kept separate from the *learned* profile below rather than merged into it —
+see `PROBLEM_FORMULATION.md` §5–6 for the reasoning and `ROADMAP.md` R12
+for why reconciling the two is still open, not yet decided.
+
+### Longitudinal difficulty model — learned (`profiling/`)
+
+Not the same system as above, despite the similar name. `profiling/profile.py`'s
+`SpeakerDifficultyProfile` stores a per-speaker, multi-factor word-difficulty
+*model* (onset risk, syllable length, frequency, grammatical class), seeded
+by self-report and population priors (`profiling/coldstart.py`), then
+updated continuously via EWMA from session events. The profile's `update()`
+method accepts a list of disfluency events — in the full Speech-AI system,
+those events come from the Audio Module; in this repo, the profile is
+currently seeded purely from the user's typed self-report.
 
 ### Profile-aware rewrite (`rewrite/`)
 
@@ -321,17 +343,16 @@ A standalone, optional layer that proposes a smoother full-sentence rewrite. It 
 
 `eval/metrics.py` computes meaning preservation, difficulty-onset reduction, substitution rate, and lambda trade-offs. `eval/profile_eval.py` compares self-report-only, observed-only, and fused profile AUC. `eval/study/` contains CSV helpers for a counterbalanced three-condition **human** study comparing reformulated-text conditions — no audio involved, it's about how readers/listeners judge the *text* output.
 
-### Storage layer (`user_store.py`)
+### Storage layer (`profile_store.py`)
 
-The public API (`register_user`, `verify_user`, `load_profile`, `save_profile`) is intentionally thin. The file-based backend can be swapped for SQLite or PostgreSQL by replacing only the private `_read()` and `_write()` functions — nothing in `auth.py` or `app.py` changes.
-
-To upgrade password hashing from SHA-256 to bcrypt:
-
-```python
-import bcrypt
-def _hash_password(p):     return bcrypt.hashpw(p.encode(), bcrypt.gensalt()).decode()
-def _check_password(p, h): return bcrypt.checkpw(p.encode(), h.encode())
-```
+Single-default-profile, file-based storage — replaces the earlier
+`user_store.py`/`auth.py` account layer (removed 2026-08-16; see
+`DECISION_LOG.md` 2026-08-16-A). The public API
+(`load_difficulty_profile`, `save_difficulty_profile`, `load_preferences`,
+`save_preferences`) takes a `profile_name` parameter everywhere, defaulting
+to `"default"` — kept parameterized rather than hardcoded so multi-profile
+support can be reintroduced later without a storage-layer rewrite, even
+though there's no UI for it today. No passwords are stored anywhere.
 
 ---
 
@@ -375,6 +396,8 @@ documentation set at the repo root:
 | `HANDOFF.md` | What's proven vs. hypothesis, how to run things, known pitfalls |
 | `DOCS.md` | One line per file — what it's for, drift status |
 | `DECISION_LOG.md` | Append-only record of why things are the way they are |
+| `RESEARCH.md` | Literature review grounding the reformulation approach (paraphrase generation, lexical substitution, phoneme-aware NLP, evaluation methodology) |
+| `PROBLEM_FORMULATION.md` | Design record for the Speaker Difficulty Profile — schema, representation research, the pattern-selection UI, single-profile architecture |
 | `VALIDATION.md` | What has actually been measured, and its named limitations |
 | `ROADMAP.md` | What's next, and the finding/gap that justifies each item |
 | `CHANGELOG.md` | Fast-scan index into the decision log |

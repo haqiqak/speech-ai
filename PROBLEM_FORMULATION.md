@@ -1,84 +1,67 @@
-# PROBLEM_FORMULATION.md — Stage 4A: The Text-Only Problem and Its Foundation
+# PROBLEM_FORMULATION.md — The Text-Only Problem and Its Foundation
 
-Per Practice.md §19 and this stage's own instructions: this document covers
-research (steps 1–3), design (step 3), and a real implementation + test pass
-(steps 4–5) — but explicitly **not** the reformulation engine itself. Every
-claim is labeled per `RESEARCH.md`'s legend (`[FINDING]` / `[INTERPRETATION]`
-/ `[HYPOTHESIS]` / `[LIMITATION]` / `[FUTURE WORK]` / `[RECOMMENDATION]`),
-reused here for continuity with that document.
+Covers Stage 4A (2026-08-15: the initial sounds/words/phrases profile
+foundation) and its refinement (2026-08-16: word-specific sound patterns,
+single-default-profile architecture). This is a living design document, not
+an append-only log — where the refinement changed a Stage 4A decision, this
+file states the **current** design and reasoning; it does not preserve the
+superseded version as if it were still accurate. The append-only record of
+*that something changed and why* lives in `DECISION_LOG.md`.
+
+Every claim is labeled per the legend: `[FINDING]` (literature/documented,
+cited) / `[INTERPRETATION]` (our reasoning from a finding) / `[HYPOTHESIS]`
+(untested claim) / `[LIMITATION]` (a stated gap) / `[FUTURE WORK]`
+(deferred, not started) / `[RECOMMENDATION]` (a forward-looking proposal,
+not a decision) / `[Decision]` (what was actually built and why).
 
 ---
 
-## 1. Problem formulation — text-only, restated and critiqued
+## 1. Problem formulation
 
-### 1.1 As given
+> Given text and a **speaker difficulty profile**, produce an alternative
+> formulation that preserves meaning while reducing the presence of
+> whatever is difficult for that speaker.
 
-> Given a piece of user-provided text and a persistent representation of the
-> linguistic patterns a particular speaker finds difficult to produce,
-> generate an alternative formulation that preserves the original meaning,
-> intent, and relevant context while reducing the presence of those
-> problematic patterns and remaining natural, grammatical, and appropriate.
+The profile is not one homogeneous thing. It is **four explicitly separate
+concepts**, none implying any other:
 
 ```
-TEXT + SPEAKER DIFFICULTY PROFILE  →  TEXT REFORMULATION  →  ALTERNATIVE TEXT
+GLOBAL SOUND DIFFICULTY      "I have trouble with /r/, generally."
+WORD DIFFICULTY              "This word is difficult," no claim about why.
+PHRASE DIFFICULTY            "This phrase is difficult as a sequence."
+WORD-SPECIFIC SOUND PATTERN  "Within THIS word specifically, these sounds
+                               are the problem" — scoped to one word entry,
+                               never a global claim by itself.
 ```
 
-### 1.2 Critique
+**[FINDING, RESEARCH.md §1.2/§2.F]** Lexical access (word-finding) and
+articulatory/motor execution (sound production) are different
+psycholinguistic mechanisms; stuttering is understood as primarily a
+motor-execution phenomenon. Conflating "this word is hard" with "every
+sound in this word is hard" is a category error a reformulation engine
+would act on incorrectly — e.g. substituting an unrelated word purely
+because it shares a syllable with a word the user actually just finds
+unfamiliar, not phonetically hard.
 
-This formulation is sound as a *description of the eventual system's I/O
-contract*. It is incomplete as a description of what "the profile" is,
-because it silently assumes the profile is a single, homogeneous thing. It
-isn't — and conflating its parts is exactly the mistake this stage's own
-instructions warn against (§6/§13 of the task: a word being difficult does
-not imply its phonemes are difficult). The refined formulation:
+**[INTERPRETATION, this refinement's central case]** The same logic applies
+one level deeper: a speaker may be "perfectly comfortable saying /th/ in
+general" and "perfectly comfortable saying /r/ in general" while still
+finding the word "three" difficult specifically because of how /th/ flows
+into /r/ *in that word*. Promoting that observation into "I->/th/ is always
+difficult" and "/r/ is always difficult" would overgeneralize from one data
+point. This is why word-specific patterns are stored as an attribute of the
+word they were observed in, never auto-copied into the global `sounds`
+list — see §2 and §3.4.
 
-> Given text and a **speaker difficulty profile with three explicitly
-> separate parts** (difficult sounds, difficult words, difficult phrases —
-> each independently declarable, none implying the others), plus, in the
-> future, a fourth source (structured signals from an Audio Module), produce
-> an alternative formulation.
-
-This document's job is to build the profile side of that contract — the
-`+ SPEAKER DIFFICULTY PROFILE` term — correctly, before anything touches the
-`TEXT REFORMULATION` box.
-
-### 1.3 Research questions from the task, answered
-
-- **Should phoneme difficulty and lexical difficulty be separate concepts?**
-  **[FINDING, RESEARCH.md §1.2/§2.F]** Yes — psycholinguistically, lexical
-  access (word-finding) and articulatory/motor execution (sound production)
-  are different mechanisms; stuttering is understood as primarily a
-  motor-execution phenomenon, distinct from a word-retrieval disorder.
-  Conflating "this word is hard" with "every sound in this word is hard"
-  would be a category error the moment a future reformulation engine tries
-  to use the data, e.g., substituting a word that shares an unrelated syllable
-  with a flagged word for no real reason. **Decision: kept fully separate**
-  (§2 below).
-- **Can a speaker have difficulty with a word without difficulty with its
-  constituent phonemes?** **[INTERPRETATION]** Yes, plausibly often — a word
-  can be hard because it's unfamiliar, long, or has an unusual stress
-  pattern, none of which is captured by "this speaker blocks on /θ/."
-  Word-level and sound-level difficulty are correlated in general but not
-  identical for any specific instance, which is exactly why they're stored
-  as separate declarations rather than one implying the other.
-- **Can a speaker have difficulty with a phoneme only in certain positions
-  or contexts?** **[LIMITATION, acknowledged not solved]** Almost certainly
-  yes (onset vs. coda, stressed vs. unstressed syllable, word-initial vs.
-  mid-sentence) — the *existing* onset-matching mechanism this repo already
-  has (`phonetic.py`, kept unchanged this stage) only models word-initial
-  onset position. This stage does not extend that model — it's flagged as
-  future work (§8) precisely because doing so is a reformulation-engine-side
-  change, out of scope here.
-- **Should phrases be treated separately from words?** **[FINDING, RESEARCH.md
-  §2.F clinical literature]** Yes — a phrase can be difficult as a
-  *sequence* even when no individual word or sound in it is independently
-  flagged (prosody, rhythm, or a specific word-to-word transition can be the
-  actual source of difficulty). Stored as a third, independent category (§2).
-- **Should the profile represent only explicit user declarations initially?**
-  **[Decision, per the task's own explicit instruction]** Yes. `source` is
-  recorded per entry (`user_typed` / `user_selected_from_text` /
-  `system_observed`), with `system_observed` reserved, unused, for §9's
-  future Audio Module integration.
+**Other research questions from the task, answered:**
+- *Can a speaker have difficulty with a word without difficulty with its
+  constituent phonemes?* **[INTERPRETATION]** Yes — unfamiliarity, length,
+  or stress pattern can make a word hard independent of any single phoneme.
+- *Should phrases be treated separately from words?* **[FINDING, RESEARCH.md
+  §2.F]** Yes — a phrase can be difficult as a sequence even when no
+  individual word/sound in it is independently flagged.
+- *Should the profile represent only explicit user declarations initially?*
+  **[Decision, per the task]** Yes — see `source` in §2.
 
 ---
 
@@ -86,366 +69,351 @@ This document's job is to build the profile side of that contract — the
 
 ```
 DifficultyProfile (per speaker)
- ├── sounds:  [DifficultyEntry, ...]
- ├── words:   [DifficultyEntry, ...]
- └── phrases: [DifficultyEntry, ...]
+ ├── sounds:  [DifficultyEntry, ...]      GLOBAL sound difficulty
+ ├── words:   [DifficultyEntry, ...]      word difficulty (+ optional pattern)
+ └── phrases: [DifficultyEntry, ...]      phrase difficulty
 
 DifficultyEntry
- ├── value          the user's text, display form, case preserved
- ├── normalized      the dedup/matching key (see §3)
- ├── category        "sound" | "word" | "phrase"
- ├── source          "user_typed" | "user_selected_from_text" | "system_observed" (unused, reserved)
+ ├── value            display text, case preserved
+ ├── normalized       dedup/matching key (§3)
+ ├── category         "sound" | "word" | "phrase"
+ ├── source           "user_typed" | "user_selected_from_text" | "system_observed" (reserved, §8)
  ├── added_at         ISO-8601 timestamp
- ├── pronunciation    words only; ARPAbet phones or null (see §4)
- └── meta             {} — empty, reserved for future fields (severity, confidence,
-                       context) without a schema migration when they're added
+ ├── pronunciation    words only; full ARPAbet phone sequence or null (§3.2)
+ ├── problem_phones   words only; a user-selected SUBSET of `pronunciation` —
+ │                     the word-specific pattern, or null if not specified
+ └── meta             {} — empty, reserved for future fields, no migration needed
 ```
 
-**[Decision]** No severity/confidence/frequency/position fields are
-populated in this stage, per the task's explicit "do not over-engineer"
-instruction. `meta: {}` exists so adding them later is additive (new key in
-an existing dict), not a migration.
+**[Decision]** `problem_phones` lives on the word entry it describes, not
+as a fifth top-level list — it's meaningless without the word it's scoped
+to, and a top-level list would need a foreign key back to the word anyway,
+which is more machinery for the same information.
 
-**[Decision, explicitly per the task]** `source` cleanly separates
-user-declared data (`user_typed`, `user_selected_from_text` — both populated
-today) from future system-observed data (`system_observed` — reserved,
-never written by anything in this stage). See §9.
-
----
-
-## 3. Representation research: sounds, words, phrases
-
-### 3.1 ARPAbet vs. IPA — researched, not assumed
-
-**[FINDING]** ARPAbet is ASCII-only, English-specific, and is what CMU
-Pronouncing Dictionary natively uses; IPA is the universal linguistic
-standard, unicode-based, more expressive, and more recognized by trained
-linguists/SLPs, but not by a general audience — "the ARPAbet (and to a much
-larger extent, the IPA alphabet) uses a specific notation to encode phonemes
-that is not widely known" to end users generally.
-
-**[Decision, evidence-based]** Keep ARPAbet as the **internal**
-representation (zero conversion cost — this repo's `phonetic.py` and CMU
-dict integration already speak it fluently and are being reused unmodified;
-see §7), and **never surface raw ARPAbet/IPA as the primary user-facing
-label**. The user always types an ordinary spelling-like cue ("str", "th",
-"r") — exactly as before this stage — and the system does the conversion.
-Where a technical detail is shown at all (an onset preview, a word's
-pronunciation), it's small, secondary, and clearly optional information, not
-something the user must understand to use the feature. **[FUTURE WORK]**
-IPA as an *additional*, opt-in display format was considered and rejected
-for this stage — no clear benefit for this project's non-linguist user base
-was found in the research, and it adds unicode-rendering risk for no
-demonstrated gain; revisit only if a specific user population (e.g., SLP
-clinicians) is identified as needing it.
-
-### 3.2 Should words map to phonemes automatically?
-
-**[Decision, directly answering the task's §6]** A word's pronunciation is
-derived **for display only**, via a new, purely additive function,
-`phonetic.full_pronunciation(word)` — CMU-dict lookup, stress digits
-stripped, returning `None` (not a guess) for out-of-vocabulary words. It is
-**never** used to create or influence a `sounds` entry. Marking "three"
-difficult does not add `/TH/` to `sounds` — that would be exactly the
-conflation §1.3 argues against. The pronunciation is shown next to the word
-entry in the UI purely so the user can see *why* a word might be hard, as
-an aid to understanding, not as a hidden side effect that changes what gets
-stored.
-
-**[Decision — deliberately conservative]** `full_pronunciation()` does *not*
-fall back to a guessed pronunciation for OOV words the way `phonetic.onset()`
-already does for the *onset* (a documented, accepted approximation for
-gating). The reasoning: a wrong onset guess only weakens a filter (cheap
-failure mode, already accepted risk in the existing pipeline); a fabricated
-*full* pronunciation would be presented to the user as if it were a
-verified fact about their own word (expensive failure mode — false
-confidence). `None` displayed as "pronunciation unknown" is honest;
-a fabricated one is not.
-
-### 3.3 Should sounds dedup by spelling or by pronunciation?
-
-**[Decision, tested — `tests/difficulty_profile_test.py::test_duplicate_sound_by_arpabet_not_spelling`]**
-By pronunciation. "c" and "k" are different letters but the same ARPAbet
-phoneme (`/K/`) — normalizing through `phonetic.normalize_pattern()` (an
-existing, unmodified function) means they correctly dedup as *one* declared
-sound difficulty, not two. This is a direct, tested application of
-`RESEARCH.md` §2.F's finding that pronunciation, not spelling, is what
-determines articulatory difficulty.
-
-### 3.4 Phrase representation
-
-**[Decision, per the task's "don't overcomplicate" instruction]** Phrases
-are stored as plain, whitespace-normalized, lowercased text — no attempt at
-structured tokenization, n-gram indexing, or position tracking in this
-stage. **[FUTURE WORK]** How a stored phrase gets *matched* against new
-input text (exact substring? fuzzy/reordered? partial overlap?) is
-explicitly deferred to the reformulation-engine stage — this stage only
-establishes that phrases are captured as a first-class, independent
-category, not how they'll later be detected in arbitrary new text. The
-representation chosen (plain text) doesn't foreclose any future matching
-strategy.
+**[Decision]** Promoting a word's `problem_phones` into a **global**
+`sounds` entry is a separate, explicit method call
+(`add_sound_from_phones()`) — nothing sets `problem_phones` and
+automatically touches `sounds`. Tested directly:
+`tests/difficulty_profile_test.py::test_setting_pattern_does_not_create_global_sound`.
 
 ---
 
-## 4. Persistence: JSON vs. SQLite — researched, not assumed
+## 3. Representation research
 
-| Criterion | JSON (per-user file, existing pattern) | SQLite |
-|---|---|---|
-| Inspectable | Yes — human-readable, diffable in git-style review | Requires a DB browser/query |
-| Easy to modify | Yes — a text editor suffices | Requires SQL or a client |
-| Data volume | Tiny — tens to low hundreds of entries per user | Designed for volumes this project doesn't have |
-| Query needs | None — always "load the whole profile for this user" | Would matter only for cross-user queries (e.g. "find all users struggling with /str/"), which nothing in this stage or the near-term roadmap needs |
-| New dependency | None — matches `user_store.py`'s existing, working pattern | New dependency (`sqlite3` is stdlib, but still a new persistence *pattern* alongside the existing JSON one) |
-| Migration risk | Additive key in an existing file (see §5) | Would require migrating existing `users/*.json` accounts into a new store, real risk for no offsetting benefit at this data volume |
+### 3.1 ARPAbet internally, never raw ARPAbet/IPA as the primary user-facing label
 
-**[Decision]** JSON, as an **additive key** (`difficulty_profile`) inside
-the *existing* per-user `users/<username>.json` file that `user_store.py`
-already manages — not preserved merely because it existed, but because it's
-the objectively right choice at this data volume and this project's stated
-"avoid unnecessary infrastructure" value, per the criteria above.
-**[FUTURE WORK]** If a later stage needs to query *across* users (e.g. for
-research/eval on population difficulty patterns), that's the point at which
-SQLite (or even just concatenating JSON files) becomes worth reconsidering
-— not before.
+**[FINDING]** ARPAbet is ASCII, English-specific, and what CMU dict natively
+uses; IPA is the universal standard but unicode and no more familiar to a
+general audience — "the ARPAbet (and to a much larger extent, the IPA
+alphabet) uses a specific notation ... not widely known" to end users.
+**[Decision]** ARPAbet stays internal (zero conversion cost, already
+integrated); the user never has to type or read a raw phone code to use the
+feature.
+
+### 3.2 Word → pronunciation → pattern, and why it's display-only until the user acts
+
+**[Decision]** `phonetic.full_pronunciation(word)` (new, additive, CMU-dict
+only, no grapheme-guess fallback — returns `None` rather than a fabricated
+pronunciation for OOV words) is used purely to populate the checkbox list
+in the pattern editor. Nothing in this module ever reads `pronunciation`
+and writes to `sounds` on its own.
+
+### 3.3 Showing phones to non-technical users — respelling, not raw codes
+
+**[FINDING, this refinement's new research]** Dictionaries written for
+general readers use **pronunciation respelling** — a familiar reference
+word per sound (e.g. "dye-REE-a" for diarrhea) — specifically because most
+readers know neither IPA nor ARPAbet notation; "most people are normally
+more comfortable with pronunciation spellings commonly found in newspapers
+... which make use of well-known words." Webster's New World Dictionary,
+Chambers, Collins, and Cassell's all use a respelling system rather than
+raw IPA for exactly this audience reason.
+
+**[Decision]** `phonetic.friendly_phone_label()` implements the same idea
+in miniature: a fixed table (`ARPABET_EXAMPLE_WORD`, all 39 CMU phones)
+mapping each phone to one common English word that contains it — "TH (as
+in "think")" rather than bare "TH". This is the label shown for every
+checkbox in the pattern editor. **[FUTURE WORK]** A full non-phonemic
+respelling of the *whole word* (e.g. "th-REE") was considered and not built
+— the per-phone table achieves the same accessibility goal with far less
+work, and covers the actual UI need (labeling individual selectable
+phones), not a general-purpose respelling engine.
+
+### 3.4 Should sounds dedup by spelling or pronunciation?
+
+**[Decision, tested]** By pronunciation — "c" and "k" both normalize to
+`/K/` and dedup as one entry. Also holds for phones-based sounds: a sound
+typed as "thr" and one promoted from a word's TH+R pattern normalize to the
+same key and dedup correctly
+(`test_promoted_sound_dedups_against_typed_sound`).
+
+### 3.5 Phrase representation
+
+**[Decision, unchanged from Stage 4A]** Plain, whitespace-normalized,
+lowercased text. **[FUTURE WORK]** How a stored phrase gets matched against
+new input text is deferred to the reformulation-engine stage.
 
 ---
 
-## 5. Reusing vs. changing the existing implementation
+## 4. The pattern-selection interaction — design and research
 
-Per the task's explicit instruction to determine this before implementing,
-not to preserve things merely because they exist:
+### 4.1 What was asked for, and what Streamlit actually supports
 
-| Existing piece | Kept as-is? | Why |
-|---|---|---|
-| `phonetic.onset()`, `matches_any()`, `normalize_pattern()`, `word_difficulty()` | **Unchanged** | Already correct for this stage's needs; RESEARCH.md found no reason to touch them, and this stage explicitly must not redesign scoring/gating logic |
-| `user_store.py`'s `phoneme_profile` (`stutter_patterns`/`blocked_words`) | **Kept, now an auto-derived mirror** | It's exactly "difficult sounds" + "difficult words" already, just as flat, unstructured lists with no phrase support and no metadata. Rather than maintaining it as an independent, separately-edited list (real drift risk — the same class of problem `RESEARCH.md` §6 flagged for the two rewrite pipelines), it's now *derived* from the new `difficulty_profile` on every save. This is the **only** point of contact between the new foundation and the existing reformulation pipeline — see §6. |
-| The old "Blocklist" UI column | **Absorbed, not duplicated** | It was already, semantically, "difficult words" (Gate A in `grammar.py` treats `blocked_words` as words to always flag) — editable from *two* separate UI surfaces before this stage (the free-text patterns/blocked panel, and the Blocklist expander). That pre-existing redundancy is resolved by making the new Words column the single place to manage it, reusing its already-working add/remove-button pattern rather than inventing a new one. |
-| The "Allowlist" UI | **Unchanged, kept separate** | A genuinely different concept — words that must *never* be touched, unrelated to difficulty — not in scope for this stage. |
-| `profiling/profile.py`'s `SpeakerDifficultyProfile` (EWMA onset-risk model) | **Unchanged, kept separate from the new profile** | A different kind of thing: a *learned, continuous* scoring model consumed by `rewrite/`, not a flat user-declared list. Conflating the two would mean redesigning `rewrite/`'s input contract, which is a reformulation-engine change explicitly out of scope this stage. The relationship between them is future work — see §9. |
+The task's example shows a "contextual popup/dialog" appearing after a word
+is flagged, offering pronunciation phones as selectable items.
 
-**[LIMITATION, stated explicitly]** This means the repository now has *two*
-different "difficulty" representations that don't talk to each other yet:
-the new, structured, user-declared `DifficultyProfile` (this stage), and the
-old, learned, continuous `SpeakerDifficultyProfile` (unchanged, still
-running, still feeding `rewrite/`). This is not an oversight — it's the
-direct, correct consequence of the task's explicit instruction not to touch
-the reformulation engine this stage. Reconciling them is named as the
-natural next step in §9/`ROADMAP.md`.
+**[FINDING]** Streamlit has a native modal primitive, `st.dialog`
+(decorator-based). **[FINDING, this refinement]** It also has a **documented,
+open bug**: "Using AppTest, st.dialog does not execute code within
+st.buttons" (streamlit/streamlit#9786) — button clicks inside a dialog are
+never triggered when driven by the automated test harness this project
+relies on for verification.
+
+**[Decision]** `st.dialog` was **not used**, specifically because of that
+bug — this project's established testing standard (set in Stage 4A, when
+an equivalent custom-JS-selection idea was rejected for being unverifiable)
+is not to ship an interaction that can't actually be exercised by the test
+suite. Instead: a plain, session-state-toggled inline panel
+(`_render_pattern_editor()` in `app.py`), which is exactly as testable as
+every other widget in the app — and was, in fact, tested
+(`tests/app_test.py` scenario 6, checkbox clicks and all).
+
+### 4.2 What was built
+
+1. A 🔍 button next to each word entry (disabled, with an explanatory
+   tooltip, when the word has no derivable pronunciation) opens/closes an
+   inline panel below the three-column layout.
+2. The panel lists the word's phones **in order**, each as an individually
+   keyed `st.checkbox` labeled with its friendly gloss (§3.3) — not a
+   `st.multiselect`, specifically to avoid ambiguity when the same phone
+   occurs twice in one word (checkbox keys are `{word}_{position-index}`,
+   so duplicates never collide).
+3. **Selecting nothing and closing is a fully valid, non-error outcome** —
+   the word stays a plain word-level difficulty. This directly satisfies
+   the task's "do not assume the user always knows or needs to specify a
+   phoneme."
+4. A separate "Also add ... as a GLOBAL difficulty" checkbox, **default
+   unchecked**, is the only path from a word-specific pattern to a global
+   `sounds` entry.
+5. The panel **auto-opens right after a word is successfully added** (via
+   the Add button or the quick-pick-from-text control) — matching the
+   task's example flow (flag → immediately asked what's difficult about
+   it) — but is also reachable any time later via the 🔍 button, covering
+   the "manage the profile without entering text first" requirement too.
+
+### 4.3 What remains deferred
+
+**[RECOMMENDATION — not built]** A true inline "select text in place, a
+floating button appears at the selection" interaction (for flagging
+arbitrary spans directly from the text, not just whole words via the
+dropdown) — researched in Stage 4A, still unbuilt, technical approach fully
+specified in that pass's record (superseded text kept only in
+`DECISION_LOG.md`/`CHANGELOG.md` history, not repeated here since nothing
+changed about that specific finding this refinement).
 
 ---
 
-## 6. How the foundation reaches the (unchanged) reformulation engine today
+## 5. Single-default-profile architecture
+
+### 5.1 What was removed, and why
+
+**[Decision, directly per the task]** `auth.py` and `user_store.py` were
+deleted (`git rm` — recoverable from history, not archived in-repo,
+per the task's explicit "do not create unnecessary compatibility layers
+just to preserve obsolete behavior"). Removed with them: the login/register
+screens, SHA-256 password hashing, multi-account management UI, the
+sidebar user badge and logout button.
+
+**Why now, not just "because the task said so":** the login layer was
+already flagged in this project's own evidence trail as a liability, not
+just unneeded complexity — `DECISION_LOG.md` 2026-06-13-A/2026-06-07-A
+record that `users/default.json` and `users/bobcat.json` carried committed,
+weakly-hashed password material, and `ROADMAP.md` R0 named remediating it
+the single highest-priority item in the whole project (ahead of any
+research question). Removing the auth layer doesn't purge that material
+from git *history* (a separate, harder problem, not attempted here without
+explicit authorization to rewrite published history), but it does mean **no
+new password hashes are ever written again**, and the current
+`users/default.json` and the now-deleted `users/bobcat.json` were rewritten
+to a clean schema with no `password_hash` field at all
+(`tests/difficulty_profile_test.py::test_no_account_fields_survive_a_save`
+verifies a save() always drops any password_hash a loaded record might
+still carry).
+
+### 5.2 What stayed extensible, and how
+
+**[Decision, directly per the task's "do not make future multi-user
+support impossible" instruction]** `profile_store.py`'s entire public API
+takes a `profile_name` parameter, defaulting to `DEFAULT_PROFILE = "default"`
+— it is never hardcoded away. `DifficultyProfile` and `SpeakerDifficultyProfile`
+(unchanged) both already took a name/username parameter before this
+refinement; nothing about *that* changed. What's gone is the **UI and
+auth layer** around choosing/switching/creating profiles, not the storage
+layer's ability to key by name. Reintroducing multiple profiles later is a
+UI change (add a profile picker back) plus a decision about how a picker
+authenticates (or doesn't) — not a data-model change.
+
+### 5.3 Where the data lives, and a deliberate naming inconsistency
+
+**[Decision, explained rather than hidden]** Profiles still live at
+`users/<profile_name>.json` — the directory is **not** renamed to
+`profiles/`, even though "users" now reads oddly for a single-profile app
+with no accounts. Reason: `profiling/profile.py` (unmodified, out of scope
+both this stage and its refinement) hardcodes `ROOT / "users"` for its own
+per-speaker `*.fluency_profile.json` files. Renaming the directory would
+require touching that file, which neither this stage nor its refinement
+does. This is recorded explicitly so the naming mismatch reads as a stated
+constraint, not an oversight.
+
+### 5.4 Schema simplification
+
+**[Decision]** The on-disk record dropped two fields that existed in the
+Stage-4A-era schema: `password_hash` (no auth = meaningless) and
+`phoneme_profile` (the mirror described in Stage 4A's original version of
+this document — see §6 below for why it's gone, not just renamed).
+Current schema:
+
+```json
+{
+  "profile_name": "default",
+  "difficulty_profile": {"sounds": [...], "words": [...], "phrases": [...]},
+  "custom_replacements": {},
+  "preferences": {"allowlist_words": [...], "rephrase_enabled": true, "profile_rewrite_enabled": true}
+}
+```
+
+---
+
+## 6. How the profile reaches the (still unchanged) reformulation engine
+
+**This is the one part of the design that changed shape in the
+refinement, not just in scope.** Stage 4A's original approach persisted a
+`phoneme_profile` mirror to disk on every save, specifically so
+`auth.py::_load_user_into_session()` could read it at login time.
+**[Decision, this refinement]** With `auth.py` gone, there is no login-time
+read to serve — `app.py` now derives `stutter_patterns`/`blocked_words`
+**purely in memory**, once per session, directly from the loaded
+`DifficultyProfile`:
 
 ```
-DifficultyProfile.save()
+app.py startup
         │
         ▼
-user_store.save_difficulty_profile()
-   writes difficulty_profile{}  (new, structured)
-   AND derives+writes phoneme_profile.stutter_patterns/.blocked_words
+_difficulty_profile()  — DifficultyProfile.load("default")
         │
         ▼
-st.session_state.stutter_patterns / .blocked_words
-   (refreshed immediately in the current session — no re-login needed)
+_sync_legacy_session_from_profile()
+   st.session_state.stutter_patterns = profile.sound_values()
+   st.session_state.blocked_words    = profile.word_values()
         │
         ▼
 grammar.py::SentenceRewriter.rewrite(stutter_patterns=..., blocked_words=...)
 rewrite/rewriter.py::DifficultyAwareRewriter    ← UNCHANGED call sites, UNCHANGED logic
 ```
 
+Any add/remove re-runs this same sync immediately
+(`_save_difficulty_profile()`), so the current session always reflects the
+latest profile with no re-login step to trigger it (there's no login at
+all anymore). **[Simplification over Stage 4A]** This removes an entire
+persisted, must-stay-in-sync field (`phoneme_profile`) that existed only to
+serve a login step that no longer exists — one fewer piece of state that
+could drift.
+
 **[FACT, verified by test]** `grammar.py`, `engine.py`, `semantic.py`,
-`rewrite/*.py`, `rephrase.py`, and `profiling/profile.py` have **zero**
-lines changed in this stage. `tests/smoke.py`'s output is byte-identical to
-the committed baseline after this stage's changes (verified below, §7) —
-direct, checkable evidence the reformulation pipeline's behavior is
-unaffected, not just an assertion.
+`rewrite/*.py`, `rephrase.py`, and `profiling/profile.py` still have
+**zero** lines changed. `tests/smoke.py`'s output remains byte-identical to
+the committed baseline after this refinement.
 
-`phrases` has **no consumer yet** — nothing in the current reformulation
-pipeline accepts a phrase-level constraint. This is honest and correct: the
-task explicitly does not ask this stage to make phrases *do* anything yet,
-only to let the user *declare* them.
+`phrases` and word-specific `problem_phones` both still have **no
+consumer** in the reformulation pipeline — declared and persisted, not yet
+acted on. Correct and expected: neither this stage nor its refinement
+touches the reformulation engine.
 
 ---
 
-## 7. Text-entry and flagging interaction — design and research
+## 7. Testing
 
-### 7.1 What the task asks for, and the real constraint it runs into
+### 7.1 What's covered, and how
 
-The requested interaction: select text inline (not necessarily double-click,
-per the task's own explicit permission to choose a different mechanism),
-see a small contextual action, flag it, get clear confirmation, be able to
-undo.
+`tests/difficulty_profile_test.py` — 38 tests: the original 26 (dedup, text
+edge cases, OOV pronunciation, persistence, legacy migration) plus 12 new
+ones for this refinement — setting/clearing a word-specific pattern,
+**that doing so never creates a global sound entry**, pattern validation
+against the word's real pronunciation (rejects a phone the word doesn't
+actually contain), behavior for a word with no derivable pronunciation,
+explicit promotion to a global sound and its dedup behavior, persistence of
+`problem_phones` across a reload, and that a save() always drops obsolete
+account fields.
 
-**[FINDING]** Native, JS-level "receive the browser's text selection as
-Streamlit input" is a **documented, open gap** in Streamlit itself — there
-is an active community feature request for exactly this
-("Feature request: receive selected text as user input," Streamlit forum),
-and the only existing solutions are third-party custom components
-(`streamlit-text-annotation`, `st-tex-annotation`, `text-highlighter`) built
-with separate React/JS frontend toolchains.
+`tests/app_test.py` — extended with two new scenarios exercising the actual
+Streamlit widgets: scenario 5 (add/remove word/sound/phrase, unchanged from
+Stage 4A but re-verified against the new storage layer) and **scenario 6**
+(flag "three", confirm the pattern editor auto-opens, click the TH and R
+checkboxes by their real widget keys, save without checking "promote",
+confirm the word shows "specifically: TH, R" in rendered markdown, **and
+confirm `st.session_state.stutter_patterns` stays empty** — i.e. no global
+sound was created). Also newly verified: no login/register text appears
+anywhere in the rendered app, and a profile pre-written directly to disk
+loads correctly through the real startup path (not just via session-state
+pre-seeding, which no longer works the same way once `_difficulty_profile()`
+syncs from disk on every fresh session — see the comment at the top of
+`tests/app_test.py` for why the test-seeding approach changed).
 
-**[INTERPRETATION]** Building an equivalent custom component from scratch in
-this pass would mean hand-rolling the `postMessage`-based Streamlit
-component protocol and verifying it in a real browser — something this tool
-environment cannot do. Shipping that as if it were a tested, working
-foundation would repeat exactly the mistake this repository's own
-`HANDOFF.md` already flags as a pitfall for `voice.py`'s `st.iframe` usage
-(unverified browser JS, never confirmed to actually work). Given this
-stage's own framing — *"The most important outcome is not a fancy
-interface. It is a correct, well-researched, persistent representation"* —
-building something unverifiable would work against the stage's actual goal.
+`tests/persistence_test.py` — rewritten (it previously depended entirely on
+the now-deleted `auth.py`) to test `profile_store.py`'s preference
+round-trip directly: a never-saved profile still returns a complete,
+well-formed preferences dict (the app must never crash on a brand-new
+default profile), and the real running app's default profile has one.
 
-### 7.2 What was actually built
-
-A two-path interaction, both using **only native Streamlit widgets** (fully
-testable, verified below):
-
-1. **Free-text flagging** (primary, general-purpose): a text input + "Add"
-   button per category (Sounds / Words / Phrases). The user can type a word
-   directly, or use the browser's own native text selection (a capability
-   every browser already has, requiring no custom code) to select-and-copy
-   text from the entry box above and paste it in. This genuinely uses text
-   selection — the browser's native one — without any custom JS.
-2. **Quick-pick from current text** (convenience, words only): a dropdown
-   auto-populated with the unique words already present in whatever the
-   user has typed into the main text area (`extract_candidate_words()`),
-   plus a "Flag" button. This directly satisfies "select something in your
-   current text and mark it as difficult" for the single-word case — the
-   task's own example (`thoroughly`) — as one compact widget, not "every
-   word as a separate box/button" (the task's explicit anti-pattern).
-   Phrases aren't offered through this path (a dropdown of individual
-   tokens can't represent a multi-word span); the free-text path (paste a
-   selection) covers that case.
-
-**Confirmation and undo:** `st.success`/`st.info` messages after add
-("clear indication after flagged"); every entry renders with its own ✕
-remove button ("ability to undo/remove the flag").
-
-**[RECOMMENDATION — not built, explicitly deferred]** A true inline
-"select text, a small floating button appears next to the selection" JS
-component remains the better long-term UX and was genuinely researched, not
-dismissed out of hand. The concrete technical path, for a future session
-with real-browser access to verify it: `st.components.v1.html()` rendering
-the text as flowing HTML, a `mouseup` listener reading `window.getSelection()`,
-a small absolutely-positioned button near the selection's bounding rect, and
-a hand-rolled `postMessage`-based Streamlit component value channel (the
-`streamlit-component-lib.js` helper would need to be vendored locally,
-not loaded from a CDN, to preserve this project's offline-only guarantee).
-This is recorded as a specified, ready-to-build future item, not implemented
-now, precisely so it doesn't get shipped as verified when it isn't.
-
-### 7.3 What was explicitly NOT done
-
-Per the task's explicit prohibition: no token-per-word chip UI. The main
-text area still renders as one normal, continuously-flowing text box —
-nothing about entering or viewing the text changed from before this stage.
-
----
-
-## 8. Fundamental design questions, answered directly
-
-- **How should multiple simultaneous difficulties be represented?** As
-  independent entries across the three lists — no attempt to represent
-  *interaction* between them (e.g., "this word is only hard when preceded by
-  a difficult sound") in this stage. **[LIMITATION]** Interaction modeling
-  is unaddressed, consistent with `RESEARCH.md` §7's finding that this is
-  underexplored in the literature generally, not just in this repo.
-- **What information should eventually be learned from user feedback?**
-  **[FUTURE WORK, directly named in RESEARCH.md §5.5/R9]** Whether a
-  suggested reformulation (once the engine exists) was accepted or rejected
-  — the `Fluent` system's active-learning loop is the concrete precedent.
-  `meta: {}` on each entry, and the reserved `system_observed` source value,
-  are the two places this would attach without a schema change.
-- **How should this interface with a future automatic speech-analysis
-  module?** See §9.
-
----
-
-## 9. Future audio-module integration (not implemented)
-
-**[Decision, per the task's explicit instruction]** The schema already
-supports it without modification: an external module producing
-`{"word": ..., "phoneme": ..., "confidence": ..., "context": ...}` per the
-task's own example maps directly onto a `DifficultyEntry` with
-`source="system_observed"` and the extra fields (`confidence`, `context`)
-placed in `meta` — no migration needed when that integration is built,
-because `meta` was designed empty-but-present for exactly this. **Nothing
-imports, calls, or depends on any audio/ASR code to do this** — the
-`difficulty_profile.py` module has zero dependency on `out_of_scope/`, and
-the whole feature works end-to-end from manual input alone, verified by the
-tests in §10.
-
----
-
-## 10. Testing — what was run, and what wasn't
-
-### 10.1 Fully automated, run, passing
-
-`tests/difficulty_profile_test.py` (26 tests) — add/remove/dedup for all
-three categories; text edge cases (punctuation-adjacent, capitalization,
-contractions, numbers, proper nouns, leading/trailing whitespace,
-multi-word phrase capture); pronunciation derivation including the OOV case
-(`full_pronunciation()` returns `None`, not a guess); persistence across a
-fresh `DifficultyProfile.load()` (simulating an app restart); the legacy
-`phoneme_profile` mirror staying in sync on both add and remove; migration
-of a pre-existing legacy-only profile into the new structure without data
-loss; migration firing exactly once, not resurrecting a removed entry on
-a later reload.
-
-`tests/app_test.py` (extended, scenario 5) — the actual Streamlit widgets,
-through `AppTest`: panel renders; add word/sound/phrase via the real text
-input + button widgets; entries appear in rendered markdown; the legacy
-session-state mirror (`stutter_patterns`/`blocked_words`) updates
-immediately, in the same session, with no re-login; remove button works;
-removed entry disappears from rendered output.
+Also re-ran unmodified: `tests/roadmap_test.py` (3/3 pass), `tests/smoke.py`
+(byte-identical to baseline).
 
 ```
-$ DISABLE_DATAMUSE=1 python tests/difficulty_profile_test.py
-Ran 26 tests in 0.85s — OK
-
-$ DISABLE_DATAMUSE=1 python tests/app_test.py
-[ok] default load / sentence mode / word mode / rephrase toggle / difficulty profile add+remove
-RESULT: ALL PASS
+$ DISABLE_DATAMUSE=1 python tests/difficulty_profile_test.py   → 38/38 OK
+$ python tests/persistence_test.py                              → ok
+$ DISABLE_DATAMUSE=1 python tests/roadmap_test.py                → 3/3 OK
+$ DISABLE_DATAMUSE=1 python tests/app_test.py                    → ALL PASS (6 scenarios)
+$ diff tests/baseline_sbert.txt <(python tests/smoke.py)         → no diff
 ```
 
-Also re-ran, unmodified, to confirm zero regression in the untouched
-reformulation pipeline: `tests/roadmap_test.py` (3/3 pass),
-`tests/persistence_test.py` (pass), `tests/smoke.py` (**byte-identical**
-to `tests/baseline_sbert.txt`).
+### 7.2 Explicitly not tested
 
-### 10.2 Explicitly not tested — stated honestly, not glossed over
-
-**[LIMITATION]** No real-browser, JS-driven interaction exists in this
-implementation, so there is nothing of that kind to test — this is a
-consequence of the §7.1 decision, not a gap in an otherwise-JS-based
-feature. `AppTest` does not execute a real browser or real JS; it verifies
-Streamlit's Python-side widget tree and session state, which is what this
-implementation is actually built from, so the coverage above is a genuine
-test of the shipped feature, not a partial one.
+**[LIMITATION, unchanged from Stage 4A]** No real-browser JS interaction
+exists in this implementation (§4.3), so there's nothing of that kind to
+verify — `AppTest` covers the Python-side widget tree and session state,
+which is the entirety of what was actually built.
 
 ---
 
-## 11. Rejected alternatives, summarized
+## 8. Future audio-module integration (still not implemented)
+
+**[Decision, unchanged]** `source="system_observed"` and the empty `meta`
+dict remain reserved, unused by anything in this repo, specifically so a
+future Audio Module's `{"word":..., "phoneme":..., "confidence":...,
+"context":...}` output maps onto a `DifficultyEntry` without a schema
+migration. Nothing here imports or depends on `out_of_scope/`.
+
+---
+
+## 9. Rejected alternatives (this refinement)
 
 | Alternative | Rejected because |
 |---|---|
-| Custom bidirectional Streamlit component (hand-rolled `postMessage` protocol) for inline text selection | Unverifiable in this environment; would ship untested browser JS as if proven, repeating a known pitfall already on record for `voice.py` |
-| Third-party Streamlit annotation components (`streamlit-text-annotation`, etc.) | New external dependency requiring a separate JS/React toolchain, conflicting with this project's offline-first, minimal-infrastructure values; unverifiable here either |
-| Storing difficulty as a single flat list (no sound/word/phrase separation) | Directly contradicts the task's central requirement (§1.3) and `RESEARCH.md`'s psycholinguistic finding that these are different mechanisms |
-| Auto-deriving `sounds` entries from a flagged word's phonemes | Exactly the conflation §1.3/§6 of the task explicitly warns against |
-| SQLite for profile storage | No query need this data volume/access pattern justifies; would add a new persistence pattern for no offsetting benefit (§4) |
-| Maintaining `phoneme_profile` as an independently-edited list alongside the new `difficulty_profile` | Real, demonstrated drift risk — the exact failure mode `RESEARCH.md` §6 already flagged for this repo's two rewrite pipelines; resolved by making it a derived mirror instead |
-| IPA as the primary user-facing phoneme notation | No evidence found that it serves this project's non-linguist users better than the existing spelling-cue-in, ARPAbet-internal approach; adds unicode risk |
+| `st.dialog` for the "what's difficult about this word?" popup | Documented AppTest bug — button clicks inside it don't execute under test (streamlit/streamlit#9786); would ship an unverifiable interaction |
+| Auto-creating a global `sounds` entry when `problem_phones` is set | Exactly the word-vs-phoneme conflation the whole refinement exists to prevent |
+| `st.multiselect` for phone selection | Ambiguous/colliding options when a word repeats a phone; per-position checkboxes have no such ambiguity |
+| Hardcoding a single profile name with no parameter | Would make reintroducing multi-user later a data-model change, not just a UI one — violates the task's explicit extensibility instruction |
+| Renaming `users/` → `profiles/` | Would require touching `profiling/profile.py` (hardcodes `users/`), which is out of scope; documented as a deliberate naming mismatch instead |
+| Archiving `auth.py`/`user_store.py` in an `out_of_scope/`-style folder | Not an audio/ASR concern (the only category that folder represents, per Stage 2) and git history already preserves them; keeping a copy in-tree is exactly the "unnecessary compatibility layer" the task says to avoid |
+| A full non-phonemic word respelling (e.g. "th-REE") | The per-phone friendly-label table achieves the same accessibility goal for the actual UI need (labeling individually selectable phones) with far less engineering |
 
 ---
 
-## 12. What this stage deliberately does not attempt
+## 10. What this stage and its refinement deliberately do not attempt
 
-Per the task's explicit scope restriction, and worth restating plainly:
-no synonym generation, no contextual lexical substitution, no paraphrase
-generation, no sentence restructuring, no semantic scoring of candidate
-reformulations, no NLI verification, no candidate ranking, no LLM/T5
-generation call added, and no phrase-matching logic (detecting a stored
-phrase inside new input text). The output of this stage is **structured
-profile data**, not a rewritten sentence — verified by the fact that
-`tests/smoke.py`'s reformulation output is unchanged.
+Unchanged from Stage 4A: no synonym generation, contextual lexical
+substitution, paraphrase generation, sentence restructuring, semantic
+scoring, NLI verification, candidate ranking, or LLM/T5 generation change.
+No phrase-matching logic. No consumption of `problem_phones` by any
+scoring/gating code. The reformulation engine's behavior, verified by
+`tests/smoke.py`, is unchanged by either pass.
