@@ -18,31 +18,27 @@ called `users/`, not renamed to `profiles/`, because profiling/profile.py
 per-speaker EWMA `*.fluency_profile.json` files; renaming it would mean
 touching that file, which this stage does not do.
 
-Current on-disk schema (no password_hash, no phoneme_profile — both
-obsolete now that there's no auth layer and the legacy mirror is computed
-in-memory by app.py instead of persisted):
+Current on-disk schema:
 
 {
   "profile_name": "default",
-  "difficulty_profile": {"sounds": [...], "words": [...], "phrases": [...]},
-  "custom_replacements": {},
-  "preferences": {"allowlist_words": [...], "rephrase_enabled": bool, "profile_rewrite_enabled": bool}
+  "difficulty_profile": {"sounds": [...], "words": [...], "phrases": [...]}
 }
 
-A profile file written by the PREVIOUS stage (Stage 4A, before this
-refinement) may still have `password_hash`/`phoneme_profile`/`username`
-fields. Those are read once for their still-useful parts (see
-load_legacy_phoneme_profile below, consumed by difficulty_profile.py's
-one-time migration) and dropped on the next save — no code here writes
-them back.
+A profile file written by an earlier stage may still carry now-obsolete
+fields (`password_hash`/`phoneme_profile`/`username` from the pre-Stage-4A
+auth layer; `custom_replacements`/`preferences` from the pre-reformulate.py
+UI, which had per-profile toggles/allowlist/custom-replacement settings
+that the current UI doesn't have). `load_legacy_phoneme_profile` below
+still reads the phoneme_profile fields once, for difficulty_profile.py's
+one-time migration; everything else obsolete is simply dropped the next
+time this module writes the file — no code here writes any of it back.
 
 Public API
 ──────────
   load_difficulty_profile(profile_name)          -> dict
   save_difficulty_profile(profile_name, data)    -> None
   load_legacy_phoneme_profile(profile_name)      -> dict (one-time migration read only)
-  load_preferences(profile_name)                 -> dict
-  save_preferences(profile_name, preferences, custom_replacements=None) -> None
 """
 
 from __future__ import annotations
@@ -103,10 +99,11 @@ def load_difficulty_profile(profile_name: str = DEFAULT_PROFILE) -> dict[str, li
 
 def save_difficulty_profile(profile_name: str, data: dict[str, list]) -> None:
     """Persist the structured difficulty profile. Rewrites the whole record
-    from only the fields this module currently knows about — a Stage-4A-era
-    record's now-obsolete password_hash/phoneme_profile/username fields are
-    silently dropped on this write, not carried forward."""
-    prefs = load_preferences(profile_name)
+    from only the fields this module currently knows about — any older
+    record's now-obsolete fields (password_hash/phoneme_profile/username
+    from the pre-Stage-4A auth layer; custom_replacements/preferences from
+    the pre-reformulate.py UI) are silently dropped on this write, not
+    carried forward."""
     record = {
         "profile_name": _safe_name(profile_name),
         "difficulty_profile": {
@@ -114,8 +111,6 @@ def save_difficulty_profile(profile_name: str, data: dict[str, list]) -> None:
             "words": list(data.get("words", [])),
             "phrases": list(data.get("phrases", [])),
         },
-        "custom_replacements": prefs["custom_replacements"],
-        "preferences": prefs["preferences"],
     }
     _write_raw(profile_name, record)
 
@@ -133,34 +128,3 @@ def load_legacy_phoneme_profile(profile_name: str = DEFAULT_PROFILE) -> dict[str
         "stutter_patterns": list(pp.get("stutter_patterns", [])),
         "blocked_words": list(pp.get("blocked_words", [])),
     }
-
-
-def load_preferences(profile_name: str = DEFAULT_PROFILE) -> dict[str, Any]:
-    raw = _read_raw(profile_name)
-    prefs = dict(raw.get("preferences", {}))
-    prefs.setdefault("allowlist_words", [])
-    prefs.setdefault("rephrase_enabled", False)
-    prefs.setdefault("profile_rewrite_enabled", True)
-    return {
-        "preferences": prefs,
-        "custom_replacements": dict(raw.get("custom_replacements", {})),
-    }
-
-
-def save_preferences(
-    profile_name: str,
-    preferences: dict[str, Any],
-    custom_replacements: dict[str, Any] | None = None,
-) -> None:
-    raw = _read_raw(profile_name)
-    dp = raw.get("difficulty_profile") or {"sounds": [], "words": [], "phrases": []}
-    record = {
-        "profile_name": _safe_name(profile_name),
-        "difficulty_profile": dp,
-        "custom_replacements": (
-            dict(custom_replacements) if custom_replacements is not None
-            else dict(raw.get("custom_replacements", {}))
-        ),
-        "preferences": dict(preferences),
-    }
-    _write_raw(profile_name, record)
