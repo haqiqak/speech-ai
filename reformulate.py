@@ -46,9 +46,8 @@ NLTK WordNet (already a dependency), edit-amount scoring is difflib
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 import re
-from typing import Any
 
 import nltk
 from nltk import pos_tag, word_tokenize

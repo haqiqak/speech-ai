@@ -51,8 +51,3 @@ def zipf_frequency(word: str, lang: str = "en") -> float:
             except MemoryError:
                 return 0.0
         return 0.0
-
-
-def active_wordlist() -> str:
-    """Which wordlist is currently in use (for UI/status display)."""
-    return _active

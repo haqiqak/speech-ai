@@ -30,8 +30,7 @@ nltk_data/
 # run.  Do NOT commit — too large and regenerates automatically.
 .cache/
 
-# ── User preferences written at runtime ───────────────────────────────────────
-user_prefs.json
+# ── User data written at runtime ──────────────────────────────────────────────
 users/*.fluency_profile.json
 
 # ── Streamlit ─────────────────────────────────────────────────────────────────
