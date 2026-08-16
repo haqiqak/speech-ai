@@ -447,6 +447,23 @@ gates, or any scoring formula.
 **Labeled as:** A confirmed bug with root-cause evidence, not a
 hypothesis — explicitly not fixed during Stage 6 per that stage's
 no-tuning boundary. Next concrete implementation candidate.
+**Update (2026-08-16) — FIXED and measured, DONE, but did not move the
+metric it was expected to move.** `_bad_words_ids()` now encodes each
+blocked word's lowercase and capitalized forms (each with/without a
+leading space). 8 new regression tests (`tests/rephrase_test.py`, all
+pass) confirm the fix works: the original repro's 5/6 capitalized-form
+leak is now 0/6. Re-running Stage 6's exact corpus afterward found **the
+fix recovered 0 of the 4 `could_not_safely_reformulate` cases** — the
+literal-word leak was real and is now closed, but it was never the
+dominant failure cause; R18 (below) already accounted for the remaining
+4/4. An unplanned second finding surfaced while verifying this: blocking
+more token forms also pushes T5's beam search toward lower-similarity
+paraphrases (observed 0.49–0.61 post-fix vs. 0.81–0.91 pre-fix on the
+same case), which then fail the SBERT gate instead of the phoneme gate —
+so the specific rejection reason shifted without the outcome changing.
+Full record: `VALIDATION.md` §6.8, `DECISION_LOG.md` 2026-08-16-H. Closed
+as implemented and measured; R18 is now the only lever left for the
+escalation path's success rate.
 
 ### R18. Escalation-model mismatch: T5 paraphrase objective vs. phoneme-avoidance requirement
 **Linked finding:** `VALIDATION.md` §6.3, Cause B — the deeper of the two
@@ -467,6 +484,16 @@ reformulate" messaging instead of chasing a fix. Needs its own research
 pass before any implementation decision, consistent with §6/§9's
 "be willing to discard, but verify before you replace" discipline.
 **Labeled as:** Confirmed limitation (not fixed here), future work.
+**Update (2026-08-16) — now the sole remaining lever, plus one new
+consideration.** R17's fix (above) confirmed this is the dominant cause:
+fixing the case-sensitivity leak recovered 0/4 escalation failures. A
+second effect surfaced while verifying R17: more aggressive word-level
+blocking measurably pushes T5 toward lower-similarity paraphrases (§6.8),
+so any future fix here that works by blocking *more* terms (e.g. also
+blocking known synonyms/inflections of flagged words) should be checked
+against this side effect specifically, not assumed to only improve
+things — it may trade a phoneme-veto rejection for a semantic-gate
+rejection instead of an actual pass.
 
 ---
 
