@@ -705,3 +705,476 @@ In priority order, each tied to a specific finding:
 
 **G2P tooling**
 - `g2p_en` — lightweight English grapheme-to-phoneme. https://github.com/Kyubyong/g2p
+
+---
+---
+
+# Stage 5B — Critical Architecture Review & Implementation Blueprint (2026-08-16)
+
+This is the last planning checkpoint before implementation, not a new research
+cycle. Per the task's own instruction, new claims below are verified directly
+against this repo's actual code/libraries (a handful of concrete checks), not
+sourced from fresh literature search. Where §1–23 above already established a
+finding, it's cited, not re-derived.
+
+## 24. Critique — does the Stage 5 architecture survive contact?
+
+### 24.A SBERT + NLI: complementary, but "NLI on every candidate" is unjustified complexity
+
+**[FINDING, re-examined]** SBERT's negation/antonym blind spot (§9) and NLI's
+purpose-built sensitivity to contradiction are genuinely complementary in
+*what they catch* — this holds. What doesn't survive critique is running a
+full bidirectional NLI pass (2 forward passes per candidate — entailment is
+directional, so meaning-preservation checking needs both directions) on
+*every* candidate, for two reasons: (1) NLI models have their own well-known
+failure mode — **hypothesis-only/lexical-overlap artifacts** in the
+SNLI/MultiNLI training data mean a cross-encoder can sometimes guess the
+label from surface patterns alone, so it is not a strictly-better oracle,
+it's a *differently-fallible* signal; (2) it's mostly redundant work for our
+actual candidate source. **[FINDING, verified directly against this repo's
+own WordNet integration, not assumed]**: `nltk.wordnet`'s `Lemma.antonyms()`
+is a direct, zero-cost, zero-model lookup — confirmed by running it against
+this repo's live `engine.py` (`happy` → antonym `unhappy`; the current
+`get_synonyms('happy')` candidate list does not currently contain it, a
+healthy baseline, though not a guarantee for every word via longer
+hypernym-chain paths).
+
+**[RECOMMENDATION, revised from Stage 5's flat "add NLI alongside SBERT"]**
+A **tiered** semantic-verification stage, not a flat second gate:
+1. **WordNet antonym rejection** (free) — for any WordNet/Datamuse-sourced
+   candidate, reject immediately if it's a direct antonym of the original
+   lemma. Catches the specific, named risk at zero cost.
+2. **SBERT threshold** (existing, unchanged) — primary gate for all
+   candidates, as today.
+3. **NLI bidirectional check** (new) — applied only to (a) candidates from
+   sources that lack step 1's safety net (MLM/generation-sourced
+   candidates, when/if those exist — §24.B), and (b) WordNet/Datamuse
+   candidates whose SBERT score is *borderline* (near the threshold), not
+   every candidate. This is a leaner design than "NLI on everything" while
+   still closing the documented gap for the cases most likely to need it.
+4. **Final-output re-verification** (unchanged from Stage 5's proposal) —
+   re-run steps 1–3 on the actual assembled output sentence, not just each
+   candidate in isolation, per SpeechAgent's independently-arrived-at
+   "recovery rate" idea (§2.2).
+
+### 24.B Candidate generation: MLM is real but unmeasured — defer, don't drop
+
+**[INTERPRETATION, revised from Stage 5's flat recommendation]** The
+literature case for MLM-native candidates (§4, RESEARCH.md §2.B) is real —
+WordNet's closed-vocabulary ceiling is a documented limitation, not a
+hypothetical one. But **we have never measured how often that ceiling is
+actually hit** on realistic difficulty-flagged input — no ablation exists
+showing "WordNet/Datamuse returns zero usable candidates X% of the time."
+Adding a new model (a masked-LM, ~260MB+ even for a small encoder) to solve
+an unmeasured problem, before the cheaper fix (§24.A's tiered verification,
+consolidating the two existing pipelines) has even shipped, is exactly the
+"modern for its own sake" trap the task warned against. **[RECOMMENDATION]**
+Defer MLM candidate generation to the *Strong* tier (§27), gated on first
+instrumenting and measuring the current `"no synonyms found"` /
+`"no valid synonym"` skip-rate on the failure-mode corpus (§29). If that
+rate is low, MLM candidates are a nice-to-have, not a blocker; if it's high,
+that measurement — not the literature alone — is the actual justification
+for building it next.
+
+### 24.C Phoneme granularity (position/stress/clusters): log now, score later — a correction to Stage 5's own §22
+
+**[LIMITATION, self-critique]** Stage 5's own §22 recommended adding
+position/stress terms to the difficulty formula as a "cheap, testable"
+near-term item. Re-examined against this project's own standing rule
+(Practice.md §6, already cited repeatedly in this repo's history —
+`DECISION_LOG.md` 2026-06-08-B is the on-record cautionary tale of a
+threshold changed by "empirically"-flavored argument rather than measured
+data): **adding new *terms* to an already-flagged-as-unfitted formula, with
+no data to fit them against and no principled coefficient the literature
+actually supplies (it tells us position/stress matter and roughly which
+direction, not a number), would compound the exact problem `VALIDATION.md`
+already names, not fix it.** This is a real correction, not a restatement —
+Stage 5's own recommendation undersold this risk.
+
+**[RECOMMENDATION, revised]** Do **not** add position/stress as *scored*
+formula terms in the MVP. Instead: **compute and log them as unscored
+metadata** alongside every difficulty decision (sentence-position index,
+whether the flagged phoneme is in a stressed syllable per CMU's stress
+digit — already present in our own phone data and currently discarded, not
+unavailable). This costs almost nothing, changes no existing score or
+threshold (satisfying Practice.md §6 without a special exception), and
+means that *when* real speaker data eventually arrives (`ROADMAP.md` R2),
+the features needed to fit a properly-weighted formula are already being
+collected — not something to retrofit later. Consonant-cluster length is
+already the dominant term in `phonetic.word_difficulty()`'s existing onset
+score; no change needed there.
+
+### 24.D Substitution vs. restructuring: a concrete, missing trigger condition
+
+**[FINDING, from re-reading `grammar.py`'s actual substitution loop]**
+Sequential per-word substitution already checks *cumulative* semantic drift
+correctly today — `SentenceRewriter.rewrite()` rebuilds candidate sentences
+from the *current* (already-partially-substituted) token list, but always
+scores SBERT similarity against the *true original* sentence, so a second
+substitution compounding a first one's drift is still caught. **What is
+not checked, by this mechanism or Stage 5's proposal, is cumulative
+*naturalness*** — three individually-valid, semantically-safe substitutions
+can still read as "obviously over-edited" as a whole, and nothing currently
+measures that.
+
+**[RECOMMENDATION, new, not in Stage 5's original proposal]** Add an
+explicit **count-based escalation trigger**, distinct from the existing
+per-span "no candidate found" trigger: if a sentence has **more than a
+small, configurable number (e.g. 2) of independently flagged content
+words**, prefer routing the *whole sentence* to the T5 restructuring stage
+over attempting N independent substitutions — on the reasoning (§17's
+"difficult phoneme in many words" failure case) that many independent local
+optima are more likely to compound into an unnatural whole than one
+sentence-level rewrite is. This directly answers "should sentence-level
+context influence the process from the beginning": **not always** (single-
+or two-word cases are handled well by substitution today), **but yes, past
+a measurable threshold** — a concrete, testable rule rather than an
+all-or-nothing architecture choice.
+
+### 24.E T5 fallback: a real constraint-mechanism limit, found by checking the code
+
+**[FINDING, verified directly against `rephrase.py`'s actual
+`_bad_words_ids()`, not assumed]** `bad_words_ids` blocks specific,
+*named* word strings (encoded token-by-token via the tokenizer) — it has
+**no mechanism for blocking a phoneme class**. This matters concretely:
+blocking every English word containing a common phoneme like /r/ via
+`bad_words_ids` is not practically achievable (the blocklist would be
+enormous and would cripple the model's ability to produce any normal
+sentence) — confirmed by reading the actual implementation, not inferred.
+
+**[INTERPRETATION — this settles several of the task's explicit questions
+at once]** Because phoneme-level constraints cannot be enforced *before*
+generation with our available tooling, the escalation stage is
+**architecturally required to be generate-then-verify, not
+constrain-then-generate**, for the phoneme dimension specifically (word-
+level `bad_words_ids` remains useful and already works for the small,
+explicitly-named `blocked_words` list — that part *can* be constrained
+before generation, and should stay that way). T5's role, precisely: propose
+several fluent, meaning-preserving full-sentence paraphrases (via the
+already-proven `generate_candidates(k=5, blocked_words=...)`), **completely
+unaware of phonemes**, then re-run the *exact same* symbolic phoneme veto
+and §24.A's tiered semantic checks already used for word substitution — no
+new verification machinery, reuse what exists. **[RECOMMENDATION]** Keep
+`Vamsi/T5_Paraphrase_Paws` — RESEARCH.md §3 already found no clear winner
+among small alternatives (FLAN-T5, BART) to justify a switch, and it's
+already proven to load and run locally in this repo's own history — the
+finding here is about *when/how* it's invoked and verified, not which
+model.
+
+### 24.F Multiple interacting difficulties — resolved case by case, not by a new subsystem
+
+- **Multiple difficult words**: handled by existing cumulative-SBERT-check
+  (§24.D) plus the new count-threshold trigger (§24.D) for the
+  naturalness half of the problem.
+- **Multiple difficult sounds**: already correctly generalizes — the
+  phoneme veto checks a candidate against *all* patterns in the profile,
+  not just one; no change needed.
+- **Substitutions that create a new difficulty**: **[FINDING, confirmed by
+  re-reading `grammar.py`'s Gate B]** already handled correctly today —
+  `s["phoneme_ok"]` is computed by checking the *candidate's own* onset
+  against every pattern, so a replacement can never introduce a fresh
+  flagged sound. Verified, not a gap.
+- **Substitutions that interfere with each other** (e.g. two independent
+  swaps together create awkward repetition): genuinely unhandled, and
+  **[LIMITATION, deliberately deferred, not silently dropped]** — the
+  planned naturalness/edit-amount metric (§28) would catch *gross* cases
+  (a heavily-altered sentence gets flagged) without specifically diagnosing
+  *why*; full pairwise-interaction modeling is out of scope for the MVP or
+  Strong tier, named explicitly rather than assumed solved.
+- **Overlapping difficult phrases containing difficult words**: moot for
+  the MVP (phrase-matching itself isn't implemented yet, `ROADMAP.md` R13)
+  — **[RECOMMENDATION, for whenever R13 is tackled]** a matched phrase
+  should be treated as one unit and suppress independent substitution of
+  words inside it, to avoid double-processing the same span two ways.
+- **Degenerate/over-restrictive profiles** (e.g. nearly every common onset
+  flagged, making most of a sentence "risky"): **[LIMITATION, new,
+  identified by this review, not in Stage 5]** neither the original
+  architecture nor this revision has a sanity cap for this. **[RECOMMENDATION]**
+  Add one defensively: if flagged content words exceed a high fraction of a
+  sentence (e.g. >60%), skip exhaustive per-word attempts and go straight
+  to the "could not safely reformulate — profile too restrictive for this
+  sentence" outcome (§26) rather than producing a heavily mangled result.
+
+---
+
+## 25. The exact system contract
+
+**[RECOMMENDATION]** Reuse the existing `DifficultyProfile` shape directly
+as input — inventing a second, flattened representation
+(`{global_sounds, difficult_words, ...}`, the task's own example) would
+recreate exactly the kind of parallel-representation drift this project's
+own history has already been burned by twice (the `phoneme_profile` mirror,
+`DECISION_LOG.md` 2026-08-15-C/2026-08-16-A). The engine receives the
+profile object (or its `to_dict()` shape) as-is.
+
+```
+INPUT
+─────
+{
+  text: str,                     # one sentence or a paragraph (split internally,
+                                  # reusing the existing _split_sentences)
+  profile: DifficultyProfile,    # the actual object — sounds/words/phrases/
+                                  # problem_phones, unchanged shape
+  settings: {                    # optional per-call overrides; mirrors the
+    sbert_threshold?: float,     # existing rewrite/rewriter.py precedent
+    nli_threshold?: float,       # (RewriteSettings dataclass) rather than
+    naturalness_budget?: float,  # inventing a new config pattern
+    escalation_word_count?: int, # the new count-threshold trigger (§24.D)
+  }
+}
+
+OUTPUT
+──────
+{
+  original_text: str,
+  reformulated_text: str,        # == original_text when status is "unchanged"
+  status: "reformulated" | "no_change_needed" | "could_not_safely_reformulate",
+  changes: [                     # one entry per span actually changed
+    {
+      sentence_index, position, span_text, original, replacement,
+      source: "substitution" | "restructuring",
+      triggered_by: [...],       # which profile entries (sound/word/phrase/
+                                  # pattern) caused this span to be flagged
+      verification: {
+        antonym_check: "pass" | "rejected",
+        sbert_sim: float | null,
+        nli: "entailment" | "neutral" | "contradiction" | "not_run",
+        phoneme_ok: bool,
+        difficulty_before: float, difficulty_after: float,
+      }
+    }
+  ],
+  skipped: [ {span_text, reason} ],   # existing pattern, kept
+  metrics: {                          # never blended, per Practice §10
+    meaning_preservation, difficulty_reduction,
+    naturalness_edit_amount, substitution_rate,
+  },
+  final_verification: { passed: bool, details: {...} },  # §24.A step 4
+}
+```
+
+**[INTERPRETATION]** This contract is deliberately audio-module-agnostic —
+nothing about `text`/`profile`/the output shape assumes text came from
+typing vs. ASR; a future Audio Module only needs to produce a
+`DifficultyProfile`-shaped object and call this same interface, exactly
+the decoupling `PROBLEM_FORMULATION.md` §9 already designed the profile
+schema for.
+
+---
+
+## 26. Failure handling — explicit outcome states, not silent pass-through
+
+**[RECOMMENDATION]** Three, and only three, top-level `status` values
+(§25) — no fourth "partial success" state, to keep the contract simple; a
+partially-reformulated sentence still reports `"reformulated"` with some
+spans in `skipped`, which already captures the nuance.
+
+| Situation | Handling |
+|---|---|
+| No safe synonym exists for a flagged word | Marked in `skipped`, contributes to the count-threshold check (§24.D) |
+| Every synonym shares the difficult sound | Same as above — Gate B empties the candidate list, already existing behavior, kept |
+| Semantic verification fails for all candidates *and* all T5 attempts | That span (or sentence, if escalated) is left unchanged, reported in `skipped` with the specific gate that failed — never a silently-degraded guess |
+| T5 produces an unsafe rewrite | Caught by final-output re-verification (§24.A step 4) on *each* of T5's `k` candidates; try the next; if all `k` fail, same clean fallback as above |
+| Sentence cannot be safely reformulated at all | `status = "could_not_safely_reformulate"`, `reformulated_text == original_text`, reasons populated — this is literally "I cannot safely reformulate this," not a hidden failure |
+| Profile conflicts with natural constraints (degenerate/over-restrictive profile) | The new sanity cap (§24.F) — reported as its own reason, not mangled output |
+| Multiple candidates score similarly | Deterministic secondary sort key (combined score, then alphabetical) — reusing `engine.py::_rank()`'s existing tie-break precedent, not introducing nondeterminism |
+| Grammatically valid but semantically wrong | This is what §24.A's tiered gate exists to catch — not a separate case |
+
+---
+
+## 27. MVP / Strong / Future
+
+### MVP — implement first
+- Consolidate `grammar.py::SentenceRewriter` and `rewrite/rewriter.py::DifficultyAwareRewriter`
+  into one substitution-and-rank stage, informed by the (now-run, see §29)
+  A-vs-B ablation.
+- Tiered semantic verification: WordNet antonym check (free) + existing
+  SBERT (unchanged threshold, per §6) — **NLI deferred to Strong** (a new
+  model dependency, even a small one, is real integration surface; the
+  antonym check covers the highest-confidence, zero-cost part of the same
+  risk).
+- Naturalness/edit-amount metric (Levenshtein-based, §10/R11) — needed as
+  the shared baseline before anything else can be honestly compared.
+- Count-threshold escalation trigger (§24.D) and the degenerate-profile
+  sanity cap (§24.F) — both pure logic, no new models.
+- T5 escalation, repurposing `rephrase.py` exactly as-is (§24.E) — generate
+  `k` candidates, re-run the *same* phoneme + SBERT gates already built for
+  substitution, no new verification code.
+- Position/stress computed and **logged, not scored** (§24.C).
+- The failure-mode evaluation corpus (§29) — buildable now, no external
+  data needed.
+
+### Strong — add once MVP is measured and works
+- Small NLI cross-encoder (`nli-deberta-v3-xsmall`/`-small`), wired into
+  the tiered gate's borderline case only (§24.A).
+- MLM-native candidate generation — **gated on actually measuring** the
+  WordNet/Datamuse skip-rate first (§24.B), not added speculatively.
+- Accept/reject feedback loop into the profile (`ROADMAP.md` R9), framed
+  as a lightweight contextual bandit per `REFORMULATION_RESEARCH.md` §11.
+
+### Future — explicitly deferred, not silently dropped
+- Position/stress as *scored*, fitted formula terms — blocked on real
+  speaker data (`ROADMAP.md` R2), unchanged blocking condition.
+- Phrase-matching consumption (`ROADMAP.md` R13).
+- A learned minimal-edit tagger (GECToR/FELIX-style) — rejected for lack of
+  training data (§6), revisit only if that data ever exists.
+- A local-LLM upgrade to the escalation stage (§15) — no evidence yet that
+  T5's restructuring quality is the bottleneck; premature before the
+  escalation stage's actual invocation rate is measured (§18 Q4).
+- Any API-based frontier LLM as a default path — still rejected (§15),
+  offline/reproducibility values unchanged.
+- Cross-substitution interference detection (§24.F) — real gap, small
+  expected impact, not worth the modeling cost yet.
+
+---
+
+## 28. Evaluation plan
+
+| Dimension | Automatable now? | Method |
+|---|---|---|
+| Reformulation effectiveness (did it reduce the flagged pattern) | **Yes, fully** | Deterministic — re-run the same phoneme/difficulty check on the output |
+| Naturalness / minimality | **Yes, proxy** | Levenshtein-based edit-amount (§10/R11) — a real metric, not a guess, but still a proxy for *perceived* naturalness |
+| Semantic fidelity | **Proxy only** | SBERT + antonym-check (+NLI in Strong) — Practice.md §12's proxy-metric trap applies exactly as already documented in `VALIDATION.md`; stated as a proxy, not equated with true meaning preservation |
+| Grammaticality | **Proxy, already exists** | Reuse `grammar.py`'s rule-based checks + optional LanguageTool, unchanged |
+| **Speaker suitability** (would *this* speaker actually find it easier) | **No — cannot be automated** | This is the core research claim itself, not a side metric; only a real speaker (or a clinician proxy) can judge it — stated plainly, consistent with `VALIDATION.md`'s existing honesty about this project having no completed human-judgment result yet |
+
+**[RECOMMENDATION]** Build a small, self-constructed **failure-mode
+evaluation corpus** now — a `tests/reformulation_eval_corpus.txt`-style
+fixture (directly following the precedent already in this repo,
+`tests/eval_corpus.txt`), covering §17's ten constructed cases (multiple
+difficult words, phoneme-heavy sentence, negation, ambiguous word,
+context-dependent substitution, proper nouns, technical terms, long
+transcript, multi-sentence context, restructuring-needed), paired with a
+handful of synthetic `DifficultyProfile` fixtures. This becomes the
+regression baseline for the new engine (mirroring `tests/smoke.py`'s
+existing role for the current pipeline) — buildable immediately, requires
+no external/real speaker data, and gives §27's MVP something concrete to
+be measured against from day one, not just "it ran without crashing."
+
+---
+
+## 29. Architecture comparison — final selection
+
+| | A. Direct generation only | B. Candidate-gen+rank, no escalation | D. Stage 5's original hybrid | **D′. This review's refined hybrid** |
+|---|---|---|---|---|
+| Quality | High restructuring, unreliable constraints | Good for localized difficulty, can't restructure | Good, some untested assumptions (flat NLI, scored position/stress) | Good, same capability as D with fewer unvalidated assumptions |
+| Complexity | Low (one model) but needs verification bolted on anyway | Low–moderate | Moderate–high (new model + new formula terms day one) | Moderate, staged (MVP lean, Strong adds the rest) |
+| Compute | Depends on model (§15) | Low, already proven | Low–moderate | Low for MVP, moderate only once Strong's NLI ships |
+| Safety | Weak without added verification | Strong (symbolic gates) | Strong | Strong, plus the new degenerate-profile cap (§24.F) and tie-break determinism (§26) |
+| Personalization | Same as others (profile-independent) | Reuses existing profile | Reuses existing profile | Reuses existing profile, explicit path to R9's bandit-based feedback loop |
+| Recommendation | Rejected (§19, unchanged) | Viable fallback if D′ integration stalls | Superseded by D′ | **Selected** |
+
+**[RECOMMENDATION — final]** **D′.** Every change from D to D′ is justified
+by a specific finding from this review (§24.A–F), not a general preference
+for caution: tiered verification over flat NLI (cost vs. measured benefit,
+§24.A), MLM deferred pending measurement (§24.B), position/stress logged
+not scored (Practice.md §6 compliance, §24.C), an explicit count-threshold
+trigger (a real gap D didn't have, §24.D), T5's role clarified by a
+concrete code-level limitation (§24.E), and two new named edge cases
+(interference, degenerate profiles, §24.F) that D was silent on.
+
+---
+
+## 30. Implementation blueprint
+
+**Components** (per §24.E's discard/reuse split — `grammar.py::sanitize_input()`
+and `phonetic.py`/`engine.py`/`semantic.py`/`rephrase.py` as *libraries* are
+kept; `grammar.py::SentenceRewriter` and `rewrite/rewriter.py::DifficultyAwareRewriter`
+as *orchestrators* are discarded, superseded by one new orchestrator):
+
+| Module (proposed) | Responsibility | Built from |
+|---|---|---|
+| `reformulate.py` (new) | Top-level orchestrator implementing §25's contract | New code; calls the modules below |
+| `engine.py`, `phonetic.py`, `semantic.py` | Candidate retrieval, phoneme veto, SBERT — **unchanged** | Existing, reused as-is |
+| `semantic.py` (extended) | + WordNet antonym check (§24.A step 1), + NLI wrapper (Strong tier) | Small, additive extension — same pattern as `phonetic.full_pronunciation()`'s additive style in Stage 4A |
+| `naturalness.py` (new, small) | Levenshtein-based edit-amount scoring (§10/R11/§28) | New, small, pure-Python |
+| `rephrase.py` | T5 escalation — **role changed, code unchanged**: called by `reformulate.py` when substitution's count/failure triggers fire, not as an independent app.py toggle | Existing, reused as-is |
+| `difficulty_profile.py`, `profile_store.py` | Unchanged — the stable foundation this stage explicitly preserves | Existing, untouched |
+| `grammar.py::sanitize_input()` | Unchanged — pre-processing step, unrelated to substitution | Existing, untouched |
+
+**Data flow**: `app.py` → `sanitize_input()` (unchanged) → `reformulate.py`
+(new orchestrator, §25's contract) → internally: tag (existing POS/profile
+logic) → substitution-and-rank (consolidated `engine.py`+`semantic.py`+
+`phonetic.py`) → count/failure-triggered escalation (`rephrase.py`) →
+final verification (§24.A step 4) → §25's output shape → `app.py` renders
+`changes`/`skipped`/`metrics` (replacing the current dual rendering of
+`grammar.py` and `rewrite/` results with one).
+
+**Algorithms**: unchanged from what's already proven (POS-tag substitution
+positions, SBERT cosine similarity, Zipf-frequency ranking, ARPAbet onset
+matching) plus two new, small ones: Levenshtein edit-amount scoring, and
+the count-threshold/degenerate-profile trigger logic (§24.D/F — simple
+arithmetic over already-computed flags, no new algorithmic complexity).
+
+**Models**: SBERT `all-MiniLM-L6-v2` (existing), T5 `Vamsi/T5_Paraphrase_Paws`
+(existing) — no new model in the MVP. Strong tier adds one small NLI
+cross-encoder (§9's named candidates).
+
+**Dependencies**: none new for the MVP (WordNet antonyms are stdlib-NLTK,
+already a dependency; Levenshtein distance is a ~10-line pure-Python
+function, no new package needed). Strong tier adds one small model
+download (~cross-encoder NLI, comparable footprint to SBERT).
+
+**Interfaces**: §25's exact input/output contract.
+
+**Tests**: unit tests for `reformulate.py`'s each stage (mirroring
+`tests/difficulty_profile_test.py`'s per-function style), the new failure-
+mode corpus (§28) as an `AppTest`-driven and direct-call regression suite,
+and a **byte-identity-style regression check is explicitly NOT the goal
+here** — unlike Stages 2/4A/4A-refinement, this *is* the reformulation
+engine changing, so `tests/smoke.py`'s existing baseline is expected to
+diverge; the new corpus (§28) becomes the new baseline going forward.
+
+**Evaluation**: §28's dimensions, run before/after against the new corpus,
+reported separately (never blended, per Practice §10) — old
+`grammar.py`/`rewrite/` output vs. new `reformulate.py` output on the same
+corpus, as the first real before/after comparison this project will have
+produced.
+
+**Migration**: `grammar.py::sanitize_input()`, `engine.py`, `phonetic.py`,
+`semantic.py`, `rephrase.py`, `difficulty_profile.py`, `profile_store.py` —
+kept, mostly unchanged (semantic.py gets small additive extensions).
+`grammar.py::SentenceRewriter`, `rewrite/` package (`rewriter.py`,
+`rank.py`, `candidates.py`) — **discarded as orchestrators**, once
+`reformulate.py` reaches parity on the new corpus; not deleted blindly on
+day one — kept until the new engine is measured to actually be at least as
+good, consistent with §9's "be willing to discard, but don't discard
+before you've verified the replacement works."
+
+---
+
+## 31. Summary — what survived, what changed
+
+**Survived the critique unchanged:** the four-category difficulty profile
+(untouched, confirmed stable per this stage's own instruction); the
+symbolic phoneme veto as an always-final gate; SBERT as the primary
+semantic signal; T5/`rephrase.py` as the model for the escalation role;
+the general shape of tag→substitute→escalate→verify; the "existing
+architecture's overall shape already matches best practice" finding from
+§6.
+
+**Changed from Stage 5's original recommendation:**
+1. NLI: flat "add it" → tiered (antonym-check first, NLI only for
+   borderline/generation-sourced cases), and moved from MVP to Strong.
+2. MLM candidates: "add them" → deferred to Strong, gated on first
+   measuring whether WordNet/Datamuse's ceiling is actually a real
+   bottleneck.
+3. Position/stress: "add as scored terms" (Stage 5's own §22) → corrected
+   to "log as unscored metadata," citing this project's own Practice.md §6
+   discipline that Stage 5's recommendation itself under-weighted.
+4. A new, previously-missing count-threshold restructuring trigger,
+   distinct from the failure-triggered one.
+5. T5's constraint mechanism limitation (word-level only, not phoneme-
+   level) — found by reading the actual code, not assumed — which settles
+   "constrain before or filter after" definitively for the phoneme
+   dimension: filter after, always.
+6. Two new named edge cases Stage 5 didn't address: cross-substitution
+   interference (deferred, named) and degenerate/over-restrictive profiles
+   (a new sanity cap added).
+7. An explicit, three-state failure-handling contract, including a real
+   "I cannot safely reformulate this" outcome, not implied by Stage 5's
+   pipeline diagram.
+
+---
+
+# **Architecture is implementation-ready.**

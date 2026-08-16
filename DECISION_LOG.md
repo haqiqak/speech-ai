@@ -682,3 +682,45 @@ confirmed via `git status`, not just asserted.
     integration, any API-based LLM as a default path, the accept/reject
     personalization loop) — but per Practice.md §0.2, this document
     authorizes none of it; that's a separate, deliberate decision.
+
+---
+
+### 2026-08-16-D — Stage 5B: critical architecture review; Stage 5's recommendation revised, not rubber-stamped
+**What was done:** A focused critique of `REFORMULATION_RESEARCH.md`'s
+Stage 5 architecture recommendation (§24–31 appended to that same file, not
+duplicated elsewhere), followed by an exact input/output contract, an
+MVP/Strong/Future split, an evaluation plan, explicit failure-handling
+states, a final architecture comparison, and an implementation blueprint.
+Two concrete technical claims were verified directly against this repo's
+own code/libraries rather than assumed: NLTK WordNet's `Lemma.antonyms()`
+is a real, zero-cost, zero-model lookup (confirmed by running it live
+against `engine.py`); `rephrase.py::_bad_words_ids()` blocks only
+specifically-named word strings, with no mechanism for blocking a phoneme
+class — confirmed by reading the actual implementation.
+**Alternatives considered:** The revised architecture (D′) against three
+others — direct generation only (A), candidate-gen+rank with no escalation
+(B), and Stage 5's original hybrid (D) — see
+`REFORMULATION_RESEARCH.md` §29's comparison table. D′ selected.
+**Why:** Explicitly requested as a "break it" critique before implementation,
+not a confirmation pass — six specific, evidence-backed revisions to
+Stage 5's own recommendation resulted (§31 in `REFORMULATION_RESEARCH.md`
+has the full list): tiered semantic verification instead of flat NLI;
+MLM candidate generation deferred pending measurement instead of added
+outright; position/stress corrected from "score them" to "log them,"
+citing this project's own Practice.md §6 discipline that Stage 5's own
+§22 had under-weighted; a new count-threshold restructuring trigger Stage
+5 didn't have; T5's constraint mechanism limitation, which settles
+constrain-vs-filter for phonemes definitively; and two newly-named edge
+cases (cross-substitution interference, degenerate/over-restrictive
+profiles).
+**Measured result:** N/A in the Practice.md §8 sense — a design-review
+pass, not an experiment. The two code-level verifications above are the
+closest thing to a measured result this entry has, and both are stated
+with how they were checked, not asserted from memory.
+**Category:** Research/design-decision pass. Per the task's explicit
+boundary, no reformulation code was modified — confirmed via `git status`
+showing only `REFORMULATION_RESEARCH.md` changed, not just asserted.
+**Status:** Architecture declared implementation-ready
+(`REFORMULATION_RESEARCH.md` §31). Implementation itself is a separate,
+not-yet-taken decision — this entry authorizes planning, not code changes,
+per Practice.md §0.2.

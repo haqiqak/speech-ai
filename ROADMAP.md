@@ -498,3 +498,17 @@ substitution case). R0's status is unchanged from the fourth reassessment.
 No item was reordered as a result of this pass — the research confirmed
 the existing order rather than revising it, which is itself worth
 recording per §15 rather than treated as a null result.
+
+**2026-08-16 — sixth reassessment, post-Stage-5B critical review.** The
+implementation-readiness checkpoint (`REFORMULATION_RESEARCH.md` §24–31,
+`DECISION_LOG.md` 2026-08-16-D) sharpened R6/R8/R9/R10/R11 into a concrete
+MVP/Strong/Future split with an exact order (§27 of that document):
+consolidate the two pipelines (R6) → naturalness metric (R11) → tiered
+antonym-check-first semantic verification (R8, now staged rather than
+flat) → count-threshold escalation trigger and T5 role change (R10) →
+position/stress logged as metadata, not scored (a correction to this
+review's own earlier framing of R2/R3's update). This is the most
+implementation-specific this roadmap has been to date; the next entry here
+should be a status update on R6 actually running, not another
+reassessment — repeated reassessment without new implementation activity
+in between would stop being useful per §15's own intent.

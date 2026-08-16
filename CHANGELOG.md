@@ -6,6 +6,17 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-16** docs: append Stage 5B critical review (§24–31) to
+  `REFORMULATION_RESEARCH.md` — challenged and revised Stage 5's
+  recommendation (tiered semantic verification instead of flat NLI, MLM
+  candidates deferred pending measurement, position/stress corrected to
+  logged-not-scored per this project's own Practice.md §6 discipline, a
+  new count-threshold restructuring trigger, T5's constraint-mechanism
+  limit found by reading `rephrase.py`'s actual code), then produced the
+  exact input/output contract, MVP/Strong/Future split, evaluation plan,
+  failure-handling states, and implementation blueprint. Architecture
+  declared implementation-ready. Zero reformulation code changed. →
+  `DECISION_LOG.md` 2026-08-16-D.
 - **2026-08-16** docs: add `REFORMULATION_RESEARCH.md` — Stage 5 deep
   research pass on the reformulation-engine architecture itself: Brown's
   four stuttering-loci factors, a second close prior system (SpeechAgent,
