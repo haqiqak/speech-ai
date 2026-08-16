@@ -911,3 +911,66 @@ delete (not just stop calling) `grammar.py::SentenceRewriter`/`rewrite/`/
 `reformulate.py` against them — that decision explicitly belongs to the
 evaluation stage's outcome, per 2026-08-16-E's migration plan, not to
 this cleanup pass.
+
+---
+
+### 2026-08-16-G — Stage 6: `reformulate.py` evaluated against both retained legacy pipelines (executed, not inferred)
+**What was done:** Built `tests/reformulation_eval_corpus.json` (18 cases —
+`REFORMULATION_RESEARCH.md` §17's eight constructed failure modes,
+phonetic claims verified against live `phonetic.onset()` output before
+writing them, plus ten control cases spanning ordinary text, multi-
+sentence input, a degenerate/dense profile, a phrase-only profile, a
+word-specific-`problem_phones`-only profile, and a direct antonym-guard
+probe) and `eval/reformulation_eval.py` (runs `reformulate.py`,
+`grammar.py::SentenceRewriter`, and `rewrite/rewriter.py::DifficultyAwareRewriter`
+on identical `sanitize_input()`-corrected text, scored with the same
+metric functions applied uniformly to all three). Ran it and wrote the
+actual results into `VALIDATION.md` §6 with Practice.md's evidence
+labels, not into a new document.
+**Measured result:** `reformulate.py` — meaning preservation 0.979,
+edit-ratio 0.068, reformulation rate 0.556; `SentenceRewriter` — 0.938 /
+0.147 / 0.889; `DifficultyAwareRewriter` — 0.929 / 0.143 / 0.833. The
+gap is fully explained by one mechanism: `reformulate.py`'s T5
+restructuring-escalation path succeeded 0/4 times on this corpus — every
+substitution-only case succeeded. Root-caused into two distinct causes by
+direct debugging (manual `_model.generate()` calls with the exact
+`bad_words_ids` computed, token IDs inspected directly), not left as one
+vague "escalation is weak" statement: (A) `rephrase.py::_bad_words_ids()`
+is case-sensitive but is given lowercased words, so a blocked word's
+capitalized form leaks through untouched — confirmed directly (lowercase
+token: 0/6 beams leaked; capitalized form of the same word: 5/6 leaked);
+(B) even where blocking worked correctly, T5 reintroduced the flagged
+phoneme via unblocked, semantically-related synonyms/inflections
+(`struggling`→`struggled`, `stressful`→`stress`) — confirming, with
+evidence for the first time, the limitation `REFORMULATION_RESEARCH.md`
+§24.E only theorized.
+**Additional findings, not hypothesized in advance:** a pre-existing
+inflection bug in `SentenceRewriter`'s own candidate path (produced
+"constructionss," double-s) surfaced by running it side-by-side with
+`reformulate.py` for the first time; the context-dependent-substitution
+failure mode (§17 row 5) confirmed to persist in all three systems with a
+concrete example; a null result honestly reported (the antonym-guard
+probe case never actually forced an antonym to the top of any system's
+ranking, so it demonstrates nothing about the guard either way); and one
+directly-observed case where SBERT scored a redundant, arguably-worse
+rewrite ("The gift was a wonderful gift.") at 0.965 — the highest
+similarity band in the corpus — offered as concrete evidence for the
+proxy-metric warning already on record in `VALIDATION.md` §2, not just a
+restatement of it.
+**Category:** Measurement only, per this stage's explicit instruction.
+No scoring formula, threshold, gate, or reformulation algorithm was
+changed. Both root-caused issues (R17/R18 in `ROADMAP.md`) are documented
+as findings with a proposed fix/research direction, not applied.
+**Verification performed:** The harness was run twice and its output CSV
+diffed byte-for-byte to confirm determinism under `DISABLE_DATAMUSE=1`
+before this entry was written. No `DifficultyProfile`/
+`SpeakerDifficultyProfile` instance created for this evaluation was ever
+saved to disk — confirmed via `git status` on `users/` showing no diff.
+**Explicitly not established:** speaker suitability (whether a real
+speaker would find any output easier to say) — stated in `VALIDATION.md`
+§6.5 as categorically outside what this or any automated evaluation can
+measure, not as a gap this corpus could have closed with more cases.
+Also not established: a realistic escalation-trigger/success rate for
+ordinary (non-adversarially-constructed) text — this corpus was built
+failure-mode-dense by design, so 0/4 should not be read as a general
+escalation failure rate.

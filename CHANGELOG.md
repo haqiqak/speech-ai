@@ -6,6 +6,22 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-16** eval: Stage 6 — ran `reformulate.py` against both
+  retained legacy pipelines on a new 18-case failure-mode corpus
+  (`tests/reformulation_eval_corpus.json`, `eval/reformulation_eval.py`).
+  New engine: highest meaning preservation (0.979) and smallest edits
+  (0.068), but lowest reformulation rate (0.556 vs. 0.889/0.833) — fully
+  explained by a 0/4 T5-restructuring-escalation success rate, root-caused
+  into a fixable case-sensitivity bug in `rephrase.py::_bad_words_ids()`
+  (`ROADMAP.md` R17) and a deeper paraphrase-model/phoneme-avoidance
+  mismatch (`ROADMAP.md` R18, confirms `REFORMULATION_RESEARCH.md` §24.E
+  with evidence for the first time). Also found: a pre-existing
+  `SentenceRewriter` inflection bug, the context-dependent-substitution
+  failure mode persisting in all three systems, and a directly-observed
+  case where SBERT scored a redundant rewrite at 0.965 — concrete evidence
+  for the proxy-metric warning, not just a restatement. Measurement only,
+  nothing tuned. → `VALIDATION.md` §6; `DECISION_LOG.md` 2026-08-16-G;
+  `ROADMAP.md` R6 (superseded)/R17/R18.
 - **2026-08-16** chore: pre-evaluation cleanup pass — removed dead surface
   the D′/UI redesign left behind: `run_app.ps1` (broken paths, described
   a removed ASR feature), `profile_store.py`'s `load_preferences`/
