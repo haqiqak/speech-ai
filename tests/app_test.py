@@ -126,11 +126,11 @@ def run():
     ok = True
     try:
 
-        # 1) Default load reaches the main UI (Phoneme Profile panel visible)
+        # 1) Default load reaches the main UI (Speaker Difficulty Profile panel visible)
         at = _fresh().run()
         ok &= _check(at, "default load")
-        cond = "Phoneme Profile" in _md(at)
-        print("     Phoneme Profile panel present:", cond); ok &= cond
+        cond = "Speaker Difficulty Profile" in _md(at)
+        print("     Speaker Difficulty Profile panel present:", cond); ok &= cond
 
         # 2) Sentence mode, no patterns → final output contains the grammar fix 'running'
         at = _fresh()
@@ -148,11 +148,14 @@ def run():
         print("     rephrase card absent when toggle off:", cond); ok &= cond
 
         # 3) Word mode 'present, happy' with pattern 'pr' → pills, NOT 'No synonyms found'
+        # Stutter pattern set directly via session_state — the Stage 4A UI now
+        # manages this through the Speaker Difficulty Profile panel (tested
+        # separately in tests/difficulty_profile_test.py), but the reformulation
+        # pipeline still just reads st.session_state.stutter_patterns, unchanged.
         at = _fresh()
         _empty_profile(at)
         at.session_state["stutter_patterns"] = ["pr"]
         at.run()
-        ok &= _set_text(at, "Stutter sounds", "pr"); at.run()
         ok &= _set_text(at, QUERY_LABEL, "present, happy"); at.run()
         ok &= _click_run(at); at.run()
         ok &= _check(at, "word mode, pattern pr")
@@ -176,6 +179,62 @@ def run():
         print("     rephrase card present:", cond); ok &= cond
         cond = ("No rephrase applied" in md) or ("Similarity:" in md)
         print("     rephrase status rendered:", cond); ok &= cond
+
+        # 5) Speaker Difficulty Profile panel: add a word, a sound, a phrase;
+        # verify each shows up; remove the word; verify it's gone. Exercises
+        # the actual Streamlit widgets (by key, since "Add" is ambiguous by
+        # label across the three add buttons), not just the profile module
+        # directly (that's covered in tests/difficulty_profile_test.py).
+        at = _fresh()
+        _empty_profile(at)
+        at.run()
+
+        def _fill(widget_key, value):
+            for ti in at.text_input:
+                if ti.key == widget_key:
+                    ti.set_value(value)
+                    return True
+            return False
+
+        def _click(widget_key):
+            for b in at.button:
+                if b.key == widget_key:
+                    b.click()
+                    return True
+            return False
+
+        ok &= _fill("dp_word_add_input", "particular"); at.run()
+        ok &= _click("dp_word_add_btn"); at.run()
+        ok &= _check(at, "difficulty profile: add word")
+        md = _md(at)
+        cond = "particular" in md.lower()
+        print("     added word visible:", cond); ok &= cond
+
+        ok &= _fill("dp_sound_add_input", "str"); at.run()
+        ok &= _click("dp_sound_add_btn"); at.run()
+        md = _md(at)
+        cond = "str" in md.lower()
+        print("     added sound visible:", cond); ok &= cond
+
+        ok &= _fill("dp_phrase_add_input", "through the research"); at.run()
+        ok &= _click("dp_phrase_add_btn"); at.run()
+        md = _md(at)
+        cond = "through the research" in md.lower()
+        print("     added phrase visible:", cond); ok &= cond
+
+        cond = at.session_state["blocked_words"] == ["particular"]
+        print("     legacy blocked_words mirror updated:", cond); ok &= cond
+        cond = at.session_state["stutter_patterns"] == ["str"]
+        print("     legacy stutter_patterns mirror updated:", cond); ok &= cond
+
+        removed = _click("dp_word_rm_particular")
+        print("     remove button found and clicked:", removed); ok &= removed
+        at.run()
+        md = _md(at)
+        cond = "particular" not in md.lower()
+        print("     removed word no longer visible:", cond); ok &= cond
+        cond = at.session_state["blocked_words"] == []
+        print("     legacy mirror updated after removal:", cond); ok &= cond
     finally:
         if snapshot is not None:
             with open(default_profile, "wb") as f:

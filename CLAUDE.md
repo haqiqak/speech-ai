@@ -16,8 +16,12 @@ only to tell you where to go next.
    literature pass) and the resulting critical assessment of this repo's own
    implementation, component by component — read before proposing any
    architecture change
-7. `ROADMAP.md` — what's next, and the finding or gap that justifies each item
-8. `CHANGELOG.md` — fast-scan index into the decision log
+7. `PROBLEM_FORMULATION.md` — the Stage 4A design record for the persistent
+   speaker difficulty profile (sounds/words/phrases): schema, representation
+   research, the text-entry/flagging interaction, and what's deliberately
+   deferred — read before touching `difficulty_profile.py` or the profile UI
+8. `ROADMAP.md` — what's next, and the finding or gap that justifies each item
+9. `CHANGELOG.md` — fast-scan index into the decision log
 
 ## The handful of standing rules (from Practice.md, restated briefly)
 

@@ -10,9 +10,21 @@ Each user is stored as  users/<username>.json  with the structure:
     "stutter_patterns": ["str", "pr"],
     "blocked_words":    ["particular"]
   },
+  "difficulty_profile": {
+    "sounds":  [{"value": "str", "normalized": "S T R", "source": "user_typed", "added_at": "...", "meta": {}}],
+    "words":   [{"value": "thoroughly", "normalized": "thoroughly", "source": "user_typed", "pronunciation": ["TH","ER","OW","L","IY"], "added_at": "...", "meta": {}}],
+    "phrases": [{"value": "through the research", "normalized": "through the research", "source": "user_typed", "added_at": "...", "meta": {}}]
+  },
   "custom_replacements": {},
   "preferences": {}
 }
+
+`phoneme_profile` is a derived, auto-refreshed mirror of
+`difficulty_profile.sounds`/`.words` — see `difficulty_profile.py` (Stage 4A)
+for the schema `phoneme_profile` is generated from and why it's kept: the
+existing reformulation pipeline (`grammar.py`, `rewrite/`) reads
+`stutter_patterns`/`blocked_words` unchanged, so it stays fed correctly
+without knowing `difficulty_profile` exists.
 
 Public API
 ──────────
@@ -22,6 +34,8 @@ Public API
   verify_user(username, password)       -> (ok: bool, msg: str)
   load_profile(username)                -> dict   (phoneme_profile sub-dict)
   save_profile(username, patterns, blocked, custom_replacements, preferences)
+  load_difficulty_profile(username)     -> dict   (difficulty_profile sub-dict)
+  save_difficulty_profile(username, data)         (also refreshes the mirror)
   migrate_legacy_prefs(path)            -> None   (call once at startup)
 
 The storage layer is intentionally kept behind this thin API so the
@@ -166,6 +180,44 @@ def save_profile(
         record["custom_replacements"] = custom_replacements
     if preferences is not None:
         record["preferences"] = preferences
+    _write(record)
+
+
+def load_difficulty_profile(username: str) -> dict:
+    """
+    Return the raw `difficulty_profile` dict for a user:
+    {"sounds": [...], "words": [...], "phrases": [...]} of entry dicts.
+    Empty lists (never None) if the user has no `difficulty_profile` key yet
+    (pre-Stage-4A accounts) — callers seed/migrate from the legacy
+    `phoneme_profile` fields, this function just returns storage as-is.
+    """
+    record = _read(username) or {}
+    dp = record.get("difficulty_profile", {})
+    return {
+        "sounds": list(dp.get("sounds", [])),
+        "words": list(dp.get("words", [])),
+        "phrases": list(dp.get("phrases", [])),
+    }
+
+
+def save_difficulty_profile(username: str, data: dict) -> None:
+    """
+    Persist the structured difficulty profile (`difficulty_profile.py`'s
+    DifficultyProfile.to_dict() output) AND, in the same write, refresh the
+    legacy `phoneme_profile.stutter_patterns` / `.blocked_words` mirror from
+    it — those two flat lists are what the existing reformulation pipeline
+    (`grammar.py`, `rewrite/`) already reads via `auth._load_user_into_session`
+    and `st.session_state`. This keeps that pipeline fed correctly with zero
+    changes to it: the mirror is a derived view, not independently edited.
+    """
+    record = _read(username)
+    if record is None:
+        return
+    record["difficulty_profile"] = data
+    pp = dict(record.get("phoneme_profile", {}))
+    pp["stutter_patterns"] = [str(e.get("value", "")) for e in data.get("sounds", []) if e.get("value")]
+    pp["blocked_words"] = [str(e.get("value", "")) for e in data.get("words", []) if e.get("value")]
+    record["phoneme_profile"] = pp
     _write(record)
 
 

@@ -86,7 +86,7 @@ before/after stutter-difficulty score.
 - 🔐 **Multi-user auth** — login/register with per-user phoneme profiles stored in `users/`
 - 🧠 **SBERT semantic firewall** — `all-MiniLM-L6-v2` ensures replacements never drift from the original meaning
 - 🔊 **Phoneme-aware filtering** — CMU Pronouncing Dictionary (ARPAbet) for onset detection, not spelling
-- 🎯 **Stutter profile** — enter the sounds you block on (`str`, `pr`, `b`) and words to always avoid
+- 🎯 **Speaker Difficulty Profile** — persistent, per-user record of difficult sounds, words, and phrases (each declared and tracked separately — see `PROBLEM_FORMULATION.md`), editable from a dedicated panel or by picking a word straight out of your entered text
 - 📊 **Scoring transparency** — collapsible table showing semantic similarity, frequency score, and gate status per candidate
 - ✏️ **Custom word input** — override any suggestion with your own word
 - 📝 **Grammar correction card** — shows every fix made before synonym analysis
@@ -201,23 +201,47 @@ Click **Register** on the login screen to create your own account.
 
 ## User Profile
 
-Each user's data lives in `users/<username>.json`:
+Each user's data lives in `users/<username>.json`. As of the Stage 4A
+foundation, the canonical, structured record of what's difficult for a
+speaker is `difficulty_profile` — three independent lists (`sounds`,
+`words`, `phrases`), each entry carrying its source, when it was added, and
+(for words) a best-effort derived pronunciation. `phoneme_profile` still
+exists alongside it as an auto-derived, always-in-sync mirror — it's what
+the existing reformulation pipeline (`grammar.py`, `rewrite/`) reads, and
+you never edit it directly:
 
 ```json
 {
   "username": "alice",
   "password_hash": "<sha256 hex>",
   "phoneme_profile": {
-    "stutter_patterns": ["str", "pr", "b"],
-    "blocked_words":    ["present", "statistics"]
+    "stutter_patterns": ["str", "pr"],
+    "blocked_words":    ["particular"]
+  },
+  "difficulty_profile": {
+    "sounds":  [{"value": "str", "normalized": "S T R", "source": "user_typed", "added_at": "...", "meta": {}}],
+    "words":   [{"value": "particular", "normalized": "particular", "source": "user_typed", "pronunciation": ["P","ER","T","IH","K","Y","AH","L","ER"], "added_at": "...", "meta": {}}],
+    "phrases": []
   },
   "custom_replacements": {},
   "preferences": {}
 }
 ```
 
-- **`stutter_patterns`** — starting sounds you block on. Enter grapheme clusters like `str`, `pr`, `b`, `sp`. Speech AI converts these to ARPAbet onsets automatically, so spelling irregularities (`kn` → N, `ph` → F) are handled correctly.
-- **`blocked_words`** — specific words to always replace, regardless of their onset.
+- **`difficulty_profile.sounds`** — starting sounds you block on. Enter
+  grapheme clusters like `str`, `pr`, `b`, `sp`; Speech AI converts these to
+  ARPAbet onsets automatically (pronunciation, not spelling — `c` and `k`
+  dedup as the same sound), so spelling irregularities (`kn` → N, `ph` → F)
+  are handled correctly.
+- **`difficulty_profile.words`** — specific words difficult for you,
+  independent of whether their sounds are separately flagged.
+- **`difficulty_profile.phrases`** — multi-word phrases difficult as a
+  whole; not yet consumed by the reformulation pipeline (see
+  `PROBLEM_FORMULATION.md`).
+
+See `PROBLEM_FORMULATION.md` for the full schema rationale, the ARPAbet-vs-IPA
+and JSON-vs-SQLite research behind these choices, and why word difficulty
+and sound difficulty are deliberately never conflated.
 
 Changes made in the app are saved back to your profile in real time.
 

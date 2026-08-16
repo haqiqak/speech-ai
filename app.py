@@ -16,6 +16,7 @@ import phonetic as ph
 import freq
 from profiling.profile import SpeakerDifficultyProfile
 from rewrite.rewriter import DifficultyAwareRewriter
+from difficulty_profile import DifficultyProfile, extract_candidate_words
 
 from user_store import save_profile, migrate_legacy_prefs
 from auth import require_auth
@@ -52,15 +53,6 @@ def _save_prefs(patterns: list[str], blocked: list[str]) -> None:
             custom_replacements=st.session_state.get("custom_replacements", {}),
             preferences=preferences,
         )
-
-
-def _parse_tokens(raw: str) -> list[str]:
-    out, seen = [], set()
-    for t in re.split(r"[\s,]+", raw.strip().lower()):
-        if t and t not in seen:
-            seen.add(t)
-            out.append(t)
-    return out
 
 
 def _content_words(sentence: str) -> list[str]:
@@ -196,6 +188,98 @@ def _profile_chart_html(profile: SpeakerDifficultyProfile) -> str:
         )
     out.append("</div>")
     return "".join(out)
+
+
+def _difficulty_profile() -> DifficultyProfile:
+    """Load (once per session, cached) the current user's persistent,
+    user-declared difficulty profile — Stage 4A foundation. Separate from
+    (and unrelated to) the longitudinal, EWMA-scored SpeakerDifficultyProfile
+    above: this one is a flat, user-declared sounds/words/phrases list; that
+    one is a learned, continuous onset-risk model consumed by rewrite/.
+    """
+    user = st.session_state.get("current_user", "default")
+    cached = st.session_state.get("difficulty_profile")
+    if cached is not None and getattr(cached, "username", None) == user:
+        return cached
+    profile = DifficultyProfile.load(user)
+    st.session_state.difficulty_profile = profile
+    _sync_legacy_session_from_profile(profile)
+    return profile
+
+
+def _sync_legacy_session_from_profile(profile: DifficultyProfile) -> None:
+    """Mirror the new profile into session_state.stutter_patterns/.blocked_words
+    — the exact, unchanged inputs the existing reformulation pipeline
+    (grammar.py, rewrite/) already reads. This is the only point of contact
+    between the new foundation and the old pipeline; nothing in grammar.py,
+    engine.py, semantic.py, or rewrite/ changed to support it."""
+    st.session_state.stutter_patterns = profile.sound_values()
+    st.session_state.blocked_words = profile.word_values()
+
+
+def _save_difficulty_profile(profile: DifficultyProfile) -> None:
+    profile.save()
+    _sync_legacy_session_from_profile(profile)
+
+
+_DIFFICULTY_ADDERS = {
+    "sound": lambda p, t, s: p.add_sound(t, s),
+    "word": lambda p, t, s: p.add_word(t, s),
+    "phrase": lambda p, t, s: p.add_phrase(t, s),
+}
+
+
+def _render_difficulty_category(
+    profile: DifficultyProfile,
+    category: str,
+    entries: list,
+    add_placeholder: str,
+    add_help: str,
+    key_prefix: str,
+) -> None:
+    """Render one category (sounds / words / phrases) of the difficulty
+    profile: existing entries with a remove button each, then an add
+    text-input + button. Mirrors the already-working Blocklist/Allowlist
+    add/remove pattern rather than inventing a new one."""
+    if entries:
+        for entry in entries:
+            col_item, col_rm = st.columns([4, 1])
+            with col_item:
+                extra = ""
+                if category == "word" and entry.pronunciation:
+                    extra = f' <span style="opacity:.55;font-size:.78rem">/{" ".join(entry.pronunciation)}/</span>'
+                elif category == "sound" and entry.normalized:
+                    extra = f' <span style="opacity:.55;font-size:.78rem">/{entry.normalized.replace(" ", "")}/</span>'
+                st.markdown(
+                    f'<span class="blocklist-item">🚫 {_fmt(entry.value)}</span>{extra}',
+                    unsafe_allow_html=True,
+                )
+            with col_rm:
+                if st.button("✕", key=f"{key_prefix}_rm_{entry.normalized}", type="secondary",
+                             help=f"Remove \"{entry.value}\""):
+                    profile.remove(category, entry.normalized)
+                    _save_difficulty_profile(profile)
+                    st.rerun()
+    else:
+        st.caption("None yet.")
+
+    add_text = st.text_input(
+        f"Add {category}",
+        key=f"{key_prefix}_add_input",
+        placeholder=add_placeholder,
+        help=add_help,
+        label_visibility="collapsed",
+    )
+    if st.button("Add", key=f"{key_prefix}_add_btn", type="secondary"):
+        entry, status = _DIFFICULTY_ADDERS[category](profile, add_text, "user_typed")
+        if status == "added":
+            _save_difficulty_profile(profile)
+            st.success(f'Added "{entry.value}" to your difficult {category}s.')
+            st.rerun()
+        elif status == "duplicate":
+            st.info(f'"{add_text.strip()}" is already in your difficult {category}s.')
+        else:
+            st.warning("Enter something first.")
 
 
 def _friendly_rephrase_status(message: str) -> str:
@@ -507,46 +591,72 @@ top_k = st.slider(
     help="Number of synonym candidates to fetch per word.",
 )
 
-# ── Phoneme profile ────────────────────────────────────────────────────────────
+# ── Speaker Difficulty Profile (Stage 4A foundation) ────────────────────────────
 with st.container():
     st.markdown('<div class="profile-panel">', unsafe_allow_html=True)
-    st.markdown('<div class="pipe-label">Phoneme Profile — Stuttering Patterns</div>',
+    st.markdown('<div class="pipe-label">🗣️ Speaker Difficulty Profile</div>',
                 unsafe_allow_html=True)
-    st.caption("Enter the **starting sounds** you stutter on (e.g. `str, pr, b`). "
-               "Replacements will avoid words that start with those same sounds.")
-    sc1, sc2 = st.columns(2)
-    with sc1:
-        patterns_raw = st.text_input(
-            "Stutter sounds",
-            value=", ".join(st.session_state.stutter_patterns),
-            placeholder="e.g.  str, pr, b",
-            help="Comma/space-separated grapheme clusters. Converted to ARPAbet onsets internally.",
-        )
-    with sc2:
-        blocked_raw = st.text_input(
-            "Words to always avoid",
-            value=", ".join(st.session_state.blocked_words),
-            placeholder="e.g.  particular, statistics",
-            help="Specific words you struggle with — flagged risky and never suggested as synonyms.",
-        )
-    _new_patterns = _parse_tokens(patterns_raw)
-    _new_blocked  = _parse_tokens(blocked_raw)
-    if (_new_patterns != st.session_state.stutter_patterns
-            or _new_blocked != st.session_state.blocked_words):
-        st.session_state.stutter_patterns = _new_patterns
-        st.session_state.blocked_words    = _new_blocked
-        _save_prefs(_new_patterns, _new_blocked)
+    st.caption(
+        "What's difficult for you, declared once and reused every time — this "
+        "already-existing profile loads automatically; entering new text below "
+        "never resets it. Sounds, words, and phrases are tracked **separately**: "
+        "flagging a word difficult does not assume every sound in it is "
+        "difficult too."
+    )
+    difficulty_profile = _difficulty_profile()
 
-    if st.session_state.stutter_patterns:
-        onset_preview = " · ".join(
-            f"{p} → /{''.join(ph.normalize_pattern(p)) or '?'}/"
-            for p in st.session_state.stutter_patterns
+    dp_sounds, dp_words, dp_phrases = st.columns(3)
+
+    with dp_sounds:
+        st.markdown("**🔊 Sounds** *(starting sound)*")
+        _render_difficulty_category(
+            difficulty_profile, "sound", difficulty_profile.sounds,
+            add_placeholder="e.g. str, pr, b",
+            add_help="A starting-sound cue, not a whole word — converted to its "
+                     "ARPAbet onset internally (pronunciation, not spelling: "
+                     "'c' and 'k' count as the same sound).",
+            key_prefix="dp_sound",
         )
-        st.markdown(
-            f'<div style="font-size:.8rem;color:#2d6aab;margin-top:.2rem">'
-            f'🔊 Active onsets: <strong>{onset_preview}</strong></div>',
-            unsafe_allow_html=True,
+
+    with dp_words:
+        st.markdown("**📝 Words** *(specific words)*")
+        _render_difficulty_category(
+            difficulty_profile, "word", difficulty_profile.words,
+            add_placeholder="e.g. particular",
+            add_help="A specific word that's difficult for you — regardless of "
+                     "whether its sounds are individually flagged above.",
+            key_prefix="dp_word",
         )
+        _candidates = extract_candidate_words(st.session_state.get("query_input", ""))
+        if _candidates:
+            st.caption("Or pick a word from your text below:")
+            _pick_col, _btn_col = st.columns([3, 1])
+            with _pick_col:
+                _picked = st.selectbox(
+                    "Pick from text", options=_candidates,
+                    key="dp_word_pick", label_visibility="collapsed",
+                )
+            with _btn_col:
+                if st.button("Flag", key="dp_word_pick_btn"):
+                    entry, status = difficulty_profile.add_word(_picked, source="user_selected_from_text")
+                    if status == "added":
+                        _save_difficulty_profile(difficulty_profile)
+                        st.success(f'Added "{entry.value}" from your text.')
+                        st.rerun()
+                    elif status == "duplicate":
+                        st.info(f'"{_picked}" is already flagged.')
+
+    with dp_phrases:
+        st.markdown("**💬 Phrases** *(multi-word)*")
+        _render_difficulty_category(
+            difficulty_profile, "phrase", difficulty_profile.phrases,
+            add_placeholder="e.g. through the research",
+            add_help="A multi-word phrase that's difficult as a whole, even if "
+                     "no single word in it is individually flagged. Type it, "
+                     "or select-and-copy it from the text box above.",
+            key_prefix="dp_phrase",
+        )
+
     fluency_profile = _fluency_profile()
     # Bug 6 fix: only save when the profile needs updating, not on every render.
     if st.session_state.pop("profile_needs_save", False):
@@ -554,87 +664,51 @@ with st.container():
     profile_html = _profile_chart_html(fluency_profile)
     if profile_html:
         st.markdown(
-            '<div class="pipe-label" style="margin-top:.7rem">Multi-factor profile</div>'
+            '<div class="pipe-label" style="margin-top:.7rem">Multi-factor profile '
+            '<span style="font-weight:400;opacity:.7">(learned from observed sessions)</span></div>'
             + profile_html,
             unsafe_allow_html=True,
         )
     st.markdown("</div>", unsafe_allow_html=True)
 
-# ── Blocklist / Allowlist UI ───────────────────────────────────────────────────
-with st.expander("📋 Blocklist & Allowlist — word-level overrides", expanded=False):
+# ── Allowlist UI ─────────────────────────────────────────────────────────────────
+with st.expander("✅ Allowlist — words that must never be substituted", expanded=False):
     st.caption(
-        "**Blocklist** — specific words that will always be flagged and replaced. "
-        "**Allowlist** — words that must never be substituted (locked in place)."
+        "Locked in place regardless of difficulty — the opposite of the "
+        "difficulty profile above. Useful for names, terms, or phrasing you "
+        "always want kept exactly as written."
     )
+    al_input = st.text_input(
+        "Add to allowlist",
+        key="al_add_input",
+        placeholder="e.g. conference",
+        label_visibility="collapsed",
+    )
+    if st.button("Add", key="al_add_btn", type="secondary"):
+        word = al_input.strip().lower()
+        if word and word not in st.session_state.allowlist_words:
+            st.session_state.allowlist_words.append(word)
+            _save_prefs(st.session_state.stutter_patterns,
+                        st.session_state.blocked_words)
+            st.rerun()
 
-    col_bl, col_al = st.columns(2)
-
-    with col_bl:
-        st.markdown("**🚫 Blocklist** *(always replace)*")
-        bl_input = st.text_input(
-            "Add to blocklist",
-            key="bl_add_input",
-            placeholder="e.g. statistics",
-            label_visibility="collapsed",
-        )
-        if st.button("Add", key="bl_add_btn", type="secondary"):
-            word = bl_input.strip().lower()
-            if word and word not in st.session_state.blocked_words:
-                st.session_state.blocked_words.append(word)
-                _save_prefs(st.session_state.stutter_patterns, st.session_state.blocked_words)
-                st.rerun()
-
-        if st.session_state.blocked_words:
-            st.markdown('<div class="blocklist-panel">', unsafe_allow_html=True)
-            for bw in list(st.session_state.blocked_words):
-                col_word, col_rm = st.columns([4, 1])
-                with col_word:
-                    st.markdown(f'<span class="blocklist-item">🚫 {_fmt(bw)}</span>',
-                                unsafe_allow_html=True)
-                with col_rm:
-                    if st.button("✕", key=f"bl_rm_{bw}", type="secondary",
-                                 help=f"Remove '{bw}' from blocklist"):
-                        st.session_state.blocked_words.remove(bw)
-                        _save_prefs(st.session_state.stutter_patterns,
-                                    st.session_state.blocked_words)
-                        st.rerun()
-            st.markdown("</div>", unsafe_allow_html=True)
-        else:
-            st.caption("No blocked words yet.")
-
-    with col_al:
-        st.markdown("**✅ Allowlist** *(never replace)*")
-        al_input = st.text_input(
-            "Add to allowlist",
-            key="al_add_input",
-            placeholder="e.g. conference",
-            label_visibility="collapsed",
-        )
-        if st.button("Add", key="al_add_btn", type="secondary"):
-            word = al_input.strip().lower()
-            if word and word not in st.session_state.allowlist_words:
-                st.session_state.allowlist_words.append(word)
-                _save_prefs(st.session_state.stutter_patterns,
-                            st.session_state.blocked_words)
-                st.rerun()
-
-        if st.session_state.allowlist_words:
-            st.markdown('<div class="blocklist-panel">', unsafe_allow_html=True)
-            for aw in list(st.session_state.allowlist_words):
-                col_word, col_rm = st.columns([4, 1])
-                with col_word:
-                    st.markdown(f'<span class="allowlist-item">✅ {_fmt(aw)}</span>',
-                                unsafe_allow_html=True)
-                with col_rm:
-                    if st.button("✕", key=f"al_rm_{aw}", type="secondary",
-                                 help=f"Remove '{aw}' from allowlist"):
-                        st.session_state.allowlist_words.remove(aw)
-                        _save_prefs(st.session_state.stutter_patterns,
-                                    st.session_state.blocked_words)
-                        st.rerun()
-            st.markdown("</div>", unsafe_allow_html=True)
-        else:
-            st.caption("No allowlisted words yet.")
+    if st.session_state.allowlist_words:
+        st.markdown('<div class="blocklist-panel">', unsafe_allow_html=True)
+        for aw in list(st.session_state.allowlist_words):
+            col_word, col_rm = st.columns([4, 1])
+            with col_word:
+                st.markdown(f'<span class="allowlist-item">✅ {_fmt(aw)}</span>',
+                            unsafe_allow_html=True)
+            with col_rm:
+                if st.button("✕", key=f"al_rm_{aw}", type="secondary",
+                             help=f"Remove '{aw}' from allowlist"):
+                    st.session_state.allowlist_words.remove(aw)
+                    _save_prefs(st.session_state.stutter_patterns,
+                                st.session_state.blocked_words)
+                    st.rerun()
+        st.markdown("</div>", unsafe_allow_html=True)
+    else:
+        st.caption("No allowlisted words yet.")
 
 # ── Run button ─────────────────────────────────────────────────────────────────
 _, col1, _ = st.columns([1, 2, 1])

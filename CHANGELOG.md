@@ -6,6 +6,19 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-15** feat: add `difficulty_profile.py` — persistent, user-declared
+  speaker difficulty profile (sounds/words/phrases, kept explicitly
+  independent). New `app.py` "Speaker Difficulty Profile" panel replaces the
+  old Phoneme-Profile panel and absorbs the redundant Blocklist column.
+  Additive-only to the reformulation pipeline: `phonetic.py` gains one new
+  informational function, `user_store.py` gains a difficulty-profile store
+  that auto-mirrors the legacy `phoneme_profile` fields. Zero changes to
+  `grammar.py`/`engine.py`/`semantic.py`/`rewrite/`/`rephrase.py`/
+  `profiling/profile.py` — verified via `tests/smoke.py` being
+  byte-identical to baseline. New tests: `tests/difficulty_profile_test.py`
+  (26 tests); `tests/app_test.py` extended with a live-widget scenario.
+  Full design record in `PROBLEM_FORMULATION.md`. → `DECISION_LOG.md`
+  2026-08-15-C; `ROADMAP.md` R12–R14.
 - **2026-08-15** docs: add `RESEARCH.md` — literature/technical-approach
   review across paraphrase generation, lexical substitution, simplification,
   semantic-preservation evaluation, controlled generation, phoneme-aware

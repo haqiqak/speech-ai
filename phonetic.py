@@ -147,6 +147,31 @@ def normalize_pattern(text: str) -> tuple[str, ...]:
     return _grapheme_onset(text)
 
 
+@lru_cache(maxsize=8192)
+def full_pronunciation(word: str) -> tuple[str, ...] | None:
+    """
+    Full ARPAbet phone sequence for *word* (stress digits stripped), e.g.
+    'thoroughly' -> ('TH','ER','OW','L','IY').  CMU dict only — deliberately
+    does NOT fall back to a guessed pronunciation for out-of-vocabulary words
+    (unlike onset(), which has a grapheme-based fallback): a wrong *onset*
+    guess only weakens a filter, but a fabricated *full* pronunciation would
+    be presented to the user as if it were a fact about their own word.
+    Returns None when CMU dict has no entry, so callers can display "unknown"
+    honestly rather than a guess.
+
+    Informational only — used by the difficulty-profile UI to show a word's
+    pronunciation next to a flagged entry. Not used by any scoring/gating
+    logic in this module or elsewhere.
+    """
+    if not word:
+        return None
+    w = word.strip().lower()
+    cmu = _cmu()
+    if cmu and w in cmu and cmu[w]:
+        return tuple(re.sub(r"\d", "", p) for p in cmu[w][0])
+    return None
+
+
 def matches_any(word: str, patterns) -> bool:
     """
     True if *word*'s onset begins with the onset of ANY pattern in *patterns*.

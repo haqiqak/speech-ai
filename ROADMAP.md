@@ -172,6 +172,14 @@ signal into `profile.update()` as a new event type, and evaluate whether it
 measurably improves suggestion quality over a session.
 **Labeled as:** Directly transferable idea from the closest comparable prior
 system, not yet implemented or validated in this codebase.
+**Update (Stage 4A, 2026-08-15):** A second, more direct feedback surface
+now exists alongside this one: `difficulty_profile.py`'s `DifficultyEntry`
+already carries an unused, reserved `source="system_observed"` value and an
+empty, forward-compatible `meta` dict per entry — see `DECISION_LOG.md`
+2026-08-15-C and `PROBLEM_FORMULATION.md` §8/§9. Wiring accept/reject into
+*this* profile (not just `SpeakerDifficultyProfile.update()`) is now also a
+live option, and reconciling the two profiles (R12 below) is a prerequisite
+either way.
 
 ### R10. Investigate a restructuring/escalation path for when substitution has no valid candidate
 **Linked finding:** `RESEARCH.md` §5.6/§7 — the single largest capability
@@ -198,6 +206,59 @@ computed) is the closest existing proxy and conflates the two.
 **Labeled as:** Open evaluation-methodology gap, future work — no
 literature answer found, flagged as a genuine open question in
 `RESEARCH.md` §9 rather than assigned a false solution.
+
+---
+
+## New from Stage 4A (2026-08-15) — the profile foundation and what it exposes
+
+### R12. Reconcile the new user-declared `DifficultyProfile` with the old learned `SpeakerDifficultyProfile`
+**Linked finding:** `PROBLEM_FORMULATION.md` §5/§9 and `DECISION_LOG.md`
+2026-08-15-C. Stage 4A deliberately built the new, structured,
+user-declared profile (`difficulty_profile.py`) as a *separate* thing from
+the existing, learned, EWMA-scored `SpeakerDifficultyProfile`
+(`profiling/profile.py`, unchanged, still driving `rewrite/`) — a direct,
+correct consequence of not touching the reformulation engine this stage,
+not a design endorsement of leaving them separate forever.
+**What this roadmap item actually is:** Before or as part of the actual
+reformulation redesign, decide how declared difficulty (sounds/words/
+phrases, from Stage 4A) and learned difficulty (continuous onset-risk, from
+the existing profile) combine into whatever single signal a rebuilt
+reformulation engine consumes — per `RESEARCH.md` §8's recommendation to
+collapse binary/continuous difficulty signals into one, this is the same
+kind of consolidation question, now with a second data source added to it.
+**Labeled as:** Directly evidence-linked (not a fresh hypothesis) — the
+duplication is a stated, deliberate, and named limitation of Stage 4A's own
+design, not a newly-discovered problem.
+
+### R13. Give `difficulty_profile.phrases` a consumer
+**Linked finding:** `PROBLEM_FORMULATION.md` §6/§12 — phrases are declared
+and persisted but nothing in the current reformulation pipeline (which
+Stage 4A did not touch) accepts or acts on a phrase-level constraint.
+**What this roadmap item actually is:** Once the reformulation engine is
+being redesigned, decide how a stored phrase gets matched against new input
+text (exact substring vs. fuzzy/reordered vs. partial overlap — genuinely
+undecided, per `PROBLEM_FORMULATION.md` §3.4) and wire it in.
+**Labeled as:** Future work, explicitly deferred by Stage 4A's own scope
+restriction, not overlooked.
+
+### R14. Build and browser-verify the inline text-selection flagging component
+**Linked finding:** `PROBLEM_FORMULATION.md` §7 — a true "select text
+in-place, a small button appears" interaction was researched and its
+technical approach fully specified (`st.components.v1.html` +
+`window.getSelection()` + a hand-rolled, locally-vendored Streamlit
+component-value channel) but deliberately not built, because this
+environment cannot verify real browser JS and shipping it unverified would
+repeat the exact, already-on-record `voice.py`/`st.iframe` pitfall
+(`ROADMAP.md` H1).
+**What this roadmap item actually is:** Implement the specified approach in
+a session with real browser access, verify it actually works before
+presenting it as done, and keep the current native-Streamlit path
+(free-text + quick-pick dropdown) as the fallback either way — the
+component would be a UX upgrade to the interaction, not a replacement for
+having a reliable one.
+**Labeled as:** Future work with an already-specified technical approach —
+not a fresh unknown, an implementation task deferred for a verifiability
+reason, stated as such in `PROBLEM_FORMULATION.md` §7.2.
 
 ---
 
@@ -277,3 +338,16 @@ here as the comparison §15 asks for; this does not reorder R0–R4 (the
 credential exposure and the still-unresolved threshold/data/study gaps are
 unaffected by the literature pass and remain ahead of R6/R10 in practical
 terms).
+
+**2026-08-15 — third reassessment, post-Stage-4A.** Building the profile
+foundation surfaced one new structural fact worth recording here rather than
+only in R12: the repository now has two independent representations of
+"what's difficult for this speaker" (the new, user-declared
+`DifficultyProfile` and the old, learned `SpeakerDifficultyProfile`), and
+neither R5/R6 (the A-vs-B rewrite-pipeline ablation) nor R2 (fitting the
+difficulty formula) can be answered completely without first deciding how
+those two profiles relate (R12) — an ablation or a formula fit run against
+only one of two now-existing difficulty signals would be answering a
+narrower question than it appears to. This doesn't change R0–R4's priority
+ordering; it means R12 should be resolved before, or alongside, R5/R6/R2
+rather than strictly after them as the numbering alone would suggest.

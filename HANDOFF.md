@@ -26,6 +26,19 @@ where it does, treat `out_of_scope/<old path>` as the current location. No
 reformulation algorithm, weight, or threshold changed in this pass — see
 `DECISION_LOG.md` for the entry recording exactly what moved and why.
 
+**Scope note (added 2026-08-15, Stage 4A foundation pass):** a new,
+persistent, user-declared speaker difficulty profile now exists
+(`difficulty_profile.py` — sounds/words/phrases, explicitly independent
+categories; full design record in `PROBLEM_FORMULATION.md`). It is **not**
+the same thing as the `SpeakerDifficultyProfile` mentioned throughout this
+file (`profiling/profile.py`, the learned/EWMA one) — the two are
+deliberately separate for now, reconciling them is `ROADMAP.md` R12. The new
+profile reaches the existing, unmodified reformulation pipeline only through
+an auto-derived mirror into the legacy `phoneme_profile.stutter_patterns`/
+`.blocked_words` fields — see `DECISION_LOG.md` 2026-08-15-C. No
+reformulation algorithm, weight, or threshold changed in this pass either;
+verified via `tests/smoke.py` being byte-identical to baseline.
+
 ## What's proven vs. still a hypothesis (read this before trusting a claim elsewhere)
 
 **Proven / fact-level, in the sense of "verifiably true of the code as it

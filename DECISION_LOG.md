@@ -331,3 +331,88 @@ forward-looking architecture recommendations — see that file's legend. Cite
 individual claims from it with that distinction intact rather than flattening
 "the research says X" when the honest label is "we interpreted the research
 to suggest X for our specific case."
+
+---
+
+### 2026-08-15-C — Stage 4A: new user-declared speaker difficulty profile foundation added, kept separate from the reformulation engine
+**What was done:** Added a new persistent, structured "speaker difficulty
+profile" — three explicitly independent lists (`sounds`, `words`,
+`phrases`), each entry carrying `source`/`added_at`/an empty forward-
+compatible `meta` dict, words additionally carrying a best-effort CMU-dict
+pronunciation for display only. New files: `difficulty_profile.py` (schema,
+validation, normalization, dedup logic), `tests/difficulty_profile_test.py`
+(26 tests). Extended (not replaced): `phonetic.py` gained one new, purely
+additive function, `full_pronunciation()` (informational only, no
+scoring/gating use); `user_store.py` gained `load_difficulty_profile()` /
+`save_difficulty_profile()`, the latter also refreshing the legacy
+`phoneme_profile.stutter_patterns`/`.blocked_words` mirror in the same
+write. `app.py`'s old "Phoneme Profile — Stuttering Patterns" panel and the
+"Blocklist" half of the Blocklist/Allowlist expander (which were, on
+inspection, two separate UI surfaces independently editing the same
+`blocked_words` list — a pre-existing redundancy resolved by this change,
+not introduced by it) were replaced by one consolidated "Speaker Difficulty
+Profile" panel: three columns (Sounds/Words/Phrases), each with the
+already-working add-input-plus-button / per-entry-remove-button pattern
+reused from the old Blocklist column rather than reinvented, plus a
+"pick a word from your current text" convenience dropdown for the Words
+column. The Allowlist (a genuinely different, untouched concept — words
+that must never be substituted) stays in its own expander.
+**Alternatives considered:**
+  - A hand-rolled, JS-based inline "select text in place, a floating
+    button appears" component — the task's own suggested interaction.
+    Rejected for this pass: Streamlit has no native support for reading
+    browser text selection (a documented open feature request on
+    Streamlit's own forum), and building a custom bidirectional component
+    would mean shipping unverified browser JS with no way to test it in
+    this environment — the exact pitfall already on record for `voice.py`'s
+    `st.iframe` usage. The technical approach is fully specified as a
+    deferred future item in `PROBLEM_FORMULATION.md` §7.2 rather than
+    built untested.
+  - Auto-deriving `sounds` entries from a flagged word's phonemes.
+    Rejected — directly conflates word-level and phoneme-level difficulty,
+    which the task's own instructions (§6/§13) explicitly require staying
+    separate; a psycholinguistic basis for keeping them separate is also in
+    `RESEARCH.md` §1.2/§2.F.
+  - SQLite for profile persistence. Rejected — no query pattern this data
+    volume justifies; would add a second persistence mechanism alongside
+    `user_store.py`'s existing, working JSON pattern for no offsetting
+    benefit. Full comparison table in `PROBLEM_FORMULATION.md` §4.
+  - Keeping `phoneme_profile` as an independently-user-edited list
+    alongside the new `difficulty_profile`. Rejected — real drift risk,
+    the same class of problem `RESEARCH.md` §6 already flagged for this
+    repo's two rewrite pipelines. Made a derived, auto-refreshed mirror
+    instead, written in the same file operation as the new profile so the
+    two can never observably disagree.
+**Why:** Per the task's explicit framing: the profile is one of the most
+important inputs to the eventual reformulation architecture, and needed a
+clean, correctly-scoped foundation before any reformulation logic changes.
+Full reasoning for every representation choice (ARPAbet-vs-IPA, word-vs-
+phoneme independence, phrase representation, JSON-vs-SQLite) is in
+`PROBLEM_FORMULATION.md`, not repeated here.
+**Measured result:** `tests/difficulty_profile_test.py` — 26/26 pass
+(add/remove/dedup per category, text edge cases, pronunciation derivation
+including the OOV case, persistence across a simulated restart, legacy-
+profile migration firing exactly once). `tests/app_test.py` — extended with
+a new scenario exercising the actual Streamlit widgets end to end (add
+word/sound/phrase, confirm rendered, confirm legacy session-state mirror
+updates without re-login, remove, confirm removal rendered); all scenarios
+pass. `tests/roadmap_test.py` (3/3), `tests/persistence_test.py` — both
+still pass unmodified in behavior. `tests/smoke.py` — **byte-identical**
+output to the committed `tests/baseline_sbert.txt`, i.e. direct, checkable
+evidence the reformulation pipeline's actual behavior is unchanged by this
+stage, not merely an assertion that it should be.
+**Category:** Engineering decision, directly scoped and instructed by the
+user, with a research pass (documented in `PROBLEM_FORMULATION.md`)
+preceding implementation per the task's own required workflow order.
+**Left deliberately unresolved, flagged for the next stage — see
+`ROADMAP.md`:**
+  - The new, user-declared `DifficultyProfile` and the old, learned/EWMA
+    `SpeakerDifficultyProfile` (`profiling/profile.py`, unchanged, still
+    driving `rewrite/`) are now two different "difficulty" representations
+    that don't talk to each other. This is the direct, correct consequence
+    of not touching the reformulation engine this stage, not an oversight —
+    but it needs reconciling before (or as part of) the actual
+    reformulation redesign.
+  - `phrases` has no consumer anywhere in the current pipeline — declared
+    and persisted, not yet matched against or acted on by anything.
+  - The inline text-selection interaction remains unbuilt, specified only.
