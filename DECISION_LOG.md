@@ -974,3 +974,56 @@ Also not established: a realistic escalation-trigger/success rate for
 ordinary (non-adversarially-constructed) text — this corpus was built
 failure-mode-dense by design, so 0/4 should not be read as a general
 escalation failure rate.
+
+---
+
+### 2026-08-16-H — R17 fixed: `rephrase.py::_bad_words_ids()` case-insensitivity, measured, did not recover any escalation cases
+**What was done:** `_bad_words_ids()` (`rephrase.py`) now encodes each
+blocked word's lowercase and capitalized forms (each with and without a
+leading space), not just the exact form the caller passed in — the fix
+for `VALIDATION.md` §6.3's Cause A, confirmed there via direct
+tokenization and a controlled `_model.generate()` repro. Nothing else in
+`rephrase.py` changed: same model, same generation parameters, same
+number of candidates, same public signature.
+**Tests added:** `tests/rephrase_test.py`, 8 new tests, all pass —
+`BadWordsIdsUnitTest` (4 fast, deterministic checks directly on
+`_bad_words_ids()`: both case forms present for a word verified to
+tokenize differently by case; leading-space variants of both forms still
+present, a regression check against the pre-fix behavior; an
+already-mixed-case input like `"TensorFlow"` still has its exact form
+blocked; empty/None input still returns `None`; no duplicate token
+sequences) and `GenerationCaseLeakTest` (3 integration-level checks
+actually calling `generate_candidates()`: a sentence-initial
+capitalization case, a mid-sentence-vs-sentence-initial pair for the same
+word, and a regression check that unblocked generation is unaffected).
+**Measured result:** Re-ran the identical `eval/reformulation_eval.py` /
+`tests/reformulation_eval_corpus.json` corpus from Stage 6
+(`VALIDATION.md` §6) after the fix. The fix works exactly as intended at
+the unit and single-sentence level (the original "manager" repro's 5/6
+capitalized leak is now 0/6, confirmed live, not just via the new tests).
+**It recovered zero of the four `could_not_safely_reformulate` cases** —
+every aggregate number in the before/after comparison is unchanged
+(reformulation rate 0.556 both times; identical status distribution;
+byte-identical final output for all four previously-failing cases).
+Traced why directly: post-fix candidates for these cases no longer leak
+the literal blocked word in any case, but they either (a) still contain a
+different word sharing the same flagged phoneme class (Cause B,
+unaffected by this fix, exactly as predicted), or (b) a newly-observed
+effect — blocking more token forms pushes T5's beam search toward
+substantially lower-similarity paraphrases (0.49–0.61 post-fix vs.
+0.81–0.91 pre-fix on the same case), which then fail the SBERT gate
+instead of, or in addition to, the phoneme gate.
+**Category:** Bug fix + measurement, exactly as scoped — no reformulation
+scoring, gate, or trigger logic touched; `ROADMAP.md` R17 explicitly
+excluded any T5 redesign or Cause B work, and none was done.
+**Verification performed:** Full existing test suite (67 cases across
+`reformulate_test`/`difficulty_profile_test`/`roadmap_test`/
+`rephrase_test`) passes. The Stage 6 corpus was re-run against the fixed
+code, not re-inferred from the fix's description. No profile touched
+disk during any of this (`git status` on `users/` clean throughout).
+**Left open, unresolved:** `ROADMAP.md` R18 (Cause B / escalation-model
+mismatch) — this entry's result strengthens the case that R18, not R17,
+is the actual blocker on this corpus's escalation success rate, and adds
+one new consideration for whoever picks up R18: naively blocking *more*
+terms as a fix risks trading a phoneme-veto rejection for a
+semantic-gate rejection rather than producing an actual pass.
