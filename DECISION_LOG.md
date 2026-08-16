@@ -811,3 +811,103 @@ loop (the UI now *has* an accept/reject signal to wire, but it isn't
 wired into the profile yet); phrase-level detection (R13, above); Strong-
 tier NLI verification (§27); MLM candidate generation (§24.B, deferred
 pending measurement per Stage 5B).
+
+---
+
+### 2026-08-16-F — Pre-evaluation cleanup pass: dead surface removed, live-but-old code left alone
+**What was done:** A repo-wide audit for code/UI/imports/dependencies/
+config/tests/docs made unreachable by the D′/app.py v8 redesign
+(2026-08-16-E), scoped to *that* redesign specifically, not a general
+decade-old-code sweep of everything `grammar.py`/`rewrite/`/`profiling/`
+contain. Every removal below was verified by tracing actual callers
+(`Grep` across the live `.py` tree, plus AST-based unused-import checks
+on the files this session touched), not by "it looks old."
+**Removed, with the verification that justified it:**
+  - `run_app.ps1` — hardcoded a nonexistent path (`L:\speech-ai`) and venv
+    name (`.venv313`, actual is `venv/`), and its entire premise (close
+    your IDE to free RAM for the ASR model) describes a feature
+    (`out_of_scope/`'s CrisperWhisper wrapper) this repo hasn't run since
+    the Stage 2 narrowing pass. Not referenced by any other file except
+    `README.md` (fixed, see below) and `changes.md` (historical, left
+    alone).
+  - `profile_store.py`'s `load_preferences()`/`save_preferences()` and
+    the on-disk `preferences`/`custom_replacements` fields (an allowlist,
+    a `rephrase_enabled` toggle, a `profile_rewrite_enabled` toggle) —
+    grepped for every caller across the repo: the only ones were
+    `profile_store.py`'s own internal round-trip (to avoid clobbering the
+    fields on every difficulty-profile save) and
+    `tests/persistence_test.py`, which tested exactly that round-trip and
+    nothing else. Both existed only because app.py v7's now-removed
+    sidebar toggles/allowlist panel wrote to them; v8 never did. Removed
+    together: the functions, the schema fields (silently dropped on the
+    next `save_difficulty_profile()` call, following the same precedent
+    already set for `password_hash`/`phoneme_profile` during the auth
+    removal), and `tests/persistence_test.py` (its one remaining
+    unique-value assertion — a never-saved profile still loads without
+    crashing — is already covered by
+    `tests/difficulty_profile_test.py::PersistenceTest`).
+  - `freq.py::active_wordlist()` — zero call sites anywhere in the repo;
+    existed solely for a sidebar caption ("Frequency wordlist: **X**")
+    that app.py v8 doesn't have.
+  - `reformulate.py`'s unused `field` (dataclasses) and `Any` (typing)
+    imports — caught by an AST pass comparing imported names against
+    `ast.Name` usage across the file, run on every file this session
+    authored or edited.
+  - `torchvision` from `requirements.txt` — re-confirmed zero imports
+    anywhere (Stage 2's `DECISION_LOG.md` 2026-08-15-A already found this
+    and explicitly deferred it as "unrelated to the audio/text boundary");
+    this pass's scope covers it.
+  - `.gitignore`'s `user_prefs.json` line — no code anywhere writes that
+    filename; a leftover from an even earlier (pre-`user_store.py`)
+    architecture.
+**Investigated and explicitly kept, not removed:**
+  - `grammar.py::SentenceRewriter`, `rewrite/` (`rewriter.py`/`rank.py`/
+    `candidates.py`), `profiling/` (`profile.py`/`coldstart.py`/
+    `config.py`), `config.yaml`, `eval/` (`metrics.py`/`profile_eval.py`/
+    `study/`) — all confirmed, by tracing actual imports, to be a single
+    connected dependency chain (`rewrite/rewriter.py` imports
+    `profiling.profile.SpeakerDifficultyProfile` and
+    `profiling.config.load_config`, which reads `config.yaml`; `eval/`
+    imports both `rewrite/` and `profiling/`) that stays alive as a whole
+    specifically because 2026-08-16-E's migration plan keeps
+    `SentenceRewriter`/`DifficultyAwareRewriter` for the upcoming
+    evaluation-stage comparison against `reformulate.py`. Confirmed
+    genuinely exercised, not just present: `tests/smoke.py`,
+    `tests/threshold_sweep.py`, `tests/evaluate.py` run `SentenceRewriter`
+    directly; `tests/roadmap_test.py` and `eval/metrics.py` run
+    `DifficultyAwareRewriter` directly.
+  - `scripts/` (T5 fine-tuning scaffolding) — standalone, not imported by
+    the live app, but not orphaned either: it targets the same
+    `Vamsi/T5_Paraphrase_Paws` model `rephrase.py` still serves as
+    `reformulate.py`'s live restructuring-escalation step.
+  - `changes.md` — pre-dates this doc set and describes several
+    now-removed features (mic profiling, the old rewrite toggles) as
+    current, but it's a labeled, append-only historical record
+    (`DOCS.md` already flags it as "not a source of truth for current
+    behavior"), not a cleanup target — Practice.md's own discipline is to
+    append corrections, not rewrite history.
+**`app.py`/`reformulate.py` audit result:** no dead code found beyond the
+two unused imports above — both were rewritten as complete, self-
+contained passes in 2026-08-16-E rather than accreted onto, so there was
+little inherited cruft to find.
+**Docs updated to match:** `README.md` (the "What It Does"/"Features"
+sections were still describing the v7 dropdown UI as current; "Architecture
+Notes" now states which modules are live vs. retained-for-comparison;
+fixed the `run_app.ps1` and `preferences`-schema references), `DOCS.md`
+(`profile_store.py`/`users/` rows, `persistence_test.py` row removed).
+**Category:** Cleanup/removal, explicitly not a redesign — no scoring
+formula, threshold, gate, or reformulation behavior changed. Verified via
+`tests/smoke.py` staying byte-identical to `tests/baseline_sbert.txt`.
+**Verification performed:** `tests/reformulate_test.py` (12),
+`tests/difficulty_profile_test.py` (44), `tests/app_test.py`, and
+`tests/roadmap_test.py` (3) all pass after every removal above: 56
+unittest cases plus two script-style suites, all green. A live
+`save_difficulty_profile()` round-trip was run and its on-disk output
+inspected directly to confirm the schema simplification behaves as
+described, not just as intended.
+**Left for the user to decide, not removed:** whether to eventually
+delete (not just stop calling) `grammar.py::SentenceRewriter`/`rewrite/`/
+`profiling/`/`eval/` once the evaluation stage actually measures
+`reformulate.py` against them — that decision explicitly belongs to the
+evaluation stage's outcome, per 2026-08-16-E's migration plan, not to
+this cleanup pass.

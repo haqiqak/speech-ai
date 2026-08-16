@@ -6,6 +6,24 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-16** chore: pre-evaluation cleanup pass — removed dead surface
+  the D′/UI redesign left behind: `run_app.ps1` (broken paths, described
+  a removed ASR feature), `profile_store.py`'s `load_preferences`/
+  `save_preferences` and the on-disk `preferences`/`custom_replacements`
+  fields (zero live consumers — traced every caller before removing),
+  `tests/persistence_test.py` (tested only that now-removed round-trip),
+  `freq.py::active_wordlist()` (zero call sites), two unused imports in
+  `reformulate.py`, `torchvision` from `requirements.txt` (flagged unused
+  and deferred back in 2026-08-15-A, now actually removed), and a stale
+  `.gitignore` line. `grammar.py::SentenceRewriter`, `rewrite/`,
+  `profiling/`, `eval/`, `config.yaml`, `scripts/` all investigated and
+  kept — confirmed still genuinely exercised (by `smoke.py`/
+  `threshold_sweep.py`/`evaluate.py`/`roadmap_test.py`/`eval/metrics.py`)
+  and load-bearing for the upcoming evaluation-stage comparison. `README.md`
+  rewritten where it still described the removed v7 UI as current. No
+  reformulation behavior changed — `tests/smoke.py` byte-identical to
+  baseline; 56 unittest cases + 2 script suites all pass. →
+  `DECISION_LOG.md` 2026-08-16-F.
 - **2026-08-16** feat: implement Architecture D′ (`reformulate.py`) and
   redesign `app.py` (v7 → v8) around it — one linear workflow (text →
   difficulty profile → Reformulate → changes/skipped/verification review
