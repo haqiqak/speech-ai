@@ -622,3 +622,63 @@ any existing entry's `normalized` dedup key.
     remain the future reformulation engine's job, confirmed (not just
     assumed) during this audit to be correctly un-precomputed by the
     profile layer.
+
+---
+
+### 2026-08-16-C — Stage 5: reformulation-engine architecture research completed; no implementation changed
+**What was done:** A dedicated research pass on the reformulation engine
+itself (as opposed to Stage 3's broader literature survey or Stage 4A's
+profile-layer focus), recorded in the new `REFORMULATION_RESEARCH.md`.
+Covers: Brown's four factors and the stuttering-loci literature (word-
+initial dominance, stress, content/function-word, consonant-cluster
+effects) as citable grounding for the difficulty formula's known gaps; a
+second close prior system, SpeechAgent (2026, arXiv 2510.20113), compared
+against Fluent (already covered in `RESEARCH.md`); minimal-edit tagging
+architectures (GECToR, FELIX, LaserTagger) researched in implementation
+depth and found infeasible to adopt directly — not for a hardware reason,
+but because they require paired training data (difficult-input →
+easier-output pairs) that doesn't exist for this task; concrete,
+CPU-feasible tooling for the two gaps `RESEARCH.md` already named (small
+NLI cross-encoders for the negation/antonym blind spot; HF's
+`force_words_ids`/`DisjunctiveConstraint` for positive constraints);
+student-hardware feasibility findings for small local LLMs (3–7B, Q4 GGUF,
+~12 tok/s on a laptop CPU — usable for an occasional fallback call, not a
+tight interactive loop); ten constructed failure-mode examples walked
+through against the current system and the recommended architecture;
+and a ranked comparison of four candidate architectures (direct
+generation, candidate-gen+rank, learned minimal-edit tagging, and a hybrid
+of the tagging/ranking/escalation/verification stages), with the hybrid
+recommended.
+**Alternatives considered:** The four candidate architectures themselves
+are the alternatives — see `REFORMULATION_RESEARCH.md` §19 for the full
+comparison and §20–21 for why the hybrid was selected over the other
+three specifically (each of its components independently justified by a
+different finding, not a single overarching preference).
+**Why:** Explicitly requested as "the most important research stage" —
+determine what's technically best before what's convenient, and determine
+what's realistically buildable at student/laptop scale before committing
+to an architecture, rather than assuming a familiar technology (LLM/T5/
+BERT/WordNet/SBERT) by default.
+**Measured result:** N/A in the Practice.md §8 sense — this is a research
+and design-comparison pass, not an experiment with a reportable numeric
+outcome. What it did produce: a reframing with real evidentiary weight —
+the existing `grammar.py`/`rewrite/` architecture's overall *shape*
+(identify positions needing attention, touch only those, reassemble)
+already matches the minimal-edit/tagging pattern the field treats as best
+practice (GECToR/FELIX), which is new, citable support for "consolidate
+and extend what exists" over "replace it," independent of and additional
+to `RESEARCH.md` §8's earlier version of that same conclusion.
+**Category:** Research/evidence-gathering, explicitly not an engineering
+decision — per the task's own strict boundary, `grammar.py`, `semantic.py`,
+`engine.py`, `rewrite/`, and `rephrase.py` all have zero lines changed;
+confirmed via `git status`, not just asserted.
+**Left explicitly for the next stage, not decided here:**
+  - Whether to actually build the recommended architecture, and in what
+    order — `REFORMULATION_RESEARCH.md` §22/§23 propose a first-
+    implementation priority order (the A-vs-B ablation, the naturalness-
+    of-intervention metric, the NLI signal, the difficulty-formula
+    position/stress terms, in that order) and explicitly what not to build
+    yet (any model training, the escalation stage itself, a local LLM
+    integration, any API-based LLM as a default path, the accept/reject
+    personalization loop) — but per Practice.md §0.2, this document
+    authorizes none of it; that's a separate, deliberate decision.

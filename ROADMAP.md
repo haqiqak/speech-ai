@@ -76,6 +76,18 @@ predict difficulty comparably to or better than onset alone.
 **Labeled as:** **Future work**, explicitly blocked on real data from the
 Audio Module — not actionable today, but should not silently drop off
 the list once that data exists.
+**Update (Stage 5, 2026-08-16):** The "does the literature suggest other
+factors" half of this item is now answered, independent of the
+still-blocked weight-fitting half — `REFORMULATION_RESEARCH.md` §2.1 cites
+Brown's four factors (word-initial phoneme, grammatical function, sentence
+position, word length) plus stress and consonant-cluster effects from the
+stuttering-loci literature. Two of these (sentence position, stress) are
+missing from both current formulas entirely, and the stress data (CMU
+stress digits) is already present in our own phone data and currently
+discarded, not unavailable — see `REFORMULATION_RESEARCH.md` §22 item 4
+for the proposed cheap, pre-fitting experiment (add the terms, check
+whether rankings change) that doesn't require waiting on R2's data
+dependency.
 
 ### R3. Run the literature pass called for in §7 — **DONE, 2026-08-15**
 **Linked finding:** `VALIDATION.md` §5 — this review did not perform it.
@@ -151,6 +163,11 @@ comparison R5 is blocked on, since both are the same class of question
 (does this specific gating/scoring choice change what gets accepted).
 **Labeled as:** Future work, blocked on R1–R4 producing a usable benchmark
 first.
+**Update (Stage 5, 2026-08-16):** `REFORMULATION_RESEARCH.md` §22 lists this
+ablation as the literal first item to implement, ahead of every other
+Stage 5 recommendation — everything else (NLI signal, difficulty-formula
+terms, the escalation path) is easier to evaluate correctly once this
+ablation's answer is known, not before.
 
 ### R7. Ablation: is the frequency term in the ranking formula doing real work?
 **Linked finding:** Practice.md §11, same source as R6.
@@ -170,6 +187,12 @@ acceptance decisions on cases the current gate gets wrong.
 finding, whether closing it changes real outcomes for our candidate
 distribution (which skews toward true synonyms, not antonyms, by
 construction of the WordNet/Datamuse retrieval step) is untested.
+**Update (Stage 5, 2026-08-16):** No longer just "an NLI model exists" —
+`REFORMULATION_RESEARCH.md` §9 names specific, confirmed-CPU-feasible
+models (`cross-encoder/nli-deberta-v3-xsmall`/`-small`, `EttinX-nli-s`),
+comparable in size/cost to the SBERT model already running in this repo.
+Sequenced third in `REFORMULATION_RESEARCH.md` §22's implementation order
+(after the R6 ablation and the naturalness-of-intervention metric, R11).
 
 ### R9. Prototype a feedback loop from accept/reject decisions into the difficulty profile
 **Linked finding:** `RESEARCH.md` §2.F/§5.5 — the closest known prior system
@@ -192,6 +215,15 @@ empty, forward-compatible `meta` dict per entry — see `DECISION_LOG.md`
 *this* profile (not just `SpeakerDifficultyProfile.update()`) is now also a
 live option, and reconciling the two profiles (R12 below) is a prerequisite
 either way.
+**Update (Stage 5, 2026-08-16):** `REFORMULATION_RESEARCH.md` §11 finds the
+current field trend for exactly this kind of small-data, single-user
+adaptation is a **contextual-bandit** framing (arm = which onset/word gets
+flagged risky, reward = accept/reject) — lightweight, CPU-trivial, no
+neural network required at our data scale. Explicitly flagged there as an
+*algorithm* worth borrowing, not a system to adopt wholesale (the cited
+papers target much larger-scale systems). Still sequenced after the core
+substitution/escalation pipeline (R6/R10) — there must be something to
+accept or reject before this is buildable.
 
 ### R10. Investigate a restructuring/escalation path for when substitution has no valid candidate
 **Linked finding:** `RESEARCH.md` §5.6/§7 — the single largest capability
@@ -209,6 +241,24 @@ running rephrase as an independent, always-optional toggle.
 **Labeled as:** The clearest architecture recommendation to come out of the
 research pass (`RESEARCH.md` §8) — still a recommendation, not a decision;
 needs Stage 4 to actually evaluate it against alternatives.
+**Update (Stage 5, 2026-08-16):** Independently re-confirmed as the right
+direction by a second, more detailed research pass —
+`REFORMULATION_RESEARCH.md` §20 makes this the "escalation" stage of the
+recommended hybrid architecture, and §17's constructed failure modes show
+it's the *only* one of the ten constructed test cases that the recommended
+architecture solves structurally (the others are either already handled or
+explicitly named as still-unsolved). Deliberately sequenced **after**
+R6/R8/R11/R2's position-stress terms in `REFORMULATION_RESEARCH.md` §22–23
+— building the escalation path before the substitution path's own quality
+is measured would conflate two different sources of improvement.
+A concrete architecture-level alternative was researched and explicitly
+**rejected**: a learned minimal-edit tagger (GECToR/FELIX-style) instead of
+this escalation approach. Not rejected for hardware reasons — rejected
+because no paired training data (difficult-input → easier-output) exists
+for this task, and synthesizing it from our own rule-based outputs would
+just teach a model to imitate rules we already have (`REFORMULATION_RESEARCH.md`
+§6). Filed as future work only if real speaker-reformulation-pair data
+ever exists (same blocking condition as R2).
 
 ### R11. Design a "naturalness of intervention" metric
 **Linked finding:** `RESEARCH.md` §4 — none of our current metrics, and
@@ -218,6 +268,17 @@ computed) is the closest existing proxy and conflates the two.
 **Labeled as:** Open evaluation-methodology gap, future work — no
 literature answer found, flagged as a genuine open question in
 `RESEARCH.md` §9 rather than assigned a false solution.
+**Update (Stage 5, 2026-08-16) — no longer a fully open question:**
+`REFORMULATION_RESEARCH.md` §10/§17 finds a concrete, established
+technique this pass's search didn't surface before: revision-quality
+literature uses **Levenshtein/character-edit-distance-based penalties**
+specifically "to penalize unnecessary changes" while preserving intent.
+This doesn't invent a *correctness* signal (still needs the semantic/
+difficulty gates), but it does give a literature-grounded, implementable
+answer to the *how-much-changed* half of the metric. Sequenced second in
+`REFORMULATION_RESEARCH.md` §22's implementation order — needed as a
+shared before/after baseline before R6's ablation or R8's NLI addition can
+be meaningfully compared.
 
 ---
 
@@ -419,3 +480,21 @@ one two reassessments ago: closing the proxy-metric gap (R2/R3/R4) and
 running the pipeline ablation (R6/R12) before any reformulation redesign
 decision is made, now with a slightly richer input layer to design that
 redesign against.
+
+**2026-08-16 — fifth reassessment, post-Stage-5 (`REFORMULATION_RESEARCH.md`).**
+The deep reformulation-engine research pass answers this reassessment's
+question directly rather than needing a fresh derivation: it independently
+re-arrives at "close the proxy-metric gap and run the ablation first"
+(§22's priority order opens with R6, then R11, then R8, then R2's
+position/stress terms) via a completely different route (constructing and
+walking through ten failure-mode examples, §17) than the earlier
+reassessments used. Two items' priority *character* changed, not their
+tier: R6 is no longer just "duplication is real," it's "duplication with a
+literature-grounded reason to expect a specific outcome" (§12's
+complementary-failure-modes test, applied); R10 is no longer just "we
+should probably support restructuring," it's "the one constructed failure
+mode our architecture cannot solve without it" (§17, the restructuring-vs-
+substitution case). R0's status is unchanged from the fourth reassessment.
+No item was reordered as a result of this pass — the research confirmed
+the existing order rather than revising it, which is itself worth
+recording per §15 rather than treated as a null result.

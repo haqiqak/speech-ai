@@ -1,8 +1,72 @@
 {
   "profile_name": "default",
   "difficulty_profile": {
-    "sounds": [],
-    "words": [],
+    "sounds": [
+      {
+        "value": "pr",
+        "normalized": "P R",
+        "category": "sound",
+        "source": "user_typed",
+        "added_at": "2026-08-16T12:39:06.978958+00:00",
+        "pronunciation": null,
+        "problem_phones": null,
+        "meta": {}
+      }
+    ],
+    "words": [
+      {
+        "value": "present",
+        "normalized": "present",
+        "category": "word",
+        "source": "user_typed",
+        "added_at": "2026-08-16T12:39:14.743224+00:00",
+        "pronunciation": [
+          "P",
+          "R",
+          "EH",
+          "Z",
+          "AH",
+          "N",
+          "T"
+        ],
+        "problem_phones": null,
+        "meta": {
+          "has_alternate_pronunciations": true
+        }
+      },
+      {
+        "value": "tree",
+        "normalized": "tree",
+        "category": "word",
+        "source": "user_typed",
+        "added_at": "2026-08-16T12:39:27.728884+00:00",
+        "pronunciation": [
+          "T",
+          "R",
+          "IY"
+        ],
+        "problem_phones": [
+          "R"
+        ],
+        "meta": {}
+      },
+      {
+        "value": "three",
+        "normalized": "three",
+        "category": "word",
+        "source": "user_typed",
+        "added_at": "2026-08-16T12:39:49.939656+00:00",
+        "pronunciation": [
+          "TH",
+          "R",
+          "IY"
+        ],
+        "problem_phones": [
+          "R"
+        ],
+        "meta": {}
+      }
+    ],
     "phrases": []
   },
   "custom_replacements": {},

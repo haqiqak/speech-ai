@@ -6,6 +6,17 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-16** docs: add `REFORMULATION_RESEARCH.md` — Stage 5 deep
+  research pass on the reformulation-engine architecture itself: Brown's
+  four stuttering-loci factors, a second close prior system (SpeechAgent,
+  2026), minimal-edit tagging architectures (GECToR/FELIX, researched and
+  found infeasible here for lack of training data, not hardware), concrete
+  CPU-feasible NLI/constrained-decoding tooling, ten constructed failure
+  modes, and a ranked architecture recommendation (candidate-gen+rank with
+  a generation escalation path and symbolic final verification). Pure
+  research — zero lines changed in `grammar.py`/`semantic.py`/`engine.py`/
+  `rewrite/`/`rephrase.py`. → `DECISION_LOG.md` 2026-08-16-C; updates to
+  `ROADMAP.md` R2/R6/R8/R9/R10/R11.
 - **2026-08-16** fix: foundation audit found and fixed two real ambiguities,
   verified against live CMU data — heteronym words (`"read"`, `"the"`, etc.)
   silently used only the first CMU pronunciation variant, now flagged

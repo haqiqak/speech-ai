@@ -20,8 +20,14 @@ only to tell you where to go next.
    speaker difficulty profile (sounds/words/phrases): schema, representation
    research, the text-entry/flagging interaction, and what's deliberately
    deferred — read before touching `difficulty_profile.py` or the profile UI
-8. `ROADMAP.md` — what's next, and the finding or gap that justifies each item
-9. `CHANGELOG.md` — fast-scan index into the decision log
+8. `REFORMULATION_RESEARCH.md` — Stage 5's deep research pass on the
+   reformulation engine itself: minimal-edit architectures, phoneme-position/
+   stress granularity, hardware feasibility, failure modes, and a ranked,
+   evidence-based architecture recommendation — **read this before designing
+   or implementing any reformulation-engine change**; it's the document that
+   should drive that decision, not `RESEARCH.md` alone
+9. `ROADMAP.md` — what's next, and the finding or gap that justifies each item
+10. `CHANGELOG.md` — fast-scan index into the decision log
 
 ## The handful of standing rules (from Practice.md, restated briefly)
 
