@@ -494,6 +494,22 @@ blocking known synonyms/inflections of flagged words) should be checked
 against this side effect specifically, not assumed to only improve
 things — it may trade a phoneme-veto rejection for a semantic-gate
 rejection instead of an actual pass.
+**Update (2026-08-16) — real, but its urgency just dropped, measured.**
+`VALIDATION.md` §6.9 ran a 210-case corpus of ordinary text (36
+already-committed sentences + 6 ordinary paragraphs) against 5 realistic,
+non-adversarial profiles, specifically to check whether Stage 6's 0/4 was
+representative. It wasn't: escalation succeeded 12/28 times (42.9%) when
+triggered, and the profile modeled directly on this repo's own real
+`users/default.json` never reached escalation at all across all 42
+texts. Cause B is still real and reproducible on Stage 6's own two
+cases — this doesn't retract the finding — but it's now clear it
+dominates specifically when several instances of one onset are
+semantically load-bearing in a single sentence, not typical ordinary
+usage. **Re-prioritized, not closed:** R9 (wire the review UI's
+keep/revert signal into the profile) and the still-never-run human-
+judgment study (`eval/study/`, §1/§5) are no longer obviously lower
+priority than R18 by comparison — left for the next planning step to
+decide, not decided here.
 
 ---
 
