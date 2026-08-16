@@ -1,12 +1,17 @@
 """
-Speech AI — Streamlit UI v6
-Multi-sentence · Copy/revert · Blocklist/allowlist UI · Datamuse POS gate (engine.py v3.1)
+Speech AI — Streamlit UI v7
+Single default speaker profile (no login) · Speaker Difficulty Profile with
+word-specific sound patterns · Datamuse POS gate (engine.py v3.1)
+
+Stage 4A refinement (2026-08-16): the multi-user auth layer (auth.py,
+user_store.py) was removed — see DECISION_LOG.md and PROBLEM_FORMULATION.md.
+The app now loads one persistent default profile automatically; there is no
+login screen and nothing here gates rendering on authentication anymore.
 """
 
 import paths  # noqa: F401
 import html
 import re
-from pathlib import Path
 import streamlit as st
 from nltk import word_tokenize
 from engine import SynonymEngine
@@ -17,12 +22,7 @@ import freq
 from profiling.profile import SpeakerDifficultyProfile
 from rewrite.rewriter import DifficultyAwareRewriter
 from difficulty_profile import DifficultyProfile, extract_candidate_words
-
-from user_store import save_profile, migrate_legacy_prefs
-from auth import require_auth
-
-_LEGACY_PREFS = Path(__file__).resolve().parent / "user_prefs.json"
-migrate_legacy_prefs(_LEGACY_PREFS)
+import profile_store
 
 st.set_page_config(
     page_title="Speech AI",
@@ -31,28 +31,48 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-require_auth()
+CURRENT_PROFILE = profile_store.DEFAULT_PROFILE
+
+
+def _load_default_profile_into_session() -> None:
+    """Single-profile equivalent of the old auth.py::_load_user_into_session
+    — runs once per session (guarded below), no login step involved."""
+    prefs_data = profile_store.load_preferences(CURRENT_PROFILE)
+    prefs = dict(prefs_data["preferences"])
+    st.session_state.custom_replacements = dict(prefs_data["custom_replacements"])
+    st.session_state.preferences = prefs
+    st.session_state.allowlist_words = list(prefs.get("allowlist_words", []))
+    st.session_state.rephrase_enabled = bool(prefs.get("rephrase_enabled", False))
+    st.session_state.profile_rewrite_enabled = bool(prefs.get("profile_rewrite_enabled", True))
+
+
+if not st.session_state.get("_profile_loaded"):
+    _load_default_profile_into_session()
+    st.session_state["_profile_loaded"] = True
 
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
 
-def _save_prefs(patterns: list[str], blocked: list[str]) -> None:
-    user = st.session_state.get("current_user")
-    if user:
-        preferences = dict(st.session_state.get("preferences", {}))
-        preferences["allowlist_words"] = list(st.session_state.get("allowlist_words", []))
-        preferences["rephrase_enabled"] = bool(st.session_state.get("rephrase_enabled", False))
-        preferences["profile_rewrite_enabled"] = bool(
-            st.session_state.get("profile_rewrite_enabled", True)
-        )
-        st.session_state.preferences = preferences
-        save_profile(
-            user,
-            patterns=patterns,
-            blocked=blocked,
-            custom_replacements=st.session_state.get("custom_replacements", {}),
-            preferences=preferences,
-        )
+def _save_prefs(*_ignored) -> None:
+    """Persist preferences (allowlist, rephrase/profile-rewrite toggles) for
+    the default profile. Takes no arguments — patterns/blocked_words are no
+    longer independently settable here; they're always derived from the
+    Speaker Difficulty Profile (see _sync_legacy_session_from_profile), so
+    saving them separately would risk exactly the drift problem
+    DECISION_LOG.md 2026-08-15-C already resolved once. Accepts and ignores
+    stray positional args so existing call sites don't need touching."""
+    preferences = dict(st.session_state.get("preferences", {}))
+    preferences["allowlist_words"] = list(st.session_state.get("allowlist_words", []))
+    preferences["rephrase_enabled"] = bool(st.session_state.get("rephrase_enabled", False))
+    preferences["profile_rewrite_enabled"] = bool(
+        st.session_state.get("profile_rewrite_enabled", True)
+    )
+    st.session_state.preferences = preferences
+    profile_store.save_preferences(
+        CURRENT_PROFILE,
+        preferences,
+        custom_replacements=st.session_state.get("custom_replacements", {}),
+    )
 
 
 def _content_words(sentence: str) -> list[str]:
@@ -165,9 +185,8 @@ def _single_rebuilt() -> str | None:
 
 
 def _fluency_profile() -> SpeakerDifficultyProfile:
-    """Load the current user's longitudinal multi-factor profile."""
-    user = st.session_state.get("current_user", "default")
-    profile = SpeakerDifficultyProfile.load(user)
+    """Load the default profile's longitudinal multi-factor profile."""
+    profile = SpeakerDifficultyProfile.load(CURRENT_PROFILE)
     profile.onboarding(st.session_state.get("stutter_patterns", []))
     return profile
 
@@ -191,17 +210,16 @@ def _profile_chart_html(profile: SpeakerDifficultyProfile) -> str:
 
 
 def _difficulty_profile() -> DifficultyProfile:
-    """Load (once per session, cached) the current user's persistent,
+    """Load (once per session, cached) the default profile's persistent,
     user-declared difficulty profile — Stage 4A foundation. Separate from
     (and unrelated to) the longitudinal, EWMA-scored SpeakerDifficultyProfile
     above: this one is a flat, user-declared sounds/words/phrases list; that
     one is a learned, continuous onset-risk model consumed by rewrite/.
     """
-    user = st.session_state.get("current_user", "default")
     cached = st.session_state.get("difficulty_profile")
-    if cached is not None and getattr(cached, "username", None) == user:
+    if cached is not None and getattr(cached, "profile_name", None) == CURRENT_PROFILE:
         return cached
-    profile = DifficultyProfile.load(user)
+    profile = DifficultyProfile.load(CURRENT_PROFILE)
     st.session_state.difficulty_profile = profile
     _sync_legacy_session_from_profile(profile)
     return profile
@@ -282,6 +300,143 @@ def _render_difficulty_category(
             st.warning("Enter something first.")
 
 
+def _render_words_category(profile: DifficultyProfile) -> None:
+    """Words column: same add/remove pattern as sounds/phrases, plus a
+    per-entry 'what's specifically difficult about this word?' toggle.
+
+    Flagging a word never implies every sound in it is difficult (see
+    PROBLEM_FORMULATION.md's refinement) — the toggle lets the user
+    optionally narrow down to a specific sound/pattern *within this word*,
+    scoped to the word, never auto-promoted to a global sound difficulty.
+    """
+    for entry in profile.words:
+        col_item, col_pattern, col_rm = st.columns([3, 1, 1])
+        with col_item:
+            extra = ""
+            if entry.pronunciation:
+                extra = f' <span style="opacity:.55;font-size:.78rem">/{" ".join(entry.pronunciation)}/</span>'
+            if entry.problem_phones:
+                extra += (
+                    f' <span style="opacity:.8;font-size:.76rem;color:#c2660f">'
+                    f'— specifically: {_fmt(", ".join(entry.problem_phones))}</span>'
+                )
+            st.markdown(
+                f'<span class="blocklist-item">🚫 {_fmt(entry.value)}</span>{extra}',
+                unsafe_allow_html=True,
+            )
+        with col_pattern:
+            pattern_disabled = not entry.pronunciation
+            if st.button(
+                "🔍", key=f"dp_word_pattern_toggle_{entry.normalized}", type="secondary",
+                disabled=pattern_disabled,
+                help=("What's specifically difficult about this word?" if not pattern_disabled
+                      else "Pronunciation unknown for this word — can't pick a specific sound."),
+            ):
+                current = st.session_state.get("dp_pattern_target")
+                st.session_state["dp_pattern_target"] = None if current == entry.normalized else entry.normalized
+                st.rerun()
+        with col_rm:
+            if st.button("✕", key=f"dp_word_rm_{entry.normalized}", type="secondary",
+                         help=f'Remove "{entry.value}"'):
+                profile.remove("word", entry.normalized)
+                _save_difficulty_profile(profile)
+                if st.session_state.get("dp_pattern_target") == entry.normalized:
+                    st.session_state["dp_pattern_target"] = None
+                st.rerun()
+    if not profile.words:
+        st.caption("None yet.")
+
+    add_text = st.text_input(
+        "Add word", key="dp_word_add_input",
+        placeholder="e.g. particular",
+        help="A specific word that's difficult for you — regardless of whether "
+             "its sounds are individually flagged above.",
+        label_visibility="collapsed",
+    )
+    if st.button("Add", key="dp_word_add_btn", type="secondary"):
+        entry, status = profile.add_word(add_text, "user_typed")
+        if status == "added":
+            _save_difficulty_profile(profile)
+            st.session_state["dp_pattern_target"] = entry.normalized
+            st.success(f'Added "{entry.value}" to your difficult words.')
+            st.rerun()
+        elif status == "duplicate":
+            st.info(f'"{add_text.strip()}" is already in your difficult words.')
+        else:
+            st.warning("Enter something first.")
+
+
+def _render_pattern_editor(profile: DifficultyProfile, entry) -> None:
+    """Full-width, inline 'what's difficult about this word?' panel.
+
+    Deliberately NOT st.dialog: Streamlit's AppTest has a documented,
+    open bug where button clicks inside an st.dialog never execute during
+    testing (streamlit/streamlit#9786) — this project's testing standard
+    (established in Stage 4A) is to not ship an interaction that can't
+    actually be verified. A plain inline panel, toggled by session state,
+    tests exactly like every other widget in this app.
+    """
+    if not entry.pronunciation:
+        st.info(f'Pronunciation unknown for "{entry.value}" — can\'t pick a specific sound.')
+        return
+
+    st.markdown(
+        f'<div class="pattern-editor">'
+        f'<div style="font-size:.85rem;font-weight:700;color:#8a5a12">'
+        f'🔍 What\'s difficult about "{_fmt(entry.value)}"?</div>',
+        unsafe_allow_html=True,
+    )
+    st.caption(
+        "Optional — leave nothing selected to keep this as a whole-word "
+        "difficulty. Check only the sound(s) that are specifically the problem."
+    )
+
+    already = set(entry.problem_phones or ())
+    selected: list[str] = []
+    for i, phone in enumerate(entry.pronunciation):
+        checked = st.checkbox(
+            ph.friendly_phone_label(phone),
+            value=phone in already,
+            key=f"dp_pattern_phone_{entry.normalized}_{i}",
+        )
+        if checked:
+            selected.append(phone)
+
+    promote = st.checkbox(
+        "Also add the selected sound(s) as a difficulty everywhere "
+        "(a GLOBAL sound, not just for this word)",
+        value=False,
+        key=f"dp_pattern_promote_{entry.normalized}",
+        disabled=not selected,
+    )
+
+    col_save, col_clear, col_close = st.columns(3)
+    with col_save:
+        if st.button("Save", key=f"dp_pattern_save_{entry.normalized}",
+                      type="primary", disabled=not selected):
+            if profile.set_word_pattern(entry.normalized, selected):
+                if promote:
+                    profile.add_sound_from_phones(selected, source="user_typed")
+                _save_difficulty_profile(profile)
+                st.session_state["dp_pattern_target"] = None
+                st.success(
+                    f'Saved — "{entry.value}" is specifically difficult because of '
+                    f'{", ".join(selected)}.'
+                )
+                st.rerun()
+    with col_clear:
+        if st.button("Clear pattern", key=f"dp_pattern_clear_{entry.normalized}",
+                      type="secondary", disabled=entry.problem_phones is None):
+            profile.clear_word_pattern(entry.normalized)
+            _save_difficulty_profile(profile)
+            st.rerun()
+    with col_close:
+        if st.button("Close", key=f"dp_pattern_close_{entry.normalized}", type="secondary"):
+            st.session_state["dp_pattern_target"] = None
+            st.rerun()
+    st.markdown("</div>", unsafe_allow_html=True)
+
+
 def _friendly_rephrase_status(message: str) -> str:
     low = (message or "").lower()
     if "model not loaded" in low:
@@ -307,8 +462,6 @@ html,body,[class*="css"]{font-family:'DM Sans',sans-serif;background:#f7fbff;col
 .hero h1{font-family:'DM Serif Display',serif;font-size:2.5rem;color:#1a2740;letter-spacing:-.5px;margin-bottom:.1rem}
 .hero h1 span{color:#f57c2b}
 .hero p{font-size:.95rem;color:#5a7096;font-weight:300;margin-top:.15rem}
-
-.user-badge{display:inline-flex;align-items:center;gap:.42rem;background:#e8f2fc;border:1.4px solid #b8d9f5;border-radius:30px;padding:.28rem .85rem;font-size:.8rem;font-weight:600;color:#2d6aab;margin-bottom:.6rem}
 
 div[data-testid="stTextInput"] input{border:2px solid #c3daf7!important;border-radius:14px!important;background:#fff!important;font-family:'DM Sans',sans-serif!important;font-size:1.05rem!important;padding:.66rem 1rem!important;color:#1a2740!important;box-shadow:0 2px 10px rgba(75,145,220,.07)!important}
 div[data-testid="stTextInput"] input:focus{border-color:#4b91dc!important}
@@ -423,6 +576,7 @@ div.stButton>button[kind="secondary"]:hover{background:#e4eaf2!important;transfo
 .blocklist-panel{background:#fffbf7;border:1.4px solid #f7c49a;border-radius:14px;padding:.85rem 1rem;margin:.45rem 0}
 .blocklist-item{display:inline-flex;align-items:center;gap:.3rem;background:#fff2e8;border:1.2px solid #f7c49a;border-radius:20px;padding:.2rem .65rem;font-size:.85rem;color:#c85d14;margin:.15rem}
 .allowlist-item{display:inline-flex;align-items:center;gap:.3rem;background:#edfaf2;border:1.2px solid #7ddba5;border-radius:20px;padding:.2rem .65rem;font-size:.85rem;color:#1a6b3c;margin:.15rem}
+.pattern-editor{background:#fbf6ec;border:1.4px solid #f0dcae;border-radius:12px;padding:.7rem .9rem;margin:.5rem 0}
 
 /* copy box */
 .copy-box{background:#f8fbff;border:1.5px solid #b8d9f5;border-radius:12px;padding:.75rem 1rem;font-size:1rem;color:#1a2740;line-height:1.7;font-family:'DM Serif Display',serif;margin-top:.4rem}
@@ -432,7 +586,6 @@ hr{border:none;border-top:1.5px solid #deeaf7;margin:1.2rem 0}
 """, unsafe_allow_html=True)
 
 # ── Header ─────────────────────────────────────────────────────────────────────
-current_user = st.session_state.get("current_user", "")
 st.markdown(f"""
 <div class="hero">
   <h1>Speech <span>AI</span></h1>
@@ -493,13 +646,6 @@ for key, default in [
 
 # ── Sidebar ────────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown(f'<div class="user-badge">👤 {current_user}</div>', unsafe_allow_html=True)
-    if st.button("Logout", key="logout_btn", type="secondary"):
-        for k in list(st.session_state.keys()):
-            del st.session_state[k]
-        st.rerun()
-
-    st.markdown("---")
     st.markdown("### ⚙ Settings")
 
     if sbert_ok:
@@ -536,7 +682,7 @@ with st.sidebar:
     if prefs.get("profile_rewrite_enabled") != profile_rewrite_enabled:
         prefs["profile_rewrite_enabled"] = profile_rewrite_enabled
         st.session_state.preferences = prefs
-        _save_prefs(st.session_state.stutter_patterns, st.session_state.blocked_words)
+        _save_prefs()
 
     pref_rephrase = bool(prefs.get("rephrase_enabled", False))
     if "rephrase_enabled" not in st.session_state:
@@ -553,7 +699,7 @@ with st.sidebar:
     if prefs.get("rephrase_enabled") != rephrase_enabled:
         prefs["rephrase_enabled"] = rephrase_enabled
         st.session_state.preferences = prefs
-        _save_prefs(st.session_state.stutter_patterns, st.session_state.blocked_words)
+        _save_prefs()
     if rephrase_enabled:
         import rephrase as _rephrase
         _rp_ok, _rp_msg = _rephrase.rephrase_status(
@@ -620,13 +766,7 @@ with st.container():
 
     with dp_words:
         st.markdown("**📝 Words** *(specific words)*")
-        _render_difficulty_category(
-            difficulty_profile, "word", difficulty_profile.words,
-            add_placeholder="e.g. particular",
-            add_help="A specific word that's difficult for you — regardless of "
-                     "whether its sounds are individually flagged above.",
-            key_prefix="dp_word",
-        )
+        _render_words_category(difficulty_profile)
         _candidates = extract_candidate_words(st.session_state.get("query_input", ""))
         if _candidates:
             st.caption("Or pick a word from your text below:")
@@ -641,6 +781,7 @@ with st.container():
                     entry, status = difficulty_profile.add_word(_picked, source="user_selected_from_text")
                     if status == "added":
                         _save_difficulty_profile(difficulty_profile)
+                        st.session_state["dp_pattern_target"] = entry.normalized
                         st.success(f'Added "{entry.value}" from your text.')
                         st.rerun()
                     elif status == "duplicate":
@@ -656,6 +797,17 @@ with st.container():
                      "or select-and-copy it from the text box above.",
             key_prefix="dp_phrase",
         )
+
+    # Full-width word-specific pattern editor — deliberately rendered outside
+    # the 3-column layout above (a checkbox list with friendly labels like
+    # 'TH (as in "think")' needs more than a third of the panel's width).
+    _pattern_target = st.session_state.get("dp_pattern_target")
+    if _pattern_target:
+        _pattern_entry = difficulty_profile.find_word(_pattern_target)
+        if _pattern_entry is not None:
+            _render_pattern_editor(difficulty_profile, _pattern_entry)
+        else:
+            st.session_state["dp_pattern_target"] = None  # stale target (word since removed)
 
     fluency_profile = _fluency_profile()
     # Bug 6 fix: only save when the profile needs updating, not on every render.
@@ -688,8 +840,7 @@ with st.expander("✅ Allowlist — words that must never be substituted", expan
         word = al_input.strip().lower()
         if word and word not in st.session_state.allowlist_words:
             st.session_state.allowlist_words.append(word)
-            _save_prefs(st.session_state.stutter_patterns,
-                        st.session_state.blocked_words)
+            _save_prefs()
             st.rerun()
 
     if st.session_state.allowlist_words:
@@ -703,8 +854,7 @@ with st.expander("✅ Allowlist — words that must never be substituted", expan
                 if st.button("✕", key=f"al_rm_{aw}", type="secondary",
                              help=f"Remove '{aw}' from allowlist"):
                     st.session_state.allowlist_words.remove(aw)
-                    _save_prefs(st.session_state.stutter_patterns,
-                                st.session_state.blocked_words)
+                    _save_prefs()
                     st.rerun()
         st.markdown("</div>", unsafe_allow_html=True)
     else:
