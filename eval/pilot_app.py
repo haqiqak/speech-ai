@@ -1,28 +1,52 @@
 """
-eval/pilot_app.py — Stage 7 human-evaluation pilot interface.
+eval/pilot_app.py — Stage 7 human-evaluation pilot interface, v3.
 
 A separate, minimal Streamlit app — deliberately not part of app.py. This
-is a research instrument, not a product feature: one pair at a time, four
-short questions, no internal scores (SBERT similarity, difficulty
-formulas, phoneme decisions) ever shown.
+is a research instrument, not a product feature: one pair at a time,
+four required short questions plus an optional diagnostic tag and an
+optional free-text comment, no internal scores (SBERT similarity,
+difficulty formulas, phoneme decisions, or whether the declared
+difficulty was actually resolved) ever shown — the participant judges
+ONLY meaning preservation, naturalness, speaking ease, and preference for
+the wording itself, never whether the reformulation matched the hidden
+difficulty profile. That question is answered automatically, separately,
+in eval/pilot_pairs.json's profile_match field, and reported alongside
+(never blended into) these ratings — see eval/pilot_analyze.py.
+
+v3 (rebuilt per direct user review of v2, and of v2's own real first
+pilot run): two changes from v2/v1, both fixing real problems found by
+using the app, not guessed at:
+  1. **Single participant, not four.** v2's mixed short/long/multi-
+     sentence/paragraph design showed long sentences only changing a
+     word or two — too little signal per item. v3 narrows to 30 short,
+     natural, everyday sentences and one focused participant, rather
+     than four participants rating a diluted set.
+  2. **Original/Reformulated are now labeled directly on each box.**
+     v2 labeled the two boxes "Sentence 1"/"Sentence 2" and relied on a
+     separate caption below to say which was which — since presentation
+     order is randomized per pair, "Sentence 1" meant Original for some
+     pairs and Reformulated for others. The real v2 pilot run showed
+     exactly this confusion: several free-text comments described the
+     reformulated text's wording as if it were the original. Fixed by
+     putting the actual "Original" / "Reformulated" label on each box,
+     no indirection.
 
 Design:
-  - Reads the 20 curated pairs from eval/pilot_pairs.json (built by
-    eval/pilot_select_pairs.py — never regenerated here).
-  - Four fixed, anonymous participant IDs (P1-P4) — no login, no
-    connection to the app's own single-profile system.
-  - All 4 participants rate all 20 pairs (80 responses total) so results
-    can be analyzed per-pair across raters, not just per-participant.
-  - Presentation order of the 20 pairs, and which sentence (Original/
-    Reformulated) is shown first within each pair, are both shuffled
-    deterministically per participant (seeded on participant_id) — order
-    counterbalancing to avoid a fixed primacy/recency bias, not identity-
-    hiding: participants need to know which sentence is which to answer
-    the meaning-preservation/naturalness/ease questions honestly, so both
-    are always clearly labeled.
-  - Every response is written to disk immediately (one row per pair, per
-    participant) so no progress is lost if the app is closed early;
-    reopening resumes at the first un-rated pair for that participant.
+  - Reads the 30 curated pairs from eval/pilot_pairs.json (built by
+    eval/pilot_select_pairs.py — never regenerated here): 18 global-
+    sound-triggered, 5 declared-word-triggered, 4 word-specific-pattern-
+    triggered, 3 multi-difficulty — all short, single, natural-register
+    sentences.
+  - One fixed participant ("P1" internally, for schema continuity with
+    v2's analysis tooling) — no selection screen, starts immediately.
+  - Presentation order of the 30 pairs, and which sentence (Original/
+    Reformulated) is shown first on screen, are both shuffled
+    deterministically (seeded) — order counterbalancing to avoid a fixed
+    primacy/recency bias, not identity-hiding: both are always clearly
+    labeled, per the fix above.
+  - Every response is written to disk immediately (one row per pair) so
+    no progress is lost if the app is closed early; reopening resumes at
+    the first un-rated pair.
 
 Run:
     streamlit run eval/pilot_app.py
@@ -43,12 +67,12 @@ PAIRS_PATH = ROOT / "eval" / "pilot_pairs.json"
 RESPONSES_DIR = ROOT / "eval" / "pilot_responses"
 RESPONSES_DIR.mkdir(parents=True, exist_ok=True)
 
-PARTICIPANT_IDS = ["P1", "P2", "P3", "P4"]
+PARTICIPANT_ID = "P1"  # single-user pilot — fixed, not selected
 
 RESPONSE_FIELDS = [
     "participant_id", "pair_id", "presentation_order_index",
     "shown_first", "meaning_preservation", "naturalness",
-    "speaking_ease", "preference", "diagnostic_tag", "timestamp",
+    "speaking_ease", "preference", "diagnostic_tag", "comment", "timestamp",
 ]
 
 EASE_OPTIONS = [
@@ -64,6 +88,7 @@ DIAGNOSTIC_OPTIONS = [
     "Sounds unnatural",
     "Too much changed",
     "Reformulation does not seem easier",
+    "Original sentence itself was confusing or ungrammatical",
     "Other",
 ]
 
@@ -76,12 +101,12 @@ def load_pairs() -> list[dict]:
     return data["pairs"]
 
 
-def _response_path(participant_id: str) -> Path:
-    return RESPONSES_DIR / f"{participant_id}.csv"
+def _response_path() -> Path:
+    return RESPONSES_DIR / f"{PARTICIPANT_ID}.csv"
 
 
-def _load_completed(participant_id: str) -> set[str]:
-    path = _response_path(participant_id)
+def _load_completed() -> set[str]:
+    path = _response_path()
     if not path.exists():
         return set()
     with open(path, "r", newline="", encoding="utf-8") as f:
@@ -89,7 +114,7 @@ def _load_completed(participant_id: str) -> set[str]:
 
 
 def _append_response(row: dict) -> None:
-    path = _response_path(row["participant_id"])
+    path = _response_path()
     is_new = not path.exists()
     with open(path, "a", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=RESPONSE_FIELDS)
@@ -98,80 +123,63 @@ def _append_response(row: dict) -> None:
         writer.writerow(row)
 
 
-def _participant_order(participant_id: str, pairs: list[dict]) -> list[dict]:
-    """Deterministic per-participant shuffle of the 20 pairs — same
-    inputs always produce the same order (reproducible, testable), but
-    the order differs across participants (avoids a fixed order effect)."""
-    rng = random.Random(f"pilot-order-{participant_id}")
+def _pair_order(pairs: list[dict]) -> list[dict]:
+    """Deterministic shuffle of the 30 pairs — reproducible, not a fixed
+    reading order (avoids a fixed order effect across the session)."""
+    rng = random.Random("pilot-v3-order")
     order = list(pairs)
     rng.shuffle(order)
     return order
 
 
-def _shown_first(participant_id: str, pair_id: str) -> str:
-    """Deterministically decide whether 'original' or 'reformulated' is
-    displayed first for this (participant, pair) — counterbalances
-    display position without hiding which sentence is which."""
-    rng = random.Random(f"pilot-position-{participant_id}-{pair_id}")
+def _shown_first(pair_id: str) -> str:
+    """Deterministically decide whether Original or Reformulated is
+    displayed first for this pair — counterbalances display position.
+    Both are always labeled directly (see module docstring's v3 fix), so
+    this affects reading order only, never which sentence is identifiable."""
+    rng = random.Random(f"pilot-v3-position-{pair_id}")
     return rng.choice(["original", "reformulated"])
 
 
-# ── Landing: pick participant ────────────────────────────────────────────
+# ── Start immediately — single participant, no selection screen ────────────
 st.title("📝 Reformulation Pilot")
 
-if "participant_id" not in st.session_state:
-    st.session_state.participant_id = None
-
-if st.session_state.participant_id is None:
-    st.markdown(
-        "Thank you for helping evaluate this system. You'll see **20 pairs** "
-        "of sentences — an original and a rewritten version — and answer four "
-        "short questions about each. It takes about 15–20 minutes. There are "
-        "no right answers; we're interested in your honest reaction."
-    )
-    pid = st.selectbox("Select your participant ID (given to you by the study organizer):",
-                        options=["— select —"] + PARTICIPANT_IDS)
-    if pid != "— select —" and st.button("Start", type="primary"):
-        st.session_state.participant_id = pid
-        st.rerun()
-    st.stop()
-
-participant_id = st.session_state.participant_id
 pairs = load_pairs()
-ordered_pairs = _participant_order(participant_id, pairs)
-completed = _load_completed(participant_id)
+ordered_pairs = _pair_order(pairs)
+completed = _load_completed()
 remaining = [p for p in ordered_pairs if p["pair_id"] not in completed]
 
-st.caption(f"Participant: **{participant_id}**  ·  Completed: {len(completed)} / {len(pairs)}")
+st.caption(f"Completed: {len(completed)} / {len(pairs)}")
 
 if not remaining:
-    st.success("✅ All 20 pairs completed. Thank you for participating!")
+    st.success(f"✅ All {len(pairs)} pairs completed. Thank you for participating!")
     st.stop()
+
+if not completed:
+    st.markdown(
+        f"Thank you for helping evaluate this system. You'll see **{len(pairs)} pairs** "
+        "of sentences — an original and a rewritten version, both clearly labeled — and "
+        "answer four short questions about each. It takes about 15–20 minutes. Judge only "
+        "the wording itself: does it mean the same thing, does it sound natural, would it be "
+        "easier to say out loud. There are no right answers; we're interested in your honest "
+        "reaction."
+    )
 
 current = remaining[0]
 current_index = ordered_pairs.index(current) + 1
-first = _shown_first(participant_id, current["pair_id"])
+first = _shown_first(current["pair_id"])
 if first == "original":
-    top_label, top_text = "Sentence 1", current["original_text"]
-    bottom_label, bottom_text = "Sentence 2", current["reformulated_text"]
-    original_shown_as, reformulated_shown_as = "Sentence 1", "Sentence 2"
+    top_text, bottom_text = current["original_text"], current["reformulated_text"]
 else:
-    top_label, top_text = "Sentence 1", current["reformulated_text"]
-    bottom_label, bottom_text = "Sentence 2", current["original_text"]
-    original_shown_as, reformulated_shown_as = "Sentence 2", "Sentence 1"
+    top_text, bottom_text = current["reformulated_text"], current["original_text"]
 
 st.progress(len(completed) / len(pairs))
 st.markdown(f"#### Pair {current_index} of {len(pairs)}")
 
-st.markdown(f"**{top_label}**")
+st.markdown("**Original**" if first == "original" else "**Reformulated**")
 st.info(top_text)
-st.markdown(f"**{bottom_label}**")
+st.markdown("**Reformulated**" if first == "original" else "**Original**")
 st.info(bottom_text)
-
-st.caption(
-    f"For the questions below: **Original** = {original_shown_as}, "
-    f"**Reformulated (rewritten)** = {reformulated_shown_as}."
-)
 
 with st.form(key=f"form_{current['pair_id']}"):
     meaning = st.radio(
@@ -205,6 +213,10 @@ with st.form(key=f"form_{current['pair_id']}"):
         options=["(not applicable / no issue)"] + DIAGNOSTIC_OPTIONS,
         index=0,
     )
+    comment = st.text_area(
+        "Optional — anything else you'd like to explain about this pair?",
+        placeholder="Type here if you'd like to say more…",
+    )
     submitted = st.form_submit_button("Submit and continue", type="primary")
 
     if submitted:
@@ -212,7 +224,7 @@ with st.form(key=f"form_{current['pair_id']}"):
             st.warning("Please answer all four required questions before continuing.")
         else:
             _append_response({
-                "participant_id": participant_id,
+                "participant_id": PARTICIPANT_ID,
                 "pair_id": current["pair_id"],
                 "presentation_order_index": current_index,
                 "shown_first": first,
@@ -221,6 +233,7 @@ with st.form(key=f"form_{current['pair_id']}"):
                 "speaking_ease": EASE_OPTIONS[ease][0],
                 "preference": preference,
                 "diagnostic_tag": "" if diagnostic == "(not applicable / no issue)" else diagnostic,
+                "comment": comment.strip(),
                 "timestamp": datetime.now(timezone.utc).isoformat(),
             })
             st.rerun()
