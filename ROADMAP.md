@@ -122,6 +122,23 @@ per §8.
 **Labeled as:** Gap identified by this review, not yet a hypothesis about
 outcome — the question here is "has this been done," not "would this
 help."
+**Update (2026-08-17) — infrastructure verified working; the real blocker
+identified, and it isn't a bug.** `VALIDATION.md` §7: `counterbalance.py`
+and `stats.py` were actually run against synthetic data (not just read)
+and work correctly — balanced condition assignment, a real Friedman-test
+result. Nothing needed fixing. Three real, non-code blockers found
+instead: `collect.py` is a CSV schema, not an actual collection
+instrument; the condition labels (`original`/`generic`/`personal`) are
+scoped to the pre-`reformulate.py` `rewrite/`-era comparison, not the
+current three-pipeline landscape; and the schema's headline metric
+(`disfluency_count`) requires spoken-performance data this text-only
+module cannot capture itself, since audio is out of scope
+(`out_of_scope/`). A realistic pilot within this repo's actual scope
+would use only `ease_likert_1_7`/`forced_choice_preference` (no audio
+needed) against a deliberately-chosen current comparison, reusing
+`counterbalance.py`/`stats.py` unmodified. Still blocked on recruiting
+actual participants — that's a scope decision for whoever can realistically
+do it, not something this pass could resolve.
 
 ---
 
@@ -251,6 +268,30 @@ accept or reject before this is buildable.
 (`DECISION_LOG.md` 2026-08-16-E) — the "something to accept or reject"
 this item was blocked on. Nothing yet feeds that signal back into
 `difficulty_profile.py` or a bandit-style weighting; this item stays open.
+**Update (2026-08-17) — wired, recording only, DONE at prototype scope.**
+Each Keep/Revert toggle now calls `reformulate.feedback_targets(change,
+profile)` (new, read-only, additive — attributes a substitution-sourced
+change to the declared word/sound entry that triggered it; returns `[]`
+for restructuring, since a whole-sentence rewrite can't be cleanly
+attributed to one entry) and records the vote via
+`difficulty_profile.record_feedback()`/`undo_feedback()` into that
+entry's existing, reserved `meta` field as plain kept/reverted counters
+— re-toggling flips the vote net rather than accumulating raw clicks.
+Persists via the existing `profile.save()` path; a small badge
+(`✓2 ↺1`) surfaces it in the difficulty-profile panel so the data isn't
+silently invisible. **This is the "prototype" the field's contextual-
+bandit framing (§11, above) called for — recording the reward signal,
+not yet acting on it.** Nothing in `reformulate.py`'s candidate ranking
+reads this field; using it to influence future substitution choices is
+separate, further work, deliberately not done here (this session's own
+discipline: don't change ranking without evaluation evidence for it —
+see `VALIDATION.md` §6.9's conclusion on this exact point). 17 new tests
+(`difficulty_profile_test.FeedbackTest`, `reformulate_test.FeedbackTargetsTest`,
+plus an `app_test.py` scenario exercising the full toggle → persist →
+reload → re-toggle round trip through the real UI) — full existing suite
+(78 tests total) and `tests/smoke.py` both confirm the reformulation
+engine itself is byte-for-byte unaffected. Full record:
+`DECISION_LOG.md` 2026-08-17-A.
 
 ### R10. Investigate a restructuring/escalation path for when substitution has no valid candidate
 **Linked finding:** `RESEARCH.md` §5.6/§7 — the single largest capability

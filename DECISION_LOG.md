@@ -1074,3 +1074,88 @@ than R18 — left for the next planning step to decide.
 representative of real speaker profiles generally — they were built to be
 *plausible*, not sourced from real users, since this repo has none beyond
 its own single default profile.
+
+---
+
+### 2026-08-17-A — R9 implemented: Keep/Revert wired into the profile as a recorded feedback signal (prototype scope, not yet acted on)
+**What was done:** `reformulate.py` gained one new, read-only, additive
+function — `feedback_targets(change, profile)` — that maps a
+substitution-sourced change back to the specific declared word/sound
+entry responsible for it, using only information already in the change
+dict (`triggered_by`, `original`); restructuring-sourced changes
+deliberately return `[]` rather than guess an attribution for a whole-
+sentence rewrite. `difficulty_profile.py` gained `record_feedback(entry,
+kept)` / `undo_feedback(entry, kept)`, storing plain kept/reverted
+counters in the entry's existing, reserved `meta` field (in place since
+Stage 4A specifically for this kind of forward-compatible extension).
+`app.py`'s existing Keep/Revert checkbox handler now calls both on every
+genuine toggle (not on re-renders) — undoing any prior vote for that same
+change first, so re-toggling reflects the user's current choice rather
+than accumulating raw clicks — and persists via the existing
+`profile.save()` path. A small `(✓k ↺r)` badge in the difficulty-profile
+panel surfaces the counts rather than leaving them invisible.
+**Explicit scope boundary, honored:** this records the reward signal the
+field's contextual-bandit framing (`ROADMAP.md` R9, `REFORMULATION_RESEARCH.md`
+§11) calls for — it does not act on it. Nothing in `reformulate.py`'s
+candidate ranking, scoring, or gating reads this field. Using it to
+influence future substitution choices is separate work, not started here,
+consistent with this project's own just-reaffirmed discipline (don't
+change ranking without evaluation evidence, `VALIDATION.md` §6.9).
+**Tests added:** 11 new — `tests/difficulty_profile_test.py::FeedbackTest`
+(6: increment, undo, undo-floors-at-zero, per-entry isolation, persists
+across reload, and — the one that matters most — recording feedback
+never mutates the declared sounds/words/phrases lists themselves, only
+annotates); `tests/reformulate_test.py::FeedbackTargetsTest` (5: word
+attribution, sound attribution, restructuring returns `[]`, no-match
+returns `[]`, and confirms `feedback_targets` mutates neither the profile
+nor the change dict it's given). `tests/app_test.py` extended with a
+real end-to-end scenario through the actual UI: reformulate → revert a
+change → confirm the vote persisted to the real `users/default.json` →
+confirm the badge renders → toggle back to Keep → confirm the vote flips
+net (1 kept, 0 reverted) rather than accumulating.
+**Verification performed:** full existing suite (78 tests total, up from
+67) passes; `tests/smoke.py` is byte-identical to `baseline_sbert.txt`,
+confirming zero effect on the underlying `grammar.py`/`engine.py`/
+`semantic.py` pipeline; `git status` on `users/` clean after the new
+`app_test.py` scenario (snapshot/restore held).
+**Category:** Feature implementation, additive only — no existing
+function's control flow, signature, or return shape was changed; three
+new functions added (`reformulate.feedback_targets`,
+`difficulty_profile.record_feedback`/`undo_feedback`), one existing UI
+event handler extended by two lines to call them.
+**Left open, unresolved:** whether recorded feedback should ever
+influence ranking, and if so how (naive down-weighting? the bandit
+framing? something else) — an explicit, separate, evaluation-gated
+decision, not decided or hinted at by this entry.
+
+---
+
+### 2026-08-17-B — `eval/study/` infrastructure verified by actually running it; no bugs found, real blockers identified instead
+**What was done:** Ran `eval/study/counterbalance.py`,
+`eval/study/collect.py`, and `eval/study/stats.py` against synthetic data
+— not read for plausibility, actually executed. `assign_conditions()`
+against 7 synthetic participants × 3 passages produced a correctly
+balanced 21-row, 7/7/7 condition schedule. `init_collection_csv()`
+produced the documented 10-column schema. `stats.friedman()` was run
+against synthetic per-condition data with scipy available and returned a
+real statistic/p-value.
+**Measured result:** No bugs. Per this task's own instruction ("fix only
+infrastructure problems if necessary"), nothing was changed, because
+nothing was broken. Three real, non-code gaps were found instead: (1)
+`collect.py` defines a CSV schema, not a collection instrument — nothing
+in the repo presents a stimulus to a participant or records a response;
+(2) the condition labels (`original`/`generic`/`personal`) are specific
+to the pre-`reformulate.py` `rewrite/`-era study design and don't map
+onto the current three-pipeline comparison; (3) the schema's own
+headline metric, `disfluency_count`, requires spoken-performance data —
+a participant reading aloud, disfluencies counted from audio — which
+this text-only module cannot capture itself, since audio was moved to
+`out_of_scope/` in this module's own Stage 2 narrowing. The two other
+recorded fields (`ease_likert_1_7`, `forced_choice_preference`) do not
+require audio and remain usable for a text-only pilot.
+**Category:** Verification only. Zero lines of `eval/study/` changed —
+confirmed via `git status` showing no diff on that directory.
+**Left for the next step, not decided here:** what a realistic pilot
+actually looks like (participants, sample size, which systems/condition
+labels to compare) — that depends on who can realistically read and rate
+outputs, which this pass has no way to determine on its own.

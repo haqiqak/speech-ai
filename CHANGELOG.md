@@ -6,6 +6,17 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-17** feat: R9 — Keep/Revert toggles now record a feedback
+  signal (kept/reverted counts) against the declared word/sound entry
+  responsible for each substitution, stored in that entry's existing
+  `meta` field and shown as a small badge in the profile panel.
+  Prototype scope only — nothing reads this field back into
+  `reformulate.py`'s ranking yet, by design. New:
+  `reformulate.feedback_targets()`,
+  `difficulty_profile.record_feedback()`/`undo_feedback()`. 11 new
+  tests; full suite (78) and `tests/smoke.py` confirm the reformulation
+  engine itself is unaffected. → `DECISION_LOG.md` 2026-08-17-A;
+  `ROADMAP.md` R9.
 - **2026-08-16** eval: Stage 6 — ran `reformulate.py` against both
   retained legacy pipelines on a new 18-case failure-mode corpus
   (`tests/reformulation_eval_corpus.json`, `eval/reformulation_eval.py`).

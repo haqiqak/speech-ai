@@ -552,3 +552,67 @@ this result lowers its urgency relative to other open items —
 profile) or the still-never-run human-judgment study are no longer
 obviously lower priority than R18 by comparison. That prioritization
 call is left to the next planning step, not decided here.
+
+## 7. `eval/study/` infrastructure verification (executed, 2026-08-17)
+
+§1/§2 flagged `eval/study/` as "scaffolding... no confirmed run," without
+having actually executed it. This section reports what happens when it's
+actually run against synthetic data — not read, run.
+
+**[FINDING] All three modules execute correctly; no bugs found.**
+`counterbalance.assign_conditions()` was run against 7 synthetic
+participants × 3 passages and produced a perfectly balanced 7/7/7
+condition assignment (21 rows, Latin-square rotation working as coded).
+`collect.init_collection_csv()` produces the documented 10-column schema.
+`stats.friedman()` was run against synthetic per-condition data (scipy
+available in this environment) and returned a real statistic/p-value, not
+an error or a silent no-op. Nothing here needed fixing — per this task's
+own instruction to fix only genuine infrastructure problems, none were
+found, so nothing was changed.
+
+**[FINDING] The real gaps are design gaps, not bugs — two of them.**
+(1) `collect.py` is a CSV **schema**, not a collection **instrument** —
+there is no code anywhere that presents a stimulus to a participant and
+records a response; whoever runs a study still needs an entirely
+separate mechanism (paper form, external survey tool, a script that
+doesn't exist yet) to actually gather data into this format. (2) The
+condition labels (`original`/`generic`/`personal`) are specific to the
+pre-`reformulate.py` study design (`rewrite/`'s "generic" vs.
+profile-aware "personal" rewrite, June 2026) and don't map cleanly onto
+the current three-pipeline landscape (`reformulate.py` vs.
+`SentenceRewriter` vs. `DifficultyAwareRewriter`) — the code is generic
+enough to accept any condition labels, so this isn't a bug, but a study
+run today would need to decide new condition names and what's actually
+being compared before this machinery is usable as-is.
+
+**[FINDING] The schema's primary metric cannot be produced by this
+repository alone.** `disfluency_count` — the field's own headline metric
+— requires a participant to read text aloud and someone/something to
+count spoken disfluencies. That's audio-domain data collection, and
+audio was explicitly moved to `out_of_scope/` in this module's own Stage
+2 narrowing. This repository, by itself, cannot run the study its own
+scaffolding's headline metric was designed around. The two other
+recorded fields — `ease_likert_1_7` (a self-reported "how easy did this
+feel") and `forced_choice_preference` (a reading-based preference
+judgment) — do **not** require spoken performance or audio capture, and
+remain usable for a text-only pilot within this repo's actual scope.
+
+**[INTERPRETATION]** `eval/study/`'s counterbalancing and stats layers
+are solid, reusable infrastructure — the honest blocker to running any
+human evaluation was never "is the code broken," it's "there's no
+collection instrument, no updated condition design, and the flagship
+metric needs data this module can't collect on its own." A **realistic**
+human evaluation, scoped to what this repository can actually do, would:
+use `ease_likert_1_7` and `forced_choice_preference` only (not
+`disfluency_count`); compare text output from the systems actually being
+studied now (e.g. `reformulate.py` vs. original, or a specific pairwise
+comparison, decided deliberately rather than inherited from the old
+schema); and reuse `counterbalance.py`/`stats.py` as-is, since neither
+needed a fix. Whether this is small-scale/informal or something larger is
+a scope decision for whoever can actually recruit readers — not decided
+here.
+
+**[LIMITATION]** This is a verification of the *machinery*, run against
+synthetic data. It says nothing about whether a real study using it would
+produce a meaningful result — that still depends on a study design and
+real participants, neither of which exist yet.
