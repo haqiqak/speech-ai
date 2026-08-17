@@ -160,6 +160,37 @@ per participant, zero cross-contamination, counterbalancing verified to
 actually vary, and the resulting data confirmed analyzable. **Not yet
 done:** the actual 4x20 data collection with real people — that's the
 only remaining step, and it's not one this pass could do on its own.
+**Update (2026-08-17, same day) — pilot redesigned (v2) per direct user
+review before any real data collection started.** v1's pairs were too
+uniform in length/register; v2 mixes 10 short single sentences, 3
+long/complex sentences, 6 multi-sentence passages, and 1 real public-
+domain speech paragraph (Gettysburg Address, sourced and verified public
+domain), plus a new "input sentence itself was ungrammatical" diagnostic
+option and an optional free-text comment field. Also found and disclosed
+a genuine T5-escalation non-determinism (identical code/input producing
+different `reformulate.py` outcomes across separate process launches —
+`VALIDATION.md` §8.4) while verifying candidate pairs; worked around via
+per-item process isolation and multi-trial stability confirmation, not
+fixed in `rephrase.py` (out of scope here). Full record:
+`DECISION_LOG.md` 2026-08-17-D.
+**Update (2026-08-17, same day) — v2 actually run (P1, real data); found
+a real UI labeling bug from that use; pilot rebuilt again as v3.** P1
+completed all 20 v2 pairs (`VALIDATION.md` §8.7) — the project's first
+real human-judgment data. That real use surfaced a genuine bug: v2's two
+text boxes were labeled "Sentence 1"/"Sentence 2" with a separate
+caption saying which was Original vs. Reformulated; since display order
+is randomized per pair, several of P1's comments describe the
+reformulated text as if it were the input. Per direct user review: pilot
+rebuilt as v3 — single participant, 30 short/natural sentences only (long
+sentences tested worse — too little signal per item), Original/
+Reformulated now labeled directly on each box, full profile-traceability
+metadata per item, and an explicit, now-locked-in methodology rule:
+human ratings cover meaning/naturalness/ease/preference only, never
+whether the declared difficulty was actually resolved (that's automated,
+reported separately). A second, unrelated bug was found and fixed while
+building v3's verification — an `AppTest` test-harness fragility across
+many sequential form-submit cycles, not a bug in the pilot app itself.
+Full record: `DECISION_LOG.md` 2026-08-17-E/F; `VALIDATION.md` §9.
 
 ---
 

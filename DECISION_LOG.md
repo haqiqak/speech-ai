@@ -1208,3 +1208,179 @@ and therefore any results, conclusions, or improvement recommendations
 drawn from it — `VALIDATION.md` §8 records the design and verified
 infrastructure only; results will be appended there, not substituted for
 this entry, once real participants complete the pilot.
+
+---
+
+### 2026-08-17-D — Pilot redesigned (v2) per direct user review; found and worked around genuine T5 escalation non-determinism
+**What was done:** The v1 pilot set (2026-08-17-C) was reviewed directly
+by the user before any real participant used it — informally, via the
+live app at localhost:8502, which produced a real 4-row `P1.csv` (cleared
+before this v2 set replaced it, since its `pair_id`s no longer correspond
+to the same sentences — flagged to the user rather than silently
+deleted). Feedback: v1's 20 pairs were too uniform in length/register.
+Redesigned to `eval/pilot_select_pairs.py` v2: 10 short single sentences
+(quickly-typed, natural register), 3 long/complex single sentences, 6
+multi-sentence passages, and 1 real public-domain speech paragraph
+(Lincoln's Gettysburg Address, 1863 — sourced via `WebSearch`/`WebFetch`
+against archival transcripts on 2026-08-17, cross-checked against two
+independent sources rather than quoted from training-data memory alone,
+confirmed public domain both by age and as a historical/government-
+adjacent work) with a profile chosen to produce many substitutions across
+its ten sentences in one item. `eval/pilot_app.py` gained a new
+diagnostic-tag option ("Original sentence itself was confusing or
+ungrammatical" — so a broken input isn't misattributed to
+`reformulate.py`) and an optional free-text comment field.
+**Unplanned finding, significant:** while verifying each new candidate
+item's stability, 4 of 24 initially-chosen (text, profile) pairs were
+found to be genuinely non-deterministic — `reformulate.reformulate()`
+called with identical code and identical input produced "reformulated"
+once and then `could_not_safely_reformulate` on 2-3 immediately-following
+fresh-process trials (repro case: `long_printer_broken`, "Because the
+printer had been broken..." — succeeded once, then failed 3/3 times in
+separate `python -c` launches with no code change in between). All
+affected items involved T5 restructuring escalation; plain
+substitution-only items showed no instability across repeated trials.
+This points to CPU floating-point non-associativity in T5's beam search
+across process/thread scheduling — not a bug in `reformulate.py`'s own
+logic — and is **not fixed here** (would mean touching `rephrase.py`,
+out of scope for a pilot-design task). Practical response: `_run_item()`
+runs in an isolated subprocess per item (`--single <case_id>` mode), and
+every final item was reconfirmed stable across 2-3 fresh-process trials
+before being kept; the 4 unstable items were swapped for equally
+illustrative, verified-stable replacements (mostly substitution-only,
+still containing genuine, checkable errors — "snacks" → "eatings",
+"exam season" → "exam period" with "Students" → "Pupils", etc.).
+**Category:** Design revision + a new, disclosed limitation finding. Zero
+changes to `reformulate.py`/`rephrase.py` — this finding is about their
+existing behavior, observed, not introduced or fixed.
+**Verification performed:** `tests/pilot_app_test.py` re-run against the
+v2 pair set end-to-end (P1/P2 through all 20 pairs via `AppTest`) — all
+checks pass, including two new ones (comment field round-trips; the new
+"input grammar" diagnostic tag is recorded correctly). Full existing
+suite (78 tests) and `tests/smoke.py` re-confirmed unaffected.
+**Left open, disclosed as a limitation:** this non-determinism means a
+different machine, or even a different run on this machine, could
+plausibly see 1-2 of these 20 pairs resolve differently than recorded in
+`eval/pilot_pairs.json` if regenerated — the pairs actually used for data
+collection are the ones frozen in that committed file, not whatever a
+fresh regeneration might produce. `eval/pilot_select_pairs.py` should not
+be re-run to "refresh" the pairs once real data collection begins.
+
+---
+
+### 2026-08-17-E — v2 pilot actually run (P1, real data); a real UI labeling bug found from using it; methodology narrowed and pilot rebuilt as v3
+**What was done:** The user ran the live v2 pilot app themselves as P1 and
+completed all 20 pairs with real ratings and several free-text comments —
+the first genuine human-judgment data this project has collected (every
+prior evaluation stage was automated/proxy-based). Headline: meaning
+preservation 4.65/5, naturalness 4.70/5, speaking ease +1.75 (of +2 max),
+preference for the reformulated sentence on 19/20 pairs.
+**Bug found from that real use, not from re-reading the code
+speculatively:** several of P1's free-text comments described a wording
+flaw as being in "the input," quoting text that was actually in the
+*reformulated* output (e.g. pair_12: "stopped 'using' is rather not so
+correct" as an input complaint — "stopped using" was `reformulate.py`'s
+own output; the input said "stopped working"). Traced to
+`eval/pilot_app.py`: the two text boxes were labeled generically
+"Sentence 1"/"Sentence 2," with a separate caption below stating which
+was Original vs. Reformulated — since display order is randomized per
+pair, "Sentence 1" meant Original for some pairs and Reformulated for
+others, and P1 evidently anchored on "Sentence 1 = input" as a shortcut
+rather than re-reading the caption on all 20 pairs. Confirmed via the
+actual `shown_first` value recorded for pair_12
+(`shown_first=reformulated`, i.e. Sentence 1 *was* the reformulated
+text). The numeric ratings are less likely affected (answered directly
+below the caption, not narrated afterward) but this can't be fully
+ruled out either.
+**User's review, direct instructions, acted on in full:**
+1. Short sentences tested far better than long ones — long sentences
+   only changed a word or two, diluting the signal. Long/multi-sentence/
+   paragraph categories dropped entirely for the next round.
+2. **Methodology narrowed, explicitly, going forward**: human ratings
+   cover meaning preservation / naturalness / speaking ease / preference
+   / optional comment ONLY. Whether a reformulation actually resolved
+   its declared difficulty profile is a separate, automated question,
+   analyzed alongside the human results afterward, never asked of the
+   participant and never blended into their ratings.
+3. Profile traceability was missing — nothing surfaced, per item, what
+   difficulty was actually being targeted. Must be fixed.
+4. New design: single participant (not four), ~30 short/natural/
+   everyday sentences only, selected to cover different difficulty types
+   and reformulation behaviors including flawed/weak outputs, not only
+   clean successes.
+**Category:** Real human-judgment data collected and recorded; a real UI
+bug found and fixed; a methodology decision locked in by explicit user
+instruction. No `reformulate.py` changes — this entire entry is about
+the evaluation instrument, not the engine.
+**Verification performed:** the `shown_first=reformulated` claim for
+pair_12 was checked directly against the v2 response CSV (archived at
+`eval/archive_v2/P1_v2_responses.csv`), not asserted from memory.
+**Left for the next entry:** the actual v3 rebuild (pilot set, app,
+analysis script, tests) — recorded separately, 2026-08-17-F, so this
+entry stays focused on what was *found*, not what was *built* in
+response.
+
+---
+
+### 2026-08-17-F — Pilot rebuilt as v3: single participant, 30 short/natural sentences, full profile traceability, labeling bug fixed
+**What was done:** `eval/pilot_select_pairs.py` rebuilt from scratch: 30
+short, natural, everyday sentences (requests, apologies, scheduling,
+small talk, complaints — the register people actually stutter on in
+real use, authored directly rather than scraped, for the same copyright-
+safety reasoning as v2's public-domain-only sourcing decision), split
+18 global-sound-triggered / 5 declared-word-triggered / 4 word-specific-
+pattern-triggered / 3 multi-difficulty, sized by category to match what
+a real, lightly-populated profile actually produces (`VALIDATION.md`
+§6.9's own finding: light/moderate profiles dominate real usage).
+`eval/pilot_app.py` rebuilt: single fixed participant, no selection
+screen; **Original/Reformulated labeled directly on each box** (the
+v2 bug's actual fix — no more "Sentence 1/2" + separate caption).
+`eval/pilot_analyze.py` extended with a profile-match section, computed
+from `reformulate.py`'s own before/after flagged-word count, printed in
+its own clearly-separated block — never merged into the human-rating
+numbers above it. Every item carries full traceability metadata
+(declared profile, trigger reason, exact word(s) changed, whether the
+difficulty was actually resolved) for post-hoc analysis, never shown to
+the participant.
+**Reused as-is, not rebuilt:** `reformulate.py` (zero changes — this
+stage is evaluation-only, per the user's own explicit instruction), the
+subprocess-isolation + multi-trial stability verification approach from
+v2 (`VALIDATION.md` §8.4's non-determinism finding still applies and was
+checked for again here, not assumed fixed), `eval/study/stats.read_rows()`.
+**Removed, not archived-in-place:** v2's 4-category composition, the
+4-participant selection screen, the "Sentence 1/2" labeling scheme. The
+real v2 P1 data and the v2 pilot_pairs.json were moved to
+`eval/archive_v2/` (not deleted — real collected human-subject data and
+a fully-documented, working design are not thrown away, even when
+superseded) before v3 overwrote the live files.
+**Verification performed:** every item run through the live
+`reformulate.py` engine and kept only on a `"reformulated"` status;
+restructuring-sourced items (8 of 30) reconfirmed stable across 2
+additional fresh-process trials before being kept (the same discipline
+v2's non-determinism finding required) — all 8 passed. `tests/pilot_app_test.py`
+rebuilt for the single-participant/30-pair flow, including a dedicated
+check that "Original"/"Reformulated" appear directly in the UI and
+"Sentence 1/2" does not — the specific v2 bug, checked for directly, not
+just assumed fixed by the code change.
+**A second, unrelated bug found and fixed while building this
+verification, not in `reformulate.py` or the pilot content:** the first
+version of `tests/pilot_app_test.py` reused one long-lived `AppTest`
+instance across all 30 submit-and-rerun cycles (the same pattern that
+worked for v2's 20-pair runs) and reliably crashed partway through with a
+`KeyError` against a stale widget ID — traced to AppTest's internal
+widget tracking accumulating corrupted state after enough sequential
+`st.form` submit → `st.rerun()` cycles (first observed to leak a stale
+form's radios into the next pair's widget list, then crash on a later
+`.run()`). Not a bug in `eval/pilot_app.py` itself — confirmed by
+checking that a fresh `AppTest` instance created for *each* pair
+(relying on the app's own disk-based resume logic, `_load_completed()`)
+completes all 30 pairs cleanly and repeatably. `tests/pilot_app_test.py`
+rebuilt on that pattern. v2's 20-pair/2-participant runs apparently
+stayed under whatever threshold triggers this; v3's 30 pairs in one
+continuous session crossed it.
+**Category:** Evaluation-infrastructure rebuild. Zero changes to
+`reformulate.py` — confirmed via the full existing suite (78 tests) and
+`tests/smoke.py`, both re-run after this stage's work.
+**Not yet done:** the actual 30-item single-participant data collection
+under v3 — this entry records the design and verified infrastructure
+only.

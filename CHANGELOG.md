@@ -6,6 +6,26 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-17** feat: Stage 7 v3 — P1 actually completed v2's 20-pair
+  pilot (first real human-judgment data collected: meaning 4.65/5,
+  naturalness 4.70/5, ease +1.75, preferred reformulated 19/20). That
+  real use found a genuine UI bug — boxes labeled "Sentence 1/2" plus a
+  separate caption meant P1's free-text comments sometimes described the
+  reformulated text as if it were the input. Rebuilt as v3 per direct
+  user review: single participant, 30 short/natural/everyday sentences
+  only (18 global-sound / 5 declared-word / 4 word-pattern / 3
+  multi-difficulty), Original/Reformulated labeled directly on each box,
+  full per-item profile-traceability metadata, and human ratings now
+  explicitly scoped to meaning/naturalness/ease/preference only —
+  profile-match effectiveness is automated and reported separately,
+  never asked of the participant. A second bug (an `AppTest` test-
+  harness fragility across many sequential form-submits, not the pilot
+  app) found and fixed while verifying the new 30-pair flow end-to-end
+  with synthetic data. v2's real P1 data and pair set archived at
+  `eval/archive_v2/`, not deleted. Zero `reformulate.py` changes — full
+  suite (78 tests) + `tests/smoke.py` re-confirmed. →
+  `DECISION_LOG.md` 2026-08-17-E/F; `VALIDATION.md` §8.7, §9;
+  `ROADMAP.md` R4.
 - **2026-08-17** feat: Stage 7 — built and verified (synthetic data) a
   human-evaluation pilot for `reformulate.py`: `eval/pilot_select_pairs.py`
   (deliberate, non-random 20-pair selection from a 69-case eligible pool,
