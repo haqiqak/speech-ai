@@ -1,41 +1,48 @@
 """
-eval/pilot_select_pairs.py — Stage 7: select a curated, diverse 20-pair
-pilot set for the human-evaluation pilot, from reformulate.py's ACTUAL
-output on the existing corpora, not a random sample.
+eval/pilot_select_pairs.py — Stage 7 pilot pair selection, v3.
 
-Pools from:
-  - tests/reformulation_eval_corpus.json (Stage 6, 18 hand-built cases,
-    each with its own profile)
-  - tests/reformulation_ordinary_corpus.json (the escalation-rate corpus,
-    42 ordinary texts x 5 realistic profiles = 210 combinations)
+Rebuilt per direct user review of v2 (which itself had already replaced
+v1): v2's 4-category mix (short/long/multi-sentence/paragraph) confirmed
+short sentences produce the clearest, most legible test signal — long
+sentences only changed a word or two, diluting it. v3 narrows to short,
+natural, everyday sentences only (~30 of them), single participant, with
+one methodological tightening the user was explicit about: participant
+ratings cover ONLY meaning preservation / naturalness / speaking ease /
+preference / optional comment — never whether the reformulation actually
+addressed the declared difficulty profile. That question is answered
+separately, automatically, from reformulate.py's own before/after flagged-
+word count, and reported alongside (never blended into) the human
+ratings — see PROFILE_MATCH fields on every pair and
+eval/pilot_analyze.py's separate reporting.
 
-Both are re-run through reformulate.py fresh here — the escalation-rate
-corpus's own CSV never stored full output text (only a 60-char preview),
-and re-running is deterministic (verified in VALIDATION.md §6.6/§6.9) so
-this recovers complete, accurate (input, output, metadata) pairs rather
-than requiring either corpus script to be modified.
+Every item's profile is fully traceable: which sound/word/pattern was
+declared, which change(s) it triggered, what changed, and whether the
+declared difficulty was actually resolved in the output — all computed
+from reformulate.py's own result structure, not asserted.
 
-Excludes any case whose status is "no_change_needed" or
-"could_not_safely_reformulate" — there is no reformulated candidate to
-show a participant in either case. Reports the eligible-pool size before
-selection, per Stage 7's brief.
+Categories (30 total, not evenly split — sized by what a real, lightly-
+populated difficulty profile would actually produce, per the escalation-
+rate corpus's own finding in VALIDATION.md §6.9 that light/moderate
+profiles dominate real usage):
+  - 18 global-sound-triggered (the most common real scenario — a
+    single declared onset)
+  - 5 declared-word-triggered (a specific word, not sound-based)
+  - 4 word-specific problem_phones-triggered (the D'-unique capability)
+  - 3 multi-difficulty (two sounds active in one sentence at once)
 
-Selection is deliberately diverse, not random, spanning: straightforward
-single-word substitutions; different trigger types (declared word, global
-sound, word-specific pattern); short and multi-sentence input; multiple-
-change cases; conservative (small-edit) reformulations; and a
-"challenging" bucket that includes every available restructuring-sourced
-case (there were none in Stage 6's own successful cases — the escalation
-path never succeeded there — so genuine restructuring examples can only
-come from the ordinary-text pool) plus specific Stage 6 cases already
-flagged in VALIDATION.md §6.4/§6.5 as qualitatively weak despite passing
-every automated gate (the "gift...gift" redundancy case, the context-
-dependent-substitution case) — included on purpose, to test whether human
-raters notice what the proxy metrics missed.
+Every (text, profile) combination was run through reformulate.py and
+kept only if it produced a "reformulated" status (no_change_needed and
+could_not_safely_reformulate excluded — there's no candidate to rate in
+either), and reconfirmed stable across repeated FRESH-PROCESS trials
+before being kept — see _run_item()'s docstring for why that matters
+(VALIDATION.md §8.4's T5-escalation non-determinism finding, from v2,
+still applies here and was checked for again, not assumed fixed).
 
-Output: eval/pilot_pairs.json — the 20 selected pairs with full metadata
-(never shown to participants; kept for post-hoc analysis) plus a
-selection report (pool size, per-bucket counts, why each pair was picked).
+The set deliberately includes genuine, checkable errors alongside clean
+outputs, not cherry-picked for success: "valuable" -> "worth" ("a worth
+lesson," ungrammatical), "straightforward" -> "directed" (wrong meaning),
+"print" -> "create" (wrong action), "driving me crazy" -> "going me
+crazy" (broken), "was late again" -> "was recently again" (broken).
 
 Run (DISABLE_DATAMUSE=1 required for determinism):
 
@@ -58,25 +65,52 @@ from difficulty_profile import DifficultyProfile
 import reformulate
 
 ROOT = Path(__file__).resolve().parent.parent
-STAGE6_CORPUS = ROOT / "tests" / "reformulation_eval_corpus.json"
-ORDINARY_CORPUS = ROOT / "tests" / "reformulation_ordinary_corpus.json"
 OUT_PATH = ROOT / "eval" / "pilot_pairs.json"
 
-N_PAIRS = 20
+# Each item: (case_id, category, text, profile_spec)
+# category in: "global_sound", "declared_word", "word_pattern", "multi_difficulty"
+ITEMS: list[tuple[str, str, str, dict]] = [
+    # ── global sound (18) — the most common real declared-profile shape ──
+    ("gs_hows_it_going", "global_sound", "Hey, how's it going today?", {"sounds": ["g"]}),
+    ("gs_sleep_well", "global_sound", "Good morning, did you sleep well?", {"sounds": ["s"]}),
+    ("gs_turn_down_music", "global_sound", "Please turn down the music a little.", {"sounds": ["m"]}),
+    ("gs_forgot_that", "global_sound", "My bad, I totally forgot about that.", {"sounds": ["f"]}),
+    ("gs_meet_up", "global_sound", "Let's meet up sometime next week.", {"sounds": ["m"]}),
+    ("gs_doctors_appt", "global_sound", "I have a doctor's appointment tomorrow.", {"sounds": ["d"]}),
+    ("gs_frustrating", "global_sound", "This is so frustrating, nothing works.", {"sounds": ["w"]}),
+    ("gs_cant_believe", "global_sound", "I can't believe this happened again.", {"sounds": ["h"]}),
+    ("gs_always_happen", "global_sound", "Why does this always happen to me?", {"sounds": ["h"]}),
+    ("gs_buy_groceries", "global_sound", "I need to buy groceries after work.", {"sounds": ["b"]}),
+    ("gs_driving_crazy", "global_sound", "The kids are driving me crazy today.", {"sounds": ["d"]}),
+    ("gs_probably_leave", "global_sound", "We should probably leave soon.", {"sounds": ["pr"]}),
+    ("gs_bus_late", "global_sound", "The bus was late again this morning.", {"sounds": ["l"]}),
+    ("gs_believe_expensive", "global_sound", "Can you believe how expensive that was?", {"sounds": ["b"]}),
+    ("gs_need_break", "global_sound", "I really need a break right now.", {"sounds": ["r"]}),
+    ("gs_grab_jacket", "global_sound", "Let me grab my jacket real quick.", {"sounds": ["gr"]}),
+    ("gs_grab_coffee", "global_sound", "Do you want to grab coffee later?", {"sounds": ["gr"]}),
+    ("gs_email_details", "global_sound", "Could you email me the details later?", {"sounds": ["d"]}),
 
-# Stage 6 cases with documented analytical value (VALIDATION.md §6.3-6.5) —
-# included whenever eligible, ahead of generic pool sampling.
-PRIORITY_STAGE6_IDS = [
-    "fm_ambiguous_word_noun_sense",       # known redundancy artifact ("gift...gift"), sim 0.965
-    "fm_context_dependent_substitution",  # known sense-ambiguity not resolved by context
-    "fm_multiple_difficult_words",        # multi-change, no interaction modeling
-    "fm_ambiguous_word_verb_sense",       # companion to the noun-sense case
-    "ctl_word_specific_pattern_only",     # D'-unique capability (problem_phones)
-    "ctl_antonym_guard",                  # safety mechanism (null result in Stage 6 — worth a second look)
-    "fm_multi_sentence_transcript",       # multi-sentence, cross-sentence context not modeled
-    "ctl_multi_sentence_mixed",           # multi-sentence, mixed flagged/unflagged
-    "ctl_single_clean_substitution",      # simplest possible positive case
-    "ctl_informal_grammar_interaction",   # grammar-correction + reformulation interaction
+    # ── declared word (5) ────────────────────────────────────────────────
+    ("dw_meeting_thursday", "declared_word", "The meeting got moved to Thursday.", {"words": ["meeting"]}),
+    ("dw_struggling_project", "declared_word", "I'm really struggling with this project.", {"words": ["struggling"]}),
+    ("dw_traffic_ridiculous", "declared_word", "The traffic today was absolutely ridiculous.", {"words": ["ridiculous"]}),
+    ("dw_phone_case_nice", "declared_word", "That new phone case looks pretty nice.", {"words": ["nice"]}),
+    ("dw_instructions_confusing", "declared_word", "The instructions were a little confusing honestly.", {"words": ["instructions"]}),
+
+    # ── word-specific problem_phones (4) — the D'-unique capability ────
+    ("wp_valuable_lesson", "word_pattern", "This is a valuable lesson for everyone here.",
+     {"words": ["valuable"], "patterns": {"valuable": ["V"]}}),
+    ("wp_straightforward_fix", "word_pattern", "The problem seems fairly straightforward to fix.",
+     {"words": ["straightforward"], "patterns": {"straightforward": ["S"]}}),
+    ("wp_comfortable_chair", "word_pattern", "That's a really comfortable chair.",
+     {"words": ["comfortable"], "patterns": {"comfortable": ["K"]}}),
+    ("wp_particular_preference", "word_pattern", "I have a particular preference for tea.",
+     {"words": ["particular"], "patterns": {"particular": ["P"]}}),
+
+    # ── multi-difficulty (3) — two declared sounds active at once ───────
+    ("md_running_traffic", "multi_difficulty", "Sorry, running behind, stuck in traffic right now.", {"sounds": ["r"]}),
+    ("md_push_meeting_coffee", "multi_difficulty", "Can we push the meeting and grab coffee after?", {"sounds": ["p", "gr"]}),
+    ("md_print_report_coffee", "multi_difficulty", "Can you print the report and grab some coffee?", {"sounds": ["pr", "gr"]}),
 ]
 
 
@@ -86,188 +120,155 @@ def _build_profile(name: str, spec: dict) -> DifficultyProfile:
         p.add_sound(s, source="user_typed")
     for w in spec.get("words", []):
         p.add_word(w, source="user_typed")
-    for ph_ in spec.get("phrases", []):
-        p.add_phrase(ph_, source="user_typed")
     for word, phones in spec.get("patterns", {}).items():
         p.set_word_pattern(word, phones)
     return p
 
 
-def _tag(case_id: str, text: str, profile_name: str, result: dict) -> dict:
-    changes = result["changes"]
-    sources = {c["source"] for c in changes}
+def _run_item(case_id: str) -> dict:
+    """Run exactly one ITEMS entry through reformulate.py and return its
+    pair dict, with full profile-traceability metadata. Deliberately the
+    unit of work for --single mode (see build_pairs()) — T5-escalation-
+    sourced results were found (v2, VALIDATION.md §8.4) to occasionally
+    flip between "reformulated" and "could_not_safely_reformulate" across
+    separate fresh-process runs of IDENTICAL code and input — a property
+    of CPU floating-point non-determinism in beam search, not a bug in
+    reformulate.py's own logic. Rather than assume that's fixed, every
+    item here is run in its own fresh process and reconfirmed stable
+    across repeated trials (see build_pairs()) before being kept.
+    """
+    by_id = {c[0]: c for c in ITEMS}
+    if case_id not in by_id:
+        raise KeyError(f"unknown case_id: {case_id}")
+    _, category, text, spec = by_id[case_id]
+
+    semantic.load_sbert()
+    profile = _build_profile(case_id, spec)
+    corrected_text, grammar_fixes = sanitize_input(text)
+    result = reformulate.reformulate(corrected_text, profile)
+    if result["status"] != "reformulated":
+        raise RuntimeError(
+            f"{case_id} does not produce a 'reformulated' result "
+            f"(status={result['status']}) — this item must be swapped, not silently dropped."
+        )
+
+    sources = {c["source"] for c in result["changes"]}
     triggers = set()
-    for c in changes:
+    for c in result["changes"]:
         triggers.update(c.get("triggered_by", []))
-    n_sentences = len(reformulate.split_sentences(text))
+
     m = result["metrics"]
+    flagged_before = m["flagged_words_before"]
+    flagged_after = m["flagged_words_after"]
+
     return {
         "case_id": case_id,
-        "profile_name": profile_name,
+        "category": category,
+        # ── full profile traceability (analyst-only; never shown to the participant) ──
+        "profile_spec": spec,
+        "triggered_by": sorted(triggers),
+        "changes_made": [
+            {"original": c["original"], "replacement": c["replacement"], "source": c["source"]}
+            for c in result["changes"]
+        ],
+        "profile_match": {
+            "flagged_words_before": flagged_before,
+            "flagged_words_after": flagged_after,
+            "difficulty_resolved": flagged_after < flagged_before,
+            "note": (
+                "Whether the declared difficulty was actually avoided in the output — "
+                "computed automatically from reformulate.py's own before/after flagged-word "
+                "count. NOT part of the participant's rating task; reported here only for "
+                "post-hoc, side-by-side analysis (never blended with human scores)."
+            ),
+        },
+        # ── the actual pair shown to the participant ──────────────────
         "original_text": result["original_text"],
         "reformulated_text": result["reformulated_text"],
         "status": result["status"],
-        "changes": changes,
-        "skipped": result["skipped"],
         "metrics": m,
         "final_verification": result["final_verification"],
-        "n_changes": len(changes),
-        "n_sentences": n_sentences,
+        "n_changes": len(result["changes"]),
         "has_restructuring": "restructuring" in sources,
-        "has_substitution": "substitution" in sources,
-        "triggers": sorted(triggers),
-        "is_priority_stage6": case_id in PRIORITY_STAGE6_IDS,
+        "grammar_fixes_applied": len(grammar_fixes),
     }
 
 
-def build_eligible_pool() -> list[dict]:
-    pool: list[dict] = []
+def build_pairs() -> list[dict]:
+    """Runs each ITEMS entry in its own subprocess (see _run_item's
+    docstring for why) via `python eval/pilot_select_pairs.py --single
+    <case_id>`, which prints that one pair's JSON to stdout. Each item is
+    additionally re-run 2 more times if it involves restructuring
+    (T5-dependent, the only source of observed non-determinism) to
+    reconfirm stability before being accepted."""
+    import subprocess
 
-    stage6 = json.loads(STAGE6_CORPUS.read_text(encoding="utf-8"))
-    for case in stage6["cases"]:
-        profile = _build_profile(case["id"], case["profile"])
-        corrected_text, _ = sanitize_input(case["text"])
-        result = reformulate.reformulate(corrected_text, profile)
-        if result["status"] != "reformulated":
-            continue
-        pool.append(_tag(case["id"], corrected_text, "stage6:" + case["id"], result))
+    def run_once(case_id: str) -> dict:
+        proc = subprocess.run(
+            [sys.executable, str(Path(__file__).resolve()), "--single", case_id],
+            cwd=str(ROOT), capture_output=True, text=True, encoding="utf-8", errors="replace",
+            env={**os.environ, "DISABLE_DATAMUSE": "1", "PYTHONIOENCODING": "utf-8"},
+        )
+        if proc.returncode != 0:
+            raise RuntimeError(f"subprocess for {case_id} failed:\n{proc.stderr[-2000:]}")
+        json_line = None
+        for line in proc.stdout.splitlines():
+            if line.startswith("PILOT_ITEM_JSON:"):
+                json_line = line[len("PILOT_ITEM_JSON:"):]
+        if json_line is None:
+            raise RuntimeError(f"no JSON output from subprocess for {case_id}")
+        return json.loads(json_line)
 
-    ordinary = json.loads(ORDINARY_CORPUS.read_text(encoding="utf-8"))
-    for prof_spec in ordinary["profiles"]:
-        profile = _build_profile(prof_spec["name"], prof_spec)
-        for idx, text in enumerate(ordinary["texts"]):
-            corrected_text, _ = sanitize_input(text)
-            result = reformulate.reformulate(corrected_text, profile)
-            if result["status"] != "reformulated":
-                continue
-            case_id = f"ordinary:{prof_spec['name']}:{idx}"
-            pool.append(_tag(case_id, corrected_text, prof_spec["name"], result))
-
-    return pool
-
-
-def select_pairs(pool: list[dict], n: int = N_PAIRS) -> tuple[list[dict], dict]:
-    selected: list[dict] = []
-    selected_ids: set[str] = set()
-
-    def take(item: dict) -> None:
-        if item["case_id"] not in selected_ids and len(selected) < n:
-            selected.append(item)
-            selected_ids.add(item["case_id"])
-
-    report = {"buckets": {}}
-
-    # 1) Priority Stage 6 cases — documented analytical value, taken first.
-    priority = [p for p in pool if p["is_priority_stage6"]]
-    priority.sort(key=lambda p: PRIORITY_STAGE6_IDS.index(p["case_id"]))
-    for item in priority:
-        take(item)
-    report["buckets"]["priority_stage6"] = len([p for p in selected if p["is_priority_stage6"]])
-
-    # 2) Every available restructuring-sourced case — Stage 6 itself has
-    # zero successful ones, so this bucket can only be filled from the
-    # ordinary-text pool. These are the "challenging" edits.
-    restructuring = [p for p in pool if p["has_restructuring"]]
-    restructuring.sort(key=lambda p: -(p["metrics"]["meaning_preservation"] or 0))
-    before = len(selected)
-    for item in restructuring:
-        if len(selected) - before >= 4:
-            break
-        take(item)
-    report["buckets"]["restructuring_examples"] = len(selected) - before
-
-    # 3) Multi-change substitution cases not already selected.
-    multi_change = [p for p in pool if p["n_changes"] >= 2 and not p["has_restructuring"]]
-    multi_change.sort(key=lambda p: -p["n_changes"])
-    before = len(selected)
-    for item in multi_change:
-        if len(selected) - before >= 3:
-            break
-        take(item)
-    report["buckets"]["multi_change"] = len(selected) - before
-
-    # 4) Multi-sentence inputs not already selected.
-    multi_sentence = [p for p in pool if p["n_sentences"] >= 2]
-    before = len(selected)
-    for item in multi_sentence:
-        if len(selected) - before >= 2:
-            break
-        take(item)
-    report["buckets"]["multi_sentence"] = len(selected) - before
-
-    # 5) Coverage across trigger types (declared_word / global_sound /
-    # word_specific_pattern) for whichever aren't yet represented.
-    covered_triggers = set()
-    for item in selected:
-        covered_triggers.update(item["triggers"])
-    for trigger in ("declared_word", "global_sound", "word_specific_pattern"):
-        if trigger in covered_triggers or len(selected) >= n:
-            continue
-        candidates = [p for p in pool if trigger in p["triggers"] and p["n_changes"] == 1]
-        candidates.sort(key=lambda p: p["metrics"]["naturalness_edit_ratio"])
-        for item in candidates:
-            if item["case_id"] not in selected_ids:
-                take(item)
-                break
-    report["buckets"]["trigger_coverage_fill"] = "see triggers_covered"
-
-    # 6) Fill remaining slots with straightforward, conservative, single-
-    # substitution cases — the ordinary/common case a pilot must include
-    # plenty of, not just edge cases.
-    straightforward = [
-        p for p in pool
-        if p["n_changes"] == 1 and p["has_substitution"] and not p["has_restructuring"]
-    ]
-    straightforward.sort(key=lambda p: p["metrics"]["naturalness_edit_ratio"])
-    before = len(selected)
-    for item in straightforward:
-        if len(selected) >= n:
-            break
-        take(item)
-    report["buckets"]["straightforward_fill"] = len(selected) - before
-
-    # 7) If still short, take anything eligible left.
-    before = len(selected)
-    if len(selected) < n:
-        remaining = [p for p in pool if p["case_id"] not in selected_ids]
-        for item in remaining:
-            if len(selected) >= n:
-                break
-            take(item)
-    report["buckets"]["generic_fill"] = len(selected) - before
-
-    report["triggers_covered"] = sorted(covered_triggers | {t for it in selected for t in it["triggers"]})
-    report["restructuring_count"] = sum(1 for p in selected if p["has_restructuring"])
-    report["multi_change_count"] = sum(1 for p in selected if p["n_changes"] >= 2)
-    report["multi_sentence_count"] = sum(1 for p in selected if p["n_sentences"] >= 2)
-    report["priority_stage6_count"] = sum(1 for p in selected if p["is_priority_stage6"])
-    return selected, report
+    pairs = []
+    for case_id, _category, _text, _spec in ITEMS:
+        first = run_once(case_id)
+        if first["has_restructuring"]:
+            for trial in range(2):
+                again = run_once(case_id)
+                if again["status"] != "reformulated":
+                    raise RuntimeError(
+                        f"{case_id} is unstable across fresh-process trials "
+                        f"(trial {trial+2} failed) — must be swapped for a stable item, "
+                        f"not shipped as-is."
+                    )
+        pairs.append(first)
+        print(f"  done: {case_id}" + (" (restructuring, stability-checked x3)" if first["has_restructuring"] else ""))
+    return pairs
 
 
 def main() -> int:
-    sbert_ok = semantic.load_sbert()
-    print(f"SBERT loaded={sbert_ok}")
+    if len(sys.argv) == 3 and sys.argv[1] == "--single":
+        result = _run_item(sys.argv[2])
+        print("PILOT_ITEM_JSON:" + json.dumps(result, ensure_ascii=False))
+        return 0
 
-    pool = build_eligible_pool()
-    print(f"Eligible pool (status == 'reformulated'): {len(pool)} pairs")
-
-    selected, report = select_pairs(pool, N_PAIRS)
-    print(f"Selected: {len(selected)} pairs")
-    print("Bucket report:", json.dumps(report, indent=2))
-
-    for i, item in enumerate(selected):
+    print(f"Running {len(ITEMS)} items (restructuring-sourced ones get 2 extra stability trials)...")
+    pairs = build_pairs()
+    for i, item in enumerate(pairs):
         item["pair_id"] = f"pair_{i+1:02d}"
 
+    by_cat: dict[str, int] = {}
+    for p in pairs:
+        by_cat[p["category"]] = by_cat.get(p["category"], 0) + 1
+    print(f"\nBuilt {len(pairs)} pairs: {by_cat}")
+    n_resolved = sum(1 for p in pairs if p["profile_match"]["difficulty_resolved"])
+    print(f"Profile-match (automated, NOT part of participant task): "
+          f"{n_resolved}/{len(pairs)} pairs actually resolved their declared difficulty")
+    for p in pairs:
+        print(f"  [{p['category']:<16}] {p['pair_id']} n_changes={p['n_changes']} "
+              f"restructuring={p['has_restructuring']} resolved={p['profile_match']['difficulty_resolved']}")
+
     out = {
-        "_doc": "eval/pilot_pairs.json - Stage 7 human-evaluation pilot set. "
-                "Full metadata here is for post-hoc analysis only and must "
-                "never be shown to participants.",
-        "n_eligible_pool": len(pool),
-        "selection_report": report,
-        "pairs": selected,
+        "_doc": "eval/pilot_pairs.json - Stage 7 human-evaluation pilot set, v3 "
+                "(single participant, 30 short/natural/everyday sentences only). "
+                "Full metadata here (profile_spec, triggered_by, changes_made, "
+                "profile_match) is for post-hoc analysis only and must never be "
+                "shown to the participant during rating.",
+        "category_counts": by_cat,
+        "pairs": pairs,
     }
     OUT_PATH.write_text(json.dumps(out, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(f"\nwrote {len(selected)} pairs to {OUT_PATH}")
+    print(f"\nwrote {len(pairs)} pairs to {OUT_PATH}")
     return 0
 
 

@@ -1,0 +1,1471 @@
+{
+  "_doc": "eval/pilot_pairs.json - Stage 7 human-evaluation pilot set, v2 (redesigned per user review: short/long/multi-sentence/paragraph mix, not uniform medium sentences). Full metadata here is for post-hoc analysis only and must never be shown to participants.",
+  "category_counts": {
+    "short": 10,
+    "long": 3,
+    "multi_sentence": 6,
+    "paragraph": 1
+  },
+  "pairs": [
+    {
+      "case_id": "short_running_late",
+      "category": "short",
+      "profile_spec": {
+        "sounds": [
+          "r"
+        ]
+      },
+      "original_text": "Running late, be there in ten minutes.",
+      "reformulated_text": "Becoming late, be there in ten minutes.",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 0,
+          "position": 0,
+          "span_text": "Running",
+          "original": "Running",
+          "replacement": "Becoming",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9075,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.3592,
+            "difficulty_after": 0.6022
+          }
+        }
+      ],
+      "skipped": [],
+      "metrics": {
+        "meaning_preservation": 0.9075,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.1429,
+        "substitution_rate": 0.1429
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9075
+        }
+      },
+      "n_changes": 1,
+      "n_sentences": 1,
+      "has_restructuring": false,
+      "triggers": [
+        "global_sound"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_01"
+    },
+    {
+      "case_id": "short_that_works",
+      "category": "short",
+      "profile_spec": {
+        "words": [
+          "works"
+        ]
+      },
+      "original_text": "Let me know if that works for you.",
+      "reformulated_text": "Let me know if that is working for you.",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 0,
+          "position": null,
+          "span_text": "Let me know if that works for you.",
+          "original": "Let me know if that works for you.",
+          "replacement": "Let me know if that is working for you.",
+          "source": "restructuring",
+          "triggered_by": [
+            "multiple_difficulties_or_no_valid_substitution"
+          ],
+          "verification": {
+            "antonym_check": "n/a_sentence_level",
+            "sbert_sim": 0.9115,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.2189,
+            "difficulty_after": 0.2105
+          }
+        }
+      ],
+      "skipped": [],
+      "metrics": {
+        "meaning_preservation": 0.9115,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.1765,
+        "substitution_rate": 0.25
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9115
+        }
+      },
+      "n_changes": 1,
+      "n_sentences": 1,
+      "has_restructuring": true,
+      "triggers": [
+        "multiple_difficulties_or_no_valid_substitution"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_02"
+    },
+    {
+      "case_id": "short_super_busy",
+      "category": "short",
+      "profile_spec": {
+        "sounds": [
+          "s"
+        ]
+      },
+      "original_text": "Sorry for the late reply, been super busy this week.",
+      "reformulated_text": "Sorry for the late reply, been big busy this week.",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 0,
+          "position": 7,
+          "span_text": "super",
+          "original": "super",
+          "replacement": "big",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9656,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.3656,
+            "difficulty_after": 0.4153
+          }
+        }
+      ],
+      "skipped": [],
+      "metrics": {
+        "meaning_preservation": 0.9656,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.1,
+        "substitution_rate": 0.1
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9656
+        }
+      },
+      "n_changes": 1,
+      "n_sentences": 1,
+      "has_restructuring": false,
+      "triggers": [
+        "global_sound"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_03"
+    },
+    {
+      "case_id": "short_grab_lunch",
+      "category": "short",
+      "profile_spec": {
+        "sounds": [
+          "pr",
+          "gr"
+        ]
+      },
+      "original_text": "We should probably grab lunch sometime next week.",
+      "reformulated_text": "We should likely take lunch sometime next week.",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 0,
+          "position": 2,
+          "span_text": "probably",
+          "original": "probably",
+          "replacement": "likely",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9918,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.7115,
+            "difficulty_after": 0.3605
+          }
+        },
+        {
+          "sentence_index": 0,
+          "position": 3,
+          "span_text": "grab",
+          "original": "grab",
+          "replacement": "take",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.942,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.598,
+            "difficulty_after": 0.4046
+          }
+        }
+      ],
+      "skipped": [],
+      "metrics": {
+        "meaning_preservation": 0.942,
+        "flagged_words_before": 2,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.25,
+        "substitution_rate": 0.25
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 2,
+          "flagged_after": 0,
+          "sbert_sim": 0.942
+        }
+      },
+      "n_changes": 2,
+      "n_sentences": 1,
+      "has_restructuring": false,
+      "triggers": [
+        "global_sound"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_04"
+    },
+    {
+      "case_id": "short_checking_in",
+      "category": "short",
+      "profile_spec": {
+        "sounds": [
+          "ch"
+        ]
+      },
+      "original_text": "Just checking in to see how things are going.",
+      "reformulated_text": "Just seeing in to see how things are going.",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 0,
+          "position": 1,
+          "span_text": "checking",
+          "original": "checking",
+          "replacement": "seeing",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.8797,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.5435,
+            "difficulty_after": 0.3673
+          }
+        }
+      ],
+      "skipped": [],
+      "metrics": {
+        "meaning_preservation": 0.8797,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.1111,
+        "substitution_rate": 0.1111
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.8797
+        }
+      },
+      "n_changes": 1,
+      "n_sentences": 1,
+      "has_restructuring": false,
+      "triggers": [
+        "global_sound"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_05"
+    },
+    {
+      "case_id": "short_movie_better",
+      "category": "short",
+      "profile_spec": {
+        "sounds": [
+          "b"
+        ]
+      },
+      "original_text": "That movie was way better than I expected.",
+      "reformulated_text": "That movie was way righter than I expected.",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 0,
+          "position": 4,
+          "span_text": "better",
+          "original": "better",
+          "replacement": "righter",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.8723,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.4865,
+            "difficulty_after": 0.4972
+          }
+        }
+      ],
+      "skipped": [],
+      "metrics": {
+        "meaning_preservation": 0.8723,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.125,
+        "substitution_rate": 0.125
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.8723
+        }
+      },
+      "n_changes": 1,
+      "n_sentences": 1,
+      "has_restructuring": false,
+      "triggers": [
+        "global_sound"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_06"
+    },
+    {
+      "case_id": "short_push_call",
+      "category": "short",
+      "profile_spec": {
+        "sounds": [
+          "p"
+        ]
+      },
+      "original_text": "Can we push the call to three instead of two?",
+      "reformulated_text": "Can we force the call to three instead of two?",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 0,
+          "position": 2,
+          "span_text": "push",
+          "original": "push",
+          "replacement": "force",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9444,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.4518,
+            "difficulty_after": 0.2842
+          }
+        }
+      ],
+      "skipped": [],
+      "metrics": {
+        "meaning_preservation": 0.9444,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.1,
+        "substitution_rate": 0.1
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9444
+        }
+      },
+      "n_changes": 1,
+      "n_sentences": 1,
+      "has_restructuring": false,
+      "triggers": [
+        "global_sound"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_07"
+    },
+    {
+      "case_id": "short_forgot_charger",
+      "category": "short",
+      "profile_spec": {
+        "sounds": [
+          "f"
+        ]
+      },
+      "original_text": "I honestly forgot my charger again this morning.",
+      "reformulated_text": "I honestly missed my charger again this morning.",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 0,
+          "position": 2,
+          "span_text": "forgot",
+          "original": "forgot",
+          "replacement": "missed",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9145,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.3849,
+            "difficulty_after": 0.3013
+          }
+        }
+      ],
+      "skipped": [],
+      "metrics": {
+        "meaning_preservation": 0.9145,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.125,
+        "substitution_rate": 0.125
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9145
+        }
+      },
+      "n_changes": 1,
+      "n_sentences": 1,
+      "has_restructuring": false,
+      "triggers": [
+        "global_sound"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_08"
+    },
+    {
+      "case_id": "short_double_check",
+      "category": "short",
+      "profile_spec": {
+        "sounds": [
+          "ch",
+          "d"
+        ]
+      },
+      "original_text": "Please double check the numbers before you send it out.",
+      "reformulated_text": "Please multiple see the numbers before you send it out.",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 0,
+          "position": 1,
+          "span_text": "double",
+          "original": "double",
+          "replacement": "multiple",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9709,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.5186,
+            "difficulty_after": 0.4475
+          }
+        },
+        {
+          "sentence_index": 0,
+          "position": 2,
+          "span_text": "check",
+          "original": "check",
+          "replacement": "see",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.8703,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.4308,
+            "difficulty_after": 0.2469
+          }
+        }
+      ],
+      "skipped": [],
+      "metrics": {
+        "meaning_preservation": 0.8703,
+        "flagged_words_before": 2,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.2,
+        "substitution_rate": 0.2
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 2,
+          "flagged_after": 0,
+          "sbert_sim": 0.8703
+        }
+      },
+      "n_changes": 2,
+      "n_sentences": 1,
+      "has_restructuring": false,
+      "triggers": [
+        "global_sound"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_09"
+    },
+    {
+      "case_id": "short_meeting_pushed",
+      "category": "short",
+      "profile_spec": {
+        "sounds": [
+          "p"
+        ]
+      },
+      "original_text": "The meeting got pushed back to next Tuesday.",
+      "reformulated_text": "The meeting got forced back to next Tuesday.",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 0,
+          "position": 3,
+          "span_text": "pushed",
+          "original": "pushed",
+          "replacement": "forced",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.8968,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.4685,
+            "difficulty_after": 0.3013
+          }
+        }
+      ],
+      "skipped": [],
+      "metrics": {
+        "meaning_preservation": 0.8968,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.125,
+        "substitution_rate": 0.125
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.8968
+        }
+      },
+      "n_changes": 1,
+      "n_sentences": 1,
+      "has_restructuring": false,
+      "triggers": [
+        "global_sound"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_10"
+    },
+    {
+      "case_id": "long_committee_proposals",
+      "category": "long",
+      "profile_spec": {
+        "sounds": [
+          "pr",
+          "r"
+        ]
+      },
+      "original_text": "Although the committee had reviewed dozens of proposals over the previous quarter, none demonstrated the combination of technical feasibility and community support that the final selection ultimately required.",
+      "reformulated_text": "Although the committee had examined dozens of ideas over the last quarter, none of them demonstrated the combination of technical feasibility and community support that the final selection ultimately needed.",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 0,
+          "position": null,
+          "span_text": "Although the committee had reviewed dozens of proposals over the previous quarter, none demonstrated the combination of technical feasibility and community support that the final selection ultimately required.",
+          "original": "Although the committee had reviewed dozens of proposals over the previous quarter, none demonstrated the combination of technical feasibility and community support that the final selection ultimately required.",
+          "replacement": "Although the committee had examined dozens of ideas over the last quarter, none of them demonstrated the combination of technical feasibility and community support that the final selection ultimately needed.",
+          "source": "restructuring",
+          "triggered_by": [
+            "multiple_difficulties_or_no_valid_substitution"
+          ],
+          "verification": {
+            "antonym_check": "n/a_sentence_level",
+            "sbert_sim": 0.9087,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.3987,
+            "difficulty_after": 0.3477
+          }
+        }
+      ],
+      "skipped": [],
+      "metrics": {
+        "meaning_preservation": 0.9087,
+        "flagged_words_before": 4,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.1724,
+        "substitution_rate": 0.2143
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 4,
+          "flagged_after": 0,
+          "sbert_sim": 0.9087
+        }
+      },
+      "n_changes": 1,
+      "n_sentences": 1,
+      "has_restructuring": true,
+      "triggers": [
+        "multiple_difficulties_or_no_valid_substitution"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_11"
+    },
+    {
+      "case_id": "long_printer_stopped",
+      "category": "long",
+      "profile_spec": {
+        "sounds": [
+          "w"
+        ]
+      },
+      "original_text": "Because the printer in the main office had stopped working, everyone on the floor had to email their documents to the front desk instead.",
+      "reformulated_text": "Because the printer in the main office had stopped using, everyone on the floor had to email their documents to the front desk instead.",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 0,
+          "position": 9,
+          "span_text": "working",
+          "original": "working",
+          "replacement": "using",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9924,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.3498,
+            "difficulty_after": 0.3489
+          }
+        }
+      ],
+      "skipped": [],
+      "metrics": {
+        "meaning_preservation": 0.9924,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.0417,
+        "substitution_rate": 0.0417
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9924
+        }
+      },
+      "n_changes": 1,
+      "n_sentences": 1,
+      "has_restructuring": false,
+      "triggers": [
+        "global_sound"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_12"
+    },
+    {
+      "case_id": "long_team_preparation",
+      "category": "long",
+      "profile_spec": {
+        "sounds": [
+          "pr",
+          "st"
+        ]
+      },
+      "original_text": "Despite months of preparation, the team still struggled to explain why the new system performed worse than the one it was designed to replace.",
+      "reformulated_text": "Despite months of thought, the team still tried to explain why the new system performed worse than the one it was designed to replace.",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 0,
+          "position": 3,
+          "span_text": "preparation",
+          "original": "preparation",
+          "replacement": "thought",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9706,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.8315,
+            "difficulty_after": 0.2688
+          }
+        },
+        {
+          "sentence_index": 0,
+          "position": 8,
+          "span_text": "struggled",
+          "original": "struggled",
+          "replacement": "tried",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9188,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.6781,
+            "difficulty_after": 0.5705
+          }
+        }
+      ],
+      "skipped": [],
+      "metrics": {
+        "meaning_preservation": 0.9188,
+        "flagged_words_before": 2,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.0833,
+        "substitution_rate": 0.0833
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 2,
+          "flagged_after": 0,
+          "sbert_sim": 0.9188
+        }
+      },
+      "n_changes": 2,
+      "n_sentences": 1,
+      "has_restructuring": false,
+      "triggers": [
+        "global_sound"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_13"
+    },
+    {
+      "case_id": "multi_maria_research",
+      "category": "multi_sentence",
+      "profile_spec": {
+        "sounds": [
+          "str"
+        ]
+      },
+      "original_text": "Maria studies computer science at the local university. She particularly enjoys algorithms and data structures. Her research increasingly focuses on natural language processing.",
+      "reformulated_text": "Maria studies computer science at the local university. She particularly enjoys algorithms and data constructions. Her research increasingly focuses on natural language processing.",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 1,
+          "position": 6,
+          "span_text": "structures",
+          "original": "structures",
+          "replacement": "constructions",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9761,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.658,
+            "difficulty_after": 0.6669
+          }
+        }
+      ],
+      "skipped": [],
+      "metrics": {
+        "meaning_preservation": 0.9934,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.0435,
+        "substitution_rate": 0.0435
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9934
+        }
+      },
+      "n_changes": 1,
+      "n_sentences": 3,
+      "has_restructuring": false,
+      "triggers": [
+        "global_sound"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_14"
+    },
+    {
+      "case_id": "multi_weather_hike",
+      "category": "multi_sentence",
+      "profile_spec": {
+        "sounds": [
+          "str"
+        ]
+      },
+      "original_text": "The weather was pleasant today. The strong wind made the strenuous hike difficult. We returned home before sunset.",
+      "reformulated_text": "The weather was pleasant today. The powerful wind made the arduous hike difficult. We returned home before sunset.",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 1,
+          "position": 1,
+          "span_text": "strong",
+          "original": "strong",
+          "replacement": "powerful",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9908,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.5513,
+            "difficulty_after": 0.6005
+          }
+        },
+        {
+          "sentence_index": 1,
+          "position": 5,
+          "span_text": "strenuous",
+          "original": "strenuous",
+          "replacement": "arduous",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9356,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.7913,
+            "difficulty_after": 0.3887
+          }
+        }
+      ],
+      "skipped": [],
+      "metrics": {
+        "meaning_preservation": 0.9888,
+        "flagged_words_before": 2,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.1111,
+        "substitution_rate": 0.1111
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 2,
+          "flagged_after": 0,
+          "sbert_sim": 0.9888
+        }
+      },
+      "n_changes": 2,
+      "n_sentences": 3,
+      "has_restructuring": false,
+      "triggers": [
+        "global_sound"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_15"
+    },
+    {
+      "case_id": "multi_bakery",
+      "category": "multi_sentence",
+      "profile_spec": {
+        "sounds": [
+          "b"
+        ]
+      },
+      "original_text": "The bakery down the street sells fresh bread every morning. My brother usually stops by before work. He says the cinnamon rolls are the best in town.",
+      "reformulated_text": "The bakery down the street sells fresh bread every morning. My brother usually stops by before work. He says the cinnamon rolls are the greatest in town.",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 2,
+          "position": 7,
+          "span_text": "best",
+          "original": "best",
+          "replacement": "greatest",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9687,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.408,
+            "difficulty_after": 0.6614
+          }
+        }
+      ],
+      "skipped": [
+        {
+          "word": "The bakery down the street sells fresh bread every morning.",
+          "position": null,
+          "reason": "could not safely reformulate this sentence"
+        },
+        {
+          "word": "My brother usually stops by before work.",
+          "position": null,
+          "reason": "could not safely reformulate this sentence"
+        }
+      ],
+      "metrics": {
+        "meaning_preservation": 0.9892,
+        "flagged_words_before": 4,
+        "flagged_words_after": 3,
+        "difficulty_reduction_pct": 25.0,
+        "naturalness_edit_ratio": 0.037,
+        "substitution_rate": 0.037
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 4,
+          "flagged_after": 3,
+          "sbert_sim": 0.9892
+        }
+      },
+      "n_changes": 1,
+      "n_sentences": 3,
+      "has_restructuring": false,
+      "triggers": [
+        "global_sound"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_16"
+    },
+    {
+      "case_id": "multi_library_exams",
+      "category": "multi_sentence",
+      "profile_spec": {
+        "sounds": [
+          "s"
+        ]
+      },
+      "original_text": "The library extended its hours for exam season. Students can now stay until midnight on weekdays. Many bring their own snacks and coffee.",
+      "reformulated_text": "The library extended its hours for exam period. Pupils can now remain until midnight on weekdays. Many bring their own meals and coffee.",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 0,
+          "position": 7,
+          "span_text": "season",
+          "original": "season",
+          "replacement": "period",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9386,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.3485,
+            "difficulty_after": 0.585
+          }
+        },
+        {
+          "sentence_index": 1,
+          "position": 0,
+          "span_text": "Students",
+          "original": "Students",
+          "replacement": "Pupils",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.8695,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.4917,
+            "difficulty_after": 0.6875
+          }
+        },
+        {
+          "sentence_index": 1,
+          "position": 3,
+          "span_text": "stay",
+          "original": "stay",
+          "replacement": "remain",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.8637,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.4132,
+            "difficulty_after": 0.3763
+          }
+        },
+        {
+          "sentence_index": 2,
+          "position": 4,
+          "span_text": "snacks",
+          "original": "snacks",
+          "replacement": "meals",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9106,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.4762,
+            "difficulty_after": 0.3288
+          }
+        }
+      ],
+      "skipped": [],
+      "metrics": {
+        "meaning_preservation": 0.942,
+        "flagged_words_before": 4,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.1739,
+        "substitution_rate": 0.1739
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 4,
+          "flagged_after": 0,
+          "sbert_sim": 0.942
+        }
+      },
+      "n_changes": 4,
+      "n_sentences": 3,
+      "has_restructuring": false,
+      "triggers": [
+        "global_sound"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_17"
+    },
+    {
+      "case_id": "multi_guitar_practice",
+      "category": "multi_sentence",
+      "profile_spec": {
+        "sounds": [
+          "m",
+          "r"
+        ]
+      },
+      "original_text": "I have been learning to play the guitar for six months now. Practice sessions usually last about thirty minutes. My teacher says my progress has been steady.",
+      "reformulated_text": "I have been learning to play the guitar for six periods now. Practice sessions usually last about thirty seconds. My teacher says my progress has been steady.",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 0,
+          "position": 10,
+          "span_text": "months",
+          "original": "months",
+          "replacement": "periods",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9607,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.279,
+            "difficulty_after": 0.6228
+          }
+        },
+        {
+          "sentence_index": 1,
+          "position": 6,
+          "span_text": "minutes",
+          "original": "minutes",
+          "replacement": "seconds",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.98,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.3558,
+            "difficulty_after": 0.375
+          }
+        }
+      ],
+      "skipped": [],
+      "metrics": {
+        "meaning_preservation": 0.9808,
+        "flagged_words_before": 2,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.0741,
+        "substitution_rate": 0.0741
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 2,
+          "flagged_after": 0,
+          "sbert_sim": 0.9808
+        }
+      },
+      "n_changes": 2,
+      "n_sentences": 3,
+      "has_restructuring": false,
+      "triggers": [
+        "global_sound"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_18"
+    },
+    {
+      "case_id": "multi_conference_shuttle",
+      "category": "multi_sentence",
+      "profile_spec": {
+        "sounds": [
+          "v"
+        ]
+      },
+      "original_text": "The conference starts next Monday morning. Most attendees will arrive the night before. A shuttle will take everyone from the hotel to the venue.",
+      "reformulated_text": "The conference starts next Monday morning. Most attendees will arrive the night before. A shuttle will take everyone from the hotel to the scene.",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 2,
+          "position": 10,
+          "span_text": "venue",
+          "original": "venue",
+          "replacement": "scene",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9014,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.4012,
+            "difficulty_after": 0.2953
+          }
+        }
+      ],
+      "skipped": [],
+      "metrics": {
+        "meaning_preservation": 0.9889,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.0417,
+        "substitution_rate": 0.0417
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9889
+        }
+      },
+      "n_changes": 1,
+      "n_sentences": 3,
+      "has_restructuring": false,
+      "triggers": [
+        "global_sound"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_19"
+    },
+    {
+      "case_id": "paragraph_gettysburg",
+      "category": "paragraph",
+      "profile_spec": {
+        "sounds": [
+          "d",
+          "n"
+        ]
+      },
+      "original_text": "Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal. Now we are engaged in a great civil war, testing whether that nation, or any nation so conceived and so dedicated, can long endure. We are met on a great battle-field of that war. We have come to dedicate a portion of that field, as a final resting place for those who here gave their lives that that nation might live. It is altogether fitting and proper that we should do this. But, in a larger sense, we can not dedicate, we can not consecrate, we can not hallow this ground. The brave men, living and dead, who struggled here, have consecrated it, far above our poor power to add or detract. The world will little note, nor long remember what we say here, but it can never forget what they did here. It is for us the living, rather, to be dedicated here to the unfinished work which they who fought here have thus far so nobly advanced. It is rather for us to be here dedicated to the great task remaining before us, that from these honored dead we take increased devotion to that cause for which they gave the last full measure of devotion, that we here highly resolve that these dead shall not have died in vain, that this nation, under God, shall have a new birth of freedom, and that government of the people, by the people, for the people, shall not perish from the earth.",
+      "reformulated_text": "Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal. Today we are engaged in a great civil war, testing whether this country, or any country so conceived and so committed, can endure long. We are met on a great battle-field of that war. We have come to give a portion of that field, as a final resting place for those who here gave their lives that that country might live. It is altogether fitting and proper that we should do this. But, in a larger sense, we can not use, we can not consecrate, we can not hallow this ground. The brave men, living and out, who struggled here, have consecrated it, far above our poor power to add or reduce. The world will little line, nor long remember what we say here, but it can never forget what they did here. It is for us the living, rather, to be dedicated here to the unfinished work which they who fought here have thus far so nobly advanced. It is rather for us to be here dedicated to the great task remaining before us, that from these honored dead we take increased devotion to that cause for which they gave the last full measure of devotion, that we here highly resolve that these dead shall not have died in vain, that this nation, under God, shall have a new birth of freedom, and that government of the people, by the people, for the people, shall not perish from the earth.",
+      "status": "reformulated",
+      "changes": [
+        {
+          "sentence_index": 1,
+          "position": null,
+          "span_text": "Now we are engaged in a great civil war, testing whether that nation, or any nation so conceived and so dedicated, can long endure.",
+          "original": "Now we are engaged in a great civil war, testing whether that nation, or any nation so conceived and so dedicated, can long endure.",
+          "replacement": "Today we are engaged in a great civil war, testing whether this country, or any country so conceived and so committed, can endure long.",
+          "source": "restructuring",
+          "triggered_by": [
+            "multiple_difficulties_or_no_valid_substitution"
+          ],
+          "verification": {
+            "antonym_check": "n/a_sentence_level",
+            "sbert_sim": 0.9359,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.2914,
+            "difficulty_after": 0.3094
+          }
+        },
+        {
+          "sentence_index": 3,
+          "position": 4,
+          "span_text": "dedicate",
+          "original": "dedicate",
+          "replacement": "give",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9824,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.6579,
+            "difficulty_after": 0.4136
+          }
+        },
+        {
+          "sentence_index": 3,
+          "position": 25,
+          "span_text": "nation",
+          "original": "nation",
+          "replacement": "country",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9656,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.3742,
+            "difficulty_after": 0.4985
+          }
+        },
+        {
+          "sentence_index": 5,
+          "position": 10,
+          "span_text": "dedicate",
+          "original": "dedicate",
+          "replacement": "use",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.8918,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.6579,
+            "difficulty_after": 0.2593
+          }
+        },
+        {
+          "sentence_index": 6,
+          "position": 6,
+          "span_text": "dead",
+          "original": "dead",
+          "replacement": "out",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.975,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.4359,
+            "difficulty_after": 0.1016
+          }
+        },
+        {
+          "sentence_index": 6,
+          "position": 24,
+          "span_text": "detract",
+          "original": "detract",
+          "replacement": "reduce",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9536,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.6043,
+            "difficulty_after": 0.3806
+          }
+        },
+        {
+          "sentence_index": 7,
+          "position": 4,
+          "span_text": "note",
+          "original": "note",
+          "replacement": "line",
+          "source": "substitution",
+          "triggered_by": [
+            "global_sound"
+          ],
+          "verification": {
+            "antonym_check": "pass",
+            "sbert_sim": 0.9355,
+            "nli": "not_run",
+            "phoneme_ok": true,
+            "difficulty_before": 0.2923,
+            "difficulty_after": 0.273
+          }
+        }
+      ],
+      "skipped": [
+        {
+          "word": "Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.",
+          "position": null,
+          "reason": "could not safely reformulate this sentence"
+        },
+        {
+          "word": "It is for us the living, rather, to be dedicated here to the unfinished work which they who fought here have thus far so nobly advanced.",
+          "position": null,
+          "reason": "could not safely reformulate this sentence"
+        },
+        {
+          "word": "It is rather for us to be here dedicated to the great task remaining before us, that from these honored dead we take increased devotion to that cause for which they gave the last full measure of devotion, that we here highly resolve that these dead shall not have died in vain, that this nation, under God, shall have a new birth of freedom, and that government of the people, by the people, for the people, shall not perish from the earth.",
+          "position": null,
+          "reason": "could not safely reformulate this sentence"
+        }
+      ],
+      "metrics": {
+        "meaning_preservation": 0.9852,
+        "flagged_words_before": 23,
+        "flagged_words_after": 13,
+        "difficulty_reduction_pct": 43.48,
+        "naturalness_edit_ratio": 0.048,
+        "substitution_rate": 0.0517
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 23,
+          "flagged_after": 13,
+          "sbert_sim": 0.9852
+        }
+      },
+      "n_changes": 7,
+      "n_sentences": 10,
+      "has_restructuring": true,
+      "triggers": [
+        "global_sound",
+        "multiple_difficulties_or_no_valid_substitution"
+      ],
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_20"
+    }
+  ]
+}
