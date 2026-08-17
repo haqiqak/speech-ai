@@ -6,6 +6,20 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-17** feat: R20 — word-sense disambiguation before candidate
+  generation, `REFORMULATION_PROBLEM_MAP.md` §5's item 2. Fixes the
+  general "right"→"justly"/"properly" sense-confusion bug (VALIDATION.md
+  §9.9), not just the "right now" phrase R19 already covered. Re-running
+  Stage 6's corpus (per direct instruction) found two real regressions
+  before this was done — a candidate colliding with another declared-
+  difficult word, and whole-sentence context failing to disambiguate two
+  occurrences of the same word in one sentence — both root-caused and
+  fixed in the same pass. Re-confirmed at scale on the 210-case ordinary-
+  text corpus: escalation-trigger rate rose 10.4%→14.1% at an unchanged
+  ~42% success rate, a real, disclosed cost that raises R18's priority.
+  Re-checked against the real pilot data: two of P1's own articulated
+  grammar complaints now directly fixed. → `DECISION_LOG.md` 2026-08-17-J;
+  `VALIDATION.md` §11; `ROADMAP.md` R20.
 - **2026-08-17** feat: R19 — idiom/fixed-expression guard for
   substitution, `REFORMULATION_PROBLEM_MAP.md` §5's item 1.
   `semantic.py` gained a curated idiom-phrase list + pronoun-wildcard

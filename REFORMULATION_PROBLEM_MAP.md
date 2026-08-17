@@ -214,6 +214,21 @@ remains the next planned step for this factor, per the user's own
 sequencing, precisely because only this one word/phrase has been
 observed to fail so far and the general problem is still unaddressed.
 
+**Update, 2026-08-17 — item 2 of §5 implemented, and corrected against
+two real regressions before shipping.** `semantic.py::disambiguate_synset()`
+now picks one sense (via SBERT gloss-matching against a local context
+window) before `engine.py` generates candidates, closing the general
+problem, not just "right now" — verified on a sentence the idiom guard
+doesn't cover ("He'll be right over to help." correctly resolves to the
+"immediately" sense). Testing this against Stage 6's corpus (per the
+user's explicit "re-run and see" instruction) found it isn't a clean
+win: full account in `VALIDATION.md` §11, including two regressions
+found and fixed in the same pass (a candidate colliding with another
+declared-difficult word — factor 2.7 below; two occurrences of one word
+forced to the identical sense) and one real, disclosed cost that
+*wasn't* fixed (single-sense candidate pools are sometimes smaller and
+score lower than the old sense-mixed pools, even when correct).
+
 ### 2.7 Interactions between multiple substitutions in one sentence
 
 **Current state [FINDING, code-verified mechanism, not just a hypothesis]:**
@@ -237,6 +252,20 @@ independent substitutions each have their own (correlated, not independent)
 chance of hitting factor 2.4's idiom-blindness, and nothing currently
 reasons about the pair jointly beyond the same blind whole-text gate that
 already misses single-substitution idiom breaks.
+
+**Update, 2026-08-17 — a concrete, reproduced instance of this factor,
+not just a hypothesis anymore.** Found while testing §2.6's WSD fix
+against Stage 6's corpus: a profile declaring both "reviewed" and
+"examined" as difficult produced a substitution of "reviewed" →
+**"examined"** — one flagged word's replacement was literally the
+*other* flagged word, because nothing checked a candidate against the
+profile's other declared words, only against the global-sound phoneme
+veto. Fixed narrowly (`_try_substitution` now also rejects a candidate
+matching `profile.find_word()`), but the mechanism that exposed it is
+worth recording here: making candidate ranking *more* semantically
+precise (§2.6's fix) made this collision *more* likely, not less — a
+real, non-obvious interaction between fixing one factor and surfacing
+another. `VALIDATION.md` §11.2/§11.3 has the full account.
 
 ### 2.8 Sentence/phrase restructuring when substitution isn't enough
 
@@ -505,9 +534,25 @@ itself supported.
    (zero collateral change), Stage 6 corpus unaffected. Found and fixed
    one follow-up correctness issue in the same pass (§2.5's update above)
    before calling it done — not shipped with a silently-known gap.
-2. **Word-sense disambiguation before candidate generation** (§2.6, §3.2) —
-   small, concrete, reproducible-twice bug with a solved-in-principle,
-   small-effort fix (`pywsd` or SBERT-gloss matching).
+2. **[DONE, 2026-08-17 — `VALIDATION.md` §11] Word-sense disambiguation
+   before candidate generation** (§2.6, §3.2) — implemented via
+   SBERT-gloss matching against a local context window (reusing the
+   existing SBERT model, no new dependency, over the `pywsd` alternative).
+   Fixes the general "right"-style sense confusion, not just the one
+   phrase §5 item 1 already covered. Re-running Stage 6's corpus (per
+   the user's explicit instruction) found two real regressions before
+   this was done: a candidate colliding with another declared-difficult
+   word (§2.7's update) and two occurrences of one word in a sentence
+   forced to the identical sense — both root-caused and fixed in the
+   same pass, not shipped with a known gap. One cost accepted and
+   disclosed, not engineered around: single-sense candidate pools are
+   sometimes smaller/lower-scoring than the old sense-mixed pools even
+   when correct (`avg_meaning_preservation` 0.9785 → 0.9652 on Stage 6's
+   corpus). Re-checked against the real pilot data: two of P1's own
+   articulated grammar complaints (`VALIDATION.md` §9.8) are now
+   directly fixed; two unrelated, different-class bugs (POS mismatch,
+   a phrasal-verb idiom not on §5 item 1's curated list) remain open,
+   named rather than glossed over.
 3. **Upgrade T5 escalation to HF constrained beam search** (§2.8, §3.3) —
    small effort, same library already in use, addresses the R17-follow-up
    side effect (tighter blocking → lower-similarity survivors) without
@@ -571,3 +616,13 @@ prioritized map for a future, explicitly-approved implementation cycle.
   difficulty fully unaddressed, and a follow-up metrics-visibility bug
   found and fixed in the same pass) — not just a status flip to "done."
   Full record: `VALIDATION.md` §10.
+- **2026-08-17** — §5 item 2 (word-sense disambiguation) implemented;
+  §2.6 and §2.7 updated. Unlike item 1, this one did NOT go smoothly on
+  the first pass: re-running Stage 6's corpus (as instructed) found two
+  real regressions — a candidate colliding with another declared-
+  difficult word, and whole-sentence context failing to distinguish two
+  occurrences of the same word — both root-caused and fixed before being
+  called done, not shipped with a known gap. One real, disclosed cost
+  (smaller candidate pools sometimes score lower even when sense-correct)
+  was NOT engineered around, per this project's no-speculative-tuning
+  rule. Full record: `VALIDATION.md` §11.

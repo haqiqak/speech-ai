@@ -1569,3 +1569,89 @@ PROBLEM_MAP.md` §5 item 1). Full record: `VALIDATION.md` §10;
 `ROADMAP.md` R19 (new, done) and R18 (cross-referenced). Not yet
 committed — pending the same review/approval flow as the rest of this
 session's work.
+
+### 2026-08-17-J — R20 implemented: word-sense disambiguation, corrected against two real regressions found by re-running the eval corpus
+
+**What was done, per the user's explicit sequencing** ("Implement #2:
+word-sense disambiguation... Re-run the evaluation corpus + targeted
+tests"): `REFORMULATION_PROBLEM_MAP.md` §5 item 2, the fix for the
+reproducible "right"→"justly"/"properly" bug (`VALIDATION.md` §9.9).
+
+`semantic.py::disambiguate_synset(word, wn_pos, sentence)` picks the one
+WordNet synset whose gloss best matches the given context (SBERT, the
+model already loaded for everything else — the small-effort option per
+`REFORMULATION_PROBLEM_MAP.md` §3.2/§4, not `pywsd`). `engine.py` gained
+a `restrict_synsets` parameter so candidate generation pulls from only
+that sense instead of unioning every same-POS sense. Verified this
+fixes the *general* problem, not just "right now": "He'll be right over
+to help." (not covered by R19's idiom list) correctly resolves to the
+"immediately" sense.
+
+**This did not ship on the first pass — re-running Stage 6's corpus
+(exactly as instructed, not skipped) found two real regressions,**
+diffed at the raw-CSV level, not just read from the aggregate:
+`avg_flagged_after` 0.9444→1.0, `avg_meaning_preservation` 0.9785→0.9703.
+Root-caused as two distinct mechanisms: (1) `fm_multiple_difficult_words`
+— a profile declaring both "reviewed" and "examined" difficult produced
+"reviewed"→"examined" as a substitution, since nothing checked a
+candidate against the profile's *other* declared words, only the
+global-sound phoneme veto; making candidate ranking more precise (this
+same fix) made this collision more likely, not less. (2)
+`fm_context_dependent_substitution` ("He runs the company... before he
+runs three miles.") — both occurrences of "runs" were disambiguated
+against the identical whole-sentence context, so both got the identical
+sense and the identical (wrong-for-at-least-one) replacement,
+measurably worsening an already-known-hard, already-disclosed failure
+mode (SBERT similarity 0.9475→0.8739).
+
+**Both fixed in the same pass, verified independently before
+re-measuring:** (1) `_try_substitution`'s acceptance loop now also
+rejects a candidate matching `profile.find_word()`. (2)
+`disambiguate_synset` is now called with a small local token window
+(`_local_context_window()`, ±6 tokens) instead of the whole sentence —
+the two "runs" occurrences now resolve independently. Re-measured:
+`avg_flagged_after` and `avg_difficulty_reduction_pct` both back to
+full parity with the pre-WSD baseline; `avg_meaning_preservation`
+settled at 0.9652 (a real, disclosed, NOT-engineered-around residual
+cost — single-sense candidate pools are sometimes smaller/lower-scoring
+than the old sense-mixed ones even when the sense picked is correct).
+
+**Confirmed at scale, not just on Stage 6's 18 cases:** the 210-case
+ordinary-text corpus (`eval/reformulation_escalation_rate.py`) was
+re-run and shows the same cost generalizes — escalation-trigger rate
+rose 10.4%→14.1% at an unchanged ~42% escalation success rate, meaning
+a real, quantified fraction of previously-successful substitutions now
+correctly escalate instead (some succeed differently, some correctly
+refuse). This directly raises R18's priority (updated separately).
+
+**Re-checked against the real, frozen pilot corpus**
+(`eval/idiom_guard_recheck.py`, still never overwritten): 13/30 pairs
+now differ from the frozen record. Two of P1's own explicitly-
+articulated grammar complaints are directly fixed — pair_24 "valuable"→
+"worth" (P1: "Must be worthy not worth") now produces "worthy"; pair_04
+"forgot"→"missed about that" (P1: "missed that would be better") is now
+left completely unchanged rather than shipping the ungrammatical guess.
+Two different-class bugs confirmed still open, named rather than
+implied fixed: pair_13's adjective-for-adverb POS mismatch (unaffected
+by word sense, a different bug class) and pair_29's phrasal-verb idiom
+("push the meeting" meaning "postpone," not on R19's curated idiom
+list).
+
+**Test coverage:** `tests/reformulate_test.py` grew from 20 to 23 tests
+(general-context "right" sense outside the idiom list, candidate-
+collision, repeated-word-different-senses — using the exact sentences
+that found each regression, not synthetic restatements); one
+pre-existing test updated to use a sentence that reliably still
+produces a substitution rather than the now-correctly-escalating
+"strong decision" case. Full regression suite (`tests/semantic_test.py`,
+`tests/app_test.py`, `tests/difficulty_profile_test.py`,
+`tests/roadmap_test.py`, `tests/rephrase_test.py`) all pass.
+`tests/smoke.py` byte-identical against both committed baselines — no
+update needed this time (none of that corpus's sentences are
+sense-ambiguous in a way that changes the final chosen candidate).
+
+**Category:** Reformulation-engine implementation (R20/`REFORMULATION_
+PROBLEM_MAP.md` §5 item 2). Full record: `VALIDATION.md` §11;
+`REFORMULATION_PROBLEM_MAP.md` §2.6/§2.7/§5 (updated, living document);
+`ROADMAP.md` R20 (new, done) and R18 (cross-referenced, raised
+priority). Not yet committed — pending the same review/approval flow.

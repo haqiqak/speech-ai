@@ -1406,3 +1406,231 @@ longer occur and nothing else regressed — it does not re-establish
 `VALIDATION.md` §9's category-level numbers (`global_sound` 4.11/3.78/+0.83
 etc.), which would require a new pilot round with fresh human ratings,
 not yet run.
+
+## 11. Word-sense disambiguation for candidate generation — implemented, then corrected against real regressions (2026-08-17)
+
+`REFORMULATION_PROBLEM_MAP.md` §5 item 2, the fix for the reproducible
+"right" → "justly"/"properly" bug (§9.9). This section is longer than
+§10's because the first version, while it fixed the targeted bug,
+**introduced two real regressions when tested against Stage 6's
+corpus** — caught by exactly the "re-run the evaluation corpus" step
+the user asked for, not shipped and found later.
+
+### 11.1 What was built (v1)
+
+`engine.py::_wordnet_synonyms()` crawled every same-POS WordNet synset
+for a word and unioned their synonyms — confirmed directly:
+`wn.synsets("right", pos=wn.ADV)` returns 9 senses, including
+`right.r.02` ("immediately," the correct sense for "right now") mixed
+in with `properly.r.01`, `justly.r.02`, `correctly.r.01`,
+`mighty.r.01` — no sense selection at all, just POS filtering. Fix:
+`semantic.py::disambiguate_synset(word, wn_pos, sentence)` — embeds the
+sentence and every candidate synset's WordNet gloss with the SBERT
+model already loaded for everything else here (no new dependency, the
+small-effort option `REFORMULATION_PROBLEM_MAP.md` §3.2/§4 ranked over
+`pywsd`), picks the closest, and `engine.py` gained a `restrict_synsets`
+parameter so candidate generation pulls from only that one sense.
+Verified directly against real sentences before wiring it in: "He'll be
+right over to help." correctly resolves to `right.r.02` ("immediately")
+via general context, not the literal "right now" phrase — confirming
+this fixes the general word-sense problem, not just one idiom.
+
+### 11.2 Two regressions found by re-running Stage 6's corpus — not assumed away
+
+Per the user's explicit instruction ("re-run the evaluation corpus +
+targeted tests"), `eval/reformulation_eval.py` was re-run against the
+same 18-case Stage 6 corpus before calling this done. Aggregate numbers
+moved in the wrong direction: `avg_flagged_after` 0.9444 → **1.0** (a
+declared difficulty that used to get resolved, now sometimes doesn't),
+`avg_meaning_preservation` 0.9785 → 0.9703. Diffing the raw per-case
+CSV against the pre-change committed file (not just reading the
+aggregate) found two distinct, root-caused mechanisms — not one:
+
+**[FINDING] Regression 1 — a candidate can itself be another declared
+difficulty.** `fm_multiple_difficult_words` (profile declares both
+"reviewed" and "examined" as difficult words, in one sentence): the
+old, sense-mixed candidate pool for "reviewed" never ranked "examined"
+highly; the new, sense-correct pool did (they're genuinely close
+synonyms in the "inspect closely" sense) — and nothing in
+`_try_substitution`'s acceptance loop checked whether a candidate
+matches one of the profile's *other* declared words. Output:
+"reviewed" → "examined", silently reintroducing a declared difficulty
+via the replacement itself (`flagged_words_after` 0 → 1). This is
+`REFORMULATION_RESEARCH.md` §17's "no interaction modeling" limitation
+— already named, now concretely reproduced for the first time, exactly
+as this corpus case's own notes predicted ("checks whether the two
+substitutions are still handled independently"). Root cause: making
+candidate ranking *more* semantically precise made it more likely to
+land exactly on another flagged word, not less — a real, counter-
+intuitive interaction between item 1/2's fixes and factor 2.7.
+
+**[FINDING] Regression 2 — whole-sentence context can't disambiguate
+two occurrences of the same word in one sentence.** `fm_context_dependent_
+substitution` ("He runs the company every morning before he runs three
+miles.") — `disambiguate_synset` was called with the full sentence as
+context for *both* occurrences of "runs," so both got the identical
+sense and the identical replacement: "He **passes** the company...
+before he **passes** three miles." (SBERT similarity dropped from the
+old 0.9475 to 0.8739 — measurably worse than before, on an
+already-known-hard case, not a wash). Confirmed by direct debugging
+(calling `disambiguate_synset` with each occurrence's actual full-
+sentence context showed both resolving to `run.v.29`, "cover by
+running").
+
+### 11.3 Fixes, verified independently before re-measuring the corpus
+
+**Fix 1:** `_try_substitution`'s acceptance loop now also rejects a
+candidate if `profile.find_word(candidate)` matches — a candidate must
+never be one of the profile's *other* declared-difficult words, not
+just checked against the global-sound phoneme veto (which it already
+was). Verified directly: the exact `fm_multiple_difficult_words`
+sentence now produces "reviewed"→"analysed", "examined"→"investigated",
+`flagged_words_after` back to 0.
+
+**Fix 2:** `disambiguate_synset` is now called with a small local token
+window (`_local_context_window()`, ±6 tokens around the target word's
+own position) instead of the whole sentence. Verified directly: the two
+occurrences of "runs" now resolve to different synsets
+(`run.v.32`/`run.v.29`) and produce different replacements
+("accompanies"/"passes"). **[LIMITATION, disclosed rather than
+oversold]** "accompanies the company" is still not a great fit for
+"manages/runs a company" — WordNet has 40+ verb senses for "run," and
+gloss-embedding similarity over a short window doesn't reliably find
+the single best one for every case. What this fix demonstrably repairs
+is the *structural* bug (both occurrences forced identical), not full
+correctness for this already-documented hard case
+(`REFORMULATION_RESEARCH.md` §17 row 5, `VALIDATION.md` §6.4) — which
+remains open, exactly as previously disclosed, not newly broken.
+
+### 11.4 Re-measured after both fixes
+
+`eval/reformulation_eval.py` re-run again: `avg_flagged_after` back to
+**0.9444** (full parity with the pre-WSD baseline — Regression 1 fully
+resolved), `avg_difficulty_reduction_pct` back to **55.5556%** (full
+parity), `reformulation_rate` and the status distribution unchanged
+throughout every version of this work. `avg_meaning_preservation`
+settled at **0.9652** — still below the original 0.9785, and this
+residual gap is a **[LIMITATION, real and disclosed, not a bug]**: a
+handful of remaining cases (e.g. "strong decision" → "forceful" instead
+of the old "powerful," "data structures" → the grammatically awkward
+"data knowledges" instead of "constructions") are the direct,
+mechanical cost of a single-sense candidate pool sometimes being
+smaller and lower-scoring than the old sense-mixed pool, even when the
+sense selection itself is correct — the same shape of trade-off
+§10.3 already disclosed for the idiom guard (Cause B's "blocking more
+narrows the search space" finding, §6.8, is the same mechanism again).
+Not chased further with additional heuristics in this pass, per this
+project's standing rule against tuning without a separate go-ahead.
+
+Full regression suite re-run after both fixes: `tests/reformulate_test.py`
+grew from 20 to 23 tests (3 new: general-context "right" sense,
+candidate-collision, repeated-word-different-senses — using the exact
+corpus sentences that found each bug, not synthetic restatements), one
+pre-existing test (`FeedbackTargetsTest`'s sound-attribution case)
+updated to use a sentence that reliably still produces a substitution
+rather than the now-correctly-escalating "strong decision" one — all
+23 pass. `tests/semantic_test.py` (12/12), `tests/app_test.py`,
+`tests/difficulty_profile_test.py` (50/50), `tests/roadmap_test.py`
+(3/3), `tests/rephrase_test.py` (8/8) all pass. `tests/smoke.py` diffed
+against both committed baselines — **byte-identical, zero diff** (none
+of that corpus's sentences happen to be sense-ambiguous in a way that
+changes the final chosen candidate).
+
+### 11.5 Re-checked against the real pilot corpus, not just Stage 6
+
+`eval/idiom_guard_recheck.py` re-run again (same frozen
+`eval/pilot_pairs.json`, still never overwritten) — now 13/30 pairs
+differ from the frozen record (up from 4 with the idiom guard alone,
+since WSD's effect isn't limited to idiom spans). Read individually
+against what `VALIDATION.md` §9.8/§9.9 already documented as human-
+identified flaws in this exact data, not just re-measured in aggregate:
+
+**[FINDING] Two of P1's own explicitly-articulated grammar complaints
+are now directly fixed.** pair_24: "valuable" → "worth" ("a worth
+lesson," which P1's own comment said should have been "worthy") now
+produces "worthy" — resolving via the WSD-narrowed candidate pool
+finding a synonym the old mixed pool ranked lower. pair_04: "forgot" →
+"missed about that" (P1's comment: "missed that would be better") is
+now left completely unchanged (`could_not_safely_reformulate`) — the
+sense-correct candidate pool for "forgot" in this context has no
+member that clears the SBERT gate, so it correctly refuses instead of
+shipping the ungrammatical guess.
+
+**[FINDING] The "generic overused replacement" pattern (`VALIDATION.md`
+§9.9) partially improved.** pair_17 "grab coffee" → "take coffee" (one
+of three "take" instances flagged as a frequency-bias pattern) is now
+"get coffee" — more idiomatic. pair_30's second clause similarly moved
+"take" → "get." Not a targeted fix for that pattern — a side effect of
+sense-correct ranking surfacing a better-fitting word.
+
+**[FINDING] Not everything is fixed, and this section says so
+explicitly.** pair_13 ("was late" → "was recently," an adjective-for-
+adverb POS mismatch — `VALIDATION.md` §9.9's idiom-adjacent pattern,
+not a sense problem) is still broken ("was belatedly" now — different
+wrong output, same underlying bug, unaffected by WSD, exactly as
+expected since this is a different failure class). pair_29 ("push the
+meeting" → "urge the meeting") remains a poor fit — "push [a meeting]"
+meaning "postpone" is itself a phrasal-verb idiom, the same general
+class of problem as §10's idiom guard but not on that guard's curated
+list (verb+object idioms weren't in scope for the specific phrases
+found in the pilot). pair_30's first clause ("print" → "copy") is still
+a wrong-action substitution, not resolved.
+
+### 11.6 What this does and doesn't establish
+
+**[RECOMMENDATION]** Per the user's own sequencing, this clears the way
+to deciding on item 3 (T5 constrained generation) based on whether
+remaining failures justify it — §10.3/§11.5 together suggest the
+higher-leverage remaining gaps are: idiom classes not on the curated
+list (phrasal-verb objects like "push the meeting"), and POS-mismatch
+substitutions (pair_13's class) — neither of which item 3 (constrained
+generation for T5 escalation specifically) directly addresses, since
+both occur in the *substitution* path. Worth naming plainly rather than
+assuming item 3 is next just because it's next on the original list.
+
+**[LIMITATION]** Same caveat as every pilot-adjacent section in this
+document: `eval/idiom_guard_recheck.py`'s comparisons are against
+already-collected human ratings for the *old* outputs, not new ratings
+of the corrected ones — "this looks better" is this project's own
+judgment reading the text, not a re-measured human score. A new pilot
+round would be needed to confirm these corrections actually move the
+`VALIDATION.md` §9 category numbers, not assumed here.
+
+### 11.7 The candidate-pool-shrinkage cost, confirmed at scale (not just Stage 6's 18 cases)
+
+§6.9's 210-case ordinary-text/realistic-profile corpus
+(`eval/reformulation_escalation_rate.py`) was re-run after both WSD
+fixes, to check whether §11.4's "smaller candidate pools" cost is a
+Stage-6-corpus artifact or a real, general effect. **It's general.**
+
+**[FINDING] WSD measurably increases how often substitution needs to
+escalate, at the same downstream escalation-success rate.** Sentences
+where escalation triggered: 28/270 (10.4%, §6.9's original number) →
+**38/270 (14.1%)**. Escalation success rate once triggered: 42.9% →
+42.1% (essentially unchanged — escalation itself wasn't touched by this
+work). 20 of the 210 (text, profile) cases changed outcome, all in the
+same direction confirmed at the individual-case level (diffed the raw
+CSV, not just the aggregate): a sentence that previously resolved via
+plain substitution now needs escalation, because the sense-correct
+candidate pool for the flagged word no longer contains a synonym that
+clears the SBERT gate on its own (the exact "strong decision" →
+"forceful" mechanism from §11.4, now observed to recur across many
+different words/sentences at this larger scale, not a one-off).
+
+**[INTERPRETATION]** This directly strengthens §11.6's recommendation:
+correcting word sense (item 2) shifts more of the real workload onto
+the escalation path, whose *success rate* (still ~42%, unimproved by
+this work) is now the more consequential bottleneck than it was before
+item 2 existed. Item 3 (T5 constrained generation) is better-justified
+now than it would have looked before this measurement — not because
+item 2 made anything worse in an absolute sense (the individual
+substitutions that do complete are more often sense-correct now), but
+because more sentences are passing through the path whose reliability
+hasn't been improved yet.
+
+**[LIMITATION]** This is still a proxy-metric comparison (SBERT/phoneme
+gates, not human judgment) on a corpus built for realistic-profile
+coverage, not statistical power — the exact percentage-point shift
+(10.4%→14.1%) should be read as "a real, confirmed direction," not as
+a precise number that would replicate exactly on a different sentence
+set.

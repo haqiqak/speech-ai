@@ -613,6 +613,12 @@ token-level, not phoneme-class blocking) but may reduce the R17-follow-up
 side effect (tighter blocking → lower-similarity survivors, §6.8). Ranked
 item 3 in that document's §5 implementation order, after the idiom guard
 (R19, done) and word-sense disambiguation — not started yet.
+**Update (2026-08-17, second):** R20 (word-sense disambiguation, done)
+measurably raised this item's urgency, not just its ranking position —
+`VALIDATION.md` §11.7 found the escalation-trigger rate on ordinary text
+rose from 10.4% to 14.1% as a direct effect of R20, at the same ~42%
+escalation success rate. More of the engine's real workload now depends
+on this item's unimproved success rate than before R19/R20 existed.
 
 ### R19. Idiom/fixed-expression guard for substitution — **DONE, 2026-08-17**
 **Linked finding:** `VALIDATION.md` §9.7/§9.9 — the pilot's single
@@ -642,6 +648,39 @@ honestly) rather than incorrectly reported as resolved via a broken
 substitution. A curated list, not a general MWE detector (`REFORMULATION_
 PROBLEM_MAP.md` §3.1's `[GAP]`) — a novel idiom not on the list will
 still break as before.
+
+### R20. Word-sense disambiguation before candidate generation — **DONE, 2026-08-17**
+**Linked finding:** `VALIDATION.md` §9.9 — "right" in "right now"
+(immediate sense) substituted using the correct/fair sense
+("justly"/"properly"), twice, independently. Item 2 in
+`REFORMULATION_PROBLEM_MAP.md` §5.
+**What was done:** `semantic.py::disambiguate_synset()` picks one
+WordNet synset via SBERT gloss-matching against a local context window
+before `engine.py` generates candidates (reuses the existing SBERT
+model, no new dependency). Fixes the general sense-confusion problem,
+not just "right now" — verified on a sentence outside the idiom guard's
+coverage. **Not a clean first pass:** re-running Stage 6's corpus (per
+direct instruction) found two real regressions before this was called
+done — a candidate colliding with another declared-difficult word
+(`_try_substitution` now also rejects those), and whole-sentence
+context failing to disambiguate two occurrences of the same word in one
+sentence (fixed with a local token window instead). Both root-caused
+and fixed in the same pass. Re-confirmed at scale against the 210-case
+ordinary-text corpus: escalation-trigger rate rose 10.4%→14.1% (same
+~42% success rate once triggered) — a real, quantified cost of smaller
+sense-pure candidate pools, not engineered around. Full record:
+`VALIDATION.md` §11; `DECISION_LOG.md` 2026-08-17-J.
+**Labeled as:** Done, with two disclosed costs, not a free win — (1)
+single-sense candidate pools are sometimes smaller/lower-scoring than
+the old sense-mixed ones even when correct, measurably shifting more
+sentences onto the escalation path (§11.7); (2) the local-window fix
+repairs the *structural* bug for repeated words with different senses,
+not full correctness for that already-documented hard case
+(`REFORMULATION_RESEARCH.md` §17 row 5) — still open.
+**Update (2026-08-17):** §11.7's escalation-rate increase directly
+raises R18's priority relative to where it stood after R19 alone — more
+of the workload now depends on escalation's success rate, which this
+item did not touch.
 
 ---
 
