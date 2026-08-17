@@ -1433,3 +1433,67 @@ succeeds now looks better than substitution's).
 implement any of the five ranked recommendations in `VALIDATION.md`
 §9.11 — user instruction was analysis first, decisions afterward.
 `reformulate.py` and the pilot test setup were not touched.
+
+### 2026-08-17-H — REFORMULATION_PROBLEM_MAP.md created; focused research pass; interface audit of app.py
+
+**What was done, per direct user instruction:** three separate pieces of
+work, none committed yet (user explicitly held off approval pending
+review).
+
+1. **`REFORMULATION_PROBLEM_MAP.md` created** — a new, explicitly *living*
+   document (unlike every other dated research file in this repo) defining
+   the reformulation engine as a nine-factor problem (input-intent
+   inference, in-context meaning preservation, grammaticality, naturalness/
+   idiomaticity, profile-difficulty resolution, word sense, cross-
+   substitution interaction, restructuring vs. substitution, change-amount
+   trade-off), each checked against real pilot evidence (`VALIDATION.md`
+   §9.6-9.11) and, for §2.7 specifically, against the actual
+   `reformulate.py`/`semantic.py` source (confirmed the per-substitution
+   SBERT check does see prior substitutions in the same sentence via the
+   candidate string, but always compares against the pristine original
+   sentence, and the whole-text final-verification gate shares the same
+   SBERT idiom-blindness as the per-substitution checks — not assumed, read
+   directly). Restated the product's ultimate objective (best, most natural
+   way for a specific speaker to get their own message and sentiment
+   across) as the standard every factor is subordinate to, per the user's
+   explicit framing.
+2. **Research pass executed** (WebSearch/WebFetch, real sources) targeting
+   the four areas the pilot evidenced most strongly — idiom/MWE
+   preservation, word-sense disambiguation, multi-difficulty interaction,
+   T5 constrained-generation/escalation — plus a survey of adjacent fields
+   (GEC/clarification precedent, stuttering/AAC-specific systems,
+   controllable text simplification, semantic-preservation metrics beyond
+   SBERT). Findings tagged `[SOURCED]`/`[GENERAL KNOWLEDGE]`/`[GAP]`,
+   crossed with feasibility for this laptop/student-scale project. Most
+   actionable finds: HuggingFace `transformers` already supports
+   constrained beam search with disjunctive constraints (`force_words_ids`)
+   — a small-effort upgrade over manual `bad_words_ids`; `pywsd` or an
+   SBERT-gloss lookup for word-sense disambiguation before candidate
+   generation (small effort, fixes the "right now" bug in principle);
+   spaCy `PhraseMatcher` + a curated idiom list as an idiom-preservation
+   guard (small effort). One unexpected, non-technical finding: mainstream
+   stuttering-therapy literature (ARTS) treats word-avoidance/substitution
+   itself as a behavior therapy works to *reduce*, in tension with this
+   project automating that behavior — recorded as an open framing question
+   in `REFORMULATION_PROBLEM_MAP.md` §2.9, not resolved here.
+3. **Interface audit of `app.py`** — removed one genuinely dead CSS rule
+   (`.pipe-card`, confirmed via a script counting every class selector's
+   usage count across the file — it was the only one appearing just once,
+   i.e. only in its own definition; every other class is actually applied
+   somewhere). Softened three places where the UI implied SBERT/automated
+   checks are a stronger guarantee than the now-twice-confirmed evidence
+   supports: the sidebar "Meaning check active" banner (now "Meaning
+   screen active," explicitly notes it can miss idiom breaks and wrong
+   word senses), the sidebar "How it works" blurb (added a "Known limits"
+   paragraph naming the same two failure modes in user-facing language),
+   and the results-page metric label ("Meaning kept" → "Meaning
+   similarity," plus a new caption stating these are automated estimates,
+   not a human judgment). No layout change, no feature removed, no engine
+   change — `sanitize_input()`/`reformulate()`/`grammar.py` untouched.
+   Verified via `tests/app_test.py` (all scenarios pass, run with the
+   project's `venv/Scripts/python.exe`) and `tests/smoke.py` (unchanged
+   output) that nothing broke.
+
+**Category:** Research / documentation / UI copy. No reformulation-engine
+behavior changed. Nothing committed — per direct user instruction, changes
+are staged locally for review, not pushed.

@@ -26,8 +26,18 @@ only to tell you where to go next.
    evidence-based architecture recommendation — **read this before designing
    or implementing any reformulation-engine change**; it's the document that
    should drive that decision, not `RESEARCH.md` alone
-9. `ROADMAP.md` — what's next, and the finding or gap that justifies each item
-10. `CHANGELOG.md` — fast-scan index into the decision log
+9. `REFORMULATION_PROBLEM_MAP.md` — the **living** Problem Definition /
+   Research Map for the reformulation engine, opened 2026-08-17 once real
+   pilot evidence showed the engine is a multi-factor research problem
+   (intent inference from malformed input, in-context meaning preservation,
+   grammaticality, naturalness/idiomaticity, profile-difficulty resolution,
+   word sense, cross-substitution interaction, restructuring vs.
+   substitution, and the help-vs-harm change budget), not a single
+   word-substitution problem — unlike the dated research passes above, this
+   one is meant to be re-opened and edited every time new evidence appears;
+   read it before proposing or prioritizing any reformulation-engine fix
+10. `ROADMAP.md` — what's next, and the finding or gap that justifies each item
+11. `CHANGELOG.md` — fast-scan index into the decision log
 
 ## The handful of standing rules (from Practice.md, restated briefly)
 

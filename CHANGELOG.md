@@ -6,6 +6,26 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-17** feat: interface audit of `app.py` — removed dead
+  `.pipe-card` CSS, softened three places implying the SBERT meaning-check
+  is a stronger guarantee than pilot evidence supports (sidebar banner,
+  "How it works" blurb gained a "Known limits" note, results metric
+  relabeled "Meaning similarity" with a new caveat caption). No layout,
+  feature, or engine change. `tests/app_test.py` + `tests/smoke.py`
+  reconfirmed passing. → `DECISION_LOG.md` 2026-08-17-H.
+- **2026-08-17** docs: added `REFORMULATION_PROBLEM_MAP.md` — a new
+  **living** Problem Definition/Research Map for the reformulation engine
+  (nine factors: input-intent inference, in-context meaning preservation,
+  grammaticality, naturalness/idiomaticity, profile-difficulty resolution,
+  word sense, cross-substitution interaction, restructuring vs.
+  substitution, change-amount trade-off), each checked against real pilot
+  data and, for the interaction factor, against `reformulate.py`/
+  `semantic.py` source directly. Includes a sourced research pass (idiom/
+  MWE detection, WSD, constrained generation, GEC/clarification precedent,
+  stuttering/AAC literature, semantic-preservation metrics) with
+  feasibility ratings and a proposed implementation order. `CLAUDE.md`
+  reading order and `DOCS.md` index updated to point to it. →
+  `DECISION_LOG.md` 2026-08-17-H.
 - **2026-08-17** docs: analyzed P1's real 30-item v3 pilot data —
   meaning=4.13/5, naturalness=4.07/5, ease=+1.10, preferred-reformulated
   73.3%. Sharp category split (content-word targets near-perfect,
