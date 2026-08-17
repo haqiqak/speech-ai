@@ -1634,3 +1634,221 @@ coverage, not statistical power — the exact percentage-point shift
 (10.4%→14.1%) should be read as "a real, confirmed direction," not as
 a precise number that would replicate exactly on a different sentence
 set.
+
+## 12. Diagnostic experiment — does a promptable model with the constraint's reason beat blocklist-only escalation? (executed 2026-08-17)
+
+`REFORMULATION_PROBLEM_MAP.md` §5 item 3 (renumbered from the earlier
+draft's item 3 — the item both parallel research passes converged on).
+Per the user's explicit instruction: run this diagnostic on the
+currently-failing cases, measure success/meaning/naturalness/difficulty-
+avoidance/runtime/failure-modes against the baseline, **do not replace
+the current engine**, and only proceed to the phrase-level tier if the
+result shows a meaningful improvement.
+
+### 12.1 Method
+
+New script `eval/escalation_model_comparison.py`. Failing-case set: every
+sentence from the committed 210-case ordinary-text corpus
+(`eval/reformulation_escalation_rate.py`) where escalation triggered and
+failed in production — **22 real sentences, re-derived directly from
+`reformulate.reformulate()`, not hand-picked.** For each: the current
+production baseline (`rephrase.generate_candidates`, `bad_words_ids`
+only) is compared against `google/flan-t5-base` (247.6M params — chosen
+to be comparable in size to the current model, 222.9M params, so any
+difference isn't just "a bigger model won") prompted with the flagged
+words **and** a natural-language reason derived from the profile (e.g.
+*"The speaker stutters on words that start with the sound(s) s, so
+those must not appear in the rewrite."*), with no `bad_words_ids` at
+all — isolating the effect of explanation from hard blocking. A third,
+hybrid condition (flan-t5-base with **both** the reason prompt **and**
+`bad_words_ids`) was added after the first result, to test whether the
+two mechanisms combine. Every candidate from every condition is scored
+by the **exact same three checks** `reformulate.py::_try_escalation`
+already applies (SBERT similarity ≥ threshold, `negation_consistent`,
+and a post-hoc scan for the flagged sound/words in every content word of
+the output) — this is the whole fairness contract of the experiment; no
+new or different verification logic was invented for the new model.
+
+### 12.2 Result: a real, robust trade-off — not a clean win, not a dead end
+
+| Condition | Pass rate (n=22) | Avg. best-candidate SBERT sim | Avg. time/case |
+|---|---|---|---|
+| Baseline (current production) | 0/22 (0%) | 0.8650 | 2.11s |
+| flan-t5-base + reason, no `bad_words_ids` | 1/22 (4.5%) | **0.9504** | 2.59s |
+| flan-t5-base + reason + `bad_words_ids` (hybrid) | 2/22 (9.1%) | 0.8116 | 2.70s |
+
+Failure-reason breakdown (per-case, best candidate):
+
+| Condition | Leaked the flagged sound | Below SBERT threshold | Passed |
+|---|---|---|---|
+| Baseline | 14 | 8 | 0 |
+| Reason-only | 20 | 1 | 1 |
+| Hybrid | 10 | 10 | 2 |
+
+**[FINDING] Reason-based prompting robustly and substantially improves
+meaning preservation — this part of the hypothesis is confirmed, not
+marginal.** Average similarity jumped from 0.865 to 0.950, and this held
+across nearly all 22 individual cases, not a couple of outliers (e.g.
+"My friend brought fresh bread to breakfast" → baseline candidate
+scored 0.6166, flan-t5's scored 0.9927 for the same sentence). This is
+exactly what the literature review (`REFORMULATION_PROBLEM_MAP.md` §3.9)
+predicted: not being straitjacketed by token-level blocking lets the
+model paraphrase far more naturally.
+
+**[FINDING] That improvement does not translate into passing full
+verification, because constraint satisfaction — not meaning
+preservation — is the actual bottleneck, and explaining the reason in
+prose does not reliably fix it.** Reason-only's failure mode inverted
+from the baseline's (mostly low-similarity failures) to almost
+entirely leaks (20/22) — a 247M-parameter instruction-following model,
+told in a sentence why to avoid certain sounds, mostly does not
+reliably apply that as a phonological rule; it produces a fluent,
+faithful paraphrase that still contains the flagged sound.
+
+**[FINDING] The hybrid condition doesn't cleanly get the best of both
+worlds.** Adding `bad_words_ids` back on top of the reason prompt
+recovered some leaks (10 vs baseline's 14) and produced the best raw
+pass count (2/22) — but at a similarity cost worse than baseline itself
+(0.8116 vs 0.8650). Read together with §6.8's R17-follow-up finding
+(tighter blocking pushes the *current* model toward lower-similarity
+candidates too), this looks like the same mechanism recurring on a
+different, less paraphrase-specialized base model — and flan-t5-base,
+despite broader instruction-following training, is not fine-tuned for
+paraphrase generation the way `Vamsi/T5_Paraphrase_Paws` is, so it
+likely has less headroom to absorb a hard constraint gracefully.
+
+**[FINDING, a genuinely new failure mode, not present in the baseline]**
+On the case with the most flagged words in one sentence (4 flagged
+words — a dense/degenerate profile case), the hybrid condition produced
+`"The speaker stuttered on words that start with s."` — the model
+echoed a fragment of its own *instruction prompt* back as if it were
+the rewritten sentence, rather than paraphrasing the input at all. This
+never happens in the baseline (which has no natural-language prompt to
+echo). A concrete, disclosed risk of prompt-based approaches that
+blocklist-only approaches don't share.
+
+**[FINDING] A common blind spot across every condition, not just the
+new ones.** For several cases (e.g. "researcher measured the **sample**",
+"my **sister** started"), every condition — baseline included —
+produced only a trivial morphological variant of the flagged word
+(singular↔plural), which trivially still shares the flagged onset. None
+of the three approaches has any mechanism for recognizing "this word
+has few or no real synonyms, morphological variation won't help" and
+either refusing cleanly or reaching for a genuinely different word
+choice (e.g. dropping the word, restructuring around it). This is a
+shared limitation, not evidence for or against the new approach.
+
+### 12.3 Robustness check: is model capacity the limiting factor?
+
+Before drawing a final conclusion, the same reason-only and hybrid
+conditions were re-run with **`google/flan-t5-large` (783.2M params —
+3.5× larger)** on a stratified 8-case subset (reduced beam width for
+tractable CPU runtime — this was a robustness check, not a claim of
+equivalent statistical power to the full 22-case run).
+
+| Condition | Pass rate (n=8) | Avg. best-candidate SBERT sim | Avg. time/case |
+|---|---|---|---|
+| Baseline | 0/8 (0%) | 0.8606 | 2.44s |
+| flan-t5-**large** + reason, no `bad_words_ids` | 0/8 (0%) | **0.9815** | 8.02s |
+| flan-t5-**large** + reason + `bad_words_ids` (hybrid) | 1/8 (12.5%) | 0.8372 | 8.43s |
+
+**[FINDING] The qualitative picture is unchanged at 3.5× the parameter
+count, and meaning preservation improved even further.** Reason-only's
+average similarity rose to 0.9815 (higher than the base model's 0.9504)
+— stronger evidence still for the "prompting helps meaning preservation"
+finding — but the pass rate on this sample stayed at 0/8, and the
+hybrid pass rate (12.5%) is statistically indistinguishable from the
+base model's (9.1%) on samples this small. **This rules out "the model
+was just too small to understand the instruction" as the explanation**
+for the low pass rate — the constraint-satisfaction gap persists across
+a 3.5× capacity range. Runtime cost scaled roughly with parameter count
+(≈3.1× slower per case), a real, disclosed resource cost of going
+bigger for no corresponding gain in the metric that actually matters
+(pass rate).
+
+### 12.4 Verdict: does this clear the "meaningful improvement" bar?
+
+**[RECOMMENDATION, the honest answer, not the hoped-for one]** No.
+Neither model, at either size, in either configuration (reason-only or
+hybrid), reaches a pass rate anywhere close to usable — 0% to 12.5% on
+small samples, against a baseline of 0%. This does not meet the bar the
+user set for proceeding to the phrase-level tier investigation, and
+that step is correctly **not** started as a result — the plan's own
+conditional gate was not met, and this is reported as such rather than
+proceeding anyway.
+
+What the experiment *did* establish, and why it wasn't wasted effort:
+reason-based prompting has a real, robust, twice-confirmed (at two
+model sizes) positive effect on meaning preservation specifically — the
+bottleneck is squarely constraint satisfaction, not fluency or fidelity.
+That reframes the next planned step (`REFORMULATION_PROBLEM_MAP.md` §5,
+constrained beam search / `force_words_ids`) usefully: it should be
+evaluated **on the current model first** (as already planned), and if
+it meaningfully improves constraint satisfaction there, it is also
+worth testing *combined with* reason-based prompting rather than
+assuming blocklist-only is the ceiling — this experiment is evidence
+that the two mechanisms are not redundant with each other, just that
+neither alone (nor the naive combination tested here) is sufficient.
+
+**[LIMITATION]** 22 cases (8 for the large-model check) is enough to
+find and characterize failure mechanisms clearly, not enough to
+establish a precise pass-rate percentage that would replicate on a
+different corpus — consistent with how every other diagnostic corpus in
+this document has been scoped and read. Only two model families
+(T5-base-scale generic paraphrase vs. Flan-T5 instruction-tuned, both
+still T5 architecture) were tested; a decoder-only instruction-tuned
+model was not tried and remains an open question, not ruled out by this
+result specifically.
+
+## 13. Constrained beam search (`force_words_ids`) — blocked by a dependency issue, not evaluated (found 2026-08-17)
+
+Per the plan's next step after §12 (regardless of §12's own result, this
+item was independently justified). `REFORMULATION_PROBLEM_MAP.md` §3.3
+described this, based on published HuggingFace documentation, as "small
+effort, same library already in use, no new dependency." **That claim
+does not hold for this project's actual installed environment, found by
+directly testing it, not assumed from documentation.**
+
+**[FINDING] `transformers==5.10.2` (this project's pinned/installed
+version) no longer supports constrained beam search through the
+standard `model.generate(force_words_ids=...)` call.** A minimal smoke
+test (`model.generate(..., force_words_ids=[[...]])`) raised:
+`ValueError: Constrained Beam Search requires trust_remote_code=True...
+it loads https://hf.co/transformers-community/constrained-beam-search`
+— the feature has been moved out of the core library into a
+community-maintained "custom_generate" repo, loaded dynamically from
+the Hub at call time. Retrying with `trust_remote_code=True` (accepting
+the new risk that implies — arbitrary code fetched from the Hub at
+runtime, a category of risk no other model call in this project takes
+on) failed differently: `OSError: transformers-community/constrained-
+beam-search does not contain a custom_generate subdirectory with a
+generate.py file, can't load the custom generate function` — **the
+replacement repo itself does not currently provide a loadable
+implementation.** Checked whether the underlying constraint classes
+(`DisjunctiveConstraint`/`PhrasalConstraint`) are still directly
+importable as a lower-level fallback: they are not present in
+`transformers.generation` in this version either — fully removed, not
+just hidden behind the new API.
+
+**[LIMITATION]** This is not evidence that constrained beam search is a
+bad idea, or that it wouldn't help — nothing about its actual behavior
+was measured. It is evidence that **the specific, cheap implementation
+path this project's own research pass assumed** (call an existing
+`transformers` API, no new dependency) **does not currently exist** in
+the installed environment. Making it work would now require one of:
+(a) pinning an older `transformers` version that still has this built
+in — a real dependency-version decision affecting every other model
+call in this project (SBERT, both T5 checkpoints), not evaluated here
+for compatibility risk; (b) accepting `trust_remote_code=True` and
+waiting for/contributing to the community repo being fixed; (c) hand-
+implementing disjunctive constrained decoding directly — a materially
+larger effort than "small," closer to the NeuroLogic Decoding route
+`REFORMULATION_PROBLEM_MAP.md` §3.3 already separately flagged as
+medium-effort with no maintained package.
+
+**[RECOMMENDATION, not decided here]** This item's feasibility rating
+(§4's table: "Small") needs to be corrected to reflect this — done in
+`REFORMULATION_PROBLEM_MAP.md`. Whether to pursue (a), (b), or (c), or
+deprioritize this item, is a real decision with dependency-risk
+implications beyond a single diagnostic script's scope — surfaced to
+the user rather than decided unilaterally.

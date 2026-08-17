@@ -285,6 +285,35 @@ single-word substitution's narrower check can. This reframes restructuring
 from "the risky fallback" to "the higher-quality-when-it-works path with a
 success-rate problem," which changes its priority (§5).
 
+**Update, 2026-08-17 — two research passes, and a convergence neither
+one was told about the other.** Following a direct question from the
+user ("can't we replace idiom-to-idiom / phrase-to-phrase instead of
+just leaving it alone or rewriting the whole sentence?" and "should we
+fine-tune T5 for this specifically?"), two research passes were run in
+parallel. §3.8 covers phrase-level replacement as a third tier between
+word-substitution and whole-sentence restructuring; §3.9 covers
+fine-tuning/specializing a model for this task. Both independently
+converged on the same near-term recommendation — see §5 item 3.
+
+**Update, 2026-08-17, second — the diagnostic experiment §5 item 3
+called for was run, and it settled the question with a real, informative
+negative result.** `VALIDATION.md` §12: `google/flan-t5-base`, prompted
+with the flagged words plus a natural-language reason (no
+`bad_words_ids`), was tested against all 22 real currently-failing
+escalation cases. It robustly improved meaning preservation (avg. SBERT
+similarity 0.865 → 0.950, confirmed again at 3.5× model size: 0.982) —
+but the actual pass rate barely moved (0% → 4.5%, or 9.1% with a hybrid
+hard-blocking variant), because constraint satisfaction, not meaning
+preservation, is the real bottleneck, and telling the model *why* in
+prose does not reliably make it obey a phonological rule, at any tested
+model size. Cause B (§2.8's original finding) is now confirmed to
+survive a genuinely different mechanism (explanation instead of pure
+blocking), not just a genuinely different model — a stronger piece of
+evidence that this is a structural limitation of prompting/blocking
+approaches on a generic paraphrase-style model, not a fixable framing
+gap. Per the plan's own condition, the phrase-level tier (§5 item 4)
+was correctly **not** started as a result.
+
 ### 2.9 The help-vs-harm trade-off: how much change is too much
 
 **Current state:** no explicit mechanism currently reasons about this
@@ -495,6 +524,185 @@ this section.
   here would need this project's own re-evaluation against real pilot
   data, not just borrowed confidence from a paper.
 
+### 3.8 Phrase-level replacement — a third tier between word-substitution and whole-sentence restructuring
+
+Prompted directly by the user's question: instead of only choosing
+between "protect the idiom, leave it alone" (§2.4/R19) and "escalate
+the whole sentence" (§2.8), should there be a middle tier that replaces
+the *whole flagged phrase* with a different, equally natural phrase
+that conveys the same meaning without the flagged sound? Researched as
+its own literature question, not assumed to be a good idea in advance.
+
+- **[SOURCED] This is a real, actively-studied task, not a stretch.**
+  The PIE corpus (Paraphrasing Idiomatic Expressions, ACL MWE 2021)
+  frames idiom↔literal rewriting explicitly as: disambiguate the idiom's
+  sense in context → generate a literal phrase → fit it back into the
+  sentence for fluency — i.e. phrase-level, context-conditioned
+  generation, not single-word substitution and not whole-sentence
+  paraphrase. A larger follow-up (AAAI 2022, "Idiomatic Expression
+  Paraphrasing without Strong Supervision") built a 15,627-pair parallel
+  corpus via weak supervision and reports SARI — a metric built
+  specifically for evaluating edits *smaller than the whole sentence*
+  (keep/add/delete n-gram operations), which most other paraphrase
+  metrics don't distinguish from whole-sentence rewrites.
+- **[SOURCED, the strongest single piece of evidence]** PARSEME 2.0's
+  MWE-2026 shared task (co-located with EACL 2026 — current, not
+  historical) has a subtask defined as **"paraphrasing a sentence
+  containing an MWE, so as to remove idiomaticity"** — almost exactly
+  the operation being considered here, across 14 languages. This is
+  strong confirmation the task is real and separately worth studying,
+  not an invented framing.
+- **[SOURCED] Idiomaticity is usage-dependent, not phrase-dependent —
+  a real gap in R19's current design.** The MAGPIE corpus's whole
+  reason for existing is that the same surface phrase ("how's it
+  going") can be literal or figurative depending on context. R19's
+  curated list can't see that distinction — it protects the phrase
+  every time it appears, correct or not. Not a blocking problem today
+  (false positives on a curated list of genuinely-almost-always-
+  idiomatic phrases are rare) but a real limitation if the list grows.
+- **[SOURCED] A concrete, low-risk implementation path exists using
+  machinery already in this codebase.** T5's own pretraining objective
+  is span-corruption with sentinel tokens (mask a span, fill it in) —
+  architecturally exactly "mask the idiom, ask the model to fill it" —
+  but the checkpoint already in use (`Vamsi/T5_Paraphrase_Paws`) is
+  fine-tuned for whole-sentence paraphrase, not sentinel-infilling, so
+  falling back to raw span-corruption behavior would likely produce
+  short, generic fills, not idiomatically fluent ones (reasoned from
+  architecture, not benchmarked). The more promising near-term
+  approach, per "Sequence Span Rewriting" (arXiv 2101.00416) and the
+  agent's own read: reuse the *existing* restructuring call
+  (`rephrase.generate_candidates`), but scope its input to a short
+  window around the idiom span instead of the whole sentence, then
+  splice the result back in — same model, same gates, no new
+  dependency, no training. ILM (Donahue et al., ACL 2020, GPT-2-based
+  infilling with published code) is a real alternative if dedicated
+  infilling quality is needed later.
+- **[SOURCED] Runtime detection beyond a curated list is possible but
+  not free.** PMI/statistical MWE detection (PARSEME's own toolkit) is
+  cheap and training-free but, per MAGPIE's insight above, would
+  false-positive on literal, non-idiomatic uses of fixed phrases.
+  SemEval-2022 Task 2 (idiomaticity detection *in context*) shows the
+  field's actual solution is a small fine-tuned classifier (BERT/XLM-R-
+  scale), not statistics alone — a real, medium-effort upgrade path,
+  not needed to build the tier itself (R19's existing curated-list
+  trigger already provides a deterministic, zero-cost detection signal
+  to start from).
+- **[SOURCED] Evaluation must score the resulting FULL sentence, not
+  the isolated phrase swap — and this project already does this for
+  the other two tiers.** "Don't Take This Out of Context!" (arXiv
+  2305.14755) found isolated-span metrics correlate poorly with human
+  judgment (ρ 0–0.3) versus context-aware scoring of the whole result
+  (ρ 0.7–0.9) for exactly this shape of localized-edit-in-a-larger-text
+  problem. Directly actionable: reuse the same "SBERT on original vs.
+  full reformulated sentence" pattern §2.8's restructuring tier already
+  uses, not a new evaluation design.
+- **Agent's own assessment (not a literature finding, stated as such):**
+  well-justified conceptually with real, current prior art (PARSEME
+  2.0's live shared task especially), and a genuine third tier — it
+  doesn't require touching the existing word-level or sentence-level
+  code paths. Not a slam-dunk free win: the idiom-paraphrase literature
+  optimizes for idiom→literal, not idiom→*phonetically-safer*, so this
+  project's own phoneme veto still has to do that half of the work
+  regardless of which generation approach is used; and rushing the
+  detection side (PMI alone, skipping context-sensitivity) would trade
+  today's failure mode (idioms wrongly left untouched) for a new one
+  (literal, non-idiomatic uses wrongly phrase-replaced).
+
+### 3.9 Fine-tuning or specializing a model for this task specifically
+
+The user's second question: given the eventual goal is a full
+profile-to-profile reformulation service, should this project invest in
+fine-tuning/specializing T5 (or another model) for phoneme-avoiding,
+profile-conditioned reformulation, rather than continuing to rely on an
+off-the-shelf generic paraphrase checkpoint?
+
+- **[SOURCED] The closest real precedent is ParaDetox (ACL 2022),** not
+  anything phoneme-specific. ParaDetox fine-tuned BART-base on ~10K
+  parallel toxic→non-toxic pairs to build a small model specialized to
+  rewrite around a *forbidden-content class* while preserving meaning —
+  structurally the closest match to "avoid X, preserve meaning" at this
+  project's scale. A 2025 follow-up (ParaDeHate) reused the exact same
+  recipe for a *different* avoid-class by regenerating training data
+  with an LLM in the loop instead of human annotators — direct
+  precedent for this project bootstrapping training pairs from its own
+  rule-based engine, or from LLM distillation for the harder cases.
+- **[SOURCED] PEFT (LoRA) fine-tuning of a T5-base-scale model is
+  realistic on a single consumer GPU, not on CPU alone.** A 2025
+  profiling study found LoRA/QLoRA fine-tuning feasible on an 8GB-class
+  consumer GPU (RTX 4060-tier); T5-base LoRA at rank 16 updates ~0.4%
+  of parameters, cutting peak memory from ~12GB (full fine-tune) to
+  ~3GB. **No sourced benchmark documents CPU-only *training* of a
+  T5-base-scale model at a usable speed** — this project's current
+  CPU-only setup is fine for inference (already proven) but fine-tuning
+  would need at minimum a free-tier Colab/Kaggle GPU or equivalent, a
+  real infrastructure decision, not assumed available.
+- **[SOURCED, the load-bearing finding for this whole question]**
+  Prompting a capable instruction-tuned model, with the constraint
+  spelled out in the prompt, is a **documented, evaluated, competing
+  alternative to fine-tuning** in the closest analogous literature — not
+  a lesser fallback. ReadCtrl/MedReadCtrl (2024–2025) explicitly frame
+  "audience-aware, prompt-based simplification with no fine-tuning" as
+  "a viable alternative to fine-tuning... rapid personalization that
+  incurs no training overhead," and report their own fine-tuned model
+  only modestly beating a strong prompted baseline (52%:36% human-eval
+  win rate) — a real edge, but not a rout, and demonstrated at 7B scale,
+  not at this project's T5-base scale.
+- **[GAP, the central risk to any fine-tuning investment]** No published
+  work fine-tunes specifically for *phoneme*-level avoidance in
+  paraphrase generation — every real "avoid X" precedent (ParaDetox,
+  ParaDeHate, detoxification generally) operates at the word/topic/
+  style level, where an off-the-shelf classifier can already detect a
+  violation. Phoneme-conditioned avoidance in a meaning-preserving
+  paraphraser appears to be a genuine, first-of-kind gap this project
+  would be filling itself, not a template to copy — a materially bigger
+  lift than "fine-tune BART on 10K pairs" suggests at first glance.
+- **[SOURCED] Profile-conditioning architectures exist (prefix-tuning,
+  PPlug/Persona-Plug) but are demonstrated at LLM scale, not T5-base.**
+  Adapting a learned or hand-built per-speaker prefix to a T5-base model
+  is conceptually simple; the specific published results proving it
+  works are not at this project's model scale.
+- **[SOURCED] Document/speech-level, profile-conditioned reformulation
+  is confirmed real, harder, and not solved by looping the sentence-
+  level engine.** Document-level text simplification work (arXiv
+  2412.18655, 2024) shows naive sentence-by-sentence processing is
+  *not* considered adequate for coherence at the document level in this
+  literature — cross-sentence pronoun/vocabulary/tone consistency needs
+  explicit handling. **[GAP]** All document-level personalization
+  literature found is reader-facing (simplify for comprehension), not
+  speaker-facing (rewrite for ease of utterance) — the project's
+  eventual "profile-to-profile full speech" goal (§1) has no direct
+  precedent at the document level; it's confirmed future work, not
+  something with a template to follow yet.
+- **[SOURCED] A reusable joint evaluation metric already exists,
+  independent of whether fine-tuning happens.** ParaDetox's own
+  "J-score" (constraint-satisfaction × content-preservation × fluency,
+  multiplied into one number) is a real, human-correlated pattern this
+  project could adopt now — it already has the content-preservation
+  piece (SBERT) and the constraint-satisfaction piece (the phoneme/
+  flagged-word check); only a fluency scorer would be new.
+- **Agent's own assessment (not a literature finding, stated as such):**
+  fine-tuning a *phoneme-level* model is not supported as the right next
+  investment — no template exists, and the closest real precedents
+  target a categorically easier constraint class. The evidence instead
+  supports, in order: (1) try prompting a stronger, more capable
+  instruction-tuned model with the constraint's *reason* spelled out in
+  natural language, before assuming the current architecture's ceiling
+  is the model's fault — zero training cost, directly tests whether
+  Cause B (§2.8) is a knowledge problem (the model doesn't know *why*
+  to avoid these words) rather than a mechanism problem; (2) only if
+  that under-delivers, a ParaDetox-style *word/token-level* LoRA
+  fine-tune (real precedent, needs one consumer GPU) — not a
+  phoneme-level one.
+
+**The convergence neither research pass was told about the other:**
+§3.8's practical near-term recommendation (reuse the existing
+restructuring call, scoped to a smaller span, no new model) and §3.9's
+practical near-term recommendation (try a stronger *prompted* model
+with the constraint's reason spelled out, no fine-tuning) point at the
+same shape of next step — improve what the generation call is *told*
+and *shown*, before spending on either a idiom classifier or a
+fine-tune. See §5's new item 1a.
+
 ## 4. Candidate techniques — feasibility summary
 
 | Technique | Targets | Off-the-shelf? | New model/training? | Rough effort |
@@ -502,7 +710,7 @@ this section.
 | spaCy `PhraseMatcher` + curated idiom list | 2.4, 2.7 | Yes | No | Small |
 | `pywsd` Lesk-family sense disambiguation | 2.6 | Yes | No | Small |
 | SBERT-gloss WSD (reuse existing SBERT) | 2.6 | Yes | No | Small |
-| HF constrained beam search (`force_words_ids`) | 2.8 | Yes | No | Small |
+| HF constrained beam search (`force_words_ids`) | 2.8 | **No, as of `transformers==5.10.2` — VALIDATION.md §13** | No, but needs `trust_remote_code` or a version pin | Was rated Small; corrected to **Medium+, blocked** until a packaging path is chosen |
 | MeaningBERT as a second verification signal | 2.2 | Yes | No | Small |
 | NLI bidirectional-entailment check | 2.2, 2.4 | Yes | No | Small-medium |
 | BERTScore/MoverScore as a second signal | 2.2 | Yes | No | Small |
@@ -512,6 +720,13 @@ this section.
 | NeuroLogic Decoding/A*esque | 2.8 (partially — Cause B) | No (no pip package) | No, but requires porting research code | Medium |
 | PARSEME-trained MWE tagger | 2.4 | No | Adapting an existing tagger | Medium |
 | ACCESS/MUSS-style control-token aggressiveness knob | 2.9 | No | Yes — real fine-tuning infra needed | Large — not currently feasible |
+| Span-scoped restructuring (existing T5 call, windowed input) | 2.4, 2.8 | Yes (reuses existing model) | No | Small |
+| Prompt a stronger instruction-tuned model with the constraint's reason spelled out | 2.6, 2.8 | Depends on model chosen | No | Small-medium |
+| MAGPIE-trained in-context idiomaticity classifier | 2.4 | No | Yes, small classifier | Medium |
+| ILM-style GPT-2 span infilling | 2.4 | Partial (published code, not a package) | Yes, if used | Medium |
+| ParaDetox-style LoRA fine-tune (word/token-level avoidance) | 2.8 | No | Yes — needs a consumer GPU | Medium-large, and needs a GPU decision first |
+| Phoneme-level fine-tuning of a paraphrase model | 2.8 | No | Yes, first-of-kind, no template | Large, not currently recommended (§3.9) |
+| ParaDetox-style J-score (joint constraint × meaning × fluency metric) | 2.2, 2.5 | Mostly (reuses SBERT + existing constraint check) | Small (a fluency scorer) | Small |
 
 ## 5. Ordered implementation plan (proposed — not yet approved or built)
 
@@ -553,26 +768,99 @@ itself supported.
    directly fixed; two unrelated, different-class bugs (POS mismatch,
    a phrasal-verb idiom not on §5 item 1's curated list) remain open,
    named rather than glossed over.
-3. **Upgrade T5 escalation to HF constrained beam search** (§2.8, §3.3) —
-   small effort, same library already in use, addresses the R17-follow-up
-   side effect (tighter blocking → lower-similarity survivors) without
-   claiming to solve Cause B outright.
-4. **Add a second semantic-preservation signal** (§2.2, §3.7) — most
+3. **[TESTED, 2026-08-17 — `VALIDATION.md` §12 — result: negative, not
+   pursued further as a model swap] Try a stronger, promptable model for
+   restructuring, with the constraint's *reason* spelled out in-context**
+   (§2.8, §3.8, §3.9) — the diagnostic both parallel research passes
+   converged on. Run against all 22 real, currently-failing escalation
+   cases (not hand-picked), comparing `google/flan-t5-base` (comparable
+   parameter count to the current model) prompted with the profile's
+   reason, against the current production baseline, using the exact
+   same verification checks for both. **Result: reason-based prompting
+   robustly improved meaning preservation (avg. SBERT similarity 0.865 →
+   0.950, confirmed again at 3.5× model capacity: 0.982) but did not
+   meaningfully improve the actual pass rate (0% → 4.5%, or 9.1% with a
+   hybrid hard-blocking variant) — constraint satisfaction, not meaning
+   preservation, is the real bottleneck, and a natural-language
+   explanation does not reliably fix it at up to ~800M parameters.** Did
+   not clear the bar for proceeding to item 4 below (correctly not
+   started as a result). Real, useful negative result: rules out "the
+   current model just needs a bigger/more-instructable replacement" as
+   the fix, and reframes item 5 (constrained beam search) as worth
+   testing in combination with reason-prompting, not as an alternative
+   to it — the two mechanisms weren't shown to be redundant, just that
+   neither alone (nor the specific hybrid tested) was sufficient.
+4. **[NOT STARTED — item 3's gate was not met] Phrase-level replacement
+   tier** (§2.4, §3.8) — a third granularity between word-substitution
+   and whole-sentence restructuring: detect a flagged word inside a
+   fixed expression (R19's existing curated list is a ready, zero-cost
+   trigger — no new detection machinery needed to start), replace the
+   *whole phrase* with an equivalent, easier phrasing, verify against
+   the resulting full sentence (reusing the exact SBERT-on-full-result
+   pattern §2.8 already uses, per §3.8's own evaluation-methodology
+   finding). Real, current prior art (PARSEME 2.0's MWE-2026 shared task
+   literally studies this operation) — still a defensible idea on its
+   own merits, but the plan's explicit condition for starting it now
+   (item 3 showing a meaningful improvement) was not met, so it stays
+   queued rather than started opportunistically.
+5. **[BLOCKED, 2026-08-17 — `VALIDATION.md` §13 — feasibility rating
+   corrected from Small] Upgrade T5 escalation to HF constrained beam
+   search** (§2.8, §3.3) — attempted, not completed. `transformers==5.10.2`
+   (this project's installed version) no longer supports
+   `force_words_ids` through the standard `generate()` call — the
+   feature was moved out of core into a community `custom_generate` repo
+   that, tested directly, does not currently provide a loadable
+   implementation, and requires `trust_remote_code=True` (a new class of
+   risk — running Hub-fetched code at call time — this project has not
+   taken on anywhere else). The underlying constraint classes
+   (`DisjunctiveConstraint`/`PhrasalConstraint`) are also no longer
+   importable in this version. **This item's technique itself was never
+   evaluated — the packaging path assumed by §3.3's research
+   (documentation-based, not tested against this project's actual
+   environment) turned out not to exist.** Real options, none decided
+   here: pin an older `transformers` (a real dependency-risk decision
+   affecting every model call in this project, not just this one),
+   accept `trust_remote_code=True` and wait for the community repo, or
+   hand-implement disjunctive decoding (materially larger than "small,"
+   closer to the NeuroLogic Decoding route already flagged as
+   medium-effort with no maintained package). Surfaced to the user
+   rather than decided unilaterally, since it's a dependency-footprint
+   decision, not a pure research/implementation one.
+6. **Add a second semantic-preservation signal** (§2.2, §3.7) — most
    likely candidate: NLI bidirectional entailment or MeaningBERT, reported
    alongside SBERT (never replacing it silently, per Practice.md §10) —
    directly targets the now-twice-confirmed one-directional SBERT blind
    spot at its root, rather than only patching the specific surface cases
-   (idioms) that happen to have been found so far.
-5. **Re-examine multi-difficulty interaction after (1)** (§2.7) — n=3 in
+   (idioms) that happen to have been found so far. §3.9's ParaDetox-style
+   J-score is a related, cheap addition worth doing alongside this —
+   both are evaluation-infrastructure improvements, not engine changes.
+7. **Re-examine multi-difficulty interaction after (1)** (§2.7) — n=3 in
    the current pilot is too small to act on alone; re-evaluate specifically
    once the idiom guard exists, since much of the compounding risk may
    already be explained by §2.4 rather than needing its own separate fix.
-6. **Input-ambiguity detection + clarification flow** (§2.1, §3.4) — real
+8. **Input-ambiguity detection + clarification flow** (§2.1, §3.4) — real
    precedent exists for the abstain/ask *pattern*, but this is the largest
    item on this list: it needs a new UX interaction (a clarification
    round-trip), not just an engine change, and deserves its own design pass
    (in the spirit of `PROBLEM_FORMULATION.md`'s treatment of the difficulty
    profile) rather than being bundled into an engine-only sprint.
+9. **[NEW, 2026-08-17, explicitly deferred] A ParaDetox-style word/
+   token-level LoRA fine-tune** (§2.8, §3.9) — real precedent, but only
+   worth it if item 3 (prompting) under-delivers, and gated on an
+   infrastructure decision this project hasn't made yet: this needs a
+   consumer GPU (or free-tier Colab/Kaggle), not the CPU-only setup used
+   everywhere else in this repo. Explicitly **not** a phoneme-level
+   fine-tune — §3.9's `[GAP]` found no template for that; scope would be
+   word/token-level avoidance only, the same class of problem ParaDetox
+   actually solved.
+10. **[NEW, 2026-08-17, explicitly future work, not started]
+    Document/speech-level, profile-conditioned reformulation** (§1, §3.9)
+    — the project's own longer-term "profile-to-profile" goal. §3.9
+    confirmed this is a real, harder, distinct problem in the literature
+    (naive sentence-by-sentence processing is not considered adequate
+    for document-level coherence) with no direct speaker-facing
+    precedent to build from — worth its own design pass when the time
+    comes, not something to bolt onto the current sentence-level engine.
 
 None of the above is implemented as part of this pass. This is the
 prioritized map for a future, explicitly-approved implementation cycle.
@@ -599,6 +887,21 @@ prioritized map for a future, explicitly-approved implementation cycle.
 - How the therapy-framing tension in §2.9 should actually shape the
   product's positioning — an open product question, not an engineering one,
   and explicitly not decided here.
+- Whether a stronger prompted model (§5 item 3) actually outperforms the
+  current `bad_words_ids`-only approach when given the constraint's
+  reason in natural language, or whether Cause B is more of a mechanism
+  problem than a knowledge problem after all — this is exactly why item
+  3 is scoped as a diagnostic experiment first, not assumed as a fix.
+  Which specific stronger model is even feasible on this project's
+  CPU-only setup is itself unresolved — not researched yet, deliberately
+  left for the implementation step rather than guessed at here.
+- Whether R19's curated idiom list is a large enough trigger set to make
+  a phrase-level tier (§5 item 4) worth building now, or whether it
+  should wait until the list has grown enough (via real usage/future
+  pilots) to justify the tier's added complexity.
+- Whether this project will actually get access to a consumer GPU (or
+  free-tier cloud GPU) — §3.9's fine-tuning item (§5 item 9) is gated on
+  this and it hasn't been decided or even asked about yet.
 
 ## 7. Changelog (of this document)
 
@@ -626,3 +929,30 @@ prioritized map for a future, explicitly-approved implementation cycle.
   (smaller candidate pools sometimes score lower even when sense-correct)
   was NOT engineered around, per this project's no-speculative-tuning
   rule. Full record: `VALIDATION.md` §11.
+- **2026-08-17** — Two new research passes added (§3.8 phrase-level
+  replacement as a third tier; §3.9 fine-tuning/specializing a model for
+  this task), prompted directly by user questions, not self-initiated.
+  Both independently converged on the same near-term recommendation
+  (try a stronger prompted model with the constraint's reason spelled
+  out, before either building an idiom classifier or fine-tuning
+  anything) — §5's implementation plan re-ranked accordingly (new items
+  3–4, existing items renumbered 5–8, two new explicitly-deferred items
+  9–10 for fine-tuning and document-level reformulation). No code
+  changed — research only, per direct instruction to research before
+  deciding next steps.
+- **2026-08-17** — §5 item 3 (the promptable-model diagnostic) executed
+  and closed with a real negative result, not a positive one: reason-
+  based prompting robustly helps meaning preservation but does not fix
+  constraint satisfaction, confirmed at two model sizes. §2.8 and §5
+  updated. Item 4 (phrase-level tier) correctly stays queued, not
+  started, since the plan's own gate for it wasn't met. Full record:
+  `VALIDATION.md` §12. The current engine was not touched or replaced —
+  this was a side-by-side diagnostic only, per direct instruction.
+- **2026-08-17, second** — §5 item 5 (constrained beam search) attempted
+  next and found blocked, not evaluated: `transformers==5.10.2`
+  (installed) no longer supports `force_words_ids` through `generate()`
+  without `trust_remote_code=True`, and the replacement community repo
+  doesn't currently provide a loadable implementation either — found by
+  direct testing, not assumed from documentation. §4's feasibility
+  rating and §5 item 5 corrected from "Small" to "blocked, needs a
+  dependency-risk decision." Full record: `VALIDATION.md` §13.

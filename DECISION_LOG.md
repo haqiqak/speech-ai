@@ -1655,3 +1655,182 @@ PROBLEM_MAP.md` §5 item 2). Full record: `VALIDATION.md` §11;
 `REFORMULATION_PROBLEM_MAP.md` §2.6/§2.7/§5 (updated, living document);
 `ROADMAP.md` R20 (new, done) and R18 (cross-referenced, raised
 priority). Not yet committed — pending the same review/approval flow.
+
+### 2026-08-17-K — Two research passes: phrase-level replacement tier; fine-tuning/specializing a model for this task
+
+**What was done, prompted directly by two user questions, not
+self-initiated:** (1) whether the idiom guard (R19) could go further —
+replace a whole flagged phrase with an equivalent easier phrase instead
+of only protecting-and-leaving-alone or escalating the whole sentence;
+(2) whether T5 should be fine-tuned/specialized for this task
+specifically, given the project's longer-term "profile-to-profile" full
+speech reformulation goal. Two research passes run in parallel
+(WebSearch/WebFetch, real sources), synthesized into
+`REFORMULATION_PROBLEM_MAP.md` §3.8/§3.9. No code changed.
+
+**Phrase-level tier (§3.8):** confirmed as a real, currently-studied
+task, not a stretch — PARSEME 2.0's MWE-2026 shared task (co-located
+with EACL 2026) has a subtask literally defined as "paraphrase a
+sentence containing an MWE to remove idiomaticity." PIE (ACL MWE 2021)
+and a AAAI 2022 follow-up give a working task framing and a
+sub-sentence-aware metric (SARI). MAGPIE's core insight — idiomaticity
+is usage-dependent, not phrase-dependent — is a real limitation of
+R19's static curated-list approach, not yet acted on. Most actionable
+near-term path found: reuse the *existing* T5 restructuring call but
+scope its input to a local window around the idiom instead of the whole
+sentence, splice back in — no new model, no training. Evaluation must
+score the resulting full sentence, not the isolated phrase swap (a
+directly relevant paper found isolated-span metrics correlate poorly
+with human judgment, ρ 0–0.3, vs. context-aware scoring, ρ 0.7–0.9) —
+this project already does exactly that for the sentence-restructuring
+tier, so no new evaluation design is needed, just reuse.
+
+**Fine-tuning/specialization (§3.9):** the closest real precedent
+(ParaDetox, ACL 2022 — BART-base fine-tuned on ~10K toxic→non-toxic
+pairs) operates at word/topic/style level, not phoneme level. No
+published work fine-tunes for phoneme-level avoidance specifically —
+a genuine, first-of-kind gap, not a template to copy. PEFT (LoRA)
+fine-tuning of T5-base is realistic on a single consumer GPU, not
+CPU-only (no sourced benchmark for realistic CPU-only training at this
+scale) — this project's current CPU-only setup would need a real
+infrastructure decision (a GPU) before fine-tuning is even possible.
+**The load-bearing finding:** prompting a capable instruction-tuned
+model, with the constraint spelled out in-context, is a documented,
+evaluated, *competing* alternative to fine-tuning in the closest
+analogous literature (ReadCtrl/MedReadCtrl, 2024-2025) — not a lesser
+fallback. Document/speech-level profile-conditioned reformulation
+(the project's own longer-term goal) is confirmed real and harder in
+the literature (naive sentence-by-sentence looping is not adequate for
+document-level coherence), with no direct speaker-facing precedent —
+genuinely future work, not something to start now.
+
+**The convergence:** both research passes, run independently and blind
+to each other's findings, arrived at the same practical near-term
+recommendation — try a stronger, promptable model for the restructuring
+step, with the constraint's *reason* (not just a blocklist) spelled out
+in-context, before building an idiom classifier or fine-tuning anything.
+Zero training cost; directly tests whether Cause B (§2.8, the T5
+escalation failure mode) is a knowledge problem or a mechanism problem.
+
+**Category:** Research only — `REFORMULATION_PROBLEM_MAP.md` §3.8/§3.9/
+§4/§5/§6/§7 updated (living document), `reformulate.py`/`semantic.py`/
+`rephrase.py` untouched. Not committed — pending user review, per the
+established pattern this session.
+
+### 2026-08-17-L — R21: diagnostic experiment (promptable model + reason vs. blocklist), negative result, phrase-tier correctly not started
+
+**What was done, per direct user instruction:** run the diagnostic
+experiment §5 item 3 named, measuring success/meaning preservation/
+naturalness/difficulty-avoidance/runtime/failure-modes against the
+current production baseline, without replacing the current engine, and
+only proceed to the phrase-level tier if the result showed a meaningful
+improvement.
+
+New script `eval/escalation_model_comparison.py`. Failing-case set: all
+22 real (profile, sentence) pairs from the committed 210-case
+ordinary-text corpus where production escalation currently triggers and
+fails — re-derived directly from `reformulate.reformulate()`, not
+hand-picked. Baseline: `rephrase.generate_candidates` (current
+production path, `bad_words_ids` only). Candidate: `google/flan-t5-base`
+(247.6M params, chosen to be comparable in size to the current model's
+222.9M so any gap isn't just "bigger model wins"), prompted with the
+flagged words **and** a natural-language reason derived from the
+profile (e.g. "The speaker stutters on words that start with the
+sound(s) s..."), with no `bad_words_ids` — isolating explanation from
+hard blocking. A third, hybrid condition (reason prompt **and**
+`bad_words_ids` together) was added after the first result. Every
+candidate from every condition was scored with the **exact same three
+checks** `_try_escalation` already applies (SBERT similarity, negation
+consistency, a post-hoc phoneme/blocked-word scan) — no new or looser
+verification logic for the new model.
+
+**Result:** baseline 0/22 passed (avg. sim 0.865); reason-only 1/22
+(avg. sim **0.950**); hybrid 2/22 (avg. sim 0.812, worse than baseline
+despite more passes). Failure-reason breakdown showed the mechanism
+precisely: baseline fails roughly evenly on leaks (14) and low
+similarity (8); reason-only fails almost entirely on leaks (20) — high
+meaning preservation, but the model doesn't reliably obey the
+phonological instruction; hybrid partially recovers leak-avoidance (10)
+at a real fluency cost (10 low-similarity failures, plus one genuinely
+new failure mode: the model echoed a fragment of its own instruction
+prompt back as the "rewritten" sentence for the densest-profile case).
+
+**Robustness check, not skipped:** before concluding, the same
+reason-only and hybrid conditions were re-run with `google/flan-t5-large`
+(783.2M params, 3.5×) on a stratified 8-case sample. Same picture,
+stronger on the meaning-preservation axis (avg. sim 0.982 reason-only)
+and unchanged on the pass-rate axis (0/8 reason-only, 1/8 hybrid) —
+rules out "the model was just too small to understand the instruction"
+specifically, rather than leaving that as an unexamined possibility.
+
+**Verdict, stated plainly rather than softened:** does not clear the
+bar for "meaningful improvement" the user set. Pass rate stayed far
+below anything usable at every tested configuration and model size.
+Per the plan's own explicit condition, the phrase-level replacement
+tier (`REFORMULATION_PROBLEM_MAP.md` §5 item 4) was **not** started as
+a result — this is reported as a negative result, not reframed as a
+partial success. The one real, positive, twice-replicated finding
+(reason-based prompting substantially improves meaning preservation) is
+preserved and folded into how the *next* item (constrained beam search,
+R18/§5 item 5) should be tested — combined with reason-prompting, not
+assumed to be made redundant by it.
+
+**Category:** Reformulation-engine diagnostic experiment (R21). No
+change to `reformulate.py`/`rephrase.py`/`semantic.py` — the current
+engine was not touched or replaced, per direct instruction. Full
+record: `VALIDATION.md` §12; `REFORMULATION_PROBLEM_MAP.md` §2.8/§5
+(updated, living document); `ROADMAP.md` R21 (new) and R18
+(cross-referenced). Not yet committed — pending the same review/
+approval flow as the rest of this session's work.
+
+### 2026-08-17-M — R22: constrained beam search (`force_words_ids`) found blocked, not evaluated
+
+**What was done:** per the plan's next step after R21, attempted to
+evaluate HuggingFace constrained beam search (`force_words_ids`) on the
+current production model, as `REFORMULATION_PROBLEM_MAP.md` §3.3's
+research pass had described it — small effort, built into `transformers`,
+no new dependency.
+
+**What was found, before any actual evaluation could run:** a minimal
+smoke test (`model.generate(..., force_words_ids=[[...]])`) against
+`transformers==5.10.2` (this project's installed version) raised
+`ValueError: Constrained Beam Search requires trust_remote_code=True...
+it loads https://hf.co/transformers-community/constrained-beam-search`
+— the feature has been moved out of core `transformers` into a
+community-maintained `custom_generate` repo, fetched from the Hub at
+call time. Retrying with `trust_remote_code=True` (accepting a category
+of risk — Hub-fetched code executed at runtime — this project has not
+taken on anywhere else, for SBERT or either T5 checkpoint) failed
+differently: `OSError: transformers-community/constrained-beam-search
+does not contain a custom_generate subdirectory with a generate.py
+file` — the replacement repo does not currently provide a loadable
+implementation. Checked for a lower-level fallback:
+`DisjunctiveConstraint`/`PhrasalConstraint` are no longer importable
+from `transformers.generation` in this version either.
+
+**Why this matters beyond "one API call didn't work":** the earlier
+research pass's claim that this technique is small-effort and dependency-
+free was based on published documentation, not tested against this
+project's actual installed environment — and turned out not to hold.
+This is exactly the kind of gap this project's own discipline (verify
+before recommending, memory guidance included) exists to catch, applied
+here to a research finding rather than a remembered fact.
+
+**Not decided here, surfaced instead:** three real paths forward exist
+— pin an older `transformers` version (affects every model call in this
+project, a real compatibility-risk decision, not evaluated for side
+effects here), accept `trust_remote_code=True` and wait for/contribute
+to the community repo, or hand-implement disjunctive constrained
+decoding (materially larger than "small," closer to the NeuroLogic
+Decoding route §3.3 already flagged as medium-effort with no maintained
+package). None of these was chosen unilaterally — this is a dependency-
+footprint decision affecting the whole project, not a pure research
+step, so it's reported to the user rather than decided mid-diagnostic.
+
+**Category:** Reformulation-engine diagnostic — blocked before
+execution, not a completed evaluation. No change to `reformulate.py`/
+`rephrase.py`/`semantic.py`, no dependency version changed. Full record:
+`VALIDATION.md` §13; `REFORMULATION_PROBLEM_MAP.md` §4/§5 (updated,
+living document); `ROADMAP.md` R22 (new, blocked). Not committed —
+pending the same review/approval flow as the rest of this session's
+work.

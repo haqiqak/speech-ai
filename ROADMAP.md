@@ -681,6 +681,83 @@ not full correctness for that already-documented hard case
 raises R18's priority relative to where it stood after R19 alone — more
 of the workload now depends on escalation's success rate, which this
 item did not touch.
+**Update (2026-08-17, second):** R21 (below) tested one candidate fix —
+a stronger, promptable model given the constraint's reason — and it
+failed to meaningfully improve pass rate, at two model sizes. This is
+evidence *for* Cause B being a structural limitation (not just a Vamsi-
+model-specific quirk or a "the model needs more context" gap), which
+somewhat lowers confidence that a model swap alone will resolve this
+item — the next test (constrained beam search, R21's own next-step
+recommendation) targets the decoding *mechanism* instead, a genuinely
+different lever, not a repeat of what R21 already ruled out.
+
+### R21. Diagnostic: promptable model + constraint reason vs. blocklist-only escalation — **TESTED, 2026-08-17, negative result**
+**Linked finding:** Two research passes (`REFORMULATION_PROBLEM_MAP.md`
+§3.8/§3.9, prompted by direct user questions) independently converged
+on the same recommendation: before building a phrase-level tier or
+fine-tuning anything, test whether giving the escalation model the
+*reason* for a constraint (not just a blocklist) improves the ~42%
+escalation success rate. Item 3 in `REFORMULATION_PROBLEM_MAP.md` §5.
+**What was done:** `eval/escalation_model_comparison.py` — all 22 real
+sentences where production escalation currently triggers and fails
+(re-derived from `reformulate.reformulate()`, not hand-picked) were run
+through `google/flan-t5-base` (247.6M params, comparable to the current
+model's 222.9M) prompted with the flagged words plus a natural-language
+reason, with no `bad_words_ids`, and a hybrid variant with both. Every
+candidate, from every condition, was scored with the exact same three
+checks `reformulate.py::_try_escalation` already applies.
+**Result:** Reason-based prompting robustly improved meaning
+preservation (avg. SBERT similarity 0.865 → 0.950) but barely moved the
+actual pass rate (0% → 4.5%, or 9.1% hybrid) — because the bottleneck is
+constraint satisfaction, not fluency, and a prose explanation does not
+reliably make the model obey a phonological rule. Re-tested at 3.5×
+model size (`flan-t5-large`, 783M params, 8-case stratified sample):
+same picture, meaning preservation improved further (0.982) while pass
+rate stayed flat — ruling out "the model was just too small" as the
+explanation. A new failure mode was also found: the hybrid condition
+produced one case of the model echoing a fragment of its own
+instruction prompt as the "rewritten" output — a risk pure-blocklist
+approaches don't share. Full record: `VALIDATION.md` §12;
+`DECISION_LOG.md` 2026-08-17-L.
+**Labeled as:** A real, informative negative result, not a failed
+experiment — it rules out a specific, plausible-sounding fix
+(model-swap-with-explanation) with real evidence rather than leaving it
+as an untested assumption, and reframes R18/the constrained-beam-search
+item as worth testing *combined with* reason-prompting rather than as
+an alternative to it. Per the plan's own condition, the phrase-level
+tier (`REFORMULATION_PROBLEM_MAP.md` §5 item 4) was **not** started, and
+the current engine was not modified or replaced — this was a
+side-by-side diagnostic only.
+
+### R22. Evaluate constrained beam search (`force_words_ids`) — **BLOCKED, 2026-08-17, not evaluated**
+**Linked finding:** The next item in the plan after R21, independently
+justified regardless of R21's result — `REFORMULATION_PROBLEM_MAP.md`
+§3.3 named `force_words_ids` as the most actionable lever for R18,
+based on published HuggingFace documentation describing it as built
+into `transformers`, no new dependency.
+**What was found, by testing directly rather than trusting the
+documentation:** `transformers==5.10.2` (this project's installed
+version) has moved constrained beam search out of the core library.
+`model.generate(force_words_ids=...)` now raises `ValueError` unless
+`trust_remote_code=True` is passed (a new class of risk — Hub-fetched
+code executed at call time — not taken on anywhere else in this
+project), and even with that flag set, the replacement community repo
+(`transformers-community/constrained-beam-search`) does not currently
+contain a loadable `generate.py` — confirmed via `OSError`, not
+assumed. The underlying `DisjunctiveConstraint`/`PhrasalConstraint`
+classes are also no longer importable in this version as a lower-level
+fallback. **The technique's actual behavior was never measured — the
+packaging path was found to not exist before any evaluation could
+happen.**
+**Labeled as:** Blocked, not evaluated — the item's feasibility rating
+in `REFORMULATION_PROBLEM_MAP.md` §4 corrected from "Small" to
+"Medium+, blocked." Real options exist (pin an older `transformers`,
+accept `trust_remote_code=True`, or hand-implement disjunctive
+decoding) but each is a real decision with implications beyond this
+one item — pinning an older library version affects every model call
+in this project (SBERT, both T5 checkpoints), so this is surfaced for
+the user to weigh in on rather than decided unilaterally mid-diagnostic.
+Full record: `VALIDATION.md` §13; `DECISION_LOG.md` 2026-08-17-M.
 
 ---
 
