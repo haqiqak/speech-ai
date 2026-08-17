@@ -108,6 +108,35 @@ PROTECTED_PHRASES: list[str] = [
     "for instance", "in contrast", "as opposed to",
 ]
 
+# Idiomatic/fixed expressions where substituting a single word breaks the
+# phrase as a whole, even though each word passes the per-word semantic
+# check in isolation (REFORMULATION_PROBLEM_MAP.md SS2.4/SS5 item 1 — found
+# directly from VALIDATION.md SS9.7/SS9.9's pilot: "how's it going" and
+# "drives me crazy" were both broken this way, and SS9.9's "right now" ->
+# "justly"/"properly" word-sense bug is also a fixed adverbial phrase this
+# same mechanism protects, ahead of the separate general word-sense-
+# disambiguation fix planned for that class of bug). Same exact-match
+# mechanism as PROTECTED_PHRASES above -- written as literal, space-
+# separated token sequences that must match nltk's own tokenization
+# (e.g. "how 's it going", not "how's it going", since word_tokenize
+# splits the contraction into its own token).
+IDIOM_PHRASES: list[str] = [
+    "how 's it going", "how is it going",
+    "what 's going on", "what is going on",
+    "right now", "right away", "right here",
+]
+
+# A handful of idioms take an object pronoun in one slot ("drives me
+# crazy" / "drives him crazy" / ...) -- spelling out every combination in
+# IDIOM_PHRASES would be error-prone and incomplete, so these use a single
+# `{pron}` wildcard slot instead, matched against a fixed, small pronoun
+# set in _matches_idiom_pattern() below.
+_IDIOM_PRONOUNS: frozenset[str] = frozenset({"me", "him", "her", "us", "you", "them", "it"})
+IDIOM_PHRASE_PATTERNS: list[str] = [
+    "drives {pron} crazy", "driving {pron} crazy",
+    "drove {pron} crazy", "drive {pron} crazy",
+]
+
 
 # ── SBERT loader (lazy — only loads when first needed) ───────────────────────
 
@@ -165,24 +194,76 @@ _PROTECTED_SINGLE: frozenset[str] = frozenset({
 })
 
 
+def _matches_idiom_pattern(window: list[str], pattern_words: list[str]) -> bool:
+    """window and pattern_words are the same length (caller's job). A
+    pattern word of `{pron}` matches any word in _IDIOM_PRONOUNS; every
+    other pattern word must match literally."""
+    for w, p in zip(window, pattern_words):
+        if p == "{pron}":
+            if w not in _IDIOM_PRONOUNS:
+                return False
+        elif w != p:
+            return False
+    return True
+
+
+def idiom_protected_positions(tokens: list[str]) -> set[int]:
+    """The subset of protected_positions() covering ONLY idiom/fixed-
+    expression spans (IDIOM_PHRASES, IDIOM_PHRASE_PATTERNS) — not the
+    connector phrases in PROTECTED_PHRASES or the single stop words in
+    _PROTECTED_SINGLE.
+
+    reformulate.py needs this distinction, not just the union
+    protected_positions() gives: a stop word or connector phrase was
+    never a real difficulty candidate, so silently excluding it from
+    flagged-word counts is correct. An idiom-locked content word CAN
+    genuinely match the speaker's declared difficulty (e.g. "going"
+    matching a declared /g/ sound inside "how's it going") — deliberately
+    leaving it unsubstituted must stay visible in reporting, not silently
+    make the difficulty count as resolved (or as never having existed).
+    Found as a follow-up correctness issue while testing the idiom guard
+    itself — see REFORMULATION_PROBLEM_MAP.md SS5 item 1's own entry.
+    """
+    protected: set[int] = set()
+    lower_tokens = [t.lower() for t in tokens]
+
+    for phrase in IDIOM_PHRASES:
+        words = phrase.split()
+        n = len(words)
+        for i in range(len(lower_tokens) - n + 1):
+            if lower_tokens[i : i + n] == words:
+                protected.update(range(i, i + n))
+
+    for pattern in IDIOM_PHRASE_PATTERNS:
+        pattern_words = pattern.split()
+        n = len(pattern_words)
+        for i in range(len(lower_tokens) - n + 1):
+            if _matches_idiom_pattern(lower_tokens[i : i + n], pattern_words):
+                protected.update(range(i, i + n))
+
+    return protected
+
+
 def protected_positions(tokens: list[str]) -> set[int]:
     """
     Return the set of token indices that must never be substituted.
 
-    Covers two categories:
-      1. Multi-word protected phrases (PROTECTED_PHRASES list above).
-      2. Single-token stop words: auxiliaries, pronouns, determiners,
+    Covers three categories:
+      1. Idiom/fixed-expression spans (idiom_protected_positions() above).
+      2. Multi-word connector phrases (PROTECTED_PHRASES).
+      3. Single-token stop words: auxiliaries, pronouns, determiners,
          prepositions, and discourse particles (_PROTECTED_SINGLE).
 
-    Keeping both in one function means the grammar layer (_STOP) and the
-    semantic/UI layer stay in sync — there is no longer a risk of protected
-    single words being left exposed when phrase matching misses them.
+    Keeping all three in one function means the grammar layer (_STOP) and
+    the semantic/UI layer stay in sync — there is no risk of protected
+    single words or idiom spans being left exposed when one check misses
+    them but another would have caught them.
     """
-    protected: set[int] = set()
+    protected: set[int] = set(idiom_protected_positions(tokens))
 
     lower_tokens = [t.lower() for t in tokens]
 
-    # 1. Multi-word protected phrases
+    # 2. Multi-word connector phrases (exact match)
     for phrase in PROTECTED_PHRASES:
         words = phrase.split()
         n = len(words)
@@ -190,7 +271,7 @@ def protected_positions(tokens: list[str]) -> set[int]:
             if lower_tokens[i : i + n] == words:
                 protected.update(range(i, i + n))
 
-    # 2. Single-token stop words
+    # 3. Single-token stop words
     for i, lt in enumerate(lower_tokens):
         if lt in _PROTECTED_SINGLE:
             protected.add(i)

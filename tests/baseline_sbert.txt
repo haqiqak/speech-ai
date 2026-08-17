@@ -40,8 +40,6 @@ SANITIZED: 'She is running right now.'
   FIX [capitalization] 's' -> 'S'
   FIX [auxiliary_form] 'run' -> 'running'
   FIX [punctuation] '' -> '.'
-  SUB 'right'        (RB) -> 'properly'   accepted=['properly', 'correctly', 'justly', 'aright', 'decently', 'mightily']
-  SUB 'now'          (RB) -> 'today'   accepted=['today']
   SKIPPED:   ['running:no valid synonym']
 
 ------------------------------------------------------------------------------

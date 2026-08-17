@@ -49,8 +49,6 @@ SANITIZED: 'She is running right now.'
   FIX [auxiliary_form] 'run' -> 'running'
   FIX [punctuation] '' -> '.'
   SUB 'running'      (VBG) -> 'going'   accepted=['go', 'work', 'last', 'free', 'play', 'change', 'course', 'become', 'win', 'move']
-  SUB 'right'        (RB) -> 'powerful'   accepted=['powerful', 'properly', 'decent', 'correctly', 'mighty', 'flop', 'decently', 'justly', 'mightily', 'aright']
-  SUB 'now'          (RB) -> 'today'   accepted=['today', 'immediately', 'directly', 'instantly', 'nowadays', 'forthwith', 'straightaway']
   SKIPPED:   []
 
 ------------------------------------------------------------------------------

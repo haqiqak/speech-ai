@@ -151,6 +151,31 @@ def _flagged_positions(tokens: list[str], tags: list[tuple], profile: Difficulty
     return flagged
 
 
+def _idiom_protected_matches(tokens: list[str], tags: list[tuple], profile: DifficultyProfile) -> list[dict]:
+    """Positions inside an idiom/fixed-expression span that would
+    otherwise match the profile — never substitutable (excluded from
+    _flagged_positions()'s result the same as before), but the match
+    itself must stay visible: counted in _flagged_word_count() and
+    reported in reformulate()'s `skipped` list, rather than silently
+    treated as if the difficulty were never there. See
+    semantic.idiom_protected_positions()'s docstring for why this needs
+    its own check instead of reusing protected_positions()."""
+    idiom_protected = sem.idiom_protected_positions(tokens)
+    if not idiom_protected:
+        return []
+    sound_patterns = profile.sound_values()
+    matches = []
+    for i, (word, tag) in enumerate(tags):
+        if i not in idiom_protected:
+            continue
+        lower = word.lower()
+        if not re.match(r"[a-z]", lower):
+            continue
+        if profile.find_word(lower) is not None or ph.matches_any(word, sound_patterns):
+            matches.append({"position": i, "word": word})
+    return matches
+
+
 def _substitutable_content_word_count(tags: list[tuple], phrase_protected: set) -> int:
     count = 0
     for i, (word, tag) in enumerate(tags):
@@ -309,7 +334,7 @@ def _flagged_word_count(text: str, profile: DifficultyProfile) -> int:
     except Exception:
         tokens = re.findall(r"[A-Za-z][A-Za-z'-]*", text)
     tags = pos_tag(tokens)
-    return len(_flagged_positions(tokens, tags, profile))
+    return len(_flagged_positions(tokens, tags, profile)) + len(_idiom_protected_matches(tokens, tags, profile))
 
 
 def reformulate(text: str, profile: DifficultyProfile, settings: ReformulateSettings | None = None) -> dict:
@@ -332,6 +357,15 @@ def reformulate(text: str, profile: DifficultyProfile, settings: ReformulateSett
         tags = pos_tag(tokens)
         phrase_protected = sem.protected_positions(tokens)
         flagged = _flagged_positions(tokens, tags, profile)
+        idiom_matches = _idiom_protected_matches(tokens, tags, profile)
+
+        if idiom_matches:
+            any_flagged = True
+            for m in idiom_matches:
+                all_skipped.append({
+                    "word": m["word"], "position": m["position"],
+                    "reason": "part of a fixed expression — left unchanged to avoid breaking it",
+                })
 
         if not flagged:
             rebuilt.append(sentence)

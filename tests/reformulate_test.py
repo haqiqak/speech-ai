@@ -134,6 +134,50 @@ class MultiSentenceTest(unittest.TestCase):
         self.assertNotIn("strong", result["reformulated_text"].lower())
 
 
+class IdiomGuardTest(unittest.TestCase):
+    """Regression tests for REFORMULATION_PROBLEM_MAP.md SS5 item 1, using the
+    exact sentences/profiles from the real VALIDATION.md SS9.6-9.9 pilot that
+    found each failure -- not synthetic restatements. Before this guard,
+    reformulate() broke each idiom by substituting one word inside it
+    (pair_01: "going"->awkward substitute; pair_11: "driving"->"going",
+    producing "going me crazy"; pair_15's "right"->"justly"/"properly" word-
+    sense error is also prevented here since "right now" is now a protected
+    phrase, ahead of the separate general word-sense-disambiguation fix)."""
+
+    def test_hows_it_going_is_left_completely_unchanged(self):
+        profile = _profile("idiom_hows_it_going")
+        profile.add_sound("g", source="user_typed")
+        result = rf.reformulate("Hey, how's it going today?", profile)
+        # The idiom is correctly left alone -- but the declared /g/
+        # difficulty in "going" is real and still unaddressed, so this
+        # must be reported honestly as "could not safely reformulate",
+        # not silently as "nothing matched" (the metrics-visibility fix
+        # in REFORMULATION_PROBLEM_MAP.md SS5 item 1's own follow-up).
+        self.assertEqual(result["status"], "could_not_safely_reformulate")
+        self.assertIn("going", result["reformulated_text"].lower())
+        self.assertEqual(result["metrics"]["flagged_words_before"], 1)
+        self.assertEqual(result["metrics"]["flagged_words_after"], 1)
+        self.assertTrue(any("fixed expression" in s["reason"] for s in result["skipped"]))
+
+    def test_drives_me_crazy_is_left_completely_unchanged(self):
+        profile = _profile("idiom_drives_me_crazy")
+        profile.add_sound("d", source="user_typed")
+        result = rf.reformulate("The kids are driving me crazy today.", profile)
+        self.assertEqual(result["status"], "could_not_safely_reformulate")
+        self.assertIn("driving me crazy", result["reformulated_text"].lower())
+        self.assertEqual(result["metrics"]["flagged_words_before"], 1)
+        self.assertEqual(result["metrics"]["flagged_words_after"], 1)
+
+    def test_right_now_survives_even_when_a_sibling_word_is_substituted(self):
+        # "really" (also R-onset) is NOT part of the idiom and remains a
+        # normal substitution target -- the guard must protect "right now"
+        # specifically, not suppress the whole sentence.
+        profile = _profile("idiom_right_now")
+        profile.add_sound("r", source="user_typed")
+        result = rf.reformulate("I really need a break right now.", profile)
+        self.assertIn("right now", result["reformulated_text"].lower())
+
+
 class MetricsTest(unittest.TestCase):
     def test_metrics_shape_and_bounds(self):
         profile = _profile("metrics")
