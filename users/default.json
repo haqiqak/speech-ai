@@ -11,6 +11,16 @@
         "pronunciation": null,
         "problem_phones": null,
         "meta": {}
+      },
+      {
+        "value": "p",
+        "normalized": "P",
+        "category": "sound",
+        "source": "user_typed",
+        "added_at": "2026-08-17T11:59:49.189367+00:00",
+        "pronunciation": null,
+        "problem_phones": null,
+        "meta": {}
       }
     ],
     "words": [
@@ -68,11 +78,5 @@
       }
     ],
     "phrases": []
-  },
-  "custom_replacements": {},
-  "preferences": {
-    "allowlist_words": [],
-    "rephrase_enabled": true,
-    "profile_rewrite_enabled": true
   }
 }
