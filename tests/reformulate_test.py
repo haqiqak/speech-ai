@@ -170,5 +170,59 @@ class SentenceSplitTest(unittest.TestCase):
         self.assertEqual(rf.split_sentences(""), [])
 
 
+class FeedbackTargetsTest(unittest.TestCase):
+    """ROADMAP.md R9 — reformulate.feedback_targets(). Read-only: these
+    tests also confirm calling it never mutates the profile or the result
+    it was given (the reformulation engine itself must be unaffected)."""
+
+    def test_declared_word_substitution_attributes_to_the_word_entry(self):
+        profile = _profile("fbt_word")
+        profile.add_word("particular", source="user_typed")
+        result = rf.reformulate("I have a particular preference for the third option.", profile)
+        subs = [c for c in result["changes"] if c["source"] == "substitution"]
+        self.assertTrue(subs)
+        targets = rf.feedback_targets(subs[0], profile)
+        self.assertEqual(len(targets), 1)
+        self.assertEqual(targets[0].normalized, "particular")
+
+    def test_global_sound_substitution_attributes_to_the_sound_entry(self):
+        profile = _profile("fbt_sound")
+        profile.add_sound("str", source="user_typed")
+        result = rf.reformulate("The team reached a strong decision.", profile)
+        subs = [c for c in result["changes"] if c["source"] == "substitution"]
+        self.assertTrue(subs)
+        targets = rf.feedback_targets(subs[0], profile)
+        self.assertEqual(len(targets), 1)
+        self.assertEqual(targets[0].value, "str")
+
+    def test_restructuring_change_has_no_targets(self):
+        """A whole-sentence restructuring can't be cleanly attributed to
+        one declared entry — feedback_targets must return [] rather than
+        guess, per its own documented design."""
+        profile = _profile("fbt_restructure")
+        profile.add_sound("str", source="user_typed")
+        settings = rf.ReformulateSettings(escalation_word_count=0)
+        result = rf.reformulate("The team reached a strong decision.", profile, settings)
+        restructured = [c for c in result["changes"] if c["source"] == "restructuring"]
+        if restructured:  # escalation succeeding isn't guaranteed; only assert when it happens
+            self.assertEqual(rf.feedback_targets(restructured[0], profile), [])
+
+    def test_no_targets_for_a_change_that_matches_nothing(self):
+        profile = _profile("fbt_none")
+        fake_change = {"source": "substitution", "original": "unrelated", "triggered_by": []}
+        self.assertEqual(rf.feedback_targets(fake_change, profile), [])
+
+    def test_feedback_targets_does_not_mutate_profile_or_change(self):
+        profile = _profile("fbt_no_mutate")
+        profile.add_word("particular", source="user_typed")
+        result = rf.reformulate("I have a particular preference for the third option.", profile)
+        subs = [c for c in result["changes"] if c["source"] == "substitution"]
+        before_words = list(profile.word_values())
+        before_change = dict(subs[0])
+        rf.feedback_targets(subs[0], profile)
+        self.assertEqual(profile.word_values(), before_words)
+        self.assertEqual(subs[0], before_change)
+
+
 if __name__ == "__main__":
     unittest.main()

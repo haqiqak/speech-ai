@@ -25,7 +25,7 @@ os.environ["DISABLE_DATAMUSE"] = "1"
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import profile_store
-from difficulty_profile import DifficultyProfile, extract_candidate_words
+from difficulty_profile import DifficultyProfile, extract_candidate_words, record_feedback, undo_feedback
 import phonetic
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -447,6 +447,73 @@ class PersistenceTest(unittest.TestCase):
         self.assertNotIn("password_hash", raw)
         self.assertNotIn("username", raw)
         self.assertNotIn("phoneme_profile", raw)
+
+
+class FeedbackTest(unittest.TestCase):
+    """ROADMAP.md R9 — record_feedback()/undo_feedback()."""
+
+    def setUp(self):
+        _fresh_profile()
+
+    def tearDown(self):
+        _cleanup()
+
+    def test_record_feedback_increments_kept_and_reverted_independently(self):
+        p = DifficultyProfile.load(TEMP_PROFILE)
+        entry, _ = p.add_word("particular")
+        record_feedback(entry, kept=True)
+        record_feedback(entry, kept=True)
+        record_feedback(entry, kept=False)
+        self.assertEqual(entry.meta["feedback"], {"kept": 2, "reverted": 1})
+
+    def test_undo_feedback_decrements_the_right_counter(self):
+        p = DifficultyProfile.load(TEMP_PROFILE)
+        entry, _ = p.add_word("particular")
+        record_feedback(entry, kept=True)
+        record_feedback(entry, kept=False)
+        undo_feedback(entry, kept=True)
+        self.assertEqual(entry.meta["feedback"], {"kept": 0, "reverted": 1})
+
+    def test_undo_feedback_never_goes_negative(self):
+        p = DifficultyProfile.load(TEMP_PROFILE)
+        entry, _ = p.add_word("particular")
+        undo_feedback(entry, kept=True)
+        undo_feedback(entry, kept=False)
+        self.assertEqual(entry.meta["feedback"], {"kept": 0, "reverted": 0})
+
+    def test_feedback_is_per_entry_not_shared(self):
+        p = DifficultyProfile.load(TEMP_PROFILE)
+        word_entry, _ = p.add_word("particular")
+        sound_entry, _ = p.add_sound("str")
+        record_feedback(word_entry, kept=True)
+        self.assertEqual(word_entry.meta.get("feedback"), {"kept": 1, "reverted": 0})
+        self.assertIsNone(sound_entry.meta.get("feedback"))
+
+    def test_feedback_persists_across_reload(self):
+        p = DifficultyProfile.load(TEMP_PROFILE)
+        entry, _ = p.add_word("particular")
+        record_feedback(entry, kept=True)
+        record_feedback(entry, kept=False)
+        record_feedback(entry, kept=False)
+        p.save()
+
+        reloaded = DifficultyProfile.load(TEMP_PROFILE)
+        reloaded_entry = reloaded.find_word("particular")
+        self.assertEqual(reloaded_entry.meta["feedback"], {"kept": 1, "reverted": 2})
+
+    def test_recording_feedback_does_not_touch_declared_sounds_words_phrases(self):
+        """The whole point of storing this in meta rather than mutating
+        sounds/words/phrases directly: recording feedback must never add,
+        remove, or reweight a declared entry — only annotate it."""
+        p = DifficultyProfile.load(TEMP_PROFILE)
+        entry, _ = p.add_word("particular")
+        p.add_sound("str")
+        p.add_phrase("through the research")
+        before = (list(p.word_values()), list(p.sound_values()), list(p.phrase_values()))
+        record_feedback(entry, kept=True)
+        record_feedback(entry, kept=False)
+        after = (list(p.word_values()), list(p.sound_values()), list(p.phrase_values()))
+        self.assertEqual(before, after)
 
 
 class CandidateWordExtractionTest(unittest.TestCase):

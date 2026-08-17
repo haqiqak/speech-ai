@@ -152,7 +152,8 @@ def run():
         print("     verification section rendered:", cond); ok &= cond
 
         # 4) Keep-toggle: unchecking a change's "Keep" box reverts that word
-        # in the displayed output.
+        # in the displayed output, AND records R9 feedback against the
+        # responsible profile entry, persisted to disk.
         keep_boxes = [cb for cb in at.checkbox if cb.key and cb.key.startswith("change_keep_")]
         cond = len(keep_boxes) >= 1
         print("     at least one change keep-toggle present:", cond); ok &= cond
@@ -163,6 +164,24 @@ def run():
             md = _md(at)
             cond = 'class="output-box"' in md and "strong deadline" in md
             print("     reverted change restores original word in output:", cond); ok &= cond
+
+            _p = DifficultyProfile.load(PROFILE)
+            _sound_entry = next((e for e in _p.sounds if e.value == "str"), None)
+            cond = _sound_entry is not None and _sound_entry.meta.get("feedback") == {"kept": 0, "reverted": 1}
+            print("     revert recorded against the sound entry, persisted to disk:", cond); ok &= cond
+            cond = "↺1" in md
+            print("     feedback badge visible in the profile panel:", cond); ok &= cond
+
+            # Toggle back to Keep — the recorded vote should flip net, not
+            # just add a second entry (last-choice-wins, not a raw tally).
+            keep_boxes = [cb for cb in at.checkbox if cb.key and cb.key.startswith("change_keep_")]
+            keep_boxes[0].set_value(True)
+            at.run()
+            ok &= _check(at, "flip the same change back to Keep")
+            _p2 = DifficultyProfile.load(PROFILE)
+            _sound_entry2 = next((e for e in _p2.sounds if e.value == "str"), None)
+            cond = _sound_entry2 is not None and _sound_entry2.meta.get("feedback") == {"kept": 1, "reverted": 0}
+            print("     re-toggling flips the vote net, not additively:", cond); ok &= cond
 
         # 5) Speaker Difficulty Profile panel: add a word, a sound, a phrase;
         # verify each shows up; remove the word; verify it's gone.
