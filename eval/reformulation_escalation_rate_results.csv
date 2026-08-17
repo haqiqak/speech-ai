@@ -19,14 +19,14 @@ light_single_sound,The baker prepared a fresh pastry for lunch.,1,no_change_need
 light_single_sound,The nurse checked the medication list twice.,1,no_change_needed,0,0,0,0,0
 light_single_sound,The programmer fixed a small problem in the script.,1,reformulated,2,0,1,1,0
 light_single_sound,The photographer captured a bright landscape.,1,no_change_needed,0,0,0,0,0
-light_single_sound,The coach praised the team's steady progress.,1,reformulated,1,1,0,0,0
+light_single_sound,The coach praised the team's steady progress.,1,reformulated,1,0,1,1,0
 light_single_sound,The train arrived late because of traffic.,1,no_change_needed,0,0,0,0,0
 light_single_sound,The musician played a familiar melody.,1,no_change_needed,0,0,0,0,0
 light_single_sound,The florist arranged pink flowers by the window.,1,no_change_needed,0,0,0,0,0
 light_single_sound,The mechanic replaced the broken cable.,1,no_change_needed,0,0,0,0,0
 light_single_sound,The planner booked a private room for dinner.,1,no_change_needed,0,0,0,0,0
 light_single_sound,The child carried a small backpack to school.,1,reformulated,2,2,0,0,0
-light_single_sound,The researcher measured the sample carefully.,1,reformulated,1,1,0,0,0
+light_single_sound,The researcher measured the sample carefully.,1,could_not_safely_reformulate,1,0,1,0,1
 light_single_sound,The chef cooked pasta for the family.,1,no_change_needed,0,0,0,0,0
 light_single_sound,The visitor asked for a simple map.,1,reformulated,1,1,0,0,0
 light_single_sound,The analyst compared the monthly figures.,1,no_change_needed,0,0,0,0,0
@@ -40,7 +40,7 @@ light_single_sound,My sister started a new job last month. She works as a proje,
 light_single_sound,The recipe calls for three cups of flour and two eggs. First,3,could_not_safely_reformulate,2,0,1,0,1
 light_single_sound,Our team finished the quarterly report ahead of schedule. Th,3,reformulated,3,1,1,0,1
 light_single_sound,The museum recently opened a new exhibit on ancient history.,3,reformulated,2,2,0,0,0
-light_single_sound,I have been learning to play the guitar for six months now. ,3,reformulated,3,2,1,0,1
+light_single_sound,I have been learning to play the guitar for six months now. ,3,reformulated,3,0,2,1,1
 moderate_two_plosive,The committee reached an important decision today.,1,no_change_needed,0,0,0,0,0
 moderate_two_plosive,The company prepared a practical project plan.,1,could_not_safely_reformulate,4,0,1,0,1
 moderate_two_plosive,My friend brought fresh bread to breakfast.,1,could_not_safely_reformulate,3,0,1,0,1
@@ -59,11 +59,11 @@ moderate_two_plosive,The speaker presented the main problem carefully.,1,reformu
 moderate_two_plosive,The delivery truck stopped near the front gate.,1,no_change_needed,0,0,0,0,0
 moderate_two_plosive,The baker prepared a fresh pastry for lunch.,1,could_not_safely_reformulate,3,0,1,0,1
 moderate_two_plosive,The nurse checked the medication list twice.,1,no_change_needed,0,0,0,0,0
-moderate_two_plosive,The programmer fixed a small problem in the script.,1,reformulated,2,2,0,0,0
+moderate_two_plosive,The programmer fixed a small problem in the script.,1,could_not_safely_reformulate,2,0,1,0,1
 moderate_two_plosive,The photographer captured a bright landscape.,1,reformulated,1,1,0,0,0
 moderate_two_plosive,The coach praised the team's steady progress.,1,reformulated,2,2,0,0,0
 moderate_two_plosive,The train arrived late because of traffic.,1,no_change_needed,0,0,0,0,0
-moderate_two_plosive,The musician played a familiar melody.,1,reformulated,1,1,0,0,0
+moderate_two_plosive,The musician played a familiar melody.,1,reformulated,1,0,1,1,0
 moderate_two_plosive,The florist arranged pink flowers by the window.,1,reformulated,1,1,0,0,0
 moderate_two_plosive,The mechanic replaced the broken cable.,1,reformulated,1,1,0,0,0
 moderate_two_plosive,The planner booked a private room for dinner.,1,could_not_safely_reformulate,3,0,1,0,1
@@ -72,17 +72,17 @@ moderate_two_plosive,The researcher measured the sample carefully.,1,no_change_n
 moderate_two_plosive,The chef cooked pasta for the family.,1,reformulated,1,0,1,1,0
 moderate_two_plosive,The visitor asked for a simple map.,1,no_change_needed,0,0,0,0,0
 moderate_two_plosive,The analyst compared the monthly figures.,1,no_change_needed,0,0,0,0,0
-moderate_two_plosive,The pilot checked the landing procedure.,1,reformulated,2,2,0,0,0
+moderate_two_plosive,The pilot checked the landing procedure.,1,could_not_safely_reformulate,2,0,1,0,1
 moderate_two_plosive,The farmer stored fresh corn in the barn.,1,reformulated,1,0,1,1,0
 moderate_two_plosive,The designer chose a clean layout for the poster.,1,could_not_safely_reformulate,1,0,1,0,1
 moderate_two_plosive,The assistant printed the final contract.,1,reformulated,1,1,0,0,0
 moderate_two_plosive,The class practiced speaking in small groups.,1,reformulated,1,1,0,0,0
 moderate_two_plosive,The weather has been quite pleasant this week. We went for a,3,reformulated,3,2,1,0,1
-moderate_two_plosive,My sister started a new job last month. She works as a proje,3,reformulated,1,1,0,0,0
+moderate_two_plosive,My sister started a new job last month. She works as a proje,3,could_not_safely_reformulate,1,0,1,0,1
 moderate_two_plosive,The recipe calls for three cups of flour and two eggs. First,3,no_change_needed,0,0,0,0,0
-moderate_two_plosive,Our team finished the quarterly report ahead of schedule. Th,3,reformulated,1,1,0,0,0
+moderate_two_plosive,Our team finished the quarterly report ahead of schedule. Th,3,reformulated,1,0,1,1,0
 moderate_two_plosive,The museum recently opened a new exhibit on ancient history.,3,no_change_needed,0,0,0,0,0
-moderate_two_plosive,I have been learning to play the guitar for six months now. ,3,reformulated,2,2,0,0,0
+moderate_two_plosive,I have been learning to play the guitar for six months now. ,3,reformulated,2,1,1,0,1
 consonant_clusters,The committee reached an important decision today.,1,no_change_needed,0,0,0,0,0
 consonant_clusters,The company prepared a practical project plan.,1,could_not_safely_reformulate,3,0,1,0,1
 consonant_clusters,My friend brought fresh bread to breakfast.,1,no_change_needed,0,0,0,0,0
@@ -101,7 +101,7 @@ consonant_clusters,The speaker presented the main problem carefully.,1,reformula
 consonant_clusters,The delivery truck stopped near the front gate.,1,no_change_needed,0,0,0,0,0
 consonant_clusters,The baker prepared a fresh pastry for lunch.,1,reformulated,1,1,0,0,0
 consonant_clusters,The nurse checked the medication list twice.,1,no_change_needed,0,0,0,0,0
-consonant_clusters,The programmer fixed a small problem in the script.,1,reformulated,2,2,0,0,0
+consonant_clusters,The programmer fixed a small problem in the script.,1,could_not_safely_reformulate,2,0,1,0,1
 consonant_clusters,The photographer captured a bright landscape.,1,no_change_needed,0,0,0,0,0
 consonant_clusters,The coach praised the team's steady progress.,1,reformulated,2,2,0,0,0
 consonant_clusters,The train arrived late because of traffic.,1,no_change_needed,0,0,0,0,0
