@@ -1,0 +1,31 @@
+participant_id,pair_id,presentation_order_index,shown_first,meaning_preservation,naturalness,speaking_ease,preference,diagnostic_tag,comment,timestamp
+P1,pair_09,1,original,5,5,2,Reformulated,,,2026-08-17T08:31:49.901994+00:00
+P1,pair_27,2,original,5,5,2,Reformulated,,,2026-08-17T08:36:03.358247+00:00
+P1,pair_13,3,original,2,2,0,Original,Sounds unnatural,,2026-08-17T08:36:37.543919+00:00
+P1,pair_18,4,reformulated,5,5,2,Reformulated,,,2026-08-17T08:36:47.606302+00:00
+P1,pair_01,5,reformulated,2,2,0,Original,Sounds unnatural,,2026-08-17T08:37:13.998816+00:00
+P1,pair_20,6,reformulated,5,5,2,Reformulated,,,2026-08-17T08:37:42.816481+00:00
+P1,pair_24,7,reformulated,4,4,1,Reformulated,,Must be worthy not worth.,2026-08-17T08:38:01.697627+00:00
+P1,pair_16,8,reformulated,5,5,1,Reformulated,,,2026-08-17T08:38:14.301792+00:00
+P1,pair_17,9,original,5,5,1,Reformulated,,,2026-08-17T08:38:23.953072+00:00
+P1,pair_26,10,original,5,5,1,Reformulated,,,2026-08-17T08:38:44.568684+00:00
+P1,pair_30,11,reformulated,2,4,1,Original,Meaning changed,Create and Print is not really the same,2026-08-17T08:39:18.757487+00:00
+P1,pair_19,12,reformulated,5,5,2,Reformulated,,,2026-08-17T08:39:27.912093+00:00
+P1,pair_07,13,original,4,4,1,Reformulated,,,2026-08-17T08:39:38.111416+00:00
+P1,pair_04,14,reformulated,5,4,1,Reformulated,,"grammer can be checked here, missed that would be better",2026-08-17T08:39:59.499222+00:00
+P1,pair_14,15,original,5,3,0,Original,Sounds unnatural,,2026-08-17T08:40:18.792249+00:00
+P1,pair_03,16,original,5,3,0,Reformulated,,,2026-08-17T08:40:31.698679+00:00
+P1,pair_11,17,reformulated,3,2,0,Original,,going me crazy is unnatural,2026-08-17T08:40:48.171707+00:00
+P1,pair_23,18,original,5,5,2,Reformulated,,,2026-08-17T08:40:58.799719+00:00
+P1,pair_25,19,reformulated,5,5,2,Reformulated,,,2026-08-17T08:41:09.130977+00:00
+P1,pair_05,20,reformulated,4,4,1,Original,Sounds unnatural,just a bit unnatural,2026-08-17T08:41:28.939602+00:00
+P1,pair_12,21,reformulated,5,4,1,Reformulated,,,2026-08-17T08:41:41.880775+00:00
+P1,pair_10,22,original,5,5,2,Reformulated,,,2026-08-17T08:41:51.168813+00:00
+P1,pair_28,23,original,1,2,0,Original,Meaning changed,going behind might mean going back.,2026-08-17T08:42:19.101982+00:00
+P1,pair_22,24,reformulated,5,5,2,Reformulated,,,2026-08-17T08:42:28.112020+00:00
+P1,pair_15,25,reformulated,3,1,0,Original,Sounds unnatural,,2026-08-17T08:42:41.287634+00:00
+P1,pair_21,26,original,5,5,2,Reformulated,,,2026-08-17T08:42:49.836280+00:00
+P1,pair_02,27,original,3,5,1,Reformulated,,,2026-08-17T08:43:01.542430+00:00
+P1,pair_06,28,original,3,5,1,Reformulated,,,2026-08-17T08:43:11.040806+00:00
+P1,pair_29,29,original,3,4,1,Reformulated,,"push and force might mean different, can explain a bit more using force, like force it now or force it ahead",2026-08-17T08:43:48.309607+00:00
+P1,pair_08,30,original,5,4,1,Reformulated,,,2026-08-17T08:44:00.460412+00:00
