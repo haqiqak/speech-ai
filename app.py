@@ -394,7 +394,6 @@ div.stButton>button[kind="secondary"]{background:#f0f4f8!important;color:#5a7096
 div.stButton>button[kind="secondary"]:hover{background:#e4eaf2!important;transform:none!important}
 
 .profile-panel{background:#fff;border:1.5px solid #d4e8f8;border-radius:16px;padding:1rem 1.2rem .85rem;margin:.55rem 0 .9rem;box-shadow:0 2px 12px rgba(75,145,220,.05)}
-.pipe-card{background:#fff;border:1.5px solid #d4e8f8;border-radius:16px;padding:.95rem 1.3rem .9rem;margin-bottom:.75rem;box-shadow:0 2px 12px rgba(75,145,220,.05)}
 .pipe-label{font-size:.68rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#4b91dc;margin-bottom:.38rem}
 
 .pill-wrap{display:flex;flex-wrap:wrap;gap:.35rem}
@@ -465,20 +464,24 @@ for key, default in [
 with st.sidebar:
     st.markdown("### ⚙ Settings")
     if sbert_ok:
-        st.markdown("""<div class="sbert-on"><strong>🧠 Meaning check active</strong><br>
-<span style="font-size:.82rem">SBERT semantic similarity is verifying every change.</span></div>""",
+        st.markdown("""<div class="sbert-on"><strong>🧠 Meaning screen active</strong><br>
+<span style="font-size:.82rem">Every change is screened for meaning drift with SBERT similarity — an
+automated estimate, not a guarantee. It can still miss changes that break an
+idiom or pick the wrong sense of a word; review the Changes list yourself.</span></div>""",
             unsafe_allow_html=True)
     else:
-        st.markdown("""<div class="sbert-off"><strong>⚠ Meaning check offline</strong><br>
-<span style="font-size:.82rem">SBERT unavailable — changes aren't verified for meaning right now.</span></div>""",
+        st.markdown("""<div class="sbert-off"><strong>⚠ Meaning screen offline</strong><br>
+<span style="font-size:.82rem">SBERT unavailable — changes aren't screened for meaning drift right now.</span></div>""",
             unsafe_allow_html=True)
 
     with st.expander("Advanced", expanded=False):
         sem_threshold = st.slider(
             "Meaning-preservation strictness", min_value=0.60, max_value=0.95,
             value=0.85, step=0.01, disabled=not sbert_ok,
-            help="How similar a reformulation must stay to your original meaning. "
-                 "Lower this if changes seem too conservative.",
+            help="How similar a reformulation must stay to your original meaning, "
+                 "by an automated SBERT estimate — not a human judgment. Lower this "
+                 "if changes seem too conservative; raising it doesn't guarantee "
+                 "catching an idiom or phrase-level meaning change.",
         )
         top_k = st.slider(
             "Candidates considered per word", min_value=5, max_value=20, value=10, step=1,
@@ -493,6 +496,13 @@ WordNet). If a sentence has too many flagged spots to patch word-by-word,
 the whole sentence is reworded instead and re-checked the same way. If
 nothing passes verification, that part is left unchanged rather than
 guessed at.
+<br><br>
+<strong style="color:#4b91dc">Known limits</strong><br>
+The meaning check can still miss it when a change breaks a fixed
+expression (e.g. "how's it going") or a common phrase like "right now"
+picks the wrong sense of a word. Multiple changes in one short sentence
+are more likely to interact and read oddly together than a single
+change. Treat the result as a strong first draft, not a final check.
 </div>""", unsafe_allow_html=True)
 
 # ── Step 1: text entry ───────────────────────────────────────────────────────
@@ -700,7 +710,7 @@ if result is not None:
 <div class="metric-grid">
   <div class="metric-box">
     <div class="metric-num">{f"{mp:.0%}" if mp is not None else "n/a"}</div>
-    <div class="metric-label">Meaning kept</div>
+    <div class="metric-label">Meaning similarity</div>
   </div>
   <div class="metric-box">
     <div class="metric-num">{m['difficulty_reduction_pct']:.0f}%</div>
@@ -715,6 +725,10 @@ if result is not None:
     <div class="metric-label">Final check</div>
   </div>
 </div>""", unsafe_allow_html=True)
+    st.caption(
+        "These are automated estimates (SBERT similarity, edit distance), not a "
+        "human judgment of quality — read the result yourself before using it."
+    )
 
     if st.button("💾 Save to session history", key="save_hist", type="secondary"):
         st.session_state.session_history.append({
