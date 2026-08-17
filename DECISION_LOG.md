@@ -1159,3 +1159,52 @@ confirmed via `git status` showing no diff on that directory.
 actually looks like (participants, sample size, which systems/condition
 labels to compare) — that depends on who can realistically read and rate
 outputs, which this pass has no way to determine on its own.
+
+---
+
+### 2026-08-17-C — Stage 7: human-evaluation pilot built, verified end-to-end with synthetic data; real 4x20 collection not yet run
+**What was done:** Built the full Stage 7 pilot per the user's detailed
+brief. `eval/pilot_select_pairs.py` re-ran `reformulate.py` (with
+`sanitize_input()` first — matching `app.py`'s real pipeline; the earlier
+escalation-rate corpus run had NOT applied `sanitize_input`, a real
+inconsistency found and fixed here for this new script, not retroactively
+fixed in the old one) over both existing evaluation corpora (18 + 210 =
+228 combinations), found 69 eligible (`status == "reformulated"`; the two
+non-reformulated statuses excluded since there's no candidate to rate),
+and selected 20 by deliberate criteria (documented in
+`VALIDATION.md` §8.2) rather than randomly — including two Stage-6 cases
+already known to be qualitatively weak despite passing every automated
+gate, and, on inspection of the freshly-regenerated ordinary-text pool,
+two previously-undiscovered genuine errors ("stored... in the **farm**"
+for "barn"; "...to **education**" for "school") that also passed every
+automated gate. `eval/pilot_app.py` (a separate, minimal Streamlit
+instrument, not part of `app.py`) presents one pair at a time, asks the
+four required questions plus an optional diagnostic tag, with
+per-participant order and display-position counterbalancing, and never
+shows any internal score. `eval/pilot_analyze.py` computes per-pair
+summaries and specifically flags pairs where the automated SBERT
+proxy and the (eventual) human meaning-preservation rating disagree by a
+material margin — the concrete, actionable output this pilot exists to
+produce, not just "did people like it."
+**Verification performed, per the brief's explicit requirement to test
+before real participants:** `tests/pilot_app_test.py` drove the actual
+app twice (participant IDs P1 and P2 — the app's selectbox only accepts
+its 4 fixed IDs, so a synthetic-only ID couldn't be used) through all 20
+pairs each via Streamlit's `AppTest`, then verified: exactly 20 rows
+saved per participant; zero cross-contamination between participant
+files; presentation order and display position both genuinely varied
+between participants (not just coded to); all response values round-trip
+through the CSV correctly; and `eval/pilot_analyze.py` correctly loads
+and summarizes the resulting 40 synthetic rows. The test snapshots and
+restores `P1.csv`/`P2.csv` around its run (same pattern
+`tests/app_test.py` uses for `users/default.json`), confirmed via
+`git status` showing no diff on `eval/pilot_responses/` afterward.
+**Category:** Infrastructure + design, explicitly not implementation of
+any reformulation change. Zero lines of `reformulate.py` changed —
+confirmed via the full existing suite (78 tests) plus `tests/smoke.py`
+byte-identical to baseline, both re-run after this stage's work.
+**Not yet done:** the actual 4x20 data collection with real participants,
+and therefore any results, conclusions, or improvement recommendations
+drawn from it — `VALIDATION.md` §8 records the design and verified
+infrastructure only; results will be appended there, not substituted for
+this entry, once real participants complete the pilot.

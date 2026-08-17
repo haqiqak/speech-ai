@@ -616,3 +616,176 @@ here.
 synthetic data. It says nothing about whether a real study using it would
 produce a meaningful result — that still depends on a study design and
 real participants, neither of which exist yet.
+
+## 8. Stage 7 — human-evaluation pilot: design and infrastructure (built 2026-08-17; results pending real participants)
+
+Following §7's finding (the machinery works, but has no collection
+instrument and no updated condition design), this section records the
+actual pilot built on top of it — scoped explicitly as a **pilot**, not a
+statistically conclusive study, and evaluating `reformulate.py` alone
+(the retained legacy pipelines were already compared quantitatively in
+§6 and are out of scope here).
+
+### 8.1 Design
+
+4 participants (fixed, anonymous IDs P1-P4, no connection to the app's
+own single-profile system), all rating the **same** 20 curated pairs (not
+disjoint sets) — 80 total ratings, chosen specifically so results have
+real inter-rater replication (n=4 per pair) rather than a single opinion
+per item. Four required questions per pair, asked plainly with no
+internal scores (SBERT similarity, difficulty formulas, phoneme
+decisions, trigger types) ever shown:
+
+1. **Meaning preservation** (1-5): "Does the reformulated sentence
+   preserve the meaning of the original sentence?"
+2. **Naturalness** (1-5): "How natural does the reformulated sentence
+   sound, as something a person would normally say?"
+3. **Perceived speaking ease** (5-point comparative, -2..+2): "Compared
+   with the original sentence, how easy would you expect the
+   reformulated sentence to be to say?" — explicitly framed as judging
+   the wording, not the participant's own speech.
+4. **Preference**: Original / Reformulated / No preference.
+5. **Optional diagnostic tag** (single-select, only meaningful when the
+   participant didn't prefer the reformulation): Meaning changed / Sounds
+   unnatural / Too much changed / Reformulation does not seem easier /
+   Other.
+
+Both sentences are shown labeled ("Original"/"Reformulated" — necessary,
+since questions 1-3 are inherently about the relationship between them,
+so blind A/B labeling would make them unanswerable), but **presentation
+order is counterbalanced, not fixed**: which pair a participant sees at
+which point in their 20, and which sentence appears first on screen, are
+both deterministically shuffled per participant (seeded on participant
+ID) — real order variation, not just a documented intention, verified in
+§8.3.
+
+### 8.2 Pair selection — not random, and why
+
+`eval/pilot_select_pairs.py` re-ran `reformulate.py` (via `sanitize_input`
+first, exactly as `app.py` does — the escalation-rate corpus's own CSV
+never stored full output text, so this was regenerated fresh rather than
+reused, and is confirmed reproducible per §6.6/§6.9's precedent) against
+both `tests/reformulation_eval_corpus.json` (Stage 6, 18 cases) and
+`tests/reformulation_ordinary_corpus.json` (the escalation-rate corpus,
+210 text×profile combinations) — **228 combinations total**, of which
+**69 were eligible** (`status == "reformulated"`; `no_change_needed` and
+`could_not_safely_reformulate` cases were excluded, since there is no
+reformulated candidate to rate in either).
+
+From that 69-case pool, 20 were selected by deliberate, reported
+criteria, not sampled randomly:
+- **10 Stage 6 cases with documented analytical value** (§6.3-6.5),
+  taken first — including two cases already known to be qualitatively
+  weak despite passing every automated gate: `fm_ambiguous_word_noun_sense`
+  ("The gift was a wonderful present." → "...a wonderful **gift**.",
+  redundant, SBERT scored it 0.965) and
+  `fm_context_dependent_substitution` (word-sense ambiguity not resolved
+  by context). Included on purpose, to test directly whether human raters
+  notice what the proxy metrics missed.
+- **4 restructuring-sourced examples** — Stage 6's own successful cases
+  contained zero (its escalation path only ever failed there, per §6.3),
+  so genuine restructuring examples could only be pulled from the
+  ordinary-text pool. Two of these turned out, on inspection, to contain
+  real errors an automated gate did not catch — "The farmer stored fresh
+  corn in the **farm**." (should be "barn"; passed SBERT/phoneme checks
+  regardless) and "...carried a small backpack to **education**."
+  (should be "school"). Both are included specifically because they're
+  concrete, checkable evidence of exactly the kind of failure this pilot
+  exists to surface.
+- **3 multi-change, 2 multi-sentence, and 1 straightforward single-word
+  case**, plus targeted fills for each of the three trigger types
+  (declared word / global sound / word-specific pattern) not already
+  covered.
+
+Two pairs (`pair_12`/`pair_13`) share the identical original sentence
+("Please bring the printed report to the meeting.") under two different
+profiles, producing two different reformulations — one with a pluralization
+artifact, one clean — kept deliberately as a natural same-input,
+different-outcome comparison, not a duplication oversight.
+
+**[LIMITATION, disclosed]** One selected pair
+(`ctl_informal_grammar_interaction`) carries a pre-existing
+`grammar.py::sanitize_input()` spellchecker artifact upstream of
+`reformulate.py` — "wasnt" was mis-corrected to "wants," changing meaning
+before reformulation ever runs. Both Original and Reformulated carry it
+identically, so the *delta* between them is still a fair test of
+`reformulate.py` specifically, but the baseline sentence reads oddly on
+its own. Flagged in `eval/pilot_pairs.json`'s metadata so a low
+meaning-preservation rating on this pair isn't misattributed to
+`reformulate.py`'s own behavior during analysis. Not fixed here —
+`grammar.py` is outside this stage's scope.
+
+Full selection metadata (bucket counts, per-pair automated metrics,
+trigger types) is in `eval/pilot_pairs.json` — never shown to
+participants, kept for the post-hoc analysis in §8.4.
+
+### 8.3 Infrastructure verification (executed, synthetic data)
+
+`eval/pilot_app.py` (a separate, minimal Streamlit app — not part of
+`app.py`) and `eval/pilot_analyze.py` were built, then driven end-to-end
+through `tests/pilot_app_test.py` using Streamlit's `AppTest` (matching
+this project's established testing convention) with two of the real,
+app-selectable participant IDs (P1/P2 — the selectbox only accepts
+P1-P4, so a synthetic-only ID can't be exercised through the actual
+widget) before any real participant touched it, per this stage's explicit
+requirement. All checks passed:
+
+- Exactly 20 rows saved per participant, no more, no less.
+- All 20 `pair_id`s distinct per participant, and identical *sets* across
+  participants (both rated the same 20 pairs).
+- Zero cross-contamination — every row in `P1.csv` tagged
+  `participant_id=P1` and likewise for `P2.csv`.
+- Presentation order differed between P1 and P2 (confirmed unequal), and
+  the first-shown sentence position differed on 7/20 pairs — both
+  counterbalancing mechanisms verified to actually vary, not just coded
+  to.
+- Both "original-first" and "reformulated-first" positions occurred.
+- All response values round-tripped through the CSV in their expected
+  ranges (1-5, 1-5, -2..2, three-way preference, non-empty timestamp).
+- `eval/pilot_analyze.py` correctly loaded all 40 synthetic rows,
+  produced a 20-row per-pair summary, and each pair showed exactly 2
+  ratings (one per synthetic-run participant) — confirming the collected
+  data shape is analyzable without further changes.
+
+`tests/pilot_app_test.py` snapshots and restores `P1.csv`/`P2.csv` around
+its run (the same pattern `tests/app_test.py` already uses for
+`users/default.json`), so it can be re-run safely even after real pilot
+data exists. Confirmed via `git status` on `eval/pilot_responses/`
+showing no diff after the run.
+
+### 8.4 Analysis plan (not yet run against real data)
+
+`eval/pilot_analyze.py` computes, per pair, across the 4 participants:
+mean meaning-preservation, mean naturalness, mean speaking-ease,
+preference counts, and collected diagnostic tags — then merges each
+pair's human ratings against its **already-computed automated metrics**
+(SBERT similarity, edit-ratio, trigger type, source) from
+`eval/pilot_pairs.json`, and flags pairs where the automated proxy and
+human judgment disagree by a material margin (`|SBERT similarity −
+normalized human meaning rating| >= 0.25`) — the specific, actionable
+output this pilot is *for*: not "did people like it," but "where does
+the proxy metric mislead us, specifically."
+
+**Deliberately not reused:** `eval/study/stats.py`'s
+`condition_summary()`/`friedman()` assume the old three-condition
+(`original`/`generic`/`personal`) design (§7) and don't apply to a
+single-system pilot with no condition column — `stats.read_rows()` (plain
+CSV loading) is reused directly; the aggregation logic is new, in
+`eval/pilot_analyze.py`, matching this pilot's actual schema.
+
+### 8.5 What this pilot can and cannot establish
+
+**[LIMITATION, stated in advance]** n=4 participants, n=4 ratings per
+pair. This can surface real, concrete disagreements between proxy metrics
+and human judgment (as §8.2 already did qualitatively, before a single
+real rating exists, just by reading the selected outputs) and can flag
+specific pairs/patterns worth investigating further. It cannot produce a
+statistically powered claim about `reformulate.py`'s general quality, and
+must not be read as evidence about improved stuttering or articulatory
+performance — it evaluates the text reformulation itself, exactly as
+scoped in the brief for this stage.
+
+**Not yet done:** the actual 4×20 data collection. §8.1-8.4 record the
+design, selection, and verified infrastructure; results will be appended
+here (not overwriting this section) once real participants complete the
+pilot.

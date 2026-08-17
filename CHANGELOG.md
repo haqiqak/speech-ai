@@ -6,6 +6,18 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-17** feat: Stage 7 — built and verified (synthetic data) a
+  human-evaluation pilot for `reformulate.py`: `eval/pilot_select_pairs.py`
+  (deliberate, non-random 20-pair selection from a 69-case eligible pool,
+  including known-weak Stage-6 cases and two newly-found genuine errors),
+  `eval/pilot_app.py` (minimal Streamlit collection instrument,
+  counterbalanced), `eval/pilot_analyze.py` (per-pair summaries +
+  proxy-vs-human disagreement flagging). Full workflow driven end-to-end
+  with synthetic responses via `AppTest` before any real participant —
+  all checks passed. Real 4x20 data collection not yet run. Zero changes
+  to `reformulate.py` — confirmed via full suite (78 tests) +
+  `tests/smoke.py`. → `DECISION_LOG.md` 2026-08-17-C; `VALIDATION.md` §8;
+  `ROADMAP.md` R4.
 - **2026-08-17** feat: R9 — Keep/Revert toggles now record a feedback
   signal (kept/reverted counts) against the declared word/sound entry
   responsible for each substitution, stored in that entry's existing

@@ -139,6 +139,27 @@ needed) against a deliberately-chosen current comparison, reusing
 `counterbalance.py`/`stats.py` unmodified. Still blocked on recruiting
 actual participants — that's a scope decision for whoever can realistically
 do it, not something this pass could resolve.
+**Update (2026-08-17) — the pilot is built, verified, and ready to run;
+no longer blocked on infrastructure, only on real participants
+completing it.** `VALIDATION.md` §8: a scoped, honest pilot design (4
+participants x 20 pairs = 80 ratings, `reformulate.py` only — the legacy
+pipelines were already compared quantitatively in §6 and are out of scope
+here), a deliberately non-random 20-pair selection from a 69-case
+eligible pool (`eval/pilot_select_pairs.py`) that specifically includes
+cases already suspected to be qualitatively weak despite passing
+automated gates, a minimal Streamlit collection instrument
+(`eval/pilot_app.py`) with per-participant order/position
+counterbalancing, and an analysis script
+(`eval/pilot_analyze.py`) that merges human ratings against each pair's
+existing automated metrics to flag proxy-vs-human disagreement directly —
+the specific, actionable signal this pilot exists to produce. The full
+workflow was driven end-to-end with synthetic responses via `AppTest`
+(`tests/pilot_app_test.py`) before any real participant touched it, per
+this item's own "confirm, don't just build" discipline: exactly 20 rows
+per participant, zero cross-contamination, counterbalancing verified to
+actually vary, and the resulting data confirmed analyzable. **Not yet
+done:** the actual 4x20 data collection with real people — that's the
+only remaining step, and it's not one this pass could do on its own.
 
 ---
 
