@@ -603,6 +603,45 @@ keep/revert signal into the profile) and the still-never-run human-
 judgment study (`eval/study/`, §1/§5) are no longer obviously lower
 priority than R18 by comparison — left for the next planning step to
 decide, not decided here.
+**Update (2026-08-17):** `REFORMULATION_PROBLEM_MAP.md` §3.3 found the
+most actionable lever for this item specifically: HuggingFace
+`transformers` already supports constrained beam search with disjunctive
+constraints (`force_words_ids`), a strictly more expressive drop-in
+replacement for the current manual `bad_words_ids`-only blocking, same
+library, no new model. It does not close Cause B outright (still
+token-level, not phoneme-class blocking) but may reduce the R17-follow-up
+side effect (tighter blocking → lower-similarity survivors, §6.8). Ranked
+item 3 in that document's §5 implementation order, after the idiom guard
+(R19, done) and word-sense disambiguation — not started yet.
+
+### R19. Idiom/fixed-expression guard for substitution — **DONE, 2026-08-17**
+**Linked finding:** `VALIDATION.md` §9.7/§9.9 — the pilot's single
+best-evidenced problem (two independent analyses, the largest SBERT-
+vs-human gaps and the largest category-score gap, converge on the same
+mechanism): substituting a word that's a load-bearing component of a
+fixed idiom or collocation ("how's it going," "drives me crazy," "right
+now") breaks the phrase even though the substitution passes every
+per-word check. Named and ranked item 1 in `REFORMULATION_PROBLEM_MAP.md`
+§5, the project's new living problem/research map.
+**What was done:** `semantic.py` gained a curated idiom-phrase guard
+(`IDIOM_PHRASES` + a pronoun-wildcard `IDIOM_PHRASE_PATTERNS`), reusing
+the existing `protected_positions()` substitution-blocking mechanism.
+Verified against the exact real pilot data, not just synthetic tests:
+the specific broken outputs P1 rated poorly no longer occur, 26/30 other
+pilot pairs are byte-identical (no collateral change), Stage 6's corpus
+is unaffected (zero phrase overlap). Found and fixed one follow-up
+correctness bug in the same pass — an early version silently excluded
+idiom-locked-but-profile-matching words from the flagged-word counts
+entirely, which would have made "difficulty resolved" misleading in a
+new way; fixed so the metric now correctly reports these as unresolved
+instead. Full record: `VALIDATION.md` §10; `DECISION_LOG.md` 2026-08-17-I.
+**Labeled as:** Done, with a disclosed trade-off, not a free win — when
+the only word matching a declared difficulty sits inside a protected
+idiom, that difficulty is now correctly left unaddressed (reported
+honestly) rather than incorrectly reported as resolved via a broken
+substitution. A curated list, not a general MWE detector (`REFORMULATION_
+PROBLEM_MAP.md` §3.1's `[GAP]`) — a novel idiom not on the list will
+still break as before.
 
 ---
 

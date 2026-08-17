@@ -6,6 +6,22 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-17** feat: R19 — idiom/fixed-expression guard for
+  substitution, `REFORMULATION_PROBLEM_MAP.md` §5's item 1.
+  `semantic.py` gained a curated idiom-phrase list + pronoun-wildcard
+  pattern, reusing the existing `protected_positions()` mechanism.
+  Verified against real pilot data: the exact broken outputs P1 rated
+  poorly ("how's it taking", "going me crazy") no longer occur; 26/30
+  pilot pairs and both Stage 6/escalation-rate eval corpora (18 + 210
+  cases) are byte-identical, zero collateral change. Found and fixed a
+  follow-up metrics bug in the same pass (idiom-protected words were
+  silently excluded from flagged-word counts, making "difficulty
+  resolved" misleading) — now correctly reported as unresolved instead.
+  Honest trade-off disclosed: an idiom-locked difficulty is now left
+  unaddressed rather than shipped broken. New tests
+  (`tests/semantic_test.py`, 3 new cases in `tests/reformulate_test.py`)
+  and a new diagnostic (`eval/idiom_guard_recheck.py`). →
+  `DECISION_LOG.md` 2026-08-17-I; `VALIDATION.md` §10; `ROADMAP.md` R19.
 - **2026-08-17** feat: interface audit of `app.py` — removed dead
   `.pipe-card` CSS, softened three places implying the SBERT meaning-check
   is a stronger guarantee than pilot evidence supports (sidebar banner,

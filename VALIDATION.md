@@ -1257,3 +1257,152 @@ statistically powered claim about `reformulate.py`'s general quality
 or about real speaker outcomes — restated because every prior section
 of this document makes the same point and it would be inconsistent to
 drop it here.
+
+## 10. Idiom/fixed-expression guard — implemented and verified (2026-08-17)
+
+`REFORMULATION_PROBLEM_MAP.md` §5 item 1, the highest-evidence item in
+that document's implementation plan. Per the user's explicit sequencing
+("test it properly on the existing pilot/evaluation corpus and see
+whether the human-proxy failures actually decrease" before moving to
+item 2), this section reports the implementation and its verification
+against real evidence, not just unit tests.
+
+### 10.1 What was built
+
+`semantic.py`: two new curated lists — `IDIOM_PHRASES` (exact multi-word
+matches: "how 's it going", "what 's going on", "right now", "right
+away", "right here") and `IDIOM_PHRASE_PATTERNS` (a small pronoun-
+wildcard mechanism for "drives/driving/drove/drive {pron} crazy",
+matching a fixed set of object pronouns). A new `idiom_protected_positions()`
+returns just this subset; `protected_positions()` (already the mechanism
+`reformulate.py` uses to block substitution at a position — this is not
+new machinery, it's the same one `PROTECTED_PHRASES`/stop-words already
+used) now includes it. `reformulate.py::_flagged_positions` already
+excluded any protected position from being substitutable — that part
+required no change.
+
+**A follow-up correctness issue found and fixed while testing the guard
+itself, not assumed away:** the first version silently excluded
+idiom-protected words from `flagged_words_before`/`flagged_words_after`
+entirely, the same way stop words always have been. For a stop word
+that's correct — "the"/"is" were never real difficulty candidates. But
+an idiom-locked *content* word (e.g. "going" in "how's it going") can
+genuinely match a declared sound, and silently excluding it made
+`difficulty_resolved: true` misleading — the metric would report success
+on a sentence where the speaker's declared difficulty is still sitting
+in the output, unaddressed, just no longer visible to the count. Fixed
+via a new `_idiom_protected_matches()` in `reformulate.py`: these
+positions are still excluded from substitution (correct, unchanged) but
+now counted in `flagged_words_before`/`after` and reported in the
+`skipped` list with reason `"part of a fixed expression — left unchanged
+to avoid breaking it"`, and the sentence's status becomes
+`could_not_safely_reformulate` rather than the misleading
+`no_change_needed` when the idiom-locked word was the only match.
+
+### 10.2 Verification
+
+**Unit level** (`tests/semantic_test.py`, 12 new tests, no model loading
+required): confirms the new idiom lists protect exactly the intended
+spans, that pre-existing `PROTECTED_PHRASES`/stop-word behavior is
+unaffected, that the pronoun wildcard matches all six pronouns tested and
+nothing outside that set, and that none of "going"/"right"/"crazy" are
+protected *outside* their specific idiom context (i.e. this is not a
+blanket ban on those words).
+
+**Integration level** (`tests/reformulate_test.py`, 3 new tests in
+`IdiomGuardTest`, using the exact real pilot sentences, not synthetic
+restatements): "how's it going" and "drives me crazy" are left
+byte-identical to the original input; "right now" survives even when a
+sibling word in the same sentence ("really") is still correctly
+substituted — confirming the guard is scoped to the idiom span, not the
+whole sentence.
+
+**Full regression suite, run twice — before and after the follow-up
+metrics fix**: `tests/reformulate_test.py` (20/20), `tests/semantic_test.py`
+(12/12), `tests/app_test.py` (all scenarios), `tests/difficulty_profile_test.py`
+(50/50), `tests/roadmap_test.py` (3/3) all pass. `tests/smoke.py` diffed
+against both committed baselines (`tests/baseline_sbert.txt`,
+`tests/baseline.txt`) — **exactly one intended, isolated change** in each
+(a "she is run right now" test sentence's "right"→"properly"/"now"→"today"
+substitutions no longer fire, correctly), nothing else shifted; both
+baselines regenerated and committed to reflect the new correct behavior.
+`eval/reformulation_eval.py` re-run against Stage 6's exact 18-case
+corpus — **byte-identical output**, since none of that corpus's text
+contains any of the new guard's trigger phrases (confirmed by direct
+grep before assuming it, not inferred) — Stage 6's §6.2 numbers stand
+unchanged.
+
+### 10.3 Did the human-proxy failures actually decrease? (the diagnostic the user asked for)
+
+New script `eval/idiom_guard_recheck.py` — reads the **frozen** v3 pilot
+corpus (`eval/pilot_pairs.json`, never overwritten) read-only, rebuilds
+each pair's exact profile from its recorded `profile_spec`, and re-runs
+`reformulate()` on the exact original text through the current engine,
+diffing against what P1 actually rated. This is a diagnostic re-run, not
+a new pilot — `eval/pilot_pairs.json`/`eval/pilot_responses/` are
+untouched, consistent with §8.4/§9.4's rule against regenerating a frozen,
+already-rated corpus.
+
+**[FINDING] All four pairs the guard targets changed, all in the
+intended direction; the other 26 pairs are byte-identical to the frozen
+record — zero collateral change.**
+
+| Pair | Case | Old (what P1 rated) | New | Old SBERT | New SBERT |
+|---|---|---|---|---|---|
+| pair_01 | gs_hows_it_going | "Hey, how's it **taking** today?" | "Hey, how's it going today?" (unchanged) | 0.910 | 1.0 |
+| pair_11 | gs_driving_crazy | "The kids are **going** me crazy today." | "The kids are driving me crazy today." (unchanged) | 0.968 | 1.0 |
+| pair_15 | gs_need_break | "I very need a break **justly** now." | "I very need a break right now." | 0.909 | 0.965 |
+| pair_28 | md_running_traffic | "...stuck in traffic **properly** now." | "...stuck in traffic right now." | 0.912 | 0.937 |
+
+Two of these three pairs from §9.7's worst-9 SBERT-vs-human disagreement
+table are now non-issues: pair_01 (was the single largest gap after
+pair_28 among global_sound cases at the time, human meaning=2/5) and
+pair_11 (human meaning=3/5) no longer produce a broken idiom at all —
+the exact wrong output P1 actually rated poorly does not recur. pair_15
+and pair_28 (both "right now" cases) keep their other, unrelated
+substitution but no longer touch "right now" itself, and their SBERT
+similarity moved measurably closer to 1.0 as a direct, mechanical
+consequence (fewer/safer edits). **[LIMITATION]** This is not a new
+human rating — nobody re-rated these four corrected sentences, so "the
+proxy-vs-human gap decreased" is inferred (the SBERT gap driver, the
+literal broken idiom, no longer exists in the output) rather than
+re-measured with a real participant. That would require a genuinely new
+pilot round, out of scope for this diagnostic.
+
+**[FINDING, the honest trade-off — not glossed over]** For pair_01 and
+pair_11, the declared difficulty is now **not resolved at all**:
+`flagged_words_before`/`after` are both 1 (the idiom-locked word is
+still there, unaddressed), and `status` is `could_not_safely_reformulate`
+rather than `reformulated`. Before this fix, the engine shipped a
+broken sentence but reported the difficulty as resolved; after this fix,
+it correctly leaves the sentence alone and correctly reports the
+difficulty as unresolved. This is the same "never ship a bad guess"
+philosophy `reformulate.py` already applies to substitution/escalation
+failures (§6.3's Cause B is the same shape of trade-off), extended
+consistently to idioms — not a free win, a disclosed trade of "silently
+wrong" for "visibly incomplete."
+
+**Two pairs on §9.7's disagreement list were checked and confirmed
+*not* addressed by this guard, rather than assumed fixed**: pair_29
+("push"→"force"/"grab"→"catch", a word-choice/frequency-bias issue) and
+pair_30 ("print"→"create", a wrong-action substitution) came back
+byte-identical to the frozen record — neither is an idiom break, and
+this guard was never going to touch them. Correctly out of scope for
+item 1; still open.
+
+### 10.4 What this does and doesn't establish
+
+**[RECOMMENDATION, per the user's own sequencing]** This clears the way
+to item 2 (word-sense disambiguation) as planned. Note the overlap
+already realized: "right now" was on both item 1's (fixed-expression)
+and item 2's (word-sense) target lists, and is already fixed here for
+its own literal phrase — item 2 should still proceed for the *general*
+word-sense problem (any polysemous word, not just "right"), since only
+one specific two-instance case has been observed so far
+(`REFORMULATION_PROBLEM_MAP.md` §6).
+
+**[LIMITATION]** This section confirms the intended idiom breaks no
+longer occur and nothing else regressed — it does not re-establish
+`VALIDATION.md` §9's category-level numbers (`global_sound` 4.11/3.78/+0.83
+etc.), which would require a new pilot round with fresh human ratings,
+not yet run.

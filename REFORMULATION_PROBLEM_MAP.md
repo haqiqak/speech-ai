@@ -146,6 +146,19 @@ word is a load-bearing idiom component" vs. "this word is a free content
 slot" — it flags by pronunciation match alone. §3.1 below researches
 concrete fixes.
 
+**Update, 2026-08-17 — item 1 of §5 implemented and verified:**
+`semantic.py` now has a curated idiom-phrase guard (`IDIOM_PHRASES`,
+`IDIOM_PHRASE_PATTERNS`) covering the specific pilot-evidenced breaks
+("how's it going," "drives/driving me crazy," "right now/away/here").
+`VALIDATION.md` §10 has the full verification: the exact broken outputs
+P1 rated ("how's it **taking**," "going me crazy") no longer occur, all
+26 unrelated pilot pairs are byte-identical (no collateral change), and
+Stage 6's corpus is unaffected (zero phrase overlap, confirmed not
+assumed). This closes the specific evidenced cases, not the general
+class — the guard is a curated list, not a general MWE detector (§3.1's
+`[GAP]`: no off-the-shelf general detector was found either), so a novel
+idiom not on the list will still break exactly as before. Still open.
+
 ### 2.5 Whether the reformulation actually removes the speaker's declared difficulty
 
 **Current state [FINDING]:** this is the one factor with a dedicated,
@@ -162,6 +175,26 @@ pair_19: `flagged_words_after` correctly dropped to zero, but the
 replacement also silently changed singular to plural — a difficulty-removed,
 meaning-changed case that this metric alone cannot see).
 
+**Update, 2026-08-17 — a second, unplanned finding from implementing
+§2.4's idiom guard:** protecting an idiom span can make this factor
+*worse* for that specific sentence, not just neutral — if the only word
+matching the speaker's declared difficulty sits inside a protected idiom,
+the engine now correctly refuses to touch it (status
+`could_not_safely_reformulate`) rather than shipping a broken
+substitution, but the declared difficulty is then **not addressed at
+all** in that sentence (`VALIDATION.md` §10.3's pair_01/pair_11). This
+is the same "never ship a bad guess" trade-off §6.3's Cause B already
+established for escalation failures, now shown to also apply to
+substitution once an idiom guard exists — a real cost of §2.4's fix,
+disclosed rather than presented as a strict improvement. A follow-up
+correctness bug in this same work is also worth recording here directly:
+the first implementation silently excluded these idiom-locked-but-
+matching words from `flagged_words_before`/`after` entirely (as if the
+difficulty had never existed), which would have made "difficulty
+resolved" misleading in a *new* way; fixed before shipping (`VALIDATION.md`
+§10.1) so the metric now honestly reports "unresolved," not "never
+existed" or "resolved."
+
 ### 2.6 Word sense and contextual appropriateness
 
 **Current state [FINDING, concrete and reproducible]:** WordNet-based
@@ -171,6 +204,15 @@ independently: "right" in "right now" (the immediate/temporal sense)
 substituted using the correct/fair sense ("justly", "properly") both times.
 §3.2 below found this is a solved-in-principle problem in the literature,
 not a research gap — the gap is implementation, not knowledge.
+
+**Update, 2026-08-17:** the *literal* "right now" case is now also
+prevented as a side effect of §2.4's idiom guard (the phrase is on the
+protected list). This is not a fix for this factor in general — it
+covers one specific two-word phrase, not word-sense disambiguation as a
+capability. Item 2 (§5) — general WSD before candidate generation —
+remains the next planned step for this factor, per the user's own
+sequencing, precisely because only this one word/phrase has been
+observed to fail so far and the general problem is still unaddressed.
 
 ### 2.7 Interactions between multiple substitutions in one sentence
 
@@ -450,12 +492,19 @@ here) crossed with feasibility (§4). This ranking updates `VALIDATION.md`
 replace that section, which stays as the dated record of what the pilot
 itself supported.
 
-1. **Idiom/fixed-expression guard before substitution** (§2.4, §3.1) —
-   highest-evidence problem (two independent pilot analyses converge on it)
-   with a small-effort, off-the-shelf technique (spaCy `PhraseMatcher` +
-   curated list). Also plausibly reduces §2.7's multi-difficulty compounding,
-   since an idiom-protected span simply won't be offered as a substitution
-   target in the first place.
+1. **[DONE, 2026-08-17 — `VALIDATION.md` §10] Idiom/fixed-expression
+   guard before substitution** (§2.4, §3.1) — highest-evidence problem
+   (two independent pilot analyses converge on it). Implemented as a
+   curated exact-match list (`semantic.py`'s `IDIOM_PHRASES` +
+   pronoun-wildcard `IDIOM_PHRASE_PATTERNS`), reusing the existing
+   `protected_positions()` mechanism rather than adding spaCy — smaller,
+   lower-risk than the `PhraseMatcher` route §3.1/§4 named, at the cost of
+   only covering phrases actually on the list (not a general MWE
+   detector — §3.1's `[GAP]` still stands). Verified: the exact broken
+   outputs P1 rated no longer occur, 26/30 pilot pairs byte-identical
+   (zero collateral change), Stage 6 corpus unaffected. Found and fixed
+   one follow-up correctness issue in the same pass (§2.5's update above)
+   before calling it done — not shipped with a silently-known gap.
 2. **Word-sense disambiguation before candidate generation** (§2.6, §3.2) —
    small, concrete, reproducible-twice bug with a solved-in-principle,
    small-effort fix (`pywsd` or SBERT-gloss matching).
@@ -516,3 +565,9 @@ prioritized map for a future, explicitly-approved implementation cycle.
   user's explicit direction (idiom preservation, WSD, multi-difficulty
   interaction, T5 escalation, plus adjacent-field survey). No code changed
   as part of producing this document.
+- **2026-08-17** — §5 item 1 (idiom/fixed-expression guard) implemented
+  and verified; §2.4 and §2.5 updated with what was found, including an
+  unplanned discovery (protecting an idiom can leave a sentence's declared
+  difficulty fully unaddressed, and a follow-up metrics-visibility bug
+  found and fixed in the same pass) — not just a status flip to "done."
+  Full record: `VALIDATION.md` §10.

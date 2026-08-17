@@ -1497,3 +1497,75 @@ review).
 **Category:** Research / documentation / UI copy. No reformulation-engine
 behavior changed. Nothing committed — per direct user instruction, changes
 are staged locally for review, not pushed.
+
+### 2026-08-17-I — R19 implemented: idiom/fixed-expression guard, verified against real pilot data
+
+**What was done, per the user's explicit approval and sequencing**
+("commit the research/interface work once checked, then idiom guard is
+the next actual implementation"): `REFORMULATION_PROBLEM_MAP.md` §5 item
+1, the highest-evidence item in that document.
+
+`semantic.py` gained `IDIOM_PHRASES` (exact multi-word matches: "how 's
+it going", "what 's going on", "right now/away/here") and
+`IDIOM_PHRASE_PATTERNS` (a pronoun-wildcard mechanism for "drives/
+driving/drove/drive {pron} crazy" — spelling out every pronoun by hand
+would've been error-prone/incomplete). Both feed the existing
+`protected_positions()` mechanism `reformulate.py` already used to block
+substitution at a position (same code path `PROTECTED_PHRASES`/stop
+words already used — not new machinery).
+
+**A follow-up correctness issue found and fixed in the same pass, not
+shipped with a known gap:** the first version silently excluded
+idiom-protected words from `flagged_words_before`/`after` entirely, the
+same as stop words always have been. Correct for stop words (never real
+difficulty candidates); wrong for an idiom-locked *content* word that
+genuinely matches a declared sound — it made "difficulty resolved: true"
+misleading for a sentence where the difficulty is still there,
+unaddressed, just no longer counted. Fixed via a new
+`_idiom_protected_matches()` in `reformulate.py`: still excluded from
+substitution (unchanged, correct), but now counted in
+`flagged_words_before`/`after` and reported in `skipped` with reason
+"part of a fixed expression — left unchanged to avoid breaking it";
+sentence status becomes `could_not_safely_reformulate` instead of the
+misleading `no_change_needed` when that's the only match.
+
+**Verification, per the user's explicit "test it properly... see whether
+the human-proxy failures actually decrease" instruction:** new script
+`eval/idiom_guard_recheck.py` re-runs the FROZEN v3 pilot corpus
+(`eval/pilot_pairs.json`, never overwritten — same discipline as
+§8.4/§9.4) through the current engine and diffs against what P1 actually
+rated. Result: the exact broken outputs P1 rated poorly ("how's it
+**taking**", "going me crazy") no longer occur; "right now" survives in
+both cases that used to break it; 26/30 pairs are byte-identical (zero
+collateral change); pair_29/pair_30 (also on the high-disagreement list
+but NOT idiom breaks) correctly came back untouched, confirmed rather
+than assumed out of scope. Full regression suite re-run twice (before
+and after the metrics follow-up fix): `tests/reformulate_test.py`
+(20/20, 3 new idiom-guard tests using the real pilot sentences),
+`tests/semantic_test.py` (new file, 12/12), `tests/app_test.py`,
+`tests/difficulty_profile_test.py` (50/50), `tests/roadmap_test.py`
+(3/3) all pass. `tests/smoke.py` diffed against both committed
+baselines — exactly one intended, isolated change in each (a "right
+now" test sentence no longer gets wrongly substituted), nothing else
+shifted; both baselines regenerated and committed.
+`eval/reformulation_eval.py` (Stage 6, 18 cases) and
+`eval/reformulation_escalation_rate.py` (210 cases) both re-run and
+produced **byte-identical** output to the pre-change committed CSVs —
+confirmed via direct grep that neither corpus contains any of the new
+guard's trigger phrases before assuming zero overlap, not inferred.
+
+**The honest trade-off, not glossed over:** when the *only* word
+matching a declared difficulty sits inside a protected idiom
+("how's it **going**", "driving me **crazy**"), the engine now correctly
+leaves the sentence alone and reports the difficulty as unresolved,
+rather than shipping a broken substitution and reporting it as resolved.
+Same "never ship a bad guess" philosophy §6.3's Cause B already
+established for escalation, now shown to extend to substitution once an
+idiom guard exists.
+
+**Category:** Reformulation-engine implementation (R19/`REFORMULATION_
+PROBLEM_MAP.md` §5 item 1). Full record: `VALIDATION.md` §10;
+`REFORMULATION_PROBLEM_MAP.md` §2.4/§2.5/§5 (updated, living document);
+`ROADMAP.md` R19 (new, done) and R18 (cross-referenced). Not yet
+committed — pending the same review/approval flow as the rest of this
+session's work.
