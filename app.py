@@ -31,7 +31,7 @@ from nltk import word_tokenize
 from grammar import sanitize_input, _detokenize
 import semantic as sem
 import phonetic as ph
-from difficulty_profile import DifficultyProfile, extract_candidate_words
+from difficulty_profile import DifficultyProfile, extract_candidate_words, record_feedback, undo_feedback
 import profile_store
 import reformulate
 
@@ -74,6 +74,22 @@ _DIFFICULTY_ADDERS = {
 }
 
 
+def _feedback_badge(entry) -> str:
+    """Small, visible readout of ROADMAP.md R9's accumulated Keep/Revert
+    counts for one entry — empty string if the entry has never triggered
+    a change the user has toggled. Kept transparent rather than silent:
+    the data exists in the profile file either way, so hiding it from the
+    UI would make it unverifiable, not just unused."""
+    fb = entry.meta.get("feedback")
+    if not fb or not (fb.get("kept") or fb.get("reverted")):
+        return ""
+    return (
+        f' <span style="opacity:.6;font-size:.74rem" '
+        f'title="How often changes tied to this entry have been kept vs. reverted">'
+        f'(✓{fb.get("kept", 0)} ↺{fb.get("reverted", 0)})</span>'
+    )
+
+
 def _render_difficulty_category(
     profile: DifficultyProfile,
     category: str,
@@ -100,6 +116,7 @@ def _render_difficulty_category(
                         'engine yet — a known limitation, not a bug in your entry.">'
                         '⚠️ not fully enforced yet</span>'
                     )
+                extra += _feedback_badge(entry)
                 st.markdown(
                     f'<span class="blocklist-item">🚫 {_fmt(entry.value)}</span>{extra}',
                     unsafe_allow_html=True,
@@ -159,6 +176,7 @@ def _render_words_category(profile: DifficultyProfile) -> None:
                     'The sounds shown are for the most common one and may not match what you meant.">'
                     '⚠️ has multiple pronunciations</span>'
                 )
+            extra += _feedback_badge(entry)
             st.markdown(
                 f'<span class="blocklist-item">🚫 {_fmt(entry.value)}</span>{extra}',
                 unsafe_allow_html=True,
@@ -327,6 +345,26 @@ def _apply_change_choices(result: dict, choices: dict[int, bool]) -> str:
     return " ".join(rebuilt)
 
 
+def _record_change_feedback(profile: DifficultyProfile, change: dict, new_keep: bool, change_index: int) -> None:
+    """Wire a Keep/Revert toggle into the declared entries responsible for
+    it (ROADMAP.md R9's feedback loop — recording only; nothing in
+    reformulate.py reads this yet). Undoes any prior vote for this same
+    change first, so re-toggling reflects the user's current choice, not
+    a running click count. A no-op for changes reformulate.feedback_targets
+    can't attribute to a specific entry (e.g. restructuring)."""
+    targets = reformulate.feedback_targets(change, profile)
+    if not targets:
+        return
+    prior = st.session_state.recorded_feedback.get(change_index)
+    if prior is not None:
+        for t in targets:
+            undo_feedback(t, kept=prior)
+    for t in targets:
+        record_feedback(t, kept=new_keep)
+    st.session_state.recorded_feedback[change_index] = new_keep
+    _save_difficulty_profile(profile)
+
+
 # ── CSS ──────────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
@@ -418,6 +456,7 @@ for key, default in [
     ("query_input", ""), ("reformulate_result", None),
     ("reformulate_source_text", None), ("change_choices", {}),
     ("grammar_fixes", []), ("session_history", []),
+    ("recorded_feedback", {}),
 ]:
     if key not in st.session_state:
         st.session_state[key] = default
@@ -560,6 +599,7 @@ if reformulate_clicked and query.strip():
         f for f in grammar_fixes if f.get("original") != f.get("corrected")
     ]
     st.session_state.change_choices = {}
+    st.session_state.recorded_feedback = {}
     st.rerun()
 
 # ── Step 4: review ────────────────────────────────────────────────────────────
@@ -631,6 +671,7 @@ if result is not None:
                 new_keep = st.checkbox("Keep", value=keep, key=f"change_keep_{i}")
                 if new_keep != keep:
                     st.session_state.change_choices[i] = new_keep
+                    _record_change_feedback(difficulty_profile, change, new_keep, i)
                     st.rerun()
 
             v = change["verification"]
