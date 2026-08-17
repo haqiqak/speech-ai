@@ -363,6 +363,29 @@ class DifficultyProfile:
         return not (self.sounds or self.words or self.phrases)
 
 
+def record_feedback(entry: DifficultyEntry, kept: bool) -> None:
+    """Record one Keep/Revert decision against a declared entry —
+    ROADMAP.md R9's feedback signal. Stored in `entry.meta['feedback']`
+    (the same reserved, forward-compatible `meta` dict every entry has
+    carried since Stage 4A) as plain kept/reverted counters — a prototype
+    that *records* the signal, not a bandit posterior and not anything
+    that changes ranking. Nothing in reformulate.py reads this field;
+    wiring it into candidate ranking is separate, future, evaluation-
+    gated work (ROADMAP.md R9), not done by recording it.
+    """
+    fb = entry.meta.setdefault("feedback", {"kept": 0, "reverted": 0})
+    fb["kept" if kept else "reverted"] += 1
+
+
+def undo_feedback(entry: DifficultyEntry, kept: bool) -> None:
+    """Reverse a previously-recorded vote — used when the user changes
+    their mind on a Keep/Revert toggle, so the stored counts reflect the
+    user's current set of choices rather than a raw click count."""
+    fb = entry.meta.setdefault("feedback", {"kept": 0, "reverted": 0})
+    key = "kept" if kept else "reverted"
+    fb[key] = max(0, fb[key] - 1)
+
+
 def extract_candidate_words(text: str) -> list[str]:
     """Unique, lowercased single-word tokens from *text*, for the UI's
     'pick a word from your current text' convenience control. Order

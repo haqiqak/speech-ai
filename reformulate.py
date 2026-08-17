@@ -416,3 +416,35 @@ def reformulate(text: str, profile: DifficultyProfile, settings: ReformulateSett
             },
         },
     }
+
+
+def feedback_targets(change: dict, profile: DifficultyProfile) -> list:
+    """Which declared DifficultyEntry objects a Keep/Revert decision on
+    *change* should be attributed to (ROADMAP.md R9). Read-only — does not
+    mutate the profile or affect reformulate()'s own behavior in any way;
+    callers (app.py) decide what to do with the returned entries.
+
+    Only substitution-sourced changes are attributed: each one already
+    names, via 'triggered_by', exactly which declared word/pattern/sound
+    caused it, and 'original' is the single word that was replaced.
+    Restructuring-sourced changes are sentence-level (multiple flagged
+    spans collapsed into one T5 rewrite) and are deliberately NOT
+    attributed to any single entry here — attributing a whole-sentence
+    accept/reject to one declared entry would be a guess, not a signal,
+    and this project's own discipline (Practice.md §6) is not to invent
+    one without evidence it's the right attribution.
+    """
+    if change.get("source") != "substitution":
+        return []
+    original = change.get("original", "")
+    triggered_by = change.get("triggered_by", [])
+    targets = []
+    if "declared_word" in triggered_by or "word_specific_pattern" in triggered_by:
+        entry = profile.find_word(original.lower())
+        if entry is not None:
+            targets.append(entry)
+    if "global_sound" in triggered_by:
+        for entry in profile.sounds:
+            if ph.matches_any(original, [entry.value]):
+                targets.append(entry)
+    return targets
