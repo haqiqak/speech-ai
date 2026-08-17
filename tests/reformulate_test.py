@@ -178,6 +178,59 @@ class IdiomGuardTest(unittest.TestCase):
         self.assertIn("right now", result["reformulated_text"].lower())
 
 
+class WordSenseDisambiguationTest(unittest.TestCase):
+    """Regression tests for REFORMULATION_PROBLEM_MAP.md SS5 item 2. Unlike
+    IdiomGuardTest, these deliberately use sentences the idiom guard does
+    NOT cover, to confirm the fix generalizes beyond the one "right now"
+    phrase -- it corrects candidate-generation sense selection, not just
+    that specific idiom."""
+
+    def test_immediate_sense_of_right_not_confused_with_correct_sense(self):
+        # "right" here means "immediately" (right.r.02), not "correctly"/
+        # "properly"/"justly" (the wrong senses the old, sense-unaware
+        # candidate pool used to surface -- VALIDATION.md SS9.9). Not
+        # covered by the idiom guard (only literal "right now/away/here"
+        # are on that list) -- this exercises WSD itself.
+        profile = _profile("wsd_right_immediate")
+        profile.add_sound("r", source="user_typed")
+        result = rf.reformulate("He'll be right over to help.", profile)
+        for wrong in ("justly", "properly", "correctly", "mighty", "mightily"):
+            self.assertNotIn(wrong, result["reformulated_text"].lower())
+
+    def test_candidate_never_reintroduces_another_declared_word(self):
+        # A follow-up bug found via the Stage 6 corpus re-run: WSD's more
+        # precise ranking picked "examined" -- itself one of the profile's
+        # OTHER declared-difficult words -- as the top candidate for
+        # "reviewed" in the same sentence. A candidate must never match
+        # any of the profile's OTHER declared words either.
+        profile = _profile("wsd_no_collision")
+        profile.add_word("reviewed", source="user_typed")
+        profile.add_word("examined", source="user_typed")
+        result = rf.reformulate(
+            "I thoroughly reviewed three reports and carefully examined the results.",
+            profile,
+        )
+        self.assertEqual(result["metrics"]["flagged_words_after"], 0)
+        for change in result["changes"]:
+            self.assertNotIn(change["replacement"].lower(), {"reviewed", "examined"})
+
+    def test_repeated_word_different_senses_get_different_replacements(self):
+        # Whole-sentence disambiguation (the first version of this fix) fed
+        # BOTH occurrences of "runs" the identical context string, so both
+        # got the identical sense and the identical (wrong-for-at-least-one)
+        # replacement -- confirmed directly via the Stage 6 corpus re-run
+        # (VALIDATION.md SS11). Fixed with a local context window per
+        # occurrence instead of the whole sentence.
+        profile = _profile("wsd_local_window")
+        profile.add_word("runs", source="user_typed")
+        result = rf.reformulate(
+            "He runs the company every morning before he runs three miles.", profile
+        )
+        subs = [c for c in result["changes"] if c["source"] == "substitution"]
+        self.assertEqual(len(subs), 2)
+        self.assertNotEqual(subs[0]["replacement"].lower(), subs[1]["replacement"].lower())
+
+
 class MetricsTest(unittest.TestCase):
     def test_metrics_shape_and_bounds(self):
         profile = _profile("metrics")
@@ -232,7 +285,16 @@ class FeedbackTargetsTest(unittest.TestCase):
     def test_global_sound_substitution_attributes_to_the_sound_entry(self):
         profile = _profile("fbt_sound")
         profile.add_sound("str", source="user_typed")
-        result = rf.reformulate("The team reached a strong decision.", profile)
+        # Same sentence as SubstitutionTest.test_global_sound_flag_produces_
+        # substitution -- known to reliably survive as a substitution (not
+        # an escalation) with the word-sense-disambiguation fix (item 2)
+        # in place, unlike a lone "strong decision", which now correctly
+        # escalates to restructuring since its single-sense candidate pool
+        # (firm/forceful) doesn't clear the SBERT gate for that sentence
+        # (VALIDATION.md SS11 -- a disclosed trade-off, not a bug).
+        result = rf.reformulate(
+            "I need to review three reports before the strong deadline.", profile
+        )
         subs = [c for c in result["changes"] if c["source"] == "substitution"]
         self.assertTrue(subs)
         targets = rf.feedback_targets(subs[0], profile)

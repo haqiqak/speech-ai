@@ -73,7 +73,7 @@ class SynonymEngine:
         self.language = language
 
     # ── Source 1: POS-filtered WordNet ──────────────────────────────────────
-    def _wordnet_synonyms(self, word: str, wn_pos=None) -> set[str]:
+    def _wordnet_synonyms(self, word: str, wn_pos=None, restrict_synsets=None) -> set[str]:
         """
         Extract synonyms from WordNet, restricted to the given POS.
 
@@ -82,9 +82,17 @@ class SynonymEngine:
                 When provided, ONLY synsets matching that POS are visited
                 and hypernym chains are also restricted to the same POS —
                 this is the key fix that prevents cross-POS contamination.
+        restrict_synsets: optional list of specific Synset objects to crawl
+                instead of wn.synsets(word, pos=wn_pos)'s full same-POS set —
+                the word-sense-disambiguation hook (semantic.disambiguate_synset,
+                REFORMULATION_PROBLEM_MAP.md SS2.6 item 2): when the caller has
+                already picked the one sense that actually fits the sentence,
+                candidates come from THAT sense only, not every same-POS sense
+                unioned together. None (the default) preserves the original
+                all-same-POS-senses behavior exactly.
         """
         syns: set[str] = set()
-        synsets = wn.synsets(word, pos=wn_pos)   # <── KEY: POS filter here
+        synsets = restrict_synsets if restrict_synsets is not None else wn.synsets(word, pos=wn_pos)
 
         for synset in synsets:
             # Direct lemmas of this sense
@@ -136,16 +144,18 @@ class SynonymEngine:
                 filtered.add(word)
         return filtered
 
-    def _collect(self, word: str, wn_pos=None) -> set[str]:
+    def _collect(self, word: str, wn_pos=None, restrict_synsets=None) -> set[str]:
         """
         Gather candidates from all sources.
         wn_pos filters WordNet to a specific POS (prevents cross-POS leak).
+        restrict_synsets, if given, further narrows WordNet to one specific
+        disambiguated sense (see _wordnet_synonyms's docstring).
         Datamuse ml= results are now POS-gated via WordNet when wn_pos is set —
         rel_syn= results are closer to true synonyms so they bypass the gate.
         """
         word = re.sub(r"^[^a-z]+|[^a-z]+$", "", word.strip().lower())
         synonyms: set[str] = set()
-        synonyms |= self._wordnet_synonyms(word, wn_pos=wn_pos)
+        synonyms |= self._wordnet_synonyms(word, wn_pos=wn_pos, restrict_synsets=restrict_synsets)
 
         # Split Datamuse: rel_syn= is already POS-appropriate (kept as-is);
         # ml= is meaning-like but POS-agnostic (gate it when we know the POS).
@@ -195,13 +205,18 @@ class SynonymEngine:
         )
 
     # ── Public API ──────────────────────────────────────────────────────────
-    def get_synonyms(self, query: str, top_k: int = 15, wn_pos=None) -> dict[str, list[str]]:
+    def get_synonyms(self, query: str, top_k: int = 15, wn_pos=None, restrict_synsets=None) -> dict[str, list[str]]:
         """
         Accept a single word OR multiple words (space/comma-separated).
         Returns dict: word → ranked synonym list (length ≤ top_k).
 
         wn_pos: WordNet POS constant (wn.NOUN, wn.VERB, wn.ADJ, wn.ADV)
                 to restrict WordNet lookups.  Pass None for word-mode (all senses).
+        restrict_synsets: optional pre-disambiguated synset list (see
+                _wordnet_synonyms's docstring) — applied to every token in
+                `query`, so this is meant for single-word calls (the only
+                caller today, reformulate.py's per-position substitution
+                loop, always passes one word).
         """
         # Strip edge punctuation and lowercase each token so a trailing period
         # from sanitize_input ("Happy.") never reaches wn.synsets() (which would
@@ -214,7 +229,7 @@ class SynonymEngine:
         for word in tokens:
             if not word:
                 continue
-            raw = self._collect(word, wn_pos=wn_pos)
+            raw = self._collect(word, wn_pos=wn_pos, restrict_synsets=restrict_synsets)
             ranked = self._rank(list(raw))
             results[word] = ranked[:top_k]
         return results

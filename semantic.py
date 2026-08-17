@@ -279,6 +279,55 @@ def protected_positions(tokens: list[str]) -> set[int]:
     return protected
 
 
+# ── Word-sense disambiguation (candidate-generation gloss matching) ──────────
+#
+# engine.py's _wordnet_synonyms() crawls every same-POS synset for a word and
+# unions their synonyms — no sense selection. Found directly (REFORMULATION_
+# PROBLEM_MAP.md SS2.6, item 2): wn.synsets("right", pos=wn.ADV) has 9 senses
+# ("immediately" alongside "properly"/"justly"/"correctly"/"mighty"), and
+# without picking the right one first, all 9 senses' synonyms end up in one
+# candidate pool ranked by frequency alone — which is exactly how "right" in
+# "right now" got replaced with "justly"/"properly" (VALIDATION.md SS9.9).
+#
+# Fix: before generating candidates for a word, pick the ONE synset whose
+# gloss (definition) best matches the sentence it's actually being used in,
+# via the same SBERT model already loaded for everything else here — no new
+# dependency, no training (REFORMULATION_PROBLEM_MAP.md SS3.2/SS4 ranked this
+# the small-effort option over pywsd).
+
+def disambiguate_synset(word: str, wn_pos, sentence: str):
+    """Return the single WordNet synset (of `word`, restricted to `wn_pos`)
+    whose gloss best matches `sentence`'s context, or None if disambiguation
+    isn't possible/needed:
+      - `wn_pos` is None (word-mode, no POS to disambiguate within), or
+      - the word has 0 or 1 synsets at that POS (nothing to choose between —
+        the existing all-senses behavior is already correct), or
+      - SBERT is unavailable (graceful fallback to the pre-existing
+        all-senses behavior, same pattern as every other SBERT-optional path
+        in this module).
+
+    A None return means "don't restrict" — callers should fall back to their
+    current behavior, not treat None as an error.
+    """
+    if wn_pos is None:
+        return None
+    synsets = wn.synsets(word, pos=wn_pos)
+    if len(synsets) <= 1:
+        return None
+    if not _sbert_ok or _sbert_model is None:
+        return None
+
+    glosses = [s.definition() for s in synsets]
+    embs = _sbert_model.encode([sentence] + glosses)
+    sentence_emb = embs[0]
+    best_i, best_score = 0, -1.0
+    for i, gloss_emb in enumerate(embs[1:]):
+        score = _cosine(sentence_emb, gloss_emb)
+        if score > best_score:
+            best_i, best_score = i, score
+    return synsets[best_i]
+
+
 # ── Semantic scoring ─────────────────────────────────────────────────────────
 
 def _cosine(a: np.ndarray, b: np.ndarray) -> float:

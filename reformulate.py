@@ -97,14 +97,46 @@ def split_sentences(text: str) -> list[str]:
     return [s for s in sentences if s.strip()]
 
 
+def _local_context_window(tokens: list[str], index: int, radius: int = 6) -> str:
+    """A small window of tokens around `index`, not the whole sentence —
+    needed so two occurrences of the same word with different senses in
+    ONE sentence ("He runs the company... before he runs three miles")
+    get disambiguated independently. Using the full sentence as context
+    (the first version of this fix) fed both occurrences the identical
+    string, so both got the identical sense — confirmed directly as a
+    regression via the Stage 6 corpus re-run, not assumed: it made an
+    already-known failure mode (REFORMULATION_RESEARCH.md §17 row 5,
+    VALIDATION.md §6.4's context-dependent-substitution case) measurably
+    worse (SBERT similarity 0.9475 -> 0.8739) before this fix."""
+    start = max(0, index - radius)
+    end = min(len(tokens), index + radius + 1)
+    return _detokenize(tokens[start:end])
+
+
 def _raw_candidates(engine: "engine_module.SynonymEngine", lemma: str, pos_tag_str: str,
-                     original_word: str, top_k: int) -> list[str]:
+                     original_word: str, top_k: int, context: str | None = None) -> list[str]:
     """Same filtering as the old grammar.py::SentenceRewriter._raw_candidates
     (same-POS check via wn_pos, single-token only, prefer -ly forms for -ly
     adverbs) — reimplemented standalone here rather than depending on the
-    class being discarded, so this module has no hidden coupling to it."""
+    class being discarded, so this module has no hidden coupling to it.
+
+    `context`, when given, is used to disambiguate WHICH sense of `lemma`
+    candidates should come from (semantic.disambiguate_synset() —
+    REFORMULATION_PROBLEM_MAP.md §2.6 item 2), instead of unioning synonyms
+    across every same-POS sense the way engine.py always did before. None
+    (the default) preserves the exact prior all-senses behavior — callers
+    that don't have context yet still work unchanged. Callers should pass a
+    LOCAL window (_local_context_window()), not necessarily the whole
+    sentence — see that function's docstring for why."""
     wn_p = _wn_pos(pos_tag_str)
-    all_syns = engine.get_synonyms(lemma, top_k=top_k * 2, wn_pos=wn_p).get(lemma, [])
+    restrict_synsets = None
+    if context is not None:
+        picked = sem.disambiguate_synset(lemma, wn_p, context)
+        if picked is not None:
+            restrict_synsets = [picked]
+    all_syns = engine.get_synonyms(
+        lemma, top_k=top_k * 2, wn_pos=wn_p, restrict_synsets=restrict_synsets
+    ).get(lemma, [])
     prefer_ly = pos_tag_str.startswith("RB") and original_word.lower().endswith("ly")
 
     from nltk.corpus import wordnet as wn
@@ -205,7 +237,8 @@ def _try_substitution(
         i, word, tag = item["position"], item["word"], item["tag"]
         base = lemmatize(word, tag)
         wn_p = _wn_pos(tag)
-        raw_cands = _raw_candidates(engine, base, tag, word, settings.top_k)
+        context_window = _local_context_window(tokens, i)
+        raw_cands = _raw_candidates(engine, base, tag, word, settings.top_k, context=context_window)
         if not raw_cands:
             skipped.append({"word": word, "position": i, "reason": "no candidates found"})
             return None, changes, skipped
@@ -225,6 +258,17 @@ def _try_substitution(
                 s["antonym_rejected"] = True
                 continue
             if ph.matches_any(s["inflected"], profile.sound_values()):
+                continue
+            if profile.find_word(s["inflected"].lower()) is not None:
+                # A candidate must never itself be one of the profile's
+                # OTHER declared-difficult words. Not a hypothetical case:
+                # "reviewed"/"examined" both declared difficult in one
+                # sentence -- WSD's more precise ranking (item 2) picked
+                # "examined" as the top candidate FOR "reviewed", silently
+                # reintroducing a declared difficulty via the replacement
+                # itself. REFORMULATION_RESEARCH.md §17's "no interaction
+                # modeling" limitation, concretely reproduced by the Stage 6
+                # corpus re-run, not hypothesized (VALIDATION.md §11).
                 continue
             usable = s
             break
