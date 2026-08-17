@@ -6,6 +6,20 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-17** docs: analyzed P1's real 30-item v3 pilot data —
+  meaning=4.13/5, naturalness=4.07/5, ease=+1.10, preferred-reformulated
+  73.3%. Sharp category split (content-word targets near-perfect,
+  sound-based targets weaker, multi-difficulty worst). Best-evidenced
+  finding: SBERT overestimates meaning preservation relative to the
+  human rater in every disagreement case (never the reverse), most
+  often when substitution breaks a fixed idiom — replicates an earlier
+  single example as a repeatable pattern. Also found: a reproducible
+  "right now" sense-disambiguation bug, a frequency-bias pattern in
+  candidate ranking, two under-counted human-missed/human-tolerated
+  errors, and an unanticipated reversal (restructuring outperformed
+  substitution on every human axis, n=8 vs n=22). No code changed —
+  analysis only, per explicit user instruction. →
+  `DECISION_LOG.md` 2026-08-17-G; `VALIDATION.md` §9.6-9.11.
 - **2026-08-17** feat: Stage 7 v3 — P1 actually completed v2's 20-pair
   pilot (first real human-judgment data collected: meaning 4.65/5,
   naturalness 4.70/5, ease +1.75, preferred reformulated 19/20). That

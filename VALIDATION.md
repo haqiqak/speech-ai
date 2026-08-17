@@ -1000,3 +1000,260 @@ of result gets discussed.
 **Not yet done:** the actual 30-item data collection. §9.1-9.4 record
 the design and verified infrastructure only; results will be appended
 here once the participant completes the pilot.
+
+### 9.6 What actually happened: P1's real v3 run (executed, 2026-08-17)
+
+The participant (P1) completed all 30 pairs. Raw data:
+`eval/pilot_responses/P1.csv`. Automated profile-match/metadata:
+`eval/pilot_pairs.json`. Analysis run via `eval/pilot_analyze.py` plus
+targeted follow-up queries against the same two files. Per §9.1's
+methodological scope, the two evidence sources below are kept
+strictly separate throughout — human ratings never used as evidence
+of profile-match effectiveness, and vice versa.
+
+**Overall human ratings (n=30, 1 rater):** meaning preservation 4.13/5,
+naturalness 4.07/5, speaking ease +1.10 (of -2..+2). Preference:
+Reformulated 22/30 (73.3%), Original 8/30 (26.7%), No preference 0/30.
+
+**By category:**
+
+| Category | n | Meaning | Naturalness | Ease |
+|---|---|---|---|---|
+| `declared_word` | 5 | 5.00 | 5.00 | +2.00 |
+| `word_pattern` | 4 | 4.75 | 4.75 | +1.50 |
+| `global_sound` | 18 | 4.11 | 3.78 | +0.83 |
+| `multi_difficulty` | 3 | 2.00 | 3.33 | +0.67 |
+
+**[FINDING] Plain content-word targets (`declared_word`,
+`word_pattern`) scored far better than sound-based targets
+(`global_sound`), and `multi_difficulty` was the worst category by a
+wide margin.** This is not a small effect — `declared_word` is a
+perfect 5/5/+2 across all 5 items, while `multi_difficulty` bottoms
+out at 2.00 meaning preservation. §9.7 below traces *why*, rather than
+stopping at the aggregate.
+
+**[FINDING] Automated profile-match: 30/30 (100%) resolved.** Every
+kept item's declared difficulty was actually removed from the output,
+per `reformulate.py`'s own before/after flagged-word count. **This
+number is not informative on its own** — by construction, only items
+that reached `"reformulated"` status were eligible for the pilot at
+all (§9.2), so 100% resolution among *selected* items says nothing
+about the resolution rate in general use (that question was already
+answered separately, and less favorably, in §6.9: escalation succeeds
+~43% of the time it triggers on ordinary text). The two numbers must
+not be read together as "the system resolves difficulty 100% of the
+time" — that would be exactly the proxy-blending error Practice.md §10
+prohibits.
+
+### 9.7 Where the automated signal and the human judgment disagreed
+
+**[FINDING] All 9 material disagreements (|SBERT similarity −
+normalized human meaning score| ≥ 0.25) ran in the same direction:
+SBERT was more optimistic than the human, never the reverse.** No
+pair in this dataset had the human rate meaning preservation higher
+than SBERT by a comparable margin — checked explicitly, not assumed.
+Ranked by gap size:
+
+| Pair | Case | SBERT | Human meaning | Gap |
+|---|---|---|---|---|
+| pair_28 | md_running_traffic | 0.912 | 1/5 | +0.91 |
+| pair_01 | gs_hows_it_going | 0.910 | 2/5 | +0.66 |
+| pair_30 | md_print_report_coffee | 0.890 | 2/5 | +0.64 |
+| pair_13 | gs_bus_late | 0.867 | 2/5 | +0.62 |
+| pair_11 | gs_driving_crazy | 0.968 | 3/5 | +0.47 |
+| pair_06 | gs_doctors_appt | 0.954 | 3/5 | +0.45 |
+| pair_15 | gs_need_break | 0.908 | 3/5 | +0.41 |
+| pair_29 | md_push_meeting_coffee | 0.901 | 3/5 | +0.40 |
+| pair_02 | gs_sleep_well | 0.894 | 3/5 | +0.39 |
+
+**[INTERPRETATION] This is a one-directional proxy failure, not
+noise.** SBERT cosine similarity, on this dataset, never
+underestimates meaning preservation relative to the human rater — it
+only ever overestimates it, and by a wide margin in the worst cases
+(pair_28: SBERT would call this a near-perfect paraphrase; the human
+rated it 1/5). Given §6.5 already found one such case on a different
+corpus, this is now confirmed as a repeatable pattern across two
+independent evaluation rounds, not a one-off. **[LIMITATION]** 9 cases
+is still not enough to characterize the failure precisely (e.g.
+whether it's specific to idiom breakage — see §9.8 — or a broader SBERT
+weakness), but the direction (never falsely pessimistic) is a specific,
+useful, falsifiable claim future work can test against.
+
+**[FINDING] Six of the nine highest-SBERT-vs-human-gap cases involve
+breaking a fixed idiomatic or grammatical construction, not a content
+error.** "How's it going" (pair_01, "going"→ awkward substitute
+mid-idiom), "drives me crazy" (pair_11, causative construction
+broken), "was late" (pair_13, adjective→adverb POS mismatch),
+"really need... right now" (pair_15, double break inc. the "right"
+sense error below), plus the two `multi_difficulty` cases
+(pair_28, pair_29/30) which stack two independent substitutions in
+one short sentence. SBERT embeddings evidently capture lexical/topical
+closeness well but do not penalize idiom/grammar breakage the way a
+human reader does — exactly the mechanism, not just the existence, of
+the proxy gap.
+
+### 9.8 Cases where the human accepted output despite a real, findable weakness
+
+**[FINDING] A meaning-changing error the human rated as flawless.**
+Pair_19: "The meeting got moved to Thursday." → "The meeting**s** were
+moved to Thursday." — a singular-to-plural change that alters meaning
+(implies multiple meetings, not one rescheduled meeting). Rated
+meaning=5, naturalness=5, ease=+2, no diagnostic tag, no comment.
+Neither the human rater nor SBERT (the pair passed the 0.85 gate)
+flagged this. This is only visible by reading `changes_made` in
+`eval/pilot_pairs.json` directly — i.e., **the profile-match/
+traceability metadata caught something both other evidence sources
+missed**, which is the concrete justification for keeping that
+metadata even when human and automated scores agree.
+
+**[FINDING] Cases where the human noticed and named a real flaw but
+still accepted the output.** Pair_04 ("forgot" → "missed about that")
+— participant's own comment: *"grammer can be checked here, missed
+that would be better"* — still rated meaning=5, naturalness=4,
+preferred Reformulated. Pair_24 ("valuable" → "worth") — comment:
+*"Must be worthy not worth."* — still meaning=4, naturalness=4,
+preferred Reformulated. Pair_29 ("push"→"force", "grab"→"catch") —
+comment: *"push and force might mean different..."* — still preferred
+Reformulated overall (meaning=3, naturalness=4).
+
+**[INTERPRETATION]** These three are methodologically reassuring in
+one specific sense (the participant is visibly using the free-text
+field to register a real concern rather than defaulting to top marks —
+naturalness dipped where grammar was the complaint, not meaning,
+showing the axes are being used as designed) but they also show a
+**tolerance ceiling**: a single, nameable grammatical defect does not
+reliably drag preference to "Original" if the sentence is still
+readable and the ease gain is present. Combined with pair_19 above,
+the practical implication is that human spot-checking in a pilot of
+this size will **undercount** real defects, not just fail to catch
+proxy blind spots — a second, independent reason (beyond n=1) to treat
+"73% preferred Reformulated" as an upper bound on quality, not a
+settled figure.
+
+### 9.9 Recurring failure patterns
+
+**[FINDING] A reproducible word-sense-disambiguation bug: "right now"
+(the temporal/immediate sense of "right") is twice substituted using
+the wrong WordNet sense.** Pair_15: "right" → "justly" (the
+correct/fair sense). Pair_28: "right" → "properly" (also the
+correct/fair sense). Both should have used the "immediately" sense.
+Found independently in two different sentences under two different
+profiles, i.e. not a one-off input quirk — a systematic gap in how
+sense is selected for a common, highly polysemous function word.
+
+**[FINDING] A frequency-bias pattern in candidate ranking: generic,
+high-frequency verbs are reused as replacements across unrelated
+source words, at the expense of fit.** "take" was selected as the
+replacement 3 times across different source words in different
+sentences (pair_16 "grab"→"take", pair_17 "grab"→"take", pair_30
+"grab"→"take"); "going" was selected twice, once as a mediocre
+target-word substitute (pair_01) and once as a poor fit for a
+causative construction (pair_11, "driving"→"going", breaking "drives
+me crazy"). This is consistent with a ranking formula that rewards
+high corpus frequency without enough weight on idiomatic/syntactic
+fit — the same generic word keeps winning regardless of the specific
+sentence it's dropped into.
+
+**[FINDING] The idiom/fixed-construction pattern already named in
+§9.7 is the single largest identifiable driver of `global_sound`'s
+worse-than-`declared_word`/`word_pattern` category scores.**
+`declared_word`/`word_pattern` targets in this set (meeting,
+struggling, valuable, comfortable, particular, ridiculous, nice,
+instructions) are ordinary content-word slots; `global_sound` targets
+are onset-matched regardless of whether the matched word sits inside
+an idiom, phrasal verb, or fixed collocation. The onset-based flagging
+mechanism has no way to detect "this word is load-bearing for a fixed
+expression" versus "this word is a free content slot" — which this
+pilot's category-level score gap makes directly visible for the first
+time, rather than only a theoretical concern.
+
+### 9.10 An unexpected finding: restructuring outperformed substitution
+
+**[FINDING] Restructuring-escalation-sourced items (n=8) scored higher
+than plain substitution-only items (n=22) on every human axis:**
+meaning 4.75 vs. 3.91, naturalness 4.50 vs. 3.91, ease +1.50 vs.
++0.95, preference-for-reformulated 87.5% (7/8) vs. 68% (15/22). This
+is the opposite of the framing that has held since Stage 6/§6.7 and
+`REFORMULATION_RESEARCH.md`, where escalation was treated as the
+riskier, harder-to-verify fallback path (correctly, on the metrics
+available at the time — 0/4 success on the adversarial Stage 6 corpus,
+then ~43% success on ordinary text per §6.9).
+
+**[INTERPRETATION, tentative — small n]** A plausible mechanism: T5
+restructuring rewrites the *whole* sentence toward a paraphrase and
+must pass a full-sentence SBERT gate, whereas single-word substitution
+swaps one slot without any check on whether that word is
+idiomatically load-bearing (§9.7/§9.9) — so restructuring's failure
+mode (reject and leave unchanged, per §6.3's Cause B) may be
+systematically *safer for the cases that do ship* than substitution's
+failure mode (ship a locally-valid but idiom-breaking single-word
+swap). **[LIMITATION]** n=8 restructuring items is too small to treat
+this as settled, and every item in this pilot was pre-filtered to
+`"reformulated"` status (§9.2) — this cannot speak to restructuring's
+*overall* success rate, which §6.9 already measured separately and
+lower (~43%). What it does say: **among restructuring attempts that
+succeed**, the output quality bar looks higher than substitution's, on
+this data. That is a narrower and more surprising claim than "use
+restructuring more," and is flagged as a specific hypothesis worth
+testing, not a conclusion.
+
+**[FINDING, secondary] The comparative-ease scale was never used
+negative, even for flatly rejected pairs.** Ease values observed:
+{+1: 13, +2: 10, 0: 7, -1: 0, -2: 0}. Pairs the participant rated
+lowest on meaning/naturalness and preferred "Original" (e.g. pair_15,
+pair_28) still received ease=0, not a negative value — the participant
+apparently reserved negative ease for "actively harder to say than the
+original," a higher bar than "this reformulation is bad." **[LIMITATION]**
+This may be a genuine ceiling-avoidance pattern worth asking about
+directly in a future pilot's instructions, or may simply reflect that
+none of these 30 pre-filtered items were actually harder to say than
+the original even when otherwise flawed — the data as collected cannot
+distinguish between those two explanations.
+
+### 9.11 Assessment: what this evidence supports doing next, and why
+
+Per this stage's own scope (analysis only, no implementation), this is
+a **[RECOMMENDATION — proposed, not applied]**, ranked by how directly
+the evidence above supports it:
+
+1. **Idiom/fixed-expression detection for `global_sound` substitution
+   is the best-evidenced next target.** §9.7 and §9.9 independently
+   converge on the same mechanism from two directions (largest
+   proxy-vs-human gaps; largest category-score gap), and it is a
+   substitution-only problem — `declared_word`/`word_pattern` targets
+   don't show it because they're rarely idiom components. This is a
+   substitution-ranking/candidate-filtering change, not a model
+   swap.
+2. **The "right now" sense-disambiguation bug (§9.9) is small,
+   concrete, and reproducible twice — a plausible low-risk fix in the
+   same spirit as R17**, but should be verified against more than 2
+   cases before being treated as a general "right" bug rather than a
+   coincidence of this corpus's phrasing.
+3. **R18 (escalation model/strategy) should be re-weighted, not
+   dropped.** §9.10's finding — restructuring outperforms substitution
+   *conditional on succeeding* — is a genuinely new data point that
+   complicates §6.9's "lower priority than other items" framing:
+   escalation's success *rate* is still the ~43% bottleneck measured
+   in §6.9, but its output *quality when it does succeed* now looks
+   better than the alternative, which raises the value of improving
+   the success rate rather than deprioritizing it.
+4. **SBERT similarity should not be trusted as a standalone acceptance
+   gate for idiom-adjacent substitutions**, per §9.7's one-directional
+   finding replicated across two independent corpora (§6.5, here).
+   This doesn't yet point to a specific replacement metric — only that
+   the current one has a now twice-confirmed, specific blind spot.
+5. **`multi_difficulty` (stacking 2+ substitutions in one short
+   sentence) needs its own investigation before scaling it up** — n=3
+   is too small to generalize from, but 2.00/5 meaning preservation is
+   low enough, and mechanistically explainable (§9.7's idiom pattern
+   compounds when two substitutions land in one short sentence), to
+   flag rather than ignore.
+
+**[LIMITATION, restated]** All of the above is drawn from n=1
+participant × 30 pre-filtered, "successfully reformulated" items. It
+is a rich source of *specific, checkable* failure mechanisms (which is
+what a small, deeply-instrumented pilot is good for) and not a
+statistically powered claim about `reformulate.py`'s general quality
+or about real speaker outcomes — restated because every prior section
+of this document makes the same point and it would be inconsistent to
+drop it here.

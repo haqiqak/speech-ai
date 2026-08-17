@@ -1384,3 +1384,52 @@ continuous session crossed it.
 **Not yet done:** the actual 30-item single-participant data collection
 under v3 — this entry records the design and verified infrastructure
 only.
+
+### 2026-08-17-G — v3 pilot actually run and analyzed (P1, real 30-item data); no changes made, analysis only
+
+**What was done:** P1 completed all 30 v3 pilot items. Analyzed per the
+user's explicit request, keeping human ratings, automated profile-match
+metadata, and automated proxy metrics as three separate evidence
+streams throughout — never blended, per Practice.md §10. Full record:
+`VALIDATION.md` §9.6-9.11. No code changed; this is an analysis-only
+entry.
+
+**Headline findings:** Overall meaning=4.13/5, naturalness=4.07/5,
+ease=+1.10, preferred-reformulated=73.3% (22/30). Sharp category split:
+plain content-word targets (`declared_word`/`word_pattern`) scored
+near-perfect; sound-based targets (`global_sound`) scored notably
+lower; `multi_difficulty` (n=3) was worst (meaning=2.00). Automated
+profile-match was 30/30 resolved, but this is a selection artifact
+(only `"reformulated"`-status items were eligible), not a general-use
+resolution rate — §6.9 already measured that separately, lower.
+
+**The single most load-bearing finding:** all 9 material SBERT-vs-human
+disagreements ran the same direction (SBERT more optimistic, never the
+reverse), and 6 of the 9 largest gaps involved breaking a fixed
+idiom/grammatical construction ("how's it going," "drives me crazy,"
+adjective→adverb POS mismatch) that the phonetic-onset flagging
+mechanism has no way to detect before substituting into it. This
+replicates §6.5's single earlier example as a repeatable pattern
+across two independent corpora, and is judged the best-evidenced next
+engineering target — not because it's the only issue found, but
+because two independent analyses (proxy-gap direction, category-score
+gap) converge on the same mechanism.
+
+**Also found:** a reproducible "right now" → wrong-WordNet-sense bug
+(twice, independently); a frequency-bias pattern in candidate ranking
+(generic high-frequency words like "take"/"going" over-selected
+regardless of fit); two cases where the human rated a real error
+(pair_19's meaning-changing singular→plural, missed by both SBERT and
+the rater) or accepted an error they explicitly named in a comment
+(pair_04, pair_24, pair_29) — evidence that a small human pilot
+undercounts real defects, not just catches proxy blind spots; and an
+unanticipated reversal — restructuring-escalation items (n=8)
+outperformed plain substitution (n=22) on every human axis, complicating
+§6.9's framing of escalation as the lower-priority path (its success
+*rate* is still the bottleneck, but its output quality when it
+succeeds now looks better than substitution's).
+
+**Category:** Evaluation results / analysis. Explicitly did not
+implement any of the five ranked recommendations in `VALIDATION.md`
+§9.11 — user instruction was analysis first, decisions afterward.
+`reformulate.py` and the pilot test setup were not touched.
