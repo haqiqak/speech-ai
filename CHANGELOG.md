@@ -6,6 +6,16 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-18** test: R23 — decoder-only instruction-tuned model
+  (Qwen2.5-0.5B/1.5B-Instruct) benchmarked against the T5 escalation
+  baseline on R21's 22 failing cases. Closed negative: worse meaning
+  preservation than both the baseline and R21's flan-t5-base result,
+  10-40x slower per case, and the smaller model often failed to perform
+  the rewrite task at all. Closes `REFORMULATION_PROBLEM_MAP.md` §5
+  item 3's investigation on a third independent angle — none of
+  prompting, constrained decoding, or a model-family swap cleared the
+  bar. The current T5 baseline stands. →
+  `DECISION_LOG.md` 2026-08-18-A; `VALIDATION.md` §14; `ROADMAP.md` R23.
 - **2026-08-17** feat: R20 — word-sense disambiguation before candidate
   generation, `REFORMULATION_PROBLEM_MAP.md` §5's item 2. Fixes the
   general "right"→"justly"/"properly" sense-confusion bug (VALIDATION.md

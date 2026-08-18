@@ -722,6 +722,8 @@ fine-tune. See §5's new item 1a.
 | ACCESS/MUSS-style control-token aggressiveness knob | 2.9 | No | Yes — real fine-tuning infra needed | Large — not currently feasible |
 | Span-scoped restructuring (existing T5 call, windowed input) | 2.4, 2.8 | Yes (reuses existing model) | No | Small |
 | Prompt a stronger instruction-tuned model with the constraint's reason spelled out | 2.6, 2.8 | Depends on model chosen | No | Small-medium |
+| Decoder-only instruction-tuned model swap (Qwen2.5-0.5B/1.5B) | 2.8 | **Tested, negative — VALIDATION.md §14** | No | Ruled out at this scale: worse meaning preservation than the T5 baseline, 10-40x slower on CPU |
+| Optimized/quantized local inference runtime (`llama.cpp`/GGUF or similar) | 2.8 | No — new dependency, not evaluated | No | Not sized — a separate dependency decision, same category as the `force_words_ids` question |
 | MAGPIE-trained in-context idiomaticity classifier | 2.4 | No | Yes, small classifier | Medium |
 | ILM-style GPT-2 span infilling | 2.4 | Partial (published code, not a package) | Yes, if used | Medium |
 | ParaDetox-style LoRA fine-tune (word/token-level avoidance) | 2.8 | No | Yes — needs a consumer GPU | Medium-large, and needs a GPU decision first |
@@ -790,6 +792,20 @@ itself supported.
    testing in combination with reason-prompting, not as an alternative
    to it — the two mechanisms weren't shown to be redundant, just that
    neither alone (nor the specific hybrid tested) was sufficient.
+   **Update, 2026-08-18 — R23, `VALIDATION.md` §14: a different
+   architecture family (decoder-only instruction-tuned, not just a
+   different encoder-decoder checkpoint) was also tested, per direct
+   instruction, and also closed negative.** Qwen2.5-0.5B/1.5B-Instruct
+   lost to both the T5 baseline and to this item's own flan-t5-base
+   result on meaning preservation, and were 10-40x slower per case —
+   likely a structural cost of decoder-only generation via plain
+   `transformers` CPU inference (no quantization/optimized runtime),
+   not a "wrong checkpoint" problem. Item 3 is now closed on three
+   independent angles (reason-prompting, constrained decoding, model-
+   family swap) — none cleared the bar. The one remaining lever
+   (an optimized inference runtime) is a new-dependency decision, not
+   a model choice — see item 5's blocked status for the same category
+   of open question.
 4. **[NOT STARTED — item 3's gate was not met] Phrase-level replacement
    tier** (§2.4, §3.8) — a third granularity between word-substitution
    and whole-sentence restructuring: detect a flagged word inside a
@@ -956,3 +972,15 @@ prioritized map for a future, explicitly-approved implementation cycle.
   direct testing, not assumed from documentation. §4's feasibility
   rating and §5 item 5 corrected from "Small" to "blocked, needs a
   dependency-risk decision." Full record: `VALIDATION.md` §13.
+- **2026-08-18** — R23: tested whether a decoder-only instruction-tuned
+  model (a different architecture family, not just a different
+  checkpoint) beats the T5 baseline, per direct instruction. Closed
+  negative — Qwen2.5-0.5B/1.5B-Instruct lost on meaning preservation to
+  both the baseline and R21's flan-t5-base result, and were 10-40x
+  slower per case on this project's CPU-only, plain-`transformers`
+  setup. §4 and §5 item 3 updated. This closes item 3's investigation on
+  a third independent angle (prompting, constrained decoding, model-
+  family swap) — none cleared the bar. The one remaining lever (an
+  optimized/quantized inference runtime) is flagged as a separate,
+  not-yet-decided dependency question, same category as item 5's
+  blocked status. Full record: `VALIDATION.md` §14.

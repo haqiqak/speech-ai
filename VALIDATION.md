@@ -1852,3 +1852,173 @@ medium-effort with no maintained package.
 deprioritize this item, is a real decision with dependency-risk
 implications beyond a single diagnostic script's scope — surfaced to
 the user rather than decided unilaterally.
+
+## 14. R23 — decoder-only instruction-tuned models vs. the T5 baseline (executed 2026-08-18)
+
+Per direct instruction, after R21 (prompting a comparable-size
+encoder-decoder model) and R22 (constrained beam search, blocked): does
+a small, decoder-only instruction-tuned model — a genuinely different
+architecture family, not just a different checkpoint — do better than
+the current T5 escalation path? Explicit constraints, honored
+throughout: no change to the installed `transformers` version, no
+`trust_remote_code`, no new heavy dependency (plain `transformers` +
+`torch`, already installed).
+
+### 14.1 Candidate selection — verified against this environment, not assumed
+
+Two models were chosen and confirmed to actually work here before any
+benchmarking: **Qwen2.5-0.5B-Instruct** (494.0M params) and
+**Qwen2.5-1.5B-Instruct** (1543.7M params). Both load via
+`AutoModelForCausalLM.from_pretrained()` with no `trust_remote_code`
+and no authentication — confirmed directly (a plain load-and-count-
+parameters smoke test succeeded for both, no gating error, matching
+Qwen's own model-card claim that the architecture is upstreamed into
+core `transformers`). Other realistic-sounding candidates surfaced by
+a web search (Gemma, Llama 3.2) were **not** tested — both families are
+gated on Hugging Face (require an accepted license + an authenticated
+token), and this project makes unauthenticated requests only; they were
+excluded on that basis, not for lack of interest. SmolLM2 was also not
+tested, on the strength of a secondary source suggesting it needs
+`trust_remote_code` — not independently re-verified, since the two
+Qwen sizes already gave a clear, consistent enough signal (§14.3) to
+not need a fourth candidate.
+
+### 14.2 Method
+
+New script `eval/escalation_model_comparison_decoder.py`, reusing
+R21's case-finding, profile-reason, and verification functions directly
+(imported, not reimplemented) — same 22 real currently-failing
+escalation cases, same three checks (SBERT similarity threshold,
+negation consistency, a post-hoc phoneme/blocked-word leak scan).
+Decoder-only models need a different prompting mechanism than T5's
+plain text-to-text prefix: a chat-template prompt (system message +
+user turn) via `tokenizer.apply_chat_template()`, with the flagged
+words and the profile's reason given the same way as R21. A grammar
+check via this project's existing (already-optional) LanguageTool
+integration was added as a fourth signal, since the user asked for
+grammar specifically — **[LIMITATION]** LanguageTool is not available
+in this running environment (`grammar._get_lt_tool()` returns `None`,
+most likely because Java isn't installed) — every `grammar_issues`
+field in the result CSVs is `None`/"n/a," reported honestly rather than
+faked or silently omitted from the schema.
+
+**[FINDING] Generation strategy had to be recalibrated for this model
+family — beam search and multi-candidate sampling were measured, not
+assumed, to be too expensive to use.** A timing probe found `num_beams=4`
+took ~106s for one call and `num_beams=2` took ~60s, versus flan-t5-base's
+~2.6s/case in R21 — and the resulting candidates, whether from beam
+search or temperature sampling, clustered tightly around the same output
+regardless of decoding strategy (all still failed the same way). Beam/
+sampling search wasn't buying meaningfully different outcomes at this
+model's scale, only ~3x the CPU cost, so **greedy decoding (one
+candidate) became the default** — a real, disclosed methodological
+difference from R21's beam=10-12/k=5 approach, not an oversight.
+
+**[FINDING, a real bug caught before trusting any result]** The first
+greedy-decoding pass produced severely degenerate output — the model
+repeated fragments of its own instruction prompt in a loop ("The
+speaker stutters on words that start with the sound(s) s, so those must
+not appear in the rewrite. The speaker stutters on words that start
+with the sound(s) s, so...") rather than attempting the task at all.
+Root cause: switching from beam search to greedy decoding had dropped
+`no_repeat_ngram_size`, a parameter beam search doesn't strictly need
+but greedy decoding does to avoid this exact failure mode. Fixed
+(`no_repeat_ngram_size=3` plus `repetition_penalty=1.3` added to the
+greedy path) and reconfirmed before any result below was recorded — a
+methodology bug, not a finding about the model.
+
+### 14.3 Results
+
+**Qwen2.5-0.5B-Instruct (n=8, stratified sample, full run completed):**
+
+| Condition | Pass rate | Avg. SBERT sim | Avg. time/case |
+|---|---|---|---|
+| Baseline (current T5) | 0/8 (0%) | 0.8606 | 2.39s |
+| Qwen2.5-0.5B + reason (no `bad_words_ids`) | 0/8 (0%) | **0.6630** | 30.44s |
+| Qwen2.5-0.5B + reason + `bad_words_ids` (hybrid) | 0/8 (0%) | 0.5712 | 31.04s |
+
+Failure-reason breakdown: baseline 5 leaked / 3 below-threshold;
+decoder-reason-only 1 leaked / **7 below-threshold**; hybrid 0 leaked /
+**8 below-threshold**. **[FINDING] This is the opposite failure pattern
+from R21's flan-t5-base result.** Flan-t5 mostly stayed faithful to the
+original sentence but leaked the constraint (20/22 leaked, only 1
+below-threshold, §12.2). Qwen2.5-0.5B does the reverse: `bad_words_ids`
+does successfully suppress literal leaks (0/8 leaked in the hybrid
+condition — the mechanism itself works on this tokenizer too), but the
+model's own paraphrases drift far enough from the original meaning that
+almost every case fails on similarity instead. The bottleneck moved
+from "constraint satisfaction" (R21) to "basic faithfulness" (R23) —
+a materially different, and worse, failure mode.
+
+**[FINDING] At this size, the model frequently doesn't perform the
+requested task at all.** Concrete examples, not paraphrased summaries:
+for "The student practiced the speech before class," the model produced
+*"The teacher corrected the pronunciation errors made by one of her
+students during practice for their presentation at school"* — an
+invented scene with a different subject, not a rewrite of the input
+(sim 0.506). For "The pilot checked the landing procedure," it produced
+*"The speaker stuttered when reading 'pilot' because they were unsure
+if there was an 'b' or 's'. So all letters starting with 'p', including
+'B,' should be removed"* — confused, self-referential meta-commentary
+about the task itself, not an attempt at the sentence (sim 0.446).
+
+**Qwen2.5-1.5B-Instruct (n=2, pilot only — not completed to n=8;
+session-length constraints, per direct instruction not to re-run this
+experiment further):**
+
+| Condition | Pass rate | Avg. SBERT sim | Avg. time/case |
+|---|---|---|---|
+| Baseline (current T5) | 0/2 (0%) | 0.8360 | 2.62s |
+| Qwen2.5-1.5B + reason (no `bad_words_ids`) | 0/2 (0%) | 0.5682 | **96.69s** |
+| Qwen2.5-1.5B + reason + `bad_words_ids` (hybrid) | 0/2 (0%) | 0.5682 | 96.62s |
+
+**[FINDING] 3.1x the parameters bought better task-following but worse
+fluency, and much worse runtime — a real trend, even at n=2, not a
+coin flip.** Unlike 0.5B, 1.5B did attempt genuine rewrites of the
+actual input sentences: *"The person rehearsed their remarks prior to
+lecture time"* (for "The student practiced the speech before class")
+and *"The person made an unbaked treat to eat at noon"* (for "The baker
+prepared a fresh pastry for lunch"). Both avoid the flagged words, but
+both read as stilted, over-literal thesaurus-swaps rather than natural
+paraphrase — and the second is **factually wrong**, not just awkward: a
+"pastry" is baked; calling it "unbaked" changes what the sentence
+claims, a meaning error, not a style issue. Runtime rose to ~97s/case,
+roughly 3x the 0.5B model's ~31s/case, tracking parameter count.
+
+### 14.4 Verdict
+
+**[RECOMMENDATION]** Decoder-only, at least this family and these two
+sizes, is not a better-suited architecture for this task within this
+project's actual constraints. It loses to the current T5 baseline *and*
+to R21's flan-t5-base candidate on meaning preservation, loses on task-
+reliability at the smaller size, and loses badly on runtime at every
+size tested (10-40x slower per case than the T5 family for comparable
+or smaller parameter counts). This is not primarily a "wrong model"
+finding — it points at something structural: causal, autoregressive
+decoder-only generation via plain `transformers` on CPU (no
+quantization, no `llama.cpp`/GGUF-style optimized runtime) is
+substantially more expensive per useful output token than T5's
+encoder-decoder path, a toolchain gap this project's own constraints
+(no new heavy dependency) don't currently allow closing. A bigger
+decoder-only model might narrow the quality gap further (1.5B already
+showed that direction relative to 0.5B) but would predictably make the
+runtime gap worse, not better — there is no obviously-better size to
+try next inside these constraints.
+
+**[LIMITATION]** Only one model family (Qwen2.5) at two sizes was
+tested; Gemma and Llama were excluded for being gated, not evaluated
+and found wanting. The 1.5B result is n=2, informative for the trend
+it shows but not to the same statistical weight as the completed n=8
+0.5B run or R21's n=22 run. Neither limitation is expected to reverse
+the direction of the verdict, given how large and consistent the
+observed gaps are (this is the same read applied to every diagnostic
+corpus in this document: enough to characterize a failure mode
+clearly, not enough to certify a precise percentage).
+
+**[RECOMMENDATION, not decided here]** The one lever that could
+plausibly change this verdict — an optimized, quantized local-inference
+runtime (`llama.cpp`/GGUF or similar) instead of plain `transformers`
+CPU inference — is a new-dependency decision in the same category as
+R22's `transformers`-version question, not a "try another model"
+question. Not pursued here; surfaced as a separate, explicit decision
+for later, same as R22.

@@ -1834,3 +1834,74 @@ execution, not a completed evaluation. No change to `reformulate.py`/
 living document); `ROADMAP.md` R22 (new, blocked). Not committed —
 pending the same review/approval flow as the rest of this session's
 work.
+
+### 2026-08-18-A — R23: decoder-only model tested against T5 baseline, closed negative
+
+**What was done, per direct instruction:** after R21 (prompting) and
+R22 (blocked), test whether a genuinely different architecture family
+— a small, decoder-only, instruction-tuned model — beats the current
+T5 escalation path, without touching the installed `transformers`
+version, without `trust_remote_code`, and without any new heavy
+dependency.
+
+**Candidate selection, verified against this environment first:**
+Qwen2.5-0.5B-Instruct (494.0M params) and Qwen2.5-1.5B-Instruct
+(1543.7M params) — both confirmed to load via `AutoModelForCausalLM`
+with no `trust_remote_code` and no authentication before any
+benchmarking began. Gemma and Llama were excluded on sight — both
+gated on Hugging Face, and this project makes unauthenticated requests
+only. SmolLM2 was not tested (a secondary source suggested it needs
+`trust_remote_code`, not independently re-verified, since the two Qwen
+sizes already gave a clear enough signal).
+
+**Method:** `eval/escalation_model_comparison_decoder.py`, reusing
+R21's case-finding and verification functions directly — same 22 real
+currently-failing cases, same checks. A calibration pass found beam
+search/sampling (num_beams=2-4) took 60-106s per call for negligible
+diversity benefit (candidates clustered on the same output regardless
+of strategy), so greedy decoding became the default generation
+strategy — a disclosed methodology difference from R21's beam search,
+not an oversight. **A real bug was found and fixed before trusting any
+result:** the first greedy pass produced degenerate, repeated-prompt-
+fragment output, traced to a dropped `no_repeat_ngram_size` parameter
+when switching away from beam search; fixed
+(`no_repeat_ngram_size=3` + `repetition_penalty=1.3`), reconfirmed, and
+only then were results recorded.
+
+**Result:** Qwen2.5-0.5B (n=8, complete run): 0/8 passed, avg. sim
+0.663 (reason-only) / 0.571 (hybrid) — worse than the T5 baseline
+(0.861) and far worse than R21's flan-t5-base (0.950). Failure-mode
+breakdown inverted from R21's pattern: flan-t5 mostly leaked the
+constraint while staying faithful; Qwen2.5-0.5B mostly failed on basic
+faithfulness (7-8 of 8 cases below the similarity threshold, only 0-1
+leaked) — the model frequently didn't perform the rewrite task at all,
+producing hallucinated unrelated content or confused meta-commentary
+about the instruction itself in some cases. Qwen2.5-1.5B (n=2, pilot
+only — the user stopped the session before this reached n=8): better
+task-following (genuine rewrites, not hallucination) but stilted
+phrasing and one outright factual error (a "fresh pastry" rewritten as
+an "unbaked treat" — a meaning change, not a style issue). Runtime:
+~31s/case (0.5B) and ~97s/case (1.5B), a 10-40x slowdown versus the T5
+family's ~2.6-8s/case at comparable or larger parameter counts.
+
+**Verdict:** decoder-only, at this family and these sizes, is not
+better suited to this task within this project's actual constraints —
+it loses on meaning preservation, loses on task-reliability at the
+smaller size, and loses badly on runtime at both sizes. Read as a
+likely structural cost of decoder-only autoregressive generation via
+plain `transformers` CPU inference (no quantization/optimized runtime),
+not a "wrong checkpoint" problem — a bigger model in this family would
+plausibly narrow the quality gap further but predictably widen the
+runtime gap, so there's no obviously-better size left to try inside
+these constraints. This closes `REFORMULATION_PROBLEM_MAP.md` §5 item
+3's investigation on a third independent angle (prompting, constrained
+decoding, model-family swap) — none cleared the bar. The one remaining
+lever that could change this (an optimized/quantized local-inference
+runtime) is a new-dependency decision, surfaced separately, not
+decided here — same category as R22's open question.
+
+**Category:** Reformulation-engine diagnostic experiment (R23). No
+change to `reformulate.py`/`rephrase.py`/`semantic.py`, no dependency
+added or changed — the current engine was not touched. Full record:
+`VALIDATION.md` §14; `REFORMULATION_PROBLEM_MAP.md` §4/§5 (updated,
+living document); `ROADMAP.md` R23 (new).

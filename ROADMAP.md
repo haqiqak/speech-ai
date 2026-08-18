@@ -759,6 +759,51 @@ in this project (SBERT, both T5 checkpoints), so this is surfaced for
 the user to weigh in on rather than decided unilaterally mid-diagnostic.
 Full record: `VALIDATION.md` §13; `DECISION_LOG.md` 2026-08-17-M.
 
+### R23. Decoder-only instruction-tuned model vs. T5 baseline — **TESTED, 2026-08-18, negative result**
+**Linked finding:** Per direct instruction, after R21 (prompting a
+comparable-size encoder-decoder model) and R22 (blocked): does a
+genuinely different architecture family — decoder-only, instruction-
+tuned — beat the current T5 escalation path, within this project's
+actual constraints (no `transformers` version change, no
+`trust_remote_code`, no new heavy dependency)?
+**What was done:** `eval/escalation_model_comparison_decoder.py`, reusing
+R21's case-finding and verification directly. Two candidates chosen and
+verified to actually load in this environment first (no gating, no
+`trust_remote_code`) rather than assumed from reputation: Qwen2.5-0.5B-
+Instruct (494.0M params) and Qwen2.5-1.5B-Instruct (1543.7M params).
+Gemma and Llama were excluded — both gated, and this project makes
+unauthenticated Hub requests only.
+**Result:** Qwen2.5-0.5B (n=8, complete): 0/8 passed, avg. meaning
+similarity 0.663 (reason-only) / 0.571 (hybrid) — **worse** than the
+T5 baseline's 0.861, and far worse than R21's flan-t5-base result
+(0.950). The model often didn't perform the rewrite task at all
+(hallucinated unrelated content, or produced confused meta-commentary
+about the instruction itself). Qwen2.5-1.5B (n=2, pilot only — not
+completed to n=8, per direct instruction to stop the session): better
+task-following, but stilted phrasing and one outright factual error
+("a fresh pastry" → "an unbaked treat"). Both sizes were dramatically
+slower than the T5 family: ~31s/case (0.5B) and ~97s/case (1.5B) versus
+~2.6s/case for flan-t5-base — a 10-40x gap, most likely a structural
+cost of decoder-only generation via plain `transformers` CPU inference
+(no quantization/optimized runtime), not a "wrong checkpoint" problem.
+A real implementation bug (missing `no_repeat_ngram_size` after
+switching to greedy decoding, causing degenerate repeated-prompt output)
+was found and fixed before any reported result was trusted. Full
+record: `VALIDATION.md` §14; `DECISION_LOG.md` 2026-08-18-A.
+**Labeled as:** A real, informative negative result, not an
+incomplete experiment — the 1.5B run's smaller sample (n=2 vs the
+planned n=8) is a completeness gap, not an uncertainty gap: the
+quality/speed trend across the two sizes is consistent and large enough
+that more samples would narrow confidence around the same conclusion,
+not plausibly reverse it. This closes item 3 in
+`REFORMULATION_PROBLEM_MAP.md` §5 on a third independent angle (after
+prompting and constrained decoding) — none of the three cleared the
+bar for a model/decoding swap. The one remaining lever that could
+plausibly change this verdict (an optimized/quantized local-inference
+runtime, e.g. `llama.cpp`/GGUF) is a new-dependency decision, not a
+model choice — surfaced as a separate, explicit, not-yet-decided
+question, same category as R22.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)
