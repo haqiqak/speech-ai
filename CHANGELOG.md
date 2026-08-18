@@ -6,6 +6,16 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-18** test: R24 — validated MeaningBERT as a candidate
+  second semantic-preservation signal, scoped tightly (14 already-
+  recorded pairs, one small model, no long-running sweep) per direct
+  instruction after R21-R23 closed the model-swap avenue. Real but
+  partial: catches several idiom-adjacent breaks SBERT missed badly,
+  but completely misses the single worst-rated case on record — the
+  same class the (not-yet-built) phrase-level tier targets
+  structurally. Proceed as a reported-alongside signal only, never a
+  replacement for SBERT. Engine wiring not yet built. →
+  `DECISION_LOG.md` 2026-08-18-B; `VALIDATION.md` §15; `ROADMAP.md` R24.
 - **2026-08-18** test: R23 — decoder-only instruction-tuned model
   (Qwen2.5-0.5B/1.5B-Instruct) benchmarked against the T5 escalation
   baseline on R21's 22 failing cases. Closed negative: worse meaning

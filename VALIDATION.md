@@ -2022,3 +2022,108 @@ CPU inference — is a new-dependency decision in the same category as
 R22's `transformers`-version question, not a "try another model"
 question. Not pursued here; surfaced as a separate, explicit decision
 for later, same as R22.
+
+## 15. R24 — validating a second semantic-preservation signal (MeaningBERT) before wiring anything in (executed 2026-08-18)
+
+After R21-R23 closed the model/decoding-swap avenue, the user approved a
+new sequence (`REFORMULATION_PROBLEM_MAP.md` §5 item 6, "add a second
+semantic-preservation signal") with an explicit scope limit: a cheap
+validation check first, using data already in the repo, no new corpus,
+no long-running sweep. This section is that check.
+
+### 15.1 Method — deliberately small, deliberately reused data
+
+§3.7's `[GAP]` named the open question directly: does any alternative to
+SBERT cosine similarity actually catch idiom-breaking substitution
+errors better, or is that just a plausible-sounding but unverified idea?
+**MeaningBERT** (Beauchemin et al., 2023 — a BERT-base-scale regression
+model, 109.5M params, trained specifically to correlate with human
+judgment of meaning preservation for text simplification/rewriting) was
+picked as the candidate, per §3.7's own ranking of it as the closest
+purpose-built match to this project's exact evaluation need. Loaded via
+`AutoModelForSequenceClassification` — no `trust_remote_code`, no
+gating, one checkpoint download, single forward passes only (a scoring
+model, not a generator — no beam search, no multi-candidate generation,
+nothing resembling R21/R23's multi-hour runs).
+
+**No new corpus was built.** 14 sentence pairs were pulled directly from
+already-recorded pilot data: the 9 pairs `VALIDATION.md` §9.7 already
+identified as SBERT-vs-human disagreement cases (real, human-rated,
+idiom-adjacent breaks — pair_28, pair_01, pair_30, pair_13, pair_11,
+pair_06, pair_15, pair_29, pair_02), plus 5 control pairs pulled from
+the same pilot data where SBERT and the human rater already agreed the
+output was excellent (human meaning=5/5, SBERT≥0.93 — pair_08, pair_10,
+pair_12, pair_16, pair_22). Each pair's original/reformulated text and
+existing SBERT score were read directly from `eval/pilot_pairs.json`
+and `eval/pilot_responses/P1.csv` — not regenerated.
+
+### 15.2 Result — a real, partial improvement, not a clean win
+
+| Pair | Human meaning (1-5) | SBERT | MeaningBERT (0-100) |
+|---|---|---|---|
+| pair_28 (worst case on record) | 1 | 0.912 | **94.5** |
+| pair_01 | 2 | 0.910 | 68.8 |
+| pair_30 | 2 | 0.890 | 88.2 |
+| pair_13 | 2 | 0.867 | 81.5 |
+| pair_11 | 3 | 0.968 | **48.0** |
+| pair_06 | 3 | 0.954 | 85.5 |
+| pair_15 | 3 | 0.909 | 65.1 |
+| pair_29 | 3 | 0.901 | 69.3 |
+| pair_02 | 3 | 0.894 | 85.8 |
+| 5 control pairs (human=5) | 5 | 0.94-0.99 | 81.5-94.5 |
+
+**[FINDING] MeaningBERT catches several idiom-adjacent breaks SBERT
+missed badly, with a large, unambiguous margin on at least one case.**
+pair_11 ("drives me crazy" → "going me crazy," a causative-construction
+break) is the clearest: SBERT rated it 0.968 (near-perfect); MeaningBERT
+rates it 48.0 — a 20+ point drop below every control pair's range
+(81.5-94.5). pair_01, pair_15, pair_29 show the same directional pattern
+at smaller margins.
+
+**[FINDING, the honest limitation — not glossed over] MeaningBERT
+completely misses pair_28, the single worst-rated case in this entire
+dataset.** Human rating: 1/5 — the floor of the scale. SBERT: 0.912
+(wrong). MeaningBERT: 94.5 — indistinguishable from the clean control
+pairs, just as wrong as SBERT, in the same direction. **This is not a
+strict improvement over SBERT; it is a different, overlapping-but-not-
+superset set of blind spots.** pair_28 is exactly the class of case
+`REFORMULATION_PROBLEM_MAP.md` §5 item 4 (the phrase-level tier) targets
+structurally — via *detecting* the fixed expression before substitution,
+not via scoring the result more cleverly after the fact. This result is
+concrete evidence, not just an architectural argument, that a better
+similarity metric alone would not have substituted for that structural
+fix.
+
+**[FINDING] pair_06 and pair_02 — the two cases in the disagreement
+list that were register/formality shifts rather than true idiom
+breaks ("doctor's" → "physician's," "sleep well" → "rest well") —
+score high on MeaningBERT (85.5, 85.8), close to the control range.**
+Plausibly the more *correct* read of these two cases: the human's
+moderate 3/5 (not 5/5) may reflect mild unnaturalness rather than an
+actual meaning change, and MeaningBERT's score is arguably more accurate
+here than a naive "SBERT missed this too" framing would suggest — worth
+naming so the 9-case disagreement list from §9.7 isn't treated as nine
+identical failures when it isn't.
+
+### 15.3 Verdict
+
+**[RECOMMENDATION]** Proceed with wiring MeaningBERT in as a genuine
+**second, reported-alongside signal** — never replacing SBERT, never
+silently blended into one score (Practice.md §10) — exactly the scope
+`REFORMULATION_PROBLEM_MAP.md` §5 item 6 already specified, not upgraded
+to "the fix" by this result. Its real, demonstrated value is flagging
+cases where it and SBERT *disagree* with each other (a large gap either
+direction is itself informative), not replacing SBERT as a stronger
+single gate — pair_28 proves a single metric, old or new, isn't
+sufficient on its own for this class of error.
+
+**[LIMITATION]** 14 pairs is enough to characterize that this is a real,
+partial, non-redundant signal — it is not enough to set a numeric
+threshold or fully map where MeaningBERT's blind spots do and don't
+overlap with SBERT's. That would need a larger comparison, not run
+here per the explicit scope limit for this check.
+
+**Not yet done:** wiring this into `reformulate.py`/`app.py` as an
+actual second reported metric — this section is the validation step
+only, per the explicit instruction to check before building. A separate
+confirmation is expected before that code change is made.

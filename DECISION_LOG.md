@@ -1905,3 +1905,59 @@ change to `reformulate.py`/`rephrase.py`/`semantic.py`, no dependency
 added or changed — the current engine was not touched. Full record:
 `VALIDATION.md` §14; `REFORMULATION_PROBLEM_MAP.md` §4/§5 (updated,
 living document); `ROADMAP.md` R23 (new).
+
+### 2026-08-18-B — R24: MeaningBERT validated as a second semantic-preservation signal, real but partial
+
+**What was done, per the user's approved sequence and explicit scope
+limit:** after R21-R23 closed the model/decoding-swap avenue, the user
+approved C (validate a second semantic signal) → A (phrase-level tier)
+→ E (re-examine multi-difficulty) → reassess, and specifically asked
+for Option C to run first "with strict limits so it doesn't disappear
+into another four-hour experiment." Honored directly: one small model
+(MeaningBERT, 109.5M params, no `trust_remote_code`, no gating), 14
+sentence pairs pulled from data already recorded in the repo (9 known
+SBERT-vs-human disagreement cases from `VALIDATION.md` §9.7, plus 5
+control pairs), single forward passes only — no new corpus, no
+generation, no long-running sweep. Total wall-clock: one model download
+plus seconds of scoring, not hours.
+
+**Result:** genuinely mixed, reported as found rather than smoothed
+into a clean verdict either direction. MeaningBERT catches several
+idiom-adjacent breaks SBERT missed badly — most clearly pair_11
+("drives me crazy" → "going me crazy," a causative-construction break):
+SBERT scored it 0.968 (near-perfect, wrong), MeaningBERT scores it 48.0,
+correctly flagging the break with a wide margin below every control
+pair (81.5-94.5). Same directional pattern, smaller margin, on three
+other disagreement pairs. **But MeaningBERT completely misses pair_28 —
+the single worst human-rated case in the entire dataset** (meaning=1/5,
+the floor of the scale): it scores 94.5, indistinguishable from the
+clean control pairs, the same mistake SBERT made (0.912). Two other
+disagreement pairs (pair_06, pair_02 — register/formality shifts, not
+true idiom breaks) scored high on MeaningBERT too, plausibly the more
+accurate read of those two cases rather than a miss.
+
+**Interpretation:** not a strict improvement over SBERT — a different,
+overlapping-but-not-superset set of blind spots. This is concrete
+evidence, not just an architectural argument, that a better similarity
+metric alone does not substitute for the phrase-level tier's structural
+approach (item 4): pair_28 is exactly the class of case that item
+targets by detecting the fixed expression before substitution, and no
+similarity metric tested so far — old or new — caught it after the
+fact.
+
+**Decision:** proceed with wiring MeaningBERT into `reformulate.py`/
+`app.py` as a genuine second, reported-alongside signal — never
+replacing SBERT, never silently blended into one score (Practice.md
+§10) — exactly the scope already planned for this item, not upgraded
+to "the fix" on the strength of this result. Its demonstrated value is
+flagging disagreement between the two signals, not serving as a
+stronger standalone gate. **This validation step is complete; the
+actual engine wiring has not been built yet** — a separate step,
+expected to be confirmed before it's made, consistent with this
+session's established checkpoint pattern.
+
+**Category:** Evaluation-infrastructure validation (R24). No change to
+`reformulate.py`/`app.py`/`semantic.py` — validation only, per the
+user's explicit scope limit. Full record: `VALIDATION.md` §15;
+`REFORMULATION_PROBLEM_MAP.md` §3.7/§4/§5 (updated, living document);
+`ROADMAP.md` R24 (new).

@@ -804,6 +804,42 @@ runtime, e.g. `llama.cpp`/GGUF) is a new-dependency decision, not a
 model choice — surfaced as a separate, explicit, not-yet-decided
 question, same category as R22.
 
+### R24. Validate a second semantic-preservation signal (MeaningBERT) — **VALIDATED, 2026-08-18, real but partial**
+**Linked finding:** After R21-R23 closed the model/decoding-swap
+avenue, the user approved a new sequence — C (validate a second
+semantic signal) → A (phrase-level tier) → E (re-examine multi-
+difficulty) → reassess — explicitly requesting Option C proceed first,
+with a strict scope limit so it wouldn't become another long-running
+experiment. `REFORMULATION_PROBLEM_MAP.md` §5 item 6; §3.7's `[GAP]`
+("does an alternative to SBERT actually catch idiom-breaking better, or
+is that unverified").
+**What was done, within the agreed limits:** one small model
+(MeaningBERT, 109.5M params, BERT-base scale, no `trust_remote_code`,
+no gating), 14 sentence pairs pulled directly from already-recorded
+pilot data (the 9 known SBERT-vs-human disagreement cases from
+`VALIDATION.md` §9.7 plus 5 control pairs where SBERT and the human
+rater already agreed), single forward passes only — no new corpus, no
+generation, no long-running sweep.
+**Result:** real but partial. MeaningBERT catches several idiom-
+adjacent breaks SBERT missed badly (largest: SBERT 0.968 vs.
+MeaningBERT 48.0 on a genuine causative-construction break). But it
+**completely misses the single worst-rated case on record** (human
+meaning=1/5; MeaningBERT scores it 94.5, indistinguishable from clean
+control pairs — the same mistake SBERT made). Not a strict improvement
+— a different, overlapping-but-not-superset blind spot. Full record:
+`VALIDATION.md` §15; `DECISION_LOG.md` 2026-08-18-B.
+**Labeled as:** Proceed with wiring MeaningBERT in as a genuine second,
+reported-alongside signal (never replacing SBERT, never silently
+blended — Practice.md §10) — exactly the scope already planned, not
+upgraded to "the fix" by this result. Its real value is flagging
+disagreement between the two signals, not replacing either one. The
+case it missed is concrete evidence (not just an architectural
+argument) that R24 doesn't substitute for item 4's structural detection
+approach (not yet started; will get its own R-number when built) —
+reinforces rather than delays that item.
+**Not yet done:** the actual engine wiring (`reformulate.py`/`app.py`)
+— this entry covers the validation step only, per explicit scope.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

@@ -523,6 +523,13 @@ this section.
   (the two pilot rounds), not literature-corroborated — any metric swap
   here would need this project's own re-evaluation against real pilot
   data, not just borrowed confidence from a paper.
+  **Update, 2026-08-18 — this project's own re-evaluation was run
+  (R24, `VALIDATION.md` §15).** MeaningBERT catches several idiom-
+  adjacent breaks SBERT missed badly, but also completely misses the
+  single worst-rated case in the dataset — a real, partial signal with
+  its own distinct blind spot, not a strict improvement. The gap named
+  here is now partially closed for MeaningBERT specifically; still open
+  for BERTScore/MoverScore/NLI-entailment, none of which were tested.
 
 ### 3.8 Phrase-level replacement — a third tier between word-substitution and whole-sentence restructuring
 
@@ -711,7 +718,7 @@ fine-tune. See §5's new item 1a.
 | `pywsd` Lesk-family sense disambiguation | 2.6 | Yes | No | Small |
 | SBERT-gloss WSD (reuse existing SBERT) | 2.6 | Yes | No | Small |
 | HF constrained beam search (`force_words_ids`) | 2.8 | **No, as of `transformers==5.10.2` — VALIDATION.md §13** | No, but needs `trust_remote_code` or a version pin | Was rated Small; corrected to **Medium+, blocked** until a packaging path is chosen |
-| MeaningBERT as a second verification signal | 2.2 | Yes | No | Small |
+| MeaningBERT as a second verification signal | 2.2 | **Yes — validated, VALIDATION.md §15** | No | Small — validation done, engine wiring not yet built |
 | NLI bidirectional-entailment check | 2.2, 2.4 | Yes | No | Small-medium |
 | BERTScore/MoverScore as a second signal | 2.2 | Yes | No | Small |
 | GECToR-style confidence-threshold abstention | 2.1 | Partial (pattern only) | No (if imitating pattern, not model) | Medium |
@@ -842,14 +849,27 @@ itself supported.
    medium-effort with no maintained package). Surfaced to the user
    rather than decided unilaterally, since it's a dependency-footprint
    decision, not a pure research/implementation one.
-6. **Add a second semantic-preservation signal** (§2.2, §3.7) — most
-   likely candidate: NLI bidirectional entailment or MeaningBERT, reported
-   alongside SBERT (never replacing it silently, per Practice.md §10) —
-   directly targets the now-twice-confirmed one-directional SBERT blind
-   spot at its root, rather than only patching the specific surface cases
-   (idioms) that happen to have been found so far. §3.9's ParaDetox-style
-   J-score is a related, cheap addition worth doing alongside this —
-   both are evaluation-infrastructure improvements, not engine changes.
+6. **[VALIDATED, 2026-08-18 — `VALIDATION.md` §15 — R24, result: real
+   but partial, proceed as a second signal only] Add a second semantic-
+   preservation signal** (§2.2, §3.7) — candidate: MeaningBERT, reported
+   alongside SBERT (never replacing it silently, per Practice.md §10).
+   A cheap validation check (14 pairs already in the repo, no new
+   corpus, single small model, single forward passes — no long-running
+   sweep) found it catches several idiom-adjacent breaks SBERT missed
+   badly (largest: SBERT 0.968 vs. MeaningBERT 48.0 on a genuine
+   causative-construction break) — but it **completely misses the
+   single worst-rated case on record** (human meaning=1/5; both SBERT
+   and MeaningBERT score it as fine). Not a strict improvement — a
+   different, overlapping-but-not-superset blind spot. Concrete evidence
+   (not just an architectural argument) that this doesn't substitute for
+   item 4's structural detection: the case MeaningBERT missed is exactly
+   the class item 4 targets by *detecting* the fixed expression, not by
+   scoring the result more cleverly. Scope going forward: wire in as a
+   reported-alongside signal, flag disagreement, don't treat as "the
+   fix." §3.9's ParaDetox-style J-score is a related, cheap addition
+   worth doing alongside this — both are evaluation-infrastructure
+   improvements, not engine changes. **Actual engine wiring not yet
+   done** — this was the validation step only, per explicit scope.
 7. **Re-examine multi-difficulty interaction after (1)** (§2.7) — n=3 in
    the current pilot is too small to act on alone; re-evaluate specifically
    once the idiom guard exists, since much of the compounding risk may
@@ -984,3 +1004,14 @@ prioritized map for a future, explicitly-approved implementation cycle.
   optimized/quantized inference runtime) is flagged as a separate,
   not-yet-decided dependency question, same category as item 5's
   blocked status. Full record: `VALIDATION.md` §14.
+- **2026-08-18, second** — R24: validated MeaningBERT as a candidate
+  second semantic-preservation signal, per the approved C → A → E
+  sequence, with an explicit scope limit (14 already-recorded pairs, no
+  new corpus, single small model, no long-running sweep). Result: real
+  but partial — catches several idiom-adjacent breaks SBERT missed
+  badly, but completely misses the single worst-rated case on record,
+  the same class of case item 4 (phrase-level tier) targets
+  structurally. §3.7's `[GAP]` partially closed; §5 item 6 and §4
+  updated. Scope: proceed as a reported-alongside signal, not a
+  replacement for SBERT or a substitute for item 4. Engine wiring not
+  yet built — validation only. Full record: `VALIDATION.md` §15.
