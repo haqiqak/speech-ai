@@ -2216,3 +2216,97 @@ explicitly did not proceed — blocked, surfaced for a future decision, not
 worked around. Full record: `VALIDATION.md` §18-20;
 `REFORMULATION_PROBLEM_MAP.md` §2.8, §5 items 6/11/12/13 (updated, living
 document); `ROADMAP.md` R27 (new, done/partial).
+
+### 2026-08-19-B — repo cleanup pass: `changes.md` removed; `HANDOFF.md`/`DOCS.md`/`README.md` refreshed for R17-R27
+
+**What was done, per direct instruction:** a full-repo sweep for unused/
+redundant files, followed by a content refresh of the three onboarding/
+product-facing docs found to be stale.
+
+**File audit.** Checked actual usage (imports, live call graph), not just
+commit recency, for every file the user named plus a general sweep:
+`paths.py`, `grammar.py`, `config.yaml`, `rewrite/`, `profiling/`, and
+`eval/study/` all confirmed still load-bearing or actively used as
+comparison-baseline evidence (`eval/reformulation_eval.py`/`tests/
+roadmap_test.py` still exercise `SentenceRewriter`/`DifficultyAwareRewriter`
+against `reformulate.py` on every Stage-6-corpus check, most recently in
+R27) — none of these are unused despite having no recent commits;
+stability and staleness are not the same thing. `scripts/` (fine-tuning
+prep) is idle but not broken or stale — correctly gated on a GPU-access
+decision (`ROADMAP.md` R9/item 9) that has never been made. Two genuine
+removal candidates found: `changes.md` (a pre-`CHANGELOG.md` release-notes
+log, last touched 2026-06-13, describing features since removed —
+microphone profiling, a `run_app.ps1` launcher already gone from the repo)
+and `tests/baseline_current.txt` (referenced by zero files in the repo).
+User approved removing `changes.md` only; `tests/baseline_current.txt` was
+left as-is.
+
+**`changes.md` removed**, `git rm`. Its four current-state pointers in
+`README.md` (project-structure listing, doc-set table, two prose
+references) updated to point at `DECISION_LOG.md`/`CHANGELOG.md` instead.
+Historical references to it in `DECISION_LOG.md` (this file, prior
+entries), `RESEARCH.md`, `REFORMULATION_RESEARCH.md`, and `CHANGELOG.md`'s
+own commit-log entry were left untouched — those are append-only records
+of what was true at the time, not current-state pointers, and editing them
+would falsify history. `DOCS.md`'s file table gained a `~~changes.md~~
+Removed` row, matching its existing convention for `AUTH_README.md`'s
+earlier removal.
+
+**Documentation drift, found and fixed.** A prior full-status pass
+(2026-08-19, same day) had already flagged `HANDOFF.md`, `DOCS.md`, and
+`README.md` as frozen at the pre-R19 (2026-08-16 Architecture D′) state —
+materially incomplete for a fresh reader, since none of R17-R27's real
+engine capability (idiom guard, WSD, the phrase-level tier, MeaningBERT,
+three closed model-swap attempts, the characterized-but-unfixed generic-
+word-ranking bias, the grammaticality gap and its Java-version blocker) was
+reflected anywhere in them. Per direct instruction, refreshed rather than
+rewritten — new dated scope notes and corrected specific stale claims,
+preserving the files' own established pattern of layering dated updates
+rather than discarding history:
+- **`HANDOFF.md`**: new 2026-08-19 scope note summarizing R17-R27 and
+  pointing to `REFORMULATION_PROBLEM_MAP.md` as the current source of
+  truth; the "proven vs. hypothesis" section's stale SBERT-idiom-blindness
+  claim ("plausible, argued by example... not measured") corrected to
+  reflect it's now been measured with real, disclosed limitations (n=1
+  pilot); the R5/R6 rewrite-vs-SentenceRewriter comparison claim ("no
+  comparison exists") corrected to point at the comparison that already
+  ran (`VALIDATION.md` §6) and still runs on every regression check; the
+  curated reading order updated to include `reformulate.py` explicitly (it,
+  not `app.py`, is the actual orchestrator) and `REFORMULATION_PROBLEM_MAP.md`;
+  two new pitfalls added (T5 non-determinism across process launches and
+  the mocking discipline it requires; the `git stash`-isolation technique
+  for verifying one change's true effect against a corpus that's drifted);
+  the "documentation drift happened twice" pitfall updated to "three times"
+  — this refresh itself is the third instance, named plainly rather than
+  quietly fixed and left unremarked.
+- **`DOCS.md`**: `reformulate.py`, `semantic.py`, `rephrase.py`, `tests/
+  semantic_test.py`, and `eval/idiom_guard_recheck.py` rows updated to
+  describe current capability instead of the 2026-08-16/17 snapshot;
+  `idiom_guard_recheck.py`'s row corrected from "built for this one fix" to
+  reflect it's been reused across five fixes since (R19/R20/R25/R26/R27).
+- **`README.md`**: the "What It Does" pipeline (5 steps → 7, adding the
+  idiom guard and phrase-level tier), the Features list (idiom guard, WSD,
+  phrase-level replacement, MeaningBERT added), "Architecture Notes"
+  (the reformulation-engine, SBERT-firewall, rephrase.py, and eval/
+  sections all updated — including correcting a now-false claim that
+  `reformulate.py` "hasn't yet been measured" against the retained
+  pipelines, which it has, repeatedly, since Stage 6), "Known Limitations"
+  (two resolved items removed/corrected — the R9 keep/revert feedback loop
+  is wired, `problem_phones` now has a consumer — and the real, current
+  limitations from R21-R27 added: no grammaticality signal, the generic-
+  word ranking bias, no quality-based escalation trigger, no clarification
+  flow, the single-participant pilot's own disclosed undercounting), and
+  the documentation-set table gained a `REFORMULATION_PROBLEM_MAP.md` row.
+
+**`CLAUDE.md` deliberately not reordered.** The user's original concern was
+that `CLAUDE.md`'s reading order (`HANDOFF.md` step 2, `DOCS.md` step 3,
+`REFORMULATION_PROBLEM_MAP.md` step 9) front-loads a stale picture before
+reaching the current one. With `HANDOFF.md`/`DOCS.md`'s *content* now
+accurate and each pointing forward to `REFORMULATION_PROBLEM_MAP.md`
+itself, reading them first is no longer harmful — the root cause was
+staleness, not sequencing, so fixing the content resolves the concern
+without needing to restructure `CLAUDE.md`'s otherwise-reasonable
+broad-to-specific order.
+
+**Category:** Repo hygiene + documentation-drift correction, no code or
+engine behavior changed. Full record: this entry; `CHANGELOG.md`.

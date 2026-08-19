@@ -6,6 +6,17 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-19, second** chore/docs: repo cleanup + doc refresh. Removed
+  `changes.md` (superseded by this file, described removed features).
+  Confirmed `paths.py`/`grammar.py`/`config.yaml`/`rewrite/`/`profiling/`/
+  `eval/study/` are all still load-bearing or active comparison-baseline
+  evidence, not unused. Refreshed `HANDOFF.md`/`DOCS.md`/`README.md` —
+  all three were frozen at the pre-R19 (2026-08-16) state and materially
+  misdescribed the current engine (no mention of the idiom guard, WSD,
+  phrase-level tier, or MeaningBERT); corrected specific stale/false
+  claims rather than just adding notes (the R5/R6 comparison "not yet run"
+  claim, the R9 keep/revert feedback loop "not wired" claim). →
+  `DECISION_LOG.md` 2026-08-19-B.
 - **2026-08-19** feat: R27 — bounded investigation of R26's ranking
   mechanism and grammaticality, then MeaningBERT wiring + idiom-guard
   extension. Found two distinct causes for `push`→`force`/`grab`→`take`
