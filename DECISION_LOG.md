@@ -2310,3 +2310,101 @@ broad-to-specific order.
 
 **Category:** Repo hygiene + documentation-drift correction, no code or
 engine behavior changed. Full record: this entry; `CHANGELOG.md`.
+
+### 2026-08-19-C — R28: grammaticality resolved-and-measured (negative); MeaningBERT test coverage added
+
+**What was done:** per the user-approved reordering of the next-steps
+plan (grammaticality investigation + MeaningBERT tests before designing
+the generic-word signal or the quality-based escalation trigger, so
+neither gets designed around an unvalidated signal), resolved the R27
+Java-version blocker and actually measured LanguageTool's hit rate, and
+closed the MeaningBERT test-coverage gap the prior audit found.
+
+**Grammaticality.** The blocker (`SystemError: Detected java 1.8.
+LanguageTool requires Java >= 17`) was resolved without a system-wide
+install: downloaded a portable Temurin JRE 17.0.20 into this project's
+own `.cache/jre17/`, added to `PATH` for the diagnostic subprocess only.
+Ran `language_tool_python.LanguageTool("en-US")` directly against R27's
+own known-broken (7 cases) and clean-control (3 cases) corpus. **Result:
+0/7 caught, 0/3 false positives** — confirmed as a genuine negative, not
+a broken check, via a direct sanity probe showing the tool correctly
+catches classic SVA/tense errors it was never given the chance to fail
+on here ("She go to the store." → `HE_VERB_AGR`; "I enjoys algorithms" →
+`BASE_FORM`). This project's own failures ("a worth lesson," "data
+knowledges," "going me crazy," "was recently again") are syntactically
+well-formed sentences built from the wrong word — outside what a
+rule-based grammar checker is built to catch. **LanguageTool itself is
+now closed for this use case**, not blocked; `REFORMULATION_PROBLEM_MAP.md`
+§5 item 12 updated from BLOCKED to TESTED/negative.
+
+Two secondary findings surfaced during this investigation, both left
+unfixed per explicit scope (measurement only, no production changes):
+(a) the project-local cache path `paths.py` redirects `LTP_PATH` to
+reproducibly fails — the bundle downloads to completion but the target
+directory ends up empty and the server then fails to start; root cause
+not isolated (ruled out a space-in-path theory directly — the working
+default cache path has the identical space and works fine); worked
+around for this diagnostic by pointing `LTP_PATH` at the default,
+already-proven-working location instead. (b) `grammar.py::
+_correct_with_languagetool()` has a latent bug: it uses `m.ruleId`/
+`m.errorLength`, which don't exist on the installed `language_tool_python`
+version's `Match` object (`rule_id`/`error_length` are correct,
+confirmed directly via `AttributeError`) — sitting outside that
+function's own exception handling, this would have crashed
+`sanitize_input()` (and so the Reformulate button) the first time
+LanguageTool ever successfully loaded *and* found an actionable match in
+production. Never triggered before now, since LanguageTool has never
+successfully loaded in this project until this investigation — a
+concrete pre-requisite for any future work in this area, not a
+theoretical risk.
+
+**MeaningBERT test coverage.** New file `tests/meaningbert_test.py`, 9
+tests — closes exactly the gap the prior ground-truth audit named
+(model loads, scores stay in the valid 0-100 range, a real R24 finding
+is reproduced as a regression guard, graceful degradation on model
+unavailability, and — the specific gap — `reformulate()`'s real,
+unmocked metrics dict is checked to actually carry the signal correctly
+and never let it gate `final_verification`). All 9 pass. Full suite now
+116 tests.
+
+**Category:** Investigation (grammaticality) + test coverage (MeaningBERT).
+No production code changed; no ranking weights touched. Full record:
+`VALIDATION.md` §21; `ROADMAP.md` R28; `REFORMULATION_PROBLEM_MAP.md` §5
+item 12.
+
+### 2026-08-19-D — R29: candidate specificity/genericness signal designed and validated (not implemented)
+
+**What was done:** per the approved plan (design/validate this before
+the quality-based escalation trigger, so the trigger isn't built around
+an unvalidated signal), read `engine.py::_wordnet_synonyms()` directly
+to find the actual mechanism behind R26/R27's "grab"→"take" pattern: a
+candidate pool is the union of a disambiguated synset's direct lemmas
+(same specificity) and that synset's hypernym lemmas (structurally
+broader, by WordNet's hierarchy) — meaning a candidate's WordNet
+hypernym-depth relative to the original word's disambiguated sense is a
+real, zero-new-dependency, already-available proxy for "is this a
+generalization."
+
+**Validated, not assumed:** computed depth-delta and Zipf-frequency-delta
+for the real production candidate pool across 3 independent "grab"
+sentences (pair_16, pair_17, pair_29) and "push" (pair_29). Depth-delta
+alone flags "take" consistently (−1 to −2 hypernym levels shallower than
+"grab" in every context) but also flags legitimate rarer synonyms
+("seize," "clutch") as false positives. **Requiring both depth-delta
+(structurally broader) and a positive Zipf-delta (anomalously more
+common) cleanly separates "take" from the legitimate alternatives in
+every case tested** — "seize"/"clutch" fire on depth alone since they
+are *less* common than "grab," not more.
+
+**Explicitly not implemented.** No ranking weights changed in
+`semantic.py`; no new gate added to `reformulate.py`. The exact
+threshold (how many hypernym-hops, how large a Zipf gap) is not settled
+by 4 cases — recorded as directionally validated, not tuned, and a
+future implementation decision if picked up. If implemented, the
+evidence points toward an additional hard gate (same shape as the
+existing antonym/phoneme/profile-collision checks), not a change to the
+weighted combined-score formula.
+
+**Category:** Signal design + validation. No production code changed;
+no ranking weights touched. Full record: `VALIDATION.md` §22;
+`ROADMAP.md` R29; `REFORMULATION_PROBLEM_MAP.md` §5 item 14.

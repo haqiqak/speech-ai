@@ -1052,22 +1052,36 @@ itself supported.
     up generic-word-fit problem — before it is implementable. Depends on
     item 12 (below) existing first for the "poor grammar" trigger case to
     even be detectable.
-12. **[BLOCKED, 2026-08-19 — `VALIDATION.md` §18.3 — R27, same category as
-    item 5's blocked status] Grammaticality as a second reported signal**
-    (§2.3) — reuse the existing, already-built `grammar._correct_with_
-    languagetool()` (currently wired only into input-side `sanitize_input`,
-    never applied to reformulation *output*) as a read-only signal
-    alongside SBERT/MeaningBERT, mirroring item 6's "second signal, not a
-    gate" pattern. Gated on a bounded empirical check first — attempted
-    directly, not just checked for presence: `language_tool_python` and
-    Java are both installed, but instantiating the tool raised `SystemError:
-    Detected java 1.8. LanguageTool requires Java >= 17 for version 6.8`.
-    The blocker is a **Java version mismatch**, not Java's absence
-    (correcting R23's speculative "most likely Java isn't installed" guess).
-    Three real options, none decided here: install a JDK 17+ alongside the
-    existing Java 8, pin an older `language_tool_python`/LanguageTool-server
-    combination compatible with Java 8, or leave this blocked. Surfaced to
-    the user rather than resolved unilaterally.
+12. **[TESTED, 2026-08-19 — `VALIDATION.md` §21.2 — R28 — result: negative,
+    LanguageTool specifically ruled out, not the whole idea of a
+    grammaticality signal] Grammaticality as a second reported signal**
+    (§2.3) — the R27 Java-version blocker was resolved (a portable,
+    project-local JRE 17, no system install — `VALIDATION.md` §21.2), and
+    `language_tool_python` was then run directly against R27's own
+    known-broken corpus. **Result: 0 of 7 known-broken outputs caught, 0
+    false positives on 3 clean controls** — confirmed as a real negative,
+    not a broken check, via a direct sanity probe that LanguageTool does
+    correctly catch classic textbook errors (subject-verb agreement) it
+    was never given a chance to fail on here. This project's specific
+    known-broken outputs ("a worth lesson," "data knowledges," "going me
+    crazy") are syntactically well-formed sentences built from the wrong
+    word — a failure class outside what a rule-based grammar checker like
+    LanguageTool is built to catch. **LanguageTool itself is now a closed
+    question for this use case, not a blocked one.** A future
+    grammaticality signal, if pursued, needs a different kind of tool
+    (e.g. fluency/perplexity-style scoring, or a classifier trained on
+    this project's own failure pattern), not LanguageTool as originally
+    scoped. Separately: a latent bug was found (not fixed) in
+    `grammar.py::_correct_with_languagetool()` — it uses attribute names
+    (`m.ruleId`/`m.errorLength`) that don't exist on the installed
+    `language_tool_python` version's `Match` object (correct:
+    `rule_id`/`error_length`), outside that function's own exception
+    handling — meaning it would have crashed `sanitize_input()` the first
+    time LanguageTool ever successfully loaded and found an actionable
+    match in production. Never hit before now, since LanguageTool has
+    never successfully loaded in this project until this investigation.
+    A real pre-requisite for any future LanguageTool-adjacent work, not
+    just a footnote.
 13. **[DONE, 2026-08-19 — `VALIDATION.md` §20 — R27] Extend the idiom guard
     to verb+object phrasal idioms** (§2.4, §5 item 1) — concretely scoped by
     the R26 follow-up: "push [a meeting]" (postpone) has no WordNet sense
@@ -1082,12 +1096,44 @@ itself supported.
     unresolved rather than mis-substituted, but pair_29's separate "grab"
     problem (the generic-word-ranking pattern, item 7) is untouched by
     design — this only ever targeted the missing-sense half of that pair.
+14. **[DESIGNED AND VALIDATED, 2026-08-19 — `VALIDATION.md` §22 — R29 —
+    not implemented] A candidate specificity/genericness signal for the
+    "grab"→"take" pattern** (§2.7, item 7's finding) — per the approved
+    reordering (design/validate this before item 11's escalation trigger,
+    so the trigger isn't designed around an unvalidated signal). Derived
+    directly from reading `engine.py::_wordnet_synonyms()`: candidates
+    come from a union of a disambiguated synset's own direct lemmas
+    (same specificity as the original word) and that synset's hypernym
+    lemmas (structurally broader, by WordNet's own hierarchy) — so a
+    candidate's WordNet hypernym-depth relative to the original word's
+    disambiguated synset is a computable, zero-new-dependency proxy for
+    "is this a generalization." Validated against the real production
+    candidate pool (same `engine.get_synonyms` → `rank_candidates_
+    contextually` call chain) across 4 real contexts — 3 independent
+    "grab" sentences (pair_16, pair_17, pair_29) plus "push" (pair_29) as
+    a negative-adjacent control. **Result: depth-delta alone flags "take"
+    consistently across all 3 grab contexts (-1 to -2 levels shallower
+    than "grab"'s own sense) but also over-flags some legitimate,
+    less-common synonyms** ("seize," "clutch" — real hypernym relations,
+    but not the popularity-driven pattern this is meant to catch).
+    **Combining depth-delta with the candidate's own Zipf-frequency delta
+    vs. the original word, requiring BOTH conditions (structurally
+    broader AND anomalously more common) before flagging, cleanly
+    separates "take" (both signals fire) from "seize"/"clutch" (depth
+    fires, frequency doesn't — they're not more common than "grab," just
+    structurally broader) across every case tested.** Threshold value
+    (how many hypernym-hops / how large a Zipf gap should trigger a flag)
+    is not settled by 4 cases — validated as directionally correct and
+    consistently discriminating, not as a tuned cutoff. **Nothing
+    implemented**: no ranking weights changed, no new gate added to
+    `semantic.py`/`reformulate.py`, per explicit scope.
 
 Items 1, 2, 4, 6, 7, and 13 are implemented and verified (dated above);
-item 12 was attempted and found blocked on an infrastructure decision;
-items 3 and 5 were tested/attempted and closed (negative/blocked,
-respectively); items 8-11 remain future work, not started. This list is
-kept current as items move, not a static snapshot of one planning pass.
+item 12 was tested and closed negative on an infrastructure decision;
+item 14 is designed and validated, not implemented; items 3 and 5 were
+tested/attempted and closed (negative/blocked, respectively); items 8-11
+remain future work, not started. This list is kept current as items
+move, not a static snapshot of one planning pass.
 
 ## 6. Open questions — what we still do not know
 

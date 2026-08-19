@@ -958,6 +958,60 @@ constrained-beam-search block), not abandoned. MeaningBERT wiring and
 the idiom-guard extension are both done and verified. Full record:
 `VALIDATION.md` §18-20.
 
+### R28. Grammaticality resolved-and-measured (negative); MeaningBERT test coverage added — **DONE, 2026-08-19**
+**Linked finding:** approved reordering of the four-item next-steps plan
+(grammaticality + MeaningBERT tests first, deliberately before designing
+the generic-word signal or the quality-based escalation trigger, on the
+methodological ground that neither should be designed around a signal
+whose usefulness hasn't been established yet).
+**What was done:** resolved the R27 Java-version blocker with a portable,
+project-local JRE 17 (no system install); ran `language_tool_python`
+directly against R27's own known-broken/clean-control corpus; added
+`tests/meaningbert_test.py` (9 tests) closing the zero-coverage gap the
+R27 audit found.
+**Result:** LanguageTool caught **0 of 7** known-broken outputs and
+produced **0** false positives on 3 clean controls — a real, confirmed
+negative (a direct sanity check verified the tool correctly catches
+classic textbook grammar errors it simply was never given a chance to
+fail on here). This project's specific failures are syntactically
+well-formed sentences built from the wrong word, a class outside a
+rule-based grammar checker's detection surface. A latent attribute-name
+bug was also found (not fixed) in `grammar.py::_correct_with_
+languagetool()` that would have crashed `sanitize_input()` the first
+time LanguageTool ever found an actionable match in production. All 9
+new MeaningBERT tests pass; full suite now 116 tests.
+**Labeled as:** LanguageTool is now closed for this use case, not
+blocked — §5 item 12 updated accordingly. A future grammaticality signal
+needs a different kind of tool. MeaningBERT test coverage is done. Full
+record: `VALIDATION.md` §21.
+
+### R29. Design and validate a candidate specificity/genericness signal for "grab"→"take" — **DESIGNED AND VALIDATED, 2026-08-19, not implemented**
+**Linked finding:** R26/R27's mechanistic finding that the sentence-
+embedding similarity term, not the frequency weight, drives the
+generic-word pattern — this item is the approved next step (design and
+validate a signal before designing the escalation trigger), not a
+ranking retune.
+**What was done:** read `engine.py::_wordnet_synonyms()` directly to
+find where a candidate actually comes from — a disambiguated synset's
+direct lemmas (same specificity) or its hypernym lemmas (structurally
+broader). Computed two candidate-level signals — WordNet hypernym-depth
+delta and Zipf-frequency delta, both relative to the original word's
+disambiguated sense — for the real production candidate pool across 3
+independent "grab" contexts (pair_16, pair_17, pair_29) plus "push"
+(pair_29) as a comparison case.
+**Result:** depth-delta alone consistently flags "take" across all 3
+grab contexts but also false-positives on legitimate rarer synonyms
+("seize," "clutch"). Requiring **both** conditions — structurally
+broader (depth) **and** anomalously more common (Zipf) — cleanly
+separates "take" from the legitimate alternatives in every case tested.
+The exact threshold is not settled by 4 cases; validated as directionally
+correct and discriminating, not as a tuned cutoff.
+**Labeled as:** a validated candidate signal, ready for a future,
+separately-approved implementation decision as an additional hard gate
+(same shape as the existing antonym/phoneme/profile-collision checks),
+not folded into the weighted ranking formula. **Not implemented** — no
+code changed, no weights touched. Full record: `VALIDATION.md` §22.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

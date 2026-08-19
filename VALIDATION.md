@@ -2593,3 +2593,201 @@ while_grab_is_still_substituted`) — full suite (46 tests) still passes.
 `pair_29`, with its stale "not an idiom break" comment corrected and
 replaced with the R27 finding, so a future re-run doesn't relitigate this
 same confusion.
+
+## 21. R28 — grammaticality resolved-and-measured; MeaningBERT test coverage added (executed 2026-08-19)
+
+Per the user-approved reordering of the four-item next-steps plan
+(grammaticality + MeaningBERT tests first, deliberately before designing
+the generic-word signal or the quality-based escalation trigger, so
+neither is designed around a signal whose usefulness hasn't been
+established). No production code changed; no ranking weights touched.
+
+### 21.1 MeaningBERT test coverage — closes the gap R27 flagged
+
+New file `tests/meaningbert_test.py`, 9 tests: the model loads correctly
+in this environment; `meaningbert_score()` returns values in its native
+0-100 range; a real, already-published R24 finding (`VALIDATION.md`
+§15.2's pair_11 case — SBERT 0.968, MeaningBERT 48.0) is reproduced as a
+regression guard, not just asserted as an abstract range check; graceful
+degradation (returns `None`, doesn't raise, when the model is
+unavailable) is tested by mocking the load path, the same pattern
+`semantic.py` already uses for SBERT; and — the specific gap identified
+in the prior audit — `reformulate()`'s real, unmocked metrics dict is
+checked to actually contain a sane `meaning_preservation_meaningbert`
+value, that it stays `None` (not silently missing) when the model is
+forced unavailable, and that a forced score of `0.0` still does not flip
+`final_verification.passed` on an otherwise-clean substitution (Practice.md
+§10 — a reported signal must never silently start gating). All 9 pass;
+full suite now 116 tests.
+
+### 21.2 Grammaticality — the Java blocker resolved, and a decisive negative result
+
+**[FINDING] The Java-version blocker (R27, `VALIDATION.md` §18.3) is
+resolvable without a system-wide install.** A portable Temurin JRE 17.0.20
+(Eclipse Adoptium, Apache-licensed) was downloaded into this project's own
+`.cache/jre17/` and added to `PATH` for the diagnostic subprocess only —
+no system PATH or `JAVA_HOME` change, no admin rights used, fully
+reversible by deleting the folder. `language_tool_python.LanguageTool
+("en-US")` then loads successfully using this JRE.
+
+**[FINDING, unresolved side issue, not chased further per scope] The
+project-local cache path `paths.py` redirects `LTP_PATH` to
+(`.cache/language_tool/`) reproducibly fails: the ~259MB LanguageTool 6.8
+bundle downloads to 100% but the target directory is empty afterward and
+the server then fails to start** (`_get_lt_tool()` swallows the real
+exception and returns `None`). Not a space-in-path issue — the working
+alternative path (the `language_tool_python` default,
+`~/.cache/language_tool_python/`) contains the identical space in the
+Windows profile directory name and works correctly. Root cause not
+isolated further, since this is a diagnostic-scope investigation, not a
+debugging session; any future production wiring of this signal would need
+to actually resolve it, or explicitly accept the non-project-local default
+cache location as a deliberate exception to `paths.py`'s usual convention.
+
+**[FINDING, latent production bug, found not fixed] `grammar.py::
+_correct_with_languagetool()` uses attribute names
+(`m.ruleId`, `m.errorLength`) that do not exist on this installed
+`language_tool_python` version's `Match` object — confirmed directly
+(`AttributeError: 'Match' object has no attribute 'ruleId'. Did you mean:
+'rule_id'?`).** The correct names are `rule_id`/`error_length` (snake_case);
+`replacements` is already a plain `list[str]`, not a list of objects with
+`.value` (a separate, correct assumption elsewhere in the same function
+would also need re-checking against this if the function is ever revised).
+This bug sits **outside** the function's own `try/except` around
+`tool.check()` (`grammar.py:1010-1013`), so it would have propagated as an
+uncaught `AttributeError` through `sanitize_input()` — crashing the
+Reformulate button in `app.py` — the very first time LanguageTool ever
+successfully loaded *and* found at least one actionable match in
+production. It has never been hit, because LanguageTool has never
+successfully loaded in this project before today (blocked on Java since
+before this bug was introduced or the dependency version changed under
+it — which is not determinable from the code alone). **Not fixed here**,
+per explicit scope ("don't integrate immediately") — flagged as a
+concrete pre-requisite for any future production wiring, not a
+theoretical risk.
+
+**[FINDING] Measured hit rate: 0 of 7 known-broken outputs caught; 0 of 3
+clean controls false-flagged.** Using a corrected (`rule_id`/`error_length`)
+version of the check, `language_tool_python` returned **zero** matches for
+every sentence in R27's known-broken corpus ("a worth lesson," "data
+knowledges," "going me crazy," "was recently again," and three others) —
+not a bug in the check this time: a direct sanity probe against classic
+textbook errors ("She go to the store." → `HE_VERB_AGR`, "I enjoys
+algorithms..." → `BASE_FORM`) confirms the tool is genuinely loaded and
+functioning, and does catch conventional subject-verb-agreement errors
+correctly (`HE_VERB_AGR` is already in this project's own `_LT_SKIP_RULES`,
+since `grammar.py`'s own dedicated SVA layer already handles that class).
+
+**[INTERPRETATION]** LanguageTool is a rule-based/statistical checker
+tuned for classic surface grammar — agreement, tense, article use,
+spelling. This project's specific known-broken outputs are a different
+failure class entirely: **syntactically well-formed sentences built from
+the wrong word** ("worth" used as a bare adjective, "data" pluralized as
+"knowledges," a causative construction missing its verb). None of these
+trip LanguageTool's rules, because none of them are the kind of error
+LanguageTool's rules are built to catch. This is a clean, decisive
+negative result on this specific tool for this specific problem — not an
+inconclusive one.
+
+**[RECOMMENDATION, not decided here]** LanguageTool, wired in as currently
+scoped, would not have caught a single one of this project's own
+documented grammaticality failures. If grammaticality is picked up again,
+the evidence points away from a rule-based grammar checker and toward a
+different kind of signal (e.g. a fluency/perplexity-style language-model
+score, or a classifier trained specifically on this project's own
+failure pattern) — not toward integrating LanguageTool as currently
+planned. §5 item 12 (`REFORMULATION_PROBLEM_MAP.md`) needs updating to
+reflect this, not just its prior "blocked" status.
+
+## 22. R29 — designing and validating a candidate specificity/genericness signal (executed 2026-08-19)
+
+Per the approved reordering: design and validate this signal before
+designing item 11's quality-based escalation trigger, so the trigger
+isn't built around a signal whose usefulness hasn't been established.
+No ranking weights changed; no production code touched — pure design
+and validation, reusing the exact production candidate-generation call
+chain (`engine.get_synonyms` → `reformulate._raw_candidates` →
+`semantic.rank_candidates_contextually`).
+
+### 22.1 Where the candidate came from — read directly from `engine.py`
+
+`engine.py::_wordnet_synonyms()`'s candidate pool for a disambiguated
+synset is the union of: (a) the synset's own direct lemmas — same
+specificity as the original word's sense — and (b) that synset's
+**hypernym** lemmas (`for hyper in synset.hypernyms(): ... hyper.lemmas()`,
+`engine.py:113-117`) — structurally *broader* concepts, by WordNet's own
+hierarchy. This means a real, computable, zero-new-dependency proxy for
+"is this candidate a generalization of what the speaker actually said"
+already exists in the data the pipeline generates every time: a
+candidate's WordNet hypernym-depth (`Synset.min_depth()`, root=0, larger
+= more specific) relative to the original word's disambiguated synset's
+depth.
+
+### 22.2 Validation — 4 real contexts, same production candidate pools
+
+Ran the identical production ranking call for 3 independent real "grab"
+sentences (pair_16 "grab my jacket," pair_17/pair_29's "grab coffee" in
+two different sentences) plus "push" (pair_29) as a comparison case, and
+computed two candidate-level signals for every candidate already in the
+real, existing ranked list — not a new candidate set:
+
+- **`depth_delta`** = candidate's best-matching synset depth − original
+  word's disambiguated synset depth (negative = more generic than the
+  original).
+- **`zipf_delta`** = candidate's own Zipf frequency − original word's
+  Zipf frequency (positive = more common than the original).
+
+| Case | Winning candidate today | depth_delta | zipf_delta |
+|---|---|---|---|
+| grab → meeting+coffee sentence | take | −2 | +1.40 |
+| grab → "Do you want to grab coffee later?" | take | −2 | +1.40 |
+| grab → "Let me grab my jacket real quick." | take | −1 (direct hypernym) | +1.40 |
+| push → "push the meeting" | force | −7 | +0.41 |
+
+**[FINDING] `depth_delta` alone correctly and consistently flags "take"
+across all 3 independent grab contexts** (−1 to −2 hypernym-levels
+shallower than "grab"'s own disambiguated sense in every case) — a real,
+structural signal, not a coincidence of one sentence.
+
+**[FINDING, the important caveat] `depth_delta` alone also flags
+legitimate, defensible, just less-common synonyms as false positives.**
+"seize" and "clutch" are also direct hypernym-relations of "grab"'s sense
+in this data (depth_delta −1 in multiple cases) — but they are not
+examples of the "generic word wins because it's popular" pattern this
+signal is meant to catch; they are genuinely rarer, more specific-feeling
+words that happen to sit one hypernym level up in WordNet's structure.
+Using `depth_delta` alone as a cutoff would reject some of the *better*
+candidates alongside the actual problem candidate.
+
+**[FINDING] Requiring BOTH `depth_delta` (structurally broader) AND a
+positive `zipf_delta` (anomalously more common) before flagging cleanly
+separates the two groups in every case tested.** "take" fires on both
+conditions in all 3 grab contexts (`depth_delta` −1/−2, `zipf_delta`
+consistently +1.40 — a large, stable gap). "seize"/"clutch" fire on
+`depth_delta` alone — their `zipf_delta` is *negative* (−0.72/−0.64:
+genuinely less common than "grab" itself), so the combined rule correctly
+does not flag them. "catch," "snatch," "grasp," "capture," "grip,"
+"snap" — same-synset or near-neighbor candidates in this data — have
+`depth_delta` at or near 0 and are untouched by either signal.
+
+**[LIMITATION, stated plainly]** n=4 real cases (3 "grab," 1 "push")
+established the *direction* and *discriminating power* of the combined
+signal, not a tuned cutoff. How many hypernym-hops and how large a Zipf
+gap should actually trigger a flag was not determined here — that would
+need either a larger validated case set or an explicit, separately
+approved tuning pass (Practice.md §6), neither of which is in scope for
+a design-and-validate step. The "push" case (`depth_delta` −7 for the
+winning candidate "force") shows the signal also incidentally flags the
+*separate*, already-known missing-sense problem (§18.2) — expected, not
+a flaw: a very large generalization jump plausibly does correlate with
+"this isn't really the right concept anymore" in general, not only with
+the popularity-driven pattern this signal targets specifically.
+
+**[RECOMMENDATION, not decided here]** If this is implemented later, the
+evidence here points toward using it as an **additional gate** (reject/
+deprioritize a candidate that fires both conditions), the same shape as
+the existing antonym/phoneme/profile-collision gates in
+`reformulate.py::_try_substitution`, rather than folding it into
+`semantic.combined_score`'s weighted formula — consistent with "don't
+touch ranking weights" and with how every other hard check in this
+pipeline is already structured. Not implemented here, per explicit scope.

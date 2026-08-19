@@ -6,6 +6,17 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-19, fourth** docs: R29 — designed and validated a candidate
+  specificity/genericness signal for R26/R27's "grab"→"take" pattern
+  (WordNet hypernym-depth delta + Zipf-frequency delta, requiring both
+  to flag). Validated across 4 real cases; not implemented — no ranking
+  weights or code changed. → `DECISION_LOG.md` 2026-08-19-D.
+- **2026-08-19, third** test/docs: R28 — grammaticality resolved and
+  measured (negative: LanguageTool caught 0/7 known-broken outputs, ruled
+  out for this use case, not just unblocked), plus a latent
+  `grammar.py` attribute bug found and disclosed (not fixed). Added
+  `tests/meaningbert_test.py` (9 tests), closing the zero-coverage gap
+  the prior audit found. → `DECISION_LOG.md` 2026-08-19-C.
 - **2026-08-19, second** chore/docs: repo cleanup + doc refresh. Removed
   `changes.md` (superseded by this file, described removed features).
   Confirmed `paths.py`/`grammar.py`/`config.yaml`/`rewrite/`/`profiling/`/
