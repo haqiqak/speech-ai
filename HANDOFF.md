@@ -63,14 +63,51 @@ multi-mode/allowlist/onset-risk-chart UI removed. R12 (below) is resolved
 for the reformulation engine specifically: it reads only the declared
 `DifficultyProfile`, not `SpeakerDifficultyProfile`.
 
+**Scope note (2026-08-17 through 2026-08-19, R17-R27 — read this before
+trusting the "proven vs. hypothesis" section below or `README.md`'s pipeline
+description, both of which predate this work):** `reformulate.py` gained
+real capability past the plain "substitute-then-restructure" shape described
+above. It now has **three** tiers, not two: word-level substitution → a
+**phrase-level replacement tier** (R25 — when a difficulty is locked inside
+a fixed expression/idiom and nothing else in the sentence is substitutable,
+it tries a local, verified phrase rewrite instead of only leaving it alone)
+→ whole-sentence T5 restructuring. Before substitution even runs, an
+**idiom/fixed-expression guard** (R19, extended in R27 to cover the
+verb+object phrasal idiom "push the meeting") protects a curated list of
+known-fragile expressions, and **word-sense disambiguation** (R20, via
+SBERT-gloss matching) picks the right WordNet sense before generating
+candidates. Meaning preservation is now checked by **two** independent
+signals, not one: SBERT (as before) plus **MeaningBERT** (R24/R27, reported
+alongside SBERT, never silently replacing it — it catches some idiom-
+adjacent breaks SBERT misses and vice versa, a disclosed partial overlap,
+not a strict improvement). Three separate attempts to replace the
+restructuring model/decoding mechanism (a stronger promptable model,
+constrained beam search, a decoder-only model family — R21-R23) were tried
+and closed negative/blocked — the current T5 setup was not swapped out.
+Two real, still-open problems were found and precisely characterized but
+deliberately **not** fixed yet, per explicit scope: a candidate-ranking bias
+toward generic/high-frequency words (R26-R27 — not primarily a frequency-
+*weight* problem; the 0.90-weighted semantic term is the actual driver), and
+a total absence of any grammaticality check on reformulation output (R27 —
+the existing LanguageTool integration is input-side only; wiring it into
+the output path is blocked on a Java version mismatch, not Java's absence).
+**`REFORMULATION_PROBLEM_MAP.md` is the current, living source of truth for
+all of this** — read it, not just this file, before touching the engine.
+Full evidence trail: `VALIDATION.md` §10-§20; `ROADMAP.md` R19-R27;
+`DECISION_LOG.md` entries dated 2026-08-17 through 2026-08-19.
+
 ## What's proven vs. still a hypothesis (read this before trusting a claim elsewhere)
 
 **Proven / fact-level, in the sense of "verifiably true of the code as it
 stands"** (verified by reading the code during this review, 2026-08-08):
-- The pipeline architecture as described in `DOCS.md` and the earlier
+- ~~The pipeline architecture as described in `DOCS.md` and the earlier
   repo-review summary: `sanitize_input()` → `SentenceRewriter.rewrite()`
   → engine/semantic/phonetic gating → inflect/rebuild, with a parallel
-  `rewrite/` "soft" path and an optional `rephrase.py` T5 layer.
+  `rewrite/` "soft" path and an optional `rephrase.py` T5 layer.~~
+  **Superseded, 2026-08-16** — this was the live path only until Architecture
+  D′; see the scope note above for what actually runs now (`reformulate.py`,
+  itself since grown a third tier — see the 2026-08-19 scope note above).
+  Kept here as an accurate historical snapshot, not current behavior.
 - `semantic.py`'s actual constants (`SEMANTIC_W=0.90`, `FREQUENCY_W=0.10`,
   `MIN_SEMANTIC=0.85`) — confirmed against source, **not** against
   README, which is stale here.
@@ -94,13 +131,30 @@ stands"** (verified by reading the code during this review, 2026-08-08):
   (`0.4/0.3/0.3` and the profiling-layer `0.45/0.25/0.20/0.10`) are
   well-calibrated. They are stated in code/config as defaults, not as
   fitted or validated values.
-- That the `rewrite/` "soft" path produces better rewrites than
+- ~~That the `rewrite/` "soft" path produces better rewrites than
   `grammar.py`'s "hard" onset-gated path, or vice versa — no comparison
-  exists (see `ROADMAP.md` R5).
+  exists~~ **Resolved, 2026-08-16 (`ROADMAP.md` R5/R6, `VALIDATION.md` §6):**
+  the comparison was run (an 18-case corpus, uniform metrics across all
+  three systems) — `reformulate.py` wins on meaning preservation (0.979 vs.
+  0.938/0.929) and edit size, at the cost of a lower reformulation rate
+  traced to two separate, since-partly-fixed escalation bugs. `rewrite/`
+  and `grammar.py::SentenceRewriter` are kept as a live comparison
+  baseline, not because the question is still open — `eval/
+  reformulation_eval.py` still runs all three side by side on every
+  Stage-6-corpus check (most recently R27, `VALIDATION.md` §19).
 - That SBERT similarity ≥ 0.85 reliably tracks human-judged meaning
   preservation at this repository's specific candidate-sentence
-  construction. Plausible, argued by example in `semantic.py`'s
-  docstring, not measured against human judgment (see `VALIDATION.md`).
+  construction. **No longer purely an unmeasured hypothesis** — a real,
+  single-participant 30-item pilot (`VALIDATION.md` §9) found concrete,
+  reproducible cases where it doesn't (idiom/fixed-expression breaks,
+  §9.7/§9.9), which is exactly why the idiom guard (R19) and a second,
+  independently-trained signal, MeaningBERT (R24/R27), now exist. Still
+  **not** validated at the scale Practice.md's own evidence standard would
+  call settled: n=1 participant, and the pilot's own record discloses that
+  spot-checking at this size *undercounts* real defects (§9's "tolerance
+  ceiling" finding) — so even the encouraging numbers are a disclosed
+  upper bound, not a result. See `REFORMULATION_PROBLEM_MAP.md` §2.2/§2.4
+  and `VALIDATION.md` §9-§20 for the full, current picture.
 
 ## What the fast, model-free test suite currently covers
 
@@ -172,11 +226,29 @@ profile (`users/default.json`, auto-created on first save if missing).
   detector code) moved to `out_of_scope/` and is no longer imported by
   `app.py`. The open question still applies to whoever picks the file up
   for the separate Audio Module — see `out_of_scope/README.md`.
-- **Documentation drift is real and already happened twice** (README's
-  stale scoring numbers, AUTH_README's incorrect `.gitignore` claim) —
-  verify against running code before citing a `.md` file's specific
-  numbers, per Practice.md §5's rule, applied here concretely rather than
-  abstractly.
+- **Documentation drift is real and has now happened three times** (README's
+  stale scoring numbers, AUTH_README's incorrect `.gitignore` claim, and —
+  most recently, 2026-08-19 — this very file, `DOCS.md`, and `README.md`
+  going three days/ten roadmap items stale after R17-R27 before anyone
+  refreshed them) — verify against running code before citing a `.md`
+  file's specific numbers, per Practice.md §5's rule, applied here
+  concretely rather than abstractly. Practical takeaway: onboarding/
+  product-facing docs (this file, `DOCS.md`, `README.md`) do not
+  self-update — only `REFORMULATION_PROBLEM_MAP.md`/`VALIDATION.md`/
+  `ROADMAP.md`/`DECISION_LOG.md`/`CHANGELOG.md` are maintained live, every
+  session. If it's been a while, cross-check this file against those before
+  trusting it over them.
+- **T5 restructuring output is non-deterministic across process launches**
+  (beam search, no fixed seed) — confirmed repeatedly across R21-R27. Any
+  test or diagnostic that needs a reproducible `reformulate()` output must
+  mock `rephrase.generate_candidates` (see `tests/reformulate_test.py`'s
+  `EscalationTest`/`PhraseTierTest` for the pattern) rather than asserting
+  on live T5 text. Relatedly, when isolating one code change's true effect
+  against a corpus that's evolved across many prior changes, don't trust a
+  diagnostic script's own stale "expected changed pairs" bookkeeping —
+  `git stash` the change, re-run, pop, re-run, and diff the two runs
+  directly against each other (established in R25, reused in R26/R27; see
+  `VALIDATION.md` §16.3/§20.1 for worked examples).
 - **User account JSON is sensitive and already leaked into git history**
   — do not add new real user data to `users/` in this repository without
   first fixing the gitignore/history issue in `DECISION_LOG.md`
@@ -197,16 +269,31 @@ profile (`users/default.json`, auto-created on first save if missing).
 4. `README.md` (product-level description — read *with* the drift warnings
    in `DOCS.md` in mind; `AUTH_README.md` was removed 2026-08-16 along with
    the auth system it documented — see `DECISION_LOG.md` 2026-08-16-A)
-5. `app.py` top-to-bottom structurally (it's the orchestrator; everything
-   else is a library it calls)
-6. `grammar.py` (`sanitize_input`, `SentenceRewriter`) — the core "hard"
-   pipeline
-7. `semantic.py`, `engine.py`, `phonetic.py`, `freq.py` — the signals the
-   core pipeline is built on
-8. `profiling/` then `rewrite/` — the persistent-profile "soft" pipeline
-9. `rephrase.py` — optional, isolated layer
-10. `DECISION_LOG.md`, `VALIDATION.md`, `RESEARCH.md`, `ROADMAP.md` — the
-    evidence record, the literature grounding, and what's next
+5. `app.py` top-to-bottom structurally — it's the UI shell (one linear
+   flow: text → profile → Reformulate → review); it calls `reformulate.py`
+   as its only reformulation entry point, not a library of its own logic
+6. `reformulate.py` — **the actual reformulation orchestrator as of
+   Architecture D′** (superseded `app.py` calling `grammar.py` directly).
+   Read `REFORMULATION_PROBLEM_MAP.md` §1-§2 alongside this, not after —
+   the nine-factor problem definition explains *why* the code is shaped
+   the way it is (three tiers, idiom guard, WSD) far better than the code
+   alone does
+7. `grammar.py` (`sanitize_input` — still live, called from `app.py` on
+   every request; `SentenceRewriter` — retained as an active comparison
+   baseline, not called from `app.py`) and `semantic.py`, `engine.py`,
+   `phonetic.py`, `freq.py` — the signals `reformulate.py` is built on
+8. `rephrase.py` — the T5 layer; no longer just "optional" for restructuring
+   escalation, it's also `reformulate.py`'s phrase-level tier's generator
+   (R25)
+9. `profiling/` then `rewrite/` — the retained "soft" comparison pipeline,
+   still actively exercised by `eval/reformulation_eval.py`/`tests/
+   roadmap_test.py`, not dead code despite being unreachable from `app.py`
+10. `REFORMULATION_PROBLEM_MAP.md` — the **living** problem map; read this
+    before proposing or prioritizing any reformulation-engine change, it is
+    more current than any research document below
+11. `DECISION_LOG.md`, `VALIDATION.md`, `RESEARCH.md`, `REFORMULATION_
+    RESEARCH.md`, `ROADMAP.md`, `CHANGELOG.md` — the evidence record, the
+    literature grounding, and what's next
 
 **Not in this reading order:** `out_of_scope/` (archived audio/ASR/voice
 code — read `out_of_scope/README.md` only if you're picking up the Audio

@@ -62,13 +62,16 @@ review proposed changes → keep/revert each one → final text
 ```
 
 The reformulation engine (`reformulate.py`, Architecture D′ —
-`REFORMULATION_RESEARCH.md` §24–31) that runs on "Reformulate":
+`REFORMULATION_RESEARCH.md` §24–31, grown a third tier since —
+`REFORMULATION_PROBLEM_MAP.md`) that runs on "Reformulate":
 
 1. **Tag** — find which words/sounds in your text match your declared difficulty profile (a global sound, a flagged word, or a word-specific sound pattern).
-2. **Substitute-and-rank** — for a sentence with a manageable number of flagged spots, try a same-meaning replacement for each: WordNet/Datamuse candidates, ranked by SBERT semantic similarity, filtered through a WordNet antonym guard and the phoneme firewall. All-or-nothing per sentence — if any flagged word can't be safely replaced, the whole sentence escalates rather than shipping a half-fixed patchwork.
-3. **Escalate to restructuring** — when a sentence has too many flagged spots to patch word-by-word (or word-by-word substitution couldn't clear every gate), a T5 model (`rephrase.py`) proposes a reworded sentence instead, which is re-checked with the same semantic and phoneme gates plus a negation-consistency check.
-4. **Verify** — the actual output is re-scanned against your profile to confirm it improved, not just assumed to have.
-5. **Report** — meaning preservation, difficulty reduction, and how much text changed are reported as separate numbers, never blended into one score, alongside anything left unchanged and why.
+2. **Guard fixed expressions** — a curated idiom/phrasal-verb list ("how's it going," "drives me crazy," "push the meeting") protects known-fragile phrases from being broken by substituting one word inside them, before substitution ever runs.
+3. **Substitute-and-rank** — for a sentence with a manageable number of flagged spots, try a same-meaning replacement for each: WordNet/Datamuse candidates, sense-disambiguated against local context, ranked by SBERT semantic similarity, filtered through a WordNet antonym guard and the phoneme firewall. All-or-nothing per sentence — if any flagged word can't be safely replaced, the whole sentence escalates rather than shipping a half-fixed patchwork.
+4. **Phrase-level replacement** — when a difficulty is locked inside a guarded fixed expression and nothing else in the sentence needs fixing, try a local, verified rewrite of just that phrase instead of only leaving it alone.
+5. **Escalate to restructuring** — when a sentence has too many flagged spots to patch word-by-word (or word-by-word substitution couldn't clear every gate), a T5 model (`rephrase.py`) proposes a reworded sentence instead, which is re-checked with the same semantic and phoneme gates plus a negation-consistency check.
+6. **Verify** — the actual output is re-scanned against your profile to confirm it improved, not just assumed to have, using two independent meaning-preservation signals (SBERT + MeaningBERT) reported side by side rather than blended into one score.
+7. **Report** — meaning preservation, difficulty reduction, and how much text changed are reported as separate numbers, alongside anything left unchanged and why.
 
 You review every change in a compact list — each one shows what triggered it and its verification details — and can revert any individual change back to the original wording before copying the final text.
 
@@ -76,13 +79,16 @@ You review every change in a compact list — each one shows what triggered it a
 
 ## Features
 
-- 🧠 **SBERT semantic firewall** — `all-MiniLM-L6-v2` ensures replacements never drift from the original meaning, plus a WordNet antonym guard and a negation-consistency check for full-sentence rewrites
+- 🧠 **Dual semantic firewall** — SBERT (`all-MiniLM-L6-v2`) as the primary gate, plus MeaningBERT as a second, independently-trained meaning-preservation signal reported alongside it (they catch different failure classes, so a disagreement between them is a real signal, not a bug), a WordNet antonym guard, and a negation-consistency check for full-sentence rewrites
 - 🔊 **Phoneme-aware filtering** — CMU Pronouncing Dictionary (ARPAbet) for onset detection, not spelling
+- 🗣️ **Idiom/fixed-expression guard** — a curated list of expressions ("how's it going," "drives me crazy," "push the meeting") protected from word-by-word substitution, since replacing one word inside them can break the phrase even when the single-word swap looks fine in isolation
+- 🎯 **Word-sense disambiguation** — before generating candidates, the intended sense of a polysemous word (e.g. "right" meaning "immediately" vs. "correctly") is picked from local context, not mixed across every sense of the word
 - 🎯 **Speaker Difficulty Profile** — one persistent, default speaker profile (no login) recording difficult sounds, words, and phrases, each declared and tracked separately; editable from a dedicated panel or by picking a word straight out of your entered text — see `PROBLEM_FORMULATION.md`
 - 🔍 **Word-specific sound patterns** — optionally narrow a difficult word down to the exact sound(s) that make it hard (e.g. "three" → specifically the TH→R transition) without assuming every occurrence of that sound elsewhere is difficult too
+- 🧩 **Phrase-level replacement** — when a difficulty is locked inside a guarded fixed expression, a local, verified rewrite of just that phrase is tried before falling back to leaving it unresolved
 - 🔁 **Restructuring escalation** — when word-level substitution can't safely fix a sentence, a T5 paraphrase pass proposes a reworded sentence instead, generate-then-verify against the same gates
 - ✅ **Change review with keep/revert** — every proposed change is shown with why it was made and its verification details; revert any single one back to the original wording
-- 📈 **Separate, honest metrics** — meaning preservation, difficulty reduction, and amount of text changed reported as distinct numbers, not combined into one score
+- 📈 **Separate, honest metrics** — meaning preservation (both signals), difficulty reduction, and amount of text changed reported as distinct numbers, not combined into one score
 - ⚠️ **Explicit "left unchanged" reporting** — if nothing can be safely changed, that's shown, not silently guessed at
 
 *(Voice input/output and microphone-based profile updates were part of this
@@ -300,14 +306,27 @@ If Reformulate is leaving more unchanged than expected, try lowering this.
 
 ### The reformulation engine (`reformulate.py`) — app.py's only entry point
 
-Architecture D′ (`REFORMULATION_RESEARCH.md` §24–31): tag flagged words →
-per-sentence escalation decision → all-or-nothing substitute-and-rank
-(antonym check → SBERT → phoneme veto) → T5 restructuring escalation
-(generate-then-verify) → re-verify the actual output → separately-reported
-metrics. Built on top of the library modules below rather than
-reimplementing candidate generation or scoring — see `DECISION_LOG.md`
-2026-08-16-E for the full build record, including two bugs found and fixed
-via live testing.
+Architecture D′ (`REFORMULATION_RESEARCH.md` §24–31), grown a third tier
+since (R19-R27, `REFORMULATION_PROBLEM_MAP.md`): tag flagged words → idiom/
+fixed-expression guard (protects a curated list of fragile phrases before
+substitution runs) → per-sentence escalation decision → all-or-nothing,
+word-sense-disambiguated substitute-and-rank (antonym check → SBERT →
+phoneme veto) → phrase-level replacement for idiom-only cases that
+word-substitution can't touch → T5 restructuring escalation
+(generate-then-verify) → re-verify the actual output against two
+independent meaning-preservation signals (SBERT + MeaningBERT) →
+separately-reported metrics. Built on top of the library modules below
+rather than reimplementing candidate generation or scoring — see
+`DECISION_LOG.md` 2026-08-16-E for the original Architecture D′ build
+record, and the 2026-08-17 through 2026-08-19 entries for everything added
+since.
+
+**Two known, characterized-but-unfixed gaps, disclosed rather than hidden:**
+a candidate-ranking bias toward generic/high-frequency words (e.g. "grab"→
+"take"), and no grammaticality signal at all on reformulation output
+(LanguageTool exists but is input-side only, and wiring it into the output
+path is blocked on a Java version mismatch in this environment). See
+`REFORMULATION_PROBLEM_MAP.md` §2.3/§2.7/§5 for the full, current detail.
 
 ### Grammar correction (`grammar.py`)
 
@@ -322,6 +341,27 @@ Retrieves candidates from WordNet (POS-filtered) and Datamuse (`rel_syn=` + `ml=
 ### SBERT firewall + antonym/negation guards (`semantic.py`)
 
 For each candidate, builds a candidate sentence, batch-encodes it alongside the original, and computes cosine similarity. Protected phrases (multi-word fixed expressions like `look forward to`, `in order to`, `as well as`) are never substituted. Falls back gracefully to frequency-only ranking if SBERT fails to load. Extended for `reformulate.py` with `is_known_antonym()` (WordNet-based, rejects a candidate that's a direct antonym of the original) and `negation_consistent()` (rejects a full-sentence restructuring that changed the number of negation markers).
+
+**Idiom/fixed-expression guard (R19, extended R27) — same module.**
+`IDIOM_PHRASES`/`IDIOM_PHRASE_PATTERNS` protect a curated list of
+expressions ("how's it going," "drives me crazy," "push the meeting")
+where substituting one word inside them breaks the phrase even though the
+single-word swap passes every per-word check in isolation. A curated exact-
+match list, not a general multi-word-expression detector — coverage is
+intentionally scoped to expressions actually observed as failures, not
+exhaustive.
+
+**Word-sense disambiguation (R20) — same module.**
+`disambiguate_synset()` picks the WordNet synset whose gloss best matches
+the word's local context (via the existing SBERT model, no new dependency)
+before generating candidates, instead of pooling synonyms across every
+sense of a word regardless of which one is meant.
+
+**MeaningBERT — a second meaning-preservation signal (R24/R27) — same module.**
+`meaningbert_score()` reports a second, independently-trained 0-100 meaning
+score alongside SBERT's cosine similarity — validated to catch some idiom-
+adjacent breaks SBERT misses (and vice versa), never silently replacing
+SBERT or gating on its own.
 
 ### Speaker Difficulty Profile — declared (`difficulty_profile.py`)
 
@@ -350,13 +390,21 @@ would otherwise imply learned data that doesn't exist here.
 
 `rewrite/rewriter.py`'s `DifficultyAwareRewriter` proposes meaning-preserving substitutions using the score `similarity - lambda * difficulty + mu * frequency`. **Retained for comparison against `reformulate.py`, not called by `app.py`.**
 
-### Restructuring escalation (`rephrase.py`)
+### Restructuring escalation + phrase-level replacement (`rephrase.py`)
 
-`reformulate.py`'s restructuring-escalation step, used when word-level substitution can't safely fix a sentence. Generates paraphrase candidates with a T5 model (`Vamsi/T5_Paraphrase_Paws`), blocks the user's flagged words via `bad_words_ids` (word-level only — phoneme-level constraints are enforced by re-checking each generated candidate, not by constraining generation, since `bad_words_ids` can't block a phoneme class), then `reformulate.py` re-verifies each candidate against the SBERT/antonym-equivalent/phoneme gates and keeps the best one that passes. Never imported by `grammar.py` or `engine.py`, loads the model lazily on first use (with `low_cpu_mem_usage=True` so it fits on low-RAM machines), and degrades to no restructuring available (that sentence is reported as left unchanged) if the stack or weights are unavailable.
+`reformulate.py`'s restructuring-escalation step, used when word-level substitution can't safely fix a sentence. Generates paraphrase candidates with a T5 model (`Vamsi/T5_Paraphrase_Paws`), blocks the user's flagged words via `bad_words_ids` (word-level only — phoneme-level constraints are enforced by re-checking each generated candidate, not by constraining generation, since `bad_words_ids` can't block a phoneme class), then `reformulate.py` re-verifies each candidate against the SBERT/MeaningBERT/antonym-equivalent/phoneme gates and keeps the best one that passes. Never imported by `grammar.py` or `engine.py`, loads the model lazily on first use (with `low_cpu_mem_usage=True` so it fits on low-RAM machines), and degrades to no restructuring available (that sentence is reported as left unchanged) if the stack or weights are unavailable.
 
-### Evaluation harness (`eval/`) — for the retained `rewrite/` path
+**Phrase-level replacement tier (R25) — same generator, a second caller.**
+When a sentence's only difficulty is locked inside an idiom-guarded
+expression (and nothing else needs fixing), `reformulate.py` reuses this
+same `generate_candidates()` function, scoped to a local window around the
+idiom span instead of the whole sentence, splices the result back into the
+full sentence, and verifies it there — no duplicated generation logic, one
+new caller of existing machinery.
 
-`eval/metrics.py` computes meaning preservation, difficulty-onset reduction, substitution rate, and lambda trade-offs against `rewrite/`'s `DifficultyAwareRewriter` and the learned `SpeakerDifficultyProfile`. `eval/profile_eval.py` compares self-report-only, observed-only, and fused profile AUC. `eval/study/` contains CSV helpers for a counterbalanced three-condition **human** study comparing reformulated-text conditions — no audio involved, it's about how readers/listeners judge the *text* output. Not yet extended to evaluate `reformulate.py` — that's the next stage.
+### Evaluation harness (`eval/`)
+
+`eval/reformulation_eval.py` is the main comparison tool — runs `reformulate.py` against the retained `rewrite/`/`grammar.py` baselines on a shared corpus with uniform metrics (meaning preservation, difficulty reduction, edit ratio); re-run after every engine change to catch regressions (most recently R27). `eval/idiom_guard_recheck.py` is a read-only diagnostic that replays the frozen pilot corpus through the current engine to check one specific fix's effect, reused across five fixes so far. `eval/metrics.py` computes the same style of metrics specifically against `rewrite/`'s `DifficultyAwareRewriter` and the learned `SpeakerDifficultyProfile`. `eval/profile_eval.py` compares self-report-only, observed-only, and fused profile AUC. `eval/study/` contains CSV helpers for a counterbalanced three-condition **human** study — verified working, but the only human evidence actually collected against `reformulate.py` so far is a smaller, single-participant pilot (`eval/pilot_app.py`/`eval/pilot_pairs.json`), not this harness.
 
 ### Storage layer (`profile_store.py`)
 
@@ -393,13 +441,16 @@ and [`DECISION_LOG.md`](DECISION_LOG.md) for the history of how it got there.
 
 - Grammar correction depends on NLTK POS tagging, which can misfire on very short or broken sentences.
 - Datamuse `ml=` results are not guaranteed to match POS; SBERT acts as the final filter for these.
-- Protected phrases are hard-coded (~35 total); idiomatic coverage is incomplete.
+- The idiom/fixed-expression guard (`semantic.py`'s `IDIOM_PHRASES`) is a curated list, not a general detector — only the specific expressions actually observed as failures are protected; most real-world idioms outside that list are not.
+- **No grammaticality check exists anywhere in the reformulation-output path** — LanguageTool integration exists (`grammar.py`) but only runs on the speaker's *input*, never on the reformulated output. Wiring it into the output path is currently blocked by a Java version mismatch in this environment (needs 17+, has 8) — see `REFORMULATION_PROBLEM_MAP.md` §5 item 12.
+- A known candidate-ranking bias toward generic, high-frequency words (e.g. "grab"→"take") is characterized but not fixed — see `REFORMULATION_PROBLEM_MAP.md` §2.7/§18.2.
+- The engine can only say "I couldn't safely fix this" when every substitution candidate is rejected outright — it has no way yet to notice "a candidate passed every check but is still a weak fit" and try a full-sentence rewrite instead. See `REFORMULATION_PROBLEM_MAP.md` §2.8/§5 item 11.
+- There is no clarification flow for ambiguous or malformed input — it's auto-corrected and reformulated silently, never flagged back to the speaker for confirmation. The largest unbuilt piece of the nine-factor problem definition (`REFORMULATION_PROBLEM_MAP.md` §2.1).
 - Subject-verb agreement detection looks left for the nearest subject, which fails in relative clauses.
 - Grammar correction runs before synonym substitution; a corrected form may shift the target lemma.
-- Declared phrase-level difficulty (`difficulty_profile.phrases`) is editable in the UI but not yet consumed by `reformulate.py` — see `ROADMAP.md` R13.
-- Per-change keep/revert in the review panel doesn't yet feed back into the difficulty profile — see `ROADMAP.md` R9.
+- Declared phrase-level difficulty (`difficulty_profile.phrases`) is editable in the UI but not yet consumed by `reformulate.py`; word-specific `problem_phones` *is* consumed as of 2026-08-16 — see `ROADMAP.md` R13.
 - The difficulty formulas and semantic threshold are hand-picked, not validated against real speaker data or human judgment — see `VALIDATION.md`.
-- `reformulate.py` hasn't yet been measured against the retained `rewrite/`/`grammar.py` pipelines on a shared evaluation corpus — that comparison is the next stage, not yet run.
+- The only human evidence on record is a single-participant, 30-item pilot. Its own record discloses that spot-checking at this scale *undercounts* real defects — even the encouraging numbers (73% preference for the reformulation) are a disclosed upper bound, not a settled result. See `VALIDATION.md` §9.
 
 ---
 
@@ -417,6 +468,7 @@ documentation set at the repo root:
 | `DECISION_LOG.md` | Append-only record of why things are the way they are |
 | `RESEARCH.md` | Literature review grounding the reformulation approach (paraphrase generation, lexical substitution, phoneme-aware NLP, evaluation methodology) |
 | `PROBLEM_FORMULATION.md` | Design record for the Speaker Difficulty Profile — schema, representation research, the pattern-selection UI, single-profile architecture |
+| `REFORMULATION_PROBLEM_MAP.md` | **Living** problem definition for the reformulation engine — nine semi-independent factors it has to get right, kept current every time a pilot or debugging session reveals something new. The most up-to-date design record for this engine; read before proposing any change to it |
 | `VALIDATION.md` | What has actually been measured, and its named limitations |
 | `ROADMAP.md` | What's next, and the finding/gap that justifies each item |
 | `CHANGELOG.md` | Fast-scan index into the decision log |
