@@ -134,7 +134,6 @@ speech-ai/
 ├── CLAUDE.md, HANDOFF.md, DOCS.md, DECISION_LOG.md, VALIDATION.md,
 ├── RESEARCH.md, PROBLEM_FORMULATION.md, REFORMULATION_RESEARCH.md,
 ├── ROADMAP.md, CHANGELOG.md   # Living documentation set
-├── changes.md            # Full narrative version history
 └── README.md
 ```
 
@@ -386,8 +385,7 @@ wrapper, a rule-based detector over ASR word timings, and a browser
 Speech-to-Text/Text-to-Speech UI layer) has been moved to
 [`out_of_scope/`](out_of_scope/), preserved as-is for reference rather than
 deleted. See [`out_of_scope/README.md`](out_of_scope/README.md) for details
-and [`changes.md`](changes.md) / [`DECISION_LOG.md`](DECISION_LOG.md) for the
-history of how it got there.
+and [`DECISION_LOG.md`](DECISION_LOG.md) for the history of how it got there.
 
 ## Known Limitations
 
@@ -422,7 +420,6 @@ documentation set at the repo root:
 | `VALIDATION.md` | What has actually been measured, and its named limitations |
 | `ROADMAP.md` | What's next, and the finding/gap that justifies each item |
 | `CHANGELOG.md` | Fast-scan index into the decision log |
-| `changes.md` | Full narrative version history (pre-dates the living doc set) |
 
 ---
 
@@ -457,4 +454,4 @@ __pycache__/
 
 Developed at **NUST SEECS** as an independent research project exploring phoneme-aware synonym substitution for stutter assistance, semantic integrity preservation via SBERT re-ranking, and accessible NLP tooling built on lightweight, offline-capable components.
 
-See `changes.md` for the full development history and `DECISION_LOG.md` for why specific choices were made.
+See `DECISION_LOG.md` for the full development history and why specific choices were made.
