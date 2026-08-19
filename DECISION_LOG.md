@@ -2408,3 +2408,35 @@ weighted combined-score formula.
 **Category:** Signal design + validation. No production code changed;
 no ranking weights touched. Full record: `VALIDATION.md` §22;
 `ROADMAP.md` R29; `REFORMULATION_PROBLEM_MAP.md` §5 item 14.
+
+### 2026-08-19-E — R30: predicate-adjective POS-tagging bug fixed (pair_13)
+
+**What was done:** a small, independent fix, approved separately from
+CONAN's escalation-trigger design work. Traced directly (not assumed)
+during the R30 design investigation: `pos_tag()` tags "late" as RB in
+"The bus was late again this morning." — it's actually a predicate
+adjective after the copula "was," part of English's small "flat adverb"
+class (identical adjective/adverb surface form: late, fast, early,
+hard, ...). Because `_wn_pos("RB")` then restricts candidate generation
+to adverb-sense synonyms only, this produced the long-standing
+`pair_13` bug ("was late again" → "was recently again").
+
+**Fix:** `reformulate.py::_correct_predicate_adjective_tags()`, applied
+at both `pos_tag()` call sites — reclassifies RB to JJ only for a
+curated `_FLAT_ADVERBS` list directly adjacent to a BE-form token. A
+broader "does WordNet list any adjective sense" check was tried first
+and rejected after empirical testing found it over-fires: WordNet lists
+a rare satellite-adjective sense for "here" (`here.s.01`), which would
+have mis-tagged "He was here." Switched to a curated list — the same
+precision-over-recall tradeoff already used for `semantic.IDIOM_PHRASES`.
+
+**Verified:** target case fixed (produces "was belated again," a
+grammatically correct predicate-adjective substitution); 8 adversarial
+controls confirm no false positives (genuinely adverbial "here"/"now"/
+"there"/"still"/"already"/"arrived late" all correctly untouched); 3 new
+regression tests added; full suite 119 tests pass; `tests/smoke.py`
+byte-identical to the committed baseline (zero collateral change,
+confirmed by diff).
+
+**Category:** Bug fix, small and targeted. No ranking weights touched;
+no new dependency. Full record: `VALIDATION.md` §23; `ROADMAP.md` R30.

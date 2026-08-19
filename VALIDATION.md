@@ -2791,3 +2791,65 @@ the existing antonym/phoneme/profile-collision gates in
 `semantic.combined_score`'s weighted formula — consistent with "don't
 touch ranking weights" and with how every other hard check in this
 pipeline is already structured. Not implemented here, per explicit scope.
+
+## 23. R30 — predicate-adjective POS-tagging bug fixed (pair_13) — implemented and verified (2026-08-19)
+
+Independent, small, targeted fix, surfaced as a side finding during the
+R30 escalation-trigger design investigation, not part of CONAN. Explicit
+scope: the case is a POS-tagging bug, not a quality-trigger case — a
+different fix category entirely (see the escalation-trigger design
+notes). Approved separately for immediate implementation.
+
+### 23.1 Root cause — traced directly, not assumed
+
+`pos_tag(word_tokenize("The bus was late again this morning."))` tags
+"late" as `RB` (adverb). "late" is actually functioning as a **predicate
+adjective** here (after the copula "was"), not an adverb — English has a
+small, well-documented class of "flat adverbs" with identical adjective
+and adverb surface forms (late, fast, early, hard, ...), and nltk's
+tagger can pick the wrong one. Because `_wn_pos("RB")` then restricts
+candidate generation to adverb-sense synonyms only, the profile-declared
+word "late" got replaced with "recently"/"lately"/"later" — valid
+answers to the wrong grammatical question, producing "The bus was
+recently again this morning." This is the long-standing pair_13 case
+(§9.9, §11.5, §15.2, §18.3, §21.2 all separately reference it without
+ever finding this specific root cause).
+
+### 23.2 Fix — a curated list, not a general re-tagger
+
+`reformulate.py` gained `_correct_predicate_adjective_tags(tokens, tags)`,
+applied at both `pos_tag()` call sites. It reclassifies a word from RB to
+JJ only when (a) the word is in a curated `_FLAT_ADVERBS` list (late,
+fast, early, hard, high, low, deep, wide, long, near, close, right,
+tight, clean, clear, straight, direct, quick, loud, sharp, smooth, far)
+and (b) it directly follows a BE-form.
+
+**[FINDING] A broader "does WordNet list any adjective sense for this
+word" check was tried first and found to over-fire, empirically, not
+assumed safe.** WordNet lists a rare satellite-adjective sense for "here"
+(`here.s.01`, "being here now"), which reclassified "He was here." into
+treating "here" as an adjective — a real regression risk for a
+genuinely adverbial word. Switched to a curated list instead, the same
+precision-over-recall tradeoff this project already makes for
+`semantic.IDIOM_PHRASES`.
+
+### 23.3 Verification
+
+- Target case fixed: `"The bus was late again this morning."` →
+  `"The bus was belated again this morning."` — a grammatically correct
+  predicate-adjective substitution, `flagged_words_after=0`.
+- No false positives on 8 adversarial controls (`"He was here."`,
+  `"It is now."`, `"He was there."`, `"They were still."`, `"It was
+  already broken."`, `"The train arrived late."` — purely adverbial,
+  correctly untouched — plus cases nltk already tagged correctly on its
+  own: `"The water was deep."`, `"The room was clean."`).
+- 3 new regression tests added (`tests/reformulate_test.py::
+  PredicateAdjectiveTaggingTest`) — full suite now 119 tests, all pass.
+- `tests/smoke.py` output byte-identical to `tests/baseline_sbert.txt` —
+  zero collateral change on the existing regression corpus, confirmed by
+  diff, not assumed from the fix's narrow scope alone.
+
+**[LIMITATION, disclosed]** Scoped to direct adjacency only — an
+intervening word between the copula and the flat adverb (e.g. a
+contracted negation) is not handled. Not a general re-tagger; a targeted
+fix for the evidenced case and its immediate neighbors.

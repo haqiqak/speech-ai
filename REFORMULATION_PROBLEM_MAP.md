@@ -1127,13 +1127,27 @@ itself supported.
     consistently discriminating, not as a tuned cutoff. **Nothing
     implemented**: no ranking weights changed, no new gate added to
     `semantic.py`/`reformulate.py`, per explicit scope.
+15. **[DONE, 2026-08-19 — `VALIDATION.md` §23 — R30] Fix the
+    predicate-adjective POS-tagging bug behind pair_13** (§2.3) — a side
+    finding from the R30 escalation-trigger design investigation, not
+    part of that design work itself. `pos_tag()` mis-tags "late" as RB
+    (adverb) in "The bus was late again," when it's a predicate adjective
+    after the copula — restricting candidate generation to wrong-POS
+    adverb synonyms ("recently"/"lately"). Fixed with a curated
+    `_FLAT_ADVERBS` list in `reformulate.py`, not a general re-tagger — a
+    broader "any WordNet adjective sense" check was tried first and found
+    to over-fire on "here" (a rare WordNet satellite-adjective sense).
+    Verified: target case fixed, 8 adversarial controls show no false
+    positives, 3 new tests, zero collateral change on the regression
+    corpus. Closes one of the two "unrelated, different-class bugs" named
+    but left open in item 2's own entry above.
 
-Items 1, 2, 4, 6, 7, and 13 are implemented and verified (dated above);
-item 12 was tested and closed negative on an infrastructure decision;
-item 14 is designed and validated, not implemented; items 3 and 5 were
-tested/attempted and closed (negative/blocked, respectively); items 8-11
-remain future work, not started. This list is kept current as items
-move, not a static snapshot of one planning pass.
+Items 1, 2, 4, 6, 7, 13, and 15 are implemented and verified (dated
+above); item 12 was tested and closed negative on an infrastructure
+decision; item 14 is designed and validated, not implemented; items 3
+and 5 were tested/attempted and closed (negative/blocked, respectively);
+items 8-11 remain future work, not started. This list is kept current as
+items move, not a static snapshot of one planning pass.
 
 ## 6. Open questions — what we still do not know
 

@@ -6,6 +6,11 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-19, fifth** fix: R30 — fixed the predicate-adjective
+  POS-tagging bug behind pair_13 ("was late" mis-tagged RB, producing
+  "was recently again"). Curated flat-adverb list, not a general
+  re-tagger (a broader WordNet-sense check over-fired on "here").
+  3 new tests, zero collateral change. → `DECISION_LOG.md` 2026-08-19-E.
 - **2026-08-19, fourth** docs: R29 — designed and validated a candidate
   specificity/genericness signal for R26/R27's "grab"→"take" pattern
   (WordNet hypernym-depth delta + Zipf-frequency delta, requiring both

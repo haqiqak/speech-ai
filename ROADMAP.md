@@ -1012,6 +1012,28 @@ separately-approved implementation decision as an additional hard gate
 not folded into the weighted ranking formula. **Not implemented** — no
 code changed, no weights touched. Full record: `VALIDATION.md` §22.
 
+### R30. Fix the predicate-adjective POS-tagging bug behind pair_13 — **DONE, 2026-08-19**
+**Linked finding:** surfaced as a side finding during the R30
+escalation-trigger design investigation (traced directly, not assumed):
+`pos_tag()` mis-tags "late" as RB (adverb) in "The bus was late again,"
+when it's a predicate adjective after the copula — restricting candidate
+generation to wrong-POS adverb synonyms ("recently"/"lately"). A
+different bug category from CONAN's escalation-trigger work; approved
+separately for immediate implementation.
+**What was done:** `reformulate.py` gained
+`_correct_predicate_adjective_tags()`, applied at both `pos_tag()` call
+sites — reclassifies RB to JJ only for a curated `_FLAT_ADVERBS` list
+directly following a BE-form. A broader "any WordNet adjective sense"
+check was tried first and found to over-fire on "here" (a rare
+satellite-adjective WordNet sense) before switching to the curated list.
+**Result:** target case fixed (`"was late again"` → `"was belated
+again"`, correctly resolves the flagged word); zero false positives on 8
+adversarial controls; 3 new regression tests
+(`PredicateAdjectiveTaggingTest`); full suite 119 tests, all pass;
+`tests/smoke.py` byte-identical to baseline — zero collateral change,
+confirmed by diff.
+**Labeled as:** done and verified. Full record: `VALIDATION.md` §23.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)
