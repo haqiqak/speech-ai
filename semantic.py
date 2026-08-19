@@ -124,6 +124,15 @@ IDIOM_PHRASES: list[str] = [
     "how 's it going", "how is it going",
     "what 's going on", "what is going on",
     "right now", "right away", "right here",
+    # R26/R27 (VALIDATION.md SS17-18): "push [a meeting]" (postpone) has NO
+    # WordNet sense at all under "push" -- every literal-force synonym
+    # ("force", "press", "drive"...) is a semantically-close but wrong
+    # substitution, and no amount of candidate re-ranking can fix a sense
+    # that was never in the pool. Added as the literal phrase actually
+    # observed, matching item 1's own scoping (a curated list of evidenced
+    # phrases, not a general phrasal-verb detector -- REFORMULATION_
+    # PROBLEM_MAP.md SS3.1's disclosed [GAP] still stands).
+    "push the meeting",
 ]
 
 # A handful of idioms take an object pronoun in one slot ("drives me
@@ -172,6 +181,82 @@ def load_sbert() -> bool:
 def sbert_status() -> tuple[bool, str]:
     """Return (is_loaded, human_readable_message)."""
     return _sbert_ok, _sbert_message
+
+
+# ── MeaningBERT loader (lazy — optional SECOND meaning-preservation signal) ──
+# Validated 2026-08-18, R24 (VALIDATION.md §15): real but partial — catches
+# several idiom-adjacent meaning breaks SBERT misses badly (e.g. a causative-
+# construction break SBERT scored 0.968/near-perfect, MeaningBERT scored
+# 48.0), but completely misses the single worst-rated case on record (SBERT
+# and MeaningBERT both score it as fine). NOT a strict improvement over
+# SBERT — a different, overlapping-but-not-superset blind spot. Wired in
+# 2026-08-19 (R27) strictly as a REPORTED-ALONGSIDE signal: it must never
+# gate `final_ok`/`accepted` decisions on its own, and must never silently
+# replace the existing SBERT gate (Practice.md §10 — proxy metrics are
+# reported, not blended into pass/fail without a separate go-ahead).
+_meaningbert_tokenizer = None
+_meaningbert_model     = None
+_meaningbert_ok        = False   # True once model is successfully loaded
+_meaningbert_message   = ""      # Human-readable status for UI
+
+MEANINGBERT_MODEL = "davebulaval/MeaningBERT"
+
+
+def load_meaningbert() -> bool:
+    """
+    Load MeaningBERT into module-level cache.
+    Returns True on success, False on any failure (network, disk, etc.).
+    Idempotent — safe to call repeatedly. Same graceful-degradation shape
+    as load_sbert() above; no trust_remote_code, no gating.
+    """
+    global _meaningbert_tokenizer, _meaningbert_model, _meaningbert_ok, _meaningbert_message
+    if _meaningbert_ok:
+        return True
+    try:
+        from transformers import AutoTokenizer, AutoModelForSequenceClassification
+        _meaningbert_tokenizer = AutoTokenizer.from_pretrained(MEANINGBERT_MODEL)
+        _meaningbert_model     = AutoModelForSequenceClassification.from_pretrained(MEANINGBERT_MODEL)
+        _meaningbert_model.eval()
+        _meaningbert_ok        = True
+        _meaningbert_message   = f"MeaningBERT model '{MEANINGBERT_MODEL}' loaded successfully."
+        return True
+    except Exception as exc:
+        _meaningbert_ok      = False
+        _meaningbert_message = (
+            f"MeaningBERT unavailable ({exc.__class__.__name__}: {exc}). "
+            "Reporting SBERT similarity only."
+        )
+        return False
+
+
+def meaningbert_status() -> tuple[bool, str]:
+    """Return (is_loaded, human_readable_message)."""
+    return _meaningbert_ok, _meaningbert_message
+
+
+def meaningbert_score(original_sentence: str, candidate_sentence: str) -> Optional[float]:
+    """
+    Return MeaningBERT's 0-100 meaning-preservation score for
+    (original_sentence, candidate_sentence), or None if the model is
+    unavailable. Lazily loads on first call, same pattern as
+    semantic_similarity()/SBERT. Deliberately a SEPARATE 0-100 scale (its
+    native output, as validated/reported in R24), not normalized to
+    SBERT's 0-1 cosine range — the two are different kinds of signal and
+    should not be visually conflated.
+    """
+    if not _meaningbert_ok and not load_meaningbert():
+        return None
+    try:
+        import torch
+        with torch.no_grad():
+            inputs = _meaningbert_tokenizer(
+                original_sentence, candidate_sentence,
+                return_tensors="pt", truncation=True,
+            )
+            logits = _meaningbert_model(**inputs).logits
+            return float(logits.squeeze().item())
+    except Exception:
+        return None
 
 
 # ── Protected position detection ─────────────────────────────────────────────

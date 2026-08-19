@@ -78,6 +78,23 @@ class IdiomPhraseGuardTest(unittest.TestCase):
         self.assertIn("right", _protected_words("Come here right away."))
         self.assertIn("right", _protected_words("Stop right here."))
 
+    def test_push_the_meeting_protects_push(self):
+        # R26/R27 (VALIDATION.md SS17-18): "push [a meeting]" (postpone) has
+        # no WordNet sense at all, so every substitution candidate was a
+        # semantically-close but wrong "exert force" synonym.
+        protected = _protected_words("Can we push the meeting and grab coffee after?")
+        self.assertIn("push", protected)
+        self.assertIn("meeting", protected)
+
+    def test_push_alone_not_protected_outside_the_idiom(self):
+        # "push" in an unrelated sentence ("push the button", "push harder")
+        # must stay a normal substitutable content word -- only the exact
+        # observed phrase is guarded (REFORMULATION_PROBLEM_MAP.md SS3.1's
+        # disclosed [GAP]: a curated list, not a general phrasal-verb
+        # detector).
+        protected = _protected_words("Please push the button to start.")
+        self.assertNotIn("push", protected)
+
 
 class IdiomPronounPatternTest(unittest.TestCase):
     def test_drives_me_crazy_protects_driving_slot(self):

@@ -624,8 +624,16 @@ def reformulate(text: str, profile: DifficultyProfile, settings: ReformulateSett
     if overall_sim is not None:
         final_ok = final_ok and overall_sim >= (settings.sbert_threshold or sem.MIN_SEMANTIC) - 0.05
 
+    # Second meaning-preservation signal (R24/R27, VALIDATION.md §15/§18) —
+    # reported ALONGSIDE overall_sim, never blended into final_ok/gating.
+    # Real but partial per R24: catches some idiom-adjacent breaks SBERT
+    # misses, misses others SBERT also misses. A None here (model
+    # unavailable) is reported honestly, not silently hidden or defaulted.
+    meaningbert = sem.meaningbert_score(text, reformulated_text)
+
     metrics = {
         "meaning_preservation": round(overall_sim, 4) if overall_sim is not None else None,
+        "meaning_preservation_meaningbert": round(meaningbert, 2) if meaningbert is not None else None,
         "flagged_words_before": flagged_before,
         "flagged_words_after": flagged_after,
         "difficulty_reduction_pct": (

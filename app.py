@@ -712,11 +712,16 @@ if result is not None:
     fv = result["final_verification"]
     st.markdown("#### Verification")
     mp = m["meaning_preservation"]
+    mb = m.get("meaning_preservation_meaningbert")
     st.markdown(f"""
 <div class="metric-grid">
   <div class="metric-box">
     <div class="metric-num">{f"{mp:.0%}" if mp is not None else "n/a"}</div>
-    <div class="metric-label">Meaning similarity</div>
+    <div class="metric-label">Meaning similarity (SBERT)</div>
+  </div>
+  <div class="metric-box">
+    <div class="metric-num">{f"{mb:.0f}/100" if mb is not None else "n/a"}</div>
+    <div class="metric-label">Meaning similarity (MeaningBERT)</div>
   </div>
   <div class="metric-box">
     <div class="metric-num">{m['difficulty_reduction_pct']:.0f}%</div>
@@ -732,8 +737,13 @@ if result is not None:
   </div>
 </div>""", unsafe_allow_html=True)
     st.caption(
-        "These are automated estimates (SBERT similarity, edit distance), not a "
-        "human judgment of quality — read the result yourself before using it."
+        "These are automated estimates (SBERT similarity, edit distance, and — "
+        "since 2026-08-19 — MeaningBERT, a second, independently-trained meaning "
+        "signal), not a human judgment of quality. The two meaning-similarity "
+        "scores can disagree — validated to each catch some breaks the other "
+        "misses, not one strictly better than the other — so treat a "
+        "disagreement between them as a reason to read the result yourself, not "
+        "as a tie needing a winner."
     )
 
     if st.button("💾 Save to session history", key="save_hist", type="secondary"):

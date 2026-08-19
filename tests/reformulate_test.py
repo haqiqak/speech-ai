@@ -180,6 +180,25 @@ class IdiomGuardTest(unittest.TestCase):
         result = rf.reformulate("I really need a break right now.", profile)
         self.assertIn("right now", result["reformulated_text"].lower())
 
+    def test_push_the_meeting_survives_while_grab_is_still_substituted(self):
+        # R26/R27 (VALIDATION.md SS17-18): before this guard, "push" (no
+        # WordNet sense for "postpone") got substituted to "force"/"urge",
+        # a meaning-drifting fix. This is a MIXED case (push AND grab both
+        # flagged) -- per R25's design the phrase tier is never attempted
+        # here; "push" is simply left alone (an honest, disclosed partial
+        # result) while "grab" -- a separate, still-open problem
+        # (VALIDATION.md SS18.2's generic-word-ranking pattern) -- is still
+        # substituted normally, unaffected by this guard.
+        profile = _profile("idiom_push_meeting")
+        profile.add_sound("p", source="user_typed")
+        profile.add_sound("gr", source="user_typed")
+        result = rf.reformulate("Can we push the meeting and grab coffee after?", profile)
+        self.assertIn("push the meeting", result["reformulated_text"].lower())
+        self.assertNotIn(" grab ", f" {result['reformulated_text'].lower()} ")
+        self.assertTrue(any("fixed expression" in s["reason"] for s in result["skipped"]))
+        self.assertEqual(result["metrics"]["flagged_words_before"], 2)
+        self.assertEqual(result["metrics"]["flagged_words_after"], 1)
+
 
 class PhraseTierTest(unittest.TestCase):
     """Regression tests for REFORMULATION_PROBLEM_MAP.md SS5 item 4 -- the

@@ -32,13 +32,23 @@ PAIRS_PATH = os.path.join(ROOT, "eval", "pilot_pairs.json")
 
 # The pairs VALIDATION.md SS9.7/SS9.9 identified as an idiom break or the
 # "right now" word-sense bug specifically — the guard's actual targets.
-# pair_29 ("push"->"force"/"grab"->"catch", a word-choice/frequency-bias
-# issue) and pair_30 ("print"->"create", a wrong-action substitution) were
-# also on SS9.7's high-SBERT-vs-human-gap list but are NOT idiom breaks —
-# confirmed by this script itself on first run (they came back unchanged,
-# correctly: this guard was never going to touch them, and it doesn't).
-# Left out of the target set now that that's confirmed, not assumed.
-TARGET_PAIR_IDS = {"pair_01", "pair_11", "pair_15", "pair_28"}
+# pair_30 ("print"->"create", a wrong-action substitution) was also on
+# SS9.7's high-SBERT-vs-human-gap list but is NOT an idiom break — confirmed
+# by this script itself on first run (came back unchanged, correctly: this
+# guard was never going to touch it, and it doesn't).
+#
+# pair_29 ("push"->"force"/"urge") WAS added to the target set in R27
+# (VALIDATION.md SS18): direct investigation found "push [a meeting]"
+# (postpone) has no WordNet sense at all, the same class of missing-sense
+# problem as the phrases already here, and semantic.IDIOM_PHRASES gained
+# the literal phrase "push the meeting" as a result. NOTE this is a
+# genuinely partial fix, not a full resolution -- pair_29's OTHER flagged
+# word ("grab"->"catch") is a separate, still-open problem (the generic-
+# word-ranking pattern, VALIDATION.md SS9.9/SS18.2) that this guard was
+# never going to touch, by design (the mixed-case path is untouched, same
+# as R25's phrase tier). Expect pair_29 to still show flagged_words_after=1
+# post-guard (an honest, disclosed partial result), not 0.
+TARGET_PAIR_IDS = {"pair_01", "pair_11", "pair_15", "pair_28", "pair_29"}
 
 
 def _build_profile(pair_id: str, spec: dict) -> DifficultyProfile:
