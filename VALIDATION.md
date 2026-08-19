@@ -2127,3 +2127,257 @@ here per the explicit scope limit for this check.
 actual second reported metric — this section is the validation step
 only, per the explicit instruction to check before building. A separate
 confirmation is expected before that code change is made.
+
+## 16. Phrase-level replacement tier — implemented and verified (2026-08-18)
+
+Option A from the approved C → A → E → reassess sequence.
+`REFORMULATION_PROBLEM_MAP.md` §5 item 4 — the third granularity
+between word-substitution and whole-sentence restructuring, targeting
+factor 2.4 (idiomaticity), the single best-evidenced problem in the
+whole pilot. R24 (§15) stayed validation-only, not wired into
+production, exactly as instructed.
+
+### 16.1 What was built
+
+`semantic.py` gained `idiom_spans()` — the actual (start, end) span
+boundaries R19's curated idiom list matches, not just a flattened
+position set — with `idiom_protected_positions()` refactored to derive
+from it (behavior-preserving; verified against the full pre-existing
+`tests/semantic_test.py` suite, unchanged). `reformulate.py` gained
+`_try_phrase_replacement()`: when a sentence's *only* difficulty is
+idiom-locked (nothing else flagged — word-level substitution is
+trivially impossible), it reuses `rephrase.generate_candidates()`
+unchanged, scoped to a local window (span ± 5 tokens) instead of the
+whole sentence, splices the result back into the full sentence, and
+verifies the **resulting full sentence** — never the window in
+isolation — with the exact same three checks `_try_escalation` already
+uses (SBERT similarity vs. the original sentence, negation consistency,
+a full-sentence phoneme/blocked-word leak scan) plus the R20 candidate-
+collision check. Falls back to R19's exact prior behavior (leave the
+span alone, report the difficulty as honestly unresolved) if nothing
+clears every gate. Deliberately scoped to one span per sentence and
+only the "idiom-only" case — the "mixed" case (an idiom span *and* a
+separately-substitutable word in the same sentence, e.g. the pilot's
+pair_15/pair_28) is untouched, since every real observed case is one of
+these two shapes and substitution already handles the mixed case
+correctly. `app.py` got two small changes: `_apply_change_choices`
+treats the new `source: "phrase"` as sentence-scoped for keep/revert
+(same as `"restructuring"`), and a distinct CSS tag for the label.
+`reformulate.feedback_targets()` was extended to attribute phrase
+changes to their declared entries (via a new `matched_words` field on
+the change dict, since `original` for this source is the whole
+sentence, not one word).
+
+No new dependency. No change to `rephrase.py`, `engine.py`, or
+`grammar.py`.
+
+### 16.2 Regression tests
+
+`tests/semantic_test.py` gained `IdiomSpansTest` (4 tests: span
+boundaries for both idiom-phrase types, no false spans, and a direct
+regression check that `idiom_protected_positions()`'s refactor is
+behavior-preserving). `tests/reformulate_test.py` gained `PhraseTierTest`
+(4 tests, using the same `mock.patch.object(rf.rephrase,
+"generate_candidates", ...)` determinism discipline `EscalationTest`
+already established — live T5 is documented elsewhere in this project
+as non-deterministic across process launches, so these test
+`reformulate.py`'s own trigger/splice/verify logic, not what T5 happens
+to produce): a mocked-good candidate lands as `source="phrase"` and
+resolves the difficulty; a mocked candidate that changes the window but
+still literally contains the flagged word is correctly rejected by the
+full-sentence leak scan; `feedback_targets()` attributes a phrase
+change correctly; and one test using **live** T5 on a longer sentence
+(where the local window is a true subset, not the whole sentence) to
+confirm splicing preserves text well outside the window verbatim,
+written to pass whether or not T5 finds a usable candidate on that run
+(non-determinism disclosed, not hidden).
+
+The two pre-existing R19 tests
+(`test_hows_it_going_is_left_completely_unchanged`,
+`test_drives_me_crazy_is_left_completely_unchanged`) were updated to
+mock `generate_candidates` explicitly — before this tier existed, these
+sentences never reached a live T5 call at all; now they do, and leaving
+them unmocked would have made previously-deterministic tests flaky. The
+third pre-existing R19 test (the mixed-case "right now" test) needed no
+change and still passes unmodified — a live confirmation that the
+mixed-case path is genuinely untouched, not just asserted to be.
+
+Full suite: `tests/reformulate_test.py` 27/27 (was 23), `tests/semantic_test.py`
+16/16 (was 12), `tests/app_test.py` all scenarios, `tests/difficulty_profile_test.py`
+50/50, `tests/roadmap_test.py` 3/3, `tests/rephrase_test.py` 8/8 — all pass.
+
+### 16.3 Collateral-change check — isolated precisely, not assumed clean
+
+**[FINDING] `tests/smoke.py` is byte-identical against both committed
+baselines** — expected and not a meaningful confirmation on its own:
+`smoke.py` never imports `reformulate.py` (only `semantic.py`/`engine.py`/
+`grammar.py::SentenceRewriter`), so it was never going to exercise the
+new code. Its value here is confirming the `semantic.py` refactor
+(`idiom_spans()`) didn't disturb anything `SentenceRewriter`/`engine.py`
+depend on.
+
+**[FINDING] Stage 6's 18-case corpus and the 210-case ordinary-text
+corpus are both byte-identical** to their pre-phrase-tier committed
+CSVs (`eval/reformulation_eval.py`, `eval/reformulation_escalation_rate.py`)
+— zero collateral change, consistent with both corpora containing zero
+overlap with the curated idiom list (already confirmed by direct grep
+in earlier stages, not re-assumed here).
+
+**[FINDING, isolated with a controlled before/after, not inferred]**
+Re-running `eval/idiom_guard_recheck.py` against the frozen pilot
+corpus initially showed 13/30 pairs differing from the original,
+pre-R19 baseline — but 11 of those 13 were already-known R20 changes
+(documented in §11.5), unrelated to this work; the diagnostic script's
+own target list was written for R19 and never updated for R20's
+changes, so it mislabeled them as "unexpected." To isolate the phrase
+tier's actual, incremental effect, `git stash` was used to get a true
+pre-phrase-tier baseline (all of R19–R24's code, none of this session's
+changes) and diffed directly against the post-phrase-tier run — **the
+phrase tier changed exactly one pair**: pair_01 (`gs_hows_it_going`),
+from `could_not_safely_reformulate` (idiom left alone, difficulty
+honestly unresolved) to `reformulated` — `"Hey, how's it today?"`,
+SBERT 0.9522, difficulty resolved. Every other pair, including pair_11
+(`gs_driving_crazy`, the other genuine idiom-only target), was
+byte-identical between the two runs.
+
+**[FINDING, disclosed honestly, not smoothed over]** pair_11 did not
+change on this run — the phrase tier attempted it (live T5) and found
+no candidate clearing every gate, so it correctly fell back to R19's
+exact prior behavior (idiom left alone, difficulty honestly reported as
+unresolved) rather than shipping something worse. Given this project's
+repeatedly-confirmed T5 non-determinism across process launches, a
+different run could plausibly find a usable candidate for this specific
+case — this result characterizes what happened on this run, not a
+guarantee of what will happen on every run.
+
+**[LIMITATION, stated plainly rather than oversold]** pair_01's actual
+output, `"Hey, how's it today?"`, is grammatically a little thin — the
+elliptical "how's it [X]" construction reads more naturally with a verb
+("going," "doing") than bare. It passed every automated gate (SBERT
+similarity, negation consistency, no leak) despite this, which is
+exactly the class of gap this project has repeatedly found in its own
+automated verification (§9.7, §15) — a human reader would likely notice
+something a similarity score doesn't. Not a reason to distrust the
+result (SBERT 0.9522 is a genuine, defensible similarity score, and the
+sentence is understandable), but not grounds for treating "passed
+verification" as "confirmed high quality" either — consistent with how
+every other automated result in this document has been read.
+
+### 16.4 What this does and doesn't establish
+
+**[RECOMMENDATION]** The phrase tier works as designed: it recovers a
+real case R19 could only leave unaddressed, changes nothing else in
+three separate, byte-identical-confirmed corpora, and falls back safely
+(not silently, not destructively) when it can't find anything good.
+n=1 successful resolution on the frozen pilot is a small number in
+isolation, but it's the *entire* previously-unaddressed target
+population for this specific pilot (only pair_01 and pair_11 were ever
+idiom-only cases in this 30-item set) — there wasn't a larger
+population available to resolve more of within this corpus.
+
+**[LIMITATION]** This does not re-establish `VALIDATION.md` §9's
+category-level pilot numbers (`global_sound` 4.11/3.78/+0.83, etc.) —
+that would need a new pilot round with fresh human ratings on the
+corrected output, not run here. It also does not resolve the underlying
+grammaticality gap the pair_01 output surfaced (factor 2.3) — a
+separate, still-open item in `REFORMULATION_PROBLEM_MAP.md`.
+
+**Not yet done:** a real re-pilot with human ratings on phrase-tier
+output; a review of whether pair_01-style output quality is common
+enough across a larger sample to warrant a grammaticality check on
+phrase-tier candidates specifically (§5 item 3's own pattern — a
+second signal reported alongside, not gating).
+
+## 17. R26 — Option E: re-examining multi-difficulty interaction after the phrase tier (executed 2026-08-18)
+
+Per `REFORMULATION_PROBLEM_MAP.md` §5 item 7 and the approved
+C → A → E sequence: does the phrase-level tier (R25, §16) explain
+factor 2.7's problem — the pilot's worst-scoring category,
+`multi_difficulty` (n=3, meaning=2.00/5), on the hypothesis that
+compounding risk across two substitutions is often really the same
+idiom-blindness problem (§2.4), just doubled? Pure re-analysis of data
+already gathered while verifying R25 — no new code, no new corpus, no
+new run beyond one direct trace of each pair's flagged/idiom-protected
+positions.
+
+### 17.1 Method
+
+The frozen pilot's three `multi_difficulty` pairs (pair_28
+`md_running_traffic`, pair_29 `md_push_meeting_coffee`, pair_30
+`md_print_report_coffee`) were already covered by R25's `git stash`
+before/after comparison (§16.3) — re-read directly rather than re-run.
+To understand *why* each did or didn't change, each pair's exact
+flagged (substitutable) positions and idiom-protected positions were
+traced directly via `reformulate._flagged_positions()`/
+`_idiom_protected_matches()`/`semantic.idiom_spans()` against its real
+profile spec — not inferred from the output text alone.
+
+### 17.2 Result
+
+**[FINDING] None of the three `multi_difficulty` pairs changed —
+zero regressions, but also zero recovery.** All three are byte-
+identical between the pre- and post-phrase-tier runs, confirmed
+directly in R25's own diff (§16.3), not re-derived here.
+
+**[FINDING, the actual reason, traced directly rather than assumed]**
+Only **one of the three** cases involves an idiom span at all:
+
+| Pair | Substitutable (flagged) | Idiom-protected | Idiom span present |
+|---|---|---|---|
+| pair_28 (`running... right now`) | `running` | `right` (inside "right now") | Yes |
+| pair_29 (`push the meeting and grab coffee`) | `push`, `grab` | — | **No** |
+| pair_30 (`print the report and grab coffee`) | `print`, `grab` | — | **No** |
+
+pair_28 is a **mixed case** — one substitutable word plus one
+idiom-locked word in the same sentence — which R25 deliberately
+excludes from the phrase tier by design (§16.1: the tier only fires
+when a sentence's *sole* difficulty is idiom-locked; substitution
+already handles pair_28's `running` correctly on its own, exactly as it
+did before R25 existed). It was never eligible, not missed.
+
+pair_29 and pair_30 have **no idiom span at all** — `push`/`grab` and
+`print`/`grab` are two independent, unrelated substitutable words with
+no fixed expression connecting them. The phrase tier has nothing to
+detect here; its absence from this run isn't a gap, it's simply not
+the right tool for this shape of case.
+
+### 17.3 Does the phrase tier substantially explain factor 2.7?
+
+**[RECOMMENDATION] No — not substantially, and the original hypothesis
+in `REFORMULATION_PROBLEM_MAP.md` §2.7 needs correcting, not just
+confirming.** §2.7's own text speculated that multi-difficulty
+compounding "may already be explained by §2.4 [idiomaticity] rather
+than needing its own separate fix." This re-examination finds the
+opposite in this specific 3-case sample: **2 of 3 cases have nothing to
+do with idiom-breaking at all.** Their poor pilot scores trace to a
+different, already-separately-documented mechanism — `VALIDATION.md`
+§9.9's "generic overused replacement" pattern (`push`→`force`/`urge`,
+`grab`→`catch`/`take`/`get`): when two substitutions land in one short
+sentence, each independently has some chance of picking a generic,
+loosely-fitting word, and with two chances instead of one, the sentence
+is more likely to end up with at least one weak pick. That's a
+candidate-ranking-quality problem, not an idiom-detection problem, and
+the phrase tier — built specifically for idiom spans — was never going
+to touch it.
+
+**[LIMITATION, restated because it still applies]** n=3 remains too
+small to generalize beyond "in this specific pilot sample" — a
+different or larger sample of multi-difficulty cases could show a
+different mix of idiom-related vs. non-idiom-related compounding.
+What this pass adds beyond the original n=3 caveat is a **mechanism**,
+traced directly rather than inferred: even within this same n=3, the
+compounding isn't uniformly one thing, and assuming it was mostly
+idiom-blindness would have been wrong for 2 of the 3 cases.
+
+**[RECOMMENDATION, not decided here]** Factor 2.7 stays open as its own
+problem, not closed out by R25. If it's picked up again, the evidence
+here points toward the candidate-ranking/frequency-bias pattern
+(§9.9) as the more relevant lever for the non-idiom cases, rather than
+another idiom-detection mechanism — but this is a direction, not a
+scoped plan, and no further investigation was started here per explicit
+scope.
+
+### 17.4 Regressions
+
+None. All three pairs byte-identical pre/post phrase tier; this section
+adds explanation, not new evidence of change.

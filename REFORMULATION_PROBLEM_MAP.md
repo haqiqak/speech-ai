@@ -133,6 +133,18 @@ preposition/adjective-slot in the sentence it lands in — nothing in the
 pipeline catches this class of error; it was only caught because a human
 happened to notice and comment.
 
+**Update, 2026-08-18 — a fourth instance, this time from the new
+phrase-level tier, not substitution.** `VALIDATION.md` §16.3: the
+phrase tier's one recovered pilot case ("how's it going" → "Hey, how's
+it today?") is grammatically thin — passed SBERT similarity, negation
+consistency, and the leak scan cleanly, and still reads as missing a
+word. None of the existing gates check grammaticality at the phrase or
+sentence level; every instance found of this factor so far (pair_04,
+pair_24, now pair_01) was caught by a human noticing, never by the
+pipeline itself. Still unaddressed, still open — this factor keeps
+accumulating separate, real evidence across every tier that's been
+built (substitution, and now phrase replacement).
+
 ### 2.4 Naturalness and idiomaticity
 
 **Current state [FINDING, the single best-evidenced problem in this
@@ -158,6 +170,18 @@ assumed). This closes the specific evidenced cases, not the general
 class — the guard is a curated list, not a general MWE detector (§3.1's
 `[GAP]`: no off-the-shelf general detector was found either), so a novel
 idiom not on the list will still break exactly as before. Still open.
+
+**Update, 2026-08-18 — item 4 of §5 implemented and verified: the
+"protect and leave alone" gap this factor's own update above named is
+now partially closed.** A phrase-level replacement tier
+(`VALIDATION.md` §16) attempts a local, verified replacement for an
+idiom-only difficulty before giving up — recovered the frozen pilot's
+pair_01 case exactly. Still not a general fix (same curated-list scope
+as item 1 — a novel idiom not on the list is still just left alone, now
+via the phrase tier's fallback path rather than R19's original one) and
+the recovered output itself surfaced a new, smaller finding: it can
+pass every automated gate while still being grammatically thin (factor
+2.3) — disclosed, not treated as solved.
 
 ### 2.5 Whether the reformulation actually removes the speaker's declared difficulty
 
@@ -266,6 +290,26 @@ worth recording here: making candidate ranking *more* semantically
 precise (§2.6's fix) made this collision *more* likely, not less — a
 real, non-obvious interaction between fixing one factor and surfacing
 another. `VALIDATION.md` §11.2/§11.3 has the full account.
+
+**Update, 2026-08-18 — R26 (§5 item 7): the "compounding is mostly
+idiom-blindness" hypothesis above is corrected, not confirmed, by
+direct evidence.** Traced each of the pilot's three `multi_difficulty`
+cases against the now-live phrase tier (R25) directly, not inferred:
+only 1 of 3 (pair_28) involves an idiom span at all, and it's a *mixed*
+case the phrase tier correctly doesn't touch by design (substitution
+already resolves its non-idiom word on its own). The other 2 of 3
+(pair_29, pair_30) have **no idiom span whatsoever** — two ordinary
+substitutable words, no fixed expression connecting them. Their poor
+pilot scores trace to a *different* mechanism this document already
+named separately: the "generic overused replacement" pattern
+(`VALIDATION.md` §9.9 — `push`→`force`/`urge`, `grab`→`catch`/`take`/
+`get`), where two independent substitution slots each have their own
+chance of a weak, loosely-fitting pick, and two chances compound that
+risk. **This factor is not substantially explained by §2.4/idiom-
+blindness** — at least not in this n=3 sample — and stays open as its
+own problem, with the candidate-ranking/frequency-bias pattern now the
+better-evidenced lever if it's picked up again, not another idiom-
+detection mechanism. Full record: `VALIDATION.md` §17.
 
 ### 2.8 Sentence/phrase restructuring when substitution isn't enough
 
@@ -813,19 +857,34 @@ itself supported.
    (an optimized inference runtime) is a new-dependency decision, not
    a model choice — see item 5's blocked status for the same category
    of open question.
-4. **[NOT STARTED — item 3's gate was not met] Phrase-level replacement
-   tier** (§2.4, §3.8) — a third granularity between word-substitution
-   and whole-sentence restructuring: detect a flagged word inside a
-   fixed expression (R19's existing curated list is a ready, zero-cost
-   trigger — no new detection machinery needed to start), replace the
-   *whole phrase* with an equivalent, easier phrasing, verify against
-   the resulting full sentence (reusing the exact SBERT-on-full-result
-   pattern §2.8 already uses, per §3.8's own evaluation-methodology
-   finding). Real, current prior art (PARSEME 2.0's MWE-2026 shared task
-   literally studies this operation) — still a defensible idea on its
-   own merits, but the plan's explicit condition for starting it now
-   (item 3 showing a meaningful improvement) was not met, so it stays
-   queued rather than started opportunistically.
+4. **[DONE, 2026-08-18 — `VALIDATION.md` §16] Phrase-level replacement
+   tier** (§2.4, §3.8) — the third granularity between word-substitution
+   and whole-sentence restructuring, built after the user's own
+   reassessment approved it directly (C → A → E → reassess) rather than
+   waiting on item 3's original gate. Implemented exactly as designed:
+   R19's curated idiom list as the trigger (`semantic.idiom_spans()`,
+   new), `rephrase.generate_candidates()` reused unchanged but scoped to
+   a local window (span ± 5 tokens) instead of the whole sentence, the
+   result spliced back into the full sentence and verified there — never
+   the window in isolation — with the same three checks the sentence-
+   restructuring tier already uses plus the R20 candidate-collision
+   check. Scoped to the "idiom-only" case only (nothing else flagged in
+   the sentence); the "mixed" case (idiom span + a separately-
+   substitutable word, e.g. pilot pair_15/pair_28) is untouched — every
+   real observed case is one of these two shapes, and substitution
+   already handles the mixed case correctly. Falls back to R19's exact
+   prior behavior when nothing clears every gate.
+   **Verified with an isolated, controlled before/after** (`git stash`
+   to get a true pre-phrase-tier baseline, not inferred from a stale
+   target list): changed exactly one pair in the frozen 30-item pilot
+   corpus (pair_01, `gs_hows_it_going` — resolved, SBERT 0.9522),
+   byte-identical everywhere else, including Stage 6's 18-case corpus
+   and the 210-case ordinary-text corpus (zero collateral change, both
+   confirmed, not assumed from zero phrase overlap alone). One honest
+   limitation surfaced, not hidden: pair_01's actual output ("Hey, how's
+   it today?") is grammatically a little thin despite passing every
+   automated gate — the same class of proxy-metric blind spot §9.7/§15
+   already found, now observed a third time on a different mechanism.
 5. **[BLOCKED, 2026-08-17 — `VALIDATION.md` §13 — feasibility rating
    corrected from Small] Upgrade T5 escalation to HF constrained beam
    search** (§2.8, §3.3) — attempted, not completed. `transformers==5.10.2`
@@ -870,10 +929,17 @@ itself supported.
    worth doing alongside this — both are evaluation-infrastructure
    improvements, not engine changes. **Actual engine wiring not yet
    done** — this was the validation step only, per explicit scope.
-7. **Re-examine multi-difficulty interaction after (1)** (§2.7) — n=3 in
-   the current pilot is too small to act on alone; re-evaluate specifically
-   once the idiom guard exists, since much of the compounding risk may
-   already be explained by §2.4 rather than needing its own separate fix.
+7. **[DONE, 2026-08-18 — `VALIDATION.md` §17 — result: not
+   substantially explained] Re-examine multi-difficulty interaction
+   after (1)** (§2.7) — re-evaluated directly against the live phrase
+   tier (R25), as planned. Result: only 1 of the pilot's 3
+   `multi_difficulty` cases even involves an idiom span, and that one is
+   a mixed case R25 correctly excludes by design; the other 2 have no
+   idiom span at all and trace to the separate "generic overused
+   replacement" pattern (§9.9) instead. The original hypothesis here —
+   compounding mostly explained by §2.4 — does not hold in this sample.
+   Stays open as its own problem; n=3 still too small to generalize
+   beyond this specific finding, and no further work was started on it.
 8. **Input-ambiguity detection + clarification flow** (§2.1, §3.4) — real
    precedent exists for the abstain/ask *pattern*, but this is the largest
    item on this list: it needs a new UX interaction (a clarification
@@ -1015,3 +1081,24 @@ prioritized map for a future, explicitly-approved implementation cycle.
   updated. Scope: proceed as a reported-alongside signal, not a
   replacement for SBERT or a substitute for item 4. Engine wiring not
   yet built — validation only. Full record: `VALIDATION.md` §15.
+- **2026-08-18, third** — §5 item 4 (phrase-level replacement tier)
+  implemented, per the user's own C → A → E → reassess sequencing
+  rather than item 3's original gate. `semantic.py` gained
+  `idiom_spans()`; `reformulate.py` gained `_try_phrase_replacement()`
+  (local-window T5 generation, full-sentence splice and verification,
+  safe fallback). Verified with an isolated, controlled before/after
+  (`git stash`, not inference from a stale target list): recovered
+  exactly one frozen pilot case (pair_01), byte-identical everywhere
+  else across three separate corpora. One honest limitation surfaced:
+  the recovered output is grammatically thin despite passing every
+  automated gate — folded into §2.3 and §2.4's running record, not
+  treated as a clean win. Full record: `VALIDATION.md` §16.
+- **2026-08-18, fourth** — R26 (§5 item 7, Option E): re-examined the
+  pilot's `multi_difficulty` category against the live phrase tier.
+  Pure re-analysis, no new code. Result corrects §2.7's own prior
+  hypothesis rather than confirming it: only 1 of 3 cases involves an
+  idiom span (a mixed case R25 correctly excludes by design); the other
+  2 have no idiom span at all and trace to a separate, already-named
+  pattern (generic overused replacement words). Factor 2.7 stays open
+  as its own problem. §2.7 and §5 item 7 updated. Full record:
+  `VALIDATION.md` §17.

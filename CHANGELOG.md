@@ -6,6 +6,27 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-18** docs: R26 — re-examined the pilot's `multi_difficulty`
+  category against the live phrase tier (Option E). Pure analysis, no
+  new code. Corrects §2.7's own prior hypothesis: only 1 of 3 cases
+  involves an idiom span (a mixed case R25 correctly excludes by
+  design); the other 2 trace to a separate, already-named pattern
+  (generic overused replacement words), not idiom-blindness. Factor 2.7
+  stays open as its own problem. → `DECISION_LOG.md` 2026-08-18-D;
+  `VALIDATION.md` §17; `ROADMAP.md` R26.
+- **2026-08-18** feat: R25 — phrase-level replacement tier (Option A of
+  the approved C → A → E sequence). New `semantic.idiom_spans()` and
+  `reformulate._try_phrase_replacement()`: when a sentence's only
+  difficulty is idiom-locked, tries a local-window T5 replacement
+  (reusing `rephrase.generate_candidates` unchanged) instead of only
+  leaving it alone, spliced into and verified against the full
+  sentence. Falls back to R19's exact prior behavior when nothing
+  clears every gate. Verified with an isolated `git stash` before/after
+  against the frozen pilot corpus: recovered exactly one case
+  (pair_01), byte-identical everywhere else across three corpora. One
+  honest limitation surfaced: the recovered output is grammatically
+  thin despite passing every automated gate. 8 new regression tests. →
+  `DECISION_LOG.md` 2026-08-18-C; `VALIDATION.md` §16; `ROADMAP.md` R25.
 - **2026-08-18** test: R24 — validated MeaningBERT as a candidate
   second semantic-preservation signal, scoped tightly (14 already-
   recorded pairs, one small model, no long-running sweep) per direct

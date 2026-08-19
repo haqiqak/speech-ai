@@ -835,10 +835,81 @@ upgraded to "the fix" by this result. Its real value is flagging
 disagreement between the two signals, not replacing either one. The
 case it missed is concrete evidence (not just an architectural
 argument) that R24 doesn't substitute for item 4's structural detection
-approach (not yet started; will get its own R-number when built) —
-reinforces rather than delays that item.
+approach (R25, below) — reinforces rather than delays that item.
 **Not yet done:** the actual engine wiring (`reformulate.py`/`app.py`)
 — this entry covers the validation step only, per explicit scope.
+
+### R25. Phrase-level replacement tier — **DONE, 2026-08-18**
+**Linked finding:** Option A of the user's own approved C → A → E →
+reassess sequence, built directly rather than waiting on item 3's
+original "meaningful improvement" gate — the user's explicit
+reassessment superseded that gate. `REFORMULATION_PROBLEM_MAP.md` §5
+item 4; §2.4's single best-evidenced pilot problem.
+**What was done:** `semantic.py` gained `idiom_spans()` (the actual
+span boundaries R19's curated idiom list matches, not just a flattened
+position set — `idiom_protected_positions()` refactored to derive from
+it, behavior-preserving). `reformulate.py` gained
+`_try_phrase_replacement()`: fires only when a sentence's *only*
+difficulty is idiom-locked (nothing else flagged); reuses
+`rephrase.generate_candidates()` unchanged, scoped to a local window
+(span ± 5 tokens) rather than the whole sentence; splices the result
+into the full sentence and verifies *that* — never the window alone —
+with the same checks the sentence-restructuring tier already uses, plus
+the R20 candidate-collision check; falls back to R19's exact prior
+behavior when nothing clears every gate. `app.py` got two small,
+consistent changes for the new `source: "phrase"` (keep/revert, a CSS
+tag); `feedback_targets()` extended to attribute phrase changes
+correctly. No new dependency.
+**Verification, isolated precisely rather than assumed:** a `git
+stash`-based before/after (not inference from a stale target list)
+against the frozen 30-item pilot corpus found the tier changed exactly
+**one** pair — pair_01 (`gs_hows_it_going`), from left-alone-and-
+unresolved to resolved (SBERT 0.9522) — with every other pair,
+including Stage 6's 18-case corpus and the 210-case ordinary-text
+corpus, byte-identical. Full regression suite (27 `reformulate_test.py`,
+16 `semantic_test.py`, plus `app_test`/`difficulty_profile_test`/
+`roadmap_test`/`rephrase_test`) all pass, including 8 new tests written
+with the same T5-determinism-via-mocking discipline `EscalationTest`
+already established. Full record: `VALIDATION.md` §16; `DECISION_LOG.md`
+2026-08-18-C.
+**Labeled as:** Done, with one honest limitation surfaced rather than
+hidden — the recovered case's actual output ("Hey, how's it today?")
+is grammatically thin despite passing every automated gate, the same
+class of proxy-metric blind spot already found on SBERT (§9.7) and
+MeaningBERT (R24) — a third independent confirmation that "passed
+verification" is not the same claim as "confirmed high quality."
+Doesn't re-establish the pilot's category-level numbers (would need a
+new human-rated pilot round, not run here) and doesn't fix factor 2.3
+(grammaticality), which now has its own accumulating evidence across
+three separate mechanisms (substitution, and now phrase replacement).
+
+### R26. Re-examine multi-difficulty interaction after the phrase tier (Option E) — **DONE, 2026-08-18, hypothesis corrected**
+**Linked finding:** Option E of the approved C → A → E sequence —
+`REFORMULATION_PROBLEM_MAP.md` §5 item 7, testing §2.7's own prior
+hypothesis that multi-difficulty compounding "may already be explained
+by §2.4 [idiomaticity] rather than needing its own separate fix," now
+that R25's phrase tier exists to test it against.
+**What was done:** pure re-analysis of data already gathered while
+verifying R25 — no new code, no new corpus, no new experiment. Each of
+the pilot's three `multi_difficulty` pairs was traced directly (not
+inferred from output text) against `reformulate._flagged_positions()`/
+`_idiom_protected_matches()`/`semantic.idiom_spans()` with its real
+profile spec, to see exactly why each did or didn't change.
+**Result:** none of the three changed (zero regressions). Why: only 1
+of 3 (pair_28) involves an idiom span at all, and it's a *mixed* case
+R25 correctly excludes by design (one substitutable word, one
+idiom-locked word — substitution already resolves the former on its
+own). The other 2 of 3 (pair_29, pair_30) have **no idiom span
+whatsoever** — two ordinary, unrelated substitutable words — and trace
+instead to the already-documented "generic overused replacement"
+pattern (`VALIDATION.md` §9.9). Full record: `VALIDATION.md` §17.
+**Labeled as:** The original §2.7 hypothesis is corrected, not
+confirmed — multi-difficulty compounding is **not** substantially
+explained by idiom-blindness in this sample, 2 of 3 cases trace to a
+different mechanism entirely. Factor 2.7 stays open as its own problem;
+n=3 remains too small to generalize beyond this specific finding, and
+per explicit scope, no further investigation (larger sample, a fix for
+the frequency-bias pattern, or anything else) was started here.
 
 ---
 
