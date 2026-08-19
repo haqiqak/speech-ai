@@ -71,6 +71,7 @@ class ReformulateSettings:
     escalation_word_count: int = 2      # >this many flagged content words -> escalate (§24.D)
     degenerate_fraction: float = 0.6    # >this fraction of content words flagged -> escalate (§24.F)
     t5_candidates: int = 5
+    phrase_window_radius: int = 5       # tokens of context on each side of an idiom span, for the phrase tier (§5 item 4)
 
 
 _ABBREVS = {
@@ -191,7 +192,13 @@ def _idiom_protected_matches(tokens: list[str], tags: list[tuple], profile: Diff
     reported in reformulate()'s `skipped` list, rather than silently
     treated as if the difficulty were never there. See
     semantic.idiom_protected_positions()'s docstring for why this needs
-    its own check instead of reusing protected_positions()."""
+    its own check instead of reusing protected_positions().
+
+    Entries carry `tag`/`word_entry`/`sound_hit` (same shape as
+    _flagged_positions()'s entries, not just position/word) so
+    _try_phrase_replacement() can reuse _trigger_reasons()/
+    feedback_targets() for attribution instead of inventing a parallel
+    scheme (REFORMULATION_PROBLEM_MAP.md SS5 item 4)."""
     idiom_protected = sem.idiom_protected_positions(tokens)
     if not idiom_protected:
         return []
@@ -203,9 +210,29 @@ def _idiom_protected_matches(tokens: list[str], tags: list[tuple], profile: Diff
         lower = word.lower()
         if not re.match(r"[a-z]", lower):
             continue
-        if profile.find_word(lower) is not None or ph.matches_any(word, sound_patterns):
-            matches.append({"position": i, "word": word})
+        word_entry = profile.find_word(lower)
+        sound_hit = ph.matches_any(word, sound_patterns)
+        if word_entry is not None or sound_hit:
+            matches.append({
+                "position": i, "word": word, "tag": tag,
+                "word_entry": word_entry, "sound_hit": sound_hit,
+            })
     return matches
+
+
+def _idiom_skip_entries(matches: list[dict], exclude_positions: set[int] | None = None) -> list[dict]:
+    """Build `skipped` entries for idiom-protected matches — factored out
+    since this now fires from three places (phrase-tier failure, phrase-
+    tier partial success leaving other spans untouched, and the
+    unchanged mixed-case path)."""
+    exclude = exclude_positions or set()
+    return [
+        {
+            "word": m["word"], "position": m["position"],
+            "reason": "part of a fixed expression — left unchanged to avoid breaking it",
+        }
+        for m in matches if m["position"] not in exclude
+    ]
 
 
 def _substitutable_content_word_count(tags: list[tuple], phrase_protected: set) -> int:
@@ -368,6 +395,101 @@ def _try_escalation(
     }
 
 
+def _try_phrase_replacement(
+    sentence: str, tokens: list[str], span: tuple[int, int], span_matches: list[dict],
+    profile: DifficultyProfile, settings: ReformulateSettings,
+) -> dict | None:
+    """Phrase-level replacement tier (REFORMULATION_PROBLEM_MAP.md §3.8/
+    §5 item 4) — the middle ground between "protect the idiom and leave
+    it alone" (§2.4/R19) and "restructure the whole sentence" (§2.8):
+    when a flagged word sits inside a fixed expression, try replacing
+    just the expression (plus a little local context) with an
+    equivalent, easier phrase, before giving up on the sentence.
+
+    Reuses rephrase.generate_candidates() unchanged — same model, same
+    `bad_words_ids` blocking — but scoped to a local window around the
+    span (settings.phrase_window_radius on each side) rather than the
+    whole sentence, per §3.8's own recommendation (the checkpoint in use
+    is fine-tuned for whole-sentence paraphrase, not sentinel-infilling,
+    so a real span-only splice would need a different model; whole-
+    window replacement reuses proven machinery instead). Every candidate
+    is verified against the FULL resulting sentence — never the window
+    in isolation — with the exact same three checks _try_escalation
+    already uses (SBERT similarity vs. the original *sentence*,
+    negation consistency, a full-sentence phoneme/blocked-word leak
+    scan), plus the R20 candidate-collision check (§2.7). Returns None
+    if nothing clears every gate — the caller leaves the span alone,
+    identical to R19's pre-existing behavior."""
+    start, end = span
+    blocked = {m["word"].lower() for m in span_matches}
+    min_semantic = settings.sbert_threshold if settings.sbert_threshold is not None else sem.MIN_SEMANTIC
+
+    radius = settings.phrase_window_radius
+    window_start = max(0, start - radius)
+    window_end = min(len(tokens), end + radius)
+    window_text = _detokenize(tokens[window_start:window_end])
+
+    candidates = rephrase.generate_candidates(window_text, k=settings.t5_candidates, blocked_words=blocked)
+
+    best = None
+    for cand in candidates:
+        if cand.strip().lower() == window_text.strip().lower():
+            continue  # T5 unavailable or returned the window unchanged -- not a real alternative
+        try:
+            replacement_tokens = word_tokenize(cand)
+        except Exception:
+            replacement_tokens = re.findall(r"[A-Za-z][A-Za-z'-]*|[.,!?;:]", cand)
+        candidate_tokens = tokens[:window_start] + replacement_tokens + tokens[window_end:]
+        candidate_sentence = _detokenize(candidate_tokens)
+
+        sim = sem.semantic_similarity(candidate_sentence, sentence)
+        # Matches _try_escalation's own documented fallback: SBERT
+        # unavailable -> don't gate on it, don't rank on it.
+        if sim is not None and sim < min_semantic:
+            continue
+        if not sem.negation_consistent(sentence, candidate_sentence):
+            continue
+        content_words = re.findall(r"[A-Za-z][A-Za-z'-]*", candidate_sentence)
+        if any(ph.matches_any(w, profile.sound_values()) or w.lower() in blocked for w in content_words):
+            continue
+        if any(profile.find_word(w.lower()) is not None for w in content_words):
+            continue  # never reintroduce another declared word (§2.7/R20)
+        rank_score = sim if sim is not None else -1.0
+        if best is None or rank_score > best["rank_score"]:
+            best = {"tokens": candidate_tokens, "text": candidate_sentence, "sim": sim, "rank_score": rank_score}
+
+    if best is None:
+        return None
+
+    triggered: list[str] = []
+    for m in span_matches:
+        for r in _trigger_reasons(m):
+            if r not in triggered:
+                triggered.append(r)
+
+    return {
+        "new_tokens": best["tokens"],
+        "change": {
+            "sentence_index": None,
+            "position": start,
+            "span_text": _detokenize(tokens[start:end]),
+            "original": sentence,
+            "replacement": best["text"],
+            "source": "phrase",
+            "triggered_by": triggered,
+            "matched_words": [m["word"] for m in span_matches],
+            "verification": {
+                "antonym_check": "n/a_phrase_level",
+                "sbert_sim": round(best["sim"], 4) if best["sim"] is not None else None,
+                "nli": "not_run",
+                "phoneme_ok": True,
+                "difficulty_before": round(ph.sentence_difficulty(re.findall(r"[A-Za-z]+", sentence)), 4),
+                "difficulty_after": round(ph.sentence_difficulty(re.findall(r"[A-Za-z]+", best["text"])), 4),
+            },
+        },
+    }
+
+
 def _flagged_word_count(text: str, profile: DifficultyProfile) -> int:
     """The 'recovery rate' check (§2.2/§24) — how many content words in
     *text* the profile would flag right now. Used both to decide whether a
@@ -403,19 +525,56 @@ def reformulate(text: str, profile: DifficultyProfile, settings: ReformulateSett
         flagged = _flagged_positions(tokens, tags, profile)
         idiom_matches = _idiom_protected_matches(tokens, tags, profile)
 
-        if idiom_matches:
-            any_flagged = True
-            for m in idiom_matches:
-                all_skipped.append({
-                    "word": m["word"], "position": m["position"],
-                    "reason": "part of a fixed expression — left unchanged to avoid breaking it",
-                })
-
-        if not flagged:
+        if not flagged and not idiom_matches:
             rebuilt.append(sentence)
             continue
 
         any_flagged = True
+
+        if not flagged and idiom_matches:
+            # The ONLY difficulty in this sentence is idiom-locked --
+            # word-level substitution is trivially impossible (nothing
+            # substitutable). Try a phrase-level replacement before
+            # giving up (§3.8/§5 item 4) instead of jumping straight to
+            # either "leave it alone" (R19's prior behavior) or a
+            # whole-sentence restructure. One span per sentence -- the
+            # common, observed case (VALIDATION.md §9's pilot never saw
+            # two idiom spans in one sentence); any additional match
+            # falls back to the existing skip behavior rather than
+            # chaining replacements against shifting token indices.
+            spans = sem.idiom_spans(tokens)
+            phrase_result = None
+            handled_span = None
+            if spans:
+                span = spans[0]
+                span_matches = [m for m in idiom_matches if span[0] <= m["position"] < span[1]]
+                if span_matches:
+                    phrase_result = _try_phrase_replacement(
+                        sentence, tokens, span, span_matches, profile, settings
+                    )
+                    if phrase_result is not None:
+                        handled_span = span
+
+            if phrase_result is not None:
+                phrase_result["change"]["sentence_index"] = sid
+                all_changes.append(phrase_result["change"])
+                rebuilt.append(_detokenize(phrase_result["new_tokens"]))
+                handled_positions = set(range(handled_span[0], handled_span[1]))
+                all_skipped.extend(_idiom_skip_entries(idiom_matches, exclude_positions=handled_positions))
+            else:
+                all_skipped.extend(_idiom_skip_entries(idiom_matches))
+                rebuilt.append(sentence)  # leave unchanged -- never ship a bad guess
+            continue
+
+        # Mixed case (flagged is non-empty): unchanged from before this
+        # tier existed -- idiom-protected matches (if any) are still
+        # just reported as skipped. Phrase-tier is not attempted here;
+        # no observed real-world case needs it (see §5 item 4), and
+        # substitution below already handles the substitutable part of
+        # the sentence correctly on its own.
+        if idiom_matches:
+            all_skipped.extend(_idiom_skip_entries(idiom_matches))
+
         content_count = _substitutable_content_word_count(tags, phrase_protected)
         flagged_fraction = len(flagged) / content_count
         pre_escalate = (
@@ -502,27 +661,35 @@ def feedback_targets(change: dict, profile: DifficultyProfile) -> list:
     mutate the profile or affect reformulate()'s own behavior in any way;
     callers (app.py) decide what to do with the returned entries.
 
-    Only substitution-sourced changes are attributed: each one already
-    names, via 'triggered_by', exactly which declared word/pattern/sound
-    caused it, and 'original' is the single word that was replaced.
-    Restructuring-sourced changes are sentence-level (multiple flagged
-    spans collapsed into one T5 rewrite) and are deliberately NOT
-    attributed to any single entry here — attributing a whole-sentence
-    accept/reject to one declared entry would be a guess, not a signal,
+    Substitution-sourced changes are attributed directly: each one
+    already names, via 'triggered_by', exactly which declared word/
+    pattern/sound caused it, and 'original' is the single word that was
+    replaced. Phrase-sourced changes (§5 item 4) are attributable too,
+    just not via 'original' — that field is the whole original sentence
+    for this source, not one word — so they carry their own
+    'matched_words' list (the specific flagged word(s) inside the
+    replaced span) to attribute against instead, a direct, non-guessed
+    link since the phrase tier only ever fires for the exact idiom span
+    those words matched. Restructuring-sourced changes remain
+    deliberately unattributed: they're genuinely sentence-level
+    (multiple flagged spans can collapse into one T5 rewrite with no
+    reliable way to tell which one drove the accept/reject decision),
     and this project's own discipline (Practice.md §6) is not to invent
-    one without evidence it's the right attribution.
+    an attribution without evidence it's the right one.
     """
-    if change.get("source") != "substitution":
+    source = change.get("source")
+    if source not in ("substitution", "phrase"):
         return []
-    original = change.get("original", "")
     triggered_by = change.get("triggered_by", [])
+    words = [change.get("original", "")] if source == "substitution" else change.get("matched_words", [])
     targets = []
-    if "declared_word" in triggered_by or "word_specific_pattern" in triggered_by:
-        entry = profile.find_word(original.lower())
-        if entry is not None:
-            targets.append(entry)
-    if "global_sound" in triggered_by:
-        for entry in profile.sounds:
-            if ph.matches_any(original, [entry.value]):
+    for word in words:
+        if "declared_word" in triggered_by or "word_specific_pattern" in triggered_by:
+            entry = profile.find_word(word.lower())
+            if entry is not None and entry not in targets:
                 targets.append(entry)
+        if "global_sound" in triggered_by:
+            for entry in profile.sounds:
+                if ph.matches_any(word, [entry.value]) and entry not in targets:
+                    targets.append(entry)
     return targets

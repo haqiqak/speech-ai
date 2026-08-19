@@ -332,7 +332,12 @@ def _apply_change_choices(result: dict, choices: dict[int, bool]) -> str:
         if not sentence_changes:
             rebuilt.append(original_sentence)
             continue
-        if sentence_changes[0][1]["source"] == "restructuring":
+        if sentence_changes[0][1]["source"] in ("restructuring", "phrase"):
+            # Both are sentence-scoped changes (original/replacement are
+            # full sentences, not a single token) -- phrase-tier changes
+            # (§5 item 4) replace only part of the sentence internally,
+            # but revert/keep still operates at the whole-sentence level,
+            # same as restructuring.
             i, change = sentence_changes[0]
             keep = choices.get(i, True)
             rebuilt.append(change["replacement"] if keep else change["original"])
@@ -417,6 +422,7 @@ div.stButton>button[kind="secondary"]:hover{background:#e4eaf2!important;transfo
 .change-after{color:#1a6b3c;font-weight:600}
 .change-tag{font-size:.68rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:.14rem .5rem;border-radius:12px;background:#e8f2fc;color:#2d6aab}
 .change-tag.restructuring{background:#fff2e8;color:#c85d14}
+.change-tag.phrase{background:#f3ecfb;color:#6b3fa0}
 
 .skip-chip{display:inline-flex;align-items:center;gap:.35rem;background:#fdf7f3;border:1.2px dashed #f7c49a;border-radius:9px;padding:.3rem .7rem;font-size:.85rem;color:#a06030;margin:.15rem 0}
 
@@ -664,7 +670,7 @@ if result is not None:
         st.markdown("#### Changes")
         for i, change in enumerate(result["changes"]):
             keep = st.session_state.change_choices.get(i, True)
-            tag_cls = "restructuring" if change["source"] == "restructuring" else ""
+            tag_cls = change["source"] if change["source"] in ("restructuring", "phrase") else ""
             col_text, col_toggle = st.columns([5, 1])
             with col_text:
                 st.markdown(

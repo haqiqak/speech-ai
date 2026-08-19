@@ -207,6 +207,36 @@ def _matches_idiom_pattern(window: list[str], pattern_words: list[str]) -> bool:
     return True
 
 
+def idiom_spans(tokens: list[str]) -> list[tuple[int, int]]:
+    """Ordered list of (start, end) [end exclusive] spans matched by
+    IDIOM_PHRASES/IDIOM_PHRASE_PATTERNS — the structured form
+    idiom_protected_positions() flattens into a position set below.
+
+    reformulate.py's phrase-level replacement tier (REFORMULATION_
+    PROBLEM_MAP.md SS3.8/SS5 item 4) needs the actual span boundaries,
+    not just which positions are protected, to know exactly what
+    contiguous stretch to replace and splice back in."""
+    spans: list[tuple[int, int]] = []
+    lower_tokens = [t.lower() for t in tokens]
+
+    for phrase in IDIOM_PHRASES:
+        words = phrase.split()
+        n = len(words)
+        for i in range(len(lower_tokens) - n + 1):
+            if lower_tokens[i : i + n] == words:
+                spans.append((i, i + n))
+
+    for pattern in IDIOM_PHRASE_PATTERNS:
+        pattern_words = pattern.split()
+        n = len(pattern_words)
+        for i in range(len(lower_tokens) - n + 1):
+            if _matches_idiom_pattern(lower_tokens[i : i + n], pattern_words):
+                spans.append((i, i + n))
+
+    spans.sort()
+    return spans
+
+
 def idiom_protected_positions(tokens: list[str]) -> set[int]:
     """The subset of protected_positions() covering ONLY idiom/fixed-
     expression spans (IDIOM_PHRASES, IDIOM_PHRASE_PATTERNS) — not the
@@ -225,22 +255,8 @@ def idiom_protected_positions(tokens: list[str]) -> set[int]:
     itself — see REFORMULATION_PROBLEM_MAP.md SS5 item 1's own entry.
     """
     protected: set[int] = set()
-    lower_tokens = [t.lower() for t in tokens]
-
-    for phrase in IDIOM_PHRASES:
-        words = phrase.split()
-        n = len(words)
-        for i in range(len(lower_tokens) - n + 1):
-            if lower_tokens[i : i + n] == words:
-                protected.update(range(i, i + n))
-
-    for pattern in IDIOM_PHRASE_PATTERNS:
-        pattern_words = pattern.split()
-        n = len(pattern_words)
-        for i in range(len(lower_tokens) - n + 1):
-            if _matches_idiom_pattern(lower_tokens[i : i + n], pattern_words):
-                protected.update(range(i, i + n))
-
+    for start, end in idiom_spans(tokens):
+        protected.update(range(start, end))
     return protected
 
 

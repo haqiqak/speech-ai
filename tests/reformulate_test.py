@@ -145,14 +145,16 @@ class IdiomGuardTest(unittest.TestCase):
     phrase, ahead of the separate general word-sense-disambiguation fix)."""
 
     def test_hows_it_going_is_left_completely_unchanged(self):
+        # As of SS5 item 4 (the phrase-level tier), a live T5 call now
+        # happens here where none did before -- mocked to return no
+        # usable candidate (the established EscalationTest pattern) so
+        # this stays deterministic and keeps testing what it always
+        # tested: when NOTHING works, the idiom is left alone and the
+        # unresolved difficulty is reported honestly, not silently.
         profile = _profile("idiom_hows_it_going")
         profile.add_sound("g", source="user_typed")
-        result = rf.reformulate("Hey, how's it going today?", profile)
-        # The idiom is correctly left alone -- but the declared /g/
-        # difficulty in "going" is real and still unaddressed, so this
-        # must be reported honestly as "could not safely reformulate",
-        # not silently as "nothing matched" (the metrics-visibility fix
-        # in REFORMULATION_PROBLEM_MAP.md SS5 item 1's own follow-up).
+        with mock.patch.object(rf.rephrase, "generate_candidates", side_effect=lambda sentence, **kw: [sentence]):
+            result = rf.reformulate("Hey, how's it going today?", profile)
         self.assertEqual(result["status"], "could_not_safely_reformulate")
         self.assertIn("going", result["reformulated_text"].lower())
         self.assertEqual(result["metrics"]["flagged_words_before"], 1)
@@ -162,7 +164,8 @@ class IdiomGuardTest(unittest.TestCase):
     def test_drives_me_crazy_is_left_completely_unchanged(self):
         profile = _profile("idiom_drives_me_crazy")
         profile.add_sound("d", source="user_typed")
-        result = rf.reformulate("The kids are driving me crazy today.", profile)
+        with mock.patch.object(rf.rephrase, "generate_candidates", side_effect=lambda sentence, **kw: [sentence]):
+            result = rf.reformulate("The kids are driving me crazy today.", profile)
         self.assertEqual(result["status"], "could_not_safely_reformulate")
         self.assertIn("driving me crazy", result["reformulated_text"].lower())
         self.assertEqual(result["metrics"]["flagged_words_before"], 1)
@@ -176,6 +179,78 @@ class IdiomGuardTest(unittest.TestCase):
         profile.add_sound("r", source="user_typed")
         result = rf.reformulate("I really need a break right now.", profile)
         self.assertIn("right now", result["reformulated_text"].lower())
+
+
+class PhraseTierTest(unittest.TestCase):
+    """Regression tests for REFORMULATION_PROBLEM_MAP.md SS5 item 4 -- the
+    phrase-level replacement tier between word-substitution and whole-
+    sentence restructuring. All T5 generation is mocked (the same
+    determinism discipline EscalationTest uses) since live T5 output is
+    documented elsewhere in this project as non-deterministic across
+    process launches -- these tests are about reformulate.py's own
+    trigger/splice/verify logic, not about what T5 happens to produce."""
+
+    def test_phrase_replacement_used_when_word_substitution_impossible(self):
+        profile = _profile("phrase_hows_it_going")
+        profile.add_sound("g", source="user_typed")
+        good = "Hey, how are you doing today?"
+        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[good]):
+            result = rf.reformulate("Hey, how's it going today?", profile)
+        self.assertEqual(result["status"], "reformulated")
+        self.assertEqual(len(result["changes"]), 1)
+        change = result["changes"][0]
+        self.assertEqual(change["source"], "phrase")
+        self.assertIn("global_sound", change["triggered_by"])
+        self.assertNotIn("going", result["reformulated_text"].lower())
+        self.assertEqual(result["metrics"]["flagged_words_after"], 0)
+
+    def test_phrase_tier_falls_back_to_skip_when_candidate_still_leaks(self):
+        # The candidate changes the window but the flagged word is still
+        # literally present -- the full-sentence leak scan must still
+        # catch it (same discipline _try_escalation already applies),
+        # not just accept because SOMETHING changed.
+        profile = _profile("phrase_leak")
+        profile.add_sound("g", source="user_typed")
+        leaky = "Hey, how's it going still today?"
+        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[leaky]):
+            result = rf.reformulate("Hey, how's it going today?", profile)
+        self.assertEqual(result["status"], "could_not_safely_reformulate")
+        self.assertIn("going", result["reformulated_text"].lower())
+        self.assertTrue(any("fixed expression" in s["reason"] for s in result["skipped"]))
+
+    def test_phrase_change_feedback_targets_attribution(self):
+        profile = _profile("phrase_feedback")
+        profile.add_sound("g", source="user_typed")
+        good = "Hey, how are you doing today?"
+        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[good]):
+            result = rf.reformulate("Hey, how's it going today?", profile)
+        change = result["changes"][0]
+        targets = rf.feedback_targets(change, profile)
+        self.assertEqual(len(targets), 1)
+        self.assertEqual(targets[0].value, "g")
+
+    def test_splice_preserves_text_outside_the_local_window(self):
+        # A longer sentence where the idiom span + context radius is a
+        # true SUBSET of the sentence -- confirms splicing doesn't
+        # disturb text well outside the window, not just that the idiom
+        # itself gets replaced.
+        profile = _profile("phrase_splice")
+        profile.add_sound("d", source="user_typed")
+        original = (
+            "Well, to be fair, the kids are driving me crazy today, "
+            "and I have no idea what to do about it."
+        )
+        result = rf.reformulate(original, profile)
+        self.assertIn("well, to be fair", result["reformulated_text"].lower())
+        self.assertIn("no idea what to do about it", result["reformulated_text"].lower())
+        if result["status"] == "reformulated":
+            self.assertEqual(result["changes"][0]["source"], "phrase")
+            self.assertNotIn("driving", result["reformulated_text"].lower())
+        else:
+            # T5 unavailable/no usable candidate in this environment --
+            # still must be the honest, disclosed skip, not silence.
+            self.assertEqual(result["status"], "could_not_safely_reformulate")
+            self.assertIn("driving me crazy", result["reformulated_text"].lower())
 
 
 class WordSenseDisambiguationTest(unittest.TestCase):

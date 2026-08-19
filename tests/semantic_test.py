@@ -103,5 +103,42 @@ class IdiomPronounPatternTest(unittest.TestCase):
         self.assertNotIn("crazy", protected)
 
 
+class IdiomSpansTest(unittest.TestCase):
+    """Regression tests for idiom_spans() — REFORMULATION_PROBLEM_MAP.md
+    SS5 item 4's phrase-level tier needs the actual (start, end) span
+    boundaries, not just the flat position set idiom_protected_positions()
+    returns, to know exactly what contiguous stretch to replace."""
+
+    def test_span_boundaries_for_exact_phrase(self):
+        tokens = word_tokenize("Hey, how's it going today?")
+        spans = sem.idiom_spans(tokens)
+        self.assertEqual(len(spans), 1)
+        start, end = spans[0]
+        self.assertEqual([t.lower() for t in tokens[start:end]], ["how", "'s", "it", "going"])
+
+    def test_span_boundaries_for_pronoun_pattern(self):
+        tokens = word_tokenize("The kids are driving me crazy today.")
+        spans = sem.idiom_spans(tokens)
+        self.assertEqual(len(spans), 1)
+        start, end = spans[0]
+        self.assertEqual([t.lower() for t in tokens[start:end]], ["driving", "me", "crazy"])
+
+    def test_no_spans_when_no_idiom_present(self):
+        tokens = word_tokenize("We are going to the store.")
+        self.assertEqual(sem.idiom_spans(tokens), [])
+
+    def test_idiom_protected_positions_still_matches_flattened_spans(self):
+        # idiom_protected_positions() is now derived from idiom_spans() --
+        # confirm the refactor is behavior-preserving, not just re-tested
+        # indirectly through the pre-existing protected_positions() tests.
+        tokens = word_tokenize("I really need a break right now.")
+        spans = sem.idiom_spans(tokens)
+        flattened = set()
+        for start, end in spans:
+            flattened.update(range(start, end))
+        self.assertEqual(flattened, sem.idiom_protected_positions(tokens))
+        self.assertTrue(flattened)  # sanity: "right now" should have matched
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
