@@ -6,6 +6,22 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-19** feat: R27 — bounded investigation of R26's ranking
+  mechanism and grammaticality, then MeaningBERT wiring + idiom-guard
+  extension. Found two distinct causes for `push`→`force`/`grab`→`take`
+  (missing WordNet sense; generic-word embedding bias, not primarily a
+  frequency-weight problem). Confirmed the output-verification path has
+  no grammaticality check anywhere; LanguageTool is blocked by a Java
+  version mismatch (needs 17+, has 8), not absence — corrects R23's
+  guess. MeaningBERT wired in as a read-only reported signal (verified
+  against R24's own recorded scores); idiom guard extended with "push
+  the meeting" (verified: exactly one pilot pair changed, zero
+  collateral). Grammaticality wiring did not proceed — blocked, surfaced
+  for a decision. An orchestration principle for a future quality-based
+  escalation trigger (substitution stays default; full-sentence rewrite
+  is an alternative, not a replacement) recorded per direct instruction,
+  not implemented. → `DECISION_LOG.md` 2026-08-19-A; `VALIDATION.md`
+  §18-20; `ROADMAP.md` R27.
 - **2026-08-18** docs: R26 — re-examined the pilot's `multi_difficulty`
   category against the live phrase tier (Option E). Pure analysis, no
   new code. Corrects §2.7's own prior hypothesis: only 1 of 3 cases

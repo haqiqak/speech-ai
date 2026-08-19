@@ -2381,3 +2381,215 @@ scope.
 
 None. All three pairs byte-identical pre/post phrase tier; this section
 adds explanation, not new evidence of change.
+
+## 18. R27 — bounded investigation: R26's candidate-ranking mechanism, and the grammaticality gap (executed 2026-08-19)
+
+Per direct instruction: investigate (not implement) two things before
+touching 1-3 of the previously-proposed order. No ranking weights changed,
+no production code touched, no new dependency installed — read-only
+inspection plus one bounded diagnostic script each, reusing the exact
+production code paths.
+
+### 18.1 Candidate-ranking mechanism for "push"/"grab" — method
+
+Called the actual production path directly — `engine.get_synonyms` →
+`reformulate._raw_candidates` → `semantic.rank_candidates_contextually`,
+unmodified — on the two real pilot sentences ("Can we push the meeting
+and grab coffee after?", "Can you print the report and grab some
+coffee?"), with SBERT loaded, printing the full scored candidate table
+(not just the winner).
+
+### 18.2 Findings — two distinct mechanisms, not one
+
+**[FINDING] "push" → "force": a missing-sense problem, not a ranking
+problem.** WordNet has 10 verb synsets for "push"; `disambiguate_synset`
+correctly selects `push.v.02` ("press, drive, or impel someone to
+action"). No synset means "postpone" — "push [a meeting]" is a
+phrasal-verb idiom absent from WordNet's sense inventory entirely, so
+every candidate in the pool (force, press, drive, thrust, urge...) is a
+synonym for "exert force," and none is correct. "force" wins because it
+has the highest SBERT sentence-similarity (0.961) among candidates that
+survive the phoneme veto — the literal top-scoring candidate, "pushing"
+(combined 0.9749), is correctly excluded because it carries the
+profile-flagged /p/ onset itself. **No amount of sim/freq reweighting
+can fix this** — the correct sense was never in the candidate pool.
+
+**[FINDING] "grab" → "take"/"catch": a generic-word embedding bias, not
+primarily a frequency-weight problem.** WSD correctly picks the right
+sense (`grab.v.05`, "take or grasp suddenly"); "take" is a genuinely
+valid synonym. It wins because it scores highest on **both** axes
+independently — sim 0.9747 (highest) and freq 0.9303 (highest, well
+above the #2 candidate at 0.88). Sim alone would already rank "take" #1;
+freq alone would too. This is the actual mechanism: a maximally generic,
+semantically-bleached word perturbs the sentence embedding least when
+substituted in, so it scores well on SBERT *and* is common, so it also
+scores well on frequency — the two signals are correlated, not
+independent, because genericness produces both.
+
+**[INTERPRETATION, corrects §9.9's framing]** The prior record described
+this as "a ranking formula that rewards high corpus frequency." Direct
+inspection of the actual scored candidates shows the 0.90-weighted
+semantic term is the dominant driver in both cases, not the 0.10-weighted
+frequency term — reweighting `w_sim`/`w_freq` in `rephrase.py`'s
+`_score_candidate` / `semantic.combined_score` would not have fixed
+either case. The two real levers are: idiom/phrasal-verb coverage
+(same category as the R19 idiom guard, extended to verb+object idioms —
+§18.4 below), and a genuinely new signal for candidate specificity/
+genericness, which does not exist in this codebase and was not designed
+here (explicitly not retuned, per direct instruction).
+
+### 18.3 Grammaticality — method and findings
+
+Inspected the reformulation-output verification path
+(`rephrase._score_candidate`, `reformulate._try_substitution`'s
+acceptance loop, `_try_escalation`, `_try_phrase_replacement`) directly:
+**no grammaticality check exists anywhere in it** — only SBERT
+similarity, the phoneme veto, the antonym check, the profile-word
+collision check, and (escalation only) negation-consistency.
+`naturalness.py` computes only edit distance. This is consistent with
+the standing record of ungrammatical outputs shipping cleanly ("data
+knowledges," "was recently again," "a worth lesson," "going me crazy,"
+pair_01's "Hey, how's it today?").
+
+**[FINDING] LanguageTool infrastructure already exists in this
+repository** (`grammar._get_lt_tool()`, `grammar._correct_with_
+languagetool()`, a curated `_LT_SKIP_RULES` set) — but it is wired only
+into `sanitize_input()`, which runs on the speaker's raw *input* before
+reformulation, **never on reformulation's output**. Reusing it as an
+output-side signal would be a thin wrapper around existing code, not new
+logic.
+
+**[FINDING, corrects an R23-era guess] `language_tool_python` (v3.4.0)
+is already pip-installed, and Java is present** (`1.8.0_461`) —
+contradicting `VALIDATION.md` §14's speculative note that the blocker
+was "most likely Java isn't installed" (explicitly disclosed there as a
+guess, never confirmed). Attempting to actually instantiate
+`LanguageTool("en-US")` (a real, direct test, not inferred) raised:
+
+```
+SystemError: Detected java 1.8. LanguageTool requires Java >= 17 for version 6.8.
+```
+
+**The real, now-confirmed blocker is a Java version mismatch, not Java's
+absence** — this project's environment has Java 8; the LanguageTool
+server version this `language_tool_python` release bundles (6.8) requires
+Java 17+. No download was attempted before this was known (verified no
+local cache existed at `~/.cache/language_tool_python` or the Windows
+equivalents first), and no download occurred as a side effect of this
+check — the instantiation failed at the Java-compatibility check before
+any download step.
+
+**[RECOMMENDATION, not decided here, same category as `VALIDATION.md`
+§13's constrained-beam-search blocker]** Three real options, none
+attempted: (a) install a JDK 17+ alongside the existing Java 8 (a
+system-level install, outside this investigation's scope and normally
+reversible but still a real environment change); (b) pin an older
+`language_tool_python`/bundled-LanguageTool-server combination compatible
+with Java 8, if one still exists and is maintained (a dependency-version
+decision); (c) treat this as blocked and defer grammaticality-as-a-signal
+until either (a) or (b) is explicitly approved. This is surfaced to the
+user rather than resolved unilaterally, exactly as §13's blocker was.
+
+### 18.4 What proceeded despite the LanguageTool block
+
+Per the approved order, the LanguageTool-dependent half of "grammaticality
++ MeaningBERT together" does not have supporting evidence to proceed on
+right now — it's blocked on an infrastructure decision, not unevaluated.
+MeaningBERT (§15, independently validated in R24, unrelated to this
+block) proceeded alone. The idiom-guard extension (§18.2's concretely
+scoped finding) proceeded as planned, independent of the LanguageTool
+question. Both are recorded in §19-20 below.
+
+## 19. MeaningBERT wired in as a second reported signal (implemented 2026-08-19)
+
+Per R24's own scope note ("proceed as a reported-alongside signal... engine
+wiring not yet done") and this session's explicit approval. `semantic.py`
+gained `load_meaningbert()` / `meaningbert_status()` / `meaningbert_score()`
+— same lazy-load, graceful-degradation shape as `load_sbert()`, no
+`trust_remote_code`. `reformulate.py`'s final metrics gained
+`meaning_preservation_meaningbert` (0-100 scale, deliberately not
+normalized into SBERT's 0-1 range — different signal, kept visually
+distinct), computed read-only alongside `overall_sim` and **never** folded
+into `final_ok`/gating. `app.py` gained a second metric box and an updated
+caption explaining the two scores can disagree and that disagreement is
+not a tie needing a winner.
+
+**[FINDING] The wiring was verified against R24's own recorded numbers
+before being trusted, not assumed correct from the code alone.** Called
+directly: pair_11 scored 48.04 (R24 recorded 48.0), pair_28 scored 94.52
+(R24 recorded 94.5), a clean control scored 85.83 (within R24's recorded
+81.5-94.5 control range) — confirms this implementation reproduces R24's
+exact methodology, not a divergent reimplementation.
+
+**Regression check:** full test suite (46 tests across `reformulate_test.py`
+and `semantic_test.py`, plus 61 more across `app_test.py`,
+`rephrase_test.py`, `difficulty_profile_test.py`, `roadmap_test.py`,
+`pilot_app_test.py`) — 107 tests, all pass. Stage 6's 18-case corpus
+(`eval/reformulation_eval.py`) re-run: `reformulation_rate` 0.5556,
+status distribution `{reformulated: 10, could_not_safely_reformulate: 4,
+no_change_needed: 4}`, `avg_meaning_preservation` 0.9652 — byte-identical
+to the pre-existing committed `eval/reformulation_eval_results.csv` (`git
+status` confirms zero diff), i.e. adding a read-only second metric changed
+nothing about `reformulated_text` or any existing metric, as designed.
+
+**[LIMITATION]** MeaningBERT's own checkpoint download (~450MB, `davebulaval/
+MeaningBERT`) is now a real first-run cost for anyone running this engine
+fresh — same category of cost SBERT/T5 already carry, disclosed rather
+than hidden.
+
+## 20. Idiom guard extended to "push the meeting" (implemented 2026-08-19)
+
+Per R26/R27's concretely-scoped finding (§18.2): "push [a meeting]"
+(postpone) has no WordNet sense at all, so no ranking fix could ever
+select a correct candidate. `semantic.py`'s `IDIOM_PHRASES` gained the
+literal phrase "push the meeting" — same curated-exact-match mechanism as
+R19's original list (§10), same disclosed scope limitation (a list of
+evidenced phrases, not a general phrasal-verb detector).
+
+### 20.1 Verification — isolated, controlled before/after
+
+Used the same `git stash` isolation technique established in R25/R26
+(`VALIDATION.md` §16.3/§17.1) rather than trusting `eval/
+idiom_guard_recheck.py`'s comparison against the pilot corpus's original,
+long-stale frozen snapshot (which reflects R19-R26's cumulative effect,
+not just this change — confirmed directly: a first unstashed run showed
+13/30 pairs "changed" against that ancient baseline, none of which is new
+information by itself). Stashed only this session's code changes
+(`app.py`, `reformulate.py`, `semantic.py`), ran the 30-pair recheck
+against that true pre-R27 baseline, popped the stash, ran it again, and
+diffed the two runs directly against each other.
+
+**[FINDING] Exactly one pair changed, zero collateral elsewhere.**
+pair_29 (`md_push_meeting_coffee`): pre-change
+`"Can we urge the meeting and catch coffee after?"` (sbert=0.8899,
+flagged_after=0) → post-change `"Can we push the meeting and catch coffee
+after?"` (sbert=0.961, flagged_after=1). "push" is now left honestly
+unresolved (its /p/ difficulty no longer silently "fixed" by a
+meaning-drifting substitution) while "grab"→"catch" — a separate,
+still-open problem (§18.2's generic-word-ranking pattern) — is untouched,
+exactly as designed: this is a mixed case (push AND grab both flagged),
+so R25's phrase tier is never attempted here (scoped to idiom-only cases
+by design, §16), and the idiom-protected word is simply skipped, same as
+every other mixed-case idiom match. Every other pair in the diff was
+byte-identical between the two runs.
+
+**[LIMITATION, disclosed rather than oversold]** This is a partial fix.
+pair_29 still ends with `flagged_words_after=1` — one of its two declared
+difficulties remains unresolved. It converts a meaning-drifting bad
+output into an honest non-fix, which this project's standing principle
+("never ship a bad guess") treats as strictly better, but it is not the
+same as fully resolving the sentence. Full resolution for this case would
+need either item 11's future quality-based escalation trigger (try a
+full-sentence rewrite when substitution is inadequate) or a fix to the
+separate generic-word-ranking problem for "grab" — neither attempted
+here, per explicit scope.
+
+**Regression check:** two new targeted tests added
+(`tests/semantic_test.py::IdiomPhraseGuardTest.test_push_the_meeting_
+protects_push` / `test_push_alone_not_protected_outside_the_idiom`;
+`tests/reformulate_test.py::IdiomGuardTest.test_push_the_meeting_survives_
+while_grab_is_still_substituted`) — full suite (46 tests) still passes.
+`eval/idiom_guard_recheck.py`'s `TARGET_PAIR_IDS` updated to include
+`pair_29`, with its stale "not an idiom break" comment corrected and
+replaced with the R27 finding, so a future re-run doesn't relitigate this
+same confusion.

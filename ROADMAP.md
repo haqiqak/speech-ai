@@ -911,6 +911,53 @@ n=3 remains too small to generalize beyond this specific finding, and
 per explicit scope, no further investigation (larger sample, a fix for
 the frequency-bias pattern, or anything else) was started here.
 
+### R27. Bounded investigation of R26's ranking mechanism + grammaticality, then MeaningBERT wiring + idiom-guard extension — **DONE, 2026-08-19 (partial: grammaticality blocked)**
+**Linked finding:** direct instruction to investigate (not implement)
+why `push`→`force`/`urge` and `grab`→`catch`/`take` outrank better
+alternatives (R26/§18.2), and what signal could realistically catch this
+project's known grammaticality failures, before touching the previously
+proposed order (MeaningBERT wiring, grammaticality wiring, idiom-guard
+extension). Also: record, per direct user instruction, an orchestration
+principle for a future quality-based escalation trigger (local
+substitution stays the default; full-sentence rewriting is a first-class
+alternative, not a replacement, triggered when substitution is genuinely
+inadequate) — explicitly not implemented this pass, recorded only.
+**What was done:** re-ran the actual production candidate-ranking path
+(`engine.get_synonyms` → `reformulate._raw_candidates` →
+`semantic.rank_candidates_contextually`) directly for the real pilot
+sentences; inspected the reformulation-output verification path for any
+grammar check (none exists) and the existing, already-built but
+input-only LanguageTool integration in `grammar.py`; attempted to
+directly instantiate LanguageTool (not just check for the package).
+`REFORMULATION_PROBLEM_MAP.md` §2.8 updated with the orchestration
+principle and §5 gained items 11 (deferred), 12, 13. Then, per the
+evidence: MeaningBERT (item 6) wired into `semantic.py`/`reformulate.py`/
+`app.py` as a read-only reported signal, verified against R24's own
+recorded scores; the idiom guard (item 13) extended with the literal
+phrase "push the meeting" in `semantic.py`'s `IDIOM_PHRASES`, verified
+with the same `git stash` isolation technique R25/R26 established.
+**Result:** two distinct root causes for R26's pattern, not one — a
+missing WordNet sense for "push [a meeting]" (postpone), and a genuine
+sentence-embedding bias toward generic/high-frequency words that the
+0.10-weighted frequency term reinforces rather than causes; neither is
+fixable by reweighting `w_sim`/`w_freq`. LanguageTool is blocked by a
+**Java version mismatch** (`SystemError: Detected java 1.8. LanguageTool
+requires Java >= 17`), correcting R23's speculative "most likely Java
+isn't installed" guess — three options surfaced, none decided
+unilaterally. MeaningBERT wiring and the idiom-guard extension both
+verified with zero collateral change (107 tests pass; Stage 6's 18-case
+corpus byte-identical to committed baseline; the idiom-guard extension
+changed exactly one pilot pair, pair_29, and even there only partially —
+"push" is now honestly unresolved rather than mis-substituted, while
+pair_29's separate "grab" problem remains open by design).
+**Labeled as:** R26's ranking pattern is now mechanistically understood,
+not just described (§9.9's framing corrected: the semantic term, not the
+frequency term, is the dominant driver). Grammaticality-as-a-signal is
+blocked on an infrastructure decision (same category as R13/item 5's
+constrained-beam-search block), not abandoned. MeaningBERT wiring and
+the idiom-guard extension are both done and verified. Full record:
+`VALIDATION.md` §18-20.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

@@ -2107,3 +2107,112 @@ in a way that has nothing to do with idiom detection.
 re-analysis of data already gathered verifying R25, per explicit scope.
 Full record: `VALIDATION.md` §17; `REFORMULATION_PROBLEM_MAP.md` §2.7/§5
 (updated, living document); `ROADMAP.md` R26 (new, done).
+
+### 2026-08-19-A — R27: bounded investigation of R26's ranking mechanism and grammaticality, orchestration principle recorded
+
+**What was done, per direct instruction:** a bounded, non-implementing
+investigation of two things before proceeding with any of the previously
+proposed order (MeaningBERT wiring, grammaticality wiring, idiom-guard
+extension) — no ranking retuning, no dependency installs, no long
+experiment.
+
+For R26's "generic overused replacement" pattern: called the actual
+production candidate-ranking path directly (`engine.get_synonyms` →
+`reformulate._raw_candidates` → `semantic.rank_candidates_contextually`,
+unmodified) on the real pilot sentences, with SBERT loaded, and printed
+the full scored candidate table rather than just the winner. Found two
+distinct mechanisms, not one: "push"→"force" is a missing-sense problem
+(WordNet has no synset for "push [a meeting]" meaning postpone — no
+amount of re-ranking could have found a correct candidate that was never
+in the pool); "grab"→"take"/"catch" is a genuine sentence-embedding bias
+toward generic, semantically-bleached words (a maximally generic word
+perturbs the sentence embedding least, so it scores highest on *both*
+the 0.90-weighted semantic term and the 0.10-weighted frequency term
+independently — they are correlated, not competing, so the formula's
+declared 90/10 split does not protect against this the way it looks like
+it should). This corrects `VALIDATION.md` §9.9's framing ("a ranking
+formula that rewards high corpus frequency") — direct inspection shows
+the semantic term, not the frequency term, is the dominant driver in
+both cases.
+
+For grammaticality: inspected `rephrase._score_candidate`,
+`reformulate._try_substitution`'s acceptance loop, `_try_escalation`,
+and `_try_phrase_replacement` directly — confirmed no grammaticality
+check exists anywhere in the reformulation-output verification path.
+Found `grammar._correct_with_languagetool()` already exists but is wired
+only into input-side `sanitize_input()`, never applied to reformulation
+output. Checked the LanguageTool situation directly rather than trusting
+the prior record: `language_tool_python` (v3.4.0) is pip-installed and
+Java is present (`1.8.0_461`) — contradicting R23's speculative "most
+likely Java isn't installed" note — but attempting to actually
+instantiate `LanguageTool("en-US")` raised `SystemError: Detected java
+1.8. LanguageTool requires Java >= 17 for version 6.8`. No download was
+triggered (no local cache existed beforehand; the failure happens before
+any download step) — the real, now-confirmed blocker is a **Java version
+mismatch**, not absence. Three options surfaced, none decided
+unilaterally: install a JDK 17+, pin an older `language_tool_python`/
+LanguageTool-server combination compatible with Java 8, or leave blocked.
+
+Per direct instruction, also recorded (not implemented) an orchestration
+principle in `REFORMULATION_PROBLEM_MAP.md` §2.8: local substitution
+stays the preferred default path (smallest change, preserves structure);
+full-sentence restructuring is a first-class *alternative*, not a
+replacement, meant to be triggered by a future quality-based escalation
+decision — distinct from today's only trigger (hard gate failure, i.e.
+"every candidate was rejected"). The `push`/`grab` cases are exactly the
+gap: the winning candidate clears every existing gate and substitution
+reports success, with no mechanism today to instead try a full-sentence
+rewrite. Recorded as `REFORMULATION_PROBLEM_MAP.md` §5 item 11, explicitly
+deferred — not scoped or implemented.
+
+**What proceeded after the investigation, per the evidence:**
+grammaticality wiring did **not** proceed (blocked, not unevaluated —
+`REFORMULATION_PROBLEM_MAP.md` §5 item 12 marked BLOCKED, same category
+as item 5's constrained-beam-search block). MeaningBERT (item 6,
+independently validated in R24, unrelated to the LanguageTool block) was
+wired into `semantic.py` (`load_meaningbert()`/`meaningbert_score()`,
+same lazy-load/graceful-degradation shape as SBERT) and `reformulate.py`
+(`meaning_preservation_meaningbert` in the final metrics, read-only,
+never blended into `final_ok`) and `app.py` (a second, separately-labeled
+metric box). Verified against R24's own recorded scores before trusting
+it (48.04 vs. 48.0, 94.52 vs. 94.5, a clean control at 85.83 within the
+81.5-94.5 control range) — confirms the implementation reproduces R24's
+methodology, not a divergent reimplementation. The idiom guard (item 13)
+was extended with the literal phrase "push the meeting" in `semantic.py`'s
+`IDIOM_PHRASES`, verified with the same `git stash` isolation technique
+R25/R26 established (stash only the session's code changes, run the
+30-pair recheck against the true pre-change baseline, pop, run again,
+diff the two runs against each other — not against the pilot corpus's
+long-stale original snapshot, which reflects R19-R26's cumulative effect,
+not just this change). Result: exactly one pair changed (pair_29), zero
+collateral elsewhere. The fix is disclosed as partial: "push" is now
+left honestly unresolved rather than mis-substituted, but pair_29's
+separate "grab" problem (the still-open generic-word-ranking pattern)
+is untouched by design, since this only ever targeted the missing-sense
+half of that pair.
+
+**Regression check:** two new targeted tests added
+(`tests/semantic_test.py::IdiomPhraseGuardTest` — `test_push_the_meeting_
+protects_push`, `test_push_alone_not_protected_outside_the_idiom`;
+`tests/reformulate_test.py::IdiomGuardTest.test_push_the_meeting_
+survives_while_grab_is_still_substituted`). Full suite: 107 tests
+(46 in `reformulate_test.py`/`semantic_test.py`, 61 across
+`app_test.py`/`rephrase_test.py`/`difficulty_profile_test.py`/
+`roadmap_test.py`/`pilot_app_test.py`) — all pass. Stage 6's 18-case
+corpus (`eval/reformulation_eval.py`) re-run: `reformulation_rate`
+0.5556, status distribution `{reformulated: 10,
+could_not_safely_reformulate: 4, no_change_needed: 4}`,
+`avg_meaning_preservation` 0.9652 — byte-identical to the committed
+`eval/reformulation_eval_results.csv` (`git status` confirms zero diff).
+`eval/idiom_guard_recheck.py`'s `TARGET_PAIR_IDS` updated to include
+`pair_29`, its stale "not an idiom break" comment corrected.
+
+**Category:** Investigation (candidate-ranking mechanism, grammaticality
+gap, LanguageTool feasibility) + two scoped implementations gated on that
+investigation's evidence (MeaningBERT wiring, idiom-guard extension) +
+one architecture note recorded per direct instruction, not implemented
+(the orchestration escalation-trigger principle). Grammaticality wiring
+explicitly did not proceed — blocked, surfaced for a future decision, not
+worked around. Full record: `VALIDATION.md` §18-20;
+`REFORMULATION_PROBLEM_MAP.md` §2.8, §5 items 6/11/12/13 (updated, living
+document); `ROADMAP.md` R27 (new, done/partial).

@@ -358,6 +358,70 @@ approaches on a generic paraphrase-style model, not a fixable framing
 gap. Per the plan's own condition, the phrase-level tier (§5 item 4)
 was correctly **not** started as a result.
 
+**Update, 2026-08-19 — an explicit orchestration principle for when to
+escalate, recorded per direct user instruction; not implemented this
+pass.** The user's framing: *"if local substitution keeps failing
+because the available replacements are still difficult or unnatural,
+the orchestration layer should eventually be able to say 'stop trying
+individual words; rewrite the sentence another way.'"* Local
+substitution stays the **preferred, default path** — it makes the
+smallest necessary change and preserves the original sentence
+structure — and full-sentence restructuring is **not a replacement**
+for it; both paths are meant to be developed well, with orchestration
+logic deciding when substitution is inadequate and escalation should
+be attempted instead. This is a genuine, currently-real gap, not just
+a restatement of what already exists — traced directly while
+investigating R26's follow-up (`VALIDATION.md` §17-18):
+
+**[FINDING] `_try_substitution`'s only escalation trigger today is hard
+gate failure** (`no candidates found` / `no candidate passed
+verification`, both returning `None` from `reformulate.py`) — i.e.
+"every candidate was rejected." It has **no trigger for "a candidate
+was accepted, but it's still a poor fit."** The `push`→`force` and
+`grab`→`take`/`catch` cases (R26 follow-up, below) are exactly this:
+the winning candidate clears every existing gate (SBERT similarity,
+phoneme veto, antonym check, profile-word collision) and substitution
+reports success — there is currently no mechanism by which the
+orchestration layer could instead decide "the best available
+word-level fit is still weak, try a full-sentence rewrite instead."
+The T5 escalation path already exists and is already known to produce
+a *better* output when it succeeds (above, `VALIDATION.md` §9.10) —
+the missing piece is purely the **trigger condition**, not the
+escalation capability itself.
+
+**[RECOMMENDATION, not scoped, not started] Kinds of failure that
+should eventually trigger this quality-based escalation**, recorded
+for a future orchestration design pass rather than guessed at
+implementation time:
+  - All viable candidates still carry a profile-flagged difficult sound
+    (already handled today — this is the existing `None`-return path,
+    named here only for completeness of the failure taxonomy).
+  - No candidate preserves meaning/context well enough (already handled
+    today — the existing SBERT-gate `None`-return path).
+  - **All viable candidates pass every existing gate but are still poor
+    grammar** — not detectable today at all; would need the
+    grammaticality signal under investigation (§5 item 6/12) to even
+    notice this case, let alone act on it.
+  - **All viable candidates pass every existing gate but are a weak
+    idiomatic/contextual fit** — the R26-follow-up mechanism itself
+    (generic-word embedding bias, missing-sense idiom coverage). No
+    signal for this exists today; the "generic-word ranking" retuning
+    question was explicitly *not* authorized to be picked up yet, and
+    this orchestration-level escalation trigger is a distinct, likely
+    larger, piece of work from a local ranking-weight fix — it needs
+    its own design pass (what counts as "still poor," how the
+    orchestration decides to discard substitution's result and try
+    escalation instead of reporting it, how a rejected-but-passing
+    substitution result is surfaced for review) before it is
+    implementable.
+
+**[LIMITATION]** None of the above is built. This update only records
+*where* the future capability belongs (as a decision the orchestration
+layer makes about the *substitution* path's output quality, not as a
+replacement mechanism, and not as a new model or new dependency by
+itself) and *what* should trigger it. Scoping the actual decision logic
+is future work — see §5 item 11.
+
 ### 2.9 The help-vs-harm trade-off: how much change is too much
 
 **Current state:** no explicit mechanism currently reasons about this
@@ -908,8 +972,8 @@ itself supported.
    medium-effort with no maintained package). Surfaced to the user
    rather than decided unilaterally, since it's a dependency-footprint
    decision, not a pure research/implementation one.
-6. **[VALIDATED, 2026-08-18 — `VALIDATION.md` §15 — R24, result: real
-   but partial, proceed as a second signal only] Add a second semantic-
+6. **[DONE, 2026-08-19 — `VALIDATION.md` §19 — R27, wired in as a
+   read-only second signal] Add a second semantic-
    preservation signal** (§2.2, §3.7) — candidate: MeaningBERT, reported
    alongside SBERT (never replacing it silently, per Practice.md §10).
    A cheap validation check (14 pairs already in the repo, no new
@@ -927,8 +991,17 @@ itself supported.
    reported-alongside signal, flag disagreement, don't treat as "the
    fix." §3.9's ParaDetox-style J-score is a related, cheap addition
    worth doing alongside this — both are evaluation-infrastructure
-   improvements, not engine changes. **Actual engine wiring not yet
-   done** — this was the validation step only, per explicit scope.
+   improvements, not engine changes.
+   **Update, 2026-08-19 — R27: engine wiring done.** `semantic.py` gained
+   `meaningbert_score()` (lazy-loaded, graceful degradation, same shape as
+   SBERT); `reformulate.py`'s metrics gained `meaning_preservation_
+   meaningbert`, computed read-only and never blended into `final_ok`;
+   `app.py` shows it as a second, separately-labeled metric box. Verified
+   against R24's own recorded numbers (48.04 vs. 48.0, 94.52 vs. 94.5,
+   85.83 within the 81.5-94.5 control range) before trusting the wiring.
+   Zero collateral change: full test suite (107 tests) passes, Stage 6's
+   18-case corpus re-run byte-identical to the committed baseline. Full
+   record: `VALIDATION.md` §19.
 7. **[DONE, 2026-08-18 — `VALIDATION.md` §17 — result: not
    substantially explained] Re-examine multi-difficulty interaction
    after (1)** (§2.7) — re-evaluated directly against the live phrase
@@ -963,9 +1036,58 @@ itself supported.
     for document-level coherence) with no direct speaker-facing
     precedent to build from — worth its own design pass when the time
     comes, not something to bolt onto the current sentence-level engine.
+11. **[NEW, 2026-08-19, explicitly deferred, not started] A quality-based
+    escalation trigger between substitution and restructuring** (§2.8's
+    2026-08-19 update) — recorded per direct user instruction as the
+    orchestration-layer capability to eventually say "substitution's best
+    candidate is technically valid but still weak — try a full-sentence
+    rewrite instead," distinct from and in addition to today's only
+    trigger (hard gate failure). Explicitly **not** a replacement for
+    substitution: both paths are meant to be developed well, with
+    substitution remaining the preferred default (smallest change,
+    preserves structure) and escalation used when it's genuinely
+    warranted. Needs its own design pass — what counts as "still poor,"
+    how a passing-but-weak substitution result is surfaced, whether this
+    subsumes or composes with item 12's grammar signal and the R26-follow-
+    up generic-word-fit problem — before it is implementable. Depends on
+    item 12 (below) existing first for the "poor grammar" trigger case to
+    even be detectable.
+12. **[BLOCKED, 2026-08-19 — `VALIDATION.md` §18.3 — R27, same category as
+    item 5's blocked status] Grammaticality as a second reported signal**
+    (§2.3) — reuse the existing, already-built `grammar._correct_with_
+    languagetool()` (currently wired only into input-side `sanitize_input`,
+    never applied to reformulation *output*) as a read-only signal
+    alongside SBERT/MeaningBERT, mirroring item 6's "second signal, not a
+    gate" pattern. Gated on a bounded empirical check first — attempted
+    directly, not just checked for presence: `language_tool_python` and
+    Java are both installed, but instantiating the tool raised `SystemError:
+    Detected java 1.8. LanguageTool requires Java >= 17 for version 6.8`.
+    The blocker is a **Java version mismatch**, not Java's absence
+    (correcting R23's speculative "most likely Java isn't installed" guess).
+    Three real options, none decided here: install a JDK 17+ alongside the
+    existing Java 8, pin an older `language_tool_python`/LanguageTool-server
+    combination compatible with Java 8, or leave this blocked. Surfaced to
+    the user rather than resolved unilaterally.
+13. **[DONE, 2026-08-19 — `VALIDATION.md` §20 — R27] Extend the idiom guard
+    to verb+object phrasal idioms** (§2.4, §5 item 1) — concretely scoped by
+    the R26 follow-up: "push [a meeting]" (postpone) has no WordNet sense
+    for that meaning at all, so no amount of candidate re-ranking can fix
+    it. Added the literal observed phrase "push the meeting" to
+    `semantic.py`'s `IDIOM_PHRASES` — same curated-list mechanism item 1
+    already uses (still a list of evidenced phrases, not a general
+    phrasal-verb detector — §3.1's `[GAP]` still stands). Verified with the
+    same `git stash` isolation technique R25/R26 established: exactly one
+    pilot pair changed (pair_29), zero collateral elsewhere. The fix is
+    partial by nature, not overstated: "push" is now left honestly
+    unresolved rather than mis-substituted, but pair_29's separate "grab"
+    problem (the generic-word-ranking pattern, item 7) is untouched by
+    design — this only ever targeted the missing-sense half of that pair.
 
-None of the above is implemented as part of this pass. This is the
-prioritized map for a future, explicitly-approved implementation cycle.
+Items 1, 2, 4, 6, 7, and 13 are implemented and verified (dated above);
+item 12 was attempted and found blocked on an infrastructure decision;
+items 3 and 5 were tested/attempted and closed (negative/blocked,
+respectively); items 8-11 remain future work, not started. This list is
+kept current as items move, not a static snapshot of one planning pass.
 
 ## 6. Open questions — what we still do not know
 
@@ -1004,6 +1126,14 @@ prioritized map for a future, explicitly-approved implementation cycle.
 - Whether this project will actually get access to a consumer GPU (or
   free-tier cloud GPU) — §3.9's fine-tuning item (§5 item 9) is gated on
   this and it hasn't been decided or even asked about yet.
+- What the actual decision rule should be for item 11's quality-based
+  escalation trigger — "the top substitution candidate scored below X" is
+  the obvious first guess, but nothing here has tested whether a fixed
+  threshold on the existing combined score would correctly separate the
+  push/grab cases from ordinary good substitutions, or whether it needs a
+  more structural signal (grammar-flagged, generic-word detection, both).
+  Not researched yet — recorded as the open question item 11's future
+  design pass will need to answer.
 
 ## 7. Changelog (of this document)
 
@@ -1102,3 +1232,36 @@ prioritized map for a future, explicitly-approved implementation cycle.
   pattern (generic overused replacement words). Factor 2.7 stays open
   as its own problem. §2.7 and §5 item 7 updated. Full record:
   `VALIDATION.md` §17.
+- **2026-08-19** — R27: bounded, code-verified follow-up on R26's
+  "generic overused replacement" pattern and on grammaticality, per
+  direct instruction (no ranking retuning, no dependency installs, no
+  long experiment). Re-ran the actual production candidate-ranking path
+  (not a re-derivation) for `push`/`grab` and found two distinct root
+  causes rather than one — a missing WordNet sense for "push [a
+  meeting]" (postpone), and a genuine sentence-embedding bias toward
+  generic/high-frequency words that the 0.10-weighted frequency term
+  reinforces rather than causes. Confirmed the reformulation-output
+  verification path has no grammaticality check anywhere (LanguageTool
+  exists in `grammar.py` but only runs on input, never output), and that
+  Java/`language_tool_python` are now actually present in this
+  environment (correcting R23's speculative "most likely Java isn't
+  installed" note) — not yet exercised, since first use requires a
+  ~200MB one-time download not triggered by the investigation itself.
+  §2.8 gained the user-specified orchestration principle (substitution
+  stays default; full-sentence escalation is a first-class alternative,
+  triggered by a currently-nonexistent quality signal, not just today's
+  hard-gate-failure trigger) and §5 gained items 11-13. Full record:
+  `VALIDATION.md` §18.
+- **2026-08-19, second** — R27 continued: attempting to instantiate
+  LanguageTool directly (not just checking for the package) surfaced the
+  REAL blocker — `SystemError: Detected java 1.8. LanguageTool requires
+  Java >= 17` — a version mismatch, not absence. §5 item 12 marked
+  BLOCKED accordingly (same category as item 5). Per the approved order,
+  proceeded with the two unblocked pieces: item 6 (MeaningBERT) wired in
+  as a read-only reported signal, verified against R24's own recorded
+  scores first; item 13 (idiom guard extended with "push the meeting")
+  implemented and verified with the same `git stash` isolation technique
+  R25/R26 established — exactly one pilot pair changed, zero collateral
+  elsewhere. Both regression-tested (107 tests total, all pass; Stage 6's
+  18-case corpus byte-identical to the committed baseline). Full record:
+  `VALIDATION.md` §19-20.
