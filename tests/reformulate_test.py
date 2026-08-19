@@ -325,6 +325,51 @@ class WordSenseDisambiguationTest(unittest.TestCase):
         self.assertNotEqual(subs[0]["replacement"].lower(), subs[1]["replacement"].lower())
 
 
+class PredicateAdjectiveTaggingTest(unittest.TestCase):
+    """Regression tests for a POS-tagging bug found during the R30 design
+    investigation (VALIDATION.md's pair_13 record): nltk's pos_tag()
+    mis-tags a flat adverb (late/fast/early/...) as RB when it's actually
+    a predicate adjective right after a copula ("was late"), so candidate
+    generation was restricted to adverb-sense synonyms only, producing
+    "The bus was recently again" -- a long-standing known bug, unrelated
+    to CONAN's escalation-trigger design work. Fixed narrowly with a
+    curated flat-adverb list (reformulate._correct_predicate_adjective_tags),
+    not a general WordNet-sense check -- that broader approach was tried
+    first and found to over-fire (WordNet lists a rare adjective sense for
+    "here," which would have mis-tagged "He was here.")."""
+
+    def test_predicate_late_gets_adjective_synonym_not_adverb(self):
+        profile = _profile("predicate_late")
+        profile.add_word("late", source="user_typed")
+        result = rf.reformulate("The bus was late again this morning.", profile)
+        for wrong in ("recently", "lately", "later"):
+            self.assertNotIn(wrong, result["reformulated_text"].lower())
+        self.assertEqual(result["metrics"]["flagged_words_after"], 0)
+
+    def test_adverbial_late_elsewhere_in_sentence_still_tagged_adverb(self):
+        # "arrived late" -- purely adverbial, no copula precedes it --
+        # must NOT be reclassified; confirms the fix doesn't just always
+        # treat "late" as an adjective regardless of context.
+        tokens = ["The", "train", "arrived", "late", "."]
+        tags = [("The", "DT"), ("train", "NN"), ("arrived", "VBD"), ("late", "RB"), (".", ".")]
+        corrected = rf._correct_predicate_adjective_tags(tokens, tags)
+        self.assertEqual(corrected[3], ("late", "RB"))
+
+    def test_genuine_predicate_adverb_not_reclassified(self):
+        # "here"/"now" are genuinely adverbial predicate complements, not
+        # adjectives -- the exact false positive the curated-list approach
+        # was chosen specifically to avoid (see class docstring).
+        tokens = ["He", "was", "here", "."]
+        tags = [("He", "PRP"), ("was", "VBD"), ("here", "RB"), (".", ".")]
+        corrected = rf._correct_predicate_adjective_tags(tokens, tags)
+        self.assertEqual(corrected[2], ("here", "RB"))
+
+        tokens = ["It", "is", "now", "."]
+        tags = [("It", "PRP"), ("is", "VBZ"), ("now", "RB"), (".", ".")]
+        corrected = rf._correct_predicate_adjective_tags(tokens, tags)
+        self.assertEqual(corrected[2], ("now", "RB"))
+
+
 class MetricsTest(unittest.TestCase):
     def test_metrics_shape_and_bounds(self):
         profile = _profile("metrics")

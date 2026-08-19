@@ -98,6 +98,58 @@ def split_sentences(text: str) -> list[str]:
     return [s for s in sentences if s.strip()]
 
 
+_BE_FORMS = frozenset({"am", "is", "are", "was", "were", "be", "been", "being"})
+
+# "Flat adverbs" -- identical surface form for the adjective and adverb
+# senses (arrived late / was late; ran fast / was fast) -- the specific,
+# well-established class of word nltk's tagger can mis-tag as RB even
+# when it's functioning as a predicate adjective right after a copula.
+# A curated list, not a general WordNet-sense check: tried checking
+# "does WordNet list any adjective sense for this word" first and found
+# it over-fires directly -- WordNet lists a rare satellite-adjective
+# sense for "here" ("here.s.01", being here now), which reclassified
+# "He was here." into treating "here" as an adjective, a real regression
+# risk for a genuinely adverbial word. Same curated-list-over-general-
+# detector tradeoff this project already makes for IDIOM_PHRASES.
+_FLAT_ADVERBS: frozenset[str] = frozenset({
+    "late", "early", "fast", "hard", "high", "low", "deep", "wide",
+    "long", "near", "close", "right", "tight", "clean", "clear",
+    "straight", "direct", "quick", "loud", "sharp", "smooth", "far",
+})
+
+
+def _correct_predicate_adjective_tags(tokens: list[str], tags: list[tuple]) -> list[tuple]:
+    """nltk's tagger sometimes mis-tags a flat adverb as RB when it's
+    actually a predicate adjective directly after a copula ("was late",
+    not "arrived late"). Confirmed directly, not assumed: pos_tag() tags
+    "late" RB in "The bus was late again this morning.", which then
+    restricts candidate generation to adverb-sense synonyms only
+    ("recently"/"lately"/"later") -- valid answers to the wrong question,
+    producing "The bus was recently again" (a long-standing known bug,
+    VALIDATION.md SS9.9/SS11.5's pair_13). Reclassifying the tag to JJ
+    before candidate generation lets WordNet return actual predicate-
+    adjective synonyms instead.
+
+    Scoped to the curated `_FLAT_ADVERBS` list, not every RB-after-copula
+    occurrence -- see that list's own comment for why a general WordNet-
+    sense check was tried and rejected (it over-fired on "here"). Also
+    requires direct adjacency to the copula, so a purely adverbial
+    occurrence elsewhere in the sentence ("arrived late") is unaffected,
+    and an intervening word ("n't", another adverb) between the copula
+    and the flat adverb is not handled -- scoped to the evidenced case,
+    not a general re-tagger."""
+    corrected = list(tags)
+    for i, (word, tag) in enumerate(tags):
+        if tag != "RB" or i == 0:
+            continue
+        if word.lower() not in _FLAT_ADVERBS:
+            continue
+        if tokens[i - 1].lower() not in _BE_FORMS:
+            continue
+        corrected[i] = (word, "JJ")
+    return corrected
+
+
 def _local_context_window(tokens: list[str], index: int, radius: int = 6) -> str:
     """A small window of tokens around `index`, not the whole sentence —
     needed so two occurrences of the same word with different senses in
@@ -499,7 +551,7 @@ def _flagged_word_count(text: str, profile: DifficultyProfile) -> int:
         tokens = word_tokenize(text)
     except Exception:
         tokens = re.findall(r"[A-Za-z][A-Za-z'-]*", text)
-    tags = pos_tag(tokens)
+    tags = _correct_predicate_adjective_tags(tokens, pos_tag(tokens))
     return len(_flagged_positions(tokens, tags, profile)) + len(_idiom_protected_matches(tokens, tags, profile))
 
 
@@ -520,7 +572,7 @@ def reformulate(text: str, profile: DifficultyProfile, settings: ReformulateSett
             tokens = word_tokenize(sentence)
         except Exception:
             tokens = re.findall(r"[A-Za-z][A-Za-z'-]*|[.,!?;:]", sentence)
-        tags = pos_tag(tokens)
+        tags = _correct_predicate_adjective_tags(tokens, pos_tag(tokens))
         phrase_protected = sem.protected_positions(tokens)
         flagged = _flagged_positions(tokens, tags, profile)
         idiom_matches = _idiom_protected_matches(tokens, tags, profile)
