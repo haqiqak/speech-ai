@@ -1177,6 +1177,35 @@ byte-identical to baseline — zero collateral change, confirmed by diff.
 threshold. Option B remains a separate, future, explicitly-gated
 decision. Full record: `VALIDATION.md` §30.
 
+### R38. Final system-level evaluation against the problem statement — **DONE, 2026-08-19**
+**Linked finding:** closes the R17-R37 investigation arc — does the
+system, taken as a whole, actually do what the problem statement asks?
+Bounded to existing corpora and measurements, plus one retroactive
+application of R37's already-validated signal to real (not lab) data.
+**What was done:** scored every dimension (difficulty, meaning ×2
+signals, naturalness, safety, escalation, over-reformulation,
+preference) against existing evidence, explicitly labeling each as
+directly-measured, enforced, reported-diagnostic, proxy, or unresolved.
+Retroactively ran `contextual_fit_score()` against the real frozen
+pilot's 26 actual substitution instances (new computation, existing
+tool, existing data).
+**Result:** Safety and SBERT-enforced meaning preservation are the
+strongest, unqualified claims. Difficulty reduction and over-
+reformulation are real but conservative by design. Both secondary
+meaning/naturalness signals add real value with specific, named blind
+spots. **The retroactive check found 2 new contextual-fit false
+positives on real data** ("forgot"→"missed," "happened"→"occurred")
+beyond the already-known "rest" quirk — a higher false-positive rate
+than the lab corpus alone suggested, disclosed not smoothed over.
+Escalation exists only as an unwired capability. **Preference is
+unresolved** — the only number on record (73.3%, pilot) reflects
+pre-R19-R37 output and cannot be treated as current.
+**Labeled as:** the problem statement is answered *partially and
+unevenly* — stated as the actual finding, not a hedge. The single
+largest remaining gap is a genuine current-state human evaluation (no
+valid preference or naturalness measurement exists for today's system).
+Full record: `VALIDATION.md` §31.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

@@ -3291,3 +3291,83 @@ The signal is visible per-change, for observation, exactly as agreed —
 Option B (the full soft-trigger → escalation → safe-fallback
 architecture from the Phase-2 design) remains a separate, future,
 explicitly-gated decision.
+
+## 31. R38 — final system-level evaluation against the problem statement (executed 2026-08-19)
+
+Bounded, per direct instruction: reuse existing frozen corpora and
+existing measurements only, plus one new-but-not-novel computation
+(applying R37's already-implemented, already-validated
+`contextual_fit_score()` retroactively to the real frozen pilot corpus's
+actual substitution outputs — re-use of an existing tool on existing
+data, not a new experiment). No production changes.
+
+### 31.1 Results by dimension, each labeled by evidence class
+
+- **Difficulty (directly measured):** Stage 6, 18 cases —
+  `reformulate.py` averages 55.56% difficulty reduction, 0.944 flagged
+  words remaining — lower than the two legacy pipelines (66.30%/65.56%)
+  because it makes fewer, more conservative changes rather than forcing
+  every flagged word to resolve.
+- **Meaning — SBERT (directly measured and enforced):** Stage 6 average
+  0.9785 (later 0.9652-0.9703 after WSD, a disclosed accepted cost) —
+  highest of the three systems compared (0.9381/0.9292), and the only
+  meaning signal that actually gates production behavior.
+- **Meaning — MeaningBERT (reported diagnostic only):** R24's 14-pair
+  validation — catches some idiom-adjacent breaks SBERT misses badly,
+  completely misses the single worst human-rated case on record
+  (pair_28). Never gates.
+- **Naturalness — contextual fit (proxy, not human judgment):** R33-R36
+  lab corpus, zero false negatives, human-confirmed 17/18 (R35). **New
+  for this report:** retroactively scored on the real frozen pilot's 26
+  actual substitution instances. **All 8 pairs with an explicit human
+  complaint or bad rating were correctly flagged (100% recall holds on
+  independent real data).** Of 9 clearly human-approved pairs, 7 were
+  correctly not flagged; **2 new false positives found** ("forgot"→
+  "missed," "happened"→"occurred," both ≤0.0001 despite 5/4 human
+  ratings) — a higher false-positive rate than the lab corpus alone
+  suggested, disclosed rather than smoothed over. Combined with the
+  already-known "rest" quirk, three specific words now have a documented
+  false-positive pattern on real data.
+- **Safety (directly measured, enforced by construction):** hard gates
+  (antonym, phoneme, profile-collision, SBERT floor) — anything shipped
+  necessarily passed them; Stage 6's 4/18 `could_not_safely_reformulate`
+  cases are the safety mechanism correctly refusing, not failing. No
+  hard-gate failure has reached production anywhere in R17-R37's
+  evidence base.
+- **Escalation (proxy — not live behavior):** no auto-escalation exists
+  anywhere in the current system (Option A only). The retroactive
+  contextual-fit scoring shows the diagnostic *would* flag most of the
+  pilot's genuinely-complained-about cases — directionally capable, but
+  explicitly not wired to trigger anything today. Capability and
+  behavior are not the same thing and must not be conflated.
+- **Over-reformulation (directly measured):** Stage 6 average edit-ratio
+  0.0682 — smallest of the three systems compared (0.1471/0.1427); the
+  `no_change_needed` status (4/18) demonstrates a real, working "leave
+  it alone" path.
+- **Preference (unresolved — not measurable from existing data):** the
+  frozen pilot's 22/30 (73.3%) preferred-reformulated number reflects a
+  single participant's judgment of **pre-R19-R37 output** — most of
+  those exact outputs have since changed (idiom guard, WSD, phrase-tier,
+  the POS-tag fix, the contextual-fit diagnostic all postdate this
+  rating). Not a valid measurement of current-system preference. Already
+  disclosed at collection time as a likely upper bound (spot-checking
+  undercounts real defects, §9). R35 tested naturalness specifically,
+  not preference, and does not substitute for it.
+
+### 31.2 Overall assessment
+
+**Answering the problem statement directly: partially, and unevenly
+across dimensions — the unevenness is the honest finding, not a hedge.**
+Strongest, unqualified claims: Safety and SBERT-enforced meaning
+preservation. Real but partial: difficulty reduction, over-
+reformulation, both secondary meaning/naturalness signals (each with a
+specific, now-named blind spot). Exists as capability, not yet
+behavior: escalation. Genuinely unresolved: current-system preference —
+the one number that exists is stale and was already disclosed as an
+upper bound when collected.
+
+**[RECOMMENDATION]** The single largest remaining evidentiary gap is a
+genuine current-state human evaluation — no valid preference or
+naturalness measurement exists for the system as it stands today, only
+for a snapshot that predates R19-R37. Designing that evaluation is the
+natural next step, not another signal investigation.

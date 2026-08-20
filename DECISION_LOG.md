@@ -2666,3 +2666,48 @@ the existing regression corpus, confirmed by diff.
 trigger, no threshold selected. Option B (the full soft-trigger
 architecture) remains a separate, future, explicitly-gated decision —
 not started here. Full record: `VALIDATION.md` §30; `ROADMAP.md` R37.
+
+### 2026-08-19-L — R38: final system-level evaluation against the problem statement
+
+**What was done:** closes the R17-R37 investigation arc with a bounded
+evaluation against the project's own governing question (does the
+system reformulate difficult speech text into easier-to-say text while
+preserving meaning, context, safety, and linguistic quality) — reusing
+existing frozen corpora and existing measurements only, per explicit
+instruction, plus one retroactive application of R37's already-
+implemented signal to real (not lab-constructed) data: every recorded
+substitution in the frozen pilot corpus was re-scored with `contextual_
+fit_score()`.
+
+**Result, by dimension, each explicitly labeled by evidence class:**
+Safety (hard gates, zero known failures reaching production) and
+SBERT-enforced meaning preservation (the only meaning signal that
+actually gates behavior, 0.9785 average, highest of three systems
+compared) are the strongest, unqualified claims available. Difficulty
+reduction and over-reformulation are real, conservative-by-design
+properties, both directly measured. MeaningBERT and the contextual-fit
+signal both add real value with specific, named blind spots — the
+retroactive real-data check found **2 new contextual-fit false
+positives** ("forgot"→"missed," "happened"→"occurred") beyond the
+already-known "rest" quirk, a higher false-positive rate than R33-R36's
+lab corpus alone suggested, reported here rather than smoothed over.
+Escalation exists only as an unwired diagnostic capability — no
+auto-escalation runs anywhere in the current system, and this report is
+explicit that capability and behavior are not the same claim.
+**Preference is unresolved**: the only number on record (73.3%,
+pilot) reflects a single participant's judgment of pre-R19-R37 output,
+already disclosed at collection time as a likely upper bound, and
+cannot be treated as a current measurement.
+
+**Decision: the problem statement is answered partially and unevenly
+across dimensions** — stated as the actual finding of this evaluation,
+not a hedge on an otherwise complete answer. **The single largest
+remaining evidentiary gap is a genuine current-state human evaluation**
+— no valid preference or naturalness measurement exists for the system
+as it actually stands today, only for eras that predate most of R17-R37's
+fixes. Designing that evaluation, not another signal investigation, is
+the justified next step.
+
+**Category:** Final evaluation, closing the R17-R38 arc. No production
+code changed; no new corpus or human study conducted; no new metrics
+introduced. Full record: `VALIDATION.md` §31; `ROADMAP.md` R38.

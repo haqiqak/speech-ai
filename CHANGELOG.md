@@ -6,6 +6,13 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-19, twelfth** docs: R38 — final system-level evaluation,
+  closes the R17-R37 arc. Safety + SBERT-enforced meaning are the
+  strongest claims; preference is unresolved (only stale pre-R19
+  data exists). Retroactive contextual-fit check on real pilot data
+  found 2 new false positives beyond "rest." Recommends a genuine
+  current-state human evaluation next. → `DECISION_LOG.md`
+  2026-08-19-L.
 - **2026-08-19, eleventh** feat: R37 — contextual-fit signal wired in as
   a reported-only diagnostic (Option A). First production code change
   in the R28-R36 investigation arc. Substitution-sourced changes only,
