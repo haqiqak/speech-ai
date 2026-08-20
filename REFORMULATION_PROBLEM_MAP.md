@@ -311,6 +311,28 @@ own problem, with the candidate-ranking/frequency-bias pattern now the
 better-evidenced lever if it's picked up again, not another idiom-
 detection mechanism. Full record: `VALIDATION.md` §17.
 
+**Update, 2026-08-19 — R32: "compounding" is not a distinct mechanism at
+all, and this section's own framing needs correcting a second time.**
+Direct, code-level trace of `_try_substitution()`/`reformulate()` found
+no mechanism that could produce genuine cross-substitution interaction —
+each candidate is scored against the pristine original sentence, and
+nothing checks whether two substitutions combine badly. Confirmed
+empirically, not just structurally: re-ran `pair_28`/`29`/`30` through
+**today's live engine** (not just the frozen capture) and built 2 new
+constructed cases pairing words each independently confirmed good
+(`VALIDATION.md` §24). **5 of 5 cases, zero exceptions: every failure
+traces to exactly one identifiably bad substitution, with the other
+substitution in the same sentence unremarkable every time.** Two of the
+three original pilot defects are already fixed by unrelated prior work
+(R19's and R27's idiom-guard entries) — not by anything about having
+multiple substitutions. §2.7's own factor is real only in the narrow
+sense that more flagged words means more independent chances for one of
+this project's *other*, already-named failure classes (idiom coverage,
+missing-sense, and a newly-surfaced inflection/word-class mismatch
+class) to fire — not a new failure mode in its own right. **No signal
+should be designed specifically for "interaction."** Full record:
+`VALIDATION.md` §25.
+
 ### 2.8 Sentence/phrase restructuring when substitution isn't enough
 
 **Current state [FINDING, and the pilot's most counter-intuitive result]:**
@@ -1096,8 +1118,8 @@ itself supported.
     unresolved rather than mis-substituted, but pair_29's separate "grab"
     problem (the generic-word-ranking pattern, item 7) is untouched by
     design — this only ever targeted the missing-sense half of that pair.
-14. **[DESIGNED AND VALIDATED, 2026-08-19 — `VALIDATION.md` §22 — R29 —
-    not implemented] A candidate specificity/genericness signal for the
+14. **[NOT PROMOTED, 2026-08-19 — `VALIDATION.md` §22, §24 — R29/R31 —
+    stays research-only] A candidate specificity/genericness signal for the
     "grab"→"take" pattern** (§2.7, item 7's finding) — per the approved
     reordering (design/validate this before item 11's escalation trigger,
     so the trigger isn't designed around an unvalidated signal). Derived
@@ -1127,6 +1149,17 @@ itself supported.
     consistently discriminating, not as a tuned cutoff. **Nothing
     implemented**: no ranking weights changed, no new gate added to
     `semantic.py`/`reformulate.py`, per explicit scope.
+    **Update, 2026-08-19 — R31: tested against a broader corpus and not
+    promoted.** The signal flags "grab"→"take" in pair_16 and pair_17 —
+    two real pilot cases the human rated 5/5/5 and preferred, a direct,
+    confirmed contradiction on its own target pattern (not just
+    unvalidated — actively wrong here). 7/7 correct on unrelated
+    ordinary substitutions. The structural mechanism is real; its
+    assumed link to human-judged quality is not confirmed. Stays
+    research-only pending a reconciliation of that gap — see also §2.7's
+    2026-08-19 update (R32), which found genericness and naturalness are
+    likely separate axes, not the same thing. Full record: `VALIDATION.md`
+    §24.
 15. **[DONE, 2026-08-19 — `VALIDATION.md` §23 — R30] Fix the
     predicate-adjective POS-tagging bug behind pair_13** (§2.3) — a side
     finding from the R30 escalation-trigger design investigation, not
@@ -1144,10 +1177,11 @@ itself supported.
 
 Items 1, 2, 4, 6, 7, 13, and 15 are implemented and verified (dated
 above); item 12 was tested and closed negative on an infrastructure
-decision; item 14 is designed and validated, not implemented; items 3
-and 5 were tested/attempted and closed (negative/blocked, respectively);
-items 8-11 remain future work, not started. This list is kept current as
-items move, not a static snapshot of one planning pass.
+decision; item 14 was tested against a broader corpus and not promoted
+(stays research-only); items 3 and 5 were tested/attempted and closed
+(negative/blocked, respectively); items 8-11 remain future work, not
+started. This list is kept current as items move, not a static snapshot
+of one planning pass.
 
 ## 6. Open questions — what we still do not know
 

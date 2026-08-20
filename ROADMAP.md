@@ -1034,6 +1034,50 @@ adversarial controls; 3 new regression tests
 confirmed by diff.
 **Labeled as:** done and verified. Full record: `VALIDATION.md` §23.
 
+### R31. Build and validate an evaluation corpus for R29/R30 — **DONE, 2026-08-19 — result: R29 not promoted**
+**Linked finding:** Tier 2 of the approved reordered plan — test R29's
+genericness signal against a broader, explicitly-labeled corpus (real
+pilot cases with human ratings + new constructed cases) before deciding
+whether to promote it.
+**What was done:** reused the exact production candidate-ranking call
+chain; built a corpus mixing REAL pilot cases (human ratings read
+directly from `eval/pilot_responses/P1.csv`) and NEW constructed cases,
+clearly labeled. Found and corrected a methodological error mid-run
+(`DISABLE_DATAMUSE=1` gave a non-representative candidate pool).
+**Result:** R29's signal flags "grab"→"take" in two real pilot cases the
+human rated 5/5/5 and preferred — a confirmed, direct contradiction on
+its own target pattern. 7/7 correct on unrelated ordinary substitutions
+(not broadly broken, just wrong about this pattern). SBERT/MeaningBERT
+disagreement magnitude tested against R24's own data: no clean
+relationship to human-judged severity. Multi-substitution interaction
+flagged as the strongest remaining lead.
+**Labeled as:** R29 **not promoted** — stays research-only. Full record:
+`VALIDATION.md` §24.
+
+### R32. Multi-substitution interaction is not a distinct mechanism — **DONE, 2026-08-19**
+**Linked finding:** R31's strongest remaining lead — the `multi_difficulty`
+category's real, large rating gap (§9.6) — investigated directly rather
+than assumed to be a genuine interaction effect.
+**What was done:** traced the substitution loop directly (sequential,
+each candidate scored against the pristine original sentence, no
+explicit interaction check anywhere); analyzed `pair_28`/`29`/`30` in
+full using their real `changes_made`/human comments; ran all three
+through **today's live engine** to see what's changed since the frozen
+capture; built 2 new cases pairing words each independently confirmed
+good in R31.
+**Result:** 5 of 5 cases (3 real + 2 new), zero exceptions — every
+failure traces to exactly one bad substitution, never to the combination
+of two. Two of the three original pilot defects are already fixed by
+unrelated prior work (R19, R27's idiom-guard entries), not by anything
+related to multiple substitutions. A new, previously-unnamed failure
+class surfaced: inflection/word-class mismatch (distinct from R30's
+predicate-adjective bug, same general shape).
+**Labeled as:** multi-substitution interaction **not supported** as a
+distinct mechanism — actively contradicted, not merely unconfirmed. Do
+not design a signal around it. A general per-word grammaticality/fluency
+check is the better-motivated next investigation (R33). Full record:
+`VALIDATION.md` §25.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

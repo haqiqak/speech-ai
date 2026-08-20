@@ -6,6 +6,16 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-19, seventh** docs: R32 — multi-substitution interaction
+  ruled out as a distinct mechanism. 5/5 real+constructed cases (not
+  just the original 3) show every failure traces to one bad
+  substitution, never interaction between two. Redirects next
+  investigation toward a general grammaticality signal (R33). →
+  `DECISION_LOG.md` 2026-08-19-G.
+- **2026-08-19, sixth** docs: R31 — built a broader evaluation corpus
+  and found R29's genericness signal flags two real pilot cases humans
+  rated 5/5/5 and preferred. Not promoted; stays research-only. →
+  `DECISION_LOG.md` 2026-08-19-F.
 - **2026-08-19, fifth** fix: R30 — fixed the predicate-adjective
   POS-tagging bug behind pair_13 ("was late" mis-tagged RB, producing
   "was recently again"). Curated flat-adverb list, not a general

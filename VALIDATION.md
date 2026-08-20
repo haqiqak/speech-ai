@@ -2853,3 +2853,138 @@ precision-over-recall tradeoff this project already makes for
 intervening word between the copula and the flat adverb (e.g. a
 contracted negation) is not handled. Not a general re-tagger; a targeted
 fix for the evidenced case and its immediate neighbors.
+
+## 24. R31 — building and validating an evaluation corpus for R29/R30 (executed 2026-08-19)
+
+Per the approved Tier 2 plan: determine whether R29's genericness signal
+is reliable enough to promote, using a corpus deliberately broader than
+the 4 cases R29 itself was validated against. Pure investigation — no
+production code changed.
+
+### 24.1 Method
+
+Reused the exact production candidate-ranking call chain
+(`engine.get_synonyms` → `reformulate._raw_candidates` →
+`semantic.rank_candidates_contextually`), unmodified. Built a small,
+explicitly labeled corpus: REAL cases pulled from `eval/pilot_pairs.json`
+with human ratings read directly from `eval/pilot_responses/P1.csv` (not
+assumed), plus NEW cases constructed for this pass, clearly marked as
+such — a curated "legitimate rare synonym" stress set (buy/start/help/
+show/live) and an exploratory "flagged but should ship" set.
+
+**A methodological error was found and corrected mid-run, disclosed
+rather than hidden**: the first pass ran with `DISABLE_DATAMUSE=1` (the
+test-suite convention), which produced a materially different, smaller,
+WordNet-only candidate pool than the live production/pilot-capture
+conditions — for one case it changed a result from "flagged" to "no
+candidates accepted at all." Re-ran everything without the flag to match
+actual conditions once this was caught.
+
+### 24.2 Result — a confirmed false positive against direct human evidence
+
+**[FINDING] R29's combined signal flags "grab"→"take" in pair_16
+("Let me grab my jacket real quick.") and pair_17 ("Do you want to grab
+coffee later?") — both cases where the human rated the output 5/5/5 and
+preferred it.** Not a hypothetical risk — a direct, 2-for-2 disagreement
+between the signal and the only real human-evidence source available for
+its own target pattern. The one case with an actual human complaint
+(pair_29) is a *compound* substitution, and the complaint named
+push/force specifically, not grab — the signal's flag on that case is
+not corroborated or contradicted by the human record either way.
+
+**[FINDING, positive] 7/7 correct, 0 false positives on unrelated
+ordinary substitutions** (5 new legitimate-rare-synonym cases, 2 known-
+good pilot cases) — the signal is not broadly broken, only specifically
+wrong about its own intended target pattern.
+
+**[INTERPRETATION]** The structural mechanism R29 found (candidates
+drawn from a hypernym are more generic) is real and reproducible. Its
+assumed *consequence* — that genericness predicts poor human-judged
+quality — is not confirmed, and is directly contradicted twice. A
+plausible resolution: genericness and naturalness/idiomaticity are
+separate axes (consistent with the R30 design investigation's own
+four-dimensional framing of "quality") — "take my jacket"/"take coffee"
+read as perfectly natural in isolation even though structurally generic;
+the compound case's problem was elsewhere (§25 below investigates this
+directly).
+
+### 24.3 Other signals checked against existing recorded data
+
+- **Multi-substitution interaction**: real, strong existing evidence
+  (§9.6's category means: `multi_difficulty` 2.00 vs. `word_pattern`
+  4.75 vs. `declared_word` 5.0) — flagged as the most promising
+  remaining lead, investigated fully in R32 (§25).
+- **SBERT/MeaningBERT disagreement magnitude**: tested against R24's own
+  14-pair table (§15.2) — **negative result**. The single worst human
+  case (pair_28, meaning=1/5) has the *smallest* disagreement between the
+  two signals (~3.3 points — both wrong the same way); several
+  meaning=3 cases have much larger disagreement (pair_11: 48.8 points).
+  No clean, monotonic relationship between disagreement magnitude and
+  human-judged severity in this dataset. Diagnostic only, not promising.
+- **Difficulty before/after (partial resolution)**: cannot be evaluated
+  — no human ratings exist for any partially-resolved output.
+
+**[RECOMMENDATION]** Do not promote R29 to even a reported diagnostic
+signal yet. Investigate multi-substitution interaction next — stronger,
+uncontradicted evidence base. Full record of that investigation:
+§25 (R32).
+
+## 25. R32 — multi-substitution interaction is not a distinct mechanism (executed 2026-08-19)
+
+### 25.1 Method
+
+Traced `_try_substitution()`/`reformulate()` directly: flagged positions
+are processed sequentially; each candidate's SBERT score compares
+against the *original* sentence, never the partially-modified one; no
+code anywhere explicitly checks whether two substitutions interact. Then
+analyzed `pair_28`/`pair_29`/`pair_30` in full — `changes_made`,
+`profile_spec`, and the actual P1 free-text comments, read directly, not
+summarized from memory — **and separately ran all three original texts
+through today's live engine** to see what's changed since the frozen v3
+capture.
+
+### 25.2 Result — five for five, no interaction found
+
+| Case | Frozen v3 (what P1 rated) | Live today | Complaint traces to |
+|---|---|---|---|
+| pair_28 | running→going, right→properly (meaning=1) | running→going only; "right now" now idiom-protected (R19) | Two *independent* idiom breaks, not interaction |
+| pair_29 | push→force, grab→catch (meaning=3) | grab→take only; "push" now idiom-protected (R27) | push/force only, per the human's own words |
+| pair_30 | print→create, grab→take (meaning=2) | unchanged — still live and unaddressed | print/create only, per the human's own words |
+
+**[FINDING] Two of the three original defects are already fixed by
+unrelated prior work (R19, R27) — not by anything related to multiple
+substitutions.** What remains in all three cases is, again, exactly
+**one** identifiable defect per sentence, with the second substitution
+unremarkable each time.
+
+**[FINDING] Two new constructed cases (pairing words each independently
+confirmed good in R31: doctor+sleep, buy+start) reproduce the identical
+pattern.** "The doctor said I need more sleep." → "The dr. said I need
+more **asleep**" (doctor→dr. clean; sleep→asleep breaks — wrong word
+class, "asleep" can't follow "more" as a noun). "We need to buy supplies
+before we start the project." → "...before we **starting** the
+project" (buy→purchase clean; start→starting breaks — wrong inflection
+for the grammatical slot). **5 of 5 cases tested, zero exceptions: every
+multi-substitution failure traces to exactly one bad substitution, never
+to the combination of two.**
+
+**[FINDING, new failure class surfaced, not previously named]** Both new
+cases fail via a wrong grammatical form landing in the wrong slot — the
+same general shape as R30's predicate-adjective bug, but distinct
+instances (a noun-slot adjective; a finite-verb-slot gerund). Not
+investigated further here — named for future work.
+
+**[RECOMMENDATION]** Multi-substitution interaction is **not** supported
+as a distinct mechanism — 5/5 real+constructed cases actively contradict
+it, not merely fail to confirm it. The category's poor ratings reflect
+doubled exposure to already-known (or still-needed) per-word failure
+classes: idiom coverage, missing-sense, and now inflection/word-class
+mismatch. **Do not design a multi-substitution-specific signal.**
+Prioritize a general per-word grammaticality/fluency check instead — it
+would catch this category's real defects *and* generalize beyond it,
+investigated next (R33).
+
+Two small, separately-fixable items surfaced, named but not implemented
+here: "running behind" is missing from the idiom guard (same shape as
+R27's "push the meeting" addition); the inflection/word-class mismatch
+class needs its own future investigation.

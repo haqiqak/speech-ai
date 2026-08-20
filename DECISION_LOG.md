@@ -2440,3 +2440,63 @@ confirmed by diff).
 
 **Category:** Bug fix, small and targeted. No ranking weights touched;
 no new dependency. Full record: `VALIDATION.md` §23; `ROADMAP.md` R30.
+
+### 2026-08-19-F — R31: evaluation corpus built, R29's genericness signal not promoted
+
+**What was done:** Tier 2 of the approved plan — tested R29's signal
+against a broader, explicitly-labeled corpus (real pilot cases with
+human ratings pulled directly from `eval/pilot_responses/P1.csv`, plus
+new constructed cases) rather than trusting the original 4-case
+validation. Found and corrected a methodological error mid-run:
+`DISABLE_DATAMUSE=1` produced a non-representative, smaller candidate
+pool than actual pilot/production conditions.
+
+**Result:** R29's combined signal flags "grab"→"take" in pair_16 and
+pair_17 — two real cases the human rated 5/5/5 and preferred. A direct,
+confirmed contradiction on the signal's own target pattern, not a
+hypothetical risk. 7/7 correct on unrelated cases (legitimate rare
+synonyms, other known-good substitutions) — the signal isn't broadly
+broken, just wrong about the specific pattern it was built for.
+Separately checked SBERT/MeaningBERT disagreement magnitude against
+R24's own 14-pair table: no clean relationship to human-judged severity
+(the single worst case has the *smallest* disagreement). Multi-
+substitution interaction identified as the strongest remaining lead.
+
+**Decision: R29 is not promoted to even a reported diagnostic signal.**
+Stays research-only pending a reconciliation of why the structural
+mechanism doesn't predict human judgment. Full record: `VALIDATION.md`
+§24; `ROADMAP.md` R31.
+
+### 2026-08-19-G — R32: multi-substitution interaction ruled out as a distinct mechanism
+
+**What was done:** traced `_try_substitution()`/`reformulate()` directly
+— sequential per-position processing, each candidate scored against the
+pristine original sentence, no explicit cross-substitution check
+anywhere in the code. Analyzed `pair_28`/`pair_29`/`pair_30` in full
+(real `changes_made`, `profile_spec`, and P1's actual free-text
+comments), then ran all three through **today's live engine** — not
+just the frozen v3 capture — to see what's changed since. Built 2 new
+cases pairing words each independently confirmed good in R31.
+
+**Result: 5 of 5 cases (3 real + 2 new), zero exceptions — every
+multi-substitution failure traces to exactly one bad substitution, never
+to interaction between two.** Concretely: two of the three original
+pilot defects are already fixed by unrelated prior work (R19's and
+R27's idiom-guard entries) — not by anything about multiple
+substitutions. A new failure class surfaced and named for future work:
+inflection/word-class mismatch (e.g. "sleep"→"asleep" used as a noun;
+"start"→"starting" in a finite-verb slot) — same general shape as R30's
+bug, distinct instances.
+
+**Decision: do not design a multi-substitution-specific signal.**
+The category's real rating gap (§9.6) reflects doubled exposure to
+already-known per-word failure classes, not a new mechanism. Redirects
+the next investigation toward a general per-word grammaticality/fluency
+signal (R33) rather than anything interaction-specific. Two small,
+separately-fixable items named but not implemented: "running behind"
+missing from the idiom guard; the inflection/word-class class needs its
+own future investigation.
+
+**Category:** Both investigations. No production code changed in either;
+no ranking weights touched. Full record: `VALIDATION.md` §24-25;
+`ROADMAP.md` R31-R32.
