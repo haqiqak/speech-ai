@@ -3371,3 +3371,90 @@ genuine current-state human evaluation — no valid preference or
 naturalness measurement exists for the system as it stands today, only
 for a snapshot that predates R19-R37. Designing that evaluation is the
 natural next step, not another signal investigation.
+
+## 32. R39 — current-state human evaluation, executed (2026-08-20/21)
+
+Executed exactly as designed (§31's recommendation), per direct
+instruction. Single rater (n=1), same disclosed limitation class as P1
+and R35 throughout — directional evidence, not a validated study.
+
+### 32.1 Method
+
+`eval/pilot_select_pairs_v4.py` (new script, mirrors `pilot_select_pairs.py`'s
+exact structure/schema) regenerated 20 (profile, text) pairs through
+**today's live engine, with live Datamuse** (not `DISABLE_DATAMUSE=1`,
+unlike v3 — R31 found that flag changes the candidate pool materially,
+and this evaluation is explicitly about real, current user-facing
+behavior). The original v3 `pilot_pairs.json`/`pilot_responses/P1.csv`
+were archived first, unmodified, to `eval/archive_v3/` (mirroring the
+existing `archive_v2/` precedent) before anything was overwritten.
+`eval/pilot_app.py` ran completely unmodified.
+
+**Group A (10):** the exact same case_id/text/profile as 10 of the
+original v3 items (gs_hows_it_going, gs_sleep_well, gs_bus_late,
+gs_grab_jacket, gs_grab_coffee, wp_valuable_lesson, md_running_traffic,
+md_push_meeting_coffee, md_print_report_coffee, plus gs_cant_believe
+swapped in for gs_driving_crazy — see below) — regenerated live for a
+direct before/after delta. **Group B (10):** fresh (profile, text)
+combinations never rated before.
+
+**[FINDING] Three items had to be swapped before generation succeeded,
+each a real, disclosed finding in its own right, not a script bug:**
+`gs_driving_crazy` ("The kids are driving me crazy today.") now produces
+`could_not_safely_reformulate` — R19's idiom guard fully protects this
+phrase today, so the exact v3 defect can no longer be produced at all,
+confirmed by the engine's own refusal rather than inferred. Two Group B
+candidates (`gs2_nice_weather`, `dw2_project_deadline`) also produced no
+safe candidate and were swapped for different fresh sentences, per this
+project's standing "swap, don't silently drop" discipline.
+
+### 32.2 Group A — direct before/after, same declared difficulty
+
+| Case | Substitution (today) | Old (v3) | New (v4) | Verdict |
+|---|---|---|---|---|
+| gs_hows_it_going | dropped entirely | 2/2/0/Original, "unnatural" | 5/5/1/Reformulated | **Improved** — R19/R25 confirmed directly |
+| gs_sleep_well | sleep→**nap** (was "rest") | 3/5/1/Reformulated | 3/4/1/Original, "nap is different to sleep, it is short" | **Regressed** — live candidate-pool drift, caught directly |
+| gs_cant_believe | happened→occurred | 5/4/1/Reformulated | 5/5/2/Reformulated | Stable |
+| gs_bus_late | late→**after-hours** (was "recently") | 2/2/0/Original, "unnatural" | 3/2/0/Original, "unnatural" | **Still bad, new mechanism** — R30's POS fix confirmed working (no wrong-POS output), but candidate quality for "late" is a separate, still-open problem |
+| gs_grab_jacket | grab→take | 5/5/1/Reformulated | 5/5/2/Reformulated | Stable |
+| gs_grab_coffee | grab→take | 5/5/1/Reformulated | 5/5/2/Reformulated | Stable |
+| wp_valuable_lesson | valuable→worth (unchanged) | 4/4/1/Reformulated, "must be worthy not worth" | 3/1/0/Original, "unnatural" | Still bad, rated more harshly — R28's own known case, never targeted by any fix |
+| md_running_traffic | running→going (unchanged) | 1/2/0/Original, "going behind might mean going back" | 1/2/0/Original, **identical complaint, independently re-typed** | Still bad, confirmed reliably — half-fixed (R19), "running behind" not on the idiom list |
+| md_push_meeting_coffee | push dropped (idiom-protected); grab→take | 3/4/1/Reformulated, "push and force might mean different" | 5/5/2/Reformulated, **no complaint** | **Improved — R27 confirmed directly**, complaint fully gone |
+| md_print_report_coffee | print→create, grab→take (unchanged) | 2/4/1/Original, "meaning changed" | 4/3/0/Original, "sounds unnatural" | Still rejected; output essentially unchanged, complaint framing shifted — likely rater-variance, not a system change |
+
+**[FINDING] Group A preference: 5/10 (50%) today vs. 6/10 (60%) on this
+same matched subset in v3** — but the aggregate obscures the real
+result: 2 confirmed genuine fixes (R19/R25, R27 — complaints fully
+resolved, not just scores nudged), 1 confirmed genuine regression
+(sleep→nap), 1 case where a targeted fix worked exactly as designed but
+exposed a different, still-open problem (bus_late), and 3 stable
+not-yet-fixed defects, independently re-confirmed by fresh blind rating
+rather than assumed still-present.
+
+### 32.3 Group B — fresh coverage, no prior comparison possible
+
+Preference: 8/10 (80%) Reformulated. Mean meaning 4.5/5, mean
+naturalness 4.3/5, mean ease +1.5. Two rejections (one meaning
+complaint, one naturalness complaint), neither connected to any
+previously-known issue.
+
+### 32.4 What this resolves from R38, and what it doesn't
+
+**[RECOMMENDATION]** Preference is no longer entirely unresolved — a
+genuine current-state number now exists (Group A 50%, Group B 80%,
+~65% blended, n=20, n=1 rater). This is not a replacement for the old
+73.3% (different sample, deliberately edge-case-weighted in Group A) —
+the valid comparison is the matched Group A delta, not a new aggregate
+overwriting the old one. **Two new findings, not previously known,
+surfaced only by regenerating through today's live engine**: a live
+regression on "sleep"→"nap" (candidate-pool drift, not a code change),
+and confirmation that R30's fix is real and working but incomplete — it
+solved the POS-tagging mechanism, not the underlying candidate-quality
+problem for that word.
+
+**[LIMITATION]** n=1, single session, no counterbalancing beyond the
+existing shuffle. Not a large validated study — a directional, honest
+reading, exactly as designed.
+
+No further investigation started, per explicit instruction.

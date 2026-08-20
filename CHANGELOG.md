@@ -6,6 +6,14 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-21** test/docs: R39 — current-state human evaluation
+  executed (n=1). 20 pairs regenerated through today's live engine
+  (live Datamuse). Group A matched-pair delta vs. v3: 2 confirmed
+  fixes (R19/R25, R27), 1 confirmed regression ("sleep"→"nap"), 1 case
+  where R30's fix works but exposed a separate open problem
+  ("after-hours"), 3 stable known defects reconfirmed. Group B: 80%
+  preference. v3 data archived to eval/archive_v3/, not overwritten.
+  → `DECISION_LOG.md` 2026-08-20/21-A.
 - **2026-08-19, twelfth** docs: R38 — final system-level evaluation,
   closes the R17-R37 arc. Safety + SBERT-enforced meaning are the
   strongest claims; preference is unresolved (only stale pre-R19

@@ -2711,3 +2711,62 @@ the justified next step.
 **Category:** Final evaluation, closing the R17-R38 arc. No production
 code changed; no new corpus or human study conducted; no new metrics
 introduced. Full record: `VALIDATION.md` §31; `ROADMAP.md` R38.
+
+### 2026-08-20/21-A — R39: current-state human evaluation executed, closing R38's largest gap
+
+**What was done:** the human evaluation R38 recommended, actually run.
+New `eval/pilot_select_pairs_v4.py` (mirrors `pilot_select_pairs.py`'s
+schema exactly) regenerated 20 pairs through today's live engine, with
+live Datamuse — deliberately not `DISABLE_DATAMUSE=1`, since R31 found
+that flag changes the candidate pool materially and this evaluation is
+about real, current behavior, not internal reproducibility. Group A
+(10) reused the exact case_id/text/profile of 10 original v3 items for
+a direct before/after delta; Group B (10) is fresh coverage. The
+original v3 `pilot_pairs.json`/`pilot_responses/P1.csv` were archived
+to `eval/archive_v3/` first, untouched, mirroring the existing
+`archive_v2/` precedent — never overwritten without a backup.
+`eval/pilot_app.py` itself ran completely unmodified. Single rater
+(n=1), same disclosed limitation as every prior pass.
+
+**Three items required swapping before generation succeeded** — each a
+real finding, not friction to route around: `gs_driving_crazy` ("The
+kids are driving me crazy today.") now produces `could_not_safely_
+reformulate` — R19's idiom guard fully protects this phrase today, so
+the exact v3 defect cannot be produced anymore, confirmed by the
+engine's own refusal rather than inferred. Two Group B candidates also
+had no safe candidate and were swapped, per this project's standing
+practice of swapping rather than silently dropping.
+
+**Group A result (matched pairs, same declared difficulty, re-rated
+fresh):** 2 confirmed genuine fixes — R19/R25's "how's it going" case
+(2/2/0/Original→5/5/1/Reformulated) and R27's "push the meeting" case
+(the exact complaint, "push and force might mean different," fully
+disappeared). 1 confirmed regression — "sleep"→"nap" (was "rest" in
+v3), the rater independently naming the exact issue ("nap is different
+to sleep, it is short"). 1 case demonstrating a fix working exactly as
+designed while exposing a different, still-open problem — "late"→
+"after-hours" (R30 correctly stopped the wrong-POS "recently" output,
+but the replacement candidate itself is a poor semantic fit for a bus).
+3 stable, still-open defects independently reconfirmed — most notably
+`md_running_traffic`, where the rater produced the *identical* free-text
+complaint ("going behind might mean going back") on a blind, independent
+re-rating, a real reliability signal on both the system and the rater.
+
+**Group B result:** 80% preference, mean meaning 4.5/5, naturalness
+4.3/5, no pattern connecting its two rejections to any previously-known
+issue.
+
+**Decision:** preference is no longer entirely unresolved — genuine
+current-state numbers now exist. This does not replace the old 73.3%
+(different, deliberately edge-case-weighted sample) — the valid,
+disclosed comparison is the matched Group A delta, not a new headline
+number. Two of this pass's findings (the "nap" regression, the
+"after-hours" candidate-quality gap) were not previously known and
+could only have been found by regenerating through live code rather
+than reasoning from old data. **No further investigation started**, per
+explicit instruction — this closes the evaluation, pending the user's
+review.
+
+**Category:** Human evaluation, executed. No production code changed;
+no ranking weights touched; no new signal or model introduced. Full
+record: `VALIDATION.md` §32; `ROADMAP.md` R39.

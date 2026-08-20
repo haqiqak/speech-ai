@@ -1206,6 +1206,39 @@ largest remaining gap is a genuine current-state human evaluation (no
 valid preference or naturalness measurement exists for today's system).
 Full record: `VALIDATION.md` §31.
 
+### R39. Current-state human evaluation, executed — **DONE, 2026-08-20/21**
+**Linked finding:** R38's single largest gap — no valid current-state
+preference or naturalness measurement existed, only a pre-R19-R37
+snapshot.
+**What was done:** new script `eval/pilot_select_pairs_v4.py` (mirrors
+`pilot_select_pairs.py`'s exact schema) regenerated 20 pairs through
+today's live engine with live Datamuse (not `DISABLE_DATAMUSE=1`, per
+R31's finding that flag changes the candidate pool). Group A (10) =
+historical re-test of the same declared difficulties v3 rated; Group B
+(10) = fresh coverage. v3 data archived to `eval/archive_v3/` first,
+untouched. `eval/pilot_app.py` ran completely unmodified. Single rater
+(n=1), same disclosed limitation as P1/R35.
+**Result:** Group A matched-pair delta: 2 confirmed genuine fixes
+(R19/R25's idiom-guard case, R27's "push the meeting" case — complaints
+fully resolved), 1 confirmed regression ("sleep"→"nap," a live
+candidate-pool drift), 1 case where R30's fix is confirmed structurally
+working but exposed a separate, still-open candidate-quality problem
+("late"→"after-hours"), 3 stable not-yet-fixed defects independently
+re-confirmed by fresh blind rating (one with an *identical*,
+independently re-typed complaint). Group B: 80% preference, mean
+meaning 4.5/5, naturalness 4.3/5. Three items had to be swapped before
+generation because they no longer produce a ratable output today —
+each itself a real finding (`gs_driving_crazy` is now fully
+idiom-protected, confirming R19 by the engine's own refusal, not
+inference).
+**Labeled as:** preference is no longer entirely unresolved — genuine
+current-state numbers exist (~65% blended, n=20, n=1). Not a
+replacement for the old 73.3% (different, deliberately edge-case-
+weighted sample) — the valid comparison is the matched Group A delta.
+Two new findings surfaced only by regenerating through live code, not
+previously known. No further investigation started, per explicit
+instruction. Full record: `VALIDATION.md` §32.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)
