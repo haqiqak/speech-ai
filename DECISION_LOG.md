@@ -2500,3 +2500,47 @@ own future investigation.
 **Category:** Both investigations. No production code changed in either;
 no ranking weights touched. Full record: `VALIDATION.md` §24-25;
 `ROADMAP.md` R31-R32.
+
+### 2026-08-19-H — R33+R34: a fluency/naturalness signal found, and its main ambiguity resolved
+
+**R33 — what was done:** tested two candidates for detecting a
+substitution that passes every gate but reads unnaturally, both via the
+already-installed `transformers` package (new checkpoints only, no new
+pip dependency): GPT-2 sentence-level perplexity, and DistilBERT
+masked-LM word-probability at the substituted word's specific position.
+
+**R33 result:** GPT-2 rejected outright — it rated R30's own confirmed
+fix ("was belated") as *less* fluent than the exact bug it replaced
+("was recently"), a direct inversion on the clearest possible test.
+DistilBERT showed strong, clean separation on matched contrast pairs
+(same sentence, only the flagged word differs) — e.g. "start" 0.2578 vs.
+"starting" 0.0001 — and correctly rated R30's fix far above its bug. One
+real ambiguity was left open: R29's own false-positive class (seize/
+clutch, legitimate but uncommon grab-synonyms) scored 0.0000 when
+substituted, indistinguishable from confirmed-bad cases.
+
+**R34 — what was done:** tested the same words (plus grasp, snatch) in
+two contexts each — a natural, idiomatic sentence and the same forced
+"grab coffee"-style substitution context — to determine whether the low
+score reflects rarity bias or genuine mismatch detection.
+
+**R34 result:** uniform and decisive across all 4 words — each scores
+high (0.05-0.44) in its natural context and collapses to 0.0000 only
+when forced into the mismatched context, by ratios of 2,259× to
+468,789×. **Not a rarity artifact.** The model is correctly detecting
+real collocation/register mismatch. Zero confirmed false positives, zero
+false negatives across R33+R34 combined.
+
+**Decision: DistilBERT masked-LM word-probability is the strongest
+candidate signal found across R28-R34** — the only one to survive every
+test, including a direct, targeted attempt to falsify it. **Not yet
+promoted to implementation.** This remains strong model-judgment
+evidence at n=25 labeled points, not human-validated — the explicit next
+step (agreed with the user) is a small blind human-rating pass on a
+controlled good/bad corpus before any design or implementation work
+proceeds, so a promising research result doesn't get promoted into
+production on model-internal consistency alone.
+
+**Category:** Signal investigation, two-part. No production code
+changed; no ranking weights touched; no thresholds set. Full record:
+`VALIDATION.md` §26-27; `ROADMAP.md` R33-R34.

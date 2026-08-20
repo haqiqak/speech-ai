@@ -1104,6 +1104,23 @@ itself supported.
     never successfully loaded in this project until this investigation.
     A real pre-requisite for any future LanguageTool-adjacent work, not
     just a footnote.
+    **Update, 2026-08-19 — R33/R34: a different kind of tool found and
+    stress-tested, promising, not yet human-validated.** DistilBERT
+    masked-LM word-probability (mask the substituted word, read the
+    model's probability for the word actually used) showed strong,
+    clean separation on matched contrast pairs and correctly rated R30's
+    own fix far above its bug — GPT-2 sentence perplexity was tried
+    first and rejected (it rated R30's fix as *less* fluent than the bug
+    it replaced). The one open ambiguity (legitimate rare synonyms
+    scoring the same as known-bad substitutions) was directly resolved:
+    tested in natural vs. forced context, the same words swing from
+    high-confidence to near-zero only when forced into a genuine
+    mismatch (ratios of 2,259×-468,789×) — not a rarity artifact. Zero
+    confirmed false positives, zero false negatives across everything
+    tested (n=25). **Still model-judgment only, not human-validated** —
+    the agreed next step is a small blind human-rating pass before any
+    design or implementation proceeds. Full record: `VALIDATION.md`
+    §26-27.
 13. **[DONE, 2026-08-19 — `VALIDATION.md` §20 — R27] Extend the idiom guard
     to verb+object phrasal idioms** (§2.4, §5 item 1) — concretely scoped by
     the R26 follow-up: "push [a meeting]" (postpone) has no WordNet sense

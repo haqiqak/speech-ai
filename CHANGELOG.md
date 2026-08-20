@@ -6,6 +6,13 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-19, eighth** docs: R33+R34 — GPT-2 perplexity rejected
+  (rated R30's own fix worse than its bug). DistilBERT masked-LM
+  word-probability found strong on matched contrast pairs; the one
+  open ambiguity (seize/clutch scoring like known-bad cases) resolved
+  directly — natural context scores 0.05-0.44, forced context 0.0000,
+  a real mismatch signal not a rarity bias. Not yet human-validated or
+  implemented. → `DECISION_LOG.md` 2026-08-19-H.
 - **2026-08-19, seventh** docs: R32 — multi-substitution interaction
   ruled out as a distinct mechanism. 5/5 real+constructed cases (not
   just the original 3) show every failure traces to one bad

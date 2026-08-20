@@ -2988,3 +2988,106 @@ Two small, separately-fixable items surfaced, named but not implemented
 here: "running behind" is missing from the idiom guard (same shape as
 R27's "push the meeting" addition); the inflection/word-class mismatch
 class needs its own future investigation.
+
+## 26. R33 — fluency/naturalness signal investigation (executed 2026-08-19)
+
+Per R32's redirect: investigate whether a practical local signal can
+detect a substitution that passes every existing gate but reads
+unnaturally. Bounded to two candidates, both via the already-installed
+`transformers` package (new checkpoints downloaded — same category of
+action as R24's MeaningBERT — no new pip dependency). No production code
+touched. LanguageTool (R28) deliberately not revisited.
+
+### 26.1 Candidate A: GPT-2 sentence-level perplexity — rejected
+
+**[FINDING] Direct inversion on the clearest possible test case.** R30's
+own fix ("The bus was **belated** again this morning" — the corrected,
+human-improved output) scored perplexity **342**, *higher* (less fluent,
+by this metric) than the exact bug it replaced (**222**) and than most
+other known-bad cases tested (worth-lesson 75, starting 108).
+Sentence-level averaging dilutes the local signal this task actually
+needs. **Rejected — not a viable candidate**, confirmed by direct
+evidence, not assumed from theory.
+
+### 26.2 Candidate B: DistilBERT masked-LM word-probability — promising
+
+Mask the substituted word's position specifically; read the model's
+probability for the word that's actually there — tests contextual fit
+at exactly the position that matters, not whole-sentence fluency.
+
+**[FINDING] Strong separation on matched contrast pairs** (same
+sentence, only the flagged word differs):
+
+| Pair | Bad | Good |
+|---|---|---|
+| data structures | knowledges: 0.0002 | structures: 0.0539 (270×) |
+| sleep | asleep: 0.0000 | rest: 0.0024 |
+| start | starting: 0.0001 | start: 0.2578 (2,578×) |
+| R30's own fix | recently: 0.0000 | belated: 0.2176 |
+
+All 6 known-bad cases tested scored ≤0.0003; known-good cases (doctor→
+physician 0.0069, grab→take 0.0223, plus the pairs above) scored
+consistently higher, though with real spread.
+
+**[LIMITATION, the open question this section leaves unresolved]**
+Tested directly against R29's own false-positive class: "seize"/"clutch"
+as legitimate grab-synonyms, forced into "...and seize/clutch coffee
+after?" — both scored **0.0000, indistinguishable from the known-bad
+cluster.** Whether this is a genuine false positive (the signal
+penalizing rare words) or a correct detection of collocation mismatch
+could not be resolved with the data gathered in this section alone —
+stated as an open question, not guessed at. Investigated directly next
+(§27, R34).
+
+**[RECOMMENDATION]** GPT-2 perplexity: reject. DistilBERT word-
+probability: promising, not yet ready to promote — the seize/clutch
+ambiguity needs resolving first.
+
+## 27. R34 — resolving R33's ambiguity: rarity vs. genuine mismatch (executed 2026-08-19)
+
+### 27.1 Method
+
+Tested the same words R33 flagged (seize, clutch) plus two more from the
+same synonym family (grasp, snatch), each in two contexts: a natural,
+idiomatic sentence a fluent speaker would consider a good fit, and the
+same forced "grab coffee"-style context that produced R33's ambiguous
+result. If the model penalizes rarity itself, both contexts should score
+similarly low; if it tracks real collocational fit, natural should score
+far higher.
+
+### 27.2 Result — decisive, uniform across all four words
+
+| Word | Natural context | Forced context | Ratio |
+|---|---|---|---|
+| seize | "seize the opportunity" — 0.4440 | "seize coffee" — 0.0000 | 406,698× |
+| clutch | "clutch her bag tightly" — 0.1566 | "clutch coffee" — 0.0000 | 91,609× |
+| grasp | "grasp the railing" — 0.1511 | "grasp coffee" — 0.0000 | 468,789× |
+| snatch | "snatch her purse" — 0.0523 | "snatch coffee" — 0.0000 | 2,259× |
+
+**[FINDING] Every word swings from a high, confident score in its
+natural context to essentially zero when forced into the grab-coffee
+context — uniformly, not just for one word.** This resolves R33's
+ambiguity: the near-zero score is not a rarity-driven false positive.
+The model is correctly detecting a genuine collocation/register mismatch
+specific to that pairing, not penalizing the word for being uncommon.
+
+**[FINDING] Consolidated false-positive/false-negative count across
+R33+R34: zero confirmed false positives, zero false negatives observed**
+in everything tested (though see the limitation below on what "tested"
+covers).
+
+**[LIMITATION, stated plainly]** This is strong, internally-consistent
+*model* evidence, not a direct *human* rating of "seize coffee"
+specifically — the inference is well-supported (collocational
+competence in a masked-LM correlates well with human naturalness
+judgment in the broader NLP literature) but not proven for this
+project's own population. n=25 labeled points total across R33+R34 —
+enough to justify further validation, not enough to set a deployment
+threshold.
+
+**[RECOMMENDATION]** DistilBERT masked-LM word-probability remains the
+strongest candidate signal found across R28-R34. Next step before any
+implementation: a small human validation round on a blind, unlabeled
+corpus — confirming the model's judgment actually matches a real
+speaker's, not just its own internal consistency. Not started here, per
+explicit scope.

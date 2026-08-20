@@ -1078,6 +1078,37 @@ not design a signal around it. A general per-word grammaticality/fluency
 check is the better-motivated next investigation (R33). Full record:
 `VALIDATION.md` §25.
 
+### R33. Fluency/naturalness signal investigation — **DONE, 2026-08-19 — GPT-2 rejected, DistilBERT promising**
+**Linked finding:** R32's redirect — a general per-word naturalness
+check, not an interaction-specific one.
+**What was done:** tested two candidates via already-installed
+`transformers` (new checkpoints, no new dependency): GPT-2 sentence
+perplexity, and DistilBERT masked-LM word-probability at the substituted
+word's position specifically.
+**Result:** GPT-2 rejected — rated R30's own fix as *less* fluent than
+the bug it replaced. DistilBERT showed strong separation on matched
+contrast pairs (e.g. start 0.2578 vs. starting 0.0001 in the same
+sentence) but left one ambiguity open: legitimate rare synonyms (seize/
+clutch) scored 0.0000, indistinguishable from known-bad cases.
+**Labeled as:** GPT-2 — reject. DistilBERT — promising, ambiguity
+investigated next (R34). Full record: `VALIDATION.md` §26.
+
+### R34. Resolving R33's ambiguity: rarity vs. genuine mismatch — **DONE, 2026-08-19**
+**Linked finding:** R33's one open question — is DistilBERT's low score
+for seize/clutch a rarity bias (bad) or real collocation-mismatch
+detection (good)?
+**What was done:** tested the same words (plus grasp, snatch) in both a
+natural, idiomatic context and the forced grab-substitute context.
+**Result:** uniform, decisive swing across all 4 words — high-confidence
+scores (0.05-0.44) in natural context, collapsing to 0.0000 only when
+forced into the mismatched context (ratios of 2,259× to 468,789×). Not a
+rarity artifact — genuine collocation-mismatch detection. Zero confirmed
+false positives, zero false negatives across R33+R34 combined.
+**Labeled as:** DistilBERT masked-LM word-probability is the strongest
+candidate signal found across R28-R34. Not yet human-validated (n=25,
+model-judgment only) — that's the explicit next step before any
+implementation. Full record: `VALIDATION.md` §27.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)
