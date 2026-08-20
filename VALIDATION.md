@@ -3091,3 +3091,54 @@ implementation: a small human validation round on a blind, unlabeled
 corpus — confirming the model's judgment actually matches a real
 speaker's, not just its own internal consistency. Not started here, per
 explicit scope.
+
+## 28. R35 — human validation of the DistilBERT signal (executed 2026-08-19)
+
+### 28.1 Method
+
+18 sentences (8 known-bad, 10 known-good/legitimate-rare by the R33/R34
+labeling), presented to the user **blind and shuffled** — no bad/good
+labels, no indication of which were DistilBERT's edge cases — with a
+simple three-point scale: Natural / Acceptable / Unnatural. Single
+rater, same disclosed-limitation class as the original P1 pilot (n=1,
+not a large study).
+
+### 28.2 Result — 17/18 agreement, one real, informative exception
+
+**[FINDING] 17 of 18 ratings agree with the pre-assigned label,
+including the two cases R34 was specifically built to test** ("...push
+the meeting and seize/clutch coffee after?" — both independently rated
+**Unnatural** by the human, exactly matching DistilBERT's 0.0000 score
+and R34's natural-vs-forced-context inference. This is direct human
+confirmation, not just model self-consistency.
+
+**[FINDING, the one disagreement — reported plainly, not smoothed
+over] The human rated R30's own fix ("The bus was belated again this
+morning") Unnatural** — the single highest-scoring sentence in the
+entire set by DistilBERT (0.2176). **[INTERPRETATION]** "Belated" is a
+correct word, almost always used in fixed collocations ("belated
+birthday wishes," "a belated apology") — applying it plainly to a bus is
+a register/formality mismatch a native speaker notices immediately, that
+DistilBERT's local collocational-fit measure did not catch. **A
+disclosed, genuine blind spot**: the signal is validated for
+collocation-mismatch detection, not formality/register matching.
+
+**[FINDING, a nuance, not a failure] "Do you want to take coffee later?"
+was rated Acceptable, not fully Natural** — even though a different
+rater (P1) rated the identical substitution 5/5/5 in the original pilot.
+Not a disagreement with the "good" label, but a faint echo of R29's
+original genericness concern that should not be smoothed away — the
+signal should not be oversold as fully resolving that question either.
+
+### 28.3 Limitations
+
+n=1 rater. Blind but not counterbalanced or repeated. The 18-item corpus
+skews toward verbs (grab-family synonyms, inflection cases) — POS
+coverage beyond that is not directly tested here.
+
+**[RECOMMENDATION]** The correlation (17-18/18) is strong enough to
+justify proceeding to trigger design — the strongest validation result
+of any signal investigated in R28-R35. **Both the "belated" blind spot
+and the "take coffee" nuance must be carried into that design
+explicitly, not treated as resolved** — this is a real, imperfect,
+useful signal, not a solved problem.

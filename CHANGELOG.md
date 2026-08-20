@@ -6,6 +6,13 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-19, ninth** docs: R35 — human validation of the DistilBERT
+  signal, 17/18 agreement. Both R34's critical seize/clutch cases
+  confirmed by a human rater. One real blind spot found: R30's own fix
+  ("belated") rated Unnatural despite being the highest-scoring
+  sentence in the set — a register/formality mismatch the signal
+  doesn't catch. Carried forward into trigger design, not smoothed
+  over. → `DECISION_LOG.md` 2026-08-19-I.
 - **2026-08-19, eighth** docs: R33+R34 — GPT-2 perplexity rejected
   (rated R30's own fix worse than its bug). DistilBERT masked-LM
   word-probability found strong on matched contrast pairs; the one

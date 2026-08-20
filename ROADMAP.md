@@ -1109,6 +1109,28 @@ candidate signal found across R28-R34. Not yet human-validated (n=25,
 model-judgment only) — that's the explicit next step before any
 implementation. Full record: `VALIDATION.md` §27.
 
+### R35. Human validation of the DistilBERT signal — **DONE, 2026-08-19 — 17/18 agreement, one real blind spot found**
+**Linked finding:** R34 closed the door on rarity-bias as an
+explanation but remained model-judgment only — the explicit next step
+was direct human confirmation.
+**What was done:** 18 sentences (known-bad + known-good/legitimate-rare,
+per R33/R34), presented blind and shuffled, rated Natural/Acceptable/
+Unnatural by a single rater (same disclosed n=1 limitation as the
+original P1 pilot).
+**Result:** 17/18 agreement, including both R34-critical cases
+("...seize/clutch coffee after?") independently rated Unnatural,
+matching DistilBERT's 0.0000 score exactly. **One real disagreement**:
+R30's own fix ("was belated") — DistilBERT's highest-scoring sentence in
+the set — was rated Unnatural by the human. Register/formality mismatch
+("belated" almost always appears in fixed collocations), a genuine blind
+spot the collocational-fit signal doesn't catch. A second, milder
+nuance: "take coffee" rated Acceptable, not fully Natural — an echo of
+R29's original genericness concern, not fully resolved.
+**Labeled as:** correlation strong enough to justify trigger design —
+the strongest validation result across R28-R35 — but the blind spot and
+nuance must carry forward into that design explicitly, not be treated as
+resolved. Full record: `VALIDATION.md` §28.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

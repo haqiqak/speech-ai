@@ -2544,3 +2544,41 @@ production on model-internal consistency alone.
 **Category:** Signal investigation, two-part. No production code
 changed; no ranking weights touched; no thresholds set. Full record:
 `VALIDATION.md` §26-27; `ROADMAP.md` R33-R34.
+
+### 2026-08-19-I — R35: human validation of the DistilBERT signal — 17/18 agreement, one real blind spot found
+
+**What was done:** the explicit next step R34 called for — direct human
+confirmation, not just model self-consistency. 18 sentences (known-bad
+plus known-good/legitimate-rare, per R33/R34's own labeling) presented
+blind and shuffled to the user, rated Natural/Acceptable/Unnatural.
+Single rater — same disclosed n=1 limitation as the original P1 pilot,
+named plainly rather than treated as a large study.
+
+**Result:** 17 of 18 ratings agree with the pre-assigned label. Both
+cases R34 was specifically built to resolve ("...push the meeting and
+seize/clutch coffee after?") were independently rated Unnatural by the
+human, exactly matching DistilBERT's 0.0000 score — direct human
+confirmation of R34's inference, not just internal model consistency.
+
+**One real, informative disagreement, reported plainly, not smoothed
+over:** the human rated R30's own fix ("The bus was belated again this
+morning") **Unnatural** — the single highest-scoring sentence in the
+entire set by DistilBERT (0.2176). "Belated" is correct but almost
+always appears in fixed collocations ("belated birthday wishes");
+applying it plainly to a bus is a register/formality mismatch a native
+speaker notices that the signal's collocational-fit measure did not
+catch. **A genuine, disclosed blind spot, not a footnote.** A second,
+milder nuance: "take coffee" was rated Acceptable, not fully Natural —
+echoes R29's original genericness concern; the signal should not be
+oversold as having fully resolved that question either.
+
+**Decision: proceed to Phase 2 (fresh escalation-trigger design) — the
+correlation (17-18/18) is the strongest validation result across
+R28-R35** and clears the bar the user set before any design work. Both
+the "belated" blind spot and the "take coffee" nuance are carried
+forward as explicit, binding constraints on that design, not treated as
+resolved or smoothed over.
+
+**Category:** Human validation. No production code changed; no ranking
+weights touched; no thresholds set. Full record: `VALIDATION.md` §28;
+`ROADMAP.md` R35.
