@@ -1,15 +1,20 @@
 {
-  "_doc": "eval/pilot_pairs.json - Stage 7 human-evaluation pilot set, v3 (single participant, 30 short/natural/everyday sentences only). Full metadata here (profile_spec, triggered_by, changes_made, profile_match) is for post-hoc analysis only and must never be shown to the participant during rating.",
+  "_doc": "eval/pilot_pairs.json - v4, bounded current-state human evaluation (VALIDATION.md R39). Group A (10) = historical re-test of v3 pair_01/02/11/13/16/17/24/28/29/30, regenerated live. Group B (10) = fresh coverage. Live Datamuse (no DISABLE_DATAMUSE), unlike v3. The original v3 corpus is archived at eval/archive_v3/pilot_pairs_v3.json, not overwritten in spirit.",
   "category_counts": {
-    "global_sound": 18,
-    "declared_word": 5,
-    "word_pattern": 4,
-    "multi_difficulty": 3
+    "global_sound": 11,
+    "word_pattern": 3,
+    "multi_difficulty": 4,
+    "declared_word": 2
+  },
+  "group_counts": {
+    "A": 10,
+    "B": 10
   },
   "pairs": [
     {
       "case_id": "gs_hows_it_going",
       "category": "global_sound",
+      "group": "A",
       "profile_spec": {
         "sounds": [
           "g"
@@ -20,9 +25,10 @@
       ],
       "changes_made": [
         {
-          "original": "going",
-          "replacement": "taking",
-          "source": "substitution"
+          "original": "Hey, how's it going today?",
+          "replacement": "Hey, how's it today?",
+          "source": "phrase",
+          "contextual_fit": null
         }
       ],
       "profile_match": {
@@ -32,14 +38,15 @@
         "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
       },
       "original_text": "Hey, how's it going today?",
-      "reformulated_text": "Hey, how's it taking today?",
+      "reformulated_text": "Hey, how's it today?",
       "status": "reformulated",
       "metrics": {
-        "meaning_preservation": 0.9102,
+        "meaning_preservation": 0.9522,
+        "meaning_preservation_meaningbert": 68.82,
         "flagged_words_before": 1,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.2,
+        "naturalness_edit_ratio": 0.1111,
         "substitution_rate": 0.2
       },
       "final_verification": {
@@ -47,7 +54,7 @@
         "details": {
           "flagged_before": 1,
           "flagged_after": 0,
-          "sbert_sim": 0.9102
+          "sbert_sim": 0.9522
         }
       },
       "n_changes": 1,
@@ -58,6 +65,7 @@
     {
       "case_id": "gs_sleep_well",
       "category": "global_sound",
+      "group": "A",
       "profile_spec": {
         "sounds": [
           "s"
@@ -69,8 +77,9 @@
       "changes_made": [
         {
           "original": "sleep",
-          "replacement": "rest",
-          "source": "substitution"
+          "replacement": "nap",
+          "source": "substitution",
+          "contextual_fit": 8.719478501006961e-06
         }
       ],
       "profile_match": {
@@ -80,10 +89,11 @@
         "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
       },
       "original_text": "Good morning, did you sleep well?",
-      "reformulated_text": "Good morning, did you rest well?",
+      "reformulated_text": "Good morning, did you nap well?",
       "status": "reformulated",
       "metrics": {
-        "meaning_preservation": 0.894,
+        "meaning_preservation": 0.9179,
+        "meaning_preservation_meaningbert": 85.87,
         "flagged_words_before": 1,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -95,7 +105,7 @@
         "details": {
           "flagged_before": 1,
           "flagged_after": 0,
-          "sbert_sim": 0.894
+          "sbert_sim": 0.9179
         }
       },
       "n_changes": 1,
@@ -104,248 +114,9 @@
       "pair_id": "pair_02"
     },
     {
-      "case_id": "gs_turn_down_music",
-      "category": "global_sound",
-      "profile_spec": {
-        "sounds": [
-          "m"
-        ]
-      },
-      "triggered_by": [
-        "multiple_difficulties_or_no_valid_substitution"
-      ],
-      "changes_made": [
-        {
-          "original": "Please turn down the music a little.",
-          "replacement": "Please turn down a little of the song.",
-          "source": "restructuring"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "Please turn down the music a little.",
-      "reformulated_text": "Please turn down a little of the song.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.875,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.3333,
-        "substitution_rate": 0.7143
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.875
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": true,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_03"
-    },
-    {
-      "case_id": "gs_forgot_that",
-      "category": "global_sound",
-      "profile_spec": {
-        "sounds": [
-          "f"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "forgot",
-          "replacement": "missed",
-          "source": "substitution"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "My bad, I totally forgot about that.",
-      "reformulated_text": "My bad, I totally missed about that.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.8863,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1429,
-        "substitution_rate": 0.1429
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.8863
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_04"
-    },
-    {
-      "case_id": "gs_meet_up",
-      "category": "global_sound",
-      "profile_spec": {
-        "sounds": [
-          "m"
-        ]
-      },
-      "triggered_by": [
-        "multiple_difficulties_or_no_valid_substitution"
-      ],
-      "changes_made": [
-        {
-          "original": "Let's meet up sometime next week.",
-          "replacement": "Let's join up sometime next week.",
-          "source": "restructuring"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "Let's meet up sometime next week.",
-      "reformulated_text": "Let's join up sometime next week.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.853,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1667,
-        "substitution_rate": 0.1667
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.853
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": true,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_05"
-    },
-    {
-      "case_id": "gs_doctors_appt",
-      "category": "global_sound",
-      "profile_spec": {
-        "sounds": [
-          "d"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "doctor",
-          "replacement": "physician",
-          "source": "substitution"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "I have a doctor's appointment tomorrow.",
-      "reformulated_text": "I have a physician's appointment tomorrow.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9535,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1667,
-        "substitution_rate": 0.1667
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9535
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_06"
-    },
-    {
-      "case_id": "gs_frustrating",
-      "category": "global_sound",
-      "profile_spec": {
-        "sounds": [
-          "w"
-        ]
-      },
-      "triggered_by": [
-        "multiple_difficulties_or_no_valid_substitution"
-      ],
-      "changes_made": [
-        {
-          "original": "This is so frustrating, nothing works.",
-          "replacement": "This is so frustrating, nothing happens.",
-          "source": "restructuring"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "This is so frustrating, nothing works.",
-      "reformulated_text": "This is so frustrating, nothing happens.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.8827,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1667,
-        "substitution_rate": 0.1667
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.8827
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": true,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_07"
-    },
-    {
       "case_id": "gs_cant_believe",
       "category": "global_sound",
+      "group": "A",
       "profile_spec": {
         "sounds": [
           "h"
@@ -358,7 +129,8 @@
         {
           "original": "happened",
           "replacement": "occurred",
-          "source": "substitution"
+          "source": "substitution",
+          "contextual_fit": 9.900169243337587e-05
         }
       ],
       "profile_match": {
@@ -372,6 +144,7 @@
       "status": "reformulated",
       "metrics": {
         "meaning_preservation": 0.9365,
+        "meaning_preservation_meaningbert": 81.51,
         "flagged_words_before": 1,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -389,203 +162,12 @@
       "n_changes": 1,
       "has_restructuring": false,
       "grammar_fixes_applied": 0,
-      "pair_id": "pair_08"
-    },
-    {
-      "case_id": "gs_always_happen",
-      "category": "global_sound",
-      "profile_spec": {
-        "sounds": [
-          "h"
-        ]
-      },
-      "triggered_by": [
-        "multiple_difficulties_or_no_valid_substitution"
-      ],
-      "changes_made": [
-        {
-          "original": "Why does this always happen to me?",
-          "replacement": "Why does this always occur to me?",
-          "source": "restructuring"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "Why does this always happen to me?",
-      "reformulated_text": "Why does this always occur to me?",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9283,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1429,
-        "substitution_rate": 0.1429
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9283
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": true,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_09"
-    },
-    {
-      "case_id": "gs_buy_groceries",
-      "category": "global_sound",
-      "profile_spec": {
-        "sounds": [
-          "b"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "buy",
-          "replacement": "purchase",
-          "source": "substitution"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "I need to buy groceries after work.",
-      "reformulated_text": "I need to purchase groceries after work.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9901,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1429,
-        "substitution_rate": 0.1429
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9901
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_10"
-    },
-    {
-      "case_id": "gs_driving_crazy",
-      "category": "global_sound",
-      "profile_spec": {
-        "sounds": [
-          "d"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "driving",
-          "replacement": "going",
-          "source": "substitution"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "The kids are driving me crazy today.",
-      "reformulated_text": "The kids are going me crazy today.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9682,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1429,
-        "substitution_rate": 0.1429
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9682
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_11"
-    },
-    {
-      "case_id": "gs_probably_leave",
-      "category": "global_sound",
-      "profile_spec": {
-        "sounds": [
-          "pr"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "probably",
-          "replacement": "likely",
-          "source": "substitution"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "We should probably leave soon.",
-      "reformulated_text": "We should likely leave soon.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9768,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.2,
-        "substitution_rate": 0.2
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9768
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_12"
+      "pair_id": "pair_03"
     },
     {
       "case_id": "gs_bus_late",
       "category": "global_sound",
+      "group": "A",
       "profile_spec": {
         "sounds": [
           "l"
@@ -597,8 +179,9 @@
       "changes_made": [
         {
           "original": "late",
-          "replacement": "recently",
-          "source": "substitution"
+          "replacement": "after-hours",
+          "source": "substitution",
+          "contextual_fit": 0.027030338358599693
         }
       ],
       "profile_match": {
@@ -608,10 +191,11 @@
         "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
       },
       "original_text": "The bus was late again this morning.",
-      "reformulated_text": "The bus was recently again this morning.",
+      "reformulated_text": "The bus was after-hours again this morning.",
       "status": "reformulated",
       "metrics": {
-        "meaning_preservation": 0.8673,
+        "meaning_preservation": 0.8772,
+        "meaning_preservation_meaningbert": 62.38,
         "flagged_words_before": 1,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -623,118 +207,18 @@
         "details": {
           "flagged_before": 1,
           "flagged_after": 0,
-          "sbert_sim": 0.8673
+          "sbert_sim": 0.8772
         }
       },
       "n_changes": 1,
       "has_restructuring": false,
       "grammar_fixes_applied": 0,
-      "pair_id": "pair_13"
-    },
-    {
-      "case_id": "gs_believe_expensive",
-      "category": "global_sound",
-      "profile_spec": {
-        "sounds": [
-          "b"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "believe",
-          "replacement": "think",
-          "source": "substitution"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "Can you believe how expensive that was?",
-      "reformulated_text": "Can you think how expensive that was?",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9209,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1429,
-        "substitution_rate": 0.1429
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9209
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_14"
-    },
-    {
-      "case_id": "gs_need_break",
-      "category": "global_sound",
-      "profile_spec": {
-        "sounds": [
-          "r"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "really",
-          "replacement": "very",
-          "source": "substitution"
-        },
-        {
-          "original": "right",
-          "replacement": "justly",
-          "source": "substitution"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 2,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "I really need a break right now.",
-      "reformulated_text": "I very need a break justly now.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9085,
-        "flagged_words_before": 2,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.2857,
-        "substitution_rate": 0.2857
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 2,
-          "flagged_after": 0,
-          "sbert_sim": 0.9085
-        }
-      },
-      "n_changes": 2,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_15"
+      "pair_id": "pair_04"
     },
     {
       "case_id": "gs_grab_jacket",
       "category": "global_sound",
+      "group": "A",
       "profile_spec": {
         "sounds": [
           "gr"
@@ -747,7 +231,8 @@
         {
           "original": "grab",
           "replacement": "take",
-          "source": "substitution"
+          "source": "substitution",
+          "contextual_fit": 0.008251278661191463
         }
       ],
       "profile_match": {
@@ -761,6 +246,7 @@
       "status": "reformulated",
       "metrics": {
         "meaning_preservation": 0.9511,
+        "meaning_preservation_meaningbert": 94.52,
         "flagged_words_before": 1,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -778,11 +264,12 @@
       "n_changes": 1,
       "has_restructuring": false,
       "grammar_fixes_applied": 0,
-      "pair_id": "pair_16"
+      "pair_id": "pair_05"
     },
     {
       "case_id": "gs_grab_coffee",
       "category": "global_sound",
+      "group": "A",
       "profile_spec": {
         "sounds": [
           "gr"
@@ -795,7 +282,8 @@
         {
           "original": "grab",
           "replacement": "take",
-          "source": "substitution"
+          "source": "substitution",
+          "contextual_fit": 0.022332310676574707
         }
       ],
       "profile_match": {
@@ -809,6 +297,7 @@
       "status": "reformulated",
       "metrics": {
         "meaning_preservation": 0.9222,
+        "meaning_preservation_meaningbert": 85.58,
         "flagged_words_before": 1,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -826,299 +315,12 @@
       "n_changes": 1,
       "has_restructuring": false,
       "grammar_fixes_applied": 0,
-      "pair_id": "pair_17"
-    },
-    {
-      "case_id": "gs_email_details",
-      "category": "global_sound",
-      "profile_spec": {
-        "sounds": [
-          "d"
-        ]
-      },
-      "triggered_by": [
-        "multiple_difficulties_or_no_valid_substitution"
-      ],
-      "changes_made": [
-        {
-          "original": "Could you email me the details later?",
-          "replacement": "Could you email me the information later?",
-          "source": "restructuring"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "Could you email me the details later?",
-      "reformulated_text": "Could you email me the information later?",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.8866,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1429,
-        "substitution_rate": 0.1429
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.8866
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": true,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_18"
-    },
-    {
-      "case_id": "dw_meeting_thursday",
-      "category": "declared_word",
-      "profile_spec": {
-        "words": [
-          "meeting"
-        ]
-      },
-      "triggered_by": [
-        "multiple_difficulties_or_no_valid_substitution"
-      ],
-      "changes_made": [
-        {
-          "original": "The meeting got moved to Thursday.",
-          "replacement": "The meetings were moved to Thursday.",
-          "source": "restructuring"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "The meeting got moved to Thursday.",
-      "reformulated_text": "The meetings were moved to Thursday.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9272,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.3333,
-        "substitution_rate": 0.3333
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9272
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": true,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_19"
-    },
-    {
-      "case_id": "dw_struggling_project",
-      "category": "declared_word",
-      "profile_spec": {
-        "words": [
-          "struggling"
-        ]
-      },
-      "triggered_by": [
-        "multiple_difficulties_or_no_valid_substitution"
-      ],
-      "changes_made": [
-        {
-          "original": "I'm really struggling with this project.",
-          "replacement": "I'm really having trouble with this project.",
-          "source": "restructuring"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "I'm really struggling with this project.",
-      "reformulated_text": "I'm really having trouble with this project.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9239,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.2308,
-        "substitution_rate": 0.3333
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9239
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": true,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_20"
-    },
-    {
-      "case_id": "dw_traffic_ridiculous",
-      "category": "declared_word",
-      "profile_spec": {
-        "words": [
-          "ridiculous"
-        ]
-      },
-      "triggered_by": [
-        "declared_word"
-      ],
-      "changes_made": [
-        {
-          "original": "ridiculous",
-          "replacement": "absurd",
-          "source": "substitution"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "The traffic today was absolutely ridiculous.",
-      "reformulated_text": "The traffic today was absolutely absurd.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9254,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1667,
-        "substitution_rate": 0.1667
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9254
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_21"
-    },
-    {
-      "case_id": "dw_phone_case_nice",
-      "category": "declared_word",
-      "profile_spec": {
-        "words": [
-          "nice"
-        ]
-      },
-      "triggered_by": [
-        "declared_word"
-      ],
-      "changes_made": [
-        {
-          "original": "nice",
-          "replacement": "good",
-          "source": "substitution"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "That new phone case looks pretty nice.",
-      "reformulated_text": "That new phone case looks pretty good.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9712,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1429,
-        "substitution_rate": 0.1429
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9712
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_22"
-    },
-    {
-      "case_id": "dw_instructions_confusing",
-      "category": "declared_word",
-      "profile_spec": {
-        "words": [
-          "instructions"
-        ]
-      },
-      "triggered_by": [
-        "declared_word"
-      ],
-      "changes_made": [
-        {
-          "original": "instructions",
-          "replacement": "directions",
-          "source": "substitution"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "The instructions were a little confusing honestly.",
-      "reformulated_text": "The directions were a little confusing honestly.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.8738,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1429,
-        "substitution_rate": 0.1429
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.8738
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_23"
+      "pair_id": "pair_06"
     },
     {
       "case_id": "wp_valuable_lesson",
       "category": "word_pattern",
+      "group": "A",
       "profile_spec": {
         "words": [
           "valuable"
@@ -1137,7 +339,8 @@
         {
           "original": "valuable",
           "replacement": "worth",
-          "source": "substitution"
+          "source": "substitution",
+          "contextual_fit": 0.00025006590294651687
         }
       ],
       "profile_match": {
@@ -1151,6 +354,7 @@
       "status": "reformulated",
       "metrics": {
         "meaning_preservation": 0.9319,
+        "meaning_preservation_meaningbert": 94.52,
         "flagged_words_before": 1,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -1168,172 +372,12 @@
       "n_changes": 1,
       "has_restructuring": false,
       "grammar_fixes_applied": 0,
-      "pair_id": "pair_24"
-    },
-    {
-      "case_id": "wp_straightforward_fix",
-      "category": "word_pattern",
-      "profile_spec": {
-        "words": [
-          "straightforward"
-        ],
-        "patterns": {
-          "straightforward": [
-            "S"
-          ]
-        }
-      },
-      "triggered_by": [
-        "multiple_difficulties_or_no_valid_substitution"
-      ],
-      "changes_made": [
-        {
-          "original": "The problem seems fairly straightforward to fix.",
-          "replacement": "The problem seems fairly simple to fix.",
-          "source": "restructuring"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "The problem seems fairly straightforward to fix.",
-      "reformulated_text": "The problem seems fairly simple to fix.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9522,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1429,
-        "substitution_rate": 0.1429
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9522
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": true,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_25"
-    },
-    {
-      "case_id": "wp_comfortable_chair",
-      "category": "word_pattern",
-      "profile_spec": {
-        "words": [
-          "comfortable"
-        ],
-        "patterns": {
-          "comfortable": [
-            "K"
-          ]
-        }
-      },
-      "triggered_by": [
-        "declared_word",
-        "word_specific_pattern"
-      ],
-      "changes_made": [
-        {
-          "original": "comfortable",
-          "replacement": "comfy",
-          "source": "substitution"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "That's a really comfortable chair.",
-      "reformulated_text": "That's a really comfy chair.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9288,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.2,
-        "substitution_rate": 0.2
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9288
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_26"
-    },
-    {
-      "case_id": "wp_particular_preference",
-      "category": "word_pattern",
-      "profile_spec": {
-        "words": [
-          "particular"
-        ],
-        "patterns": {
-          "particular": [
-            "P"
-          ]
-        }
-      },
-      "triggered_by": [
-        "declared_word",
-        "word_specific_pattern"
-      ],
-      "changes_made": [
-        {
-          "original": "particular",
-          "replacement": "specific",
-          "source": "substitution"
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "I have a particular preference for tea.",
-      "reformulated_text": "I have a specific preference for tea.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9874,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1429,
-        "substitution_rate": 0.1429
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9874
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_27"
+      "pair_id": "pair_07"
     },
     {
       "case_id": "md_running_traffic",
       "category": "multi_difficulty",
+      "group": "A",
       "profile_spec": {
         "sounds": [
           "r"
@@ -1346,47 +390,45 @@
         {
           "original": "running",
           "replacement": "going",
-          "source": "substitution"
-        },
-        {
-          "original": "right",
-          "replacement": "properly",
-          "source": "substitution"
+          "source": "substitution",
+          "contextual_fit": 0.0023045530542731285
         }
       ],
       "profile_match": {
         "flagged_words_before": 2,
-        "flagged_words_after": 0,
+        "flagged_words_after": 1,
         "difficulty_resolved": true,
         "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
       },
       "original_text": "Sorry, running behind, stuck in traffic right now.",
-      "reformulated_text": "Sorry, going behind, stuck in traffic properly now.",
+      "reformulated_text": "Sorry, going behind, stuck in traffic right now.",
       "status": "reformulated",
       "metrics": {
-        "meaning_preservation": 0.9121,
+        "meaning_preservation": 0.9372,
+        "meaning_preservation_meaningbert": 94.52,
         "flagged_words_before": 2,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.25,
-        "substitution_rate": 0.25
+        "flagged_words_after": 1,
+        "difficulty_reduction_pct": 50.0,
+        "naturalness_edit_ratio": 0.125,
+        "substitution_rate": 0.125
       },
       "final_verification": {
         "passed": true,
         "details": {
           "flagged_before": 2,
-          "flagged_after": 0,
-          "sbert_sim": 0.9121
+          "flagged_after": 1,
+          "sbert_sim": 0.9372
         }
       },
-      "n_changes": 2,
+      "n_changes": 1,
       "has_restructuring": false,
       "grammar_fixes_applied": 0,
-      "pair_id": "pair_28"
+      "pair_id": "pair_08"
     },
     {
       "case_id": "md_push_meeting_coffee",
       "category": "multi_difficulty",
+      "group": "A",
       "profile_spec": {
         "sounds": [
           "p",
@@ -1398,49 +440,47 @@
       ],
       "changes_made": [
         {
-          "original": "push",
-          "replacement": "force",
-          "source": "substitution"
-        },
-        {
           "original": "grab",
-          "replacement": "catch",
-          "source": "substitution"
+          "replacement": "take",
+          "source": "substitution",
+          "contextual_fit": 0.01663406565785408
         }
       ],
       "profile_match": {
         "flagged_words_before": 2,
-        "flagged_words_after": 0,
+        "flagged_words_after": 1,
         "difficulty_resolved": true,
         "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
       },
       "original_text": "Can we push the meeting and grab coffee after?",
-      "reformulated_text": "Can we force the meeting and catch coffee after?",
+      "reformulated_text": "Can we push the meeting and take coffee after?",
       "status": "reformulated",
       "metrics": {
-        "meaning_preservation": 0.901,
+        "meaning_preservation": 0.9747,
+        "meaning_preservation_meaningbert": 94.51,
         "flagged_words_before": 2,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.2222,
-        "substitution_rate": 0.2222
+        "flagged_words_after": 1,
+        "difficulty_reduction_pct": 50.0,
+        "naturalness_edit_ratio": 0.1111,
+        "substitution_rate": 0.1111
       },
       "final_verification": {
         "passed": true,
         "details": {
           "flagged_before": 2,
-          "flagged_after": 0,
-          "sbert_sim": 0.901
+          "flagged_after": 1,
+          "sbert_sim": 0.9747
         }
       },
-      "n_changes": 2,
+      "n_changes": 1,
       "has_restructuring": false,
       "grammar_fixes_applied": 0,
-      "pair_id": "pair_29"
+      "pair_id": "pair_09"
     },
     {
       "case_id": "md_print_report_coffee",
       "category": "multi_difficulty",
+      "group": "A",
       "profile_spec": {
         "sounds": [
           "pr",
@@ -1454,12 +494,14 @@
         {
           "original": "print",
           "replacement": "create",
-          "source": "substitution"
+          "source": "substitution",
+          "contextual_fit": 0.0005209517548792064
         },
         {
           "original": "grab",
           "replacement": "take",
-          "source": "substitution"
+          "source": "substitution",
+          "contextual_fit": 0.011034360155463219
         }
       ],
       "profile_match": {
@@ -1473,6 +515,7 @@
       "status": "reformulated",
       "metrics": {
         "meaning_preservation": 0.89,
+        "meaning_preservation_meaningbert": 88.24,
         "flagged_words_before": 2,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -1490,7 +533,536 @@
       "n_changes": 2,
       "has_restructuring": false,
       "grammar_fixes_applied": 0,
-      "pair_id": "pair_30"
+      "pair_id": "pair_10"
+    },
+    {
+      "case_id": "gs2_forgot_call",
+      "category": "global_sound",
+      "group": "B",
+      "profile_spec": {
+        "sounds": [
+          "f"
+        ]
+      },
+      "triggered_by": [
+        "global_sound"
+      ],
+      "changes_made": [
+        {
+          "original": "forgot",
+          "replacement": "missed",
+          "source": "substitution",
+          "contextual_fit": 0.00017568827024661005
+        }
+      ],
+      "profile_match": {
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_resolved": true,
+        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
+      },
+      "original_text": "I forgot to call my mother yesterday.",
+      "reformulated_text": "I missed to call my mother yesterday.",
+      "status": "reformulated",
+      "metrics": {
+        "meaning_preservation": 0.8678,
+        "meaning_preservation_meaningbert": 84.61,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.1429,
+        "substitution_rate": 0.1429
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.8678
+        }
+      },
+      "n_changes": 1,
+      "has_restructuring": false,
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_11"
+    },
+    {
+      "case_id": "gs2_finished_homework",
+      "category": "global_sound",
+      "group": "B",
+      "profile_spec": {
+        "sounds": [
+          "f"
+        ]
+      },
+      "triggered_by": [
+        "global_sound"
+      ],
+      "changes_made": [
+        {
+          "original": "finished",
+          "replacement": "completed",
+          "source": "substitution",
+          "contextual_fit": 0.26406797766685486
+        }
+      ],
+      "profile_match": {
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_resolved": true,
+        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
+      },
+      "original_text": "She quickly finished her homework before dinner.",
+      "reformulated_text": "She quickly completed her homework before dinner.",
+      "status": "reformulated",
+      "metrics": {
+        "meaning_preservation": 0.9897,
+        "meaning_preservation_meaningbert": 94.52,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.1429,
+        "substitution_rate": 0.1429
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9897
+        }
+      },
+      "n_changes": 1,
+      "has_restructuring": false,
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_12"
+    },
+    {
+      "case_id": "gs2_wonderful_experience",
+      "category": "global_sound",
+      "group": "B",
+      "profile_spec": {
+        "sounds": [
+          "w"
+        ]
+      },
+      "triggered_by": [
+        "global_sound"
+      ],
+      "changes_made": [
+        {
+          "original": "wonderful",
+          "replacement": "fantastic",
+          "source": "substitution",
+          "contextual_fit": 0.01384652964770794
+        }
+      ],
+      "profile_match": {
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_resolved": true,
+        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
+      },
+      "original_text": "That was a truly wonderful experience.",
+      "reformulated_text": "That was a truly fantastic experience.",
+      "status": "reformulated",
+      "metrics": {
+        "meaning_preservation": 0.951,
+        "meaning_preservation_meaningbert": 94.53,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.1667,
+        "substitution_rate": 0.1667
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.951
+        }
+      },
+      "n_changes": 1,
+      "has_restructuring": false,
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_13"
+    },
+    {
+      "case_id": "gs2_brings_snacks",
+      "category": "global_sound",
+      "group": "B",
+      "profile_spec": {
+        "sounds": [
+          "b"
+        ]
+      },
+      "triggered_by": [
+        "global_sound"
+      ],
+      "changes_made": [
+        {
+          "original": "brings",
+          "replacement": "takes",
+          "source": "substitution",
+          "contextual_fit": 0.0019255435327067971
+        }
+      ],
+      "profile_match": {
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_resolved": true,
+        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
+      },
+      "original_text": "He always brings snacks to the office.",
+      "reformulated_text": "He always takes snacks to the office.",
+      "status": "reformulated",
+      "metrics": {
+        "meaning_preservation": 0.9718,
+        "meaning_preservation_meaningbert": 90.22,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.1429,
+        "substitution_rate": 0.1429
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9718
+        }
+      },
+      "n_changes": 1,
+      "has_restructuring": false,
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_14"
+    },
+    {
+      "case_id": "gs2_moved_apartment",
+      "category": "global_sound",
+      "group": "B",
+      "profile_spec": {
+        "sounds": [
+          "m"
+        ]
+      },
+      "triggered_by": [
+        "global_sound"
+      ],
+      "changes_made": [
+        {
+          "original": "moved",
+          "replacement": "went",
+          "source": "substitution",
+          "contextual_fit": 0.0006162537611089647
+        }
+      ],
+      "profile_match": {
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_resolved": true,
+        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
+      },
+      "original_text": "They recently moved into a new apartment.",
+      "reformulated_text": "They recently went into a new apartment.",
+      "status": "reformulated",
+      "metrics": {
+        "meaning_preservation": 0.969,
+        "meaning_preservation_meaningbert": 79.09,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.1429,
+        "substitution_rate": 0.1429
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.969
+        }
+      },
+      "n_changes": 1,
+      "has_restructuring": false,
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_15"
+    },
+    {
+      "case_id": "dw2_complicated_situation",
+      "category": "declared_word",
+      "group": "B",
+      "profile_spec": {
+        "words": [
+          "complicated"
+        ]
+      },
+      "triggered_by": [
+        "multiple_difficulties_or_no_valid_substitution"
+      ],
+      "changes_made": [
+        {
+          "original": "The situation became quite complicated.",
+          "replacement": "The situation became quite complex.",
+          "source": "restructuring",
+          "contextual_fit": null
+        }
+      ],
+      "profile_match": {
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_resolved": true,
+        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
+      },
+      "original_text": "The situation became quite complicated.",
+      "reformulated_text": "The situation became quite complex.",
+      "status": "reformulated",
+      "metrics": {
+        "meaning_preservation": 0.8799,
+        "meaning_preservation_meaningbert": 90.12,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.2,
+        "substitution_rate": 0.2
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.8799
+        }
+      },
+      "n_changes": 1,
+      "has_restructuring": true,
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_16"
+    },
+    {
+      "case_id": "dw2_movie_hilarious",
+      "category": "declared_word",
+      "group": "B",
+      "profile_spec": {
+        "words": [
+          "hilarious"
+        ]
+      },
+      "triggered_by": [
+        "declared_word"
+      ],
+      "changes_made": [
+        {
+          "original": "hilarious",
+          "replacement": "funny",
+          "source": "substitution",
+          "contextual_fit": 0.008958745747804642
+        }
+      ],
+      "profile_match": {
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_resolved": true,
+        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
+      },
+      "original_text": "I found the movie absolutely hilarious.",
+      "reformulated_text": "I found the movie absolutely funny.",
+      "status": "reformulated",
+      "metrics": {
+        "meaning_preservation": 0.9466,
+        "meaning_preservation_meaningbert": 94.52,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.1667,
+        "substitution_rate": 0.1667
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9466
+        }
+      },
+      "n_changes": 1,
+      "has_restructuring": false,
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_17"
+    },
+    {
+      "case_id": "wp2_negotiations_successful",
+      "category": "word_pattern",
+      "group": "B",
+      "profile_spec": {
+        "words": [
+          "successful"
+        ],
+        "patterns": {
+          "successful": [
+            "S"
+          ]
+        }
+      },
+      "triggered_by": [
+        "declared_word",
+        "word_specific_pattern"
+      ],
+      "changes_made": [
+        {
+          "original": "successful",
+          "replacement": "in",
+          "source": "substitution",
+          "contextual_fit": 2.0063333067810163e-05
+        }
+      ],
+      "profile_match": {
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_resolved": true,
+        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
+      },
+      "original_text": "The negotiations were surprisingly successful.",
+      "reformulated_text": "The negotiations were surprisingly in.",
+      "status": "reformulated",
+      "metrics": {
+        "meaning_preservation": 0.9087,
+        "meaning_preservation_meaningbert": 78.58,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.2,
+        "substitution_rate": 0.2
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9087
+        }
+      },
+      "n_changes": 1,
+      "has_restructuring": false,
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_18"
+    },
+    {
+      "case_id": "wp2_thoughtful_gesture",
+      "category": "word_pattern",
+      "group": "B",
+      "profile_spec": {
+        "words": [
+          "thoughtful"
+        ],
+        "patterns": {
+          "thoughtful": [
+            "TH"
+          ]
+        }
+      },
+      "triggered_by": [
+        "declared_word",
+        "word_specific_pattern"
+      ],
+      "changes_made": [
+        {
+          "original": "thoughtful",
+          "replacement": "kind",
+          "source": "substitution",
+          "contextual_fit": 0.0018323686672374606
+        }
+      ],
+      "profile_match": {
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_resolved": true,
+        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
+      },
+      "original_text": "That was a genuinely thoughtful gesture.",
+      "reformulated_text": "That was a genuinely kind gesture.",
+      "status": "reformulated",
+      "metrics": {
+        "meaning_preservation": 0.897,
+        "meaning_preservation_meaningbert": 94.45,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.1667,
+        "substitution_rate": 0.1667
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.897
+        }
+      },
+      "n_changes": 1,
+      "has_restructuring": false,
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_19"
+    },
+    {
+      "case_id": "md2_grab_dinner",
+      "category": "multi_difficulty",
+      "group": "B",
+      "profile_spec": {
+        "sounds": [
+          "pr",
+          "gr"
+        ]
+      },
+      "triggered_by": [
+        "global_sound"
+      ],
+      "changes_made": [
+        {
+          "original": "probably",
+          "replacement": "likely",
+          "source": "substitution",
+          "contextual_fit": 0.0014338473556563258
+        },
+        {
+          "original": "grab",
+          "replacement": "take",
+          "source": "substitution",
+          "contextual_fit": 0.008634203113615513
+        }
+      ],
+      "profile_match": {
+        "flagged_words_before": 2,
+        "flagged_words_after": 0,
+        "difficulty_resolved": true,
+        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
+      },
+      "original_text": "We should probably grab dinner before the movie.",
+      "reformulated_text": "We should likely take dinner before the movie.",
+      "status": "reformulated",
+      "metrics": {
+        "meaning_preservation": 0.9757,
+        "meaning_preservation_meaningbert": 93.95,
+        "flagged_words_before": 2,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.25,
+        "substitution_rate": 0.25
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 2,
+          "flagged_after": 0,
+          "sbert_sim": 0.9757
+        }
+      },
+      "n_changes": 2,
+      "has_restructuring": false,
+      "grammar_fixes_applied": 0,
+      "pair_id": "pair_20"
     }
   ]
 }
