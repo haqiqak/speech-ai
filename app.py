@@ -691,12 +691,18 @@ if result is not None:
                     st.rerun()
 
             v = change["verification"]
+            fit = v.get("contextual_fit")
+            fit_line = (
+                f"\n- Contextual fit (word naturalness, diagnostic only): **{fit:.4f}**"
+                if fit is not None else ""
+            )
             with st.expander("Why this change / verification", expanded=False):
                 st.markdown(
                     f"- Triggered by: **{', '.join(change['triggered_by'])}**\n"
                     f"- Meaning similarity (SBERT): **{v['sbert_sim'] if v['sbert_sim'] is not None else 'n/a'}**\n"
                     f"- Antonym check: **{v['antonym_check']}**\n"
                     f"- Difficulty score: **{v['difficulty_before']} → {v['difficulty_after']}**"
+                    f"{fit_line}"
                 )
 
     if result["skipped"]:

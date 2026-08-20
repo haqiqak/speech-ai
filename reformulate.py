@@ -644,6 +644,16 @@ def reformulate(text: str, profile: DifficultyProfile, settings: ReformulateSett
             rebuilt_sentence = _detokenize(new_tokens)
             for c in sentence_changes:
                 c["sentence_index"] = sid
+                # Contextual-fit signal (R33-R36, Option A -- reported
+                # only, never gates anything here). Scored against the
+                # FINAL assembled sentence, not the original -- this
+                # checks whether the word reads naturally in its actual
+                # shipped context, a different question from meaning
+                # preservation. Word-level substitutions only; phrase/
+                # restructuring output isn't validated for this signal.
+                c["verification"]["contextual_fit"] = sem.contextual_fit_score(
+                    rebuilt_sentence, c["replacement"]
+                )
             all_changes.extend(sentence_changes)
             rebuilt.append(rebuilt_sentence)
             continue

@@ -259,6 +259,119 @@ def meaningbert_score(original_sentence: str, candidate_sentence: str) -> Option
         return None
 
 
+# ── Contextual-fit loader (lazy — optional NATURALNESS/fluency signal) ───────
+# Validated 2026-08-19, R33-R36 (VALIDATION.md SS26-29): a masked-LM word-
+# probability check — mask the substituted word's position in the FINAL
+# reformulated sentence, read the model's probability for the word actually
+# used there. Answers a genuinely different question than SBERT/MeaningBERT
+# (which check whether MEANING survived): does this specific word choice
+# read naturally in this specific slot. Catches a real, confirmed failure
+# class SBERT/MeaningBERT/LanguageTool all miss (R28's LanguageTool result
+# was 0/7; this signal is 16/16 on the same style of known-bad case across
+# R33-R36's combined 61-case corpus, human-confirmed 17/18 in R35). Has a
+# real, disclosed, word-specific blind spot (register/formality mismatches
+# like "belated" score high despite reading oddly to a human — R35/R36) and
+# should not be treated as complete. Named "contextual fit," not
+# "naturalness," specifically to avoid confusion with naturalness.py's
+# unrelated edit-ratio metric.
+#
+# Wired in 2026-08-19 (R36 -> Option A) strictly as a REPORTED-ONLY signal,
+# same discipline as MeaningBERT (R24/R27): must never gate `final_ok`/
+# `accepted`/escalation decisions on its own. That gating decision (Option
+# B, REFORMULATION_PROBLEM_MAP.md's Phase-2 design) is explicitly deferred,
+# not implemented here.
+_contextual_fit_tokenizer = None
+_contextual_fit_model     = None
+_contextual_fit_ok        = False   # True once model is successfully loaded
+_contextual_fit_message   = ""      # Human-readable status for UI
+
+CONTEXTUAL_FIT_MODEL = "distilbert-base-uncased"
+
+
+def load_contextual_fit_model() -> bool:
+    """
+    Load the contextual-fit masked-LM into module-level cache.
+    Returns True on success, False on any failure (network, disk, etc.).
+    Idempotent — safe to call repeatedly. Same graceful-degradation shape
+    as load_sbert()/load_meaningbert() above; no trust_remote_code, no
+    gating.
+    """
+    global _contextual_fit_tokenizer, _contextual_fit_model, _contextual_fit_ok, _contextual_fit_message
+    if _contextual_fit_ok:
+        return True
+    try:
+        from transformers import AutoTokenizer, AutoModelForMaskedLM
+        _contextual_fit_tokenizer = AutoTokenizer.from_pretrained(CONTEXTUAL_FIT_MODEL)
+        _contextual_fit_model     = AutoModelForMaskedLM.from_pretrained(CONTEXTUAL_FIT_MODEL)
+        _contextual_fit_model.eval()
+        _contextual_fit_ok        = True
+        _contextual_fit_message   = f"Contextual-fit model '{CONTEXTUAL_FIT_MODEL}' loaded successfully."
+        return True
+    except Exception as exc:
+        _contextual_fit_ok      = False
+        _contextual_fit_message = (
+            f"Contextual-fit model unavailable ({exc.__class__.__name__}: {exc}). "
+            "Reporting SBERT/MeaningBERT only."
+        )
+        return False
+
+
+def contextual_fit_status() -> tuple[bool, str]:
+    """Return (is_loaded, human_readable_message)."""
+    return _contextual_fit_ok, _contextual_fit_message
+
+
+def contextual_fit_score(sentence: str, word: str, occurrence: int = 0) -> Optional[float]:
+    """
+    Mask `word`'s position (the `occurrence`-th match, 0-indexed) in
+    `sentence` and return the model's probability for the token(s)
+    actually there — how well the surrounding context predicts the
+    specific word used at that position. Returns None if the model is
+    unavailable or `word` can't be located in the sentence's own
+    tokenization (rare tokenization mismatches; fails closed to "no
+    signal," never raises).
+
+    Deliberately scored against the FINAL, fully-assembled sentence, not
+    the original — this checks a property of the output alone (does it
+    read naturally), not meaning preservation (SBERT/MeaningBERT's job).
+    Multi-word candidates average the probability across their sub-word
+    pieces. Validated only for single-word substitutions (source=
+    "substitution") — not yet validated for phrase-tier or restructuring
+    output, which replace a multi-word span rather than one word; not
+    applied to those sources.
+    """
+    if not _contextual_fit_ok and not load_contextual_fit_model():
+        return None
+    try:
+        import torch
+        enc = _contextual_fit_tokenizer(sentence, return_tensors="pt")
+        input_ids = enc["input_ids"][0]
+        tokens = _contextual_fit_tokenizer.convert_ids_to_tokens(input_ids)
+        target_pieces = _contextual_fit_tokenizer.tokenize(word.lower())
+        if not target_pieces:
+            return None
+        n = len(target_pieces)
+        matches = [
+            i for i in range(len(tokens) - n + 1)
+            if tokens[i:i + n] == target_pieces
+        ]
+        if not matches or occurrence >= len(matches):
+            return None
+        start = matches[occurrence]
+        probs = []
+        for pos in range(start, start + n):
+            masked = input_ids.clone().unsqueeze(0)
+            original_id = masked[0, pos].item()
+            masked[0, pos] = _contextual_fit_tokenizer.mask_token_id
+            with torch.no_grad():
+                logits = _contextual_fit_model(input_ids=masked).logits
+            p = torch.softmax(logits[0, pos], dim=-1)[original_id].item()
+            probs.append(p)
+        return sum(probs) / len(probs)
+    except Exception:
+        return None
+
+
 # ── Protected position detection ─────────────────────────────────────────────
 
 # Single-token protected words — mirrors grammar._STOP exactly so that
