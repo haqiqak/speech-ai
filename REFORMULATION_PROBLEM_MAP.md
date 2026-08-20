@@ -1121,6 +1121,26 @@ itself supported.
     the agreed next step is a small blind human-rating pass before any
     design or implementation proceeds. Full record: `VALIDATION.md`
     §26-27.
+    **Update, 2026-08-19 — R35/R36/R37: human-validated (17/18), scaled
+    up (61-case combined corpus), and implemented as a reported-only
+    diagnostic (Option A).** `semantic.contextual_fit_score()` is now
+    live for every word-level substitution, surfaced per-change in the
+    UI, never gating anything — see item 16 below. Option B (a real
+    escalation trigger using this signal) remains undecided, future
+    work, not this item's concern anymore.
+16. **[DONE, 2026-08-19 — `VALIDATION.md` §30 — R37] Contextual-fit
+    signal wired in as a reported-only diagnostic (Option A)** (§2.3) —
+    the user's explicit choice after R36, mirroring item 6/MeaningBERT's
+    own rollout precedent rather than jumping straight to the Phase-2
+    escalation-trigger design. `semantic.py`/`reformulate.py`/`app.py`
+    changed; 12 new tests; full suite 131 tests pass; zero collateral
+    change on the regression baseline. Scoped to substitution-sourced
+    changes only, matching exactly what R33-R36 validated — phrase-tier
+    and restructuring output are not scored. No gate, no threshold, no
+    escalation behavior changed. The Phase-2 soft-trigger design
+    (Option B) is the natural next step if this diagnostic's real usage
+    data supports it, but that is an explicit future decision, not
+    started here.
 13. **[DONE, 2026-08-19 — `VALIDATION.md` §20 — R27] Extend the idiom guard
     to verb+object phrasal idioms** (§2.4, §5 item 1) — concretely scoped by
     the R26 follow-up: "push [a meeting]" (postpone) has no WordNet sense
@@ -1192,11 +1212,12 @@ itself supported.
     corpus. Closes one of the two "unrelated, different-class bugs" named
     but left open in item 2's own entry above.
 
-Items 1, 2, 4, 6, 7, 13, and 15 are implemented and verified (dated
-above); item 12 was tested and closed negative on an infrastructure
-decision; item 14 was tested against a broader corpus and not promoted
-(stays research-only); items 3 and 5 were tested/attempted and closed
-(negative/blocked, respectively); items 8-11 remain future work, not
+Items 1, 2, 4, 6, 7, 13, 15, and 16 are implemented and verified (dated
+above); item 12 was tested, human-validated, and its signal (item 16)
+implemented as a reported-only diagnostic; item 14 was tested against a
+broader corpus and not promoted (stays research-only); items 3 and 5
+were tested/attempted and closed (negative/blocked, respectively); items
+8-11 remain future work, not
 started. This list is kept current as items move, not a static snapshot
 of one planning pass.
 

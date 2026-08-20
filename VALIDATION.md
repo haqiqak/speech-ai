@@ -3233,3 +3233,61 @@ instruction]** Strong enough for reported-only diagnostics now (Option
 A, same rollout pattern as MeaningBERT). Not yet strong enough for full
 auto-escalation control (Option B) — the blind spot's edges aren't fully
 mapped, and the corpus remains research-scale, not production-scale.
+
+## 30. R37 — contextual-fit signal wired in as a reported-only diagnostic (Option A, implemented 2026-08-19)
+
+Per the user's Option A decision after R36. First production code change
+in the R28-R36 investigation arc — everything before this was read-only.
+
+### 30.1 What was built
+
+`semantic.py` gained `load_contextual_fit_model()` /
+`contextual_fit_status()` / `contextual_fit_score(sentence, word,
+occurrence=0)` — the exact masked-LM word-probability mechanism
+validated in R33-R36 (`distilbert-base-uncased`, mask the word's
+position in the given sentence, return the model's probability for the
+token(s) actually there), same lazy-load/graceful-degradation shape as
+`load_meaningbert()`. Named "contextual fit," not "naturalness,"
+specifically to avoid confusion with `naturalness.py`'s unrelated
+edit-ratio metric.
+
+`reformulate.py`: in the main per-sentence loop, immediately after a
+successful `_try_substitution()` assembles the final sentence, every
+`source == "substitution"` change gets `verification["contextual_fit"]`
+set by scoring the replacement word **in the final, fully-assembled
+sentence** (matching R33-R36's validated design — never the original
+sentence, and never mid-loop). Scope discipline, matching R36's own
+scope: **only substitution-sourced changes** — phrase-tier and
+restructuring output are not scored, since R33-R36 validated single-word
+substitution checks specifically, not multi-word span replacement.
+
+`app.py`: the per-change "Why this change / verification" expander gains
+one line, explicitly labeled "(diagnostic only)," when the field is
+present.
+
+`tests/contextual_fit_test.py` (new, 12 tests): load, score-range,
+two regression guards reproducing R33/R36's own known-bad/known-good
+cases, an explicit test asserting the "belated" blind spot **is present
+and expected** (not a bug — if it ever flips, that's a real behavior
+change worth noticing), graceful degradation, and three `reformulate()`
+integration tests confirming the field reaches the result, degrades to
+`None` (not silently missing) when the model is unavailable, and —
+the actual behavioral contract, not just documentation — **never gates
+`final_ok` or `status`**, even when forced to the lowest possible score.
+A fourth integration test confirms restructuring-sourced changes do not
+pick up the field at all.
+
+### 30.2 Verification
+
+Full suite: 131 tests, all pass. `tests/smoke.py` output byte-identical
+to `tests/baseline_sbert.txt` — **zero collateral change** on the
+existing regression corpus, confirmed by diff, not assumed from "it's
+purely additive."
+
+### 30.3 Scope, stated plainly
+
+This is Option A only. No gate. No escalation trigger. No threshold.
+The signal is visible per-change, for observation, exactly as agreed —
+Option B (the full soft-trigger → escalation → safe-fallback
+architecture from the Phase-2 design) remains a separate, future,
+explicitly-gated decision.

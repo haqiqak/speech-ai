@@ -1156,6 +1156,27 @@ blind spot's edges aren't fully mapped and the corpus remains
 research-scale. Decision reserved for the user. Full record:
 `VALIDATION.md` §29.
 
+### R37. Contextual-fit signal wired in as a reported-only diagnostic (Option A) — **DONE, 2026-08-19**
+**Linked finding:** the user's Option A decision after R36 — reported
+diagnostics first, same rollout as MeaningBERT (R24/R27), not the full
+soft-trigger architecture from the Phase-2 design.
+**What was done:** `semantic.py` gained `contextual_fit_score()` (the
+exact masked-LM mechanism validated R33-R36, `distilbert-base-uncased`).
+`reformulate.py` scores every substitution-sourced change's replacement
+word against the final assembled sentence, stored in that change's
+`verification` dict — never gates anything. Scoped to substitution-
+sourced changes only, matching what was actually validated (not phrase-
+tier or restructuring). `app.py` surfaces it per-change, labeled
+diagnostic-only. 12 new tests (`tests/contextual_fit_test.py`),
+including an explicit regression guard on the "belated" blind spot
+itself (asserted as present and expected, not a bug) and a direct test
+that the signal never flips `final_ok`/`status` even at score 0.0.
+**Result:** full suite 131 tests, all pass. `tests/smoke.py`
+byte-identical to baseline — zero collateral change, confirmed by diff.
+**Labeled as:** done, Option A only. No gate, no escalation trigger, no
+threshold. Option B remains a separate, future, explicitly-gated
+decision. Full record: `VALIDATION.md` §30.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

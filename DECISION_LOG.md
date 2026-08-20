@@ -2624,3 +2624,45 @@ still research-scale, not production-scale.
 **Category:** Final pre-implementation validation. No production code
 changed; no ranking weights touched; no threshold selected for
 deployment. Full record: `VALIDATION.md` §29; `ROADMAP.md` R36.
+
+### 2026-08-19-K — R37: contextual-fit signal wired in as a reported-only diagnostic (Option A)
+
+**What was done:** the user chose Option A after reviewing R36 —
+reported-only diagnostics first, the same rollout MeaningBERT used
+(R24/R27), not the full soft-trigger → escalation architecture from the
+Phase-2 design. This is the first production code change in the entire
+R28-R36 investigation arc; everything before it was read-only.
+
+`semantic.py` gained `load_contextual_fit_model()`/`contextual_fit_
+status()`/`contextual_fit_score()` — the exact masked-LM word-
+probability mechanism validated across R33-R36 (`distilbert-base-
+uncased`), same lazy-load/graceful-degradation shape as
+`load_meaningbert()`. Named "contextual fit" specifically to avoid
+confusion with `naturalness.py`'s unrelated edit-ratio metric.
+`reformulate.py`: every `source == "substitution"` change gets its
+replacement word scored against the **final, fully-assembled sentence**
+(never the original, never mid-loop) immediately after `_try_
+substitution()` succeeds — matching the Phase-2 design's validated
+placement exactly. Deliberately scoped to substitution-sourced changes
+only — phrase-tier and restructuring output were never validated for
+this signal, so they don't receive it. `app.py` surfaces the score
+per-change, explicitly labeled diagnostic-only.
+
+`tests/contextual_fit_test.py` (new, 12 tests): load/status,
+known-bad/known-good regression guards reproducing R33/R36's own cases,
+an explicit assertion that the "belated" blind spot **is present and
+expected** (a documented characteristic, not a bug — if it ever flips,
+that's a real change worth noticing, not silent drift), graceful
+degradation, and — the actual behavioral contract, not just
+documentation — a direct test that forcing the score to 0.0 does not
+flip `final_ok` or `status`, plus a test confirming restructuring-
+sourced changes never receive the field at all.
+
+**Verified:** full suite 131 tests, all pass. `tests/smoke.py` output
+byte-identical to `tests/baseline_sbert.txt` — zero collateral change on
+the existing regression corpus, confirmed by diff.
+
+**Category:** Implementation, Option A only. No gate, no escalation
+trigger, no threshold selected. Option B (the full soft-trigger
+architecture) remains a separate, future, explicitly-gated decision —
+not started here. Full record: `VALIDATION.md` §30; `ROADMAP.md` R37.

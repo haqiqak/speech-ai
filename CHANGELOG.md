@@ -6,6 +6,12 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-19, eleventh** feat: R37 — contextual-fit signal wired in as
+  a reported-only diagnostic (Option A). First production code change
+  in the R28-R36 investigation arc. Substitution-sourced changes only,
+  scored against the final sentence, never gates anything. 12 new
+  tests, 131 total pass, zero collateral change on the regression
+  baseline. → `DECISION_LOG.md` 2026-08-19-K.
 - **2026-08-19, tenth** docs: R36 — larger naturalness-signal validation
   (38 new cases). Zero false negatives at every threshold; false
   positives concentrate specifically on "rest." Register-mismatch
