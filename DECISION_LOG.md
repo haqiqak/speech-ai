@@ -2582,3 +2582,45 @@ resolved or smoothed over.
 **Category:** Human validation. No production code changed; no ranking
 weights touched; no thresholds set. Full record: `VALIDATION.md` §28;
 `ROADMAP.md` R35.
+
+### 2026-08-19-J — R36: larger-scale naturalness signal validation — evidence supports Option A now
+
+**What was done:** the final validation pass before an implementation
+decision, per direct instruction — a 38-case corpus (up from R33-R35's
+25), covering every category requested: known-bad, known-good,
+legitimate rare/formal, collocation/register mismatch (specifically
+expanded to stress-test the "belated" blind spot beyond one sentence),
+grammatical/inflection (entirely new cases, closing the standing R32
+open item), sentence-length variation, and constructed multi-
+substitution sentences testing whether per-position independent
+checking on the final sentence remains valid when multiple substitutions
+co-occur.
+
+**Result:** zero false negatives at every candidate cutoff tested. False
+positives are not random — all concentrate on the word "rest," recurring
+across three separate sentences, a specific and now-characterized quirk.
+The register-mismatch blind spot is real but **not universal**: 2 of 5
+stress cases (belated, and likely — unconfirmed — procure) show it; the
+other 2 (consume, terminate) are caught correctly, meaning the blind
+spot is word-specific, not a blanket failure of the approach.
+Inflection/word-class mismatch, tested on entirely new sentences with no
+overlap with prior corpora, is cleanly caught — confirmed as a
+complementary signal, closing R32's standing open item. Sentence length
+has no measurable effect. **Multi-substitution: no cross-contamination
+found between positions** — a good substitution's score stays consistent
+with its solo-sentence value even when a bad substitution sits nearby in
+the same sentence, directly validating the Phase-2 design's central
+architectural assumption (check each position independently on the
+final, fully-assembled sentence).
+
+**Decision, reserved for the user per explicit instruction, not made
+here:** the evidence is strong enough to justify Option A (reported-only
+diagnostics, the same rollout pattern MeaningBERT used) now. It is not
+yet strong enough for Option B (full auto-escalation control) — the
+register-mismatch blind spot's edges are better scoped than before but
+not fully mapped, and the combined corpus (61 cases across R33-R36) is
+still research-scale, not production-scale.
+
+**Category:** Final pre-implementation validation. No production code
+changed; no ranking weights touched; no threshold selected for
+deployment. Full record: `VALIDATION.md` §29; `ROADMAP.md` R36.

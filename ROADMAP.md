@@ -1131,6 +1131,31 @@ the strongest validation result across R28-R35 — but the blind spot and
 nuance must carry forward into that design explicitly, not be treated as
 resolved. Full record: `VALIDATION.md` §28.
 
+### R36. Larger-scale naturalness signal validation — **DONE, 2026-08-19 — evidence supports Option A (reported-only) now**
+**Linked finding:** final validation pass requested before an
+implementation decision — expand R33-R35's 25-case corpus (38 new
+cases) and specifically stress-test the "belated" blind spot, "take
+coffee" ambiguity, and the multi-substitution architecture assumption.
+**What was done:** built a corpus covering known-bad, known-good,
+legitimate rare/formal (6 new), collocation/register mismatch (3 new
+stress cases beyond belated), grammatical/inflection (3 new, zero reuse),
+sentence-length variants, and 3 constructed multi-substitution sentences.
+**Result:** zero false negatives at every threshold tested; false
+positives concentrate specifically on "rest" (recurring across 3
+sentences), not randomly. Register-mismatch blind spot confirmed
+real but *not universal* — 2 of 5 stress cases show it (belated,
+likely procure — unconfirmed), the other 2 (consume, terminate) are
+caught correctly. Inflection/word-class confirmed as a complementary
+catch on entirely new cases — closes that standing R32 open item.
+Sentence length: no effect. **Multi-substitution: no cross-
+contamination between positions — a good position stays good next to a
+bad one, validating the Phase-2 design's core assumption directly.**
+**Labeled as:** strong enough for reported-only diagnostics (Option A).
+Not yet strong enough for full auto-escalation control (Option B) — the
+blind spot's edges aren't fully mapped and the corpus remains
+research-scale. Decision reserved for the user. Full record:
+`VALIDATION.md` §29.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

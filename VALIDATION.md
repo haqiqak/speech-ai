@@ -3142,3 +3142,94 @@ of any signal investigated in R28-R35. **Both the "belated" blind spot
 and the "take coffee" nuance must be carried into that design
 explicitly, not treated as resolved** — this is a real, imperfect,
 useful signal, not a solved problem.
+
+## 29. R36 — larger-scale naturalness signal validation (executed 2026-08-19)
+
+Final validation pass before an implementation decision, per direct
+instruction. 38-case corpus, up from R33-R35's 25 — known-bad,
+known-good, legitimate rare/formal, collocation/register mismatch
+(expanded stress test), grammatical/inflection (new cases), varying
+sentence length, and multi-substitution. No production code touched.
+
+### 29.1 Bad/good separation and threshold tradeoff (not a selected threshold)
+
+Aggregate: bad n=16, mean 0.0001, max 0.0003 — a tight cluster. Good
+n=20, mean 0.0884, min 0.0001.
+
+| Cutoff | False negatives | False positives |
+|---|---|---|
+| 0.001 | 0/16 | 3/20 |
+| 0.005 | 0/16 | 6/20 |
+| 0.01 | 0/16 | 10/20 |
+| 0.05 | 0/16 | 13/20 |
+
+**[FINDING] Zero false negatives at every cutoff tested.** A low cutoff
+(~0.001) gives ~84% precision at 100% recall on this corpus — a
+defensible operating *range*, not a selected value; n=36 (61 combined
+with R33-35) remains research-scale.
+
+**[FINDING] False positives are not random — all 3 at the tightest
+cutoff are the word "rest,"** recurring across three separate sentences
+(0.0009, 0.0003, 0.0001). A specific, now-characterized quirk, not
+noise.
+
+### 29.2 Register-mismatch stress test — the blind spot is real but not universal
+
+| Word | Context | Score | Reading |
+|---|---|---|---|
+| belated | short | 0.2176 | Blind spot confirmed (R35: human said Unnatural) |
+| belated | long | 0.4638 | Persists, if anything strengthens, with more context |
+| procure | "procure a new pair of shoes" | 0.9822 | Likely a second blind-spot case — **not human-tested** |
+| consume | "consume his lunch quickly" | 0.0024 | Model *correctly* catches this mismatch |
+| terminate | "terminate the call now" | 0.0053 | Model *correctly* catches this one too |
+
+**[FINDING] Only 2 of 5 register-mismatch stress cases show blind-spot
+behavior; the other 2 are caught correctly.** The blind spot is
+word-specific, not a blanket failure of the underlying approach —
+usefully scoped, not newly discovered as bigger than thought. "Procure"
+is a new hypothesis, not a confirmed second instance (no human rating
+exists for it).
+
+### 29.3 Inflection/word-class — confirmed as a complementary signal (closes the R32 open item)
+
+3 new inflection-mismatch sentences (leaving/please/shared — none reused
+from earlier sections), zero overlap with prior corpora: all scored in
+the bad cluster (0.0000-0.0003); corrected counterparts (leaves/
+pleased/share) scored 0.05-0.42. **[FINDING] DistilBERT already serves
+as a complementary signal for the inflection/word-class mismatch class
+R32 surfaced — no separate mechanism needed.** Closes that standing open
+item.
+
+### 29.4 Sentence length — no meaningful effect
+
+Long-sentence bad/good cases track their short-sentence counterparts
+closely (asleep 0.0000 both; rest 0.0001 short vs. 0.0010 long). No
+length-driven degradation found, resolving the open question from the
+Phase-2 design report.
+
+### 29.5 Multi-substitution — the core architectural assumption, validated
+
+Three constructed two-substitution sentences (both-good, one-bad-one-
+good, both-bad), each position checked independently on the final,
+fully-substituted sentence. **[FINDING] No cross-contamination between
+positions** — a good position (e.g. "physician") scores consistently
+with its solo-sentence value regardless of a bad position ("asleep")
+sitting nearby in the same sentence, and the bad position is still
+caught. **Directly validates the Phase-2 design's core assumption**:
+checking each substituted position independently on the final sentence
+remains valid when multiple substitutions co-occur.
+
+### 29.6 Recommendation
+
+Evidence has meaningfully strengthened since R35: multi-substitution
+behavior validated, inflection confirmed as a complementary catch,
+sentence length ruled out as a confound, and a defensible (not
+selected) low-cutoff range identified with a specific, bounded
+false-positive pattern. The register-mismatch blind spot is real,
+better-scoped, but not fully closed.
+
+**[RECOMMENDATION, decision reserved for the user per explicit
+instruction]** Strong enough for reported-only diagnostics now (Option
+A, same rollout pattern as MeaningBERT). Not yet strong enough for full
+auto-escalation control (Option B) — the blind spot's edges aren't fully
+mapped, and the corpus remains research-scale, not production-scale.

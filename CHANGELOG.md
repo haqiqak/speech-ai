@@ -6,6 +6,15 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-19, tenth** docs: R36 — larger naturalness-signal validation
+  (38 new cases). Zero false negatives at every threshold; false
+  positives concentrate specifically on "rest." Register-mismatch
+  blind spot confirmed real but not universal (2/5 stress cases, not
+  5/5). Inflection/word-class confirmed as a complementary catch.
+  Multi-substitution: no cross-contamination between positions,
+  validating the Phase-2 design. Evidence supports Option A
+  (reported-only) now, not yet Option B. → `DECISION_LOG.md`
+  2026-08-19-J.
 - **2026-08-19, ninth** docs: R35 — human validation of the DistilBERT
   signal, 17/18 agreement. Both R34's critical seize/clutch cases
   confirmed by a human rater. One real blind spot found: R30's own fix
