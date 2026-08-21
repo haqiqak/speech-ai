@@ -2770,3 +2770,54 @@ review.
 **Category:** Human evaluation, executed. No production code changed;
 no ranking weights touched; no new signal or model introduced. Full
 record: `VALIDATION.md` §32; `ROADMAP.md` R39.
+
+### 2026-08-21-A — R40: ceiling probe + direct linguistic audit, on user request
+
+**What was done:** user asked directly whether the engine has hit a
+ceiling, after seeing repeated `could_not_safely_reformulate` output, and
+asked for large-scale real-sentence testing plus a genuine linguistic
+read of the output, not just the pipeline's own scores. New script
+`eval/ceiling_probe_r40.py` ran 48 real sentences (fetched live from four
+Wikipedia articles spanning technical/scientific/procedural/conversational
+register) against 4 profiles (light to heavy density) through today's
+live engine — 192 pairs, one live run each. Claude then read all 79
+`reformulated` outputs directly, without relying on SBERT/MeaningBERT, per
+explicit instruction to apply general linguistic judgment as the check,
+not the app's own proxy metrics.
+
+**Quantitative result:** 21/192 (11%) failed both tiers, concentrated in
+dense profiles (`heavy_dense` 31%). T5 restructuring — the tier meant to
+back up substitution — succeeded in 2/192 runs, both the same sentence.
+Substitution is carrying essentially all observed success.
+
+**Qualitative result — the more consequential finding:** direct reading
+found real, reproducible defects inside outputs the pipeline itself
+labels successful: nonsense fragments ("sulfur"→"s", "greenhouse
+gases"→"gas gases"), fluent-but-wrong word sense including a ~50,000-year
+factual error ("pre-industrial"→"palaeolithic"), grammar errors
+introduced by substitution itself (correct "gases was" → incorrect "gases
+were," 4x), and a fixed term eroding under plain substitution ("small
+talk"→"little talk," 6x). Spot-checked SBERT (0.877-0.971) and MeaningBERT
+(56.8-94.5) scores, and the engine's own `final_verification.passed`,
+were all green for these — confirmed, at scale and on real text, the
+limitation the UI already discloses in the abstract.
+
+**Connecting finding:** re-running 6 of the worst cases and reading
+`contextual_fit` (R37, wired in but reported-only) directly — 5 of 6
+scored ≤0.0007 (one at 0.0000000053), matching direct linguistic
+judgment exactly. The one miss ("palaeolithic," scoring 0.9994) is a
+factual-correctness error, a different problem class contextual_fit
+isn't built to catch (it measures fluency, not world knowledge).
+
+**Decision:** findings only, no fix implemented, no config changed —
+recorded per explicit instruction, with the user to decide direction
+next. The evidence points toward revisiting R37's Option A
+(reported-only) decision for contextual_fit now that real production
+evidence exists, and toward adding per-candidate rejection-reason
+logging to both the substitution ranker and `_try_escalation` before any
+threshold or gating change, so the next step is measured rather than
+guessed.
+
+**Category:** Diagnostic investigation, on direct user request. No
+production code changed; no ranking weights touched; no fix implemented.
+Full record: `VALIDATION.md` §33; `ROADMAP.md` R40.

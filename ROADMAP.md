@@ -1239,6 +1239,40 @@ Two new findings surfaced only by regenerating through live code, not
 previously known. No further investigation started, per explicit
 instruction. Full record: `VALIDATION.md` §32.
 
+### R40. Ceiling probe + direct linguistic audit — **DONE, 2026-08-21**
+**Linked finding:** direct user question after seeing repeated
+`could_not_safely_reformulate` output — has the engine hit a ceiling? —
+plus an instruction to judge output quality with general linguistic
+capability, not the pipeline's own SBERT/MeaningBERT scores.
+**What was done:** new script `eval/ceiling_probe_r40.py` ran 48 real
+sentences (fetched live from four Wikipedia articles, register-diverse)
+against 4 profiles (light to heavy density) through today's live engine,
+live Datamuse — 192 pairs, one live run each, no restructuring-stability
+recheck (disclosed limitation). Claude then read all 79 `reformulated`
+outputs directly.
+**Result:** 21/192 (11%) failed both tiers, concentrated in dense
+profiles (`heavy_dense` 31%); T5 restructuring succeeded in only 2/192
+runs, both the same sentence — it is not currently functioning as a
+fallback. More consequential: direct reading of the 79 "successes" found
+real, reproducible defects the pipeline itself scores as passing —
+nonsense fragments ("sulfur"→"s", "greenhouse gases"→"gas gases"), a
+~50,000-year factual error dressed as a synonym ("pre-industrial"→
+"palaeolithic"), substitution-introduced grammar errors (correct "gases
+was"→incorrect "gases were," 4x), and a fixed term eroding under
+plain substitution ("small talk"→"little talk," 6x) — all scoring SBERT
+0.877-0.971, MeaningBERT 56.8-94.5, `final_verification.passed=True`.
+Re-running 6 of the worst cases found R37's contextual_fit (reported-only,
+never gates) scores ≤0.0007 for 5 of 6, matching direct linguistic
+judgment exactly — an existing, unused signal that would catch most of
+this.
+**Labeled as:** findings only, no fix implemented, per explicit
+instruction. Points toward two concrete next steps, neither decided
+here: revisit R37's Option A for contextual_fit now that real production
+evidence exists, and add per-candidate rejection-reason logging to both
+the substitution ranker and `_try_escalation` before any threshold
+change, so the next step is measured, not guessed. Full record:
+`VALIDATION.md` §33.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

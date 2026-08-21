@@ -6,7 +6,18 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
-- **2026-08-21** test/docs: R39 — current-state human evaluation
+- **2026-08-21, second** test/docs: R40 — ceiling probe (192 real
+  sentence×profile pairs, live engine) + direct linguistic audit of the
+  79 "successful" outputs, on user request. 11% fail both tiers; T5
+  restructuring succeeds in only 2/192 runs (1 sentence) — not
+  functioning as a fallback. Direct reading found real defects the
+  pipeline scores as passing: nonsense fragments, a ~50,000-year factual
+  error dressed as synonymy, substitution-introduced grammar errors, a
+  fixed term ("small talk") eroding 6x. R37's contextual_fit
+  (reported-only) scores ≤0.0007 on 5/6 of the worst cases — an unused
+  signal that would catch most of this. Findings only, no fix
+  implemented. → `DECISION_LOG.md` 2026-08-21-A.
+- **2026-08-21, first** test/docs: R39 — current-state human evaluation
   executed (n=1). 20 pairs regenerated through today's live engine
   (live Datamuse). Group A matched-pair delta vs. v3: 2 confirmed
   fixes (R19/R25, R27), 1 confirmed regression ("sleep"→"nap"), 1 case

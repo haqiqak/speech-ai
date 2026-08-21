@@ -3458,3 +3458,135 @@ existing shuffle. Not a large validated study — a directional, honest
 reading, exactly as designed.
 
 No further investigation started, per explicit instruction.
+
+## 33. R40 — large-scale ceiling probe + direct linguistic audit (executed 2026-08-21)
+
+Triggered by a direct user question after seeing repeated
+`could_not_safely_reformulate` output: has the engine hit a ceiling? Two
+parts, both against **today's live engine, live Datamuse**, no production
+code changed: (1) a 192-pair quantitative probe of where substitution and
+T5 restructuring each fail, (2) a direct linguistic read of the 79
+"successful" outputs by Claude itself — not the app's own SBERT/
+MeaningBERT scores — per the user's explicit instruction to judge quality
+using general linguistic capability, not the pipeline's own proxy metrics
+(Practice.md's "never blend proxy metrics with human judgment," applied
+literally).
+
+### 33.1 Method
+
+New script `eval/ceiling_probe_r40.py`. Corpus: 48 real sentences pulled
+verbatim from four live Wikipedia articles (Artificial intelligence,
+Climate change, Cooking, Small talk — chosen for register spread:
+technical, scientific, procedural, conversational), fetched fresh, not
+drawn from any existing project corpus. Four profiles spanning density:
+`light_single_sound` (1 sound), `moderate_mixed` (2 sounds + 2 words),
+`heavy_dense` (3 sounds + 3 words + 1 phrase), `single_common_sound`
+(just "s"). 48×4 = 192 pairs, one live run each (no subprocess-per-item
+restructuring-stability recheck like `pilot_select_pairs_v4.py` uses —
+a single sample of T5's non-deterministic output, disclosed as a
+limitation, not a stability-verified one). Full results:
+`eval/ceiling_probe_r40_results.json`.
+
+### 33.2 Quantitative finding — restructuring is not functioning as a fallback
+
+**[FACT]** 21/192 pairs (11%) ended `could_not_safely_reformulate`,
+concentrated in the two densest profiles (`heavy_dense` 31%,
+`moderate_mixed` 6%, vs. 0% for the lightest profile). Per the code path
+at `reformulate.py:637-671`, every failure went through **both** tiers —
+substitution was tried or skipped-as-pre-escalated, and T5 restructuring
+was tried — before being reported as a failure.
+
+**[FACT]** T5 restructuring (`_try_escalation`) produced a usable result
+in exactly **2 of 192 runs — the same single sentence** ("Long-chain
+sugars such as starch..." → "...like glucose..."), out of 48 different
+real sentences run against the two densest profiles specifically
+designed to trigger it. Substitution is carrying essentially all
+observed success; the tier meant to back it up when it can't cover a
+sentence is not currently working.
+
+**[HYPOTHESIS]** `_try_escalation`'s `bad_words_ids` only blocks the
+*literal words already flagged in the original sentence*
+(`reformulate.py:407`), not the sound class they represent — T5 has no
+signal that an entire phoneme class is off-limits, so it is free to
+generate any other word matching that sound, which the post-hoc leak
+check (`reformulate.py:422`) then rejects. This lines up with the data
+(failure concentrates in the broadest-sound-class profiles) but is not
+directly measured — no per-candidate rejection-reason logging exists yet
+to confirm which of the three gates (leak check / SBERT / negation) is
+actually killing candidates.
+
+### 33.3 Qualitative finding — a meaningful share of "successful" substitutions are not good
+
+Direct read of all 79 `reformulated` outputs (not the app's automated
+scores) found real, reproducible defect classes, concentrated in the
+`moderate`/`heavy` profiles — ordinary, plausible real-user profiles, not
+contrived edge cases:
+
+- **[FINDING] Nonsense/fragment candidates reach the output.**
+  "sulfur dioxide emissions" → "**s** dioxide emissions" (the letter "s"
+  as a word); "greenhouse gases" → "**gas gases**" (adjacent duplicate);
+  "optimises" → "**optimists**" (verb replaced by an unrelated noun);
+  "foodborne" → "**forborne**" (not an English word).
+- **[FINDING] Wrong word sense, fluent-sounding, factually or logically
+  wrong.** "pre-industrial baseline" → "**palaeolithic** baseline" (a
+  ~50,000-year factual error); "radiating into space" → "into **place**";
+  "such as in frying" → "**much as** in frying" (changes sentence logic,
+  occurred twice independently).
+- **[FINDING] Substitution introduces grammar errors not present in the
+  original**, apparently from proximity-based rather than head-noun-aware
+  re-agreement: correct "greenhouse gases **was** stronger" → incorrect
+  "**were** powerful," 4 independent occurrences; "**takes** actions" →
+  ungrammatical "**take** actions" triggered by an unrelated nearby edit.
+- **[FINDING] A fixed term erodes under plain word-level substitution.**
+  "**Small talk**" → "**Little talk**," 6 independent occurrences — the
+  same class of problem R19's idiom guard exists to prevent, for a term
+  not on that guard's list.
+
+**[FACT]** None of this was caught by the engine's own verification.
+Spot-checked scores for the examples above: SBERT 0.877-0.971, MeaningBERT
+56.8-94.5/100, `final_verification.passed = True` for every one. Not a
+bug in those metrics — documented, expected behavior of whole-sentence
+embedding similarity against a five-to-twenty-word sentence with one
+garbled token — but concrete, at-scale confirmation of a limitation the
+project's own UI copy already discloses in the abstract.
+
+### 33.4 Connecting finding — the R37 contextual-fit signal already catches most of this, unused
+
+**[FINDING]** Re-running six of the worst cases above and reading
+`verification.contextual_fit` (R37, wired in but reported-only, never
+gates) directly: 5 of 6 score **at or below 0.0007** — "sulfur"→"s"
+scored 0.0000000053, "search"→"quest" 0.0000007, "study"→"take"
+0.0000011, "set"→"place" 0.0000125, "greenhouse"→"gas" 0.00046,
+"Small"→"Little" 0.00072. The model rates these substitutions as
+essentially impossible in context, matching direct linguistic judgment
+exactly, using a signal the pipeline already computes on every
+substitution today.
+
+**[LIMITATION]** The signal is not universal. "pre-industrial"→
+"palaeolithic" scored **0.9994** — contextual_fit measures local
+fluency/naturalness, not factual or world-knowledge correctness, and a
+wrong historical period reads perfectly fluently in that sentence slot.
+This class of error is out of reach for any signal currently in the
+pipeline.
+
+### 33.5 Assessment
+
+**[RECOMMENDATION, not decided here]** The evidence points toward
+revisiting R37's Option A (reported-only) decision for contextual_fit —
+not because R37 was wrong to defer gating (no real production evidence
+existed yet), but because R40 supplies exactly that evidence: on a
+real, unscripted corpus, a very low contextual_fit threshold (e.g.
+reject/retry below ~0.01) would have caught 5 of 6 of the worst quality
+defects found here, using an existing, already-computed signal, zero new
+dependencies. Threshold selection and retry behavior are config/behavior
+decisions requiring separate explicit go-ahead per Practice.md §6 — not
+decided or implemented here.
+
+**[LIMITATION]** No per-candidate rejection-reason instrumentation exists
+for either the substitution ranking or `_try_escalation`, so §33.2's
+restructuring-failure hypothesis and §33.4's proposed fix are both one
+level short of being directly measured causes — the next natural step,
+before any weight or gating change, is adding that instrumentation.
+
+No production code changed in this investigation. No ranking weights
+touched. No fix implemented — findings only, per explicit instruction.
