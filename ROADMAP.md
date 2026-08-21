@@ -1273,6 +1273,51 @@ the substitution ranker and `_try_escalation` before any threshold
 change, so the next step is measured, not guessed. Full record:
 `VALIDATION.md` §33.
 
+**Update, 2026-08-22 — R40 completed:** the entry above rated a curated
+~15-example worst-of list; per follow-up instruction, R40 is now
+completed with an unselected audit of all 112 individual substitutions
+behind the 79 `reformulated` sentences. **Tally: 8/112 CLEAN (7%),
+21/112 MINOR (19%), 83/112 SEVERE (74%)** — only 26% of substitutions
+in this corpus were free of a real defect, a full-sample proportion,
+not a curated list. Two new findings: `sanitize_input()`'s spellchecker
+independently corrupts "optimises"→"optimists" (a separate subsystem
+bug, not the reformulation engine); and the single worst substitution
+found, "slower"→"easier", inverts its own sentence's logic while the
+engine's `antonym_check` recorded "pass" (the two words aren't each
+other's WordNet antonym). SBERT shows no per-substitution separation
+either. Full record: `VALIDATION.md` §33.6.
+
+### R41. Bounded validation of contextual_fit as a candidate substitution-quality gate — **DONE, 2026-08-22**
+**Linked finding:** R40's recommendation (§33.5, a 6-example spot
+check) that a ~0.01 contextual_fit threshold looked promising for
+gating — tested here at full scale against R40's 112 labeled changes.
+**What was done:** compared `contextual_fit` score distributions across
+R40's CLEAN/MINOR/SEVERE buckets, swept reject thresholds. No
+threshold promoted, no production gate, no T5 change, no fine-tuning,
+per explicit scope.
+**Result:** real signal (CLEAN median 0.0078 vs. SEVERE median 0.00004)
+but heavy distribution overlap — no threshold cleanly separates good
+from bad. At 0.01, 94% of severe defects are caught but so are **62% of
+substitutions that were actually fine**; even 0.001 still misses 19% of
+severe cases while rejecting 31% of good ones. Structurally blind to
+the corpus's most damaging defects (the factual-era/"palaeolithic" and
+"half-century" errors score 0.6-0.999 — they read fluently, which is
+exactly what the signal measures).
+**Labeled as:** explicitly revises §33.5's smaller-sample optimism, not
+a quiet contradiction. contextual_fit remains worth further work as a
+signal but is not shown safe as a standalone binary gate — either a
+working retry/fallback path (which doesn't currently exist — R40 found
+T5 restructuring succeeds in 2/192 runs) or a second signal for the
+factual-correctness class is needed first. Neither decided nor
+implemented. Full record: `VALIDATION.md` §34.
+
+**Next, per direct instruction, not yet started:** an architecture
+reassessment — is the current candidate-generation + verification
+design sufficient, or has R40/R41's evidence accumulated enough to
+justify investigating a learned, speaker-conditioned generation model
+instead? This is the natural next entry, not another signal
+investigation.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

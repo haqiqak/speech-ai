@@ -2821,3 +2821,67 @@ guessed.
 **Category:** Diagnostic investigation, on direct user request. No
 production code changed; no ranking weights touched; no fix implemented.
 Full record: `VALIDATION.md` §33; `ROADMAP.md` R40.
+
+### 2026-08-22-A — R40 completed: systematic audit of all 112 substitutions
+
+**What was done:** the prior R40 entry rated a curated ~15-example
+worst-of list. Per explicit follow-up instruction, R40 is completed
+here with an unselected audit of all 112 individual substitution
+changes behind the 79 `reformulated` sentences — new
+`eval/r40_change_audit.py` re-captured full change-level detail
+(reproduced the original 79/112 split exactly), `eval/
+r40_change_audit_verdicts.py` records a CLEAN/MINOR/SEVERE verdict and
+reason for every one, index-matched and reproducible.
+
+**Result:** 8/112 CLEAN (7%), 21/112 MINOR (19%), 83/112 SEVERE (74%) —
+a full-sample proportion, not a curated list. Two findings beyond the
+tally: (1) a second, independent bug source — `sanitize_input()`'s
+spellchecker turns valid "optimises" into the noun "optimists" via
+edit-distance correction, on a code path separate from the
+reformulation engine entirely; (2) the single worst substitution found,
+"slower"→"easier", inverts its own sentence's logic ("insufficient...
+because... become exponentially easier") while the engine's own
+`antonym_check` recorded "pass" — "slower"/"easier" are not each
+other's WordNet antonym, so the check cannot see this class of error.
+SBERT similarity shows no separation at the per-substitution level
+either (SEVERE median 0.9696, actually higher than MINOR's 0.9682).
+
+**Decision:** findings only, no fix implemented. Full record:
+`VALIDATION.md` §33.6.
+
+### 2026-08-22-B — R41: bounded contextual_fit gate validation
+
+**What was done:** per direct instruction — validate contextual_fit as
+a candidate substitution-quality gate using the R40 audit's 112 labeled
+changes as ground truth, no threshold promoted, no production gate, no
+T5 change, no fine-tuning. Compared `contextual_fit` score distributions
+across the CLEAN/MINOR/SEVERE buckets and swept reject thresholds.
+
+**Result:** real signal exists (CLEAN median 0.0078 vs. SEVERE median
+0.00004, ~200x apart) but the distributions overlap heavily — no single
+threshold cleanly separates them. At threshold 0.01 (the level §33.5's
+earlier 6-example spot check had suggested), 94% of severe defects
+would be caught, but so would **62% of substitutions that were actually
+fine**. Even the most permissive threshold tested (0.001) still misses
+19% of severe cases while already rejecting 31% of good ones. The
+signal is also structurally blind to the corpus's most damaging defect
+class: the "palaeolithic"/"pre-industrial" and "half-century" factual-era
+errors all score 0.6-0.999 — they read fluently, which is exactly what
+contextual_fit measures, so it cannot see that they're factually wrong.
+
+**Decision:** this explicitly revises §33.5's earlier recommendation
+rather than quietly superseding it — the small-sample optimism doesn't
+survive at scale. contextual_fit remains worth further investigation as
+a signal, but is not shown safe to wire in as a standalone binary gate.
+Any production use would need either a working retry/fallback path
+(which R40 §33.2 already found doesn't currently exist — T5
+restructuring succeeds in 2/192 runs) or a second signal for the
+factual-correctness class this one can't see. Neither is decided or
+implemented here. Per explicit instruction, architecture reassessment
+(candidate-generation + verification vs. a learned, speaker-conditioned
+generation model) is the next step, not started in this pass.
+
+**Category:** Bounded signal validation, on direct user request. No
+production code changed; no ranking weights touched; no threshold
+promoted; no fix implemented. Full record: `VALIDATION.md` §34;
+`ROADMAP.md` R41.

@@ -1,0 +1,1684 @@
+{
+  "changes": [
+    {
+      "source": "ai",
+      "profile": "light_single_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "strategy",
+      "replacement_word": "way",
+      "original_sentence": "High-profile applications of AI includes advanced web search engines, chariots, virtual assistants, autonomous vehicles, play and analysis in strategy games, and content generation.",
+      "reformulated_sentence": "High-profile applications of AI includes advanced web search engines, chariots, virtual assistants, autonomous vehicles, play and analysis in way games, and content generation.",
+      "contextual_fit": 7.316939445445314e-07,
+      "sbert_sim": 0.9913,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "light_single_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "stronger",
+      "replacement_word": "powerful",
+      "original_sentence": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were stronger than the cooling effect of airborne particulates in air pollution.",
+      "reformulated_sentence": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were powerful than the cooling effect of airborne particulates in air pollution.",
+      "contextual_fit": 9.712945939099882e-06,
+      "sbert_sim": 0.9871,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "light_single_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "strategy",
+      "replacement_word": "way",
+      "original_sentence": "Small talk is a bonding ritual and a strategy for managing interpersonal distance.",
+      "reformulated_sentence": "Small talk is a bonding ritual and a way for managing interpersonal distance.",
+      "contextual_fit": 0.019568100571632385,
+      "sbert_sim": 0.994,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "problem-solving",
+      "replacement_word": "issue",
+      "original_sentence": "Artificial intelligence (AI) is the capability of computational systems to perform tasks typically associated with human intelligence, such as learning, reasoning, problem-solving, perception, and decision-making.",
+      "reformulated_sentence": "Artificial intelligence ( AI ) is the capability of computational systems to perform tasks typically associated with human intelligence, such as learning, reasoning, issue, perception, and decision-making.",
+      "contextual_fit": 2.662881684045715e-07,
+      "sbert_sim": 0.9978,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "properties",
+      "replacement_word": "places",
+      "original_sentence": "An ontology is the set of objects, relations, concepts, and properties used by a particular domain of knowledge.",
+      "reformulated_sentence": "An ontology is the set of objects, relations, concepts, and places used by a specific domain of knowledge.",
+      "contextual_fit": 0.000291478936560452,
+      "sbert_sim": 0.9881,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "declared_word"
+      ],
+      "original_word": "particular",
+      "replacement_word": "specific",
+      "original_sentence": "An ontology is the set of objects, relations, concepts, and properties used by a particular domain of knowledge.",
+      "reformulated_sentence": "An ontology is the set of objects, relations, concepts, and places used by a specific domain of knowledge.",
+      "contextual_fit": 0.11053116619586945,
+      "sbert_sim": 0.9869,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "preferences",
+      "replacement_word": "options",
+      "original_sentence": "A rational agent has goals or preferences and take actions to make them happen.",
+      "reformulated_sentence": "A rational agent has goals or options and take actions to make them happen.",
+      "contextual_fit": 0.0022066887468099594,
+      "sbert_sim": 0.9656,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "programs",
+      "replacement_word": "softwares",
+      "original_sentence": "Machine learning is the study of programs that can improve their performance on a given task automatically.",
+      "reformulated_sentence": "Machine learning is the study of softwares that can improve their performance on a given task automatically.",
+      "contextual_fit": 0.008771450302447192,
+      "sbert_sim": 0.9743,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "processing",
+      "replacement_word": "operation",
+      "original_sentence": "Natural language processing allows programs to read, write, and communicate in human languages.",
+      "reformulated_sentence": "Natural language operation allows softwares to read, write, and communicate in human languages.",
+      "contextual_fit": 2.467043486831244e-05,
+      "sbert_sim": 0.9113,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "programs",
+      "replacement_word": "softwares",
+      "original_sentence": "Natural language processing allows programs to read, write, and communicate in human languages.",
+      "reformulated_sentence": "Natural language operation allows softwares to read, write, and communicate in human languages.",
+      "contextual_fit": 0.0004691982758231461,
+      "sbert_sim": 0.8863,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "practices",
+      "replacement_word": "workings",
+      "original_sentence": "Fossil fuel use, deforestation, and some agricultural and industrial practices release greenhouse gases.",
+      "reformulated_sentence": "Fossil fuel use, deforestation, and some agricultural and industrial workings release warming gases.",
+      "contextual_fit": 7.491678843507543e-06,
+      "sbert_sim": 0.9907,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "greenhouse",
+      "replacement_word": "warming",
+      "original_sentence": "Fossil fuel use, deforestation, and some agricultural and industrial practices release greenhouse gases.",
+      "reformulated_sentence": "Fossil fuel use, deforestation, and some agricultural and industrial workings release warming gases.",
+      "contextual_fit": 7.549344445578754e-06,
+      "sbert_sim": 0.8958,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "greenhouse",
+      "replacement_word": "warming",
+      "original_sentence": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were stronger than the cooling effect of airborne particulates in air pollution.",
+      "reformulated_sentence": "Before the 1980s, it was unclear whether the warming effect of increased warming gases were stronger than the cooling effect of airborne particulates in air pollution.",
+      "contextual_fit": 0.4424729645252228,
+      "sbert_sim": 0.9593,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "greenhouse",
+      "replacement_word": "gas",
+      "original_sentence": "Between the 18th century and 1970 there was little net warming, as the warming impact of greenhouse gas emissions were offset by cooling from sulfur dioxide emissions.",
+      "reformulated_sentence": "Between the 18th century and 1970 there was little net warming, as the warming impact of gas gas emissions were offset by cooling from sulfur dioxide emissions.",
+      "contextual_fit": 4.5932267767057056e-07,
+      "sbert_sim": 0.984,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "pre-industrial",
+      "replacement_word": "palaeolithic",
+      "original_sentence": "The 2016 to 2025 decade warmed to an average of 1.26 degrees compared to the pre-industrial baseline.",
+      "reformulated_sentence": "The 2016 to 2025 decade warmed to an average of 1.26 degrees compared to the palaeolithic baseline.",
+      "contextual_fit": 0.9994170069694519,
+      "sbert_sim": 0.877,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "greenhouse",
+      "replacement_word": "gas",
+      "original_sentence": "The upper atmosphere is cooling, because greenhouse gases are trapping heat near the Earth's surface, and so less heat is radiating into space.",
+      "reformulated_sentence": "The upper atmosphere is cooling, because gas gases are trapping heat near the Earth's surface, and so less heat is radiating into space.",
+      "contextual_fit": 0.0004640217521227896,
+      "sbert_sim": 0.9282,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "pre-industrial",
+      "replacement_word": "palaeolithic",
+      "original_sentence": "Since the pre-industrial period, the average surface temperature over land regions has increased almost twice as fast as the global average surface temperature.",
+      "reformulated_sentence": "Since the palaeolithic period, the average surface temperature over land regions has increased almost twice as fast as the global average surface temperature.",
+      "contextual_fit": 0.9995739012956619,
+      "sbert_sim": 0.9131,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "grilling",
+      "replacement_word": "cooking",
+      "original_sentence": "Cooking techniques and ingredients vary widely, from grilling food over an open fire, to using electric stoves, to baking in various types of ovens, to boiling and blanching in water.",
+      "reformulated_sentence": "Cooking techniques and ingredients vary widely, from cooking food over an open fire, to using electric stoves, to baking in various types of ovens, to boiling and blanching in water.",
+      "contextual_fit": 0.9505218267440796,
+      "sbert_sim": 0.9589,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "proteins",
+      "replacement_word": "peptides",
+      "original_sentence": "When proteins are heated they become denatured and change texture.",
+      "reformulated_sentence": "When peptides are heated they become denatured and change texture.",
+      "contextual_fit": 0.06231925143219996,
+      "sbert_sim": 0.8897,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "prevent",
+      "replacement_word": "avoid",
+      "original_sentence": "Cooking can prevent many forborne illnesses that would otherwise occur if raw food is consumed.",
+      "reformulated_sentence": "Cooking can avoid many forborne illnesses that would otherwise occur if raw food is consumed.",
+      "contextual_fit": 0.011487861163914204,
+      "sbert_sim": 0.9758,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "prone",
+      "replacement_word": "vulnerable",
+      "original_sentence": "Vitamin C is especially prone to oxidation during cooking and may be destroyed by protracted cooking.",
+      "reformulated_sentence": "Vitamin C is especially vulnerable to oxidation during cooking and may be destroyed by long cooking.",
+      "contextual_fit": 0.06775099784135818,
+      "sbert_sim": 0.9873,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "protracted",
+      "replacement_word": "long",
+      "original_sentence": "Vitamin C is especially prone to oxidation during cooking and may be destroyed by protracted cooking.",
+      "reformulated_sentence": "Vitamin C is especially vulnerable to oxidation during cooking and may be destroyed by long cooking.",
+      "contextual_fit": 0.0001225308806169778,
+      "sbert_sim": 0.9766,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "professional",
+      "replacement_word": "expert",
+      "original_sentence": "Cooking is done both by people in their own dwellings and by professional cooks and chefs in restaurants and other food establishments.",
+      "reformulated_sentence": "Cooking is done both by people in their own dwellings and by expert cooks and chefs in restaurants and other food establishments.",
+      "contextual_fit": 0.00766137195751071,
+      "sbert_sim": 0.9813,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "greeting",
+      "replacement_word": "welcome",
+      "original_sentence": "Small talk consists of three main parts: a greeting, conversation, and a closing.",
+      "reformulated_sentence": "Small talk consists of three main parts: a welcome, conversation, and a closing.",
+      "contextual_fit": 0.0004135371127631515,
+      "sbert_sim": 0.9633,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "problem",
+      "replacement_word": "trouble",
+      "original_sentence": "The phenomenon of small talk was initially studied in 1923 by Bronislaw Malinowski in his essay on the problem of meaning in primitive languages.",
+      "reformulated_sentence": "The phenomenon of small talk was initially studied in 1923 by Bronislaw Malinowski in his essay on the trouble of meaning in natural languages.",
+      "contextual_fit": 1.3445521290122997e-05,
+      "sbert_sim": 0.9891,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "primitive",
+      "replacement_word": "natural",
+      "original_sentence": "The phenomenon of small talk was initially studied in 1923 by Bronislaw Malinowski in his essay on the problem of meaning in primitive languages.",
+      "reformulated_sentence": "The phenomenon of small talk was initially studied in 1923 by Bronislaw Malinowski in his essay on the trouble of meaning in natural languages.",
+      "contextual_fit": 0.00583323510363698,
+      "sbert_sim": 0.9632,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "search",
+      "replacement_word": "look",
+      "original_sentence": "High-profile applications of AI includes advanced web search engines, chariots, virtual assistants, autonomous vehicles, play and analysis in strategy games, and content generation.",
+      "reformulated_sentence": "High-profile applications of AI includes advanced web look engines, chariots, virtual assistants, autonomous vehicles, play and analysis in way games, and content generation.",
+      "contextual_fit": 1.1411566447350197e-05,
+      "sbert_sim": 0.9751,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "strategy",
+      "replacement_word": "way",
+      "original_sentence": "High-profile applications of AI includes advanced web search engines, chariots, virtual assistants, autonomous vehicles, play and analysis in strategy games, and content generation.",
+      "reformulated_sentence": "High-profile applications of AI includes advanced web look engines, chariots, virtual assistants, autonomous vehicles, play and analysis in way games, and content generation.",
+      "contextual_fit": 8.867472729434667e-07,
+      "sbert_sim": 0.963,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "set",
+      "replacement_word": "lot",
+      "original_sentence": "An ontology is the set of objects, relations, concepts, and properties used by a particular domain of knowledge.",
+      "reformulated_sentence": "An ontology is the lot of objects, telling, concepts, and properties used by a particular domain of knowledge.",
+      "contextual_fit": 1.992010948015377e-05,
+      "sbert_sim": 0.9868,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "relations",
+      "replacement_word": "telling",
+      "original_sentence": "An ontology is the set of objects, relations, concepts, and properties used by a particular domain of knowledge.",
+      "reformulated_sentence": "An ontology is the lot of objects, telling, concepts, and properties used by a particular domain of knowledge.",
+      "contextual_fit": 1.6590233542501664e-07,
+      "sbert_sim": 0.9734,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "study",
+      "replacement_word": "work",
+      "original_sentence": "Machine learning is the study of programs that can improve their performance on a given task automatically.",
+      "reformulated_sentence": "Machine learning is the work of programs that can improve their performance on a given task automatically.",
+      "contextual_fit": 0.001195328077301383,
+      "sbert_sim": 0.9784,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "read",
+      "replacement_word": "take",
+      "original_sentence": "Natural language processing allows programs to read, write, and communicate in human languages.",
+      "reformulated_sentence": "Natural language processing allows programs to take, communicate, and communicate in human languages.",
+      "contextual_fit": 6.692975148325786e-05,
+      "sbert_sim": 0.9923,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "write",
+      "replacement_word": "communicate",
+      "original_sentence": "Natural language processing allows programs to read, write, and communicate in human languages.",
+      "reformulated_sentence": "Natural language processing allows programs to take, communicate, and communicate in human languages.",
+      "contextual_fit": 0.021816138178110123,
+      "sbert_sim": 0.9856,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "search",
+      "replacement_word": "quest",
+      "original_sentence": "Gradient descent is a type of local search that optimists a set of numerical parameters by incrementally adjusting them to minimize a loss function.",
+      "reformulated_sentence": "Gradient descent is a type of local quest that optimists a place of numerical parameters by incrementally adjusting them to minimize a loss function.",
+      "contextual_fit": 7.388068183900032e-07,
+      "sbert_sim": 0.9682,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "set",
+      "replacement_word": "place",
+      "original_sentence": "Gradient descent is a type of local search that optimists a set of numerical parameters by incrementally adjusting them to minimize a loss function.",
+      "reformulated_sentence": "Gradient descent is a type of local quest that optimists a place of numerical parameters by incrementally adjusting them to minimize a loss function.",
+      "contextual_fit": 1.2453841918613762e-05,
+      "sbert_sim": 0.9666,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "several",
+      "replacement_word": "various",
+      "original_sentence": "Deep learning uses several layers of neurons between the network's inputs and outputs.",
+      "reformulated_sentence": "Deep learning uses various layers of neurons between the network's inputs and outputs.",
+      "contextual_fit": 0.007956086657941341,
+      "sbert_sim": 0.9859,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "surface",
+      "replacement_word": "layer",
+      "original_sentence": "Earth's average surface air temperature has increased about 1.5 degrees Celsius since the Industrial Revolution.",
+      "reformulated_sentence": "Earth's average layer air heat has increased about 1.5 degrees Celsius since the Industrial Revolution.",
+      "contextual_fit": 3.1209538065013476e-06,
+      "sbert_sim": 0.9626,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "declared_word"
+      ],
+      "original_word": "temperature",
+      "replacement_word": "heat",
+      "original_sentence": "Earth's average surface air temperature has increased about 1.5 degrees Celsius since the Industrial Revolution.",
+      "reformulated_sentence": "Earth's average layer air heat has increased about 1.5 degrees Celsius since the Industrial Revolution.",
+      "contextual_fit": 5.965578384348191e-05,
+      "sbert_sim": 0.9314,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "release",
+      "replacement_word": "device",
+      "original_sentence": "Fossil fuel use, deforestation, and some agricultural and industrial practices release greenhouse gases.",
+      "reformulated_sentence": "Fossil fuel use, deforestation, and some agricultural and industrial practices device greenhouse gases.",
+      "contextual_fit": 3.726436716533499e-06,
+      "sbert_sim": 0.9447,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "sea",
+      "replacement_word": "ocean",
+      "original_sentence": "The Arctic has warmed the most, and temperatures on land have generally increased more than sea surface temperatures.",
+      "reformulated_sentence": "The Arctic has warmed the most, and temperatures on land have generally increased more than ocean layer temperatures.",
+      "contextual_fit": 0.015738876536488533,
+      "sbert_sim": 0.9887,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "surface",
+      "replacement_word": "layer",
+      "original_sentence": "The Arctic has warmed the most, and temperatures on land have generally increased more than sea surface temperatures.",
+      "reformulated_sentence": "The Arctic has warmed the most, and temperatures on land have generally increased more than ocean layer temperatures.",
+      "contextual_fit": 0.0001749999210005626,
+      "sbert_sim": 0.9696,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "stronger",
+      "replacement_word": "powerful",
+      "original_sentence": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were stronger than the cooling effect of airborne particulates in air pollution.",
+      "reformulated_sentence": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were powerful than the cooling effect of airborne particulates in air pollution.",
+      "contextual_fit": 9.712945939099882e-06,
+      "sbert_sim": 0.9871,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "century",
+      "replacement_word": "half-century",
+      "original_sentence": "Between the 18th century and 1970 there was little net warming, as the warming impact of greenhouse gas emissions were offset by cooling from sulfur dioxide emissions.",
+      "reformulated_sentence": "Between the 18th half-century and 1970 there was little net warming, as the warming impact of greenhouse gas emissions were offset by cooling from s dioxide emissions.",
+      "contextual_fit": 0.6062632746373614,
+      "sbert_sim": 0.9958,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "sulfur",
+      "replacement_word": "s",
+      "original_sentence": "Between the 18th century and 1970 there was little net warming, as the warming impact of greenhouse gas emissions were offset by cooling from sulfur dioxide emissions.",
+      "reformulated_sentence": "Between the 18th half-century and 1970 there was little net warming, as the warming impact of greenhouse gas emissions were offset by cooling from s dioxide emissions.",
+      "contextual_fit": 5.26438892478609e-09,
+      "sbert_sim": 0.9708,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "range",
+      "replacement_word": "place",
+      "original_sentence": "The range of hundreds of North American birds has shifted northward at an average rate of 1.5 kilometers per year over the past 55 years.",
+      "reformulated_sentence": "The place of hundreds of North American birds has shifted northward at an average place of 1.5 kilometers per year over the past 55 years.",
+      "contextual_fit": 2.8895465220557526e-07,
+      "sbert_sim": 0.9789,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "rate",
+      "replacement_word": "place",
+      "original_sentence": "The range of hundreds of North American birds has shifted northward at an average rate of 1.5 kilometers per year over the past 55 years.",
+      "reformulated_sentence": "The place of hundreds of North American birds has shifted northward at an average place of 1.5 kilometers per year over the past 55 years.",
+      "contextual_fit": 2.8895465220557526e-07,
+      "sbert_sim": 0.9694,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "stoves",
+      "replacement_word": "fires",
+      "original_sentence": "Cooking techniques and ingredients vary widely, from grilling food over an open fire, to using electric stoves, to baking in various types of ovens, to boiling and blanching in water.",
+      "reformulated_sentence": "Cooking techniques and ingredients vary widely, from grilling food over an open fire, to using electric fires, to baking in various types of ovens, to boiling and blanching in water.",
+      "contextual_fit": 0.0005440050736069679,
+      "sbert_sim": 0.9933,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "societies",
+      "replacement_word": "companies",
+      "original_sentence": "Cooking is an aspect of all human societies and a cultural universal.",
+      "reformulated_sentence": "Cooking is an aspect of all human companies and a cultural universal.",
+      "contextual_fit": 1.5192368891803198e-06,
+      "sbert_sim": 0.9562,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "started",
+      "replacement_word": "went",
+      "original_sentence": "Archaeological evidence of cooking fires date to at least 300,000 years ago, but some estimate that humans started cooking as early as 2 million years ago.",
+      "reformulated_sentence": "Archaeological evidence of cooking fires date to at least 300,000 years ago, but some estimate that humans went cooking as early as 2 million years ago.",
+      "contextual_fit": 0.00013716430112253875,
+      "sbert_sim": 0.9954,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "heavy_dense",
+      "change_source": "restructuring",
+      "triggered_by": [
+        "multiple_difficulties_or_no_valid_substitution"
+      ],
+      "original_word": "Long-chain sugars such as starch tends to break down into more digestible simpler sugars.",
+      "replacement_word": "Long-chain sugars like glucose tend to break down into more digestible sugars.",
+      "original_sentence": "Long-chain sugars such as starch tends to break down into more digestible simpler sugars.",
+      "reformulated_sentence": "Long-chain sugars like glucose tend to break down into more digestible sugars.",
+      "contextual_fit": null,
+      "sbert_sim": 0.8861,
+      "antonym_check": "n/a_sentence_level"
+    },
+    {
+      "source": "cooking",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "raw",
+      "replacement_word": "new",
+      "original_sentence": "Cooking can prevent many forborne illnesses that would otherwise occur if raw food is consumed.",
+      "reformulated_sentence": "Cooking can prevent many forborne illnesses that would otherwise occur if new food is consumed.",
+      "contextual_fit": 0.0016752638621255755,
+      "sbert_sim": 0.949,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "saturated",
+      "replacement_word": "pure",
+      "original_sentence": "Home-cooked meals tend to be healthier with fewer calories, and less saturated fat, cholesterol and sodium on a per calorie basis.",
+      "reformulated_sentence": "Home-cooked meals tend to be healthier with fewer calories, and less pure fat, cholesterol and na on a per calorie basis.",
+      "contextual_fit": 3.273996480857022e-05,
+      "sbert_sim": 0.9968,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "sodium",
+      "replacement_word": "na",
+      "original_sentence": "Home-cooked meals tend to be healthier with fewer calories, and less saturated fat, cholesterol and sodium on a per calorie basis.",
+      "reformulated_sentence": "Home-cooked meals tend to be healthier with fewer calories, and less pure fat, cholesterol and na on a per calorie basis.",
+      "contextual_fit": 2.6197587885690155e-06,
+      "sbert_sim": 0.9744,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "scientific",
+      "replacement_word": "technical",
+      "original_sentence": "The scientific study of cooking has become known as molecular gastronomy.",
+      "reformulated_sentence": "The technical take of cooking has become known as molecular gastronomy.",
+      "contextual_fit": 0.0038694951217621565,
+      "sbert_sim": 0.9893,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "study",
+      "replacement_word": "take",
+      "original_sentence": "The scientific study of cooking has become known as molecular gastronomy.",
+      "reformulated_sentence": "The technical take of cooking has become known as molecular gastronomy.",
+      "contextual_fit": 1.052997617989604e-06,
+      "sbert_sim": 0.9606,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "restaurants",
+      "replacement_word": "buildings",
+      "original_sentence": "Cooking is done both by people in their own dwellings and by professional cooks and chefs in restaurants and other food establishments.",
+      "reformulated_sentence": "Cooking is done both by people in their own dwellings and by professional cooks and chefs in buildings and other food establishments.",
+      "contextual_fit": 0.0002293977449880913,
+      "sbert_sim": 0.9956,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "Small",
+      "replacement_word": "Little",
+      "original_sentence": "Small talk is an informal type of discourse that does not cover any functional topics of conversation or any transactions that need to be addressed.",
+      "reformulated_sentence": "Little talk is an informal type of discourse that does not cover any functional topics of conversation or any transactions that need to be addressed.",
+      "contextual_fit": 0.0007159791421145201,
+      "sbert_sim": 0.9239,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "Small",
+      "replacement_word": "Little",
+      "original_sentence": "Small talk consists of three main parts: a greeting, conversation, and a closing.",
+      "reformulated_sentence": "Little talk consists of three main parts: a greeting, conversation, and a closing.",
+      "contextual_fit": 0.000856719387229532,
+      "sbert_sim": 0.9503,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "small",
+      "replacement_word": "little",
+      "original_sentence": "The phenomenon of small talk was initially studied in 1923 by Bronislaw Malinowski in his essay on the problem of meaning in primitive languages.",
+      "reformulated_sentence": "The phenomenon of little talk was initially taken in 1923 by Bronislaw Malinowski in his essay on the problem of meaning in primitive languages.",
+      "contextual_fit": 0.001709834672510624,
+      "sbert_sim": 0.9655,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "studied",
+      "replacement_word": "taken",
+      "original_sentence": "The phenomenon of small talk was initially studied in 1923 by Bronislaw Malinowski in his essay on the problem of meaning in primitive languages.",
+      "reformulated_sentence": "The phenomenon of little talk was initially taken in 1923 by Bronislaw Malinowski in his essay on the problem of meaning in primitive languages.",
+      "contextual_fit": 1.2470522960938979e-05,
+      "sbert_sim": 0.9597,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "serves",
+      "replacement_word": "helps",
+      "original_sentence": "It serves many functions in helping to define the relationships between friends, colleagues, and new acquaintances.",
+      "reformulated_sentence": "It helps many functions in helping to define the associations between friends, colleagues, and new acquaintances.",
+      "contextual_fit": 6.158085307106376e-05,
+      "sbert_sim": 0.9668,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "relationships",
+      "replacement_word": "associations",
+      "original_sentence": "It serves many functions in helping to define the relationships between friends, colleagues, and new acquaintances.",
+      "reformulated_sentence": "It helps many functions in helping to define the associations between friends, colleagues, and new acquaintances.",
+      "contextual_fit": 0.000578183913603425,
+      "sbert_sim": 0.9445,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "reputation",
+      "replacement_word": "esteem",
+      "original_sentence": "In a business meeting, it enables people to establish each other's reputation and level of expertise.",
+      "reformulated_sentence": "In a business meeting, it enables people to establish each other's esteem and level of expertise.",
+      "contextual_fit": 0.00048369643627665937,
+      "sbert_sim": 0.9622,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "silences",
+      "replacement_word": "quiets",
+      "original_sentence": "In many cultures, silences between two people are usually considered uncomfortable and awkward.",
+      "reformulated_sentence": "In many cultures, quiets between two people are usually considered uncomfortable and awkward.",
+      "contextual_fit": 0.00011877099132107105,
+      "sbert_sim": 0.9431,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "Speech",
+      "replacement_word": "Words",
+      "original_sentence": "Speech patterns between women tend to be more collaborative than those of men.",
+      "reformulated_sentence": "Words patterns between women tend to be more collaborative than those of men.",
+      "contextual_fit": 3.7053080177429365e-06,
+      "sbert_sim": 0.8886,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "systems",
+      "replacement_word": "methods",
+      "original_sentence": "Artificial intelligence (AI) is the capability of computational systems to perform tasks typically associated with human intelligence, such as learning, reasoning, problem-solving, perception, and decision-making.",
+      "reformulated_sentence": "Artificial intelligence ( AI ) is the capability of computational methods to perform tasks typically associated with human intelligence, much as learning, reasoning, problem-solving, perception, and decision-making.",
+      "contextual_fit": 0.0016450731782242656,
+      "sbert_sim": 0.9899,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "such",
+      "replacement_word": "much",
+      "original_sentence": "Artificial intelligence (AI) is the capability of computational systems to perform tasks typically associated with human intelligence, such as learning, reasoning, problem-solving, perception, and decision-making.",
+      "reformulated_sentence": "Artificial intelligence ( AI ) is the capability of computational methods to perform tasks typically associated with human intelligence, much as learning, reasoning, problem-solving, perception, and decision-making.",
+      "contextual_fit": 6.160912136010666e-08,
+      "sbert_sim": 0.9892,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "search",
+      "replacement_word": "research",
+      "original_sentence": "High-profile applications of AI includes advanced web search engines, chariots, virtual assistants, autonomous vehicles, play and analysis in strategy games, and content generation.",
+      "reformulated_sentence": "High-profile applications of AI includes advanced web research engines, chariots, virtual assistants, autonomous vehicles, play and analysis in way games, and content generation.",
+      "contextual_fit": 0.0001188558162539266,
+      "sbert_sim": 0.9868,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "strategy",
+      "replacement_word": "way",
+      "original_sentence": "High-profile applications of AI includes advanced web search engines, chariots, virtual assistants, autonomous vehicles, play and analysis in strategy games, and content generation.",
+      "reformulated_sentence": "High-profile applications of AI includes advanced web research engines, chariots, virtual assistants, autonomous vehicles, play and analysis in way games, and content generation.",
+      "contextual_fit": 8.453853297396563e-07,
+      "sbert_sim": 0.9774,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "step-by-step",
+      "replacement_word": "detailed",
+      "original_sentence": "Early researchers developed algorithms that imitated step-by-step reasoning that humans use when solving puzzles or making logical deductions.",
+      "reformulated_sentence": "Early researchers developed algorithms that imitated detailed reasoning that humans use when working puzzles or making logical deductions.",
+      "contextual_fit": 0.0015132909175008535,
+      "sbert_sim": 0.9568,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "solving",
+      "replacement_word": "working",
+      "original_sentence": "Early researchers developed algorithms that imitated step-by-step reasoning that humans use when solving puzzles or making logical deductions.",
+      "reformulated_sentence": "Early researchers developed algorithms that imitated detailed reasoning that humans use when working puzzles or making logical deductions.",
+      "contextual_fit": 8.788714694674127e-06,
+      "sbert_sim": 0.9506,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "solving",
+      "replacement_word": "working",
+      "original_sentence": "Many of these algorithms were insufficient for solving large reasoning problems because they experienced a combinatorial explosion, meaning they become exponentially slower as the problems grow.",
+      "reformulated_sentence": "Many of these algorithms were insufficient for working large reasoning problems because they experienced a combinatorial explosion, meaning they become exponentially easier as the problems grow.",
+      "contextual_fit": 1.9265933588030748e-05,
+      "sbert_sim": 0.9948,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "slower",
+      "replacement_word": "easier",
+      "original_sentence": "Many of these algorithms were insufficient for solving large reasoning problems because they experienced a combinatorial explosion, meaning they become exponentially slower as the problems grow.",
+      "reformulated_sentence": "Many of these algorithms were insufficient for working large reasoning problems because they experienced a combinatorial explosion, meaning they become exponentially easier as the problems grow.",
+      "contextual_fit": 0.0032156503293663263,
+      "sbert_sim": 0.9849,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "set",
+      "replacement_word": "lot",
+      "original_sentence": "An ontology is the set of objects, relations, concepts, and properties used by a particular domain of knowledge.",
+      "reformulated_sentence": "An ontology is the lot of objects, relations, concepts, and properties used by a particular domain of knowledge.",
+      "contextual_fit": 1.6078913176897913e-05,
+      "sbert_sim": 0.9868,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "study",
+      "replacement_word": "work",
+      "original_sentence": "Machine learning is the study of programs that can improve their performance on a given task automatically.",
+      "reformulated_sentence": "Machine learning is the work of programs that can improve their performance on a given task automatically.",
+      "contextual_fit": 0.001195328077301383,
+      "sbert_sim": 0.9784,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "search",
+      "replacement_word": "quest",
+      "original_sentence": "Gradient descent is a type of local search that optimists a set of numerical parameters by incrementally adjusting them to minimize a loss function.",
+      "reformulated_sentence": "Gradient descent is a type of local quest that optimists a place of numerical parameters by incrementally adjusting them to minimize a loss function.",
+      "contextual_fit": 7.388068183900032e-07,
+      "sbert_sim": 0.9682,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "set",
+      "replacement_word": "place",
+      "original_sentence": "Gradient descent is a type of local search that optimists a set of numerical parameters by incrementally adjusting them to minimize a loss function.",
+      "reformulated_sentence": "Gradient descent is a type of local quest that optimists a place of numerical parameters by incrementally adjusting them to minimize a loss function.",
+      "contextual_fit": 1.2453841918613762e-05,
+      "sbert_sim": 0.9666,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "several",
+      "replacement_word": "various",
+      "original_sentence": "Deep learning uses several layers of neurons between the network's inputs and outputs.",
+      "reformulated_sentence": "Deep learning uses various layers of neurons between the network's inputs and outputs.",
+      "contextual_fit": 0.007956086657941341,
+      "sbert_sim": 0.9859,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "semantic",
+      "replacement_word": "meaningful",
+      "original_sentence": "Generative pre-trained transformers are large language models that generate text based on the semantic relationships between words in sentences.",
+      "reformulated_sentence": "Generative pre-trained transformers are large language models that generate text based on the meaningful relationships between words in times.",
+      "contextual_fit": 0.002551938174292445,
+      "sbert_sim": 0.986,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "ai",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "sentences",
+      "replacement_word": "times",
+      "original_sentence": "Generative pre-trained transformers are large language models that generate text based on the semantic relationships between words in sentences.",
+      "reformulated_sentence": "Generative pre-trained transformers are large language models that generate text based on the meaningful relationships between words in times.",
+      "contextual_fit": 4.187219019513577e-06,
+      "sbert_sim": 0.9361,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "surface",
+      "replacement_word": "layer",
+      "original_sentence": "Earth's average surface air temperature has increased about 1.5 degrees Celsius since the Industrial Revolution.",
+      "reformulated_sentence": "Earth's average layer air temperature has increased about 1.5 degrees Celsius since the Industrial Revolution.",
+      "contextual_fit": 2.6320803954149596e-06,
+      "sbert_sim": 0.9626,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "sea",
+      "replacement_word": "ocean",
+      "original_sentence": "The Arctic has warmed the most, and temperatures on land have generally increased more than sea surface temperatures.",
+      "reformulated_sentence": "The Arctic has warmed the most, and temperatures on land have generally increased more than ocean layer temperatures.",
+      "contextual_fit": 0.015738876536488533,
+      "sbert_sim": 0.9887,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "surface",
+      "replacement_word": "layer",
+      "original_sentence": "The Arctic has warmed the most, and temperatures on land have generally increased more than sea surface temperatures.",
+      "reformulated_sentence": "The Arctic has warmed the most, and temperatures on land have generally increased more than ocean layer temperatures.",
+      "contextual_fit": 0.0001749999210005626,
+      "sbert_sim": 0.9696,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "stronger",
+      "replacement_word": "powerful",
+      "original_sentence": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were stronger than the cooling effect of airborne particulates in air pollution.",
+      "reformulated_sentence": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were powerful than the cooling effect of airborne particulates in air pollution.",
+      "contextual_fit": 9.712945939099882e-06,
+      "sbert_sim": 0.9871,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "century",
+      "replacement_word": "half-century",
+      "original_sentence": "Between the 18th century and 1970 there was little net warming, as the warming impact of greenhouse gas emissions were offset by cooling from sulfur dioxide emissions.",
+      "reformulated_sentence": "Between the 18th half-century and 1970 there was little net warming, as the warming impact of greenhouse gas emissions were offset by cooling from s dioxide emissions.",
+      "contextual_fit": 0.6062632746373614,
+      "sbert_sim": 0.9958,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "sulfur",
+      "replacement_word": "s",
+      "original_sentence": "Between the 18th century and 1970 there was little net warming, as the warming impact of greenhouse gas emissions were offset by cooling from sulfur dioxide emissions.",
+      "reformulated_sentence": "Between the 18th half-century and 1970 there was little net warming, as the warming impact of greenhouse gas emissions were offset by cooling from s dioxide emissions.",
+      "contextual_fit": 5.26438892478609e-09,
+      "sbert_sim": 0.9708,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "surface",
+      "replacement_word": "open",
+      "original_sentence": "The upper atmosphere is cooling, because greenhouse gases are trapping heat near the Earth's surface, and so less heat is radiating into space.",
+      "reformulated_sentence": "The upper atmosphere is cooling, because greenhouse gases are trapping heat near the Earth's open, and so less heat is radiating into place.",
+      "contextual_fit": 3.8865962892487005e-08,
+      "sbert_sim": 0.9978,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "space",
+      "replacement_word": "place",
+      "original_sentence": "The upper atmosphere is cooling, because greenhouse gases are trapping heat near the Earth's surface, and so less heat is radiating into space.",
+      "reformulated_sentence": "The upper atmosphere is cooling, because greenhouse gases are trapping heat near the Earth's open, and so less heat is radiating into place.",
+      "contextual_fit": 0.00019246699230279773,
+      "sbert_sim": 0.9721,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "surface",
+      "replacement_word": "rise",
+      "original_sentence": "Since the pre-industrial period, the average surface temperature over land regions has increased almost twice as fast as the global average surface temperature.",
+      "reformulated_sentence": "Since the pre-industrial period, the average rise temperature over land regions has increased almost twice as fast as the global average open temperature.",
+      "contextual_fit": 0.0001476393808843568,
+      "sbert_sim": 0.9672,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "climate",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "surface",
+      "replacement_word": "open",
+      "original_sentence": "Since the pre-industrial period, the average surface temperature over land regions has increased almost twice as fast as the global average surface temperature.",
+      "reformulated_sentence": "Since the pre-industrial period, the average rise temperature over land regions has increased almost twice as fast as the global average open temperature.",
+      "contextual_fit": 2.18217282963451e-05,
+      "sbert_sim": 0.9273,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "stoves",
+      "replacement_word": "fires",
+      "original_sentence": "Cooking techniques and ingredients vary widely, from grilling food over an open fire, to using electric stoves, to baking in various types of ovens, to boiling and blanching in water.",
+      "reformulated_sentence": "Cooking techniques and ingredients vary widely, from grilling food over an open fire, to using electric fires, to baking in various types of ovens, to boiling and blanching in water.",
+      "contextual_fit": 0.0005440050736069679,
+      "sbert_sim": 0.9933,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "societies",
+      "replacement_word": "companies",
+      "original_sentence": "Cooking is an aspect of all human societies and a cultural universal.",
+      "reformulated_sentence": "Cooking is an aspect of all human companies and a cultural universal.",
+      "contextual_fit": 1.5192368891803198e-06,
+      "sbert_sim": 0.9562,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "started",
+      "replacement_word": "went",
+      "original_sentence": "Archaeological evidence of cooking fires date to at least 300,000 years ago, but some estimate that humans started cooking as early as 2 million years ago.",
+      "reformulated_sentence": "Archaeological evidence of cooking fires date to at least 300,000 years ago, but some estimate that humans went cooking as early as 2 million years ago.",
+      "contextual_fit": 0.00013716430112253875,
+      "sbert_sim": 0.9954,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "single_common_sound",
+      "change_source": "restructuring",
+      "triggered_by": [
+        "multiple_difficulties_or_no_valid_substitution"
+      ],
+      "original_word": "Long-chain sugars such as starch tends to break down into more digestible simpler sugars.",
+      "replacement_word": "Long-chain sugars like glucose tend to break down into more digestible sugars.",
+      "original_sentence": "Long-chain sugars such as starch tends to break down into more digestible simpler sugars.",
+      "reformulated_sentence": "Long-chain sugars like glucose tend to break down into more digestible sugars.",
+      "contextual_fit": null,
+      "sbert_sim": 0.8861,
+      "antonym_check": "n/a_sentence_level"
+    },
+    {
+      "source": "cooking",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "such",
+      "replacement_word": "much",
+      "original_sentence": "Fats can reach temperatures above the boiling point of water and is often used to transfer high heat to other ingredients, such as in frying or sautéing.",
+      "reformulated_sentence": "Fats can reach temperatures above the boiling point of water and is often used to transfer high heat to other ingredients, much as in frying or cooking.",
+      "contextual_fit": 6.38500350760296e-05,
+      "sbert_sim": 0.9991,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "sautéing",
+      "replacement_word": "cooking",
+      "original_sentence": "Fats can reach temperatures above the boiling point of water and is often used to transfer high heat to other ingredients, such as in frying or sautéing.",
+      "reformulated_sentence": "Fats can reach temperatures above the boiling point of water and is often used to transfer high heat to other ingredients, much as in frying or cooking.",
+      "contextual_fit": 0.16608083248138428,
+      "sbert_sim": 0.9915,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "saturated",
+      "replacement_word": "pure",
+      "original_sentence": "Home-cooked meals tend to be healthier with fewer calories, and less saturated fat, cholesterol and sodium on a per calorie basis.",
+      "reformulated_sentence": "Home-cooked meals tend to be healthier with fewer calories, and less pure fat, cholesterol and na on a per calorie basis.",
+      "contextual_fit": 3.273996480857022e-05,
+      "sbert_sim": 0.9968,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "sodium",
+      "replacement_word": "na",
+      "original_sentence": "Home-cooked meals tend to be healthier with fewer calories, and less saturated fat, cholesterol and sodium on a per calorie basis.",
+      "reformulated_sentence": "Home-cooked meals tend to be healthier with fewer calories, and less pure fat, cholesterol and na on a per calorie basis.",
+      "contextual_fit": 2.6197587885690155e-06,
+      "sbert_sim": 0.9744,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "scientific",
+      "replacement_word": "technical",
+      "original_sentence": "The scientific study of cooking has become known as molecular gastronomy.",
+      "reformulated_sentence": "The technical take of cooking has become known as molecular gastronomy.",
+      "contextual_fit": 0.0038694951217621565,
+      "sbert_sim": 0.9893,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "cooking",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "study",
+      "replacement_word": "take",
+      "original_sentence": "The scientific study of cooking has become known as molecular gastronomy.",
+      "reformulated_sentence": "The technical take of cooking has become known as molecular gastronomy.",
+      "contextual_fit": 1.052997617989604e-06,
+      "sbert_sim": 0.9606,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "Small",
+      "replacement_word": "Little",
+      "original_sentence": "Small talk is an informal type of discourse that does not cover any functional topics of conversation or any transactions that need to be addressed.",
+      "reformulated_sentence": "Little talk is an informal type of discourse that does not cover any functional topics of conversation or any transactions that need to be addressed.",
+      "contextual_fit": 0.0007159791421145201,
+      "sbert_sim": 0.9239,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "Small",
+      "replacement_word": "Little",
+      "original_sentence": "Small talk consists of three main parts: a greeting, conversation, and a closing.",
+      "reformulated_sentence": "Little talk consists of three main parts: a greeting, conversation, and a closing.",
+      "contextual_fit": 0.000856719387229532,
+      "sbert_sim": 0.9503,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "small",
+      "replacement_word": "little",
+      "original_sentence": "The phenomenon of small talk was initially studied in 1923 by Bronislaw Malinowski in his essay on the problem of meaning in primitive languages.",
+      "reformulated_sentence": "The phenomenon of little talk was initially taken in 1923 by Bronislaw Malinowski in his essay on the problem of meaning in primitive languages.",
+      "contextual_fit": 0.001709834672510624,
+      "sbert_sim": 0.9655,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "studied",
+      "replacement_word": "taken",
+      "original_sentence": "The phenomenon of small talk was initially studied in 1923 by Bronislaw Malinowski in his essay on the problem of meaning in primitive languages.",
+      "reformulated_sentence": "The phenomenon of little talk was initially taken in 1923 by Bronislaw Malinowski in his essay on the problem of meaning in primitive languages.",
+      "contextual_fit": 1.2470522960938979e-05,
+      "sbert_sim": 0.9597,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "small",
+      "replacement_word": "little",
+      "original_sentence": "Phatic communication, or small talk, is not used to exchange important information; instead it is used to build and maintain interpersonal relationships.",
+      "reformulated_sentence": "Phatic communication, or little talk, is not used to exchange important information; instead it is used to build and maintain interpersonal relationships.",
+      "contextual_fit": 0.0008267690427601337,
+      "sbert_sim": 0.9722,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "Small",
+      "replacement_word": "Little",
+      "original_sentence": "Small talk is a bonding ritual and a strategy for managing interpersonal distance.",
+      "reformulated_sentence": "Little talk is a bonding ritual and a way for managing interpersonal distance.",
+      "contextual_fit": 0.0034313658252358437,
+      "sbert_sim": 0.9302,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "strategy",
+      "replacement_word": "way",
+      "original_sentence": "Small talk is a bonding ritual and a strategy for managing interpersonal distance.",
+      "reformulated_sentence": "Little talk is a bonding ritual and a way for managing interpersonal distance.",
+      "contextual_fit": 0.016947248950600624,
+      "sbert_sim": 0.9278,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "serves",
+      "replacement_word": "helps",
+      "original_sentence": "It serves many functions in helping to define the relationships between friends, colleagues, and new acquaintances.",
+      "reformulated_sentence": "It helps many functions in helping to define the relationships between friends, colleagues, and new acquaintances.",
+      "contextual_fit": 7.785120396874845e-05,
+      "sbert_sim": 0.9668,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "silences",
+      "replacement_word": "quiets",
+      "original_sentence": "In many cultures, silences between two people are usually considered uncomfortable and awkward.",
+      "reformulated_sentence": "In many cultures, quiets between two people are usually considered uncomfortable and awkward.",
+      "contextual_fit": 0.00011877099132107105,
+      "sbert_sim": 0.9431,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "small",
+      "replacement_word": "little",
+      "original_sentence": "The topics of small talk conversations are generally less important than their social function.",
+      "reformulated_sentence": "The topics of little talk conversations are generally less important than their friendly function.",
+      "contextual_fit": 0.0011014541378244758,
+      "sbert_sim": 0.972,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "social",
+      "replacement_word": "friendly",
+      "original_sentence": "The topics of small talk conversations are generally less important than their social function.",
+      "reformulated_sentence": "The topics of little talk conversations are generally less important than their friendly function.",
+      "contextual_fit": 3.941646355087869e-05,
+      "sbert_sim": 0.9289,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "smalltalk",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "Speech",
+      "replacement_word": "Words",
+      "original_sentence": "Speech patterns between women tend to be more collaborative than those of men.",
+      "reformulated_sentence": "Words patterns between women tend to be more collaborative than those of men.",
+      "contextual_fit": 3.7053080177429365e-06,
+      "sbert_sim": 0.8886,
+      "antonym_check": "pass"
+    }
+  ]
+}

@@ -3590,3 +3590,161 @@ before any weight or gating change, is adding that instrumentation.
 
 No production code changed in this investigation. No ranking weights
 touched. No fix implemented — findings only, per explicit instruction.
+
+### 33.6 Systematic manual audit — all 112 individual substitutions rated (2026-08-22)
+
+§33.3 above rated a curated set of ~15 severe examples. Per explicit
+follow-up instruction, this section completes R40 with a full,
+unselected audit: every individual substitution change behind the 79
+`reformulated` sentences, rated directly by Claude, not the pipeline's
+own scores. New script `eval/r40_change_audit.py` re-ran the same 48×4
+corpus and captured all 112 individual changes (original word,
+replacement, full sentence context, `contextual_fit`, `sbert_sim`) —
+re-running reproduced the original 79/112 split exactly, no drift.
+`eval/r40_change_audit_verdicts.py` records a verdict (CLEAN / MINOR /
+SEVERE) and a one-line reason for every one of the 112, index-matched to
+the data file; full data in `eval/r40_change_audit_data.json` and
+`eval/r40_change_audit_verdicts.json`.
+
+**[FACT] Tally: 8/112 CLEAN (7%), 21/112 MINOR (19%), 83/112 SEVERE
+(74%).** SEVERE = ungrammatical, nonsensical, wrong word sense with real
+meaning change, a duplicate/garbage token, or a factual/logical error.
+MINOR = meaning basically preserved but a real, noticeable quality loss
+(awkward collocation, register mismatch, lost precision) — not counted
+as a defect, but not good either. Only 26% of individual substitutions
+in this corpus (CLEAN+MINOR) were free of a real defect. This is a
+harsher, and more trustworthy, number than §33.3's anecdotal read: it is
+a full-sample proportion, not a curated worst-of list.
+
+**[FINDING] A second, independent bug source: `sanitize_input()`'s
+spellchecker, not the reformulation engine.** Change #34/#76 ("search"→
+"quest" in "Gradient descent is a type of local search that optimises
+...") sits inside a sentence whose actual worst defect —
+"optimises"→**"optimists"** — was never a reformulation-engine
+substitution at all. Direct reproduction: `sanitize_input("...that
+optimises a set...minimise a loss function.")` returns `corrected` text
+already containing "optimists", with `fixes` showing `{"original":
+"optimises", "corrected": "optimists", "reason": "Spelling: \"optimises\"
+→ \"optimists\""}` — alongside a correct, working fix in the same call
+(`"minimise"→"minimize"`). This is `pyspellchecker` (via
+`grammar.py::sanitize_input`) treating a valid British-English verb
+spelling it doesn't recognize as a misspelling and "correcting" it to
+the nearest dictionary word by edit distance, landing on an unrelated
+noun. **This is a distinct subsystem from the WSD/candidate-ranking
+issues R40 otherwise documents** — it runs before reformulation ever
+starts, on a completely different code path, and the inconsistent
+behavior (correctly fixing "minimise" while breaking "optimises" in the
+same call) suggests it is not a systematic British-spelling gap but a
+specific dictionary/edit-distance quirk.
+
+**[FINDING] The single worst substitution found: a logic-inverting
+near-antonym that the engine's own antonym check passed.** Change #73,
+"Many of these algorithms... become exponentially **slower**" →
+"...become exponentially **easier**", inside a sentence whose own
+opening clause is "these algorithms were **insufficient** for solving
+large reasoning problems" — the reformulated sentence now contradicts
+itself (something described as insufficient is, two clauses later, said
+to get easier as it scales). Confirmed: `antonym_check: "pass"` on this
+change. Not a bug in the check — "slower" and "easier" are not each
+other's WordNet antonym ("slow"'s antonym is "fast"; "easy"'s antonym is
+"hard") — they only invert *this sentence's specific logical claim*,
+which no signal in the pipeline is built to detect. A precise
+illustration of the gap between lexical antonym-pairing and contextual
+logical consistency.
+
+**[FINDING] SBERT shows no separation at the per-substitution level
+either**, confirming §33.3's sentence-level finding holds one level
+down: CLEAN median 0.9859, MINOR median 0.9682, **SEVERE median
+0.9696 — higher than MINOR's**. SBERT similarity carries no usable
+signal for distinguishing a good substitution from a bad one at the
+single-word-change level in this corpus.
+
+## 34. R41 — bounded validation of contextual_fit as a candidate substitution-quality gate (executed 2026-08-22)
+
+Direct follow-up to R40, per explicit instruction: use the now-labeled
+112-change dataset (§33.6) as ground truth and ask whether
+`contextual_fit` — reported-only since R37 — actually separates good
+substitutions from bad ones well enough to gate on. **No threshold
+promoted, no production gate added, no T5 change, no fine-tuning** — a
+measurement only, exactly as scoped.
+
+### 34.1 Method
+
+For the 110/112 changes with a `contextual_fit` score (2 restructuring-
+sourced changes score `None` by design, per R37's scope — restructuring
+output isn't validated for this signal), compared the score distribution
+across the three §33.6 verdict buckets, then swept candidate reject
+thresholds against "would this threshold have caught SEVERE cases, and
+at what cost to CLEAN/MINOR ('good') cases."
+
+### 34.2 Result — real signal, not a usable binary gate
+
+**[FACT] Distributions differ by roughly 200x at the median, but overlap
+heavily.**
+
+| Verdict | n | min | median | max |
+|---|---|---|---|---|
+| CLEAN | 8 | 0.000123 | 0.007809 | 0.110531 |
+| MINOR | 21 | 0.000001 | 0.003869 | 0.950522 |
+| SEVERE | 81 | 0.000000 | 0.000039 | 0.999574 |
+
+**[FACT] Threshold sweep (reject if `contextual_fit` below threshold):**
+
+| Threshold | SEVERE caught | Good (CLEAN+MINOR) wrongly rejected |
+|---|---|---|
+| 0.001 | 66/81 (81%) | 9/29 (31%) |
+| 0.005 | 74/81 (91%) | 15/29 (52%) |
+| **0.01** | 76/81 (94%) | **18/29 (62%)** |
+| 0.02 | 76/81 (94%) | 23/29 (79%) |
+| 0.05-0.1 | 77/81 (95%) | 23-25/29 (79-86%) |
+
+**[INTERPRETATION, revises §33.5's premature read]** §33.5 (R40, on a
+6-example spot check) recommended a ~0.01 threshold as a promising
+next step. At full scale, that same threshold catches 94% of severe
+defects **at the cost of wrongly rejecting 62% of substitutions that
+were actually fine** — CLEAN cases like "protracted"→"long" (0.000123)
+and "several"→"various" (0.007956) score as low as many genuine defects.
+The earlier 6-case read was accurate on those 6 cases but not
+representative of the full distribution's overlap; this is a real
+correction, not a contradiction papered over. No threshold tested here
+cleanly separates the classes — every setting trades a meaningful chunk
+of good output for defect coverage, and even the most permissive
+reasonable threshold (0.001) still misses 19% of severe cases while
+already rejecting 31% of good ones.
+
+**[FACT] contextual_fit is structurally blind to the worst defect
+class.** The two "palaeolithic"/"pre-industrial" factual-era errors
+(0.999, 0.9996) and the two "half-century" logical-corruption errors
+(0.606) — arguably the four most damaging substitutions in the whole
+corpus, changing a factual claim rather than just reading awkwardly —
+all score well above any threshold that would still preserve a usable
+share of good output. contextual_fit measures local fluency, and these
+substitutions all read fluently; the defect is in world-knowledge
+correctness, a different problem no signal in this pipeline currently
+addresses (§33.4/§33.6 both note this independently).
+
+### 34.3 Assessment
+
+**[RECOMMENDATION, not decided here]** contextual_fit carries real,
+non-trivial signal (an ~200x median separation is not nothing) and is
+still worth further investigation — but is not, on this evidence, safe
+to wire in as a standalone binary accept/reject gate at any single
+threshold. A production design would need to either (a) accept a
+substantial false-positive cost and pair rejection with a working
+retry/fallback path — which §33.2 already found does not currently exist
+(T5 restructuring succeeded in 2/192 runs) so aggressive rejection today
+would mostly convert bad substitutions into `could_not_safely_
+reformulate`, not into good ones — or (b) combine contextual_fit with an
+additional, different signal for the factual/logical-correctness class
+it structurally cannot see. Neither option is decided, scoped, or
+implemented here.
+
+**[LIMITATION]** n=112 changes from one 48-sentence, 4-profile corpus —
+directional, not a large validated study. The CLEAN bucket is small
+(n=8), so its score range is not tightly estimated. No new corpus was
+collected for this validation; it reuses R40's data by design, per
+explicit instruction ("using the existing outputs and known good/bad
+examples").
+
+This closes R41 as scoped. No production code changed; no ranking
+weights touched; no threshold promoted; no fix implemented.

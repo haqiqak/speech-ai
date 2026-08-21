@@ -6,6 +6,22 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-22, second** test/docs: R41 — bounded validation of
+  contextual_fit as a candidate substitution-quality gate, against
+  R40's 112 labeled changes. Real signal (CLEAN median 0.0078 vs.
+  SEVERE median 0.00004) but heavy overlap — at threshold 0.01, 94% of
+  severe defects caught but 62% of genuinely fine substitutions also
+  wrongly rejected. Blind to factual/logical-correctness errors
+  ("palaeolithic", "half-century" score 0.6-0.999). Revises R40's
+  earlier 6-example optimism. No threshold promoted, no gate, no fix.
+  → `DECISION_LOG.md` 2026-08-22-B.
+- **2026-08-22, first** test/docs: R40 completed — systematic audit of
+  all 112 individual substitutions (not just a curated worst-of list).
+  8/112 CLEAN (7%), 21/112 MINOR (19%), 83/112 SEVERE (74%). New
+  findings: `sanitize_input()`'s spellchecker independently corrupts
+  "optimises"→"optimists"; worst single case "slower"→"easier" inverts
+  its sentence's logic while `antonym_check` passed it. → `DECISION_LOG.md`
+  2026-08-22-A.
 - **2026-08-21, second** test/docs: R40 — ceiling probe (192 real
   sentence×profile pairs, live engine) + direct linguistic audit of the
   79 "successful" outputs, on user request. 11% fail both tiers; T5

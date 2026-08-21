@@ -1,0 +1,1018 @@
+{
+  "tally": {
+    "CLEAN": 8,
+    "MINOR": 21,
+    "SEVERE": 83
+  },
+  "n": 112,
+  "verdicts": [
+    {
+      "index": 1,
+      "original_word": "strategy",
+      "replacement_word": "way",
+      "contextual_fit": 7.316939445445314e-07,
+      "sbert_sim": 0.9913,
+      "verdict": "SEVERE",
+      "reason": "\"way games\" is not a coherent compound; loses the meaning of \"strategy\"."
+    },
+    {
+      "index": 2,
+      "original_word": "stronger",
+      "replacement_word": "powerful",
+      "contextual_fit": 9.712945939099882e-06,
+      "sbert_sim": 0.9871,
+      "verdict": "SEVERE",
+      "reason": "\"powerful than\" is ungrammatical — comparative form lost (\"more powerful than\")."
+    },
+    {
+      "index": 3,
+      "original_word": "strategy",
+      "replacement_word": "way",
+      "contextual_fit": 0.019568100571632385,
+      "sbert_sim": 0.994,
+      "verdict": "MINOR",
+      "reason": "\"a way for managing\" is a slightly awkward preposition choice; comprehensible."
+    },
+    {
+      "index": 4,
+      "original_word": "problem-solving",
+      "replacement_word": "issue",
+      "contextual_fit": 2.662881684045715e-07,
+      "sbert_sim": 0.9978,
+      "verdict": "SEVERE",
+      "reason": "\"issue\" breaks the parallel gerund/noun list and does not fit \"problem-solving\"'s sense."
+    },
+    {
+      "index": 5,
+      "original_word": "properties",
+      "replacement_word": "places",
+      "contextual_fit": 0.000291478936560452,
+      "sbert_sim": 0.9881,
+      "verdict": "SEVERE",
+      "reason": "\"places\" (locations) for \"properties\" (attributes) — wrong sense in an ontology context."
+    },
+    {
+      "index": 6,
+      "original_word": "particular",
+      "replacement_word": "specific",
+      "contextual_fit": 0.11053116619586945,
+      "sbert_sim": 0.9869,
+      "verdict": "CLEAN",
+      "reason": "valid, natural synonym, meaning fully preserved."
+    },
+    {
+      "index": 7,
+      "original_word": "preferences",
+      "replacement_word": "options",
+      "contextual_fit": 0.0022066887468099594,
+      "sbert_sim": 0.9656,
+      "verdict": "MINOR",
+      "reason": "\"options\" (external choices) for \"preferences\" (internal wants) — real but survivable sense shift."
+    },
+    {
+      "index": 8,
+      "original_word": "programs",
+      "replacement_word": "softwares",
+      "contextual_fit": 0.008771450302447192,
+      "sbert_sim": 0.9743,
+      "verdict": "SEVERE",
+      "reason": "\"softwares\" is an ungrammatical plural of a mass noun."
+    },
+    {
+      "index": 9,
+      "original_word": "processing",
+      "replacement_word": "operation",
+      "contextual_fit": 2.467043486831244e-05,
+      "sbert_sim": 0.9113,
+      "verdict": "SEVERE",
+      "reason": "breaks the fixed technical term \"natural language processing\" into nonsense (\"operation\")."
+    },
+    {
+      "index": 10,
+      "original_word": "programs",
+      "replacement_word": "softwares",
+      "contextual_fit": 0.0004691982758231461,
+      "sbert_sim": 0.8863,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #8's ungrammatical plural, same sentence."
+    },
+    {
+      "index": 11,
+      "original_word": "practices",
+      "replacement_word": "workings",
+      "contextual_fit": 7.491678843507543e-06,
+      "sbert_sim": 0.9907,
+      "verdict": "MINOR",
+      "reason": "\"workings\" is an unusual but attested collocation; comprehensible."
+    },
+    {
+      "index": 12,
+      "original_word": "greenhouse",
+      "replacement_word": "warming",
+      "contextual_fit": 7.549344445578754e-06,
+      "sbert_sim": 0.8958,
+      "verdict": "MINOR",
+      "reason": "\"warming gases\" for \"greenhouse gases\" loses the standard term but stays meaningful."
+    },
+    {
+      "index": 13,
+      "original_word": "greenhouse",
+      "replacement_word": "warming",
+      "contextual_fit": 0.4424729645252228,
+      "sbert_sim": 0.9593,
+      "verdict": "MINOR",
+      "reason": "creates \"warming impact of...warming gases\" — awkward near-repetition, not nonsense."
+    },
+    {
+      "index": 14,
+      "original_word": "greenhouse",
+      "replacement_word": "gas",
+      "contextual_fit": 4.5932267767057056e-07,
+      "sbert_sim": 0.984,
+      "verdict": "SEVERE",
+      "reason": "\"gas gas emissions\" — literal word duplication, nonsense."
+    },
+    {
+      "index": 15,
+      "original_word": "pre-industrial",
+      "replacement_word": "palaeolithic",
+      "contextual_fit": 0.9994170069694519,
+      "sbert_sim": 0.877,
+      "verdict": "SEVERE",
+      "reason": "\"palaeolithic\" (Stone Age) for \"pre-industrial\" (~1850) — ~50,000-year factual error; reads fluently despite being wrong (contextual_fit=0.999, a false negative)."
+    },
+    {
+      "index": 16,
+      "original_word": "greenhouse",
+      "replacement_word": "gas",
+      "contextual_fit": 0.0004640217521227896,
+      "sbert_sim": 0.9282,
+      "verdict": "SEVERE",
+      "reason": "\"gas gases\" — literal word duplication, nonsense."
+    },
+    {
+      "index": 17,
+      "original_word": "pre-industrial",
+      "replacement_word": "palaeolithic",
+      "contextual_fit": 0.9995739012956619,
+      "sbert_sim": 0.9131,
+      "verdict": "SEVERE",
+      "reason": "same palaeolithic/pre-industrial factual error, second occurrence."
+    },
+    {
+      "index": 18,
+      "original_word": "grilling",
+      "replacement_word": "cooking",
+      "contextual_fit": 0.9505218267440796,
+      "sbert_sim": 0.9589,
+      "verdict": "MINOR",
+      "reason": "\"cooking food\" replacing \"grilling\" inside a sentence about cooking techniques is circular/less specific but not wrong."
+    },
+    {
+      "index": 19,
+      "original_word": "proteins",
+      "replacement_word": "peptides",
+      "contextual_fit": 0.06231925143219996,
+      "sbert_sim": 0.8897,
+      "verdict": "MINOR",
+      "reason": "\"peptides\" is a related but technically distinct concept from \"proteins\" — imprecise, not absurd."
+    },
+    {
+      "index": 20,
+      "original_word": "prevent",
+      "replacement_word": "avoid",
+      "contextual_fit": 0.011487861163914204,
+      "sbert_sim": 0.9758,
+      "verdict": "MINOR",
+      "reason": "\"avoid\" for \"prevent\" is a slightly odd collocation (\"cooking can avoid illnesses\") but understandable."
+    },
+    {
+      "index": 21,
+      "original_word": "prone",
+      "replacement_word": "vulnerable",
+      "contextual_fit": 0.06775099784135818,
+      "sbert_sim": 0.9873,
+      "verdict": "CLEAN",
+      "reason": "valid synonym, idiomatic collocation preserved."
+    },
+    {
+      "index": 22,
+      "original_word": "protracted",
+      "replacement_word": "long",
+      "contextual_fit": 0.0001225308806169778,
+      "sbert_sim": 0.9766,
+      "verdict": "CLEAN",
+      "reason": "clean simplification, meaning and grammar fully intact."
+    },
+    {
+      "index": 23,
+      "original_word": "professional",
+      "replacement_word": "expert",
+      "contextual_fit": 0.00766137195751071,
+      "sbert_sim": 0.9813,
+      "verdict": "CLEAN",
+      "reason": "valid, natural synonym."
+    },
+    {
+      "index": 24,
+      "original_word": "greeting",
+      "replacement_word": "welcome",
+      "contextual_fit": 0.0004135371127631515,
+      "sbert_sim": 0.9633,
+      "verdict": "CLEAN",
+      "reason": "\"welcome\" is a reasonable near-synonym for \"greeting\" in this list context."
+    },
+    {
+      "index": 25,
+      "original_word": "problem",
+      "replacement_word": "trouble",
+      "contextual_fit": 1.3445521290122997e-05,
+      "sbert_sim": 0.9891,
+      "verdict": "SEVERE",
+      "reason": "\"the trouble of meaning\" does not match the idiomatic \"the problem of meaning\" (a term-of-art in this essay title)."
+    },
+    {
+      "index": 26,
+      "original_word": "primitive",
+      "replacement_word": "natural",
+      "contextual_fit": 0.00583323510363698,
+      "sbert_sim": 0.9632,
+      "verdict": "SEVERE",
+      "reason": "\"natural languages\" is a specific, different linguistics term from \"primitive languages\" (Malinowski's actual term) — wrong sense with real technical meaning change."
+    },
+    {
+      "index": 27,
+      "original_word": "search",
+      "replacement_word": "look",
+      "contextual_fit": 1.1411566447350197e-05,
+      "sbert_sim": 0.9751,
+      "verdict": "SEVERE",
+      "reason": "\"web look engines\" — nonsense compound."
+    },
+    {
+      "index": 28,
+      "original_word": "strategy",
+      "replacement_word": "way",
+      "contextual_fit": 8.867472729434667e-07,
+      "sbert_sim": 0.963,
+      "verdict": "SEVERE",
+      "reason": "\"way games\" — nonsense compound, duplicate of #1."
+    },
+    {
+      "index": 29,
+      "original_word": "set",
+      "replacement_word": "lot",
+      "contextual_fit": 1.992010948015377e-05,
+      "sbert_sim": 0.9868,
+      "verdict": "SEVERE",
+      "reason": "\"the lot of objects\" is not standard English for \"the set of objects\"."
+    },
+    {
+      "index": 30,
+      "original_word": "relations",
+      "replacement_word": "telling",
+      "contextual_fit": 1.6590233542501664e-07,
+      "sbert_sim": 0.9734,
+      "verdict": "SEVERE",
+      "reason": "\"objects, telling, concepts\" — a verb/gerund inserted into a noun list, nonsense."
+    },
+    {
+      "index": 31,
+      "original_word": "study",
+      "replacement_word": "work",
+      "contextual_fit": 0.001195328077301383,
+      "sbert_sim": 0.9784,
+      "verdict": "SEVERE",
+      "reason": "\"the work of programs\" changes the sentence's actual definitional claim (a field of study vs. an activity/output)."
+    },
+    {
+      "index": 32,
+      "original_word": "read",
+      "replacement_word": "take",
+      "contextual_fit": 6.692975148325786e-05,
+      "sbert_sim": 0.9923,
+      "verdict": "SEVERE",
+      "reason": "\"programs to take\" — wrong sense, and combines with #33 to duplicate \"communicate...communicate\"."
+    },
+    {
+      "index": 33,
+      "original_word": "write",
+      "replacement_word": "communicate",
+      "contextual_fit": 0.021816138178110123,
+      "sbert_sim": 0.9856,
+      "verdict": "SEVERE",
+      "reason": "creates \"take, communicate, and communicate\" — duplicate token, nonsense list."
+    },
+    {
+      "index": 34,
+      "original_word": "search",
+      "replacement_word": "quest",
+      "contextual_fit": 7.388068183900032e-07,
+      "sbert_sim": 0.9682,
+      "verdict": "MINOR",
+      "reason": "\"local quest\" for \"local search\" (a technical optimization term) is a register clash but not nonsense."
+    },
+    {
+      "index": 35,
+      "original_word": "set",
+      "replacement_word": "place",
+      "contextual_fit": 1.2453841918613762e-05,
+      "sbert_sim": 0.9666,
+      "verdict": "SEVERE",
+      "reason": "\"optimists a place of numerical parameters\" — wrong sense, \"place\" does not fit a mathematical set."
+    },
+    {
+      "index": 36,
+      "original_word": "several",
+      "replacement_word": "various",
+      "contextual_fit": 0.007956086657941341,
+      "sbert_sim": 0.9859,
+      "verdict": "CLEAN",
+      "reason": "valid, natural synonym."
+    },
+    {
+      "index": 37,
+      "original_word": "surface",
+      "replacement_word": "layer",
+      "contextual_fit": 3.1209538065013476e-06,
+      "sbert_sim": 0.9626,
+      "verdict": "SEVERE",
+      "reason": "combines with #38 into \"average layer air heat\" — nonsense compound."
+    },
+    {
+      "index": 38,
+      "original_word": "temperature",
+      "replacement_word": "heat",
+      "contextual_fit": 5.965578384348191e-05,
+      "sbert_sim": 0.9314,
+      "verdict": "SEVERE",
+      "reason": "combines with #37 into \"average layer air heat\" — nonsense compound."
+    },
+    {
+      "index": 39,
+      "original_word": "release",
+      "replacement_word": "device",
+      "contextual_fit": 3.726436716533499e-06,
+      "sbert_sim": 0.9447,
+      "verdict": "SEVERE",
+      "reason": "\"practices device greenhouse gases\" — \"device\" used as a verb; not grammatical English."
+    },
+    {
+      "index": 40,
+      "original_word": "sea",
+      "replacement_word": "ocean",
+      "contextual_fit": 0.015738876536488533,
+      "sbert_sim": 0.9887,
+      "verdict": "MINOR",
+      "reason": "\"ocean\" for \"sea\" is a fine synonym in isolation."
+    },
+    {
+      "index": 41,
+      "original_word": "surface",
+      "replacement_word": "layer",
+      "contextual_fit": 0.0001749999210005626,
+      "sbert_sim": 0.9696,
+      "verdict": "SEVERE",
+      "reason": "combined with #40, replaces the precise term \"sea surface temperature\" with \"ocean layer temperatures\" — a different, stealth-plausible scientific claim (implies depth, not surface)."
+    },
+    {
+      "index": 42,
+      "original_word": "stronger",
+      "replacement_word": "powerful",
+      "contextual_fit": 9.712945939099882e-06,
+      "sbert_sim": 0.9871,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #2's ungrammatical comparative."
+    },
+    {
+      "index": 43,
+      "original_word": "century",
+      "replacement_word": "half-century",
+      "contextual_fit": 0.6062632746373614,
+      "sbert_sim": 0.9958,
+      "verdict": "SEVERE",
+      "reason": "\"18th half-century\" does not correspond to any real time period — factual/logical corruption; contextual_fit=0.61 is a partial false negative."
+    },
+    {
+      "index": 44,
+      "original_word": "sulfur",
+      "replacement_word": "s",
+      "contextual_fit": 5.26438892478609e-09,
+      "sbert_sim": 0.9708,
+      "verdict": "SEVERE",
+      "reason": "\"s dioxide emissions\" — the letter \"s\" used as a word; contextual_fit correctly near-zero."
+    },
+    {
+      "index": 45,
+      "original_word": "range",
+      "replacement_word": "place",
+      "contextual_fit": 2.8895465220557526e-07,
+      "sbert_sim": 0.9789,
+      "verdict": "SEVERE",
+      "reason": "\"the place of hundreds of...birds has shifted\" — wrong sense (\"range\"=distribution, not location) and does not parse."
+    },
+    {
+      "index": 46,
+      "original_word": "rate",
+      "replacement_word": "place",
+      "contextual_fit": 2.8895465220557526e-07,
+      "sbert_sim": 0.9694,
+      "verdict": "SEVERE",
+      "reason": "\"an average place of 1.5 kilometers per year\" — wrong sense, does not fit a unit-of-measurement context."
+    },
+    {
+      "index": 47,
+      "original_word": "stoves",
+      "replacement_word": "fires",
+      "contextual_fit": 0.0005440050736069679,
+      "sbert_sim": 0.9933,
+      "verdict": "SEVERE",
+      "reason": "\"electric fires\" commonly means room heaters, not cooking appliances — a real sense confusion in a cooking-technique list."
+    },
+    {
+      "index": 48,
+      "original_word": "societies",
+      "replacement_word": "companies",
+      "contextual_fit": 1.5192368891803198e-06,
+      "sbert_sim": 0.9562,
+      "verdict": "SEVERE",
+      "reason": "\"all human companies\" for \"all human societies\" — wrong sense, factually absurd in context."
+    },
+    {
+      "index": 49,
+      "original_word": "started",
+      "replacement_word": "went",
+      "contextual_fit": 0.00013716430112253875,
+      "sbert_sim": 0.9954,
+      "verdict": "SEVERE",
+      "reason": "\"humans went cooking\" is not idiomatic (unlike \"went fishing\"); wrong verb choice."
+    },
+    {
+      "index": 50,
+      "original_word": "Long-chain sugars such as starch tends to break down into more digestible simpler sugars.",
+      "replacement_word": "Long-chain sugars like glucose tend to break down into more digestible sugars.",
+      "contextual_fit": null,
+      "sbert_sim": 0.8861,
+      "verdict": "SEVERE",
+      "reason": "restructuring: \"long-chain sugars like glucose\" is scientifically backwards — glucose is the simple sugar starch breaks INTO, not an example of a long-chain sugar."
+    },
+    {
+      "index": 51,
+      "original_word": "raw",
+      "replacement_word": "new",
+      "contextual_fit": 0.0016752638621255755,
+      "sbert_sim": 0.949,
+      "verdict": "SEVERE",
+      "reason": "\"if new food is consumed\" loses the raw/cooked distinction the sentence is actually about (foodborne illness from raw food)."
+    },
+    {
+      "index": 52,
+      "original_word": "saturated",
+      "replacement_word": "pure",
+      "contextual_fit": 3.273996480857022e-05,
+      "sbert_sim": 0.9968,
+      "verdict": "SEVERE",
+      "reason": "\"pure fat\" is not a coherent replacement for \"saturated fat\" — a specific, different nutritional term."
+    },
+    {
+      "index": 53,
+      "original_word": "sodium",
+      "replacement_word": "na",
+      "contextual_fit": 2.6197587885690155e-06,
+      "sbert_sim": 0.9744,
+      "verdict": "SEVERE",
+      "reason": "\"na\" — a chemical symbol used as a word for \"sodium\"."
+    },
+    {
+      "index": 54,
+      "original_word": "scientific",
+      "replacement_word": "technical",
+      "contextual_fit": 0.0038694951217621565,
+      "sbert_sim": 0.9893,
+      "verdict": "MINOR",
+      "reason": "\"technical\" for \"scientific\" is a mild register/precision shift, still comprehensible."
+    },
+    {
+      "index": 55,
+      "original_word": "study",
+      "replacement_word": "take",
+      "contextual_fit": 1.052997617989604e-06,
+      "sbert_sim": 0.9606,
+      "verdict": "SEVERE",
+      "reason": "\"the technical take of cooking\" — wrong sense, \"take\" (opinion) does not fit \"the study of cooking\"."
+    },
+    {
+      "index": 56,
+      "original_word": "restaurants",
+      "replacement_word": "buildings",
+      "contextual_fit": 0.0002293977449880913,
+      "sbert_sim": 0.9956,
+      "verdict": "SEVERE",
+      "reason": "\"buildings and other food establishments\" implies buildings are not food establishments — contradicts the sentence and loses the specific meaning of \"restaurants\"."
+    },
+    {
+      "index": 57,
+      "original_word": "Small",
+      "replacement_word": "Little",
+      "contextual_fit": 0.0007159791421145201,
+      "sbert_sim": 0.9239,
+      "verdict": "SEVERE",
+      "reason": "\"Small talk\" is a fixed term (the article's own subject); \"Little talk\" is not a substitute."
+    },
+    {
+      "index": 58,
+      "original_word": "Small",
+      "replacement_word": "Little",
+      "contextual_fit": 0.000856719387229532,
+      "sbert_sim": 0.9503,
+      "verdict": "SEVERE",
+      "reason": "same fixed-term erosion, second occurrence."
+    },
+    {
+      "index": 59,
+      "original_word": "small",
+      "replacement_word": "little",
+      "contextual_fit": 0.001709834672510624,
+      "sbert_sim": 0.9655,
+      "verdict": "SEVERE",
+      "reason": "same fixed-term erosion, third occurrence."
+    },
+    {
+      "index": 60,
+      "original_word": "studied",
+      "replacement_word": "taken",
+      "contextual_fit": 1.2470522960938979e-05,
+      "sbert_sim": 0.9597,
+      "verdict": "SEVERE",
+      "reason": "\"was initially taken\" for \"was initially studied\" — wrong sense, does not mean the same thing."
+    },
+    {
+      "index": 61,
+      "original_word": "serves",
+      "replacement_word": "helps",
+      "contextual_fit": 6.158085307106376e-05,
+      "sbert_sim": 0.9668,
+      "verdict": "SEVERE",
+      "reason": "\"It helps many functions\" breaks the collocation \"serves a function\"; not idiomatic."
+    },
+    {
+      "index": 62,
+      "original_word": "relationships",
+      "replacement_word": "associations",
+      "contextual_fit": 0.000578183913603425,
+      "sbert_sim": 0.9445,
+      "verdict": "MINOR",
+      "reason": "\"associations\" for \"relationships\" is a real but survivable sense shift, still comprehensible."
+    },
+    {
+      "index": 63,
+      "original_word": "reputation",
+      "replacement_word": "esteem",
+      "contextual_fit": 0.00048369643627665937,
+      "sbert_sim": 0.9622,
+      "verdict": "MINOR",
+      "reason": "\"esteem\" (respect) for \"reputation\" (how one is perceived) — related but not identical; comprehensible."
+    },
+    {
+      "index": 64,
+      "original_word": "silences",
+      "replacement_word": "quiets",
+      "contextual_fit": 0.00011877099132107105,
+      "sbert_sim": 0.9431,
+      "verdict": "SEVERE",
+      "reason": "\"quiets\" is a non-standard plural noun form of \"quiet\"."
+    },
+    {
+      "index": 65,
+      "original_word": "Speech",
+      "replacement_word": "Words",
+      "contextual_fit": 3.7053080177429365e-06,
+      "sbert_sim": 0.8886,
+      "verdict": "SEVERE",
+      "reason": "\"Words patterns\" should be singular attributive \"word pattern\" — ungrammatical."
+    },
+    {
+      "index": 66,
+      "original_word": "systems",
+      "replacement_word": "methods",
+      "contextual_fit": 0.0016450731782242656,
+      "sbert_sim": 0.9899,
+      "verdict": "CLEAN",
+      "reason": "\"methods\" for \"systems\" is acceptable in this AI-definition context."
+    },
+    {
+      "index": 67,
+      "original_word": "such",
+      "replacement_word": "much",
+      "contextual_fit": 6.160912136010666e-08,
+      "sbert_sim": 0.9892,
+      "verdict": "SEVERE",
+      "reason": "\"much as learning, reasoning...\" changes the list-introducing logic of \"such as\" — a structural, not just lexical, change."
+    },
+    {
+      "index": 68,
+      "original_word": "search",
+      "replacement_word": "research",
+      "contextual_fit": 0.0001188558162539266,
+      "sbert_sim": 0.9868,
+      "verdict": "SEVERE",
+      "reason": "breaks the fixed, well-known compound term \"search engines\" into \"research engines\"."
+    },
+    {
+      "index": 69,
+      "original_word": "strategy",
+      "replacement_word": "way",
+      "contextual_fit": 8.453853297396563e-07,
+      "sbert_sim": 0.9774,
+      "verdict": "SEVERE",
+      "reason": "\"way games\" — nonsense compound, duplicate."
+    },
+    {
+      "index": 70,
+      "original_word": "step-by-step",
+      "replacement_word": "detailed",
+      "contextual_fit": 0.0015132909175008535,
+      "sbert_sim": 0.9568,
+      "verdict": "MINOR",
+      "reason": "\"detailed reasoning\" for \"step-by-step reasoning\" loses the procedural connotation but is not wrong."
+    },
+    {
+      "index": 71,
+      "original_word": "solving",
+      "replacement_word": "working",
+      "contextual_fit": 8.788714694674127e-06,
+      "sbert_sim": 0.9506,
+      "verdict": "MINOR",
+      "reason": "\"working puzzles\" is attested in some English varieties (\"work a puzzle\"), non-standard but understandable."
+    },
+    {
+      "index": 72,
+      "original_word": "solving",
+      "replacement_word": "working",
+      "contextual_fit": 1.9265933588030748e-05,
+      "sbert_sim": 0.9948,
+      "verdict": "SEVERE",
+      "reason": "\"working large reasoning problems\" is a less natural collocation than #71's case; reads as broken."
+    },
+    {
+      "index": 73,
+      "original_word": "slower",
+      "replacement_word": "easier",
+      "contextual_fit": 0.0032156503293663263,
+      "sbert_sim": 0.9849,
+      "verdict": "SEVERE",
+      "reason": "a near-antonym substitution that inverts the sentence's logic: \"become exponentially easier\" contradicts \"insufficient for solving\" earlier in the same sentence — the single worst substitution found."
+    },
+    {
+      "index": 74,
+      "original_word": "set",
+      "replacement_word": "lot",
+      "contextual_fit": 1.6078913176897913e-05,
+      "sbert_sim": 0.9868,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #29's ungrammatical phrasing."
+    },
+    {
+      "index": 75,
+      "original_word": "study",
+      "replacement_word": "work",
+      "contextual_fit": 0.001195328077301383,
+      "sbert_sim": 0.9784,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #31's definitional meaning change."
+    },
+    {
+      "index": 76,
+      "original_word": "search",
+      "replacement_word": "quest",
+      "contextual_fit": 7.388068183900032e-07,
+      "sbert_sim": 0.9682,
+      "verdict": "MINOR",
+      "reason": "duplicate of #34's register clash."
+    },
+    {
+      "index": 77,
+      "original_word": "set",
+      "replacement_word": "place",
+      "contextual_fit": 1.2453841918613762e-05,
+      "sbert_sim": 0.9666,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #35's wrong-sense error."
+    },
+    {
+      "index": 78,
+      "original_word": "several",
+      "replacement_word": "various",
+      "contextual_fit": 0.007956086657941341,
+      "sbert_sim": 0.9859,
+      "verdict": "CLEAN",
+      "reason": "duplicate of #36's clean synonym."
+    },
+    {
+      "index": 79,
+      "original_word": "semantic",
+      "replacement_word": "meaningful",
+      "contextual_fit": 0.002551938174292445,
+      "sbert_sim": 0.986,
+      "verdict": "MINOR",
+      "reason": "\"meaningful relationships\" is a reasonable lay paraphrase of the technical term \"semantic relationships\"."
+    },
+    {
+      "index": 80,
+      "original_word": "sentences",
+      "replacement_word": "times",
+      "contextual_fit": 4.187219019513577e-06,
+      "sbert_sim": 0.9361,
+      "verdict": "SEVERE",
+      "reason": "\"words in times\" — wrong sense, \"times\" does not fit \"sentences\" at all."
+    },
+    {
+      "index": 81,
+      "original_word": "surface",
+      "replacement_word": "layer",
+      "contextual_fit": 2.6320803954149596e-06,
+      "sbert_sim": 0.9626,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #37's nonsense compound (\"average layer air temperature\")."
+    },
+    {
+      "index": 82,
+      "original_word": "sea",
+      "replacement_word": "ocean",
+      "contextual_fit": 0.015738876536488533,
+      "sbert_sim": 0.9887,
+      "verdict": "MINOR",
+      "reason": "duplicate of #40's fine synonym."
+    },
+    {
+      "index": 83,
+      "original_word": "surface",
+      "replacement_word": "layer",
+      "contextual_fit": 0.0001749999210005626,
+      "sbert_sim": 0.9696,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #41's stealth-wrong scientific term."
+    },
+    {
+      "index": 84,
+      "original_word": "stronger",
+      "replacement_word": "powerful",
+      "contextual_fit": 9.712945939099882e-06,
+      "sbert_sim": 0.9871,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #2/#42's ungrammatical comparative."
+    },
+    {
+      "index": 85,
+      "original_word": "century",
+      "replacement_word": "half-century",
+      "contextual_fit": 0.6062632746373614,
+      "sbert_sim": 0.9958,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #43's factual/logical corruption."
+    },
+    {
+      "index": 86,
+      "original_word": "sulfur",
+      "replacement_word": "s",
+      "contextual_fit": 5.26438892478609e-09,
+      "sbert_sim": 0.9708,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #44's letter-as-word error."
+    },
+    {
+      "index": 87,
+      "original_word": "surface",
+      "replacement_word": "open",
+      "contextual_fit": 3.8865962892487005e-08,
+      "sbert_sim": 0.9978,
+      "verdict": "SEVERE",
+      "reason": "\"near the Earth's open\" — drops the noun, does not parse."
+    },
+    {
+      "index": 88,
+      "original_word": "space",
+      "replacement_word": "place",
+      "contextual_fit": 0.00019246699230279773,
+      "sbert_sim": 0.9721,
+      "verdict": "SEVERE",
+      "reason": "\"radiating into place\" — wrong sense, loses the astronomical meaning of \"space\"."
+    },
+    {
+      "index": 89,
+      "original_word": "surface",
+      "replacement_word": "rise",
+      "contextual_fit": 0.0001476393808843568,
+      "sbert_sim": 0.9672,
+      "verdict": "SEVERE",
+      "reason": "\"average rise temperature\" — nonsense compound, not a real term."
+    },
+    {
+      "index": 90,
+      "original_word": "surface",
+      "replacement_word": "open",
+      "contextual_fit": 2.18217282963451e-05,
+      "sbert_sim": 0.9273,
+      "verdict": "SEVERE",
+      "reason": "\"average open temperature\" — nonsense compound."
+    },
+    {
+      "index": 91,
+      "original_word": "stoves",
+      "replacement_word": "fires",
+      "contextual_fit": 0.0005440050736069679,
+      "sbert_sim": 0.9933,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #47's appliance-type sense confusion."
+    },
+    {
+      "index": 92,
+      "original_word": "societies",
+      "replacement_word": "companies",
+      "contextual_fit": 1.5192368891803198e-06,
+      "sbert_sim": 0.9562,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #48's wrong-sense error."
+    },
+    {
+      "index": 93,
+      "original_word": "started",
+      "replacement_word": "went",
+      "contextual_fit": 0.00013716430112253875,
+      "sbert_sim": 0.9954,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #49's non-idiomatic verb choice."
+    },
+    {
+      "index": 94,
+      "original_word": "Long-chain sugars such as starch tends to break down into more digestible simpler sugars.",
+      "replacement_word": "Long-chain sugars like glucose tend to break down into more digestible sugars.",
+      "contextual_fit": null,
+      "sbert_sim": 0.8861,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #50's scientifically-backwards restructuring."
+    },
+    {
+      "index": 95,
+      "original_word": "such",
+      "replacement_word": "much",
+      "contextual_fit": 6.38500350760296e-05,
+      "sbert_sim": 0.9991,
+      "verdict": "SEVERE",
+      "reason": "duplicate of the \"such\"->\"much\" structural break, different sentence."
+    },
+    {
+      "index": 96,
+      "original_word": "sautéing",
+      "replacement_word": "cooking",
+      "contextual_fit": 0.16608083248138428,
+      "sbert_sim": 0.9915,
+      "verdict": "MINOR",
+      "reason": "\"cooking\" for \"sauteing\" is a reasonable hypernym, mildly redundant given the sentence topic."
+    },
+    {
+      "index": 97,
+      "original_word": "saturated",
+      "replacement_word": "pure",
+      "contextual_fit": 3.273996480857022e-05,
+      "sbert_sim": 0.9968,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #52's wrong nutritional term."
+    },
+    {
+      "index": 98,
+      "original_word": "sodium",
+      "replacement_word": "na",
+      "contextual_fit": 2.6197587885690155e-06,
+      "sbert_sim": 0.9744,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #53's chemical-symbol-as-word error."
+    },
+    {
+      "index": 99,
+      "original_word": "scientific",
+      "replacement_word": "technical",
+      "contextual_fit": 0.0038694951217621565,
+      "sbert_sim": 0.9893,
+      "verdict": "MINOR",
+      "reason": "duplicate of #54's mild register shift."
+    },
+    {
+      "index": 100,
+      "original_word": "study",
+      "replacement_word": "take",
+      "contextual_fit": 1.052997617989604e-06,
+      "sbert_sim": 0.9606,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #55's wrong-sense error."
+    },
+    {
+      "index": 101,
+      "original_word": "Small",
+      "replacement_word": "Little",
+      "contextual_fit": 0.0007159791421145201,
+      "sbert_sim": 0.9239,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #57's fixed-term erosion."
+    },
+    {
+      "index": 102,
+      "original_word": "Small",
+      "replacement_word": "Little",
+      "contextual_fit": 0.000856719387229532,
+      "sbert_sim": 0.9503,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #57's fixed-term erosion."
+    },
+    {
+      "index": 103,
+      "original_word": "small",
+      "replacement_word": "little",
+      "contextual_fit": 0.001709834672510624,
+      "sbert_sim": 0.9655,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #59's fixed-term erosion."
+    },
+    {
+      "index": 104,
+      "original_word": "studied",
+      "replacement_word": "taken",
+      "contextual_fit": 1.2470522960938979e-05,
+      "sbert_sim": 0.9597,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #60's wrong-sense error."
+    },
+    {
+      "index": 105,
+      "original_word": "small",
+      "replacement_word": "little",
+      "contextual_fit": 0.0008267690427601337,
+      "sbert_sim": 0.9722,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #59's fixed-term erosion, different sentence."
+    },
+    {
+      "index": 106,
+      "original_word": "Small",
+      "replacement_word": "Little",
+      "contextual_fit": 0.0034313658252358437,
+      "sbert_sim": 0.9302,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #57's fixed-term erosion."
+    },
+    {
+      "index": 107,
+      "original_word": "strategy",
+      "replacement_word": "way",
+      "contextual_fit": 0.016947248950600624,
+      "sbert_sim": 0.9278,
+      "verdict": "MINOR",
+      "reason": "duplicate of #3's slightly awkward preposition."
+    },
+    {
+      "index": 108,
+      "original_word": "serves",
+      "replacement_word": "helps",
+      "contextual_fit": 7.785120396874845e-05,
+      "sbert_sim": 0.9668,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #61's broken collocation."
+    },
+    {
+      "index": 109,
+      "original_word": "silences",
+      "replacement_word": "quiets",
+      "contextual_fit": 0.00011877099132107105,
+      "sbert_sim": 0.9431,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #64's non-standard plural."
+    },
+    {
+      "index": 110,
+      "original_word": "small",
+      "replacement_word": "little",
+      "contextual_fit": 0.0011014541378244758,
+      "sbert_sim": 0.972,
+      "verdict": "SEVERE",
+      "reason": "\"little talk\" for \"small talk\" and \"friendly\" for \"social\" — the fixed term erodes again, and \"social function\" (a specific sociological sense) becomes \"friendly function\", a real meaning change."
+    },
+    {
+      "index": 111,
+      "original_word": "social",
+      "replacement_word": "friendly",
+      "contextual_fit": 3.941646355087869e-05,
+      "sbert_sim": 0.9289,
+      "verdict": "SEVERE",
+      "reason": "\"friendly function\" for \"social function\" — wrong sense; \"social function\" is a specific term (the role something plays), not about friendliness."
+    },
+    {
+      "index": 112,
+      "original_word": "Speech",
+      "replacement_word": "Words",
+      "contextual_fit": 3.7053080177429365e-06,
+      "sbert_sim": 0.8886,
+      "verdict": "SEVERE",
+      "reason": "duplicate of #65's ungrammatical plural."
+    }
+  ]
+}
