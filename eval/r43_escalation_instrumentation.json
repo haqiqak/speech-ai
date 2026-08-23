@@ -1,0 +1,1991 @@
+{
+  "results": [
+    {
+      "source": "ai",
+      "profile": "moderate_mixed",
+      "sentence": "Many of these algorithms were insufficient for solving large reasoning problems because they experienced a combinatorial explosion, meaning they become exponentially slower as the problems grow.",
+      "pre_escalated": true,
+      "n_flagged": 3,
+      "flagged_fraction": 0.188,
+      "blocked_words": [
+        "grow",
+        "problems"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 4,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "Many of these algorithms were insufficient for solving large reasoning problems because they experienced a combinatorial explosion, meaning they become exponentially slower as the problems grow.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "problems",
+            "problems",
+            "grow"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Many of these algorithms were insufficient for solving large problem solving because they experienced a combinatorial explosion, meaning they become exponentially slower as the problem grows.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9319,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "problem",
+            "problem",
+            "grows"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Many of these algorithms were insufficient for solving large problem of reasoning because they experienced a combinatorial explosion, meaning they become exponentially slower as the problem grows.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9876,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "problem",
+            "problem",
+            "grows"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Many of these algorithms were insufficient for solving large reasoning issues because they experienced a combinatorial explosion, meaning they become exponentially slower as the problem grows.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9931,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "problem",
+            "grows"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Many of these algorithms were insufficient for solving large reasoning problem because they experienced a combinatorial explosion, meaning they become exponentially slower as the problem grows.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9934,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "problem",
+            "problem",
+            "grows"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "ai",
+      "profile": "moderate_mixed",
+      "sentence": "Gradient descent is a type of local search that optimists a set of numerical parameters by incrementally adjusting them to minimize a loss function.",
+      "pre_escalated": false,
+      "n_flagged": 1,
+      "flagged_fraction": 0.071,
+      "blocked_words": [
+        "gradient"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 0,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "Gradient descent is a type of local search that optimists a set of numerical parameters by incrementally adjusting them to minimize a loss function.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "Gradient"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "The gradual descent is a type of local search that optimizes a set of numerical parameters by incrementally adjusting them to minimize a loss function.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.8038,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "gradual"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "A gradual descent is a type of local search that optimizes a set of numerical parameters by incrementally adjusting them to minimize a loss function.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.794,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "gradual"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "The gradual descent is a type of local search that optimises a set of numerical parameters by incrementally adjusting them to minimize a loss function.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.802,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "gradual"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "The gradual descent is a type of local search that optimizes a set of numerical parameters by adjusting them incrementally to minimize a loss function.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.8012,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "gradual"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "ai",
+      "profile": "moderate_mixed",
+      "sentence": "Generative pre-trained transformers are large language models that generate text based on the semantic relationships between words in sentences.",
+      "pre_escalated": false,
+      "n_flagged": 1,
+      "flagged_fraction": 0.077,
+      "blocked_words": [
+        "pre-trained"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 4,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "Generative pre-trained transformers are large language models that generate text based on the semantic relationships between words in sentences.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "pre-trained"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Generative pretrained transformers are large language models that generate text based on the semantic relationships between words in sentences.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.979,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "pretrained"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Generative pre-training transformers are large language models that generate text based on the semantic relationships between words in sentences.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9903,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "pre-training"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Generative pretrained transformers are large language models that generate text based on semantic relationships between words in sentences.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9786,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "pretrained"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Generative pre-trainers are large language models that generate text based on the semantic relationships between words in sentences.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.8927,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "pre-trainers"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "ai",
+      "profile": "heavy_dense",
+      "sentence": "Artificial intelligence (AI) is the capability of computational systems to perform tasks typically associated with human intelligence, such as learning, reasoning, problem-solving, perception, and decision-making.",
+      "pre_escalated": true,
+      "n_flagged": 3,
+      "flagged_fraction": 0.176,
+      "blocked_words": [
+        "reasoning",
+        "such",
+        "systems"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 4,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "Artificial intelligence (AI) is the capability of computational systems to perform tasks typically associated with human intelligence, such as learning, reasoning, problem-solving, perception, and decision-making.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "systems",
+            "such",
+            "reasoning"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Artificial Intelligence (AI) is the capability of computational system to perform tasks typically associated with human intelligence, like learning, reasoning, problem-solving, perception and decision-making.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9978,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "system",
+            "reasoning"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Artificial Intelligence (AI) is the capability of computational system to perform tasks typically associated with human intelligence, including learning, reasoning, problem-solving, perception and decision-making.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9987,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "system",
+            "reasoning"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Artificial Intelligence (AI) is the ability of computational system to perform tasks typically associated with human intelligence, like learning, reasoning, problem-solving, perception and decision-making.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9933,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "system",
+            "reasoning"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Artificial Intelligence (AI) is the ability of computational system to perform tasks typically associated with human intelligence, including learning, reasoning, problem-solving, perception and decision-making.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9946,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "system",
+            "reasoning"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "ai",
+      "profile": "heavy_dense",
+      "sentence": "Early researchers developed algorithms that imitated step-by-step reasoning that humans use when solving puzzles or making logical deductions.",
+      "pre_escalated": true,
+      "n_flagged": 4,
+      "flagged_fraction": 0.308,
+      "blocked_words": [
+        "reasoning",
+        "researchers",
+        "solving",
+        "step-by-step"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 4,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "Early researchers developed algorithms that imitated step-by-step reasoning that humans use when solving puzzles or making logical deductions.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "researchers",
+            "step-by-step",
+            "reasoning",
+            "solving"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Early scientists developed algorithms that imitated step-by - step thinking that humans use to solve puzzles or make logical deductions.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9554,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "scientists",
+            "step-by",
+            "step",
+            "thinking",
+            "solve"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Early scientists developed algorithms that imitated step-by - step thinking that humans use when they solve puzzles or make logical deductions.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9572,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "scientists",
+            "step-by",
+            "step",
+            "thinking",
+            "solve"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Early scientists developed algorithms that imitated step-by - step logic that humans use to solve puzzles or make logical deductions.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.956,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "scientists",
+            "step-by",
+            "step",
+            "solve"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Early scientists developed algorithms that imitated step-by - step logic that humans use when they solve puzzles or make logical deductions.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9582,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "scientists",
+            "step-by",
+            "step",
+            "solve"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "ai",
+      "profile": "heavy_dense",
+      "sentence": "Many of these algorithms were insufficient for solving large reasoning problems because they experienced a combinatorial explosion, meaning they become exponentially slower as the problems grow.",
+      "pre_escalated": true,
+      "n_flagged": 3,
+      "flagged_fraction": 0.188,
+      "blocked_words": [
+        "reasoning",
+        "slower",
+        "solving"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 4,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "Many of these algorithms were insufficient for solving large reasoning problems because they experienced a combinatorial explosion, meaning they become exponentially slower as the problems grow.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "solving",
+            "reasoning",
+            "slower"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Many of these algorithms were insufficient to solve large thinking problems because they experienced a combinatorial explosion, meaning they become exponentially faster as the problems grow.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.939,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "solve",
+            "thinking"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Many of these algorithms were insufficient to solve large thinking problems because they experienced a combinatorial explosion, meaning they become exponentially slower as the problems grow.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9414,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "solve",
+            "thinking",
+            "slower"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Many of these algorithms were insufficient to solve large logical problems because they experienced a combinatorial explosion, meaning they become exponentially faster as the problems grow.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9513,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "solve"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Many of these algorithms were insufficient to solve large thinking problems because they experienced a combinatorial explosion, meaning that they become exponentially faster as the problems grow.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9371,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "solve",
+            "thinking"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "ai",
+      "profile": "heavy_dense",
+      "sentence": "A rational agent has goals or preferences and take actions to make them happen.",
+      "pre_escalated": false,
+      "n_flagged": 1,
+      "flagged_fraction": 0.125,
+      "blocked_words": [
+        "rational"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 2,
+      "n_negation_ok": 4,
+      "n_leak_free": 2,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "A rational agent has goals or preferences and take actions to make them happen.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "rational"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "A logical agent has goals or preferences and takes actions to make them happen.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.8318,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [],
+          "leak_free": true,
+          "accepted": false
+        },
+        {
+          "text": "Rational agents have goals or preferences and take actions to make them happen.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9784,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Rational"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Rational agent has goals or preferences and takes actions to make them happen.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9876,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Rational"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "An intelligent agent has goals or preferences and takes actions to make them happen.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.808,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [],
+          "leak_free": true,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "ai",
+      "profile": "heavy_dense",
+      "sentence": "State space search searches through a tree of possible states to try to find a goal state.",
+      "pre_escalated": true,
+      "n_flagged": 6,
+      "flagged_fraction": 0.545,
+      "blocked_words": [
+        "search",
+        "searches",
+        "space",
+        "state",
+        "states"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 4,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "State space search searches through a tree of possible states to try to find a goal state.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "State",
+            "space",
+            "search",
+            "searches",
+            "through",
+            "states",
+            "state"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Using a 'state-space-search', a tree of possible 'states' browses to try to find a goal-state.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9101,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "state-space-search'",
+            "states'"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Using a 'State-Space-Search', a tree of possible 'states seeks to find a goal-state.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9223,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "State-Space-Search'",
+            "states",
+            "seeks"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Using a 'state-space-search', a tree of possible 'states seeks to find a goal-state through.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9246,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "state-space-search'",
+            "states",
+            "seeks",
+            "through"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Using a 'state-space-search', a tree of possible 'states' browses to try to find a goal-state",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9163,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "state-space-search'",
+            "states'"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "ai",
+      "profile": "heavy_dense",
+      "sentence": "Generative pre-trained transformers are large language models that generate text based on the semantic relationships between words in sentences.",
+      "pre_escalated": true,
+      "n_flagged": 3,
+      "flagged_fraction": 0.231,
+      "blocked_words": [
+        "relationships",
+        "semantic",
+        "sentences"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 4,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "Generative pre-trained transformers are large language models that generate text based on the semantic relationships between words in sentences.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "semantic",
+            "relationships",
+            "sentences"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Generative pre-trained transformers are large language models that generate text based on semantics between words in phrases.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.961,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "semantics"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Generative pre-trained transformers are large language models that generate text based on semantic relations between words in phrases.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9733,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "semantic",
+            "relations"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Generative pre-trained transformers are large language models that generate text based on the semantics between words in phrases.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9638,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "semantics"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Generative pre-trained transformers are large language models that generate text based on the semantics of words in phrases.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9619,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "semantics"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "climate",
+      "profile": "heavy_dense",
+      "sentence": "The upper atmosphere is cooling, because greenhouse gases are trapping heat near the Earth's surface, and so less heat is radiating into space.",
+      "pre_escalated": true,
+      "n_flagged": 3,
+      "flagged_fraction": 0.25,
+      "blocked_words": [
+        "radiating",
+        "space",
+        "surface"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 4,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "The upper atmosphere is cooling, because greenhouse gases are trapping heat near the Earth's surface, and so less heat is radiating into space.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "surface",
+            "so",
+            "radiating",
+            "space"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "The upper atmosphere is cooling because greenhouse gases are trapping heat near the Earth's top and so less heat radiates into the universe.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9501,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "so",
+            "radiates"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "The upper atmosphere is cooling because greenhouse gases are trapping heat near the Earth's top and so less heat radiates into the atmosphere.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.947,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "so",
+            "radiates"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "The upper atmosphere is cooling because greenhouse gases are trapping heat near the Earth's top and thus less heat radiates into the universe.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9477,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "radiates"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "The upper atmosphere is cooling because greenhouse gases are trapping heat near the Earth's top and so less heat radiates into the universe",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9503,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "so",
+            "radiates"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "climate",
+      "profile": "heavy_dense",
+      "sentence": "Since the pre-industrial period, the average surface temperature over land regions has increased almost twice as fast as the global average surface temperature.",
+      "pre_escalated": true,
+      "n_flagged": 5,
+      "flagged_fraction": 0.312,
+      "blocked_words": [
+        "regions",
+        "surface",
+        "temperature"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 0,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "Since the pre-industrial period, the average surface temperature over land regions has increased almost twice as fast as the global average surface temperature.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "Since",
+            "surface",
+            "temperature",
+            "regions",
+            "surface",
+            "temperature"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Since the pre-industrial period, the average topography over land areas has increased almost twice as fast as the average global topography.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.7734,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Since"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Since the pre-industrial period, the average topography has increased almost twice as fast over land areas as the average global topography.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.7603,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Since"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Since the pre-industrial period, the average topography has increased almost twice as fast as the average global topography.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.7222,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Since"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Since the pre-industrial period, the average topography over land areas has increased almost twice as fast as the global topography average.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.7759,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Since"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "climate",
+      "profile": "heavy_dense",
+      "sentence": "Deforestation is the main land use change contributor to global warming, as the destroyed trees release carbon dioxide, and are not replaced by new trees.",
+      "pre_escalated": false,
+      "n_flagged": 2,
+      "flagged_fraction": 0.125,
+      "blocked_words": [
+        "release",
+        "replaced"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 4,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "Deforestation is the main land use change contributor to global warming, as the destroyed trees release carbon dioxide, and are not replaced by new trees.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "release",
+            "replaced"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Deforestation is the main contributor to global warming due to land use change, as the destroyed trees emit carbon dioxide and are not substituted by new trees.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9677,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "substituted"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Deforestation is the main contributor to global warming due to land use change, as the destroyed trees emit carbon dioxide and are not replace by new trees.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9678,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "replace"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Deforestation is the main contributor to the global warming of land use change, as the destroyed trees emit carbon dioxide and are not replace by new trees.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9797,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "replace"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Deforestation is the main contributor to global warming due to land use change, as the destroyed trees emit carbon dioxide and are not regenerated by new trees.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9632,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "regenerated"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "cooking",
+      "profile": "heavy_dense",
+      "sentence": "Long-chain sugars such as starch tends to break down into more digestible simpler sugars.",
+      "pre_escalated": true,
+      "n_flagged": 3,
+      "flagged_fraction": 0.3,
+      "blocked_words": [
+        "simpler",
+        "starch",
+        "such"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 4,
+      "n_negation_ok": 4,
+      "n_leak_free": 1,
+      "n_accepted": 1,
+      "any_accepted": true,
+      "candidates": [
+        {
+          "text": "Long-chain sugars such as starch tends to break down into more digestible simpler sugars.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "such",
+            "starch",
+            "simpler"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Long-chain sugars like starches tend to break down into more digestible simple sugars.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9612,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "starches",
+            "simple"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Long-chain sugars like glucose tend to break down into more digestible simple sugars.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.8847,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "simple"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Long-chain sugars like starches tend to break down into more digestible sugars.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9598,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "starches"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Long-chain sugars like glucose tend to break down into more digestible sugars.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.8861,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [],
+          "leak_free": true,
+          "accepted": true
+        }
+      ]
+    },
+    {
+      "source": "cooking",
+      "profile": "heavy_dense",
+      "sentence": "Fats can reach temperatures above the boiling point of water and is often used to transfer high heat to other ingredients, such as in frying or sautéing.",
+      "pre_escalated": true,
+      "n_flagged": 3,
+      "flagged_fraction": 0.2,
+      "blocked_words": [
+        "reach",
+        "sautéing",
+        "such"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 4,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "Fats can reach temperatures above the boiling point of water and is often used to transfer high heat to other ingredients, such as in frying or sautéing.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "reach",
+            "such",
+            "saut"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Fats are capable of reaching temperatures above the boiling point of water and is often used to transfer high heat to other ingredients like in frying or sauteing.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9924,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "reaching",
+            "sauteing"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Fats can rise to temperatures above the boiling point of water and is often used to transfer high heat to other ingredients, like in frying or sauteing.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9843,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "rise",
+            "sauteing"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Fats can attain temperatures above the boiling point of water and is often used to transfer high heat to other ingredients, like in frying or sauteing.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9935,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "sauteing"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Fats are capable of reaching temperatures above the boiling point of water and is often used to transfer high heat to other ingredients, like in frying or cooking.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9838,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "reaching"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "cooking",
+      "profile": "heavy_dense",
+      "sentence": "Steaming works by continuously boiling water, which vaporizes into steam; the steam then transfers heat to the food, cooking it.",
+      "pre_escalated": true,
+      "n_flagged": 3,
+      "flagged_fraction": 0.231,
+      "blocked_words": [
+        "steam",
+        "steaming"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 0,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "Steaming works by continuously boiling water, which vaporizes into steam; the steam then transfers heat to the food, cooking it.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "Steaming",
+            "steam",
+            "steam"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Soaking works by continuously boiling water, which vaporizes and then transfers heat to the food, cooking it.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.6027,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Soaking"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Soaking works by continuously boiling water, which vaporizes and then transfers heat to the food and cooks it.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.5935,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Soaking"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Soaking works by continuously boiling water, which vaporizes and transfers heat to the food, cooking it.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.5981,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Soaking"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Soaking works by continuously boiling water, which vaporizes and transfers heat to the food, which cooks it.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.5828,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Soaking"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "smalltalk",
+      "profile": "heavy_dense",
+      "sentence": "Phatic communication, or small talk, is not used to exchange important information; instead it is used to build and maintain interpersonal relationships.",
+      "pre_escalated": true,
+      "n_flagged": 3,
+      "flagged_fraction": 0.214,
+      "blocked_words": [
+        "important",
+        "relationships",
+        "small"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 4,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "Phatic communication, or small talk, is not used to exchange important information; instead it is used to build and maintain interpersonal relationships.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "small",
+            "important",
+            "relationships"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Phatic communication, or little talk, is not used to exchange valuable information; instead it is used to build and maintain interpersonal relations.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9642,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "relations"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Phatic communication, or little talk, is not used to exchange valuable information, but instead is used to build and maintain interpersonal relations.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9605,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "relations"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Phatic communication, or little talk, is not used to exchange valuable information; it is instead used to build and maintain interpersonal relations.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.961,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "relations"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Phatic communication, or little talk, is not used to exchange valuable information; it is used instead to build and maintain interpersonal relations.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9605,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "relations"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "smalltalk",
+      "profile": "heavy_dense",
+      "sentence": "Small talk is a bonding ritual and a strategy for managing interpersonal distance.",
+      "pre_escalated": true,
+      "n_flagged": 3,
+      "flagged_fraction": 0.375,
+      "blocked_words": [
+        "ritual",
+        "small",
+        "strategy"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 0,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "Small talk is a bonding ritual and a strategy for managing interpersonal distance.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "Small",
+            "ritual",
+            "strategy"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Minimal talk is a bonding rite and a strategy for managing interpersonal distance.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.8467,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "rite",
+            "strategy"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Klein talk is a bonding ritual and a strategic for managing interpersonal distance.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.6615,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "ritual",
+            "strategic"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Minimal talk is a bonding rite and a strategic for managing interpersonal distance.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.8438,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "rite",
+            "strategic"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Klein talk is a bonding rituel and a method for managing interpersonal distance.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.6282,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "rituel"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "smalltalk",
+      "profile": "heavy_dense",
+      "sentence": "The topics of small talk conversations are generally less important than their social function.",
+      "pre_escalated": true,
+      "n_flagged": 3,
+      "flagged_fraction": 0.333,
+      "blocked_words": [
+        "important",
+        "small",
+        "social"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 4,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "The topics of small talk conversations are generally less important than their social function.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "small",
+            "important",
+            "social"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "The topics of smaller talk conversations are generally less relevant than their socio-economic function.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.8942,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "smaller",
+            "relevant",
+            "socio-economic"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "The topics of smaller talk conversations are generally less significant than their socio-economic function.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9043,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "smaller",
+            "significant",
+            "socio-economic"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "The topics of smaller talk conversations are generally less relevant than their societal function.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9113,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "smaller",
+            "relevant",
+            "societal"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "The topics of smaller talk conversations are generally less relevant than their socio-social function.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9465,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "smaller",
+            "relevant",
+            "socio-social"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "smalltalk",
+      "profile": "heavy_dense",
+      "sentence": "Finland and Sweden have been cited as countries where there are little culture of small talk and people are more comfortable with silence.",
+      "pre_escalated": true,
+      "n_flagged": 3,
+      "flagged_fraction": 0.3,
+      "blocked_words": [
+        "cited",
+        "silence",
+        "small"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 4,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "Finland and Sweden have been cited as countries where there are little culture of small talk and people are more comfortable with silence.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "Sweden",
+            "cited",
+            "small",
+            "silence"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Finland and Sweden have been mentioned as countries where there is little culture of little talk and people are more comfortable with quiet.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9537,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Sweden"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Finland and Sweden have been mentioned as countries where there is little culture of tiny talk and people are more comfortable with quiet.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9489,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Sweden"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Finland and Sweden have been mentioned as countries where there is little culture of little talk and where people are more comfortable with quiet.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9497,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Sweden"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Finland and Sweden have been mentioned as countries where there is little culture of tiny talk and where people are more comfortable with quiet.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9485,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Sweden"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "ai",
+      "profile": "single_common_sound",
+      "sentence": "State space search searches through a tree of possible states to try to find a goal state.",
+      "pre_escalated": true,
+      "n_flagged": 6,
+      "flagged_fraction": 0.545,
+      "blocked_words": [
+        "search",
+        "searches",
+        "space",
+        "state",
+        "states"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 4,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "State space search searches through a tree of possible states to try to find a goal state.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "State",
+            "space",
+            "search",
+            "searches",
+            "states",
+            "state"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Using a 'state-space-search', a tree of possible 'states' browses to try to find a goal-state.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9101,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "state-space-search'",
+            "states'"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Using a 'State-Space-Search', a tree of possible 'states seeks to find a goal-state.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9223,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "State-Space-Search'",
+            "states",
+            "seeks"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Using a 'state-space-search', a tree of possible 'states seeks to find a goal-state through.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9246,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "state-space-search'",
+            "states",
+            "seeks"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Using a 'state-space-search', a tree of possible 'states' browses to try to find a goal-state",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9163,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "state-space-search'",
+            "states'"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "cooking",
+      "profile": "single_common_sound",
+      "sentence": "Long-chain sugars such as starch tends to break down into more digestible simpler sugars.",
+      "pre_escalated": true,
+      "n_flagged": 3,
+      "flagged_fraction": 0.3,
+      "blocked_words": [
+        "simpler",
+        "starch",
+        "such"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 4,
+      "n_negation_ok": 4,
+      "n_leak_free": 1,
+      "n_accepted": 1,
+      "any_accepted": true,
+      "candidates": [
+        {
+          "text": "Long-chain sugars such as starch tends to break down into more digestible simpler sugars.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "such",
+            "starch",
+            "simpler"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Long-chain sugars like starches tend to break down into more digestible simple sugars.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9612,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "starches",
+            "simple"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Long-chain sugars like glucose tend to break down into more digestible simple sugars.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.8847,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "simple"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Long-chain sugars like starches tend to break down into more digestible sugars.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9598,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "starches"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Long-chain sugars like glucose tend to break down into more digestible sugars.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.8861,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [],
+          "leak_free": true,
+          "accepted": true
+        }
+      ]
+    },
+    {
+      "source": "cooking",
+      "profile": "single_common_sound",
+      "sentence": "Steaming works by continuously boiling water, which vaporizes into steam; the steam then transfers heat to the food, cooking it.",
+      "pre_escalated": true,
+      "n_flagged": 3,
+      "flagged_fraction": 0.231,
+      "blocked_words": [
+        "steam",
+        "steaming"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 0,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "Steaming works by continuously boiling water, which vaporizes into steam; the steam then transfers heat to the food, cooking it.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "Steaming",
+            "steam",
+            "steam"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Soaking works by continuously boiling water, which vaporizes and then transfers heat to the food, cooking it.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.6027,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Soaking"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Soaking works by continuously boiling water, which vaporizes and then transfers heat to the food and cooks it.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.5935,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Soaking"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Soaking works by continuously boiling water, which vaporizes and transfers heat to the food, cooking it.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.5981,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Soaking"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Soaking works by continuously boiling water, which vaporizes and transfers heat to the food, which cooks it.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.5828,
+          "sbert_pass": false,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Soaking"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "source": "smalltalk",
+      "profile": "single_common_sound",
+      "sentence": "Finland and Sweden have been cited as countries where there are little culture of small talk and people are more comfortable with silence.",
+      "pre_escalated": true,
+      "n_flagged": 3,
+      "flagged_fraction": 0.3,
+      "blocked_words": [
+        "cited",
+        "silence",
+        "small"
+      ],
+      "n_raw_candidates_from_t5": 5,
+      "n_unique_non_duplicate": 4,
+      "n_sbert_pass": 4,
+      "n_negation_ok": 4,
+      "n_leak_free": 0,
+      "n_accepted": 0,
+      "any_accepted": false,
+      "candidates": [
+        {
+          "text": "Finland and Sweden have been cited as countries where there are little culture of small talk and people are more comfortable with silence.",
+          "is_duplicate_of_input": true,
+          "sbert_sim": null,
+          "sbert_pass": false,
+          "negation_consistent": false,
+          "leaked_words": [
+            "Sweden",
+            "cited",
+            "small",
+            "silence"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Finland and Sweden have been mentioned as countries where there is little culture of little talk and people are more comfortable with quiet.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9537,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Sweden"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Finland and Sweden have been mentioned as countries where there is little culture of tiny talk and people are more comfortable with quiet.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9489,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Sweden"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Finland and Sweden have been mentioned as countries where there is little culture of little talk and where people are more comfortable with quiet.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9497,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Sweden"
+          ],
+          "leak_free": false,
+          "accepted": false
+        },
+        {
+          "text": "Finland and Sweden have been mentioned as countries where there is little culture of tiny talk and where people are more comfortable with quiet.",
+          "is_duplicate_of_input": false,
+          "sbert_sim": 0.9485,
+          "sbert_pass": true,
+          "negation_consistent": true,
+          "leaked_words": [
+            "Sweden"
+          ],
+          "leak_free": false,
+          "accepted": false
+        }
+      ]
+    }
+  ]
+}

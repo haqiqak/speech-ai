@@ -1,0 +1,21 @@
+participant_id,pair_id,presentation_order_index,shown_first,meaning_preservation,naturalness,speaking_ease,preference,diagnostic_tag,comment,timestamp
+P1,pair_11,1,reformulated,4,4,1,Reformulated,,,2026-08-20T17:58:31.988468+00:00
+P1,pair_01,2,reformulated,5,5,1,Reformulated,,,2026-08-20T17:58:55.274162+00:00
+P1,pair_17,3,original,5,4,1,Reformulated,,,2026-08-20T17:59:07.699273+00:00
+P1,pair_10,4,original,4,3,0,Original,Sounds unnatural,,2026-08-20T17:59:34.981268+00:00
+P1,pair_04,5,reformulated,3,2,0,Original,Sounds unnatural,,2026-08-20T17:59:54.774646+00:00
+P1,pair_12,6,reformulated,5,5,2,Reformulated,,,2026-08-20T18:00:11.137023+00:00
+P1,pair_07,7,original,3,1,0,Original,Sounds unnatural,,2026-08-20T18:00:38.199578+00:00
+P1,pair_18,8,reformulated,4,2,1,Original,Sounds unnatural,,2026-08-20T18:00:53.563155+00:00
+P1,pair_09,9,original,5,5,2,Reformulated,,,2026-08-20T18:01:03.871552+00:00
+P1,pair_14,10,original,5,5,2,Reformulated,,,2026-08-20T18:01:12.429205+00:00
+P1,pair_13,11,original,5,5,2,Reformulated,,,2026-08-20T18:01:19.747460+00:00
+P1,pair_20,12,reformulated,4,4,1,Reformulated,,,2026-08-20T18:01:31.351729+00:00
+P1,pair_03,13,original,5,5,2,Reformulated,,,2026-08-20T18:01:39.990239+00:00
+P1,pair_16,14,reformulated,5,5,2,Reformulated,,,2026-08-20T18:02:02.278721+00:00
+P1,pair_05,15,reformulated,5,5,2,Reformulated,,,2026-08-20T18:02:15.822968+00:00
+P1,pair_19,16,reformulated,5,5,2,Reformulated,,,2026-08-20T18:02:25.434003+00:00
+P1,pair_15,17,reformulated,3,4,1,Original,Meaning changed,went not so same as moved,2026-08-20T18:02:52.304851+00:00
+P1,pair_02,18,original,3,4,1,Original,Meaning changed,"nap is different to sleep, it is short.",2026-08-20T18:03:26.647620+00:00
+P1,pair_06,19,original,5,5,2,Reformulated,,,2026-08-20T18:03:35.375897+00:00
+P1,pair_08,20,original,1,2,0,Original,Meaning changed,going behind might mean going back,2026-08-20T18:04:00.593306+00:00

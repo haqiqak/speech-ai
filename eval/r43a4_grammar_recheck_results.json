@@ -1,0 +1,118 @@
+{
+  "results": [
+    {
+      "label": "GRAMMAR-SEVERE",
+      "index": 2,
+      "sentence": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were powerful than the cooling effect of airborne particulates in air pollution.",
+      "n_matches": 0,
+      "matches": []
+    },
+    {
+      "label": "GRAMMAR-SEVERE",
+      "index": 8,
+      "sentence": "Machine learning is the study of softwares that can improve their performance on a given task automatically.",
+      "n_matches": 1,
+      "matches": [
+        {
+          "rule_id": "SOFTWARES",
+          "message": "In standard English, the noun “softwares” is uncountable. Consider using an alternative.",
+          "context": "Machine learning is the study of softwares that can improve their performance on a..."
+        }
+      ]
+    },
+    {
+      "label": "GRAMMAR-SEVERE",
+      "index": 39,
+      "sentence": "Fossil fuel use, deforestation, and some agricultural and industrial practices device greenhouse gases.",
+      "n_matches": 1,
+      "matches": [
+        {
+          "rule_id": "POSSESSIVE_APOSTROPHE",
+          "message": "An apostrophe may be missing.",
+          "context": "...n, and some agricultural and industrial practices device greenhouse gases."
+        }
+      ]
+    },
+    {
+      "label": "GRAMMAR-SEVERE",
+      "index": 64,
+      "sentence": "In many cultures, quiets between two people are usually considered uncomfortable and awkward.",
+      "n_matches": 0,
+      "matches": []
+    },
+    {
+      "label": "GRAMMAR-SEVERE",
+      "index": 65,
+      "sentence": "Words patterns between women tend to be more collaborative than those of men.",
+      "n_matches": 0,
+      "matches": []
+    },
+    {
+      "label": "WAS-WERE-ORIGINAL(correct)",
+      "index": 0,
+      "sentence": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases was stronger than the cooling effect of airborne particulates in air pollution.",
+      "n_matches": 0,
+      "matches": []
+    },
+    {
+      "label": "WAS-WERE-CORRUPTED(sanitize_input bug)",
+      "index": 0,
+      "sentence": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were stronger than the cooling effect of airborne particulates in air pollution.",
+      "n_matches": 0,
+      "matches": []
+    },
+    {
+      "label": "CLEAN",
+      "index": 6,
+      "sentence": "An ontology is the set of objects, relations, concepts, and places used by a specific domain of knowledge.",
+      "n_matches": 0,
+      "matches": []
+    },
+    {
+      "label": "CLEAN",
+      "index": 21,
+      "sentence": "Vitamin C is especially vulnerable to oxidation during cooking and may be destroyed by long cooking.",
+      "n_matches": 0,
+      "matches": []
+    },
+    {
+      "label": "CLEAN",
+      "index": 22,
+      "sentence": "Vitamin C is especially vulnerable to oxidation during cooking and may be destroyed by long cooking.",
+      "n_matches": 0,
+      "matches": []
+    },
+    {
+      "label": "CLEAN",
+      "index": 23,
+      "sentence": "Cooking is done both by people in their own dwellings and by expert cooks and chefs in restaurants and other food establishments.",
+      "n_matches": 0,
+      "matches": []
+    },
+    {
+      "label": "CLEAN",
+      "index": 36,
+      "sentence": "Deep learning uses various layers of neurons between the network's inputs and outputs.",
+      "n_matches": 0,
+      "matches": []
+    },
+    {
+      "label": "CLEAN",
+      "index": 66,
+      "sentence": "Artificial intelligence ( AI ) is the capability of computational methods to perform tasks typically associated with human intelligence, much as learning, reasoning, problem-solving, perception, and decision-making.",
+      "n_matches": 2,
+      "matches": [
+        {
+          "rule_id": "COMMA_PARENTHESIS_WHITESPACE",
+          "message": "Don’t put a space after the opening parenthesis.",
+          "context": "Artificial intelligence ( AI ) is the capability of computational ..."
+        },
+        {
+          "rule_id": "COMMA_PARENTHESIS_WHITESPACE",
+          "message": "Don’t put a space before the closing parenthesis.",
+          "context": "Artificial intelligence ( AI ) is the capability of computational meth..."
+        }
+      ]
+    }
+  ]
+}

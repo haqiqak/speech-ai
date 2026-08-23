@@ -1,0 +1,1584 @@
+{
+  "results": [
+    {
+      "profile": "light_single_sound",
+      "source": "ai",
+      "verdict": "SEVERE",
+      "original_text": "High-profile applications of AI include advanced web search engines, chatbots, virtual assistants, autonomous vehicles, play and analysis in strategy games, and content generation.",
+      "reformulated_text": "High-profile applications of AI includes advanced web search engines, chariots, virtual assistants, autonomous vehicles, play and analysis in way games, and content generation.",
+      "fwd_label": "contradiction",
+      "fwd_logits": {
+        "contradiction": 2.0142,
+        "entailment": -1.0911,
+        "neutral": -0.981
+      },
+      "rev_label": "contradiction",
+      "rev_logits": {
+        "contradiction": 1.8544,
+        "entailment": -1.9982,
+        "neutral": 0.1194
+      },
+      "either_contradiction": true
+    },
+    {
+      "profile": "light_single_sound",
+      "source": "climate",
+      "verdict": "SEVERE",
+      "original_text": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases was stronger than the cooling effect of airborne particulates in air pollution.",
+      "reformulated_text": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were powerful than the cooling effect of airborne particulates in air pollution.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.6656,
+        "entailment": 3.4738,
+        "neutral": -1.494
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.4143,
+        "entailment": 3.2645,
+        "neutral": -1.4706
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "light_single_sound",
+      "source": "smalltalk",
+      "verdict": "MINOR",
+      "original_text": "Small talk is a bonding ritual and a strategy for managing interpersonal distance.",
+      "reformulated_text": "Small talk is a bonding ritual and a way for managing interpersonal distance.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.6891,
+        "entailment": 3.6115,
+        "neutral": -1.615
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.8784,
+        "entailment": 3.3658,
+        "neutral": -1.1132
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "ai",
+      "verdict": "SEVERE",
+      "original_text": "Artificial intelligence (AI) is the capability of computational systems to perform tasks typically associated with human intelligence, such as learning, reasoning, problem-solving, perception, and decision-making.",
+      "reformulated_text": "Artificial intelligence ( AI ) is the capability of computational systems to perform tasks typically associated with human intelligence, such as learning, reasoning, issue, perception, and decision-making.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -1.931,
+        "entailment": 1.8705,
+        "neutral": -1.0293
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.3217,
+        "entailment": 2.5748,
+        "neutral": -0.6251
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "ai",
+      "verdict": "SEVERE",
+      "original_text": "An ontology is the set of objects, relations, concepts, and properties used by a particular domain of knowledge.",
+      "reformulated_text": "An ontology is the set of objects, relations, concepts, and places used by a specific domain of knowledge.",
+      "fwd_label": "neutral",
+      "fwd_logits": {
+        "contradiction": 0.5684,
+        "entailment": -2.2011,
+        "neutral": 1.4212
+      },
+      "rev_label": "neutral",
+      "rev_logits": {
+        "contradiction": -1.3366,
+        "entailment": -0.1671,
+        "neutral": 1.4656
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "ai",
+      "verdict": "MINOR",
+      "original_text": "A rational agent has goals or preferences and takes actions to make them happen.",
+      "reformulated_text": "A rational agent has goals or options and take actions to make them happen.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.2595,
+        "entailment": 2.5925,
+        "neutral": -0.7176
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.3272,
+        "entailment": 2.6991,
+        "neutral": -0.7888
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "ai",
+      "verdict": "SEVERE",
+      "original_text": "Machine learning is the study of programs that can improve their performance on a given task automatically.",
+      "reformulated_text": "Machine learning is the study of softwares that can improve their performance on a given task automatically.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.8808,
+        "entailment": 2.6552,
+        "neutral": -1.0809
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.3684,
+        "entailment": 3.2165,
+        "neutral": -1.4032
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "ai",
+      "verdict": "SEVERE",
+      "original_text": "Natural language processing allows programs to read, write, and communicate in human languages.",
+      "reformulated_text": "Natural language operation allows softwares to read, write, and communicate in human languages.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.2966,
+        "entailment": 3.2774,
+        "neutral": -1.5879
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.4615,
+        "entailment": 3.1678,
+        "neutral": -1.2753
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "climate",
+      "verdict": "MINOR",
+      "original_text": "Fossil fuel use, deforestation, and some agricultural and industrial practices release greenhouse gases.",
+      "reformulated_text": "Fossil fuel use, deforestation, and some agricultural and industrial workings release warming gases.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.8353,
+        "entailment": 3.4871,
+        "neutral": -1.3298
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -4.0304,
+        "entailment": 3.4437,
+        "neutral": -1.1179
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "climate",
+      "verdict": "MINOR",
+      "original_text": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases was stronger than the cooling effect of airborne particulates in air pollution.",
+      "reformulated_text": "Before the 1980s, it was unclear whether the warming effect of increased warming gases were stronger than the cooling effect of airborne particulates in air pollution.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -1.7522,
+        "entailment": 2.0532,
+        "neutral": -1.3019
+      },
+      "rev_label": "neutral",
+      "rev_logits": {
+        "contradiction": -2.5028,
+        "entailment": 0.6501,
+        "neutral": 1.654
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "climate",
+      "verdict": "SEVERE",
+      "original_text": "Between the 18th century and 1970 there was little net warming, as the warming impact of greenhouse gas emissions was offset by cooling from sulfur dioxide emissions.",
+      "reformulated_text": "Between the 18th century and 1970 there was little net warming, as the warming impact of gas gas emissions were offset by cooling from sulfur dioxide emissions.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -0.5109,
+        "entailment": 1.3274,
+        "neutral": -1.4732
+      },
+      "rev_label": "neutral",
+      "rev_logits": {
+        "contradiction": -0.1555,
+        "entailment": -0.8893,
+        "neutral": 0.9475
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "climate",
+      "verdict": "SEVERE",
+      "original_text": "The 2016 to 2025 decade warmed to an average of 1.26 degrees compared to the pre-industrial baseline.",
+      "reformulated_text": "The 2016 to 2025 decade warmed to an average of 1.26 degrees compared to the palaeolithic baseline.",
+      "fwd_label": "contradiction",
+      "fwd_logits": {
+        "contradiction": 3.8821,
+        "entailment": -3.3883,
+        "neutral": -0.5927
+      },
+      "rev_label": "contradiction",
+      "rev_logits": {
+        "contradiction": 2.9006,
+        "entailment": -2.793,
+        "neutral": -0.1893
+      },
+      "either_contradiction": true
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "climate",
+      "verdict": "SEVERE",
+      "original_text": "The upper atmosphere is cooling, because greenhouse gases are trapping heat near the Earth's surface, and so less heat is radiating into space.",
+      "reformulated_text": "The upper atmosphere is cooling, because gas gases are trapping heat near the Earth's surface, and so less heat is radiating into space.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.1835,
+        "entailment": 2.2102,
+        "neutral": -1.1044
+      },
+      "rev_label": "neutral",
+      "rev_logits": {
+        "contradiction": -1.7109,
+        "entailment": -1.6061,
+        "neutral": 3.4112
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "climate",
+      "verdict": "SEVERE",
+      "original_text": "Since the pre-industrial period, the average surface temperature over land regions has increased almost twice as fast as the global average surface temperature.",
+      "reformulated_text": "Since the palaeolithic period, the average surface temperature over land regions has increased almost twice as fast as the global average surface temperature.",
+      "fwd_label": "contradiction",
+      "fwd_logits": {
+        "contradiction": 4.1903,
+        "entailment": -2.6898,
+        "neutral": -1.6012
+      },
+      "rev_label": "contradiction",
+      "rev_logits": {
+        "contradiction": 3.6411,
+        "entailment": -2.3874,
+        "neutral": -1.2849
+      },
+      "either_contradiction": true
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "cooking",
+      "verdict": "MINOR",
+      "original_text": "Cooking techniques and ingredients vary widely, from grilling food over an open fire, to using electric stoves, to baking in various types of ovens, to boiling and blanching in water.",
+      "reformulated_text": "Cooking techniques and ingredients vary widely, from cooking food over an open fire, to using electric stoves, to baking in various types of ovens, to boiling and blanching in water.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.0347,
+        "entailment": 2.7979,
+        "neutral": -1.2128
+      },
+      "rev_label": "neutral",
+      "rev_logits": {
+        "contradiction": -0.9386,
+        "entailment": -1.8529,
+        "neutral": 2.7511
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "cooking",
+      "verdict": "MINOR",
+      "original_text": "When proteins are heated they become denatured and change texture.",
+      "reformulated_text": "When peptides are heated they become denatured and change texture.",
+      "fwd_label": "contradiction",
+      "fwd_logits": {
+        "contradiction": 2.2434,
+        "entailment": -2.2576,
+        "neutral": -0.0064
+      },
+      "rev_label": "contradiction",
+      "rev_logits": {
+        "contradiction": 1.7575,
+        "entailment": -1.4724,
+        "neutral": -0.2544
+      },
+      "either_contradiction": true
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "cooking",
+      "verdict": "MINOR",
+      "original_text": "Cooking can prevent many foodborne illnesses that would otherwise occur if raw food is consumed.",
+      "reformulated_text": "Cooking can avoid many forborne illnesses that would otherwise occur if raw food is consumed.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.2405,
+        "entailment": 3.2814,
+        "neutral": -1.6474
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.8626,
+        "entailment": 3.7647,
+        "neutral": -1.648
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "cooking",
+      "verdict": "CLEAN",
+      "original_text": "Vitamin C is especially prone to oxidation during cooking and may be destroyed by protracted cooking.",
+      "reformulated_text": "Vitamin C is especially vulnerable to oxidation during cooking and may be destroyed by long cooking.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.6416,
+        "entailment": 3.1265,
+        "neutral": -1.0983
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.6092,
+        "entailment": 3.4176,
+        "neutral": -1.4777
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "cooking",
+      "verdict": "CLEAN",
+      "original_text": "Cooking is done both by people in their own dwellings and by professional cooks and chefs in restaurants and other food establishments.",
+      "reformulated_text": "Cooking is done both by people in their own dwellings and by expert cooks and chefs in restaurants and other food establishments.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -4.024,
+        "entailment": 3.7377,
+        "neutral": -1.4837
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -4.2334,
+        "entailment": 3.7619,
+        "neutral": -1.3102
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "smalltalk",
+      "verdict": "CLEAN",
+      "original_text": "Small talk consists of three main parts: a greeting, conversation, and a closing.",
+      "reformulated_text": "Small talk consists of three main parts: a welcome, conversation, and a closing.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.9991,
+        "entailment": 3.2496,
+        "neutral": -1.8512
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -2.854,
+        "entailment": 3.1785,
+        "neutral": -1.8922
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "smalltalk",
+      "verdict": "SEVERE",
+      "original_text": "The phenomenon of small talk was initially studied in 1923 by Bronislaw Malinowski in his essay on the problem of meaning in primitive languages.",
+      "reformulated_text": "The phenomenon of small talk was initially studied in 1923 by Bronislaw Malinowski in his essay on the trouble of meaning in natural languages.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.0495,
+        "entailment": 1.7449,
+        "neutral": -0.6185
+      },
+      "rev_label": "neutral",
+      "rev_logits": {
+        "contradiction": -1.9456,
+        "entailment": 0.7837,
+        "neutral": 0.8284
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "ai",
+      "verdict": "SEVERE",
+      "original_text": "High-profile applications of AI include advanced web search engines, chatbots, virtual assistants, autonomous vehicles, play and analysis in strategy games, and content generation.",
+      "reformulated_text": "High-profile applications of AI includes advanced web look engines, chariots, virtual assistants, autonomous vehicles, play and analysis in way games, and content generation.",
+      "fwd_label": "contradiction",
+      "fwd_logits": {
+        "contradiction": 2.3912,
+        "entailment": -0.995,
+        "neutral": -1.5428
+      },
+      "rev_label": "contradiction",
+      "rev_logits": {
+        "contradiction": 3.3411,
+        "entailment": -2.529,
+        "neutral": -0.857
+      },
+      "either_contradiction": true
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "ai",
+      "verdict": "SEVERE",
+      "original_text": "An ontology is the set of objects, relations, concepts, and properties used by a particular domain of knowledge.",
+      "reformulated_text": "An ontology is the lot of objects, telling, concepts, and properties used by a particular domain of knowledge.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.1497,
+        "entailment": 2.0267,
+        "neutral": -0.9551
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -2.9704,
+        "entailment": 2.2999,
+        "neutral": -0.5829
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "ai",
+      "verdict": "SEVERE",
+      "original_text": "Machine learning is the study of programs that can improve their performance on a given task automatically.",
+      "reformulated_text": "Machine learning is the work of programs that can improve their performance on a given task automatically.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.6902,
+        "entailment": 2.7822,
+        "neutral": -1.5339
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -2.8554,
+        "entailment": 2.7642,
+        "neutral": -1.3365
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "ai",
+      "verdict": "SEVERE",
+      "original_text": "Natural language processing allows programs to read, write, and communicate in human languages.",
+      "reformulated_text": "Natural language processing allows programs to take, communicate, and communicate in human languages.",
+      "fwd_label": "contradiction",
+      "fwd_logits": {
+        "contradiction": 2.4,
+        "entailment": -1.0523,
+        "neutral": -1.3834
+      },
+      "rev_label": "neutral",
+      "rev_logits": {
+        "contradiction": -0.557,
+        "entailment": -1.6159,
+        "neutral": 2.0827
+      },
+      "either_contradiction": true
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "ai",
+      "verdict": "SEVERE",
+      "original_text": "Gradient descent is a type of local search that optimises a set of numerical parameters by incrementally adjusting them to minimise a loss function.",
+      "reformulated_text": "Gradient descent is a type of local quest that optimists a place of numerical parameters by incrementally adjusting them to minimize a loss function.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -1.2802,
+        "entailment": 1.545,
+        "neutral": -1.0675
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -2.2883,
+        "entailment": 2.4574,
+        "neutral": -1.4434
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "ai",
+      "verdict": "CLEAN",
+      "original_text": "Deep learning uses several layers of neurons between the network's inputs and outputs.",
+      "reformulated_text": "Deep learning uses various layers of neurons between the network's inputs and outputs.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -4.2094,
+        "entailment": 3.7245,
+        "neutral": -1.279
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -4.1033,
+        "entailment": 3.8113,
+        "neutral": -1.4773
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "climate",
+      "verdict": "SEVERE",
+      "original_text": "Earth's average surface air temperature has increased about 1.5 degrees Celsius since the Industrial Revolution.",
+      "reformulated_text": "Earth's average layer air heat has increased about 1.5 degrees Celsius since the Industrial Revolution.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -1.6576,
+        "entailment": 1.9398,
+        "neutral": -1.2547
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -2.4576,
+        "entailment": 2.5449,
+        "neutral": -1.3514
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "climate",
+      "verdict": "SEVERE",
+      "original_text": "Fossil fuel use, deforestation, and some agricultural and industrial practices release greenhouse gases.",
+      "reformulated_text": "Fossil fuel use, deforestation, and some agricultural and industrial practices device greenhouse gases.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.0611,
+        "entailment": 2.171,
+        "neutral": -1.2525
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.2078,
+        "entailment": 3.1825,
+        "neutral": -1.5744
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "climate",
+      "verdict": "SEVERE",
+      "original_text": "The Arctic has warmed the most, and temperatures on land have generally increased more than sea surface temperatures.",
+      "reformulated_text": "The Arctic has warmed the most, and temperatures on land have generally increased more than ocean layer temperatures.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.685,
+        "entailment": 3.6935,
+        "neutral": -1.6758
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.5112,
+        "entailment": 3.6591,
+        "neutral": -1.8008
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "climate",
+      "verdict": "SEVERE",
+      "original_text": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases was stronger than the cooling effect of airborne particulates in air pollution.",
+      "reformulated_text": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were powerful than the cooling effect of airborne particulates in air pollution.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.6656,
+        "entailment": 3.4738,
+        "neutral": -1.494
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.4143,
+        "entailment": 3.2645,
+        "neutral": -1.4706
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "climate",
+      "verdict": "SEVERE",
+      "original_text": "Between the 18th century and 1970 there was little net warming, as the warming impact of greenhouse gas emissions was offset by cooling from sulfur dioxide emissions.",
+      "reformulated_text": "Between the 18th half-century and 1970 there was little net warming, as the warming impact of greenhouse gas emissions were offset by cooling from s dioxide emissions.",
+      "fwd_label": "neutral",
+      "fwd_logits": {
+        "contradiction": -1.4222,
+        "entailment": -1.4053,
+        "neutral": 2.9416
+      },
+      "rev_label": "neutral",
+      "rev_logits": {
+        "contradiction": -0.0551,
+        "entailment": -2.2951,
+        "neutral": 2.275
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "climate",
+      "verdict": "SEVERE",
+      "original_text": "The range of hundreds of North American birds has shifted northward at an average rate of 1.5 kilometers per year over the past 55 years.",
+      "reformulated_text": "The place of hundreds of North American birds has shifted northward at an average place of 1.5 kilometers per year over the past 55 years.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -1.7906,
+        "entailment": 2.0879,
+        "neutral": -1.3608
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -2.3211,
+        "entailment": 2.0199,
+        "neutral": -0.799
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "cooking",
+      "verdict": "SEVERE",
+      "original_text": "Cooking techniques and ingredients vary widely, from grilling food over an open fire, to using electric stoves, to baking in various types of ovens, to boiling and blanching in water.",
+      "reformulated_text": "Cooking techniques and ingredients vary widely, from grilling food over an open fire, to using electric fires, to baking in various types of ovens, to boiling and blanching in water.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.23,
+        "entailment": 3.3934,
+        "neutral": -1.8329
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -2.6823,
+        "entailment": 3.0151,
+        "neutral": -1.8571
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "cooking",
+      "verdict": "SEVERE",
+      "original_text": "Cooking is an aspect of all human societies and a cultural universal.",
+      "reformulated_text": "Cooking is an aspect of all human companies and a cultural universal.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.8369,
+        "entailment": 2.8019,
+        "neutral": -1.3766
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -2.8905,
+        "entailment": 2.9653,
+        "neutral": -1.5342
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "cooking",
+      "verdict": "SEVERE",
+      "original_text": "Archaeological evidence of cooking fires dates to at least 300,000 years ago, but some estimate that humans started cooking as early as 2 million years ago.",
+      "reformulated_text": "Archaeological evidence of cooking fires date to at least 300,000 years ago, but some estimate that humans went cooking as early as 2 million years ago.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.7503,
+        "entailment": 3.1816,
+        "neutral": -1.9669
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.1053,
+        "entailment": 3.349,
+        "neutral": -1.8544
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "cooking",
+      "verdict": "SEVERE",
+      "original_text": "Long-chain sugars such as starch tend to break down into more digestible simpler sugars.",
+      "reformulated_text": "Long-chain sugars like glucose tend to break down into more digestible sugars.",
+      "fwd_label": "contradiction",
+      "fwd_logits": {
+        "contradiction": 3.2217,
+        "entailment": -2.4048,
+        "neutral": -0.8389
+      },
+      "rev_label": "contradiction",
+      "rev_logits": {
+        "contradiction": 2.9884,
+        "entailment": -3.6645,
+        "neutral": 0.3897
+      },
+      "either_contradiction": true
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "cooking",
+      "verdict": "SEVERE",
+      "original_text": "Cooking can prevent many foodborne illnesses that would otherwise occur if raw food is consumed.",
+      "reformulated_text": "Cooking can prevent many forborne illnesses that would otherwise occur if new food is consumed.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -1.0002,
+        "entailment": 1.304,
+        "neutral": -0.9506
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -0.6527,
+        "entailment": 1.2116,
+        "neutral": -1.1092
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "cooking",
+      "verdict": "SEVERE",
+      "original_text": "Home-cooked meals tend to be healthier with fewer calories, and less saturated fat, cholesterol and sodium on a per calorie basis.",
+      "reformulated_text": "Home-cooked meals tend to be healthier with fewer calories, and less pure fat, cholesterol and na on a per calorie basis.",
+      "fwd_label": "contradiction",
+      "fwd_logits": {
+        "contradiction": 1.4227,
+        "entailment": -0.7943,
+        "neutral": -0.6794
+      },
+      "rev_label": "neutral",
+      "rev_logits": {
+        "contradiction": 1.0989,
+        "entailment": -2.6684,
+        "neutral": 1.45
+      },
+      "either_contradiction": true
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "cooking",
+      "verdict": "SEVERE",
+      "original_text": "The scientific study of cooking has become known as molecular gastronomy.",
+      "reformulated_text": "The technical take of cooking has become known as molecular gastronomy.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.288,
+        "entailment": 3.0419,
+        "neutral": -1.1957
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -2.9172,
+        "entailment": 2.616,
+        "neutral": -1.0187
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "cooking",
+      "verdict": "SEVERE",
+      "original_text": "Cooking is done both by people in their own dwellings and by professional cooks and chefs in restaurants and other food establishments.",
+      "reformulated_text": "Cooking is done both by people in their own dwellings and by professional cooks and chefs in buildings and other food establishments.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -1.697,
+        "entailment": 1.7808,
+        "neutral": -0.9955
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -1.3907,
+        "entailment": 1.0611,
+        "neutral": -0.1812
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "smalltalk",
+      "verdict": "SEVERE",
+      "original_text": "Small talk is an informal type of discourse that does not cover any functional topics of conversation or any transactions that need to be addressed.",
+      "reformulated_text": "Little talk is an informal type of discourse that does not cover any functional topics of conversation or any transactions that need to be addressed.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.1913,
+        "entailment": 3.343,
+        "neutral": -1.7925
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.3176,
+        "entailment": 3.4918,
+        "neutral": -1.8685
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "smalltalk",
+      "verdict": "SEVERE",
+      "original_text": "Small talk consists of three main parts: a greeting, conversation, and a closing.",
+      "reformulated_text": "Little talk consists of three main parts: a greeting, conversation, and a closing.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.8202,
+        "entailment": 3.1392,
+        "neutral": -1.8681
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.1962,
+        "entailment": 3.4122,
+        "neutral": -1.8559
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "smalltalk",
+      "verdict": "SEVERE",
+      "original_text": "The phenomenon of small talk was initially studied in 1923 by Bronislaw Malinowski in his essay on the problem of meaning in primitive languages.",
+      "reformulated_text": "The phenomenon of little talk was initially taken in 1923 by Bronislaw Malinowski in his essay on the problem of meaning in primitive languages.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.3674,
+        "entailment": 2.7415,
+        "neutral": -1.7676
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.2398,
+        "entailment": 3.068,
+        "neutral": -1.3432
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "smalltalk",
+      "verdict": "SEVERE",
+      "original_text": "It serves many functions in helping to define the relationships between friends, colleagues, and new acquaintances.",
+      "reformulated_text": "It helps many functions in helping to define the associations between friends, colleagues, and new acquaintances.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.2149,
+        "entailment": 3.1691,
+        "neutral": -1.5692
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.4083,
+        "entailment": 3.5045,
+        "neutral": -1.7965
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "smalltalk",
+      "verdict": "MINOR",
+      "original_text": "In a business meeting, it enables people to establish each other's reputation and level of expertise.",
+      "reformulated_text": "In a business meeting, it enables people to establish each other's esteem and level of expertise.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.2618,
+        "entailment": 3.3638,
+        "neutral": -1.758
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.3688,
+        "entailment": 3.3639,
+        "neutral": -1.6615
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "smalltalk",
+      "verdict": "SEVERE",
+      "original_text": "In many cultures, silences between two people are usually considered uncomfortable and awkward.",
+      "reformulated_text": "In many cultures, quiets between two people are usually considered uncomfortable and awkward.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.567,
+        "entailment": 3.6837,
+        "neutral": -1.8507
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.6669,
+        "entailment": 3.6867,
+        "neutral": -1.7582
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "smalltalk",
+      "verdict": "SEVERE",
+      "original_text": "Speech patterns between women tend to be more collaborative than those of men.",
+      "reformulated_text": "Words patterns between women tend to be more collaborative than those of men.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.8746,
+        "entailment": 3.1084,
+        "neutral": -1.7221
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.1361,
+        "entailment": 3.33,
+        "neutral": -1.7559
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "ai",
+      "verdict": "SEVERE",
+      "original_text": "Artificial intelligence (AI) is the capability of computational systems to perform tasks typically associated with human intelligence, such as learning, reasoning, problem-solving, perception, and decision-making.",
+      "reformulated_text": "Artificial intelligence ( AI ) is the capability of computational methods to perform tasks typically associated with human intelligence, much as learning, reasoning, problem-solving, perception, and decision-making.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.11,
+        "entailment": 2.0494,
+        "neutral": -1.0231
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -2.078,
+        "entailment": 1.99,
+        "neutral": -0.986
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "ai",
+      "verdict": "SEVERE",
+      "original_text": "High-profile applications of AI include advanced web search engines, chatbots, virtual assistants, autonomous vehicles, play and analysis in strategy games, and content generation.",
+      "reformulated_text": "High-profile applications of AI includes advanced web research engines, chariots, virtual assistants, autonomous vehicles, play and analysis in way games, and content generation.",
+      "fwd_label": "contradiction",
+      "fwd_logits": {
+        "contradiction": 2.4528,
+        "entailment": -1.3239,
+        "neutral": -1.1751
+      },
+      "rev_label": "contradiction",
+      "rev_logits": {
+        "contradiction": 3.0423,
+        "entailment": -2.6534,
+        "neutral": -0.4364
+      },
+      "either_contradiction": true
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "ai",
+      "verdict": "MINOR",
+      "original_text": "Early researchers developed algorithms that imitated step-by-step reasoning that humans use when solving puzzles or making logical deductions.",
+      "reformulated_text": "Early researchers developed algorithms that imitated detailed reasoning that humans use when working puzzles or making logical deductions.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -0.3035,
+        "entailment": 1.1077,
+        "neutral": -1.4321
+      },
+      "rev_label": "contradiction",
+      "rev_logits": {
+        "contradiction": 2.6044,
+        "entailment": -1.2927,
+        "neutral": -1.3319
+      },
+      "either_contradiction": true
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "ai",
+      "verdict": "SEVERE",
+      "original_text": "Many of these algorithms were insufficient for solving large reasoning problems because they experienced a combinatorial explosion, meaning they become exponentially slower as the problems grow.",
+      "reformulated_text": "Many of these algorithms were insufficient for working large reasoning problems because they experienced a combinatorial explosion, meaning they become exponentially easier as the problems grow.",
+      "fwd_label": "contradiction",
+      "fwd_logits": {
+        "contradiction": 4.3172,
+        "entailment": -2.468,
+        "neutral": -2.0529
+      },
+      "rev_label": "contradiction",
+      "rev_logits": {
+        "contradiction": 4.2941,
+        "entailment": -2.643,
+        "neutral": -1.8219
+      },
+      "either_contradiction": true
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "ai",
+      "verdict": "SEVERE",
+      "original_text": "An ontology is the set of objects, relations, concepts, and properties used by a particular domain of knowledge.",
+      "reformulated_text": "An ontology is the lot of objects, relations, concepts, and properties used by a particular domain of knowledge.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.5376,
+        "entailment": 2.4303,
+        "neutral": -1.1692
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.3649,
+        "entailment": 3.12,
+        "neutral": -1.3212
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "ai",
+      "verdict": "SEVERE",
+      "original_text": "Machine learning is the study of programs that can improve their performance on a given task automatically.",
+      "reformulated_text": "Machine learning is the work of programs that can improve their performance on a given task automatically.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.6902,
+        "entailment": 2.7822,
+        "neutral": -1.5339
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -2.8554,
+        "entailment": 2.7642,
+        "neutral": -1.3365
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "ai",
+      "verdict": "SEVERE",
+      "original_text": "Gradient descent is a type of local search that optimises a set of numerical parameters by incrementally adjusting them to minimise a loss function.",
+      "reformulated_text": "Gradient descent is a type of local quest that optimists a place of numerical parameters by incrementally adjusting them to minimize a loss function.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -1.2802,
+        "entailment": 1.545,
+        "neutral": -1.0675
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -2.2883,
+        "entailment": 2.4574,
+        "neutral": -1.4434
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "ai",
+      "verdict": "CLEAN",
+      "original_text": "Deep learning uses several layers of neurons between the network's inputs and outputs.",
+      "reformulated_text": "Deep learning uses various layers of neurons between the network's inputs and outputs.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -4.2094,
+        "entailment": 3.7245,
+        "neutral": -1.279
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -4.1033,
+        "entailment": 3.8113,
+        "neutral": -1.4773
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "ai",
+      "verdict": "SEVERE",
+      "original_text": "Generative pre-trained transformers are large language models that generate text based on the semantic relationships between words in sentences.",
+      "reformulated_text": "Generative pre-trained transformers are large language models that generate text based on the meaningful relationships between words in times.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.3314,
+        "entailment": 2.0751,
+        "neutral": -0.8184
+      },
+      "rev_label": "neutral",
+      "rev_logits": {
+        "contradiction": -1.5327,
+        "entailment": 0.017,
+        "neutral": 1.4583
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "climate",
+      "verdict": "SEVERE",
+      "original_text": "Earth's average surface air temperature has increased about 1.5 degrees Celsius since the Industrial Revolution.",
+      "reformulated_text": "Earth's average layer air temperature has increased about 1.5 degrees Celsius since the Industrial Revolution.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -0.2886,
+        "entailment": 0.7775,
+        "neutral": -0.9221
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -1.6431,
+        "entailment": 1.8261,
+        "neutral": -1.0786
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "climate",
+      "verdict": "SEVERE",
+      "original_text": "The Arctic has warmed the most, and temperatures on land have generally increased more than sea surface temperatures.",
+      "reformulated_text": "The Arctic has warmed the most, and temperatures on land have generally increased more than ocean layer temperatures.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.685,
+        "entailment": 3.6935,
+        "neutral": -1.6758
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.5112,
+        "entailment": 3.6591,
+        "neutral": -1.8008
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "climate",
+      "verdict": "SEVERE",
+      "original_text": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases was stronger than the cooling effect of airborne particulates in air pollution.",
+      "reformulated_text": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were powerful than the cooling effect of airborne particulates in air pollution.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.6656,
+        "entailment": 3.4738,
+        "neutral": -1.494
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.4143,
+        "entailment": 3.2645,
+        "neutral": -1.4706
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "climate",
+      "verdict": "SEVERE",
+      "original_text": "Between the 18th century and 1970 there was little net warming, as the warming impact of greenhouse gas emissions was offset by cooling from sulfur dioxide emissions.",
+      "reformulated_text": "Between the 18th half-century and 1970 there was little net warming, as the warming impact of greenhouse gas emissions were offset by cooling from s dioxide emissions.",
+      "fwd_label": "neutral",
+      "fwd_logits": {
+        "contradiction": -1.4222,
+        "entailment": -1.4053,
+        "neutral": 2.9416
+      },
+      "rev_label": "neutral",
+      "rev_logits": {
+        "contradiction": -0.0551,
+        "entailment": -2.2951,
+        "neutral": 2.275
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "climate",
+      "verdict": "SEVERE",
+      "original_text": "The upper atmosphere is cooling, because greenhouse gases are trapping heat near the Earth's surface, and so less heat is radiating into space.",
+      "reformulated_text": "The upper atmosphere is cooling, because greenhouse gases are trapping heat near the Earth's open, and so less heat is radiating into place.",
+      "fwd_label": "contradiction",
+      "fwd_logits": {
+        "contradiction": 0.5421,
+        "entailment": 0.1594,
+        "neutral": -0.9137
+      },
+      "rev_label": "contradiction",
+      "rev_logits": {
+        "contradiction": 1.5712,
+        "entailment": -0.8307,
+        "neutral": -0.7371
+      },
+      "either_contradiction": true
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "climate",
+      "verdict": "SEVERE",
+      "original_text": "Since the pre-industrial period, the average surface temperature over land regions has increased almost twice as fast as the global average surface temperature.",
+      "reformulated_text": "Since the pre-industrial period, the average rise temperature over land regions has increased almost twice as fast as the global average open temperature.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -1.3884,
+        "entailment": 1.3136,
+        "neutral": -0.6482
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -0.4483,
+        "entailment": 0.806,
+        "neutral": -0.8369
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "cooking",
+      "verdict": "SEVERE",
+      "original_text": "Cooking techniques and ingredients vary widely, from grilling food over an open fire, to using electric stoves, to baking in various types of ovens, to boiling and blanching in water.",
+      "reformulated_text": "Cooking techniques and ingredients vary widely, from grilling food over an open fire, to using electric fires, to baking in various types of ovens, to boiling and blanching in water.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.23,
+        "entailment": 3.3934,
+        "neutral": -1.8329
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -2.6823,
+        "entailment": 3.0151,
+        "neutral": -1.8571
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "cooking",
+      "verdict": "SEVERE",
+      "original_text": "Cooking is an aspect of all human societies and a cultural universal.",
+      "reformulated_text": "Cooking is an aspect of all human companies and a cultural universal.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.8369,
+        "entailment": 2.8019,
+        "neutral": -1.3766
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -2.8905,
+        "entailment": 2.9653,
+        "neutral": -1.5342
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "cooking",
+      "verdict": "SEVERE",
+      "original_text": "Archaeological evidence of cooking fires dates to at least 300,000 years ago, but some estimate that humans started cooking as early as 2 million years ago.",
+      "reformulated_text": "Archaeological evidence of cooking fires date to at least 300,000 years ago, but some estimate that humans went cooking as early as 2 million years ago.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.7503,
+        "entailment": 3.1816,
+        "neutral": -1.9669
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.1053,
+        "entailment": 3.349,
+        "neutral": -1.8544
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "cooking",
+      "verdict": "SEVERE",
+      "original_text": "Long-chain sugars such as starch tend to break down into more digestible simpler sugars.",
+      "reformulated_text": "Long-chain sugars like glucose tend to break down into more digestible sugars.",
+      "fwd_label": "contradiction",
+      "fwd_logits": {
+        "contradiction": 3.2217,
+        "entailment": -2.4048,
+        "neutral": -0.8389
+      },
+      "rev_label": "contradiction",
+      "rev_logits": {
+        "contradiction": 2.9884,
+        "entailment": -3.6645,
+        "neutral": 0.3897
+      },
+      "either_contradiction": true
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "cooking",
+      "verdict": "SEVERE",
+      "original_text": "Fats can reach temperatures above the boiling point of water and are often used to transfer high heat to other ingredients, such as in frying or sauteing.",
+      "reformulated_text": "Fats can reach temperatures above the boiling point of water and is often used to transfer high heat to other ingredients, much as in frying or cooking.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.971,
+        "entailment": 3.7297,
+        "neutral": -1.5231
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -4.3247,
+        "entailment": 2.9212,
+        "neutral": -0.0487
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "cooking",
+      "verdict": "SEVERE",
+      "original_text": "Home-cooked meals tend to be healthier with fewer calories, and less saturated fat, cholesterol and sodium on a per calorie basis.",
+      "reformulated_text": "Home-cooked meals tend to be healthier with fewer calories, and less pure fat, cholesterol and na on a per calorie basis.",
+      "fwd_label": "contradiction",
+      "fwd_logits": {
+        "contradiction": 1.4227,
+        "entailment": -0.7943,
+        "neutral": -0.6794
+      },
+      "rev_label": "neutral",
+      "rev_logits": {
+        "contradiction": 1.0989,
+        "entailment": -2.6684,
+        "neutral": 1.45
+      },
+      "either_contradiction": true
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "cooking",
+      "verdict": "SEVERE",
+      "original_text": "The scientific study of cooking has become known as molecular gastronomy.",
+      "reformulated_text": "The technical take of cooking has become known as molecular gastronomy.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.288,
+        "entailment": 3.0419,
+        "neutral": -1.1957
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -2.9172,
+        "entailment": 2.616,
+        "neutral": -1.0187
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "smalltalk",
+      "verdict": "SEVERE",
+      "original_text": "Small talk is an informal type of discourse that does not cover any functional topics of conversation or any transactions that need to be addressed.",
+      "reformulated_text": "Little talk is an informal type of discourse that does not cover any functional topics of conversation or any transactions that need to be addressed.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.1913,
+        "entailment": 3.343,
+        "neutral": -1.7925
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.3176,
+        "entailment": 3.4918,
+        "neutral": -1.8685
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "smalltalk",
+      "verdict": "SEVERE",
+      "original_text": "Small talk consists of three main parts: a greeting, conversation, and a closing.",
+      "reformulated_text": "Little talk consists of three main parts: a greeting, conversation, and a closing.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.8202,
+        "entailment": 3.1392,
+        "neutral": -1.8681
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.1962,
+        "entailment": 3.4122,
+        "neutral": -1.8559
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "smalltalk",
+      "verdict": "SEVERE",
+      "original_text": "The phenomenon of small talk was initially studied in 1923 by Bronislaw Malinowski in his essay on the problem of meaning in primitive languages.",
+      "reformulated_text": "The phenomenon of little talk was initially taken in 1923 by Bronislaw Malinowski in his essay on the problem of meaning in primitive languages.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.3674,
+        "entailment": 2.7415,
+        "neutral": -1.7676
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.2398,
+        "entailment": 3.068,
+        "neutral": -1.3432
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "smalltalk",
+      "verdict": "SEVERE",
+      "original_text": "Phatic communication, or small talk, is not used to exchange important information; instead it is used to build and maintain interpersonal relationships.",
+      "reformulated_text": "Phatic communication, or little talk, is not used to exchange important information; instead it is used to build and maintain interpersonal relationships.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.156,
+        "entailment": 3.4383,
+        "neutral": -1.9598
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.1271,
+        "entailment": 3.4545,
+        "neutral": -1.9936
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "smalltalk",
+      "verdict": "SEVERE",
+      "original_text": "Small talk is a bonding ritual and a strategy for managing interpersonal distance.",
+      "reformulated_text": "Little talk is a bonding ritual and a way for managing interpersonal distance.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.5023,
+        "entailment": 3.536,
+        "neutral": -1.7141
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.7362,
+        "entailment": 3.5145,
+        "neutral": -1.4577
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "smalltalk",
+      "verdict": "SEVERE",
+      "original_text": "It serves many functions in helping to define the relationships between friends, colleagues, and new acquaintances.",
+      "reformulated_text": "It helps many functions in helping to define the relationships between friends, colleagues, and new acquaintances.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.3422,
+        "entailment": 3.3589,
+        "neutral": -1.7236
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.5144,
+        "entailment": 3.6755,
+        "neutral": -1.9332
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "smalltalk",
+      "verdict": "SEVERE",
+      "original_text": "In many cultures, silences between two people are usually considered uncomfortable and awkward.",
+      "reformulated_text": "In many cultures, quiets between two people are usually considered uncomfortable and awkward.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.567,
+        "entailment": 3.6837,
+        "neutral": -1.8507
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.6669,
+        "entailment": 3.6867,
+        "neutral": -1.7582
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "smalltalk",
+      "verdict": "SEVERE",
+      "original_text": "The topics of small talk conversations are generally less important than their social function.",
+      "reformulated_text": "The topics of little talk conversations are generally less important than their friendly function.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -3.2039,
+        "entailment": 1.7437,
+        "neutral": 0.7515
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.5593,
+        "entailment": 2.7706,
+        "neutral": -0.5977
+      },
+      "either_contradiction": false
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "smalltalk",
+      "verdict": "SEVERE",
+      "original_text": "Speech patterns between women tend to be more collaborative than those of men.",
+      "reformulated_text": "Words patterns between women tend to be more collaborative than those of men.",
+      "fwd_label": "entailment",
+      "fwd_logits": {
+        "contradiction": -2.8746,
+        "entailment": 3.1084,
+        "neutral": -1.7221
+      },
+      "rev_label": "entailment",
+      "rev_logits": {
+        "contradiction": -3.1361,
+        "entailment": 3.33,
+        "neutral": -1.7559
+      },
+      "either_contradiction": false
+    }
+  ]
+}

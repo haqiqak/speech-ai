@@ -1,414 +1,30 @@
 {
-  "_doc": "eval/pilot_pairs.json - v4, bounded current-state human evaluation (VALIDATION.md R39). Group A (10) = historical re-test of v3 pair_01/02/11/13/16/17/24/28/29/30, regenerated live. Group B (10) = fresh coverage. Live Datamuse (no DISABLE_DATAMUSE), unlike v3. The original v3 corpus is archived at eval/archive_v3/pilot_pairs_v3.json, not overwritten in spirit.",
-  "category_counts": {
-    "global_sound": 11,
-    "word_pattern": 3,
-    "multi_difficulty": 4,
-    "declared_word": 2
-  },
-  "group_counts": {
-    "A": 10,
-    "B": 10
+  "_doc": "eval/pilot_pairs.json - v5, Track C (per direct instruction after R43). 20 pairs selected from R40's real-text corpus (VALIDATION.md SS33), frozen output reused verbatim -- no new reformulate() run. Stratified across R40's CLEAN/MINOR/SEVERE manual-audit verdicts and all 4 profile densities, so a real human rating this corpus provides the first independent check of R40's severity classification, the evidentiary basis for R42/R43's architecture recommendations.",
+  "verdict_counts": {
+    "CLEAN": 4,
+    "MINOR": 4,
+    "SEVERE": 12
   },
   "pairs": [
     {
-      "case_id": "gs_hows_it_going",
-      "category": "global_sound",
-      "group": "A",
-      "profile_spec": {
-        "sounds": [
-          "g"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "Hey, how's it going today?",
-          "replacement": "Hey, how's it today?",
-          "source": "phrase",
-          "contextual_fit": null
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "Hey, how's it going today?",
-      "reformulated_text": "Hey, how's it today?",
+      "pair_id": "pair_01",
+      "case_id": "r40_moderate_mixed_01",
+      "category": "r40_real_text",
+      "profile": "moderate_mixed",
+      "source_article": "cooking",
+      "original_text": "Vitamin C is especially prone to oxidation during cooking and may be destroyed by protracted cooking.",
+      "reformulated_text": "Vitamin C is especially vulnerable to oxidation during cooking and may be destroyed by long cooking.",
       "status": "reformulated",
+      "n_changes": 2,
+      "change_sources": [
+        "substitution"
+      ],
       "metrics": {
-        "meaning_preservation": 0.9522,
-        "meaning_preservation_meaningbert": 68.82,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1111,
-        "substitution_rate": 0.2
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9522
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_01"
-    },
-    {
-      "case_id": "gs_sleep_well",
-      "category": "global_sound",
-      "group": "A",
-      "profile_spec": {
-        "sounds": [
-          "s"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "sleep",
-          "replacement": "nap",
-          "source": "substitution",
-          "contextual_fit": 8.719478501006961e-06
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "Good morning, did you sleep well?",
-      "reformulated_text": "Good morning, did you nap well?",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9179,
-        "meaning_preservation_meaningbert": 85.87,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1667,
-        "substitution_rate": 0.1667
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9179
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_02"
-    },
-    {
-      "case_id": "gs_cant_believe",
-      "category": "global_sound",
-      "group": "A",
-      "profile_spec": {
-        "sounds": [
-          "h"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "happened",
-          "replacement": "occurred",
-          "source": "substitution",
-          "contextual_fit": 9.900169243337587e-05
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "I can't believe this happened again.",
-      "reformulated_text": "I can't believe this occurred again.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9365,
-        "meaning_preservation_meaningbert": 81.51,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1667,
-        "substitution_rate": 0.1667
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9365
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_03"
-    },
-    {
-      "case_id": "gs_bus_late",
-      "category": "global_sound",
-      "group": "A",
-      "profile_spec": {
-        "sounds": [
-          "l"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "late",
-          "replacement": "after-hours",
-          "source": "substitution",
-          "contextual_fit": 0.027030338358599693
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "The bus was late again this morning.",
-      "reformulated_text": "The bus was after-hours again this morning.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.8772,
-        "meaning_preservation_meaningbert": 62.38,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1429,
-        "substitution_rate": 0.1429
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.8772
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_04"
-    },
-    {
-      "case_id": "gs_grab_jacket",
-      "category": "global_sound",
-      "group": "A",
-      "profile_spec": {
-        "sounds": [
-          "gr"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "grab",
-          "replacement": "take",
-          "source": "substitution",
-          "contextual_fit": 0.008251278661191463
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "Let me grab my jacket real quick.",
-      "reformulated_text": "Let me take my jacket real quick.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9511,
-        "meaning_preservation_meaningbert": 94.52,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1429,
-        "substitution_rate": 0.1429
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9511
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_05"
-    },
-    {
-      "case_id": "gs_grab_coffee",
-      "category": "global_sound",
-      "group": "A",
-      "profile_spec": {
-        "sounds": [
-          "gr"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "grab",
-          "replacement": "take",
-          "source": "substitution",
-          "contextual_fit": 0.022332310676574707
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "Do you want to grab coffee later?",
-      "reformulated_text": "Do you want to take coffee later?",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9222,
-        "meaning_preservation_meaningbert": 85.58,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1429,
-        "substitution_rate": 0.1429
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9222
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_06"
-    },
-    {
-      "case_id": "wp_valuable_lesson",
-      "category": "word_pattern",
-      "group": "A",
-      "profile_spec": {
-        "words": [
-          "valuable"
-        ],
-        "patterns": {
-          "valuable": [
-            "V"
-          ]
-        }
-      },
-      "triggered_by": [
-        "declared_word",
-        "word_specific_pattern"
-      ],
-      "changes_made": [
-        {
-          "original": "valuable",
-          "replacement": "worth",
-          "source": "substitution",
-          "contextual_fit": 0.00025006590294651687
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "This is a valuable lesson for everyone here.",
-      "reformulated_text": "This is a worth lesson for everyone here.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9319,
-        "meaning_preservation_meaningbert": 94.52,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.125,
-        "substitution_rate": 0.125
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9319
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_07"
-    },
-    {
-      "case_id": "md_running_traffic",
-      "category": "multi_difficulty",
-      "group": "A",
-      "profile_spec": {
-        "sounds": [
-          "r"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "running",
-          "replacement": "going",
-          "source": "substitution",
-          "contextual_fit": 0.0023045530542731285
-        }
-      ],
-      "profile_match": {
+        "meaning_preservation": 0.9766,
+        "meaning_preservation_meaningbert": 91.94,
         "flagged_words_before": 2,
-        "flagged_words_after": 1,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "Sorry, running behind, stuck in traffic right now.",
-      "reformulated_text": "Sorry, going behind, stuck in traffic right now.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9372,
-        "meaning_preservation_meaningbert": 94.52,
-        "flagged_words_before": 2,
-        "flagged_words_after": 1,
-        "difficulty_reduction_pct": 50.0,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
         "naturalness_edit_ratio": 0.125,
         "substitution_rate": 0.125
       },
@@ -416,51 +32,441 @@
         "passed": true,
         "details": {
           "flagged_before": 2,
-          "flagged_after": 1,
-          "sbert_sim": 0.9372
+          "flagged_after": 0,
+          "sbert_sim": 0.9766
         }
       },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_08"
+      "claude_audit_verdict": "CLEAN",
+      "claude_audit_defect_label": "clean: prone->vulnerable",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
     },
     {
-      "case_id": "md_push_meeting_coffee",
-      "category": "multi_difficulty",
-      "group": "A",
-      "profile_spec": {
-        "sounds": [
-          "p",
-          "gr"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "grab",
-          "replacement": "take",
-          "source": "substitution",
-          "contextual_fit": 0.01663406565785408
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 2,
-        "flagged_words_after": 1,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "Can we push the meeting and grab coffee after?",
-      "reformulated_text": "Can we push the meeting and take coffee after?",
+      "pair_id": "pair_02",
+      "case_id": "r40_moderate_mixed_02",
+      "category": "r40_real_text",
+      "profile": "moderate_mixed",
+      "source_article": "cooking",
+      "original_text": "Cooking is done both by people in their own dwellings and by professional cooks and chefs in restaurants and other food establishments.",
+      "reformulated_text": "Cooking is done both by people in their own dwellings and by expert cooks and chefs in restaurants and other food establishments.",
       "status": "reformulated",
+      "n_changes": 1,
+      "change_sources": [
+        "substitution"
+      ],
       "metrics": {
-        "meaning_preservation": 0.9747,
-        "meaning_preservation_meaningbert": 94.51,
+        "meaning_preservation": 0.9813,
+        "meaning_preservation_meaningbert": 94.53,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.0455,
+        "substitution_rate": 0.0455
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9813
+        }
+      },
+      "claude_audit_verdict": "CLEAN",
+      "claude_audit_defect_label": "clean: professional->expert",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
+    },
+    {
+      "pair_id": "pair_03",
+      "case_id": "r40_heavy_dense_03",
+      "category": "r40_real_text",
+      "profile": "heavy_dense",
+      "source_article": "ai",
+      "original_text": "Deep learning uses several layers of neurons between the network's inputs and outputs.",
+      "reformulated_text": "Deep learning uses various layers of neurons between the network's inputs and outputs.",
+      "status": "reformulated",
+      "n_changes": 1,
+      "change_sources": [
+        "substitution"
+      ],
+      "metrics": {
+        "meaning_preservation": 0.9859,
+        "meaning_preservation_meaningbert": 94.53,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.0769,
+        "substitution_rate": 0.0769
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9859
+        }
+      },
+      "claude_audit_verdict": "CLEAN",
+      "claude_audit_defect_label": "clean: several->various",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
+    },
+    {
+      "pair_id": "pair_04",
+      "case_id": "r40_moderate_mixed_04",
+      "category": "r40_real_text",
+      "profile": "moderate_mixed",
+      "source_article": "smalltalk",
+      "original_text": "Small talk consists of three main parts: a greeting, conversation, and a closing.",
+      "reformulated_text": "Small talk consists of three main parts: a welcome, conversation, and a closing.",
+      "status": "reformulated",
+      "n_changes": 1,
+      "change_sources": [
+        "substitution"
+      ],
+      "metrics": {
+        "meaning_preservation": 0.9633,
+        "meaning_preservation_meaningbert": 94.53,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.0769,
+        "substitution_rate": 0.0769
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9633
+        }
+      },
+      "claude_audit_verdict": "CLEAN",
+      "claude_audit_defect_label": "clean: greeting->welcome",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
+    },
+    {
+      "pair_id": "pair_05",
+      "case_id": "r40_light_single_sound_05",
+      "category": "r40_real_text",
+      "profile": "light_single_sound",
+      "source_article": "smalltalk",
+      "original_text": "Small talk is a bonding ritual and a strategy for managing interpersonal distance.",
+      "reformulated_text": "Small talk is a bonding ritual and a way for managing interpersonal distance.",
+      "status": "reformulated",
+      "n_changes": 1,
+      "change_sources": [
+        "substitution"
+      ],
+      "metrics": {
+        "meaning_preservation": 0.994,
+        "meaning_preservation_meaningbert": 77.82,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.0769,
+        "substitution_rate": 0.0769
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.994
+        }
+      },
+      "claude_audit_verdict": "MINOR",
+      "claude_audit_defect_label": "minor: strategy->way",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
+    },
+    {
+      "pair_id": "pair_06",
+      "case_id": "r40_moderate_mixed_06",
+      "category": "r40_real_text",
+      "profile": "moderate_mixed",
+      "source_article": "ai",
+      "original_text": "A rational agent has goals or preferences and takes actions to make them happen.",
+      "reformulated_text": "A rational agent has goals or options and take actions to make them happen.",
+      "status": "reformulated",
+      "n_changes": 1,
+      "change_sources": [
+        "substitution"
+      ],
+      "metrics": {
+        "meaning_preservation": 0.9656,
+        "meaning_preservation_meaningbert": 72.69,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.0714,
+        "substitution_rate": 0.0714
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9656
+        }
+      },
+      "claude_audit_verdict": "MINOR",
+      "claude_audit_defect_label": "minor: preferences->options",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
+    },
+    {
+      "pair_id": "pair_07",
+      "case_id": "r40_moderate_mixed_07",
+      "category": "r40_real_text",
+      "profile": "moderate_mixed",
+      "source_article": "cooking",
+      "original_text": "When proteins are heated they become denatured and change texture.",
+      "reformulated_text": "When peptides are heated they become denatured and change texture.",
+      "status": "reformulated",
+      "n_changes": 1,
+      "change_sources": [
+        "substitution"
+      ],
+      "metrics": {
+        "meaning_preservation": 0.8897,
+        "meaning_preservation_meaningbert": 94.52,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.1,
+        "substitution_rate": 0.1
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.8897
+        }
+      },
+      "claude_audit_verdict": "MINOR",
+      "claude_audit_defect_label": "minor: proteins->peptides",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
+    },
+    {
+      "pair_id": "pair_08",
+      "case_id": "r40_heavy_dense_08",
+      "category": "r40_real_text",
+      "profile": "heavy_dense",
+      "source_article": "smalltalk",
+      "original_text": "In a business meeting, it enables people to establish each other's reputation and level of expertise.",
+      "reformulated_text": "In a business meeting, it enables people to establish each other's esteem and level of expertise.",
+      "status": "reformulated",
+      "n_changes": 1,
+      "change_sources": [
+        "substitution"
+      ],
+      "metrics": {
+        "meaning_preservation": 0.9622,
+        "meaning_preservation_meaningbert": 94.53,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.0625,
+        "substitution_rate": 0.0625
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9622
+        }
+      },
+      "claude_audit_verdict": "MINOR",
+      "claude_audit_defect_label": "minor: reputation->esteem",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
+    },
+    {
+      "pair_id": "pair_09",
+      "case_id": "r40_moderate_mixed_09",
+      "category": "r40_real_text",
+      "profile": "moderate_mixed",
+      "source_article": "climate",
+      "original_text": "The upper atmosphere is cooling, because greenhouse gases are trapping heat near the Earth's surface, and so less heat is radiating into space.",
+      "reformulated_text": "The upper atmosphere is cooling, because gas gases are trapping heat near the Earth's surface, and so less heat is radiating into space.",
+      "status": "reformulated",
+      "n_changes": 1,
+      "change_sources": [
+        "substitution"
+      ],
+      "metrics": {
+        "meaning_preservation": 0.9282,
+        "meaning_preservation_meaningbert": 94.53,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.0435,
+        "substitution_rate": 0.0435
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9282
+        }
+      },
+      "claude_audit_verdict": "SEVERE",
+      "claude_audit_defect_label": "severe: nonsense duplicate (gas gases)",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
+    },
+    {
+      "pair_id": "pair_10",
+      "case_id": "r40_moderate_mixed_10",
+      "category": "r40_real_text",
+      "profile": "moderate_mixed",
+      "source_article": "climate",
+      "original_text": "Since the pre-industrial period, the average surface temperature over land regions has increased almost twice as fast as the global average surface temperature.",
+      "reformulated_text": "Since the palaeolithic period, the average surface temperature over land regions has increased almost twice as fast as the global average surface temperature.",
+      "status": "reformulated",
+      "n_changes": 1,
+      "change_sources": [
+        "substitution"
+      ],
+      "metrics": {
+        "meaning_preservation": 0.9131,
+        "meaning_preservation_meaningbert": 59.17,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.0435,
+        "substitution_rate": 0.0435
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9131
+        }
+      },
+      "claude_audit_verdict": "SEVERE",
+      "claude_audit_defect_label": "severe: wrong sense/factual (palaeolithic)",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
+    },
+    {
+      "pair_id": "pair_11",
+      "case_id": "r40_moderate_mixed_11",
+      "category": "r40_real_text",
+      "profile": "moderate_mixed",
+      "source_article": "ai",
+      "original_text": "Machine learning is the study of programs that can improve their performance on a given task automatically.",
+      "reformulated_text": "Machine learning is the study of softwares that can improve their performance on a given task automatically.",
+      "status": "reformulated",
+      "n_changes": 1,
+      "change_sources": [
+        "substitution"
+      ],
+      "metrics": {
+        "meaning_preservation": 0.9743,
+        "meaning_preservation_meaningbert": 94.52,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.0588,
+        "substitution_rate": 0.0588
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9743
+        }
+      },
+      "claude_audit_verdict": "SEVERE",
+      "claude_audit_defect_label": "severe: grammar corruption (softwares)",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
+    },
+    {
+      "pair_id": "pair_12",
+      "case_id": "r40_heavy_dense_12",
+      "category": "r40_real_text",
+      "profile": "heavy_dense",
+      "source_article": "smalltalk",
+      "original_text": "Small talk is an informal type of discourse that does not cover any functional topics of conversation or any transactions that need to be addressed.",
+      "reformulated_text": "Little talk is an informal type of discourse that does not cover any functional topics of conversation or any transactions that need to be addressed.",
+      "status": "reformulated",
+      "n_changes": 1,
+      "change_sources": [
+        "substitution"
+      ],
+      "metrics": {
+        "meaning_preservation": 0.9239,
+        "meaning_preservation_meaningbert": 71.14,
+        "flagged_words_before": 1,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.04,
+        "substitution_rate": 0.04
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 1,
+          "flagged_after": 0,
+          "sbert_sim": 0.9239
+        }
+      },
+      "claude_audit_verdict": "SEVERE",
+      "claude_audit_defect_label": "severe: fixed-term erosion (little talk)",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
+    },
+    {
+      "pair_id": "pair_13",
+      "case_id": "r40_single_common_sound_13",
+      "category": "r40_real_text",
+      "profile": "single_common_sound",
+      "source_article": "ai",
+      "original_text": "Many of these algorithms were insufficient for solving large reasoning problems because they experienced a combinatorial explosion, meaning they become exponentially slower as the problems grow.",
+      "reformulated_text": "Many of these algorithms were insufficient for working large reasoning problems because they experienced a combinatorial explosion, meaning they become exponentially easier as the problems grow.",
+      "status": "reformulated",
+      "n_changes": 2,
+      "change_sources": [
+        "substitution"
+      ],
+      "metrics": {
+        "meaning_preservation": 0.9849,
+        "meaning_preservation_meaningbert": 94.53,
         "flagged_words_before": 2,
-        "flagged_words_after": 1,
-        "difficulty_reduction_pct": 50.0,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.0769,
+        "substitution_rate": 0.0769
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 2,
+          "flagged_after": 0,
+          "sbert_sim": 0.9849
+        }
+      },
+      "claude_audit_verdict": "SEVERE",
+      "claude_audit_defect_label": "severe: logical inversion (slower->easier)",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
+    },
+    {
+      "pair_id": "pair_14",
+      "case_id": "r40_heavy_dense_14",
+      "category": "r40_real_text",
+      "profile": "heavy_dense",
+      "source_article": "ai",
+      "original_text": "An ontology is the set of objects, relations, concepts, and properties used by a particular domain of knowledge.",
+      "reformulated_text": "An ontology is the lot of objects, telling, concepts, and properties used by a particular domain of knowledge.",
+      "status": "reformulated",
+      "n_changes": 2,
+      "change_sources": [
+        "substitution"
+      ],
+      "metrics": {
+        "meaning_preservation": 0.9734,
+        "meaning_preservation_meaningbert": 83.21,
+        "flagged_words_before": 2,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
         "naturalness_edit_ratio": 0.1111,
         "substitution_rate": 0.1111
       },
@@ -468,601 +474,217 @@
         "passed": true,
         "details": {
           "flagged_before": 2,
-          "flagged_after": 1,
-          "sbert_sim": 0.9747
+          "flagged_after": 0,
+          "sbert_sim": 0.9734
         }
       },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_09"
+      "claude_audit_verdict": "SEVERE",
+      "claude_audit_defect_label": "severe: nonsense compound (lot of objects, telling)",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
     },
     {
-      "case_id": "md_print_report_coffee",
-      "category": "multi_difficulty",
-      "group": "A",
-      "profile_spec": {
-        "sounds": [
-          "pr",
-          "gr"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "print",
-          "replacement": "create",
-          "source": "substitution",
-          "contextual_fit": 0.0005209517548792064
-        },
-        {
-          "original": "grab",
-          "replacement": "take",
-          "source": "substitution",
-          "contextual_fit": 0.011034360155463219
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 2,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "Can you print the report and grab some coffee?",
-      "reformulated_text": "Can you create the report and take some coffee?",
+      "pair_id": "pair_15",
+      "case_id": "r40_heavy_dense_15",
+      "category": "r40_real_text",
+      "profile": "heavy_dense",
+      "source_article": "ai",
+      "original_text": "Gradient descent is a type of local search that optimises a set of numerical parameters by incrementally adjusting them to minimise a loss function.",
+      "reformulated_text": "Gradient descent is a type of local quest that optimists a place of numerical parameters by incrementally adjusting them to minimize a loss function.",
       "status": "reformulated",
+      "n_changes": 2,
+      "change_sources": [
+        "substitution"
+      ],
       "metrics": {
-        "meaning_preservation": 0.89,
-        "meaning_preservation_meaningbert": 88.24,
+        "meaning_preservation": 0.9666,
+        "meaning_preservation_meaningbert": 94.52,
         "flagged_words_before": 2,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.2222,
-        "substitution_rate": 0.2222
+        "naturalness_edit_ratio": 0.0833,
+        "substitution_rate": 0.0833
       },
       "final_verification": {
         "passed": true,
         "details": {
           "flagged_before": 2,
           "flagged_after": 0,
-          "sbert_sim": 0.89
+          "sbert_sim": 0.9666
         }
       },
+      "claude_audit_verdict": "SEVERE",
+      "claude_audit_defect_label": "severe: wrong POS + nonsense (quest, optimists, place)",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
+    },
+    {
+      "pair_id": "pair_16",
+      "case_id": "r40_heavy_dense_16",
+      "category": "r40_real_text",
+      "profile": "heavy_dense",
+      "source_article": "climate",
+      "original_text": "Between the 18th century and 1970 there was little net warming, as the warming impact of greenhouse gas emissions was offset by cooling from sulfur dioxide emissions.",
+      "reformulated_text": "Between the 18th half-century and 1970 there was little net warming, as the warming impact of greenhouse gas emissions were offset by cooling from s dioxide emissions.",
+      "status": "reformulated",
       "n_changes": 2,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_10"
-    },
-    {
-      "case_id": "gs2_forgot_call",
-      "category": "global_sound",
-      "group": "B",
-      "profile_spec": {
-        "sounds": [
-          "f"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
+      "change_sources": [
+        "substitution"
       ],
-      "changes_made": [
-        {
-          "original": "forgot",
-          "replacement": "missed",
-          "source": "substitution",
-          "contextual_fit": 0.00017568827024661005
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "I forgot to call my mother yesterday.",
-      "reformulated_text": "I missed to call my mother yesterday.",
-      "status": "reformulated",
       "metrics": {
-        "meaning_preservation": 0.8678,
-        "meaning_preservation_meaningbert": 84.61,
-        "flagged_words_before": 1,
+        "meaning_preservation": 0.9708,
+        "meaning_preservation_meaningbert": 92.11,
+        "flagged_words_before": 2,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1429,
-        "substitution_rate": 0.1429
+        "naturalness_edit_ratio": 0.0741,
+        "substitution_rate": 0.0741
       },
       "final_verification": {
         "passed": true,
         "details": {
-          "flagged_before": 1,
+          "flagged_before": 2,
           "flagged_after": 0,
-          "sbert_sim": 0.8678
+          "sbert_sim": 0.9708
         }
       },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_11"
+      "claude_audit_verdict": "SEVERE",
+      "claude_audit_defect_label": "severe: factual/logical (half-century, letter-as-word)",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
     },
     {
-      "case_id": "gs2_finished_homework",
-      "category": "global_sound",
-      "group": "B",
-      "profile_spec": {
-        "sounds": [
-          "f"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "finished",
-          "replacement": "completed",
-          "source": "substitution",
-          "contextual_fit": 0.26406797766685486
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "She quickly finished her homework before dinner.",
-      "reformulated_text": "She quickly completed her homework before dinner.",
+      "pair_id": "pair_17",
+      "case_id": "r40_heavy_dense_17",
+      "category": "r40_real_text",
+      "profile": "heavy_dense",
+      "source_article": "cooking",
+      "original_text": "Long-chain sugars such as starch tend to break down into more digestible simpler sugars.",
+      "reformulated_text": "Long-chain sugars like glucose tend to break down into more digestible sugars.",
       "status": "reformulated",
+      "n_changes": 1,
+      "change_sources": [
+        "restructuring"
+      ],
       "metrics": {
-        "meaning_preservation": 0.9897,
-        "meaning_preservation_meaningbert": 94.52,
-        "flagged_words_before": 1,
+        "meaning_preservation": 0.8861,
+        "meaning_preservation_meaningbert": 90.59,
+        "flagged_words_before": 3,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1429,
-        "substitution_rate": 0.1429
+        "naturalness_edit_ratio": 0.3077,
+        "substitution_rate": 0.3571
       },
       "final_verification": {
         "passed": true,
         "details": {
-          "flagged_before": 1,
+          "flagged_before": 3,
           "flagged_after": 0,
-          "sbert_sim": 0.9897
+          "sbert_sim": 0.8861
         }
       },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_12"
+      "claude_audit_verdict": "SEVERE",
+      "claude_audit_defect_label": "severe: restructuring, scientifically backwards (glucose)",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
     },
     {
-      "case_id": "gs2_wonderful_experience",
-      "category": "global_sound",
-      "group": "B",
-      "profile_spec": {
-        "sounds": [
-          "w"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "wonderful",
-          "replacement": "fantastic",
-          "source": "substitution",
-          "contextual_fit": 0.01384652964770794
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "That was a truly wonderful experience.",
-      "reformulated_text": "That was a truly fantastic experience.",
+      "pair_id": "pair_18",
+      "case_id": "r40_single_common_sound_18",
+      "category": "r40_real_text",
+      "profile": "single_common_sound",
+      "source_article": "climate",
+      "original_text": "The upper atmosphere is cooling, because greenhouse gases are trapping heat near the Earth's surface, and so less heat is radiating into space.",
+      "reformulated_text": "The upper atmosphere is cooling, because greenhouse gases are trapping heat near the Earth's open, and so less heat is radiating into place.",
       "status": "reformulated",
+      "n_changes": 2,
+      "change_sources": [
+        "substitution"
+      ],
       "metrics": {
-        "meaning_preservation": 0.951,
+        "meaning_preservation": 0.9721,
+        "meaning_preservation_meaningbert": 94.53,
+        "flagged_words_before": 2,
+        "flagged_words_after": 0,
+        "difficulty_reduction_pct": 100.0,
+        "naturalness_edit_ratio": 0.087,
+        "substitution_rate": 0.087
+      },
+      "final_verification": {
+        "passed": true,
+        "details": {
+          "flagged_before": 2,
+          "flagged_after": 0,
+          "sbert_sim": 0.9721
+        }
+      },
+      "claude_audit_verdict": "SEVERE",
+      "claude_audit_defect_label": "severe: wrong sense, stealth-plausible (space->place)",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
+    },
+    {
+      "pair_id": "pair_19",
+      "case_id": "r40_heavy_dense_19",
+      "category": "r40_real_text",
+      "profile": "heavy_dense",
+      "source_article": "cooking",
+      "original_text": "Cooking techniques and ingredients vary widely, from grilling food over an open fire, to using electric stoves, to baking in various types of ovens, to boiling and blanching in water.",
+      "reformulated_text": "Cooking techniques and ingredients vary widely, from grilling food over an open fire, to using electric fires, to baking in various types of ovens, to boiling and blanching in water.",
+      "status": "reformulated",
+      "n_changes": 1,
+      "change_sources": [
+        "substitution"
+      ],
+      "metrics": {
+        "meaning_preservation": 0.9933,
         "meaning_preservation_meaningbert": 94.53,
         "flagged_words_before": 1,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1667,
-        "substitution_rate": 0.1667
+        "naturalness_edit_ratio": 0.0333,
+        "substitution_rate": 0.0333
       },
       "final_verification": {
         "passed": true,
         "details": {
           "flagged_before": 1,
           "flagged_after": 0,
-          "sbert_sim": 0.951
+          "sbert_sim": 0.9933
         }
       },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_13"
+      "claude_audit_verdict": "SEVERE",
+      "claude_audit_defect_label": "severe: appliance-type sense confusion (stoves->fires)",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
     },
     {
-      "case_id": "gs2_brings_snacks",
-      "category": "global_sound",
-      "group": "B",
-      "profile_spec": {
-        "sounds": [
-          "b"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "brings",
-          "replacement": "takes",
-          "source": "substitution",
-          "contextual_fit": 0.0019255435327067971
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "He always brings snacks to the office.",
-      "reformulated_text": "He always takes snacks to the office.",
+      "pair_id": "pair_20",
+      "case_id": "r40_heavy_dense_20",
+      "category": "r40_real_text",
+      "profile": "heavy_dense",
+      "source_article": "smalltalk",
+      "original_text": "Speech patterns between women tend to be more collaborative than those of men.",
+      "reformulated_text": "Words patterns between women tend to be more collaborative than those of men.",
       "status": "reformulated",
+      "n_changes": 1,
+      "change_sources": [
+        "substitution"
+      ],
       "metrics": {
-        "meaning_preservation": 0.9718,
-        "meaning_preservation_meaningbert": 90.22,
+        "meaning_preservation": 0.8886,
+        "meaning_preservation_meaningbert": 94.53,
         "flagged_words_before": 1,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1429,
-        "substitution_rate": 0.1429
+        "naturalness_edit_ratio": 0.0769,
+        "substitution_rate": 0.0769
       },
       "final_verification": {
         "passed": true,
         "details": {
           "flagged_before": 1,
           "flagged_after": 0,
-          "sbert_sim": 0.9718
+          "sbert_sim": 0.8886
         }
       },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_14"
-    },
-    {
-      "case_id": "gs2_moved_apartment",
-      "category": "global_sound",
-      "group": "B",
-      "profile_spec": {
-        "sounds": [
-          "m"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "moved",
-          "replacement": "went",
-          "source": "substitution",
-          "contextual_fit": 0.0006162537611089647
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "They recently moved into a new apartment.",
-      "reformulated_text": "They recently went into a new apartment.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.969,
-        "meaning_preservation_meaningbert": 79.09,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1429,
-        "substitution_rate": 0.1429
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.969
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_15"
-    },
-    {
-      "case_id": "dw2_complicated_situation",
-      "category": "declared_word",
-      "group": "B",
-      "profile_spec": {
-        "words": [
-          "complicated"
-        ]
-      },
-      "triggered_by": [
-        "multiple_difficulties_or_no_valid_substitution"
-      ],
-      "changes_made": [
-        {
-          "original": "The situation became quite complicated.",
-          "replacement": "The situation became quite complex.",
-          "source": "restructuring",
-          "contextual_fit": null
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "The situation became quite complicated.",
-      "reformulated_text": "The situation became quite complex.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.8799,
-        "meaning_preservation_meaningbert": 90.12,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.2,
-        "substitution_rate": 0.2
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.8799
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": true,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_16"
-    },
-    {
-      "case_id": "dw2_movie_hilarious",
-      "category": "declared_word",
-      "group": "B",
-      "profile_spec": {
-        "words": [
-          "hilarious"
-        ]
-      },
-      "triggered_by": [
-        "declared_word"
-      ],
-      "changes_made": [
-        {
-          "original": "hilarious",
-          "replacement": "funny",
-          "source": "substitution",
-          "contextual_fit": 0.008958745747804642
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "I found the movie absolutely hilarious.",
-      "reformulated_text": "I found the movie absolutely funny.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9466,
-        "meaning_preservation_meaningbert": 94.52,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1667,
-        "substitution_rate": 0.1667
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9466
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_17"
-    },
-    {
-      "case_id": "wp2_negotiations_successful",
-      "category": "word_pattern",
-      "group": "B",
-      "profile_spec": {
-        "words": [
-          "successful"
-        ],
-        "patterns": {
-          "successful": [
-            "S"
-          ]
-        }
-      },
-      "triggered_by": [
-        "declared_word",
-        "word_specific_pattern"
-      ],
-      "changes_made": [
-        {
-          "original": "successful",
-          "replacement": "in",
-          "source": "substitution",
-          "contextual_fit": 2.0063333067810163e-05
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "The negotiations were surprisingly successful.",
-      "reformulated_text": "The negotiations were surprisingly in.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9087,
-        "meaning_preservation_meaningbert": 78.58,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.2,
-        "substitution_rate": 0.2
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.9087
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_18"
-    },
-    {
-      "case_id": "wp2_thoughtful_gesture",
-      "category": "word_pattern",
-      "group": "B",
-      "profile_spec": {
-        "words": [
-          "thoughtful"
-        ],
-        "patterns": {
-          "thoughtful": [
-            "TH"
-          ]
-        }
-      },
-      "triggered_by": [
-        "declared_word",
-        "word_specific_pattern"
-      ],
-      "changes_made": [
-        {
-          "original": "thoughtful",
-          "replacement": "kind",
-          "source": "substitution",
-          "contextual_fit": 0.0018323686672374606
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "That was a genuinely thoughtful gesture.",
-      "reformulated_text": "That was a genuinely kind gesture.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.897,
-        "meaning_preservation_meaningbert": 94.45,
-        "flagged_words_before": 1,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1667,
-        "substitution_rate": 0.1667
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 1,
-          "flagged_after": 0,
-          "sbert_sim": 0.897
-        }
-      },
-      "n_changes": 1,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_19"
-    },
-    {
-      "case_id": "md2_grab_dinner",
-      "category": "multi_difficulty",
-      "group": "B",
-      "profile_spec": {
-        "sounds": [
-          "pr",
-          "gr"
-        ]
-      },
-      "triggered_by": [
-        "global_sound"
-      ],
-      "changes_made": [
-        {
-          "original": "probably",
-          "replacement": "likely",
-          "source": "substitution",
-          "contextual_fit": 0.0014338473556563258
-        },
-        {
-          "original": "grab",
-          "replacement": "take",
-          "source": "substitution",
-          "contextual_fit": 0.008634203113615513
-        }
-      ],
-      "profile_match": {
-        "flagged_words_before": 2,
-        "flagged_words_after": 0,
-        "difficulty_resolved": true,
-        "note": "Whether the declared difficulty was actually avoided in the output — computed automatically from reformulate.py's own before/after flagged-word count. NOT part of the participant's rating task; reported here only for post-hoc, side-by-side analysis (never blended with human scores)."
-      },
-      "original_text": "We should probably grab dinner before the movie.",
-      "reformulated_text": "We should likely take dinner before the movie.",
-      "status": "reformulated",
-      "metrics": {
-        "meaning_preservation": 0.9757,
-        "meaning_preservation_meaningbert": 93.95,
-        "flagged_words_before": 2,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.25,
-        "substitution_rate": 0.25
-      },
-      "final_verification": {
-        "passed": true,
-        "details": {
-          "flagged_before": 2,
-          "flagged_after": 0,
-          "sbert_sim": 0.9757
-        }
-      },
-      "n_changes": 2,
-      "has_restructuring": false,
-      "grammar_fixes_applied": 0,
-      "pair_id": "pair_20"
+      "claude_audit_verdict": "SEVERE",
+      "claude_audit_defect_label": "severe: non-standard plural/agreement (Words patterns)",
+      "_note": "claude_audit_verdict/defect_label are for POST-HOC comparison only (VALIDATION.md SS33.6) -- never shown to the participant, never blended into their ratings."
     }
   ]
 }
