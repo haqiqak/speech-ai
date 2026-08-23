@@ -213,10 +213,68 @@ been measured, only argued; the honest next step, if you want that number
 before deciding, would be running all three together on the same 23/79
 cases rather than assuming additivity.
 
-**What this does not do:** none of A1–A4 individually or in combination
-demonstrated recovering anywhere near 74%→low-defect-rate territory on
-this evidence. Whether the combined effect gets close enough to justify
-staying with the current hybrid, or whether the residual gap after
-stacking all three still looks large enough to justify the generation-tier
-redesign or fine-tuning-prep track, is the actual decision in front of
-you — this document supplies the numbers, not the call.
+**What this does not do:** none of A1–A4 individually demonstrated
+recovering anywhere near 74%→low-defect-rate territory on this evidence.
+Whether stacking them closes enough of that gap is answered directly
+below, not left open.
+
+---
+
+## A5 — The stacked experiment: A1 (expanded blocking) + A3 (NLI) + A4 (grammar), together
+
+**What it tests:** exactly the open question above. Same 23 escalation
+cases, generation uses A1's expanded blocking, and every candidate must
+now clear five checks instead of three: SBERT, negation, phoneme/word
+leak (unchanged), **plus** NLI (neither direction predicts contradiction)
+**plus** LanguageTool (zero matches). A2's iterative regeneration is
+deliberately excluded — a different kind of change (control-flow, not a
+filter), tested separately so this measures the filter-stack question
+cleanly.
+
+| | Baseline | A1 alone | **A5 (A1+A3+A4 stacked)** |
+|---|---|---|---|
+| Non-duplicate candidates | 92 | 92 | 92 |
+| Accepted | 2 (2%) | 8 (9%) | **4 (4%)** |
+| **Cases with ≥1 accepted candidate** | 2/23 (9%) | 3/23 (13%) | **1/23 (4%)** |
+
+**[FINDING, the decisive number]** Stacking more checks *lowered* the
+acceptance rate relative to A1 alone — mechanically expected (each added
+gate is a stricter AND, so it can only hold or shrink the pool) — but
+this is the honest ceiling, not a regression to explain away. NLI alone
+rejected 29 of the 92 candidates and grammar rejected 13, on top of what
+SBERT/negation/leak already rejected — real, additional problems the
+three original gates were letting through, now caught. **Only 1 of the 23
+hard, dense-profile sentences produced any candidate that survives a
+genuinely comprehensive check.** Read directly, its 4 surviving
+candidates are actually clean:
+
+> "Many of these algorithms were insufficient for solving large reasoning
+> **issues** because they experienced a combinatorial explosion,
+> **that**/**which** means they become exponentially slower as the
+> **issues** **develop**/**increase**." (sbert ≈ 0.984)
+
+That single success is a genuine, trustworthy win — but it is 1 sentence
+out of 23. **[INTERPRETATION]** This is the clearest single data point in
+the whole R42–R43A arc for the architecture decision: even after
+implementing every validated fix together — better constraint blocking,
+a logical-consistency check, a grammar check — the escalation tier still
+fails on 96% of the dense-profile cases it's meant to rescue. The
+ceiling isn't being missed because the checks aren't strict enough; it's
+that **T5's candidate pool for these sentences rarely contains a
+genuinely good option to begin with**. Verification can filter a bad
+pool down to a trustworthy remainder, but it cannot make a bad pool
+larger. That points specifically at the *generation* side of the
+escalation tier — not the verification side — as the actual ceiling,
+which bears directly on whether "add more checks to the current hybrid"
+(Architecture B/E.2) has room left to close this gap, versus needing a
+different generation mechanism (Architecture C/D) to have a real pool to
+verify against in the first place.
+
+---
+
+Whether this residual gap is large enough to justify the generation-tier
+redesign or fine-tuning-prep track — versus accepting the current
+architecture's ceiling on dense profiles as a known, documented
+limitation and shipping the cheaper fixes (A1/A4, and NLI for the
+substitution tier) as incremental improvement — is the actual decision in
+front of you. This document supplies the numbers, not the call.
