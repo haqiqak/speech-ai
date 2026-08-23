@@ -6,6 +6,17 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-23, fourth** feat: R46 — R45's architecture built as real,
+  tested, additive code. rephrase.generate_candidates_phoneme_
+  constrained(), semantic.logical_consistency_check()/
+  grammar_issue_count(), reformulate.reformulate_v2()/
+  _try_escalation_v2() - new functions only, reformulate()/app.py
+  untouched (full suite passes, smoke.py byte-identical to baseline).
+  reformulate_v2() reproduces R45's measured 52% escalation success
+  rate exactly on the real integrated pipeline; new validator caught
+  the "slower->faster" inversion and the "glucose" case for real.
+  Not wired into app.py - additive code, not a shipped feature. →
+  `DECISION_LOG.md` 2026-08-23-D.
 - **2026-08-23, third** test/docs: R45 — two bounded prototypes and the
   architecture decision. Prototype 1 (combined NLI+grammar validator,
   all 79 substitution-tier pairs): 32% recall on SEVERE, vs ~20% for

@@ -2994,3 +2994,36 @@ measured.
 **Category:** Bounded prototypes + architecture decision, on direct
 instruction. No production code, threshold, or model changed. Full
 record: `VALIDATION.md` §36; `ROADMAP.md` R45.
+
+### 2026-08-23-D — R46: R45's decision built as real, tested, additive code
+
+**What was done:** per direct instruction to proceed without delay, R45's
+combined architecture (phoneme-aware escalation + NLI/grammar validator)
+built as production-quality code, not another diagnostic script — three
+new functions only, nothing existing modified:
+`rephrase.generate_candidates_phoneme_constrained()`,
+`semantic.logical_consistency_check()`/`grammar_issue_count()`, and
+`reformulate.reformulate_v2()`/`_try_escalation_v2()` as a separate,
+parallel entry point.
+
+**Verification:** the full existing test suite (`reformulate_test.py`
+31 tests, `rephrase_test.py`, `semantic_test.py`, `contextual_fit_test.py`,
+`app_test.py`) passes unchanged; `smoke.py`'s output is byte-identical to
+the committed baseline — `reformulate()` is confirmed unaffected. New
+`tests/reformulate_v2_test.py` (17 tests, real models) passes. The real
+`reformulate_v2()`, re-run against the same 23 escalation cases R45
+used, reproduces the diagnostic prototype's number exactly (12/23, 52%)
+— no drift between prototype and production-quality implementation. The
+new validator, running for real for the first time, caught the exact
+"slower→faster" logical inversion found by manual review in R45, plus
+independently flagged the "starch"→"glucose" restructuring case R40
+had raised only as a manual concern.
+
+**Decision:** this is tested, verified, additive code — not a shipped
+feature. `reformulate_v2()` is not called anywhere in `app.py`; wiring
+it in, and whether `validation` stays reported-only or becomes a real
+gate, remains a separate, explicit decision, not made here.
+
+**Category:** Implementation of a prior architecture decision, on direct
+instruction. No existing production code path changed. Full record:
+`VALIDATION.md` §37; `ROADMAP.md` R46.

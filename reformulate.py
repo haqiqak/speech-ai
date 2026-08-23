@@ -447,6 +447,68 @@ def _try_escalation(
     }
 
 
+def _try_escalation_v2(
+    sentence: str, flagged: list[dict], profile: DifficultyProfile, settings: ReformulateSettings,
+) -> tuple[str | None, dict | None]:
+    """R45's redesigned escalation path (VALIDATION.md §36.2/§36.3) — same
+    contract and same three post-generation gates as _try_escalation()
+    above, but candidates come from rephrase.generate_candidates_
+    phoneme_constrained() instead of generate_candidates(): a decoding-
+    time constraint kills a beam the moment its in-progress text matches
+    a blocked sound, instead of generating a full candidate and rejecting
+    it after the fact. Measured result on this project's escalation-
+    invoked corpus: leak-free 4% -> 100%, cases with >=1 accepted
+    candidate 9% -> 52% (VALIDATION.md §36.2).
+
+    Deliberately a separate function, not a parameter on _try_escalation()
+    — reformulate() (production, unchanged) keeps calling the original;
+    only reformulate_v2() (this module's new, not-yet-wired-to-app.py
+    entry point) calls this one."""
+    min_semantic = settings.sbert_threshold if settings.sbert_threshold is not None else sem.MIN_SEMANTIC
+    blocked = {item["word"].lower() for item in flagged}
+    candidates, gen_stats = rephrase.generate_candidates_phoneme_constrained(
+        sentence, k=settings.t5_candidates, blocked_words=blocked, blocked_patterns=profile.sound_values(),
+    )
+
+    best = None
+    for cand in candidates:
+        if cand.strip().lower() == sentence.strip().lower():
+            continue  # T5 unavailable or returned the input unchanged — not a real alternative
+        sim = sem.semantic_similarity(cand, sentence)
+        if sim is not None and sim < min_semantic:
+            continue
+        if not sem.negation_consistent(sentence, cand):
+            continue
+        content_words = re.findall(r"[A-Za-z][A-Za-z'-]*", cand)
+        if any(ph.matches_any(w, profile.sound_values()) or w.lower() in blocked for w in content_words):
+            continue
+        rank_score = sim if sim is not None else -1.0
+        if best is None or (rank_score > best["rank_score"]):
+            best = {"text": cand, "sim": sim, "rank_score": rank_score}
+
+    if best is None:
+        return None, None
+
+    return best["text"], {
+        "sentence_index": None,
+        "position": None,
+        "span_text": sentence,
+        "original": sentence,
+        "replacement": best["text"],
+        "source": "restructuring_v2",
+        "triggered_by": ["multiple_difficulties_or_no_valid_substitution"],
+        "verification": {
+            "antonym_check": "n/a_sentence_level",
+            "sbert_sim": round(best["sim"], 4) if best["sim"] is not None else None,
+            "nli": "not_run",  # filled in by reformulate_v2()'s post-assembly validation pass
+            "phoneme_ok": True,
+            "difficulty_before": round(ph.sentence_difficulty(re.findall(r"[A-Za-z]+", sentence)), 4),
+            "difficulty_after": round(ph.sentence_difficulty(re.findall(r"[A-Za-z]+", best["text"])), 4),
+            "beam_kills": gen_stats.get("beam_kills", 0),
+        },
+    }
+
+
 def _try_phrase_replacement(
     sentence: str, tokens: list[str], span: tuple[int, int], span_matches: list[dict],
     profile: DifficultyProfile, settings: ReformulateSettings,
@@ -722,6 +784,182 @@ def reformulate(text: str, profile: DifficultyProfile, settings: ReformulateSett
                 "sbert_sim": round(overall_sim, 4) if overall_sim is not None else None,
             },
         },
+    }
+
+
+def reformulate_v2(text: str, profile: DifficultyProfile, settings: ReformulateSettings | None = None) -> dict:
+    """R45's next-generation hybrid entry point (VALIDATION.md §36.3's
+    decision) — NOT called by app.py, NOT a drop-in replacement for
+    reformulate() yet. A separate, parallel function so reformulate()'s
+    production behavior is completely unaffected by anything in this one.
+
+    Two changes from reformulate(), both directly evidenced, nothing
+    else:
+      1. Escalation uses _try_escalation_v2() (phoneme-aware decoding-
+         time constraint) instead of _try_escalation() — substitution
+         stays byte-identical to reformulate(), per the decision that
+         substitution "stays primary and unchanged."
+      2. The final assembled output gets ONE additional validation pass
+         — sem.logical_consistency_check() (NLI) and
+         sem.grammar_issue_count() — combined the same way R45's
+         Prototype 1 measured (32% recall on R40's SEVERE class,
+         VALIDATION.md §36.1). Reported in the new `validation` key,
+         same reported-only discipline as contextual_fit_score()
+         (Practice.md §10) — does NOT gate `status` or
+         `final_verification.passed`. Promoting it to an actual gate is
+         a separate, deliberate decision, not made here.
+    """
+    settings = settings or ReformulateSettings()
+    sem.load_sbert()
+    engine = engine_module.SynonymEngine()
+
+    sentences = split_sentences(text)
+    rebuilt: list[str] = []
+    all_changes: list[dict] = []
+    all_skipped: list[dict] = []
+    any_flagged = False
+
+    for sid, sentence in enumerate(sentences):
+        try:
+            tokens = word_tokenize(sentence)
+        except Exception:
+            tokens = re.findall(r"[A-Za-z][A-Za-z'-]*|[.,!?;:]", sentence)
+        tags = _correct_predicate_adjective_tags(tokens, pos_tag(tokens))
+        phrase_protected = sem.protected_positions(tokens)
+        flagged = _flagged_positions(tokens, tags, profile)
+        idiom_matches = _idiom_protected_matches(tokens, tags, profile)
+
+        if not flagged and not idiom_matches:
+            rebuilt.append(sentence)
+            continue
+
+        any_flagged = True
+
+        if not flagged and idiom_matches:
+            spans = sem.idiom_spans(tokens)
+            phrase_result = None
+            handled_span = None
+            if spans:
+                span = spans[0]
+                span_matches = [m for m in idiom_matches if span[0] <= m["position"] < span[1]]
+                if span_matches:
+                    phrase_result = _try_phrase_replacement(
+                        sentence, tokens, span, span_matches, profile, settings
+                    )
+                    if phrase_result is not None:
+                        handled_span = span
+
+            if phrase_result is not None:
+                phrase_result["change"]["sentence_index"] = sid
+                all_changes.append(phrase_result["change"])
+                rebuilt.append(_detokenize(phrase_result["new_tokens"]))
+                handled_positions = set(range(handled_span[0], handled_span[1]))
+                all_skipped.extend(_idiom_skip_entries(idiom_matches, exclude_positions=handled_positions))
+            else:
+                all_skipped.extend(_idiom_skip_entries(idiom_matches))
+                rebuilt.append(sentence)
+            continue
+
+        if idiom_matches:
+            all_skipped.extend(_idiom_skip_entries(idiom_matches))
+
+        content_count = _substitutable_content_word_count(tags, phrase_protected)
+        flagged_fraction = len(flagged) / content_count
+        pre_escalate = (
+            len(flagged) > settings.escalation_word_count
+            or flagged_fraction > settings.degenerate_fraction
+        )
+
+        new_tokens, sentence_changes, sentence_skipped = (None, [], [])
+        if not pre_escalate:
+            new_tokens, sentence_changes, sentence_skipped = _try_substitution(
+                sentence, tokens, tags, flagged, profile, engine, settings
+            )
+
+        if new_tokens is not None:
+            rebuilt_sentence = _detokenize(new_tokens)
+            for c in sentence_changes:
+                c["sentence_index"] = sid
+                c["verification"]["contextual_fit"] = sem.contextual_fit_score(
+                    rebuilt_sentence, c["replacement"]
+                )
+            all_changes.extend(sentence_changes)
+            rebuilt.append(rebuilt_sentence)
+            continue
+
+        # The one substantive change from reformulate(): phoneme-aware escalation.
+        restructured_text, change = _try_escalation_v2(sentence, flagged, profile, settings)
+        if restructured_text is not None:
+            change["sentence_index"] = sid
+            all_changes.append(change)
+            rebuilt.append(restructured_text)
+        else:
+            reason = "profile too restrictive for this sentence" if flagged_fraction > settings.degenerate_fraction \
+                else "could not safely reformulate this sentence"
+            all_skipped.append({"word": sentence, "position": None, "reason": reason})
+            rebuilt.append(sentence)
+
+    reformulated_text = " ".join(rebuilt)
+
+    if not any_flagged:
+        status = "no_change_needed"
+    elif all_changes:
+        status = "reformulated"
+    else:
+        status = "could_not_safely_reformulate"
+
+    flagged_before = _flagged_word_count(text, profile)
+    flagged_after = _flagged_word_count(reformulated_text, profile)
+    overall_sim = sem.semantic_similarity(text, reformulated_text)
+    final_ok = (flagged_after < flagged_before) or (flagged_before == 0)
+    if overall_sim is not None:
+        final_ok = final_ok and overall_sim >= (settings.sbert_threshold or sem.MIN_SEMANTIC) - 0.05
+
+    meaningbert = sem.meaningbert_score(text, reformulated_text)
+
+    metrics = {
+        "meaning_preservation": round(overall_sim, 4) if overall_sim is not None else None,
+        "meaning_preservation_meaningbert": round(meaningbert, 2) if meaningbert is not None else None,
+        "flagged_words_before": flagged_before,
+        "flagged_words_after": flagged_after,
+        "difficulty_reduction_pct": (
+            round(100.0 * (flagged_before - flagged_after) / flagged_before, 2) if flagged_before else 0.0
+        ),
+        "naturalness_edit_ratio": nat.edit_ratio(text, reformulated_text),
+        "substitution_rate": round(
+            nat.changed_word_count(text, reformulated_text) / max(1, len(nat._word_tokens(text))), 4
+        ),
+    }
+
+    # ── R45's combined validator, on the final assembled output only ────────
+    # Reported, not gating (see docstring). Skipped when nothing changed —
+    # there's nothing new to validate against the original.
+    validation: dict = {"nli": None, "grammar_issue_count": None, "flagged": False}
+    if status == "reformulated":
+        nli_result = sem.logical_consistency_check(text, reformulated_text)
+        grammar_count = sem.grammar_issue_count(reformulated_text)
+        validation = {
+            "nli": nli_result,
+            "grammar_issue_count": grammar_count,
+            "flagged": bool(nli_result and nli_result["contradiction"]) or bool(grammar_count),
+        }
+
+    return {
+        "original_text": text,
+        "reformulated_text": reformulated_text,
+        "status": status,
+        "changes": all_changes,
+        "skipped": all_skipped,
+        "metrics": metrics,
+        "final_verification": {
+            "passed": bool(final_ok),
+            "details": {
+                "flagged_before": flagged_before,
+                "flagged_after": flagged_after,
+                "sbert_sim": round(overall_sim, 4) if overall_sim is not None else None,
+            },
+        },
+        "validation": validation,
     }
 
 

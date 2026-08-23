@@ -372,6 +372,158 @@ def contextual_fit_score(sentence: str, word: str, occurrence: int = 0) -> Optio
         return None
 
 
+# ── NLI logical-consistency check (R45, VALIDATION.md §36.1/§36.3) ───────────
+# SBERT/MeaningBERT/contextual_fit all measure some flavor of embedding
+# similarity or local fluency -- none of them check whether the candidate
+# still makes the same CLAIM as the original. "pre-industrial"->"palaeolithic"
+# and "slower"->"easier" both read fluently and score well on every one of
+# those signals, because fluency isn't what's wrong with them. R41 already
+# showed contextual_fit can't fill this gap (structurally blind to exactly
+# this class); this is the tiered NLI check REFORMULATION_RESEARCH.md §24.A
+# designed and deferred, now validated: 32% recall on R40's SEVERE class when
+# combined with grammar_issue_count() below (vs. ~20% for either alone,
+# VALIDATION.md §36.1) -- real, non-overlapping signal, not a complete fix.
+_nli_model = None
+_nli_ok = False
+_nli_message = ""
+
+NLI_MODEL = "cross-encoder/nli-deberta-v3-xsmall"
+# The larger nli-deberta-v3-small failed three separate download attempts on
+# this project's network (httpcore.RemoteProtocolError, connection reset
+# ~50-60MB in regardless of file size, not a timeout -- VALIDATION.md §36
+# footnote). xsmall downloaded successfully via a resumable per-file retry
+# loop; kept as the default since it's already proven to load here.
+
+
+def load_nli_model() -> bool:
+    """Load the NLI cross-encoder into module-level cache. Same graceful-
+    degradation shape as load_sbert()/load_meaningbert()/
+    load_contextual_fit_model() above; idempotent, no gating."""
+    global _nli_model, _nli_ok, _nli_message
+    if _nli_ok:
+        return True
+    try:
+        from sentence_transformers import CrossEncoder
+        _nli_model = CrossEncoder(NLI_MODEL)
+        _nli_ok = True
+        _nli_message = f"NLI model '{NLI_MODEL}' loaded successfully."
+        return True
+    except Exception as exc:
+        _nli_ok = False
+        _nli_message = f"NLI model unavailable ({exc.__class__.__name__}: {exc})."
+        return False
+
+
+def nli_status() -> tuple[bool, str]:
+    """Return (is_loaded, human_readable_message)."""
+    return _nli_ok, _nli_message
+
+
+def logical_consistency_check(original_sentence: str, candidate_sentence: str) -> Optional[dict]:
+    """
+    Bidirectional NLI check (entailment isn't symmetric, so both
+    directions are run, same as R45's validation methodology) between
+    `original_sentence` and `candidate_sentence`. Returns None if the
+    model is unavailable -- fails closed to "no signal," never raises.
+
+    Returns:
+      {"fwd_label": "contradiction"|"entailment"|"neutral",
+       "rev_label": "contradiction"|"entailment"|"neutral",
+       "contradiction": bool}   # True if EITHER direction predicts contradiction
+
+    Reported-only by design, same discipline as contextual_fit_score()
+    (Practice.md §10) -- this function does not gate anything on its own;
+    callers decide what to do with the result.
+    """
+    if not _nli_ok and not load_nli_model():
+        return None
+    try:
+        fwd, rev = _nli_model.predict([
+            (original_sentence, candidate_sentence),
+            (candidate_sentence, original_sentence),
+        ])
+        id2label = _nli_model.model.config.id2label
+        fwd_label = id2label[int(fwd.argmax())]
+        rev_label = id2label[int(rev.argmax())]
+        return {
+            "fwd_label": fwd_label,
+            "rev_label": rev_label,
+            "contradiction": fwd_label == "contradiction" or rev_label == "contradiction",
+        }
+    except Exception:
+        return None
+
+
+# ── Grammaticality check, second attempt (R45, VALIDATION.md §36.1) ──────────
+# R28 found LanguageTool 0/7 against a DIFFERENT error class ("syntactically
+# well-formed sentences built from the wrong word"). R45 re-tested it against
+# R40's actual grammar-corruption class (agreement breaks, non-standard
+# plurals, a noun used as a verb) and found a real, if partial, positive:
+# ~20-25% recall there, non-overlapping with the NLI check above.
+#
+# Deliberately a SEPARATE LanguageTool instance from grammar.py's
+# `_get_lt_tool()` (used by sanitize_input()'s existing, currently-dormant
+# Layer 10) -- not shared, on purpose. Loading this one requires prepending
+# a portable JRE to PATH (R28's workaround: no system Java is installed in
+# this environment); since PATH mutation is process-global, calling this
+# loader may ALSO make grammar.py's dormant LanguageTool layer start
+# succeeding for the rest of the process. That's a disclosed side effect,
+# not a hidden one -- it only happens if something actually calls
+# load_grammar_tool(), which nothing in the existing reformulate()/
+# sanitize_input() path does.
+_grammar_tool = None
+_grammar_tool_ok = False
+_grammar_tool_message = ""
+
+
+def load_grammar_tool() -> bool:
+    """Load a standalone LanguageTool instance for grammar_issue_count()
+    below. Same graceful-degradation shape as this module's other
+    loaders. See this section's module comment for the PATH side effect."""
+    global _grammar_tool, _grammar_tool_ok, _grammar_tool_message
+    if _grammar_tool_ok:
+        return True
+    try:
+        import os
+        from pathlib import Path
+        from language_tool_python import LanguageTool
+
+        root = Path(__file__).resolve().parent
+        jre_bin = root / ".cache" / "jre17" / "bin"
+        if jre_bin.exists():
+            os.environ.pop("LTP_PATH", None)  # R28: paths.py's redirect reproducibly fails
+            os.environ["PATH"] = str(jre_bin) + os.pathsep + os.environ.get("PATH", "")
+
+        _grammar_tool = LanguageTool("en-US")
+        _grammar_tool_ok = True
+        _grammar_tool_message = "LanguageTool loaded successfully."
+        return True
+    except Exception as exc:
+        _grammar_tool_ok = False
+        _grammar_tool_message = f"LanguageTool unavailable ({exc.__class__.__name__}: {exc})."
+        return False
+
+
+def grammar_status() -> tuple[bool, str]:
+    """Return (is_loaded, human_readable_message)."""
+    return _grammar_tool_ok, _grammar_tool_message
+
+
+def grammar_issue_count(sentence: str) -> Optional[int]:
+    """
+    Number of LanguageTool matches against `sentence`, or None if the
+    tool is unavailable. Reported-only by design (Practice.md §10) --
+    a nonzero count is a signal, not an automatic rejection; callers
+    decide what to do with it.
+    """
+    if not _grammar_tool_ok and not load_grammar_tool():
+        return None
+    try:
+        return len(_grammar_tool.check(sentence))
+    except Exception:
+        return None
+
+
 # ── Protected position detection ─────────────────────────────────────────────
 
 # Single-token protected words — mirrors grammar._STOP exactly so that

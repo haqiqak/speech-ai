@@ -23,13 +23,15 @@ from semantic import _PROTECTED_SINGLE
 
 try:  # Safe import: app behavior must not depend on these being installed.
     import torch
-    from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+    from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, LogitsProcessor, LogitsProcessorList
     _STACK_OK = True
     _STACK_ERROR = ""
 except Exception as exc:  # pragma: no cover - depends on local environment
     torch = None
     AutoModelForSeq2SeqLM = None
     AutoTokenizer = None
+    LogitsProcessor = object  # placeholder base so the class body below still parses
+    LogitsProcessorList = None
     _STACK_OK = False
     _STACK_ERROR = f"{exc.__class__.__name__}: {exc}"
 
@@ -198,6 +200,132 @@ def generate_candidates(
         _status = f"Rephrase generation failed ({exc.__class__.__name__}: {exc})."
 
     return candidates[: max(k, 1)]
+
+
+# ── Phoneme-aware decoding-time constraint (VALIDATION.md §36.2, R45) ────────
+# generate_candidates() above only blocks NAMED words via bad_words_ids -- it
+# has no way to express "avoid this SOUND." R43's instrumentation found that
+# was the dominant escalation-tier failure: 96% of candidates leaked the
+# flagged sound even when they cleared every other gate. R45 prototyped, and
+# measured, a decoding-time fix instead of a post-hoc one: a LogitsProcessor
+# that kills a beam the moment any word in its in-progress text -- complete
+# or still-forming, as soon as its onset is determinable -- matches the
+# profile's blocked sound patterns (phonetic.matches_any, the same check the
+# production phoneme veto already uses everywhere else). Measured result:
+# leak-free rate 4% -> 100%, cases with any usable candidate 9% -> 52% on
+# R43's 23-case corpus (VALIDATION.md §36.2). A direct manual read found the
+# remaining defects are meaning/logic/grammar issues, not leaks -- exactly
+# what semantic.py's logical_consistency_check()/grammar_issue_count() (also
+# added this pass) are for, not this function's job.
+#
+# Deliberately a SEPARATE function from generate_candidates(), not a new
+# parameter on it -- additive, not a replacement, so every existing caller
+# (grammar.py's choose_best(), reformulate.py's _try_escalation()) is
+# completely unaffected. reformulate.py's NEW _try_escalation_v2() (R45's
+# recommended combined architecture) calls this one instead.
+
+class PhonemeConstraintLogitsProcessor(LogitsProcessor):
+    """Sets a beam's score to -inf the moment its decoded text-so-far
+    contains a word matching `blocked_patterns` -- checked every step,
+    against every word including the still-forming last one, so a
+    violation is caught as soon as its onset is determinable rather than
+    only after the whole candidate is finished.
+
+    `decoder_start_len` is how many leading tokens of `input_ids` are the
+    decoder's own start token(s), not generated text -- T5 uses exactly
+    one (`decoder_start_token_id`), so the default of 1 is correct for
+    this project's model family; passed explicitly rather than hardcoded
+    so this class stays reusable if that ever changes.
+    """
+
+    def __init__(self, tokenizer, blocked_patterns: list[str], decoder_start_len: int = 1):
+        self.tokenizer = tokenizer
+        self.blocked_patterns = [p for p in (blocked_patterns or []) if p]
+        self.decoder_start_len = decoder_start_len
+        self.kill_count = 0
+
+    def __call__(self, input_ids, scores):
+        if not self.blocked_patterns:
+            return scores
+        for i in range(input_ids.shape[0]):
+            if torch.isneginf(scores[i]).all():
+                continue  # already dead this generation -- skip re-decoding
+            gen_ids = input_ids[i, self.decoder_start_len:]
+            if gen_ids.numel() == 0:
+                continue
+            text = self.tokenizer.decode(gen_ids, skip_special_tokens=True)
+            for w in re.findall(r"[A-Za-z][A-Za-z'-]*", text):
+                if phonetic.matches_any(w, self.blocked_patterns):
+                    scores[i, :] = float("-inf")
+                    self.kill_count += 1
+                    break
+        return scores
+
+
+def generate_candidates_phoneme_constrained(
+    sentence: str,
+    k: int = 5,
+    blocked_words=None,
+    blocked_patterns=None,
+) -> tuple[list[str], dict]:
+    """
+    Same contract and defaults as generate_candidates() (base sentence
+    always included, degrades to passthrough if the model can't load),
+    PLUS a decoding-time phoneme constraint on top of the existing
+    bad_words_ids literal-word blocking. `blocked_patterns` is the
+    profile's declared sound patterns (DifficultyProfile.sound_values());
+    `blocked_words` is unchanged from generate_candidates() -- the
+    literal named words, blocked the same way.
+
+    Returns (candidates, stats) where stats['beam_kills'] reports how
+    many beam-steps the phoneme processor actually intervened on, for
+    diagnostic visibility -- not used by callers, but cheap to keep.
+    """
+    base = _clean_generation(sentence)
+    if not base or k <= 1 or not _load_model():
+        return [base] if base else [], {"beam_kills": 0, "model_unavailable": True}
+
+    try:
+        prompt = REPHRASE_PREFIX + base
+        encoded = _tokenizer(prompt, return_tensors="pt", truncation=True)
+        device = next(_model.parameters()).device
+        encoded = {key: val.to(device) for key, val in encoded.items()}
+        in_len = int(encoded["input_ids"].shape[1])
+        max_new_tokens = max(16, int(in_len * 1.5) + 8)
+        beams = max(4, min(12, k * 2))
+        bad_ids = _bad_words_ids(blocked_words)
+        processor = PhonemeConstraintLogitsProcessor(_tokenizer, blocked_patterns)
+
+        kwargs: dict[str, Any] = {
+            "num_beams": beams,
+            "num_return_sequences": min(beams, max(k * 2, k)),
+            "max_new_tokens": max_new_tokens,
+            "no_repeat_ngram_size": 3,
+            "early_stopping": True,
+            "logits_processor": LogitsProcessorList([processor]),
+        }
+        if bad_ids:
+            kwargs["bad_words_ids"] = bad_ids
+
+        with torch.no_grad():
+            outputs = _model.generate(**encoded, **kwargs)
+
+        candidates: list[str] = []
+        seen: set[str] = set()
+        for output in outputs:
+            text = _clean_generation(_tokenizer.decode(output, skip_special_tokens=True))
+            sig = text.lower()
+            if text and sig not in seen:
+                seen.add(sig)
+                candidates.append(text)
+                if len(candidates) >= k:
+                    break
+
+        return candidates[:k], {"beam_kills": processor.kill_count}
+    except Exception as exc:  # pragma: no cover - model dependent
+        global _status
+        _status = f"Phoneme-constrained generation failed ({exc.__class__.__name__}: {exc})."
+        return [base], {"beam_kills": 0, "error": str(exc)}
 
 
 def _content_words(sentence: str) -> list[str]:

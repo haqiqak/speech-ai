@@ -4036,3 +4036,89 @@ add. The compound-word leak-check gap (§36.2) should be fixed in any
 follow-up measurement, not carried forward silently.
 
 No production code, threshold, or model changed in this investigation.
+
+## 37. R46 — the R45 architecture built as real, tested, additive code (executed 2026-08-23)
+
+R45 decided: combine Prototype 1 (validator) and Prototype 2 (phoneme-
+aware decoding) into the next-generation hybrid. Per direct instruction
+to proceed without delay, this is that combination, built as production-
+quality code — not another throwaway diagnostic script — while keeping
+`reformulate()`/`app.py` completely untouched. Three new functions,
+added additively (new functions only; nothing existing was modified):
+
+- `rephrase.generate_candidates_phoneme_constrained()` +
+  `PhonemeConstraintLogitsProcessor` — R45 Prototype 2, promoted from
+  diagnostic script to a real, documented function in `rephrase.py`.
+- `semantic.logical_consistency_check()` (NLI) and
+  `semantic.grammar_issue_count()` (LanguageTool) — R45 Prototype 1,
+  same lazy-load/graceful-degradation pattern as `contextual_fit_score()`/
+  `meaningbert_score()`. `load_grammar_tool()`'s JRE-PATH side effect on
+  `grammar.py`'s dormant Layer 10 is documented in its own docstring,
+  not hidden.
+- `reformulate.reformulate_v2()` + `reformulate._try_escalation_v2()` —
+  a **separate, parallel entry point**, not a flag on `reformulate()`.
+  Substitution logic is byte-identical to `reformulate()` (same private
+  helpers, unchanged); escalation calls the phoneme-aware generator;
+  the final assembled output gets one additional `validation` block
+  (NLI + grammar, combined the way R45 measured), reported-only —
+  it does not gate `status` or `final_verification.passed`, same
+  discipline as `contextual_fit`'s Option A (Practice.md §10).
+
+### 37.1 Verification — zero regression, exact reproduction
+
+**[FACT]** Full existing suite re-run after the change: `tests/
+reformulate_test.py` (31 tests), `tests/rephrase_test.py`, `tests/
+semantic_test.py`, `tests/contextual_fit_test.py`, `tests/app_test.py`
+— all pass, unchanged. `tests/smoke.py`'s output diffed against the
+committed `tests/baseline_sbert.txt`: byte-identical (the only diff was
+stderr progress-bar noise from the diff command's own capture, not
+content). `reformulate()` is confirmed unaffected by `reformulate_v2()`
+existing alongside it.
+
+**[FACT]** New `tests/reformulate_v2_test.py` (17 tests, real models —
+NLI cross-encoder, T5, LanguageTool — not mocked, same rationale as
+`contextual_fit_test.py`): all pass. Covers load/status/degradation for
+both new signals, the phoneme constraint's core guarantee (output never
+contains a blocked-sound word, checked directly against
+`phonetic.matches_any` rather than trusted), and `reformulate_v2()`'s
+additive contract (validation never gates status, `restructuring_v2`
+never appears from `reformulate()`, no validation computed when nothing
+changed).
+
+**[FINDING] The real, integrated `reformulate_v2()` reproduces R45's
+diagnostic-script numbers exactly**, not approximately: re-run against
+the same 23 escalation-invoked cases, **12/23 (52%) reformulated** —
+identical to Prototype 2's measured rate on the throwaway script,
+confirming no silent behavioral drift between prototype and production-
+quality implementation.
+
+**[FINDING] The new validator, running for real inside the integrated
+pipeline for the first time, caught exactly the defects found by manual
+review in R45**: of the 12 reformulated cases, 3 were flagged. One is
+the "exponentially slower"→"exponentially faster" logical inversion
+(§36.2's own example, independently reproduced here — non-deterministic
+T5 sampling produced a slightly different exact wording this run,
+"addressing"/"logical problems" instead of the earlier run's phrasing,
+but the same inversion and the same NLI catch). The other two are both
+the "starch"→"glucose" restructuring case (R40 §33.6's scientifically-
+backwards flag) — flagged by NLI as a contradiction in both directions,
+an independent, automated corroboration of a concern raised on manual
+review alone until now.
+
+### 37.2 What this is not
+
+**[LIMITATION]** `reformulate_v2()` is not called anywhere in `app.py`
+or by any part of the running application — it exists as tested,
+verified, additive code, not as a shipped feature. Wiring it in (and
+whether the `validation` block should stay reported-only or become an
+actual gate — R45 deliberately left that undecided) is a separate,
+explicit decision, not made here. The compound-word leak-check gap
+noted in R45 was specific to that diagnostic script's own measurement
+code, not present in `PhonemeConstraintLogitsProcessor` itself (which
+checks decoded text directly, not token-membership), but has not been
+independently re-verified absent in this pass either — worth confirming
+before any production decision.
+
+No existing production code path changed. `reformulate()`, `app.py`,
+`generate_candidates()`, and every function `reformulate()` calls remain
+exactly as they were before this pass.

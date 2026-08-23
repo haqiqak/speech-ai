@@ -1399,6 +1399,29 @@ handling and validation failing despite being properly implemented) is
 the opposite of what was measured. No production code, threshold, or
 model changed.
 
+### R46. R45's architecture, built as real, tested, additive code — **DONE, 2026-08-23**
+**Linked finding:** R45's decision, implemented without delay per direct
+instruction. Full record: `VALIDATION.md` §37.
+**What was done:** three new functions, additive only — nothing existing
+modified: `rephrase.generate_candidates_phoneme_constrained()` (R45
+Prototype 2, promoted from diagnostic script), `semantic.
+logical_consistency_check()`/`grammar_issue_count()` (R45 Prototype 1,
+same lazy-load pattern as `contextual_fit_score()`), and `reformulate.
+reformulate_v2()`/`_try_escalation_v2()` — a separate, parallel entry
+point, not a flag on `reformulate()`.
+**Result:** the full existing test suite passes unchanged, `smoke.py`
+is byte-identical to baseline — `reformulate()` confirmed unaffected.
+New `tests/reformulate_v2_test.py` (17 tests, real models) passes. The
+real, integrated `reformulate_v2()` reproduces R45's diagnostic-script
+number exactly (12/23, 52%) on the same 23 escalation cases — no drift.
+The validator, running for real for the first time, caught the exact
+"slower→faster" inversion found by manual review, plus independently
+flagged the "glucose" restructuring case.
+**Labeled as:** tested, verified, additive code — not a shipped
+feature. `reformulate_v2()` is not called by `app.py`. Wiring it in,
+and whether `validation` becomes a real gate, is a separate decision,
+not made here.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)
