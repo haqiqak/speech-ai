@@ -2950,3 +2950,47 @@ cases as equally costly.
 **Category:** Human evaluation, executed on direct instruction. No
 production code changed; no new signal added; no architecture changed.
 Full record: `VALIDATION.md` §35; `ROADMAP.md` R44.
+
+### 2026-08-23-C — R45: two bounded prototypes, and the architecture decision
+
+**What was done:** per direct instruction, two prototypes against
+existing corpora only. Prototype 1: combined NLI + LanguageTool
+validator run on all 79 R40 substitution-tier pairs (previously only
+NLI had covered all 79; grammar had only covered 11). Prototype 2: a
+custom `LogitsProcessor` intervening during T5 generation itself —
+killing any beam the moment a word's onset (even mid-formation) matches
+a blocked sound — tested on the same 23 escalation cases as R43/A1/A2/A5.
+
+**Prototype 1 result:** combining beats either check alone — 32% recall
+on SEVERE (21/65) vs. ~20% for NLI or grammar individually, confirming
+the two checks are genuinely non-overlapping. Real but partial: 68% of
+SEVERE cases still pass both checks undetected.
+
+**Prototype 2 result — the largest improvement measured in this entire
+arc:** leak-free rate 4%→100%; cases producing any usable candidate
+9%→52% (vs. 13% for A1 and 4% for A5's fully-stacked verification). A
+direct manual read of a 12-case sample (not trusting the gate-pass count
+alone) found roughly half still carry a real defect — but every one is
+a meaning/logic/grammar defect, not a constraint leak, including a
+second independent instance of the exact logical-inversion class R40
+found worst ("exponentially slower"→"exponentially faster", passing
+every existing gate). Also found and disclosed a narrow tooling gap (a
+blocked word absorbed into a larger hyphenated compound escaped the
+leak-check, confirmed to 4 occurrences from one sentence) and a genuine
+cost when the flagged word is itself the sentence's subject (the model
+drops it rather than replacing it).
+
+**Decision, per the branching logic given directly:** both prototypes
+show material, independent improvement, targeting different problems —
+Prototype 2 fixes constraint satisfaction, Prototype 1 catches what
+survives it. **Combine them**: substitution stays primary and unchanged;
+the escalation tier's generation is rebuilt around phoneme-aware
+decoding; the combined validator applies to both tiers' final output,
+not just escalation's. **Fine-tuning is explicitly not justified** —
+the precondition for it (appropriate constraint handling and validation
+failing to reach required quality) is the opposite of what was just
+measured.
+
+**Category:** Bounded prototypes + architecture decision, on direct
+instruction. No production code, threshold, or model changed. Full
+record: `VALIDATION.md` §36; `ROADMAP.md` R45.

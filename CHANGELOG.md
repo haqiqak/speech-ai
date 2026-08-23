@@ -6,6 +6,17 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-23, third** test/docs: R45 — two bounded prototypes and the
+  architecture decision. Prototype 1 (combined NLI+grammar validator,
+  all 79 substitution-tier pairs): 32% recall on SEVERE, vs ~20% for
+  either check alone. Prototype 2 (phoneme-aware decoding-time
+  constraint via a custom LogitsProcessor, 23 escalation cases): the
+  largest improvement in the whole arc - leak-free 4%->100%, usable
+  candidates 9%->52%. Manual read found ~half of "accepted" outputs
+  still carry a meaning/logic defect (never a leak) - exactly what
+  Prototype 1 targets. Decision: both work, combine them into the
+  next-generation hybrid; fine-tuning explicitly not justified. →
+  `DECISION_LOG.md` 2026-08-23-C.
 - **2026-08-23, second** test/docs: R44 — bounded v5 human evaluation,
   the pre-redesign baseline. n=1, 20 sentences from R40's Track C
   corpus. Strong aggregate agreement with R40's audit (monotonic

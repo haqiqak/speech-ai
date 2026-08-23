@@ -1368,6 +1368,37 @@ confusion classes more heavily than grammar/fixed-term/subtle-factual
 ones, per this disclosed (n=1) human signal. No production code, new
 signal, or architecture change in this evaluation.
 
+### R45. Two bounded prototypes, and the architecture decision — **DONE, 2026-08-23**
+**Linked finding:** R44's baseline, now used to decide between extending
+the current hybrid, redesigning the generation tier, or fine-tuning.
+Full record: `VALIDATION.md` §36.
+**What was done:** Prototype 1 — combined NLI + LanguageTool validator
+on all 79 R40 substitution-tier pairs. Prototype 2 — a custom
+`LogitsProcessor` that kills a beam mid-generation the instant a word's
+onset matches a blocked sound, tested on the same 23 escalation cases as
+R43/A1/A2/A5. Both bounded to existing corpora, no production code
+touched.
+**Result:** Prototype 1: 32% recall on SEVERE (vs. ~20% for either check
+alone) — real, partial. **Prototype 2: the largest improvement in the
+whole R42-R45 arc** — leak-free 4%→100%, cases with any usable candidate
+9%→52% (vs. 13% for A1, 4% for A5's stacked verification). A direct
+manual read found ~half of "accepted" outputs still carry a real defect
+— but every one is a meaning/logic/grammar defect (including a second
+independent instance of the "slower→easier"-class logical inversion),
+never a constraint leak — exactly what Prototype 1 targets. Also
+disclosed: a narrow tooling gap (a blocked word absorbed into a
+hyphenated compound escaped the leak-check) and a real cost when the
+flagged word is the sentence's own subject (dropped rather than
+replaced).
+**Decision:** both prototypes show material, non-overlapping
+improvement → **combine them**. Substitution stays primary; the
+escalation tier's generation is rebuilt around phoneme-aware decoding;
+the combined validator applies to both tiers' final output. **Fine-
+tuning explicitly not justified** — its precondition (constraint
+handling and validation failing despite being properly implemented) is
+the opposite of what was measured. No production code, threshold, or
+model changed.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

@@ -3900,3 +3900,139 @@ signal worth weighing, not a validated rate.
 
 No production code changed; no new signal added; no architecture changed
 in this evaluation, per explicit instruction.
+
+## 36. R45 — two bounded prototypes and the architecture decision (executed 2026-08-23)
+
+Per direct instruction, following R44's human baseline: two bounded
+prototypes, each targeting one of the two problems the R42-R43A arc
+separated — substitution-tier verification gaps, and the escalation
+tier's constraint-representation gap — then a decision, not another
+open-ended investigation. Both prototypes reuse existing corpora only
+(R40's 79 sentence-level pairs; R43's 23 escalation-invoked cases). No
+production code, threshold, or model changed.
+
+### 36.1 Prototype 1 — combined NLI + grammar validator, full substitution-tier corpus
+
+New `eval/r44_substitution_validator.py`. Extends A3 (NLI, already run
+on all 79 pairs) with a full LanguageTool pass over the same 79 (A4 had
+only tested 11). Combined flag = NLI contradiction (either direction) OR
+≥1 LanguageTool match.
+
+**[FINDING]** Combining materially beats either check alone:
+
+| | NLI alone | Grammar alone | **Combined (OR)** |
+|---|---|---|---|
+| Recall on SEVERE (n=65) | 18% (12/65) | 25% (16/65) | **32% (21/65)** |
+| False positives on CLEAN+MINOR (n=14) | 0% | 0% | 14% (2/14) |
+
+Recall rises from ~20% for either check to 32% combined — real, roughly
+1.5-1.8× the individual rate, confirming the two checks are genuinely
+non-overlapping (§C.6/§34's prediction, now measured rather than argued).
+**[LIMITATION]** Still partial — 68% of SEVERE cases (44/65) pass both
+checks undetected; the false-positive cost (both from A3's already-known
+MINOR misses) is real, not zero. This is a materially better validator
+than either signal alone, not a solved problem.
+
+### 36.2 Prototype 2 — phoneme-aware decoding-time constraint
+
+New `eval/r44_phoneme_decoding.py`. A custom `LogitsProcessor` (the
+`transformers` library's standard extension point for `model.generate()`
+— `rephrase.py` itself is not modified) decodes each beam's in-progress
+text at every generation step and sets that beam's score to `-inf` the
+moment any word — complete or still-forming, as soon as its onset is
+determinable — matches the profile's blocked sound patterns
+(`phonetic.matches_any`, the same function the production phoneme veto
+already uses). This intervenes *during* generation, steering beam search
+away from violations as they happen, rather than generating a full
+candidate and rejecting it afterward (A1/A2's approach). Same 23
+escalation-invoked cases as R43/A1/A2/A5.
+
+**[FACT] The mechanism works exactly as designed:**
+
+| | R43 baseline | A1 (blocking) | A5 (stacked) | **Prototype 2** |
+|---|---|---|---|---|
+| Leak-free | 4% | 11% | — | **100% (105/105)** |
+| Accepted (all gates) | 2% | 9% | 4% | **54% (57/105)** |
+| Cases with ≥1 accepted | 2/23 (9%) | 3/23 (13%) | 1/23 (4%) | **12/23 (52%)** |
+
+This is the largest improvement of any fix tested in the R42-R45 arc, by
+a wide margin — the leak-free rate goes from a near-total failure to a
+perfect record, and the fraction of dense-profile sentences that produce
+*any* usable candidate goes from roughly 1 in 10 to roughly 1 in 2.
+
+**[FINDING, from direct reading, not trusting the gate-pass count]**
+Reading a 12-case sample of "accepted" candidates by hand found the same
+discipline R40 applied everywhere is still necessary: **roughly half
+still carry a real defect**, and they are, without exception, defects
+the *validation* side (Prototype 1) targets, not the constraint side —
+this mechanism was never meant to fix them, and correctly doesn't:
+- **A genuine second instance of the logical-inversion class**:
+  "exponentially **slower**" → "exponentially **faster**" — the same
+  shape of error as R40's "slower→easier," passing SBERT (0.9427) and
+  the phoneme check cleanly, because both are fluent and phonetically
+  safe. Not caught by anything in this prototype; would be caught by
+  Prototype 1's NLI check.
+- **The same "replaced→displaced" and "space→the universe" wrong-sense
+  substitutions A2 already surfaced**, recurring here independently —
+  confirms these are stable properties of T5's candidate quality on
+  these sentences, not artifacts of a specific fix.
+- **A genuine tooling gap, disclosed directly**: one candidate,
+  "Generate-pre-trained transformers...," leaked the literal blocked
+  word "pre-trained" — absorbed into a larger hyphenated compound
+  ("Generate-**pre-trained**") that the diagnostic's exact-token-
+  membership leak check didn't catch, since the whole hyphenated span is
+  a different string than the bare blocked word. This is a bug in the
+  *prototype's own measurement*, not the phoneme processor (which
+  correctly killed 100% of onset-detectable violations) — confirmed
+  narrow (4 occurrences, both from the same one sentence×profile
+  pair) by a direct scan of all 57 accepted candidates, not assumed.
+- **A real, disclosed cost when the flagged word IS the subject**: on
+  one case ("**Gradient** descent is a type of local search..." with
+  "gr" blocked), the model dropped the subject entirely rather than
+  finding a real replacement ("**It** is a type of local search...”),
+  producing safe but lower-fidelity output (sbert ≈ 0.73, below
+  threshold) — a genuine, disclosed failure mode distinct from anything
+  A1/A2/A5 surfaced, worth naming even though it didn't make it into the
+  "accepted" count.
+
+### 36.3 The decision
+
+Per the branching logic given directly: both prototypes show material,
+independent improvement — Prototype 1 materially improves substitution-
+tier validation (32% recall vs. ~20% for either check alone); Prototype
+2 materially improves escalation (52% of cases now produce a usable
+candidate, vs. 9% at baseline and no more than 13% for any prior fix).
+**They target different, non-overlapping problems — Prototype 2 fixes
+constraint satisfaction, Prototype 1 catches the meaning/logic/grammar
+defects that survive it (§36.2's "slower→faster" case is a direct,
+concrete example of exactly this handoff).** Per the stated logic: **both
+work, so combine them.**
+
+**[RECOMMENDATION]** The next-generation hybrid architecture is:
+substitution stays primary and unchanged for the cases it already
+handles; the escalation tier's generation mechanism is rebuilt around
+phoneme-aware decoding-time constraint (Prototype 2) instead of post-hoc
+`bad_words_ids`-only blocking; and the combined NLI+grammar validator
+(Prototype 1) is applied to the **final assembled output of both tiers**
+— not just escalation's — before anything ships, since §36.1's
+non-overlap with §36.2's own residual defects shows the validator's
+value isn't specific to either generation path.
+
+**[RECOMMENDATION, explicit per instruction]** Fine-tuning is **not**
+justified by this pass — the opposite of the precondition for it was
+just demonstrated: appropriate constraint handling (Prototype 2) and
+validation (Prototype 1) both produced large, measured improvements
+using only inference-time mechanism changes and existing off-the-shelf
+models, with zero training data. The remaining defects (the recurring
+logical-inversion and wrong-sense classes) are exactly the ones
+Prototype 1 is built to catch, not evidence that generation itself has
+hit a capability ceiling.
+
+**[LIMITATION]** Both prototypes are bounded to their existing 23/79-case
+corpora, single-pass, not combined into one end-to-end run in this
+investigation — the natural next step (§next) is building and measuring
+that combination directly, not assuming the two numbers above simply
+add. The compound-word leak-check gap (§36.2) should be fixed in any
+follow-up measurement, not carried forward silently.
+
+No production code, threshold, or model changed in this investigation.
