@@ -3748,3 +3748,155 @@ examples").
 
 This closes R41 as scoped. No production code changed; no ranking
 weights touched; no threshold promoted; no fix implemented.
+
+## 35. R44 — bounded v5 human evaluation, the final human-rated baseline before the generation-tier redesign (executed 2026-08-23)
+
+R42/R43's architecture reassessment (`ARCHITECTURE_REASSESSMENT_R42.md`,
+`ARCHITECTURE_TRANSITION_R43.md`, `ARCHITECTURE_TRANSITION_R43A_RESULTS.md`
+— kept as standalone documents, not folded in here, per their own scope)
+concluded that no combination of validated fixes closes the escalation
+tier's gap, and recommended a generation-tier redesign. Before that
+redesign starts, per direct instruction: rate the v5 corpus (§34's Track
+C, `eval/pilot_select_pairs_v5.py` — 20 sentences pulled verbatim from
+R40's frozen output, stratified 4 CLEAN / 4 MINOR / 12 SEVERE against
+R40's own manual audit) through `eval/pilot_app.py`, completely
+unmodified, exactly as every prior pilot round. No production code, no
+new signal, no new metric — a pure human-rating pass, single participant
+(n=1), same disclosed limitation class as every human eval in this
+project (R35, R39).
+
+### 35.1 Method
+
+All 20 pairs rated in one session (2026-08-23, ~16 minutes,
+08:35–08:52 UTC per the response timestamps). Standard v3-lineage
+questions: meaning preservation (1-5), naturalness (1-5), speaking ease
+(-2 to +2), forced-choice preference, optional diagnostic tag and
+free-text comment. `claude_audit_verdict`/`claude_audit_defect_label`
+(R40 §33.6's per-sentence CLEAN/MINOR/SEVERE labels) were never shown to
+the participant — compared only after rating, the same discipline
+`profile_match` has always used in this project's pilot rounds.
+
+### 35.2 Result — strong aggregate agreement, a clean monotonic gradient
+
+**[FINDING]** Mean ratings by Claude's own R40 verdict, unprompted:
+
+| Verdict | n | Mean meaning | Mean naturalness | Mean ease | Preferred reformulated |
+|---|---|---|---|---|---|
+| CLEAN | 4 | 5.00 | 5.00 | 1.75 | 4/4 (100%) |
+| MINOR | 4 | 4.75 | 4.75 | 1.50 | 3/4 (75%) |
+| SEVERE | 12 | 3.08 | 3.25 | 0.75 | 5/12 (42%) |
+
+Every dimension — meaning, naturalness, ease, and preference — degrades
+monotonically from CLEAN through MINOR to SEVERE, with no reversals. This
+is the first independent, real-human confirmation that R40's manual
+audit (the evidentiary spine of R42/R43's entire architecture argument)
+tracks genuine human perception, not just Claude's own reading of the
+text.
+
+### 35.3 The more consequential finding — SEVERE splits into two tiers by actual human impact
+
+**[FINDING]** The 12 SEVERE cases split almost evenly, and the split is
+not random — it tracks defect *type*:
+
+**Rejected outright (7/12) — human agrees the defect matters:**
+nonsense/duplicate tokens ("gas gases," meaning=2), wrong-sense/factual
+substitutions ("palaeolithic," meaning=1; "space→place," meaning=2),
+nonsense compounds ("lot of objects, telling," meaning=1), wrong-POS
+nonsense ("optimists...place," meaning=4 but naturalness low enough to
+reject), the "half-century"/letter-as-word factual case (meaning=3), and
+appliance-type sense confusion ("stoves→fires," meaning=3). Every one of
+these is a case where the surface text is visibly broken or the claim is
+visibly wrong once read carefully.
+
+**Accepted despite the SEVERE label (5/12) — human tolerates it:**
+grammar corruption ("softwares," meaning=4, naturalness=4, **preferred**);
+fixed-term erosion ("little talk," meaning=3, **preferred**); the
+logical inversion ("slower→easier," meaning=4, **preferred** — see
+§35.4); the scientifically-backwards restructuring ("glucose," meaning=5,
+naturalness=5, **preferred**); the non-standard-plural agreement case
+("Words patterns," meaning=5, naturalness=5, **preferred**).
+
+**[INTERPRETATION]** This refines, not contradicts, R40's taxonomy. The
+categories that visibly break the sentence or the claim (nonsense, wrong
+sense, register/appliance confusion) are the ones a real reader
+consistently rejects. The categories that are *technically* wrong but
+don't visibly disrupt the sentence's flow (a subtle agreement slip, an
+eroded-but-still-parseable fixed term, a factual error outside common
+knowledge) are tolerated, sometimes even when consciously noticed. This
+is a real, human-confirmed priority signal for where fix effort matters
+most in practice — not identical to "how often does this defect class
+occur," which was R40's original ranking axis.
+
+### 35.4 The "slower→easier" case, specifically — noticed, named correctly, and still not disqualifying
+
+**[FINDING, the single most informative data point in this round]** For
+pair_13, the participant's free-text comment reads: *"solving working is
+fine, slower easier are not fine"* — an independent, correct, unprompted
+identification of exactly the defect R40/R42/R43 named as the worst
+single substitution found in this project (the logical inversion that
+passed `antonym_check`). **The same participant then rated it
+meaning=4, naturalness=4, and preferred the reformulated version
+anyway.** The defect was seen, named precisely, and did not change the
+overall verdict. **[INTERPRETATION]** A defect can be correctly
+identified in free text without being weighted heavily enough to flip a
+holistic forced-choice preference — a real limitation of using
+preference alone (without the paired free-text read) to validate a
+specific defect taxonomy, and a caution against assuming "rejected"
+counts are the only signal worth trusting from a pilot round.
+
+### 35.5 The restructuring "success," independently confirmed
+
+**[FINDING]** Pair_17 ("Long-chain sugars such as starch..." → "...like
+glucose...") — the *only* candidate that survived R43's original 3-gate
+escalation check, and one of R43-A5's few near-successes — was rated
+5/5/5/**+2**/**Preferred**, a full, unqualified positive. R40 §33.6
+flagged this as scientifically backwards on manual review (glucose is
+the simple sugar starch breaks *into*, not an example of a long-chain
+sugar). **[INTERPRETATION]** Both readings stand at once, not in
+tension: for a lay reader with no biochemistry background, the sentence
+reads as genuinely good — natural, clear, and easier to say. The factual
+inaccuracy is real but outside common knowledge, exactly the profile of
+defect §35.3 shows gets tolerated. This is a concrete instance of R41's
+own finding (fluent-but-wrong content is invisible to fluency-based
+signals) extended one step further: it can be invisible to a real human
+rater too, when the wrongness requires domain expertise to catch.
+
+### 35.6 A disclosed methodological wrinkle
+
+**[LIMITATION]** Pair_09 and pair_18 share an identical original
+sentence ("The upper atmosphere is cooling, because greenhouse gases are
+trapping heat...") with two different reformulated versions (moderate_
+mixed's "gas gases" duplicate-token defect vs. single_common_sound's
+"surface→open"/"space→place" defect), shown at adjacent presentation
+positions (8 and 9). Pair_09's free-text comment ("space is not similar
+to place here...") describes pair_18's defect, not pair_09's own (which
+doesn't touch "space" at all) — very likely a genuine mix-up from rating
+two near-identical-looking prompts back to back, not a data error. The
+**numeric** ratings and preference for pair_09 are unaffected and still
+track correctly (rejected, meaning=2) — only the free-text attribution
+is unreliable for that one row. **[RECOMMENDATION, for any future
+round]** avoid placing two reformulations of the identical original
+sentence at adjacent presentation positions.
+
+### 35.7 Assessment
+
+**[RECOMMENDATION]** This establishes the human-rated baseline the
+generation-tier redesign should be measured against: aggregate
+preference on this stratified, defect-aware corpus is **70%** (14/20
+across all three tiers) — driven almost entirely by which defect
+*category* is present, not defect presence alone. A redesigned
+generation tier's success criterion should not be "reduce R40's 74%
+severe-rate to near zero" uniformly — §35.3's split suggests the
+nonsense/wrong-sense/register-confusion classes are the ones where a
+fix would move real human preference; the grammar/fixed-term/subtle-
+factual classes, while still worth fixing, carry a smaller, disclosed
+practical cost on this evidence.
+
+**[LIMITATION]** n=1, single session — directional, not population-level,
+identical disclosure to every human-evaluation round in this project's
+history. A 12-item SEVERE stratum split into two 5-7 item groups is not
+a statistically robust split; it is a real, specific, human-sourced
+signal worth weighing, not a validated rate.
+
+No production code changed; no new signal added; no architecture changed
+in this evaluation, per explicit instruction.

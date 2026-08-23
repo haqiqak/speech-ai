@@ -2885,3 +2885,68 @@ generation model) is the next step, not started in this pass.
 production code changed; no ranking weights touched; no threshold
 promoted; no fix implemented. Full record: `VALIDATION.md` §34;
 `ROADMAP.md` R41.
+
+### 2026-08-23-A — R42/R43/R43-A: architecture reassessment, escalation instrumentation, four bounded fixes tested and stacked
+
+**What was done:** on direct instruction, a full architecture
+reassessment (`ARCHITECTURE_REASSESSMENT_R42.md`) reading the actual
+implementation and prior research fresh, followed by R43
+(`ARCHITECTURE_TRANSITION_R43.md`): instrumenting the T5 escalation path
+on the 23 (sentence, profile) pairs from R40's corpus that actually
+invoke it. Then four candidate fixes tested in isolation and stacked
+(`ARCHITECTURE_TRANSITION_R43A_RESULTS.md`, A1-A5).
+
+**Key results:** T5 escalation fails 96% of the time not from poor
+generation (76% of candidates clear a strict SBERT floor) but from
+constraint-satisfaction failure — 68% of leaks are the blocked word
+itself or a morphological variant, correcting R42's own hypothesis that
+it was mostly unrelated same-sound words. A1 (expanded inflected-form
+blocking) recovered part of that gap; A2 (generate-verify-regenerate)
+recovered more but at 6x latency and with real defects still present in
+several "accepted" outputs; A3 (NLI) and A4 (LanguageTool) each caught a
+narrow, non-overlapping defect class with real but low recall. **A5
+(all three filters stacked) produced the decisive number: only 1/23
+dense-profile sentences produces any candidate surviving a genuinely
+comprehensive check** — verification stacking lowers the accept rate
+further (2%→9%→4%), confirming the ceiling is the candidate pool, not
+the checks. Also found a third independent spellchecker-corruption
+instance ("chatbots"→"chariots").
+
+**Decision:** no production code, threshold, or model changed throughout.
+Findings point toward the generation side of the escalation tier as the
+actual bottleneck, not verification — directly informing the next step
+(R44's human evaluation, then the generation-tier redesign).
+
+**Category:** Architecture investigation + bounded diagnostic
+experiments, on direct user request. Full record: the three standalone
+architecture documents named above.
+
+### 2026-08-23-B — R44: bounded v5 human evaluation, the pre-redesign baseline
+
+**What was done:** per direct instruction, before starting the
+generation-tier redesign, rated the v5 corpus (20 sentences, R40 §33.6
+Track C) through `eval/pilot_app.py`, unmodified. n=1, single session,
+same disclosed limitation as every prior pilot round.
+
+**Result:** strong aggregate agreement with R40's own CLEAN/MINOR/SEVERE
+audit — mean meaning/naturalness/ease and preference rate all degrade
+monotonically across the three tiers, no reversals. But the 12 SEVERE
+cases split near-evenly by defect *type*: nonsense, wrong-sense, and
+register-confusion defects were reliably rejected (7/12); grammar
+corruption, fixed-term erosion, a subtle factual error, and the
+project's own worst logical-inversion case were tolerated and even
+preferred (5/12) — including one case where the participant's free-text
+comment correctly named the exact defect ("slower easier are not fine")
+while still preferring the reformulated version overall. Overall
+preference across the stratified corpus: 70% (14/20).
+
+**Decision:** this is the human-rated baseline the generation-tier
+redesign will be measured against. A redesign's priority should weight
+the nonsense/wrong-sense/register-confusion classes more heavily than
+the grammar/fixed-term/subtle-factual classes, per this round's
+disclosed, human-sourced (if n=1) signal — not treat all of R40's SEVERE
+cases as equally costly.
+
+**Category:** Human evaluation, executed on direct instruction. No
+production code changed; no new signal added; no architecture changed.
+Full record: `VALIDATION.md` §35; `ROADMAP.md` R44.

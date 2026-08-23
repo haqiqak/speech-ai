@@ -6,6 +6,27 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-23, second** test/docs: R44 — bounded v5 human evaluation,
+  the pre-redesign baseline. n=1, 20 sentences from R40's Track C
+  corpus. Strong aggregate agreement with R40's audit (monotonic
+  CLEAN>MINOR>SEVERE across meaning/naturalness/ease/preference), but
+  SEVERE splits near-evenly: nonsense/wrong-sense/register-confusion
+  reliably rejected (7/12), grammar/fixed-term/subtle-factual/logical-
+  inversion defects tolerated and often preferred (5/12) - including
+  one case correctly named in free text ("slower easier are not fine")
+  yet still preferred overall. Overall preference 70%. →
+  `DECISION_LOG.md` 2026-08-23-B.
+- **2026-08-23, first** docs: R42/R43/R43-A — architecture reassessment,
+  T5 escalation instrumentation, four bounded fixes tested and stacked.
+  Escalation fails 96% of the time from constraint-satisfaction failure,
+  not generation quality (76% pass SBERT). 68% of leaks are the blocked
+  word's own morphological variants, not unrelated same-sound words -
+  corrects R42's initial hypothesis. Stacking every validated fix
+  (A1+A3+A4) still leaves only 1/23 dense-profile sentences with a
+  candidate that clears a comprehensive check - the ceiling is the
+  candidate pool, not the checks. Points toward redesigning the
+  escalation tier's generation mechanism. No production changes. →
+  `DECISION_LOG.md` 2026-08-23-A.
 - **2026-08-22, second** test/docs: R41 — bounded validation of
   contextual_fit as a candidate substitution-quality gate, against
   R40's 112 labeled changes. Real signal (CLEAN median 0.0078 vs.

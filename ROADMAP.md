@@ -1318,6 +1318,56 @@ justify investigating a learned, speaker-conditioned generation model
 instead? This is the natural next entry, not another signal
 investigation.
 
+### R42/R43/R43-A. Architecture reassessment, escalation instrumentation, four bounded fixes — **DONE, 2026-08-22/23**
+**Linked finding:** R41's own recommendation above, executed. Full
+records are three standalone documents, not folded into this file's
+usual R-item length: `ARCHITECTURE_REASSESSMENT_R42.md`,
+`ARCHITECTURE_TRANSITION_R43.md`, `ARCHITECTURE_TRANSITION_R43A_RESULTS.md`.
+**What was done:** R42 reassessed the architecture fresh against the
+actual code and prior research. R43 instrumented every T5 candidate in
+the 23 escalation-invoked cases from R40's corpus, not just the
+final pass/fail. A1-A4 tested four candidate fixes (expanded inflected-
+form blocking, a generate-verify-regenerate loop, an NLI logical-
+consistency check, a LanguageTool re-test) in isolation; A5 stacked
+A1+A3+A4 together.
+**Result:** escalation fails 96% of the time from constraint-
+satisfaction failure, not poor generation (76% of T5's candidates clear
+a strict meaning-similarity floor). 68% of leaks are the blocked word
+itself or a morphological variant — not unrelated same-sound words as
+R42 first guessed. **The decisive number: even with every validated fix
+stacked, only 1/23 dense-profile sentences produces a candidate that
+survives a comprehensive check** — more verification lowers the accept
+rate further (2%→9%→4%), showing the ceiling is the candidate pool, not
+the checks.
+**Labeled as:** points at the generation side of the escalation tier as
+the actual bottleneck. Neither "patch the current substitution engine"
+nor "fine-tune now" is supported; the evidence favors redesigning the
+escalation tier's generation mechanism, once a human baseline exists
+(R44). No production code, threshold, or model changed throughout.
+
+### R44. Bounded v5 human evaluation — the pre-redesign baseline — **DONE, 2026-08-23**
+**Linked finding:** R42/R43's recommendation to redesign the generation
+tier, but per direct instruction, establish a human-rated baseline
+first. Full record: `VALIDATION.md` §35.
+**What was done:** rated the v5 corpus (20 sentences, R40 §33.6 Track C,
+stratified against R40's own CLEAN/MINOR/SEVERE audit) through
+`eval/pilot_app.py`, unmodified. n=1, same disclosed limitation as every
+prior pilot round.
+**Result:** strong aggregate agreement — mean meaning/naturalness/ease
+and preference all degrade monotonically CLEAN→MINOR→SEVERE, no
+reversals. But the 12 SEVERE cases split near-evenly by defect type:
+nonsense/wrong-sense/register-confusion defects were reliably rejected
+(7/12); grammar corruption, fixed-term erosion, a subtle factual error,
+and the project's own worst logical-inversion case ("slower"→"easier")
+were tolerated and even preferred (5/12) — in one case despite the
+participant's free-text comment correctly naming the exact defect.
+Overall preference: 70% (14/20).
+**Labeled as:** the baseline the generation-tier redesign is measured
+against. Redesign priority should weight nonsense/wrong-sense/register-
+confusion classes more heavily than grammar/fixed-term/subtle-factual
+ones, per this disclosed (n=1) human signal. No production code, new
+signal, or architecture change in this evaluation.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)
