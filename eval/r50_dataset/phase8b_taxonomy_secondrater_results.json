@@ -1,0 +1,137 @@
+{
+  "P8-organic-018": {
+    "category": "GRAMMAR",
+    "step_reached": 1,
+    "rationale": "\"Before to the Industrial Revolution\" is not standard English syntax — \"before\" does not take \"to\" as a following preposition in this construction."
+  },
+  "R40-067": {
+    "category": "WRONG_WORD_OR_SENSE",
+    "step_reached": 2,
+    "rationale": "\"much as learning, reasoning, problem-solving...\" substitutes the example-introducing \"such as\" with \"much as\" (a comparison/concession phrase), which is grammatical but no longer correctly asserts that these are examples of the tasks described."
+  },
+  "R40-042": {
+    "category": "GRAMMAR",
+    "step_reached": 1,
+    "rationale": "\"the warming effect ... were powerful than\" has a singular subject \"effect\" paired with the plural verb \"were\", and \"powerful than\" is missing the required comparative \"more\"."
+  },
+  "P8-organic-048": {
+    "category": "GRAMMAR",
+    "step_reached": 1,
+    "rationale": "\"Mechanized textile production open from Britain\" uses the bare verb \"open\" with a third-person singular/past-tense subject that requires an inflected form (\"opened\"/\"opens\")."
+  },
+  "R40-030": {
+    "category": "WRONG_WORD_OR_SENSE",
+    "step_reached": 2,
+    "rationale": "\"the lot of objects, telling, concepts, and properties\" is grammatical (all items are nouns), but \"lot\" and especially \"telling\" have meanings unrelated to \"set\" and \"relations\", changing what the definition actually claims."
+  },
+  "P8-organic-038": {
+    "category": "WRONG_WORD_OR_SENSE",
+    "step_reached": 2,
+    "rationale": "\"ability to better from intensive exercise\" uses the real verb \"better\" (to improve) in place of \"recover\", changing the claim about what the body's ability actually is."
+  },
+  "P8-organic-010": {
+    "category": "WRONG_WORD_OR_SENSE",
+    "step_reached": 2,
+    "rationale": "\"the thus bound system\" and \"most widely its eight planets\" substitute \"thus\" for \"gravitationally\" and \"widely\" for \"prominently\" — grammatical adverb slots, but the words no longer convey the stated mechanism or prominence claims."
+  },
+  "R40-084": {
+    "category": "GRAMMAR",
+    "step_reached": 1,
+    "rationale": "Identical reformulated text to R40-042: \"effect ... were powerful than\" has subject-verb disagreement and a missing comparative \"more\"."
+  },
+  "R47-presentation_renewable_v1_sva_bug": {
+    "category": "GRAMMAR",
+    "step_reached": 1,
+    "rationale": "\"His presentation about renewable energy sources were really impressive\" has a singular subject \"presentation\" paired with the plural verb \"were\"."
+  },
+  "R47-review_documents-v1v2": {
+    "category": "WRONG_WORD_OR_SENSE",
+    "step_reached": 2,
+    "rationale": "\"critique\" replaces \"review\", shifting the request from a general check to a critical evaluation, which changes what is being asked."
+  },
+  "P8-organic-020": {
+    "category": "WRONG_WORD_OR_SENSE",
+    "step_reached": 2,
+    "rationale": "\"personal\" replaces \"private\" in a list of network-ownership categories, changing the classification being described (personal vs. private/sector-based)."
+  },
+  "P8-organic-013": {
+    "category": "WRONG_WORD_OR_SENSE",
+    "step_reached": 2,
+    "rationale": "\"the heavy collapse of a region\" replaces \"gravitational collapse\", removing the stated causal mechanism (gravity) for the Solar System's formation."
+  },
+  "R40-004": {
+    "category": "WRONG_WORD_OR_SENSE",
+    "step_reached": 2,
+    "rationale": "\"issue\" replaces \"problem-solving\" in a parallel list of cognitive tasks; it is a grammatical noun in that slot but breaks the intended meaning of the list."
+  },
+  "R40-001": {
+    "category": "GRAMMAR",
+    "step_reached": 1,
+    "rationale": "\"High-profile applications of AI includes\" has a plural subject \"applications\" paired with the singular verb \"includes\"."
+  },
+  "R40-092": {
+    "category": "WRONG_WORD_OR_SENSE",
+    "step_reached": 2,
+    "rationale": "\"human companies\" replaces \"human societies\", changing the claim from something true of all societies to something about businesses."
+  },
+  "P8-organic-049": {
+    "category": "GRAMMAR",
+    "step_reached": 1,
+    "rationale": "\"entered the competition to industrialist\" places the noun \"industrialist\" after the infinitive marker \"to\", which requires a base verb form (e.g. \"industrialize\")."
+  },
+  "P8-organic-044": {
+    "category": "WRONG_WORD_OR_SENSE",
+    "step_reached": 2,
+    "rationale": "\"machine power\" replaces \"steam power\", losing the specific historical claim about which power source drove the transition."
+  },
+  "R40-080": {
+    "category": "WRONG_WORD_OR_SENSE",
+    "step_reached": 2,
+    "rationale": "\"words in times\" replaces \"words in sentences\" with a temporal noun that doesn't fit as the linguistic unit being described, breaking the sentence's claim."
+  },
+  "P8-organic-017": {
+    "category": "NATURALNESS_OR_REGISTER",
+    "step_reached": 3,
+    "rationale": "\"modern making methods\" is a grammatical, meaning-preserving but somewhat awkward/informal substitute for \"modern production methods\"."
+  },
+  "P8-organic-052": {
+    "category": "NATURALNESS_OR_REGISTER",
+    "step_reached": 3,
+    "rationale": "\"local to global extent\" preserves the meaning of \"local to global scope\" but is a less common, slightly clunkier collocation."
+  },
+  "R40-018": {
+    "category": "WRONG_WORD_OR_SENSE",
+    "step_reached": 2,
+    "rationale": "\"cooking food over an open fire\" replaces \"grilling food\" with the general category term itself, making the list of \"cooking techniques\" circular and losing the specific technique being named."
+  },
+  "R40-099": {
+    "category": "WRONG_WORD_OR_SENSE",
+    "step_reached": 2,
+    "rationale": "\"the technical take of cooking\" replaces \"the scientific study of cooking\" — \"take\" (an opinion/perspective) is grammatical but shifts the claim from a formal field of research to an informal viewpoint."
+  },
+  "R47-grab_presentation-v1v2": {
+    "category": "WRONG_WORD_OR_SENSE",
+    "step_reached": 2,
+    "rationale": "\"showing materials\" replaces \"presentation materials\" with a word whose ordinary sense doesn't match materials used to give a presentation."
+  },
+  "P8-organic-065": {
+    "category": "GRAMMAR",
+    "step_reached": 1,
+    "rationale": "\"after consumption of a protein-rich meal\" uses \"after\" (a preposition/adverb) attributively in the adjective slot that \"subsequent\" filled, which is not a standard part-of-speech use for \"after\"."
+  },
+  "R40-034": {
+    "category": "GRAMMAR",
+    "step_reached": 1,
+    "rationale": "\"that optimists a place of numerical parameters\" uses \"optimists\" (a plural noun, \"people who are optimistic\") in the verb slot of the relative clause."
+  },
+  "P8-organic-026": {
+    "category": "NATURALNESS_OR_REGISTER",
+    "step_reached": 3,
+    "rationale": "\"it gives most of the biological energy\" preserves the meaning of \"it supplies most of the biological energy\" but is a slightly less precise/formal collocation in this scientific register."
+  },
+  "R48-13": {
+    "category": "GRAMMAR",
+    "step_reached": 1,
+    "rationale": "\"Fats can attain temperatures ... and is often used\" has the plural subject \"Fats\" paired with the singular verb \"is\"."
+  }
+}

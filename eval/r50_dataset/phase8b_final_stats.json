@@ -1,0 +1,36 @@
+{
+  "total_records": 313,
+  "by_source": {
+    "R50": 135,
+    "Phase8_new": 116,
+    "Phase8B_new": 62
+  },
+  "n_unique_dedup_groups": 252,
+  "unique_case_primary_defect": {
+    "WRONG_WORD_OR_SENSE": 72,
+    "GRAMMAR": 26,
+    "CLEAN": 32,
+    "FIXED_TERM_OR_IDIOM": 53,
+    "NATURALNESS_OR_REGISTER": 22,
+    "OTHER_DEFECT": 9,
+    "FACTUAL_OR_LOGICAL_REVERSAL": 33,
+    "ORIGINAL_NO_CHANGE": 5
+  },
+  "unique_case_severity": {
+    "SEVERE": 191,
+    "MINOR": 32,
+    "CLEAN": 24,
+    "ORIGINAL_NO_CHANGE": 5
+  },
+  "evidence_quality_factual": {
+    "HUMAN_REVIEW_OF_EXISTING_CASE": 7,
+    "ORGANIC_OBSERVED": 6,
+    "CONSTRUCTED": 20
+  },
+  "evidence_quality_fixedterm": {
+    "HUMAN_REVIEW_OF_EXISTING_CASE": 8,
+    "ORGANIC_OBSERVED": 25,
+    "CONSTRUCTED": 20
+  },
+  "n_convention_adjusted": 18
+}

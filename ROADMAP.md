@@ -1559,6 +1559,32 @@ examples specifically, three classes' boundaries need refinement or a
 coarser evaluation axis, and the labeling convention needs reconciling
 before validator training can proceed. No training performed.
 
+### R50 Phase 8B. Targeted finalization — final GO/NO-GO decision — **DONE, 2026-08-24**
+**Linked finding:** direct instruction to resolve Phase 8's three named
+blockers specifically and decide, not run another broad collection
+cycle. Full record: `VALIDATION.md` §42, `eval/r50p8b_report.md`.
+**What was done:** targeted organic harvest on 4 causal-dense topics
+(vaccine, plate tectonics, antimicrobial resistance, supply and demand);
+taxonomy reconciliation via a strict 3-step decision procedure tested by
+an independent rater; the isolation-vs-whole-sentence labeling
+convention resolved and applied retroactively to both R50 and Phase 8;
+every record tagged with evidence quality (ORGANIC_OBSERVED/CONSTRUCTED/
+HUMAN_REVIEW_OF_EXISTING_CASE).
+**Result:** organic FACTUAL_OR_LOGICAL_REVERSAL yield rose ~6× (1/68→
+9/58 records) via topic-targeting alone. GRAMMAR/WRONG_WORD_OR_SENSE
+agreement improved substantially with the refined procedure (25%→56%,
+67%→78%); NATURALNESS_OR_REGISTER did not improve at all (33%→33%) and
+was retired as a primary label. 12+6 records corrected under the
+resolved convention. Final unique-case counts: FIXED_TERM_OR_IDIOM 53
+(62% non-constructed, past target), FACTUAL_OR_LOGICAL_REVERSAL 33
+(organic 6, still 61% constructed, short of target).
+**Labeled as: GO, scoped per class** — WRONG_WORD_OR_SENSE,
+FIXED_TERM_OR_IDIOM, GRAMMAR, and CLEAN/acceptability are sufficient to
+proceed to a validator prototype now; FACTUAL_OR_LOGICAL_REVERSAL
+proceeds too but any reported performance on it must be labeled
+directional/low-confidence pending more organic evidence. A decision,
+not a deferral — no further data-collection phase follows automatically.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

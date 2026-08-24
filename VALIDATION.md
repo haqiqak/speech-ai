@@ -4576,3 +4576,76 @@ instruction. A separate, frozen Phase 8 split
 (`eval/r50_dataset/phase8_split.json`) exists alongside — not merged
 into, and independent of — R50's own frozen split, both untouched for
 label refinement, threshold selection, or training.
+
+## 42. R50 Phase 8B — targeted finalization, final GO/NO-GO decision (executed 2026-08-24)
+
+Per direct instruction: resolve Phase 8's three specific blockers and
+decide, rather than run another broad collection cycle. **Data/analysis
+phase only — no model trained, no production code touched.** Full
+report: `eval/r50p8b_report.md`; scripts: `eval/r50p8b_corpus.py`,
+`_harvest.py`, `_labels.py`, `_build.py`, `_taxonomy_agreement.py`,
+`_convention.py`, `_final_stats.py`.
+
+**[FACT] Task 1 — targeted organic harvest.** 42 new sentences, 4 topics
+never used before (Vaccine, Plate Tectonics, Antimicrobial Resistance,
+Supply and Demand), chosen this time for causal-claim *density* rather
+than just novelty. Organic `FACTUAL_OR_LOGICAL_REVERSAL` yield rose from
+1/68 (Phase 8) to **8 sentence-groups/9 records out of 58 (≈6× rate)** —
+confirming the defect occurs naturally at a low but real, topic-dependent
+rate. Concrete unprompted finds: "Vaccines led to the eradication of
+vaccination..." (calls the cure a disease); "A fall in production costs
+would increase demand..." (supply-side cause misattributed to demand,
+plus an internally inconsistent direction); "rigid"→"fixed" appearing
+independently twice, each time asserting tectonic plates are immobile in
+an article about plate *motion*.
+
+**[FACT] Task 2 — taxonomy reconciliation.** A strict, ordered 3-step
+decision procedure (grammar → word-sense → naturalness, tested fresh by
+an independent rater) raised agreement on the classes Phase 8 found
+weakest: GRAMMAR 25%→56%, WRONG_WORD_OR_SENSE 67%→78%.
+**NATURALNESS_OR_REGISTER stayed at 33% — unchanged** despite the same
+clearer procedure; all its disagreements resolved to GRAMMAR or
+WRONG_WORD_OR_SENSE instead, not to each other. **Decision: retain
+GRAMMAR and WRONG_WORD_OR_SENSE as separate primary labels (imperfect,
+real signal); retire NATURALNESS_OR_REGISTER as a primary label**
+(kept only as an optional secondary tag) — a data-driven, partial
+coarsening, narrower than a blanket merge since the two other classes
+responded differently to the same fix.
+
+**[FACT] Task 3 — labeling convention resolved and applied
+retroactively.** Adopted: judge the complete delivered sentence, not an
+isolated word change. Applied forward to all Phase 8B labels; applied
+backward by finding sentences with 2+ genuinely distinct co-occurring
+substitutions and upgrading any record that had been called "clean in
+isolation" to its sentence's actual worst severity — **12 R50-baseline
+records and 6 Phase-8 records corrected**, original rationale preserved
+alongside the new one, every change flagged `convention_adjusted: true`.
+
+**[FACT] Task 4/5 — evidence-quality tagging and final counts.** Every
+record now carries `ORGANIC_OBSERVED` / `CONSTRUCTED` /
+`HUMAN_REVIEW_OF_EXISTING_CASE`. Final combined unique-case totals:
+`FIXED_TERM_OR_IDIOM` 53 (25 organic, 8 human-reviewed, 20 constructed —
+62% non-constructed, past the original 40-60 target);
+`FACTUAL_OR_LOGICAL_REVERSAL` 33 (6 organic, 7 human-reviewed, 20
+constructed — improved 6× in organic terms but still short of target and
+61% constructed). 313 total records, 252 unique dedup groups, 191 SEVERE
+/ 32 MINOR / 24 CLEAN unique cases — CLEAN remains thin (~1:8 vs SEVERE),
+named as an open limitation for training time, not a blocker now.
+
+**[RECOMMENDATION] Final decision: GO, scoped per class.**
+WRONG_WORD_OR_SENSE, FIXED_TERM_OR_IDIOM, and CLEAN/acceptability (88%
+inter-rater agreement) are sufficient — proceed. GRAMMAR is sufficient
+with a disclosed ~44% expected confusion against WRONG_WORD_OR_SENSE.
+NATURALNESS_OR_REGISTER is retired as a primary target per Task 2's
+result, not a data gap. FACTUAL_OR_LOGICAL_REVERSAL proceeds too, but
+any reported validator performance on it must be labeled directional/
+low-confidence and evaluated separately, given 61% of its evidence is
+constructed. This is neither (A) unconditionally nor (C) — it is a
+per-class GO with the confidence level tied explicitly to each class's
+`evidence_quality` mix, which is exactly what that field exists to make
+possible.
+
+**[LIMITATION]** All raters remain Claude instances, not independent
+humans. The NATURALNESS_OR_REGISTER retirement rests on n=27. Organic
+FACTUAL_OR_LOGICAL_REVERSAL examples (6) establish existence and a rough
+rate, not a representative sample of the failure mode's full shape.

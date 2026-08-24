@@ -3203,3 +3203,38 @@ proceeds from this phase.
 **Category:** Data collection, on direct instruction. No model trained,
 no threshold changed, no production code touched. Full record:
 `VALIDATION.md` §41, `eval/r50p8_report.md`.
+
+### 2026-08-24-F — R50 Phase 8B: targeted finalization, final GO/NO-GO decision
+
+**What was done:** per direct instruction, resolve Phase 8's three named
+blockers and decide, rather than run another broad collection cycle.
+(1) Targeted organic harvest: 42 new sentences from 4 causal-dense topics
+(Vaccine, Plate Tectonics, Antimicrobial Resistance, Supply and Demand);
+organic FACTUAL_OR_LOGICAL_REVERSAL yield rose 1/68->9/58 records (~6x).
+(2) Taxonomy reconciliation: a strict 3-step decision procedure, tested
+by an independent rater, raised GRAMMAR agreement 25%->56% and WRONG_
+WORD_OR_SENSE 67%->78%, but NATURALNESS_OR_REGISTER stayed at 33%
+unchanged. (3) Labeling convention resolved (judge the complete
+delivered sentence, not an isolated word) and applied retroactively - 12
+R50 + 6 Phase 8 records corrected, original rationale preserved
+alongside. (4)/(5) Evidence-quality tagging (ORGANIC_OBSERVED/
+CONSTRUCTED/HUMAN_REVIEW_OF_EXISTING_CASE) and full recount.
+
+**Result:** FIXED_TERM_OR_IDIOM 53 unique (62% non-constructed, past
+target). FACTUAL_OR_LOGICAL_REVERSAL 33 unique (organic count 1->6,
+still 61% constructed, short of the 40-60 target). NATURALNESS_OR_
+REGISTER retired as a primary label (kept as secondary only) since two
+independent tests found it unreliable regardless of definitional
+clarity - a data-driven partial coarsening, not a blanket merge.
+
+**Decision: GO, scoped per class.** WRONG_WORD_OR_SENSE,
+FIXED_TERM_OR_IDIOM, GRAMMAR, and CLEAN/acceptability are sufficient to
+proceed to a validator prototype. FACTUAL_OR_LOGICAL_REVERSAL proceeds
+too, but any reported performance on it must be labeled directional/
+low-confidence and evaluated separately, given its evidence is still
+majority-constructed. This is a decision, not a deferral - no further
+data-collection phase follows automatically.
+
+**Category:** Data/analysis phase, on direct instruction. No model
+trained, no threshold changed, no production code touched. Full record:
+`VALIDATION.md` §42, `eval/r50p8b_report.md`.

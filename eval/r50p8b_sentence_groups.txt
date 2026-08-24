@@ -1,0 +1,232 @@
+1. pairs=[('strongest', 'heaviest', 'substitution')]
+   ORIG: At a subduction zone, the relatively cold, dense oceanic crust sinks down into the mantle, forming the downward convecting limb of a mantle cell, which is the strongest driver of plate motion.
+   REFM: At a subduction zone, the relatively cold, dense oceanic crust sinks down into the mantle, forming the downward convecting limb of a mantle cell, which is the heaviest driver of plate motion.
+
+2. pairs=[('A vaccine is a biological preparation that provides active acquired immunity to a particular infectious disease.', 'A vaccine is a biological treatment that gives active acquired immunity to a specific infectious disease.', 'restructuring')]
+   ORIG: A vaccine is a biological preparation that provides active acquired immunity to a particular infectious disease.
+   REFM: A vaccine is a biological treatment that gives active acquired immunity to a specific infectious disease.
+
+3. pairs=[('preventing', 'keeping', 'substitution')]
+   ORIG: Vaccination is the most effective method of preventing infectious diseases.
+   REFM: Vaccination is the most effective method of keeping infectious diseases.
+
+4. pairs=[('prevent', 'avoid', 'substitution'), ('practice', 'use', 'substitution')]
+   ORIG: The first recorded use of inoculation to prevent smallpox occurred in the 16th century in China, with the earliest hints of the practice in China coming during the 10th century.
+   REFM: The first recorded use of inoculation to avoid smallpox occurred in the 16th century in China, with the earliest hints of the use in China coming during the 10th century.
+
+5. pairs=[('produced', 'created', 'substitution')]
+   ORIG: It was also the first disease for which a vaccine was produced.
+   REFM: It was also the first disease for which a vaccine was created.
+
+6. pairs=[('practice', 'use', 'substitution')]
+   ORIG: The folk practice of inoculation against smallpox was brought from Turkey to Britain in 1721 by Lady Mary Wortley Montagu.
+   REFM: The folk use of inoculation against smallpox was brought from Turkey to Britain in 1721 by Lady Mary Wortley Montagu.
+
+7. pairs=[('protective', 'careful', 'substitution')]
+   ORIG: He used the phrase in 1798 for the long title of his inquiry, in which he described the protective effect of cowpox against smallpox.
+   REFM: He used the phrase in 1798 for the long title of his inquiry, in which he described the careful effect of cowpox against smallpox.
+
+8. pairs=[('proposed', 'suggested', 'substitution'), ('protective', 'careful', 'substitution')]
+   ORIG: In 1881, to honor Jenner, Louis Pasteur proposed that the terms should be extended to cover the new protective inoculations then being developed.
+   REFM: In 1881, to honor Jenner, Louis Pasteur suggested that the terms should be extended to cover the new careful inoculations then being developed.
+
+9. pairs=[('protein', 'peptide', 'substitution'), ('prepared', 'up', 'substitution')]
+   ORIG: When the virulent version of an agent is encountered, the body recognizes the protein coat on the agent, and thus is prepared to respond.
+   REFM: When the virulent version of an agent is encountered, the body recognizes the peptide coat on the agent, and thus is up to respond.
+
+10. pairs=[('processes', 'acts', 'substitution')]
+   ORIG: The processes that result in plates and shape Earth's crust is called tectonics.
+   REFM: The acts that result in plates and shape Earth's crust is called tectonics.
+
+11. pairs=[('primary', 'main', 'substitution')]
+   ORIG: Misuse and improper management of antimicrobial is primary drivers of this resistance, though it can also occur naturally through genetic mutations.
+   REFM: Misuse and improper management of antimicrobial is main drivers of this resistance, though it can also occur naturally through genetic mutations.
+
+12. pairs=[('pressure', 'force', 'substitution')]
+   ORIG: Resistance arises through spontaneous mutation, horizontal gene transfer, and increased selective pressure from antibiotic overuse, which accelerates resistance development.
+   REFM: Resistance arises through spontaneous mutation, horizontal gene transfer, and increased selective force from antibiotic overuse, which accelerates resistance development.
+
+13. pairs=[('process', 'work', 'substitution')]
+   ORIG: With the increased use of antimicrobial agents, there is a speeding up of this natural process.
+   REFM: With the increased use of antimicrobial agents, there is a speeding up of this natural work.
+
+14. pairs=[('promote', 'support', 'substitution')]
+   ORIG: These inappropriate uses of antimicrobial agents promote the evolution of antimicrobial resistance by supporting the bacteria in developing genetic alterations that lead to resistance.
+   REFM: These inappropriate uses of antimicrobial agents support the evolution of antimicrobial resistance by supporting the bacteria in developing genetic alterations that lead to resistance.
+
+15. pairs=[('process', 'act', 'substitution')]
+   ORIG: This process, known as horizontal gene transfer, allows resistance genes to spread rapidly between different bacterial species.
+   REFM: This act, known as horizontal gene transfer, allows resistance genes to spread rapidly between different bacterial species.
+
+16. pairs=[('produce', 'create', 'substitution')]
+   ORIG: Natural selection means that organisms that are able to adapt to their environment survive and continue to produce offspring.
+   REFM: Natural selection means that organisms that are able to adapt to their environment survive and continue to create offspring.
+
+17. pairs=[('It postulates that, holding all else equal, the unit price for a particular good in a perfectly competitive market will vary until it settles at the market-clearing price.', 'It postulates that, holding all else equal, the unit rate for a specific good in a perfectly competitive market will vary until it settles at the market-clearing rate.', 'restructuring')]
+   ORIG: It postulates that, holding all else equal, the unit price for a particular good in a perfectly competitive market will vary until it settles at the market-clearing price.
+   REFM: It postulates that, holding all else equal, the unit rate for a specific good in a perfectly competitive market will vary until it settles at the market-clearing rate.
+
+18. pairs=[('price', 'cost', 'substitution')]
+   ORIG: A rise in the cost of raw materials would decrease supply, shifting the supply curve to the left because at each possible price a smaller quantity would be supplied.
+   REFM: A rise in the cost of raw materials would decrease supply, shifting the supply curve to the left because at each possible cost a smaller quantity would be supplied.
+
+19. pairs=[('production', 'making', 'substitution')]
+   ORIG: A fall in production costs would increase supply, shifting the supply curve to the right or down.
+   REFM: A fall in making costs would increase supply, shifting the supply curve to the right or down.
+
+20. pairs=[('price', 'cost', 'substitution')]
+   ORIG: Generally, consumers will buy an additional unit as long as the marginal value of the extra unit is more than the market price they pay.
+   REFM: Generally, consumers will buy an additional unit as long as the marginal value of the extra unit is more than the market cost they pay.
+
+21. pairs=[('price', 'terms', 'substitution')]
+   ORIG: According to the law of demand, the demand curve is always downward-sloping, meaning that as the price decreases, consumers will buy more of the good.
+   REFM: According to the law of demand, the demand curve is always downward-sloping, meaning that as the terms decreases, consumers will buy more of the good.
+
+22. pairs=[('price', 'cost', 'substitution')]
+   ORIG: When consumers increase the quantity demanded at a given price, it is referred to as an increase in demand.
+   REFM: When consumers increase the quantity demanded at a given cost, it is referred to as an increase in demand.
+
+23. pairs=[('price', 'cost', 'substitution')]
+   ORIG: As a result of a supply curve shift, the price and the quantity move in opposite directions.
+   REFM: As a result of a supply curve shift, the cost and the quantity move in opposite directions.
+
+24. pairs=[('price', 'cost', 'substitution')]
+   ORIG: If desire for goods increases while its availability decreases, its price rises.
+   REFM: If desire for goods increases while its availability decreases, its cost rises.
+
+25. pairs=[('smallpox', 'vaccination', 'substitution')]
+   ORIG: The folk practice of inoculation against smallpox was brought from Turkey to Britain in 1721 by Lady Mary Wortley Montagu.
+   REFM: The folk practice of inoculation against vaccination was brought from Turkey to Britain in 1721 by Lady Mary Wortley Montagu.
+
+26. pairs=[('smallpox', 'vaccination', 'substitution')]
+   ORIG: He used the phrase in 1798 for the long title of his inquiry, in which he described the protective effect of cowpox against smallpox.
+   REFM: He used the phrase in 1798 for the long title of his inquiry, in which he described the protective effect of cowpox against vaccination.
+
+27. pairs=[('recognizes', 'knows', 'substitution'), ('respond', 'answer', 'substitution')]
+   ORIG: When the virulent version of an agent is encountered, the body recognizes the protein coat on the agent, and thus is prepared to respond.
+   REFM: When the virulent version of an agent is encountered, the body knows the protein coat on the agent, and thus is prepared to answer.
+
+28. pairs=[('smallpox', 'vaccination', 'substitution')]
+   ORIG: Vaccines led to the eradication of smallpox, one of the most contagious and deadly diseases in humans.
+   REFM: Vaccines led to the eradication of vaccination, one of the most contagious and deadly diseases in humans.
+
+29. pairs=[('century', 'period', 'substitution')]
+   ORIG: The model builds on the concept of continental drift, an idea developed during the first decades of the 20th century.
+   REFM: The model builds on the concept of continental drift, an idea developed during the first decades of the 20th period.
+
+30. pairs=[('seafloor', 'deep-sea', 'substitution'), ('spreading', 'dissemination', 'substitution')]
+   ORIG: Plate tectonics came to be accepted by geoscientists after seafloor spreading was validated in the mid to late 1960s.
+   REFM: Plate tectonics came to be accepted by geoscientists after deep-sea dissemination was validated in the mid to late 1960s.
+
+31. pairs=[('result', 'produce', 'substitution')]
+   ORIG: The processes that result in plates and shape Earth's crust is called tectonics.
+   REFM: The processes that produce in plates and shape Earth's crust is called tectonics.
+
+32. pairs=[('relative', 'corresponding', 'substitution')]
+   ORIG: Where the plates meet, their relative motion determines the type of plate boundary, convergent, divergent, or transform.
+   REFM: Where the plates meet, their corresponding motion determines the type of plate boundary, convergent, divergent, or transform.
+
+33. pairs=[('The relative movement of the plates typically range from zero to 10 centimeters annually.', 'Typically, the absolute movement of the plates is from zero to 10 centimetres annually.', 'restructuring')]
+   ORIG: The relative movement of the plates typically range from zero to 10 centimeters annually.
+   REFM: Typically, the absolute movement of the plates is from zero to 10 centimetres annually.
+
+34. pairs=[('relatively', 'about', 'substitution'), ('rigid', 'fixed', 'substitution')]
+   ORIG: Tectonic plates are relatively rigid and float across the ductile asthenosphere beneath.
+   REFM: Tectonic plates are about fixed and float across the ductile asthenosphere beneath.
+
+35. pairs=[('rigid', 'fixed', 'substitution')]
+   ORIG: The lithosphere is cooler and more rigid, while the asthenosphere is hotter and flows more easily.
+   REFM: The lithosphere is cooler and more fixed, while the asthenosphere is hotter and flows more easily.
+
+36. pairs=[('resistance', 'opposition', 'substitution')]
+   ORIG: Misuse and improper management of antimicrobial is primary drivers of this resistance, though it can also occur naturally through genetic mutations.
+   REFM: Misuse and improper management of antimicrobial is primary drivers of this opposition, though it can also occur naturally through genetic mutations.
+
+37. pairs=[('resistance', 'condition', 'substitution')]
+   ORIG: Antimicrobial resistance is driven largely by the misuse and overuse of antimicrobial.
+   REFM: Antimicrobial condition is driven largely by the misuse and overuse of antimicrobial.
+
+38. pairs=[('speeding', 'accelerating', 'substitution')]
+   ORIG: With the increased use of antimicrobial agents, there is a speeding up of this natural process.
+   REFM: With the increased use of antimicrobial agents, there is a accelerating up of this natural process.
+
+39. pairs=[('resistance', 'condition', 'substitution')]
+   ORIG: Overuse of disinfectants can lead to mutations that induce antimicrobial resistance.
+   REFM: Overuse of disinfectants can lead to mutations that induce antimicrobial condition.
+
+40. pairs=[('selection', 'choice', 'substitution'), ('survive', 'last', 'substitution')]
+   ORIG: Natural selection means that organisms that are able to adapt to their environment survive and continue to produce offspring.
+   REFM: Natural choice means that organisms that are able to adapt to their environment last and continue to produce offspring.
+
+41. pairs=[('settles', 'places', 'substitution')]
+   ORIG: It postulates that, holding all else equal, the unit price for a particular good in a perfectly competitive market will vary until it settles at the market-clearing price.
+   REFM: It postulates that, holding all else equal, the unit price for a particular good in a perfectly competitive market will vary until it places at the market-clearing price.
+
+42. pairs=[('A fall in production costs would increase supply, shifting the supply curve to the right or down.', 'A fall in production costs would increase demand, shifting the demand curve to the left or down.', 'restructuring')]
+   ORIG: A fall in production costs would increase supply, shifting the supply curve to the right or down.
+   REFM: A fall in production costs would increase demand, shifting the demand curve to the left or down.
+
+43. pairs=[('referred', 'mentioned', 'substitution')]
+   ORIG: When consumers increase the quantity demanded at a given price, it is referred to as an increase in demand.
+   REFM: When consumers increase the quantity demanded at a given price, it is mentioned to as an increase in demand.
+
+44. pairs=[('supply', 'add', 'substitution')]
+   ORIG: As a result of a supply curve shift, the price and the quantity move in opposite directions.
+   REFM: As a result of a add curve shift, the price and the quantity move in opposite directions.
+
+45. pairs=[('supplied', 'providing', 'substitution')]
+   ORIG: If the quantity supplied decreases, the opposite happens.
+   REFM: If the quantity providing decreases, the opposite happens.
+
+46. pairs=[('supply', 'issue', 'substitution'), ('rate', 'charge', 'substitution')]
+   ORIG: The demand for money intersects with the money supply to determine the interest rate.
+   REFM: The demand for money intersects with the money issue to determine the interest charge.
+
+47. pairs=[('rises', 'increases', 'substitution')]
+   ORIG: If desire for goods increases while its availability decreases, its price rises.
+   REFM: If desire for goods increases while its availability decreases, its price increases.
+
+48. pairs=[('stimulates', 'causes', 'substitution'), ('system', 'organization', 'substitution')]
+   ORIG: The agent stimulates the immune system to recognize the agent as a threat, destroy it, and recognize further and destroy any of the microorganisms associated with that agent that it may encounter in the future.
+   REFM: The agent causes the immune organization to recognize the agent as a threat, destroy it, and recognize further and destroy any of the microorganisms associated with that agent that it may encounter in the future.
+
+49. pairs=[('smallpox', 'vaccination', 'substitution'), ('such', 'much', 'substitution')]
+   ORIG: Widespread immunity due to vaccination is largely responsible for the worldwide eradication of smallpox and the restriction of diseases such as polio, measles, and tetanus from much of the world.
+   REFM: Widespread immunity due to vaccination is largely responsible for the worldwide eradication of vaccination and the restriction of diseases much as polio, measles, and tetanus from much of the world.
+
+50. pairs=[('system', 'organization', 'substitution')]
+   ORIG: The immune system recognizes vaccine agents as foreign, destroys them, and remembers them.
+   REFM: The immune organization recognizes vaccine agents as foreign, destroys them, and remembers them.
+
+51. pairs=[('scientific', 'technical', 'substitution'), ('slowly', 'late', 'substitution')]
+   ORIG: Plate tectonics are the scientific theory that Earth's lithosphere comprises a number of large tectonic plates, which have been slowly moving since 3 to 4 billion years ago.
+   REFM: Plate tectonics are the technical theory that Earth's lithosphere comprises a number of large tectonic plates, which have been late moving since 3 to 4 billion years ago.
+
+52. pairs=[('centimeters', 'cms', 'substitution')]
+   ORIG: The relative movement of the plates typically range from zero to 10 centimeters annually.
+   REFM: The relative movement of the plates typically range from zero to 10 cms annually.
+
+53. pairs=[('spontaneous', 'natural', 'substitution'), ('selective', 'exclusive', 'substitution')]
+   ORIG: Resistance arises through spontaneous mutation, horizontal gene transfer, and increased selective pressure from antibiotic overuse, which accelerates resistance development.
+   REFM: Resistance arises through natural mutation, horizontal gene transfer, and increased exclusive pressure from antibiotic overuse, which accelerates resistance development.
+
+54. pairs=[('cell', 'case', 'substitution')]
+   ORIG: Microbes may naturally develop resistance through genetic mutations that occur during cell division.
+   REFM: Microbes may naturally develop resistance through genetic mutations that occur during case division.
+
+55. pairs=[('supporting', 'backing', 'substitution')]
+   ORIG: These inappropriate uses of antimicrobial agents promote the evolution of antimicrobial resistance by supporting the bacteria in developing genetic alterations that lead to resistance.
+   REFM: These inappropriate uses of antimicrobial agents promote the evolution of antimicrobial resistance by backing the bacteria in developing genetic alterations that lead to resistance.
+
+56. pairs=[('spread', 'continue', 'substitution'), ('species', 'manners', 'substitution')]
+   ORIG: This process, known as horizontal gene transfer, allows resistance genes to spread rapidly between different bacterial species.
+   REFM: This process, known as horizontal gene transfer, allows resistance genes to continue rapidly between different bacterial manners.
+
+57. pairs=[('supply', 'add', 'substitution'), ('supply', 'issue', 'substitution')]
+   ORIG: A fall in production costs would increase supply, shifting the supply curve to the right or down.
+   REFM: A fall in production costs would increase add, shifting the issue curve to the right or down.
+
+58. pairs=[('supply', 'issue', 'substitution')]
+   ORIG: The demand for money intersects with the money supply to determine the interest rate.
+   REFM: The demand for money intersects with the money issue to determine the interest rate.
+

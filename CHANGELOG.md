@@ -6,6 +6,20 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-24, sixth** docs: R50 Phase 8B — targeted finalization,
+  final GO/NO-GO decision. Targeted organic harvest on 4 causal-dense
+  topics raised organic FACTUAL_OR_LOGICAL_REVERSAL yield ~6x (1/68 to
+  9/58). A strict 3-step decision procedure raised GRAMMAR/WRONG_WORD_
+  OR_SENSE inter-rater agreement to 56%/78% but left NATURALNESS_OR_
+  REGISTER unchanged at 33% - retired as a primary label. The
+  isolation-vs-whole-sentence labeling convention resolved and applied
+  retroactively (18 records corrected). Final counts: FIXED_TERM_OR_
+  IDIOM 53 unique (62% non-constructed), FACTUAL_OR_LOGICAL_REVERSAL 33
+  unique (61% still constructed). Decision: GO scoped per class -
+  proceed to validator prototype, with FACTUAL_OR_LOGICAL_REVERSAL
+  results flagged directional/low-confidence pending more organic
+  evidence. No training performed, no production changes. →
+  `DECISION_LOG.md` 2026-08-24-F.
 - **2026-08-24, fifth** docs: R50 Phase 8 — building the missing
   human-labeled dataset. 54 new real sentences (5 Wikipedia topics never
   used before) through today's live reformulate() across R40's 4

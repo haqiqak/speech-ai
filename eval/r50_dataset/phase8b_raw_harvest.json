@@ -1,0 +1,1866 @@
+{
+  "changes": [
+    {
+      "source": "plate_tectonics",
+      "profile": "light_single_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "strongest",
+      "replacement_word": "heaviest",
+      "original_sentence": "At a subduction zone, the relatively cold, dense oceanic crust sinks down into the mantle, forming the downward convecting limb of a mantle cell, which is the strongest driver of plate motion.",
+      "reformulated_sentence": "At a subduction zone, the relatively cold, dense oceanic crust sinks down into the mantle, forming the downward convecting limb of a mantle cell, which is the heaviest driver of plate motion.",
+      "contextual_fit": 1.2344344213488512e-05,
+      "sbert_sim": 0.9745,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "moderate_mixed",
+      "change_source": "restructuring",
+      "triggered_by": [
+        "multiple_difficulties_or_no_valid_substitution"
+      ],
+      "original_word": "A vaccine is a biological preparation that provides active acquired immunity to a particular infectious disease.",
+      "replacement_word": "A vaccine is a biological treatment that gives active acquired immunity to a specific infectious disease.",
+      "original_sentence": "A vaccine is a biological preparation that provides active acquired immunity to a particular infectious disease.",
+      "reformulated_sentence": "A vaccine is a biological treatment that gives active acquired immunity to a specific infectious disease.",
+      "contextual_fit": null,
+      "sbert_sim": 0.9682,
+      "antonym_check": "n/a_sentence_level"
+    },
+    {
+      "source": "vaccine",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "preventing",
+      "replacement_word": "keeping",
+      "original_sentence": "Vaccination is the most effective method of preventing infectious diseases.",
+      "reformulated_sentence": "Vaccination is the most effective method of keeping infectious diseases.",
+      "contextual_fit": 0.0002527975011616945,
+      "sbert_sim": 0.9661,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "prevent",
+      "replacement_word": "avoid",
+      "original_sentence": "The first recorded use of inoculation to prevent smallpox occurred in the 16th century in China, with the earliest hints of the practice in China coming during the 10th century.",
+      "reformulated_sentence": "The first recorded use of inoculation to avoid smallpox occurred in the 16th century in China, with the earliest hints of the use in China coming during the 10th century.",
+      "contextual_fit": 0.00033986958442255855,
+      "sbert_sim": 0.9901,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "practice",
+      "replacement_word": "use",
+      "original_sentence": "The first recorded use of inoculation to prevent smallpox occurred in the 16th century in China, with the earliest hints of the practice in China coming during the 10th century.",
+      "reformulated_sentence": "The first recorded use of inoculation to avoid smallpox occurred in the 16th century in China, with the earliest hints of the use in China coming during the 10th century.",
+      "contextual_fit": 0.6123977303504944,
+      "sbert_sim": 0.9867,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "produced",
+      "replacement_word": "created",
+      "original_sentence": "It was also the first disease for which a vaccine was produced.",
+      "reformulated_sentence": "It was also the first disease for which a vaccine was created.",
+      "contextual_fit": 0.02075216732919216,
+      "sbert_sim": 0.9787,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "practice",
+      "replacement_word": "use",
+      "original_sentence": "The folk practice of inoculation against smallpox was brought from Turkey to Britain in 1721 by Lady Mary Wortley Montagu.",
+      "reformulated_sentence": "The folk use of inoculation against smallpox was brought from Turkey to Britain in 1721 by Lady Mary Wortley Montagu.",
+      "contextual_fit": 2.6619316486176103e-05,
+      "sbert_sim": 0.9881,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "protective",
+      "replacement_word": "careful",
+      "original_sentence": "He used the phrase in 1798 for the long title of his inquiry, in which he described the protective effect of cowpox against smallpox.",
+      "reformulated_sentence": "He used the phrase in 1798 for the long title of his inquiry, in which he described the careful effect of cowpox against smallpox.",
+      "contextual_fit": 3.197367050233879e-06,
+      "sbert_sim": 0.9856,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "proposed",
+      "replacement_word": "suggested",
+      "original_sentence": "In 1881, to honor Jenner, Louis Pasteur proposed that the terms should be extended to cover the new protective inoculations then being developed.",
+      "reformulated_sentence": "In 1881, to honor Jenner, Louis Pasteur suggested that the terms should be extended to cover the new careful inoculations then being developed.",
+      "contextual_fit": 0.25656452775001526,
+      "sbert_sim": 0.988,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "protective",
+      "replacement_word": "careful",
+      "original_sentence": "In 1881, to honor Jenner, Louis Pasteur proposed that the terms should be extended to cover the new protective inoculations then being developed.",
+      "reformulated_sentence": "In 1881, to honor Jenner, Louis Pasteur suggested that the terms should be extended to cover the new careful inoculations then being developed.",
+      "contextual_fit": 9.433030754735228e-06,
+      "sbert_sim": 0.9366,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "protein",
+      "replacement_word": "peptide",
+      "original_sentence": "When the virulent version of an agent is encountered, the body recognizes the protein coat on the agent, and thus is prepared to respond.",
+      "reformulated_sentence": "When the virulent version of an agent is encountered, the body recognizes the peptide coat on the agent, and thus is up to respond.",
+      "contextual_fit": 8.14045561128296e-05,
+      "sbert_sim": 0.9501,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "prepared",
+      "replacement_word": "up",
+      "original_sentence": "When the virulent version of an agent is encountered, the body recognizes the protein coat on the agent, and thus is prepared to respond.",
+      "reformulated_sentence": "When the virulent version of an agent is encountered, the body recognizes the peptide coat on the agent, and thus is up to respond.",
+      "contextual_fit": 3.383885632501915e-05,
+      "sbert_sim": 0.9422,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "processes",
+      "replacement_word": "acts",
+      "original_sentence": "The processes that result in plates and shape Earth's crust is called tectonics.",
+      "reformulated_sentence": "The acts that result in plates and shape Earth's crust is called tectonics.",
+      "contextual_fit": 2.3499429516959935e-05,
+      "sbert_sim": 0.9546,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "primary",
+      "replacement_word": "main",
+      "original_sentence": "Misuse and improper management of antimicrobial is primary drivers of this resistance, though it can also occur naturally through genetic mutations.",
+      "reformulated_sentence": "Misuse and improper management of antimicrobial is main drivers of this resistance, though it can also occur naturally through genetic mutations.",
+      "contextual_fit": 0.02222161367535591,
+      "sbert_sim": 0.9947,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "pressure",
+      "replacement_word": "force",
+      "original_sentence": "Resistance arises through spontaneous mutation, horizontal gene transfer, and increased selective pressure from antibiotic overuse, which accelerates resistance development.",
+      "reformulated_sentence": "Resistance arises through spontaneous mutation, horizontal gene transfer, and increased selective force from antibiotic overuse, which accelerates resistance development.",
+      "contextual_fit": 4.419504330144264e-05,
+      "sbert_sim": 0.9772,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "process",
+      "replacement_word": "work",
+      "original_sentence": "With the increased use of antimicrobial agents, there is a speeding up of this natural process.",
+      "reformulated_sentence": "With the increased use of antimicrobial agents, there is a speeding up of this natural work.",
+      "contextual_fit": 0.0002619721053633839,
+      "sbert_sim": 0.9535,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "promote",
+      "replacement_word": "support",
+      "original_sentence": "These inappropriate uses of antimicrobial agents promote the evolution of antimicrobial resistance by supporting the bacteria in developing genetic alterations that lead to resistance.",
+      "reformulated_sentence": "These inappropriate uses of antimicrobial agents support the evolution of antimicrobial resistance by supporting the bacteria in developing genetic alterations that lead to resistance.",
+      "contextual_fit": 0.002330556744709611,
+      "sbert_sim": 0.9959,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "process",
+      "replacement_word": "act",
+      "original_sentence": "This process, known as horizontal gene transfer, allows resistance genes to spread rapidly between different bacterial species.",
+      "reformulated_sentence": "This act, known as horizontal gene transfer, allows resistance genes to spread rapidly between different bacterial species.",
+      "contextual_fit": 0.0010498174233362079,
+      "sbert_sim": 0.9799,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "produce",
+      "replacement_word": "create",
+      "original_sentence": "Natural selection means that organisms that are able to adapt to their environment survive and continue to produce offspring.",
+      "reformulated_sentence": "Natural selection means that organisms that are able to adapt to their environment survive and continue to create offspring.",
+      "contextual_fit": 0.019148243591189384,
+      "sbert_sim": 0.9975,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "moderate_mixed",
+      "change_source": "restructuring",
+      "triggered_by": [
+        "multiple_difficulties_or_no_valid_substitution"
+      ],
+      "original_word": "It postulates that, holding all else equal, the unit price for a particular good in a perfectly competitive market will vary until it settles at the market-clearing price.",
+      "replacement_word": "It postulates that, holding all else equal, the unit rate for a specific good in a perfectly competitive market will vary until it settles at the market-clearing rate.",
+      "original_sentence": "It postulates that, holding all else equal, the unit price for a particular good in a perfectly competitive market will vary until it settles at the market-clearing price.",
+      "reformulated_sentence": "It postulates that, holding all else equal, the unit rate for a specific good in a perfectly competitive market will vary until it settles at the market-clearing rate.",
+      "contextual_fit": null,
+      "sbert_sim": 0.8751,
+      "antonym_check": "n/a_sentence_level"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "price",
+      "replacement_word": "cost",
+      "original_sentence": "A rise in the cost of raw materials would decrease supply, shifting the supply curve to the left because at each possible price a smaller quantity would be supplied.",
+      "reformulated_sentence": "A rise in the cost of raw materials would decrease supply, shifting the supply curve to the left because at each possible cost a smaller quantity would be supplied.",
+      "contextual_fit": 0.16826756298542023,
+      "sbert_sim": 0.9947,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "production",
+      "replacement_word": "making",
+      "original_sentence": "A fall in production costs would increase supply, shifting the supply curve to the right or down.",
+      "reformulated_sentence": "A fall in making costs would increase supply, shifting the supply curve to the right or down.",
+      "contextual_fit": 9.83244099188596e-05,
+      "sbert_sim": 0.9764,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "price",
+      "replacement_word": "cost",
+      "original_sentence": "Generally, consumers will buy an additional unit as long as the marginal value of the extra unit is more than the market price they pay.",
+      "reformulated_sentence": "Generally, consumers will buy an additional unit as long as the marginal value of the extra unit is more than the market cost they pay.",
+      "contextual_fit": 0.001305612619034946,
+      "sbert_sim": 0.9936,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "price",
+      "replacement_word": "terms",
+      "original_sentence": "According to the law of demand, the demand curve is always downward-sloping, meaning that as the price decreases, consumers will buy more of the good.",
+      "reformulated_sentence": "According to the law of demand, the demand curve is always downward-sloping, meaning that as the terms decreases, consumers will buy more of the good.",
+      "contextual_fit": 7.043805112516566e-07,
+      "sbert_sim": 0.9941,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "price",
+      "replacement_word": "cost",
+      "original_sentence": "When consumers increase the quantity demanded at a given price, it is referred to as an increase in demand.",
+      "reformulated_sentence": "When consumers increase the quantity demanded at a given cost, it is referred to as an increase in demand.",
+      "contextual_fit": 0.004968275316059589,
+      "sbert_sim": 0.9877,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "price",
+      "replacement_word": "cost",
+      "original_sentence": "As a result of a supply curve shift, the price and the quantity move in opposite directions.",
+      "reformulated_sentence": "As a result of a supply curve shift, the cost and the quantity move in opposite directions.",
+      "contextual_fit": 0.00022580916993319988,
+      "sbert_sim": 0.9444,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "price",
+      "replacement_word": "cost",
+      "original_sentence": "If desire for goods increases while its availability decreases, its price rises.",
+      "reformulated_sentence": "If desire for goods increases while its availability decreases, its cost rises.",
+      "contextual_fit": 0.00837897788733244,
+      "sbert_sim": 0.9699,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "smallpox",
+      "replacement_word": "vaccination",
+      "original_sentence": "The folk practice of inoculation against smallpox was brought from Turkey to Britain in 1721 by Lady Mary Wortley Montagu.",
+      "reformulated_sentence": "The folk practice of inoculation against vaccination was brought from Turkey to Britain in 1721 by Lady Mary Wortley Montagu.",
+      "contextual_fit": 0.9987839460372925,
+      "sbert_sim": 0.9089,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "smallpox",
+      "replacement_word": "vaccination",
+      "original_sentence": "He used the phrase in 1798 for the long title of his inquiry, in which he described the protective effect of cowpox against smallpox.",
+      "reformulated_sentence": "He used the phrase in 1798 for the long title of his inquiry, in which he described the protective effect of cowpox against vaccination.",
+      "contextual_fit": 0.9979216853777567,
+      "sbert_sim": 0.9478,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "recognizes",
+      "replacement_word": "knows",
+      "original_sentence": "When the virulent version of an agent is encountered, the body recognizes the protein coat on the agent, and thus is prepared to respond.",
+      "reformulated_sentence": "When the virulent version of an agent is encountered, the body knows the protein coat on the agent, and thus is prepared to answer.",
+      "contextual_fit": 0.0015711589949205518,
+      "sbert_sim": 0.9886,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "respond",
+      "replacement_word": "answer",
+      "original_sentence": "When the virulent version of an agent is encountered, the body recognizes the protein coat on the agent, and thus is prepared to respond.",
+      "reformulated_sentence": "When the virulent version of an agent is encountered, the body knows the protein coat on the agent, and thus is prepared to answer.",
+      "contextual_fit": 5.309592233970761e-05,
+      "sbert_sim": 0.9672,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "smallpox",
+      "replacement_word": "vaccination",
+      "original_sentence": "Vaccines led to the eradication of smallpox, one of the most contagious and deadly diseases in humans.",
+      "reformulated_sentence": "Vaccines led to the eradication of vaccination, one of the most contagious and deadly diseases in humans.",
+      "contextual_fit": 0.9876816670099894,
+      "sbert_sim": 0.9187,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "century",
+      "replacement_word": "period",
+      "original_sentence": "The model builds on the concept of continental drift, an idea developed during the first decades of the 20th century.",
+      "reformulated_sentence": "The model builds on the concept of continental drift, an idea developed during the first decades of the 20th period.",
+      "contextual_fit": 6.298246262304019e-07,
+      "sbert_sim": 0.9957,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "seafloor",
+      "replacement_word": "deep-sea",
+      "original_sentence": "Plate tectonics came to be accepted by geoscientists after seafloor spreading was validated in the mid to late 1960s.",
+      "reformulated_sentence": "Plate tectonics came to be accepted by geoscientists after deep-sea dissemination was validated in the mid to late 1960s.",
+      "contextual_fit": 0.517116129398346,
+      "sbert_sim": 0.948,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "spreading",
+      "replacement_word": "dissemination",
+      "original_sentence": "Plate tectonics came to be accepted by geoscientists after seafloor spreading was validated in the mid to late 1960s.",
+      "reformulated_sentence": "Plate tectonics came to be accepted by geoscientists after deep-sea dissemination was validated in the mid to late 1960s.",
+      "contextual_fit": 2.2392375740309944e-06,
+      "sbert_sim": 0.9212,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "result",
+      "replacement_word": "produce",
+      "original_sentence": "The processes that result in plates and shape Earth's crust is called tectonics.",
+      "reformulated_sentence": "The processes that produce in plates and shape Earth's crust is called tectonics.",
+      "contextual_fit": 0.00046216632472351193,
+      "sbert_sim": 0.9852,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "relative",
+      "replacement_word": "corresponding",
+      "original_sentence": "Where the plates meet, their relative motion determines the type of plate boundary, convergent, divergent, or transform.",
+      "reformulated_sentence": "Where the plates meet, their corresponding motion determines the type of plate boundary, convergent, divergent, or transform.",
+      "contextual_fit": 0.0031981319189071655,
+      "sbert_sim": 0.9787,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "change_source": "restructuring",
+      "triggered_by": [
+        "multiple_difficulties_or_no_valid_substitution"
+      ],
+      "original_word": "The relative movement of the plates typically range from zero to 10 centimeters annually.",
+      "replacement_word": "Typically, the absolute movement of the plates is from zero to 10 centimetres annually.",
+      "original_sentence": "The relative movement of the plates typically range from zero to 10 centimeters annually.",
+      "reformulated_sentence": "Typically, the absolute movement of the plates is from zero to 10 centimetres annually.",
+      "contextual_fit": null,
+      "sbert_sim": 0.9502,
+      "antonym_check": "n/a_sentence_level"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "relatively",
+      "replacement_word": "about",
+      "original_sentence": "Tectonic plates are relatively rigid and float across the ductile asthenosphere beneath.",
+      "reformulated_sentence": "Tectonic plates are about fixed and float across the ductile asthenosphere beneath.",
+      "contextual_fit": 5.4841500968905166e-05,
+      "sbert_sim": 0.9863,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "rigid",
+      "replacement_word": "fixed",
+      "original_sentence": "Tectonic plates are relatively rigid and float across the ductile asthenosphere beneath.",
+      "reformulated_sentence": "Tectonic plates are about fixed and float across the ductile asthenosphere beneath.",
+      "contextual_fit": 3.873020614264533e-05,
+      "sbert_sim": 0.9683,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "rigid",
+      "replacement_word": "fixed",
+      "original_sentence": "The lithosphere is cooler and more rigid, while the asthenosphere is hotter and flows more easily.",
+      "reformulated_sentence": "The lithosphere is cooler and more fixed, while the asthenosphere is hotter and flows more easily.",
+      "contextual_fit": 7.639291652594693e-06,
+      "sbert_sim": 0.9771,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "resistance",
+      "replacement_word": "opposition",
+      "original_sentence": "Misuse and improper management of antimicrobial is primary drivers of this resistance, though it can also occur naturally through genetic mutations.",
+      "reformulated_sentence": "Misuse and improper management of antimicrobial is primary drivers of this opposition, though it can also occur naturally through genetic mutations.",
+      "contextual_fit": 2.597497768874746e-06,
+      "sbert_sim": 0.9108,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "resistance",
+      "replacement_word": "condition",
+      "original_sentence": "Antimicrobial resistance is driven largely by the misuse and overuse of antimicrobial.",
+      "reformulated_sentence": "Antimicrobial condition is driven largely by the misuse and overuse of antimicrobial.",
+      "contextual_fit": 4.356860517873429e-05,
+      "sbert_sim": 0.9055,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "speeding",
+      "replacement_word": "accelerating",
+      "original_sentence": "With the increased use of antimicrobial agents, there is a speeding up of this natural process.",
+      "reformulated_sentence": "With the increased use of antimicrobial agents, there is a accelerating up of this natural process.",
+      "contextual_fit": 7.2709967753326055e-06,
+      "sbert_sim": 0.949,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "resistance",
+      "replacement_word": "condition",
+      "original_sentence": "Overuse of disinfectants can lead to mutations that induce antimicrobial resistance.",
+      "reformulated_sentence": "Overuse of disinfectants can lead to mutations that induce antimicrobial condition.",
+      "contextual_fit": 1.936686021508649e-05,
+      "sbert_sim": 0.9734,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "selection",
+      "replacement_word": "choice",
+      "original_sentence": "Natural selection means that organisms that are able to adapt to their environment survive and continue to produce offspring.",
+      "reformulated_sentence": "Natural choice means that organisms that are able to adapt to their environment last and continue to produce offspring.",
+      "contextual_fit": 0.0003581065684556961,
+      "sbert_sim": 0.8624,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "survive",
+      "replacement_word": "last",
+      "original_sentence": "Natural selection means that organisms that are able to adapt to their environment survive and continue to produce offspring.",
+      "reformulated_sentence": "Natural choice means that organisms that are able to adapt to their environment last and continue to produce offspring.",
+      "contextual_fit": 1.1364569218130782e-05,
+      "sbert_sim": 0.8613,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "settles",
+      "replacement_word": "places",
+      "original_sentence": "It postulates that, holding all else equal, the unit price for a particular good in a perfectly competitive market will vary until it settles at the market-clearing price.",
+      "reformulated_sentence": "It postulates that, holding all else equal, the unit price for a particular good in a perfectly competitive market will vary until it places at the market-clearing price.",
+      "contextual_fit": 2.098748882417567e-05,
+      "sbert_sim": 0.9935,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "heavy_dense",
+      "change_source": "restructuring",
+      "triggered_by": [
+        "multiple_difficulties_or_no_valid_substitution"
+      ],
+      "original_word": "A fall in production costs would increase supply, shifting the supply curve to the right or down.",
+      "replacement_word": "A fall in production costs would increase demand, shifting the demand curve to the left or down.",
+      "original_sentence": "A fall in production costs would increase supply, shifting the supply curve to the right or down.",
+      "reformulated_sentence": "A fall in production costs would increase demand, shifting the demand curve to the left or down.",
+      "contextual_fit": null,
+      "sbert_sim": 0.9256,
+      "antonym_check": "n/a_sentence_level"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "referred",
+      "replacement_word": "mentioned",
+      "original_sentence": "When consumers increase the quantity demanded at a given price, it is referred to as an increase in demand.",
+      "reformulated_sentence": "When consumers increase the quantity demanded at a given price, it is mentioned to as an increase in demand.",
+      "contextual_fit": 7.758224285225879e-08,
+      "sbert_sim": 0.987,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "supply",
+      "replacement_word": "add",
+      "original_sentence": "As a result of a supply curve shift, the price and the quantity move in opposite directions.",
+      "reformulated_sentence": "As a result of a add curve shift, the price and the quantity move in opposite directions.",
+      "contextual_fit": 2.065540058993065e-07,
+      "sbert_sim": 0.9272,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "supplied",
+      "replacement_word": "providing",
+      "original_sentence": "If the quantity supplied decreases, the opposite happens.",
+      "reformulated_sentence": "If the quantity providing decreases, the opposite happens.",
+      "contextual_fit": 2.416233883195673e-06,
+      "sbert_sim": 0.9389,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "supply",
+      "replacement_word": "issue",
+      "original_sentence": "The demand for money intersects with the money supply to determine the interest rate.",
+      "reformulated_sentence": "The demand for money intersects with the money issue to determine the interest charge.",
+      "contextual_fit": 0.0016020946204662323,
+      "sbert_sim": 0.9649,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "rate",
+      "replacement_word": "charge",
+      "original_sentence": "The demand for money intersects with the money supply to determine the interest rate.",
+      "reformulated_sentence": "The demand for money intersects with the money issue to determine the interest charge.",
+      "contextual_fit": 0.0019337666453793645,
+      "sbert_sim": 0.9014,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "rises",
+      "replacement_word": "increases",
+      "original_sentence": "If desire for goods increases while its availability decreases, its price rises.",
+      "reformulated_sentence": "If desire for goods increases while its availability decreases, its price increases.",
+      "contextual_fit": 0.6341618299484253,
+      "sbert_sim": 0.9901,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "stimulates",
+      "replacement_word": "causes",
+      "original_sentence": "The agent stimulates the immune system to recognize the agent as a threat, destroy it, and recognize further and destroy any of the microorganisms associated with that agent that it may encounter in the future.",
+      "reformulated_sentence": "The agent causes the immune organization to recognize the agent as a threat, destroy it, and recognize further and destroy any of the microorganisms associated with that agent that it may encounter in the future.",
+      "contextual_fit": 0.015066646039485931,
+      "sbert_sim": 0.9665,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "system",
+      "replacement_word": "organization",
+      "original_sentence": "The agent stimulates the immune system to recognize the agent as a threat, destroy it, and recognize further and destroy any of the microorganisms associated with that agent that it may encounter in the future.",
+      "reformulated_sentence": "The agent causes the immune organization to recognize the agent as a threat, destroy it, and recognize further and destroy any of the microorganisms associated with that agent that it may encounter in the future.",
+      "contextual_fit": 0.00012711179442703724,
+      "sbert_sim": 0.9581,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "smallpox",
+      "replacement_word": "vaccination",
+      "original_sentence": "Widespread immunity due to vaccination is largely responsible for the worldwide eradication of smallpox and the restriction of diseases such as polio, measles, and tetanus from much of the world.",
+      "reformulated_sentence": "Widespread immunity due to vaccination is largely responsible for the worldwide eradication of vaccination and the restriction of diseases much as polio, measles, and tetanus from much of the world.",
+      "contextual_fit": 0.9998726844787598,
+      "sbert_sim": 0.9546,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "such",
+      "replacement_word": "much",
+      "original_sentence": "Widespread immunity due to vaccination is largely responsible for the worldwide eradication of smallpox and the restriction of diseases such as polio, measles, and tetanus from much of the world.",
+      "reformulated_sentence": "Widespread immunity due to vaccination is largely responsible for the worldwide eradication of vaccination and the restriction of diseases much as polio, measles, and tetanus from much of the world.",
+      "contextual_fit": 3.4102096702071094e-09,
+      "sbert_sim": 0.9544,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "smallpox",
+      "replacement_word": "vaccination",
+      "original_sentence": "The folk practice of inoculation against smallpox was brought from Turkey to Britain in 1721 by Lady Mary Wortley Montagu.",
+      "reformulated_sentence": "The folk practice of inoculation against vaccination was brought from Turkey to Britain in 1721 by Lady Mary Wortley Montagu.",
+      "contextual_fit": 0.9987839460372925,
+      "sbert_sim": 0.9089,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "smallpox",
+      "replacement_word": "vaccination",
+      "original_sentence": "He used the phrase in 1798 for the long title of his inquiry, in which he described the protective effect of cowpox against smallpox.",
+      "reformulated_sentence": "He used the phrase in 1798 for the long title of his inquiry, in which he described the protective effect of cowpox against vaccination.",
+      "contextual_fit": 0.9979216853777567,
+      "sbert_sim": 0.9478,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "system",
+      "replacement_word": "organization",
+      "original_sentence": "The immune system recognizes vaccine agents as foreign, destroys them, and remembers them.",
+      "reformulated_sentence": "The immune organization recognizes vaccine agents as foreign, destroys them, and remembers them.",
+      "contextual_fit": 0.0006353695061989129,
+      "sbert_sim": 0.9584,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "vaccine",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "smallpox",
+      "replacement_word": "vaccination",
+      "original_sentence": "Vaccines led to the eradication of smallpox, one of the most contagious and deadly diseases in humans.",
+      "reformulated_sentence": "Vaccines led to the eradication of vaccination, one of the most contagious and deadly diseases in humans.",
+      "contextual_fit": 0.9876816670099894,
+      "sbert_sim": 0.9187,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "scientific",
+      "replacement_word": "technical",
+      "original_sentence": "Plate tectonics are the scientific theory that Earth's lithosphere comprises a number of large tectonic plates, which have been slowly moving since 3 to 4 billion years ago.",
+      "reformulated_sentence": "Plate tectonics are the technical theory that Earth's lithosphere comprises a number of large tectonic plates, which have been late moving since 3 to 4 billion years ago.",
+      "contextual_fit": 0.002565291477367282,
+      "sbert_sim": 0.9945,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "slowly",
+      "replacement_word": "late",
+      "original_sentence": "Plate tectonics are the scientific theory that Earth's lithosphere comprises a number of large tectonic plates, which have been slowly moving since 3 to 4 billion years ago.",
+      "reformulated_sentence": "Plate tectonics are the technical theory that Earth's lithosphere comprises a number of large tectonic plates, which have been late moving since 3 to 4 billion years ago.",
+      "contextual_fit": 7.19252341241372e-07,
+      "sbert_sim": 0.9848,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "century",
+      "replacement_word": "period",
+      "original_sentence": "The model builds on the concept of continental drift, an idea developed during the first decades of the 20th century.",
+      "reformulated_sentence": "The model builds on the concept of continental drift, an idea developed during the first decades of the 20th period.",
+      "contextual_fit": 6.298246262304019e-07,
+      "sbert_sim": 0.9957,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "seafloor",
+      "replacement_word": "deep-sea",
+      "original_sentence": "Plate tectonics came to be accepted by geoscientists after seafloor spreading was validated in the mid to late 1960s.",
+      "reformulated_sentence": "Plate tectonics came to be accepted by geoscientists after deep-sea dissemination was validated in the mid to late 1960s.",
+      "contextual_fit": 0.517116129398346,
+      "sbert_sim": 0.948,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "spreading",
+      "replacement_word": "dissemination",
+      "original_sentence": "Plate tectonics came to be accepted by geoscientists after seafloor spreading was validated in the mid to late 1960s.",
+      "reformulated_sentence": "Plate tectonics came to be accepted by geoscientists after deep-sea dissemination was validated in the mid to late 1960s.",
+      "contextual_fit": 2.2392375740309944e-06,
+      "sbert_sim": 0.9212,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "centimeters",
+      "replacement_word": "cms",
+      "original_sentence": "The relative movement of the plates typically range from zero to 10 centimeters annually.",
+      "reformulated_sentence": "The relative movement of the plates typically range from zero to 10 cms annually.",
+      "contextual_fit": 0.013367951847612858,
+      "sbert_sim": 0.9725,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "spontaneous",
+      "replacement_word": "natural",
+      "original_sentence": "Resistance arises through spontaneous mutation, horizontal gene transfer, and increased selective pressure from antibiotic overuse, which accelerates resistance development.",
+      "reformulated_sentence": "Resistance arises through natural mutation, horizontal gene transfer, and increased exclusive pressure from antibiotic overuse, which accelerates resistance development.",
+      "contextual_fit": 0.00347894593141973,
+      "sbert_sim": 0.9957,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "selective",
+      "replacement_word": "exclusive",
+      "original_sentence": "Resistance arises through spontaneous mutation, horizontal gene transfer, and increased selective pressure from antibiotic overuse, which accelerates resistance development.",
+      "reformulated_sentence": "Resistance arises through natural mutation, horizontal gene transfer, and increased exclusive pressure from antibiotic overuse, which accelerates resistance development.",
+      "contextual_fit": 8.137835720845032e-07,
+      "sbert_sim": 0.9928,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "cell",
+      "replacement_word": "case",
+      "original_sentence": "Microbes may naturally develop resistance through genetic mutations that occur during cell division.",
+      "reformulated_sentence": "Microbes may naturally develop resistance through genetic mutations that occur during case division.",
+      "contextual_fit": 1.7044268361132708e-06,
+      "sbert_sim": 0.9531,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "speeding",
+      "replacement_word": "accelerating",
+      "original_sentence": "With the increased use of antimicrobial agents, there is a speeding up of this natural process.",
+      "reformulated_sentence": "With the increased use of antimicrobial agents, there is a accelerating up of this natural process.",
+      "contextual_fit": 7.2709967753326055e-06,
+      "sbert_sim": 0.949,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "supporting",
+      "replacement_word": "backing",
+      "original_sentence": "These inappropriate uses of antimicrobial agents promote the evolution of antimicrobial resistance by supporting the bacteria in developing genetic alterations that lead to resistance.",
+      "reformulated_sentence": "These inappropriate uses of antimicrobial agents promote the evolution of antimicrobial resistance by backing the bacteria in developing genetic alterations that lead to resistance.",
+      "contextual_fit": 4.567968517221743e-06,
+      "sbert_sim": 0.9916,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "spread",
+      "replacement_word": "continue",
+      "original_sentence": "This process, known as horizontal gene transfer, allows resistance genes to spread rapidly between different bacterial species.",
+      "reformulated_sentence": "This process, known as horizontal gene transfer, allows resistance genes to continue rapidly between different bacterial manners.",
+      "contextual_fit": 3.437516716076061e-05,
+      "sbert_sim": 0.9828,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "species",
+      "replacement_word": "manners",
+      "original_sentence": "This process, known as horizontal gene transfer, allows resistance genes to spread rapidly between different bacterial species.",
+      "reformulated_sentence": "This process, known as horizontal gene transfer, allows resistance genes to continue rapidly between different bacterial manners.",
+      "contextual_fit": 5.185034297028324e-06,
+      "sbert_sim": 0.9712,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "selection",
+      "replacement_word": "choice",
+      "original_sentence": "Natural selection means that organisms that are able to adapt to their environment survive and continue to produce offspring.",
+      "reformulated_sentence": "Natural choice means that organisms that are able to adapt to their environment last and continue to produce offspring.",
+      "contextual_fit": 0.0003581065684556961,
+      "sbert_sim": 0.8624,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "survive",
+      "replacement_word": "last",
+      "original_sentence": "Natural selection means that organisms that are able to adapt to their environment survive and continue to produce offspring.",
+      "reformulated_sentence": "Natural choice means that organisms that are able to adapt to their environment last and continue to produce offspring.",
+      "contextual_fit": 1.1364569218130782e-05,
+      "sbert_sim": 0.8613,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "settles",
+      "replacement_word": "places",
+      "original_sentence": "It postulates that, holding all else equal, the unit price for a particular good in a perfectly competitive market will vary until it settles at the market-clearing price.",
+      "reformulated_sentence": "It postulates that, holding all else equal, the unit price for a particular good in a perfectly competitive market will vary until it places at the market-clearing price.",
+      "contextual_fit": 2.098748882417567e-05,
+      "sbert_sim": 0.9935,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "supply",
+      "replacement_word": "add",
+      "original_sentence": "A fall in production costs would increase supply, shifting the supply curve to the right or down.",
+      "reformulated_sentence": "A fall in production costs would increase add, shifting the issue curve to the right or down.",
+      "contextual_fit": 4.567946689348901e-06,
+      "sbert_sim": 0.9725,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "supply",
+      "replacement_word": "issue",
+      "original_sentence": "A fall in production costs would increase supply, shifting the supply curve to the right or down.",
+      "reformulated_sentence": "A fall in production costs would increase add, shifting the issue curve to the right or down.",
+      "contextual_fit": 2.6723106202553026e-05,
+      "sbert_sim": 0.8921,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "supply",
+      "replacement_word": "add",
+      "original_sentence": "As a result of a supply curve shift, the price and the quantity move in opposite directions.",
+      "reformulated_sentence": "As a result of a add curve shift, the price and the quantity move in opposite directions.",
+      "contextual_fit": 2.065540058993065e-07,
+      "sbert_sim": 0.9272,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "supplied",
+      "replacement_word": "providing",
+      "original_sentence": "If the quantity supplied decreases, the opposite happens.",
+      "reformulated_sentence": "If the quantity providing decreases, the opposite happens.",
+      "contextual_fit": 2.416233883195673e-06,
+      "sbert_sim": 0.9389,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "supply",
+      "replacement_word": "issue",
+      "original_sentence": "The demand for money intersects with the money supply to determine the interest rate.",
+      "reformulated_sentence": "The demand for money intersects with the money issue to determine the interest rate.",
+      "contextual_fit": 0.0004260784189682454,
+      "sbert_sim": 0.9649,
+      "antonym_check": "pass"
+    }
+  ],
+  "no_change": [
+    {
+      "source": "vaccine",
+      "profile": "light_single_sound",
+      "original_text": "A vaccine is a biological preparation that provides active acquired immunity to a particular infectious disease.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "light_single_sound",
+      "original_text": "The agent stimulates the immune system to recognize the agent as a threat, destroy it, and recognize further and destroy any of the microorganisms associated with that agent that it may encounter in the future.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "light_single_sound",
+      "original_text": "Vaccination is the most effective method of preventing infectious diseases.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "light_single_sound",
+      "original_text": "Widespread immunity due to vaccination is largely responsible for the worldwide eradication of smallpox and the restriction of diseases such as polio, measles, and tetanus from much of the world.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "light_single_sound",
+      "original_text": "The first recorded use of inoculation to prevent smallpox occurred in the 16th century in China, with the earliest hints of the practice in China coming during the 10th century.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "light_single_sound",
+      "original_text": "It was also the first disease for which a vaccine was produced.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "light_single_sound",
+      "original_text": "The folk practice of inoculation against smallpox was brought from Turkey to Britain in 1721 by Lady Mary Wortley Montagu.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "light_single_sound",
+      "original_text": "He used the phrase in 1798 for the long title of his inquiry, in which he described the protective effect of cowpox against smallpox.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "light_single_sound",
+      "original_text": "In 1881, to honor Jenner, Louis Pasteur proposed that the terms should be extended to cover the new protective inoculations then being developed.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "light_single_sound",
+      "original_text": "The immune system recognizes vaccine agents as foreign, destroys them, and remembers them.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "light_single_sound",
+      "original_text": "When the virulent version of an agent is encountered, the body recognizes the protein coat on the agent, and thus is prepared to respond.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "light_single_sound",
+      "original_text": "Vaccines led to the eradication of smallpox, one of the most contagious and deadly diseases in humans.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "light_single_sound",
+      "original_text": "Plate tectonics are the scientific theory that Earth's lithosphere comprises a number of large tectonic plates, which have been slowly moving since 3 to 4 billion years ago.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "light_single_sound",
+      "original_text": "The model builds on the concept of continental drift, an idea developed during the first decades of the 20th century.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "light_single_sound",
+      "original_text": "Plate tectonics came to be accepted by geoscientists after seafloor spreading was validated in the mid to late 1960s.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "light_single_sound",
+      "original_text": "The processes that result in plates and shape Earth's crust is called tectonics.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "light_single_sound",
+      "original_text": "Where the plates meet, their relative motion determines the type of plate boundary, convergent, divergent, or transform.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "light_single_sound",
+      "original_text": "The relative movement of the plates typically range from zero to 10 centimeters annually.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "light_single_sound",
+      "original_text": "Tectonic plates are relatively rigid and float across the ductile asthenosphere beneath.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "light_single_sound",
+      "original_text": "The lithosphere is cooler and more rigid, while the asthenosphere is hotter and flows more easily.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "light_single_sound",
+      "original_text": "Oceanic crust is denser than continental crust because it has less silicon and more of the heavier elements than continental crust.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "light_single_sound",
+      "original_text": "Misuse and improper management of antimicrobial is primary drivers of this resistance, though it can also occur naturally through genetic mutations.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "light_single_sound",
+      "original_text": "Resistance arises through spontaneous mutation, horizontal gene transfer, and increased selective pressure from antibiotic overuse, which accelerates resistance development.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "light_single_sound",
+      "original_text": "Antimicrobial resistance is driven largely by the misuse and overuse of antimicrobial.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "light_single_sound",
+      "original_text": "Microbes may naturally develop resistance through genetic mutations that occur during cell division.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "light_single_sound",
+      "original_text": "With the increased use of antimicrobial agents, there is a speeding up of this natural process.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "light_single_sound",
+      "original_text": "These inappropriate uses of antimicrobial agents promote the evolution of antimicrobial resistance by supporting the bacteria in developing genetic alterations that lead to resistance.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "light_single_sound",
+      "original_text": "Overuse of disinfectants can lead to mutations that induce antimicrobial resistance.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "light_single_sound",
+      "original_text": "This process, known as horizontal gene transfer, allows resistance genes to spread rapidly between different bacterial species.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "light_single_sound",
+      "original_text": "Natural selection means that organisms that are able to adapt to their environment survive and continue to produce offspring.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "light_single_sound",
+      "original_text": "Drug inactivation or modification occurs through enzymatic deactivation of penicillin in some penicillin-resistant bacteria.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "light_single_sound",
+      "original_text": "It postulates that, holding all else equal, the unit price for a particular good in a perfectly competitive market will vary until it settles at the market-clearing price.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "light_single_sound",
+      "original_text": "A rise in the cost of raw materials would decrease supply, shifting the supply curve to the left because at each possible price a smaller quantity would be supplied.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "light_single_sound",
+      "original_text": "A fall in production costs would increase supply, shifting the supply curve to the right or down.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "light_single_sound",
+      "original_text": "Generally, consumers will buy an additional unit as long as the marginal value of the extra unit is more than the market price they pay.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "light_single_sound",
+      "original_text": "According to the law of demand, the demand curve is always downward-sloping, meaning that as the price decreases, consumers will buy more of the good.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "light_single_sound",
+      "original_text": "When consumers increase the quantity demanded at a given price, it is referred to as an increase in demand.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "light_single_sound",
+      "original_text": "As a result of a supply curve shift, the price and the quantity move in opposite directions.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "light_single_sound",
+      "original_text": "If the quantity supplied decreases, the opposite happens.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "light_single_sound",
+      "original_text": "The demand for money intersects with the money supply to determine the interest rate.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "light_single_sound",
+      "original_text": "If desire for goods increases while its availability decreases, its price rises.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "moderate_mixed",
+      "original_text": "The agent stimulates the immune system to recognize the agent as a threat, destroy it, and recognize further and destroy any of the microorganisms associated with that agent that it may encounter in the future.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "moderate_mixed",
+      "original_text": "Widespread immunity due to vaccination is largely responsible for the worldwide eradication of smallpox and the restriction of diseases such as polio, measles, and tetanus from much of the world.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "moderate_mixed",
+      "original_text": "The immune system recognizes vaccine agents as foreign, destroys them, and remembers them.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "moderate_mixed",
+      "original_text": "Vaccines led to the eradication of smallpox, one of the most contagious and deadly diseases in humans.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "moderate_mixed",
+      "original_text": "Plate tectonics are the scientific theory that Earth's lithosphere comprises a number of large tectonic plates, which have been slowly moving since 3 to 4 billion years ago.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "moderate_mixed",
+      "original_text": "The model builds on the concept of continental drift, an idea developed during the first decades of the 20th century.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "moderate_mixed",
+      "original_text": "Plate tectonics came to be accepted by geoscientists after seafloor spreading was validated in the mid to late 1960s.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "moderate_mixed",
+      "original_text": "Where the plates meet, their relative motion determines the type of plate boundary, convergent, divergent, or transform.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "moderate_mixed",
+      "original_text": "The relative movement of the plates typically range from zero to 10 centimeters annually.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "moderate_mixed",
+      "original_text": "Tectonic plates are relatively rigid and float across the ductile asthenosphere beneath.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "moderate_mixed",
+      "original_text": "At a subduction zone, the relatively cold, dense oceanic crust sinks down into the mantle, forming the downward convecting limb of a mantle cell, which is the strongest driver of plate motion.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "moderate_mixed",
+      "original_text": "The lithosphere is cooler and more rigid, while the asthenosphere is hotter and flows more easily.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "moderate_mixed",
+      "original_text": "Oceanic crust is denser than continental crust because it has less silicon and more of the heavier elements than continental crust.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "moderate_mixed",
+      "original_text": "Antimicrobial resistance is driven largely by the misuse and overuse of antimicrobial.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "moderate_mixed",
+      "original_text": "Microbes may naturally develop resistance through genetic mutations that occur during cell division.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "moderate_mixed",
+      "original_text": "Overuse of disinfectants can lead to mutations that induce antimicrobial resistance.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "moderate_mixed",
+      "original_text": "Drug inactivation or modification occurs through enzymatic deactivation of penicillin in some penicillin-resistant bacteria.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "moderate_mixed",
+      "original_text": "If the quantity supplied decreases, the opposite happens.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "moderate_mixed",
+      "original_text": "The demand for money intersects with the money supply to determine the interest rate.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "heavy_dense",
+      "original_text": "A vaccine is a biological preparation that provides active acquired immunity to a particular infectious disease.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "heavy_dense",
+      "original_text": "The agent stimulates the immune system to recognize the agent as a threat, destroy it, and recognize further and destroy any of the microorganisms associated with that agent that it may encounter in the future.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "vaccine",
+      "profile": "heavy_dense",
+      "original_text": "Vaccination is the most effective method of preventing infectious diseases.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "heavy_dense",
+      "original_text": "Widespread immunity due to vaccination is largely responsible for the worldwide eradication of smallpox and the restriction of diseases such as polio, measles, and tetanus from much of the world.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "vaccine",
+      "profile": "heavy_dense",
+      "original_text": "The first recorded use of inoculation to prevent smallpox occurred in the 16th century in China, with the earliest hints of the practice in China coming during the 10th century.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "vaccine",
+      "profile": "heavy_dense",
+      "original_text": "It was also the first disease for which a vaccine was produced.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "heavy_dense",
+      "original_text": "In 1881, to honor Jenner, Louis Pasteur proposed that the terms should be extended to cover the new protective inoculations then being developed.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "heavy_dense",
+      "original_text": "The immune system recognizes vaccine agents as foreign, destroys them, and remembers them.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "original_text": "Plate tectonics are the scientific theory that Earth's lithosphere comprises a number of large tectonic plates, which have been slowly moving since 3 to 4 billion years ago.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "original_text": "At a subduction zone, the relatively cold, dense oceanic crust sinks down into the mantle, forming the downward convecting limb of a mantle cell, which is the strongest driver of plate motion.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "original_text": "Oceanic crust is denser than continental crust because it has less silicon and more of the heavier elements than continental crust.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "heavy_dense",
+      "original_text": "Resistance arises through spontaneous mutation, horizontal gene transfer, and increased selective pressure from antibiotic overuse, which accelerates resistance development.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "heavy_dense",
+      "original_text": "Microbes may naturally develop resistance through genetic mutations that occur during cell division.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "heavy_dense",
+      "original_text": "These inappropriate uses of antimicrobial agents promote the evolution of antimicrobial resistance by supporting the bacteria in developing genetic alterations that lead to resistance.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "heavy_dense",
+      "original_text": "This process, known as horizontal gene transfer, allows resistance genes to spread rapidly between different bacterial species.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "heavy_dense",
+      "original_text": "Drug inactivation or modification occurs through enzymatic deactivation of penicillin in some penicillin-resistant bacteria.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "heavy_dense",
+      "original_text": "A rise in the cost of raw materials would decrease supply, shifting the supply curve to the left because at each possible price a smaller quantity would be supplied.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "heavy_dense",
+      "original_text": "Generally, consumers will buy an additional unit as long as the marginal value of the extra unit is more than the market price they pay.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "heavy_dense",
+      "original_text": "According to the law of demand, the demand curve is always downward-sloping, meaning that as the price decreases, consumers will buy more of the good.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "single_common_sound",
+      "original_text": "A vaccine is a biological preparation that provides active acquired immunity to a particular infectious disease.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "single_common_sound",
+      "original_text": "Vaccination is the most effective method of preventing infectious diseases.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "single_common_sound",
+      "original_text": "The first recorded use of inoculation to prevent smallpox occurred in the 16th century in China, with the earliest hints of the practice in China coming during the 10th century.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "vaccine",
+      "profile": "single_common_sound",
+      "original_text": "It was also the first disease for which a vaccine was produced.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "single_common_sound",
+      "original_text": "In 1881, to honor Jenner, Louis Pasteur proposed that the terms should be extended to cover the new protective inoculations then being developed.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "vaccine",
+      "profile": "single_common_sound",
+      "original_text": "When the virulent version of an agent is encountered, the body recognizes the protein coat on the agent, and thus is prepared to respond.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "single_common_sound",
+      "original_text": "The processes that result in plates and shape Earth's crust is called tectonics.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "single_common_sound",
+      "original_text": "Where the plates meet, their relative motion determines the type of plate boundary, convergent, divergent, or transform.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "single_common_sound",
+      "original_text": "Tectonic plates are relatively rigid and float across the ductile asthenosphere beneath.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "single_common_sound",
+      "original_text": "At a subduction zone, the relatively cold, dense oceanic crust sinks down into the mantle, forming the downward convecting limb of a mantle cell, which is the strongest driver of plate motion.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "single_common_sound",
+      "original_text": "The lithosphere is cooler and more rigid, while the asthenosphere is hotter and flows more easily.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "plate_tectonics",
+      "profile": "single_common_sound",
+      "original_text": "Oceanic crust is denser than continental crust because it has less silicon and more of the heavier elements than continental crust.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "single_common_sound",
+      "original_text": "Misuse and improper management of antimicrobial is primary drivers of this resistance, though it can also occur naturally through genetic mutations.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "single_common_sound",
+      "original_text": "Antimicrobial resistance is driven largely by the misuse and overuse of antimicrobial.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "single_common_sound",
+      "original_text": "Overuse of disinfectants can lead to mutations that induce antimicrobial resistance.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "antimicrobial_resistance",
+      "profile": "single_common_sound",
+      "original_text": "Drug inactivation or modification occurs through enzymatic deactivation of penicillin in some penicillin-resistant bacteria.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "single_common_sound",
+      "original_text": "A rise in the cost of raw materials would decrease supply, shifting the supply curve to the left because at each possible price a smaller quantity would be supplied.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "single_common_sound",
+      "original_text": "Generally, consumers will buy an additional unit as long as the marginal value of the extra unit is more than the market price they pay.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "single_common_sound",
+      "original_text": "According to the law of demand, the demand curve is always downward-sloping, meaning that as the price decreases, consumers will buy more of the good.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "single_common_sound",
+      "original_text": "When consumers increase the quantity demanded at a given price, it is referred to as an increase in demand.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "supply_and_demand",
+      "profile": "single_common_sound",
+      "original_text": "If desire for goods increases while its availability decreases, its price rises.",
+      "status": "no_change_needed"
+    }
+  ]
+}

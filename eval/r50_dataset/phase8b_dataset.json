@@ -1,0 +1,2541 @@
+{
+  "n_records": 72,
+  "n_sentence_groups": 58,
+  "overlap_with_prior_dedup_key": [
+    "P8B-organic-004-1",
+    "P8B-organic-013",
+    "P8B-organic-015",
+    "P8B-organic-019",
+    "P8B-organic-029",
+    "P8B-organic-048-0",
+    "P8B-organic-049-1",
+    "P8B-organic-050",
+    "P8B-organic-051-1",
+    "P8B-organic-056-1"
+  ],
+  "organic_factual_reversal_group_count": 8,
+  "records": [
+    {
+      "uid": "P8B-organic-001",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "At a subduction zone, the relatively cold, dense oceanic crust sinks down into the mantle, forming the downward convecting limb of a mantle cell, which is the strongest driver of plate motion.",
+      "reformulated_text": "At a subduction zone, the relatively cold, dense oceanic crust sinks down into the mantle, forming the downward convecting limb of a mantle cell, which is the heaviest driver of plate motion.",
+      "changed_word_pair": [
+        "strongest",
+        "heaviest"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": []
+      },
+      "human_rationale": "\"the heaviest driver of plate motion\" changes the specific claim from force/dominance (\"strongest\") to mass (\"heaviest\") -- a different physical property.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "plate_tectonics",
+      "profile": "light_single_sound",
+      "sentence_group_index": 1,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:strongest->heaviest"
+    },
+    {
+      "uid": "P8B-organic-002",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "restructuring",
+      "original_text": "A vaccine is a biological preparation that provides active acquired immunity to a particular infectious disease.",
+      "reformulated_text": "A vaccine is a biological treatment that gives active acquired immunity to a specific infectious disease.",
+      "changed_word_pair": null,
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "MINOR",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": []
+      },
+      "human_rationale": "\"treatment\" for \"preparation\" is a mild, defensible sense shift; \"gives\"/\"specific\" are fine.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 2,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "text:a vaccine is a biological preparation that provides active acquired immunity to a particular infectious disease.=>a vaccine is a biological treatment that gives active acquired immunity to a specific infectious disease."
+    },
+    {
+      "uid": "P8B-organic-003",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Vaccination is the most effective method of preventing infectious diseases.",
+      "reformulated_text": "Vaccination is the most effective method of keeping infectious diseases.",
+      "changed_word_pair": [
+        "preventing",
+        "keeping"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": [
+          "FACTUAL_OR_LOGICAL_REVERSAL"
+        ]
+      },
+      "human_rationale": "\"the most effective method of keeping infectious diseases\" (missing \"away\"/\"at bay\") reads as maintaining diseases, near-opposite of preventing them.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 3,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:preventing->keeping"
+    },
+    {
+      "uid": "P8B-organic-004-0",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "The first recorded use of inoculation to prevent smallpox occurred in the 16th century in China, with the earliest hints of the practice in China coming during the 10th century.",
+      "reformulated_text": "The first recorded use of inoculation to avoid smallpox occurred in the 16th century in China, with the earliest hints of the use in China coming during the 10th century.",
+      "changed_word_pair": [
+        "practice",
+        "use"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "MINOR",
+      "human_defect_labels": {
+        "primary": "NATURALNESS_OR_REGISTER",
+        "secondary": []
+      },
+      "human_rationale": "\"avoid smallpox\" is fine; \"hints of the use\" is a bit vaguer than \"hints of the practice\" but still comprehensible.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 4,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:practice->use"
+    },
+    {
+      "uid": "P8B-organic-004-1",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "The first recorded use of inoculation to prevent smallpox occurred in the 16th century in China, with the earliest hints of the practice in China coming during the 10th century.",
+      "reformulated_text": "The first recorded use of inoculation to avoid smallpox occurred in the 16th century in China, with the earliest hints of the use in China coming during the 10th century.",
+      "changed_word_pair": [
+        "prevent",
+        "avoid"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "MINOR",
+      "human_defect_labels": {
+        "primary": "NATURALNESS_OR_REGISTER",
+        "secondary": []
+      },
+      "human_rationale": "\"avoid smallpox\" is fine; \"hints of the use\" is a bit vaguer than \"hints of the practice\" but still comprehensible.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 4,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:prevent->avoid"
+    },
+    {
+      "uid": "P8B-organic-005",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "It was also the first disease for which a vaccine was produced.",
+      "reformulated_text": "It was also the first disease for which a vaccine was created.",
+      "changed_word_pair": [
+        "produced",
+        "created"
+      ],
+      "human_acceptability": "CLEAN",
+      "human_severity": "CLEAN",
+      "human_defect_labels": {
+        "primary": "CLEAN",
+        "secondary": []
+      },
+      "human_rationale": "\"created\" is a valid, natural synonym for \"produced\".",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 5,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:produced->created"
+    },
+    {
+      "uid": "P8B-organic-006",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "The folk practice of inoculation against smallpox was brought from Turkey to Britain in 1721 by Lady Mary Wortley Montagu.",
+      "reformulated_text": "The folk use of inoculation against smallpox was brought from Turkey to Britain in 1721 by Lady Mary Wortley Montagu.",
+      "changed_word_pair": [
+        "practice",
+        "use"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "MINOR",
+      "human_defect_labels": {
+        "primary": "NATURALNESS_OR_REGISTER",
+        "secondary": []
+      },
+      "human_rationale": "\"the folk use of inoculation\" is a slightly less natural collocation than \"the folk practice of inoculation\" but remains comprehensible.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 6,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:practice->use"
+    },
+    {
+      "uid": "P8B-organic-007",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "He used the phrase in 1798 for the long title of his inquiry, in which he described the protective effect of cowpox against smallpox.",
+      "reformulated_text": "He used the phrase in 1798 for the long title of his inquiry, in which he described the careful effect of cowpox against smallpox.",
+      "changed_word_pair": [
+        "protective",
+        "careful"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": []
+      },
+      "human_rationale": "\"the careful effect of cowpox\" -- \"careful\" (cautious) does not substitute for \"protective\" (immunizing); loses the entire immunological claim.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 7,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:protective->careful"
+    },
+    {
+      "uid": "P8B-organic-008-0",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "In 1881, to honor Jenner, Louis Pasteur proposed that the terms should be extended to cover the new protective inoculations then being developed.",
+      "reformulated_text": "In 1881, to honor Jenner, Louis Pasteur suggested that the terms should be extended to cover the new careful inoculations then being developed.",
+      "changed_word_pair": [
+        "proposed",
+        "suggested"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": []
+      },
+      "human_rationale": "\"the new careful inoculations\" -- same protective->careful defect as case 7, independently occurring in a different sentence.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 8,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:proposed->suggested"
+    },
+    {
+      "uid": "P8B-organic-008-1",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "In 1881, to honor Jenner, Louis Pasteur proposed that the terms should be extended to cover the new protective inoculations then being developed.",
+      "reformulated_text": "In 1881, to honor Jenner, Louis Pasteur suggested that the terms should be extended to cover the new careful inoculations then being developed.",
+      "changed_word_pair": [
+        "protective",
+        "careful"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": []
+      },
+      "human_rationale": "\"the new careful inoculations\" -- same protective->careful defect as case 7, independently occurring in a different sentence.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 8,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:protective->careful"
+    },
+    {
+      "uid": "P8B-organic-009-0",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "When the virulent version of an agent is encountered, the body recognizes the protein coat on the agent, and thus is prepared to respond.",
+      "reformulated_text": "When the virulent version of an agent is encountered, the body recognizes the peptide coat on the agent, and thus is up to respond.",
+      "changed_word_pair": [
+        "prepared",
+        "up"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "GRAMMAR",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"thus is up to respond\" does not parse as standard English (missing \"for\"/\"to\"); \"peptide coat\" is also a real scientific imprecision for the correct term \"protein coat\".",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 9,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:prepared->up"
+    },
+    {
+      "uid": "P8B-organic-009-1",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "When the virulent version of an agent is encountered, the body recognizes the protein coat on the agent, and thus is prepared to respond.",
+      "reformulated_text": "When the virulent version of an agent is encountered, the body recognizes the peptide coat on the agent, and thus is up to respond.",
+      "changed_word_pair": [
+        "protein",
+        "peptide"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "GRAMMAR",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"thus is up to respond\" does not parse as standard English (missing \"for\"/\"to\"); \"peptide coat\" is also a real scientific imprecision for the correct term \"protein coat\".",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 9,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:protein->peptide"
+    },
+    {
+      "uid": "P8B-organic-010",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "The processes that result in plates and shape Earth's crust is called tectonics.",
+      "reformulated_text": "The acts that result in plates and shape Earth's crust is called tectonics.",
+      "changed_word_pair": [
+        "processes",
+        "acts"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": []
+      },
+      "human_rationale": "\"acts\" (discrete actions) for \"processes\" (systematic/continuous mechanisms) is a real precision loss in a technical/definitional sentence.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "plate_tectonics",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 10,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:processes->acts"
+    },
+    {
+      "uid": "P8B-organic-011",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Misuse and improper management of antimicrobial is primary drivers of this resistance, though it can also occur naturally through genetic mutations.",
+      "reformulated_text": "Misuse and improper management of antimicrobial is main drivers of this resistance, though it can also occur naturally through genetic mutations.",
+      "changed_word_pair": [
+        "primary",
+        "main"
+      ],
+      "human_acceptability": "CLEAN",
+      "human_severity": "CLEAN",
+      "human_defect_labels": {
+        "primary": "CLEAN",
+        "secondary": []
+      },
+      "human_rationale": "\"main drivers\" is a valid, natural synonym for \"primary drivers\".",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "antimicrobial_resistance",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 11,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:primary->main"
+    },
+    {
+      "uid": "P8B-organic-012",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Resistance arises through spontaneous mutation, horizontal gene transfer, and increased selective pressure from antibiotic overuse, which accelerates resistance development.",
+      "reformulated_text": "Resistance arises through spontaneous mutation, horizontal gene transfer, and increased selective force from antibiotic overuse, which accelerates resistance development.",
+      "changed_word_pair": [
+        "pressure",
+        "force"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FIXED_TERM_OR_IDIOM",
+        "secondary": []
+      },
+      "human_rationale": "\"selective pressure\" is a specific, fixed term in evolutionary biology; \"selective force\" is a non-standard substitute that breaks it.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "antimicrobial_resistance",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 12,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:pressure->force"
+    },
+    {
+      "uid": "P8B-organic-013",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "With the increased use of antimicrobial agents, there is a speeding up of this natural process.",
+      "reformulated_text": "With the increased use of antimicrobial agents, there is a speeding up of this natural work.",
+      "changed_word_pair": [
+        "process",
+        "work"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": []
+      },
+      "human_rationale": "\"a speeding up of this natural work\" -- \"work\" does not fit as a substitute for a biological/evolutionary mechanism (\"process\").",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "antimicrobial_resistance",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 13,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:process->work"
+    },
+    {
+      "uid": "P8B-organic-014",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "These inappropriate uses of antimicrobial agents promote the evolution of antimicrobial resistance by supporting the bacteria in developing genetic alterations that lead to resistance.",
+      "reformulated_text": "These inappropriate uses of antimicrobial agents support the evolution of antimicrobial resistance by supporting the bacteria in developing genetic alterations that lead to resistance.",
+      "changed_word_pair": [
+        "promote",
+        "support"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "MINOR",
+      "human_defect_labels": {
+        "primary": "NATURALNESS_OR_REGISTER",
+        "secondary": []
+      },
+      "human_rationale": "\"support the evolution... by supporting the bacteria\" is an awkward near-repetition, though \"support\"/\"promote\" are reasonably close synonyms.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "antimicrobial_resistance",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 14,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:promote->support"
+    },
+    {
+      "uid": "P8B-organic-015",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "This process, known as horizontal gene transfer, allows resistance genes to spread rapidly between different bacterial species.",
+      "reformulated_text": "This act, known as horizontal gene transfer, allows resistance genes to spread rapidly between different bacterial species.",
+      "changed_word_pair": [
+        "process",
+        "act"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": []
+      },
+      "human_rationale": "\"This act, known as horizontal gene transfer\" -- \"act\" does not fit a systematic biological mechanism (\"process\"); same recurring pattern as case 13.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "antimicrobial_resistance",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 15,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:process->act"
+    },
+    {
+      "uid": "P8B-organic-016",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Natural selection means that organisms that are able to adapt to their environment survive and continue to produce offspring.",
+      "reformulated_text": "Natural selection means that organisms that are able to adapt to their environment survive and continue to create offspring.",
+      "changed_word_pair": [
+        "produce",
+        "create"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "MINOR",
+      "human_defect_labels": {
+        "primary": "NATURALNESS_OR_REGISTER",
+        "secondary": []
+      },
+      "human_rationale": "\"continue to create offspring\" is a slightly unusual collocation vs. the standard \"produce offspring\", but understandable.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "antimicrobial_resistance",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 16,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:produce->create"
+    },
+    {
+      "uid": "P8B-organic-017",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "restructuring",
+      "original_text": "It postulates that, holding all else equal, the unit price for a particular good in a perfectly competitive market will vary until it settles at the market-clearing price.",
+      "reformulated_text": "It postulates that, holding all else equal, the unit rate for a specific good in a perfectly competitive market will vary until it settles at the market-clearing rate.",
+      "changed_word_pair": null,
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": [
+          "FIXED_TERM_OR_IDIOM"
+        ]
+      },
+      "human_rationale": "\"unit rate\"/\"market-clearing rate\" for \"unit price\"/\"market-clearing price\" -- \"rate\" is not the correct economic term (implies exchange rate/frequency), breaking the specific fixed term \"market-clearing price\".",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "supply_and_demand",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 17,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "text:it postulates that, holding all else equal, the unit price for a particular good in a perfectly competitive market will vary until it settles at the market-clearing price.=>it postulates that, holding all else equal, the unit rate for a specific good in a perfectly competitive market will vary until it settles at the market-clearing rate."
+    },
+    {
+      "uid": "P8B-organic-018",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "A rise in the cost of raw materials would decrease supply, shifting the supply curve to the left because at each possible price a smaller quantity would be supplied.",
+      "reformulated_text": "A rise in the cost of raw materials would decrease supply, shifting the supply curve to the left because at each possible cost a smaller quantity would be supplied.",
+      "changed_word_pair": [
+        "price",
+        "cost"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": []
+      },
+      "human_rationale": "\"at each possible cost a smaller quantity would be supplied\" -- \"price\" and \"cost\" are distinct economic concepts (what buyers pay vs. what it costs to produce); substituting changes the actual economic claim, especially confusing alongside the sentence's own separate \"cost of raw materials\".",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "supply_and_demand",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 18,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:price->cost"
+    },
+    {
+      "uid": "P8B-organic-019",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "A fall in production costs would increase supply, shifting the supply curve to the right or down.",
+      "reformulated_text": "A fall in making costs would increase supply, shifting the supply curve to the right or down.",
+      "changed_word_pair": [
+        "production",
+        "making"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FIXED_TERM_OR_IDIOM",
+        "secondary": []
+      },
+      "human_rationale": "\"a fall in making costs\" breaks the specific fixed economic term \"production costs\".",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "supply_and_demand",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 19,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:production->making"
+    },
+    {
+      "uid": "P8B-organic-020",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Generally, consumers will buy an additional unit as long as the marginal value of the extra unit is more than the market price they pay.",
+      "reformulated_text": "Generally, consumers will buy an additional unit as long as the marginal value of the extra unit is more than the market cost they pay.",
+      "changed_word_pair": [
+        "price",
+        "cost"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": [
+          "FIXED_TERM_OR_IDIOM"
+        ]
+      },
+      "human_rationale": "\"more than the market cost they pay\" -- breaks the fixed term \"market price\" and the collocation \"pay a price\"; same price/cost conflation as case 18.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "supply_and_demand",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 20,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:price->cost"
+    },
+    {
+      "uid": "P8B-organic-021",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "According to the law of demand, the demand curve is always downward-sloping, meaning that as the price decreases, consumers will buy more of the good.",
+      "reformulated_text": "According to the law of demand, the demand curve is always downward-sloping, meaning that as the terms decreases, consumers will buy more of the good.",
+      "changed_word_pair": [
+        "price",
+        "terms"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": [
+          "FACTUAL_OR_LOGICAL_REVERSAL"
+        ]
+      },
+      "human_rationale": "\"as the terms decreases\" garbles the specific named economic law (\"law of demand\", about PRICE) into an ungrammatical, economically meaningless substitute (\"terms\" does not decrease in this sense; also introduces a subject-verb mismatch).",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "supply_and_demand",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 21,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:price->terms"
+    },
+    {
+      "uid": "P8B-organic-022",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "When consumers increase the quantity demanded at a given price, it is referred to as an increase in demand.",
+      "reformulated_text": "When consumers increase the quantity demanded at a given cost, it is referred to as an increase in demand.",
+      "changed_word_pair": [
+        "price",
+        "cost"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": []
+      },
+      "human_rationale": "\"at a given cost\" for \"at a given price\" -- same price/cost conflation, in one of the law-of-demand defining sentences.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "supply_and_demand",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 22,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:price->cost"
+    },
+    {
+      "uid": "P8B-organic-023",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "As a result of a supply curve shift, the price and the quantity move in opposite directions.",
+      "reformulated_text": "As a result of a supply curve shift, the cost and the quantity move in opposite directions.",
+      "changed_word_pair": [
+        "price",
+        "cost"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": [
+          "FACTUAL_OR_LOGICAL_REVERSAL"
+        ]
+      },
+      "human_rationale": "\"the cost and the quantity move in opposite directions\" -- changes which specific variable (price, not cost) the law of demand describes.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "supply_and_demand",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 23,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:price->cost"
+    },
+    {
+      "uid": "P8B-organic-024",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "If desire for goods increases while its availability decreases, its price rises.",
+      "reformulated_text": "If desire for goods increases while its availability decreases, its cost rises.",
+      "changed_word_pair": [
+        "price",
+        "cost"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": []
+      },
+      "human_rationale": "\"its cost rises\" for \"its price rises\" -- same price/cost conflation.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "supply_and_demand",
+      "profile": "moderate_mixed",
+      "sentence_group_index": 24,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:price->cost"
+    },
+    {
+      "uid": "P8B-organic-025",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "The folk practice of inoculation against smallpox was brought from Turkey to Britain in 1721 by Lady Mary Wortley Montagu.",
+      "reformulated_text": "The folk practice of inoculation against vaccination was brought from Turkey to Britain in 1721 by Lady Mary Wortley Montagu.",
+      "changed_word_pair": [
+        "smallpox",
+        "vaccination"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FACTUAL_OR_LOGICAL_REVERSAL",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"inoculation against vaccination\" is self-contradictory -- inoculation IS a vaccination method, so being \"against\" it while performing it is a logical inversion.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "heavy_dense",
+      "sentence_group_index": 25,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:smallpox->vaccination"
+    },
+    {
+      "uid": "P8B-organic-026",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "He used the phrase in 1798 for the long title of his inquiry, in which he described the protective effect of cowpox against smallpox.",
+      "reformulated_text": "He used the phrase in 1798 for the long title of his inquiry, in which he described the protective effect of cowpox against vaccination.",
+      "changed_word_pair": [
+        "smallpox",
+        "vaccination"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FACTUAL_OR_LOGICAL_REVERSAL",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"the protective effect of cowpox against vaccination\" -- cowpox's protective effect is against SMALLPOX; vaccination is the protective mechanism itself, not the threat -- backwards.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "heavy_dense",
+      "sentence_group_index": 26,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:smallpox->vaccination"
+    },
+    {
+      "uid": "P8B-organic-027-0",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "When the virulent version of an agent is encountered, the body recognizes the protein coat on the agent, and thus is prepared to respond.",
+      "reformulated_text": "When the virulent version of an agent is encountered, the body knows the protein coat on the agent, and thus is prepared to answer.",
+      "changed_word_pair": [
+        "respond",
+        "answer"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": []
+      },
+      "human_rationale": "\"knows the protein coat\" and \"prepared to answer\" are both non-standard for immunological recognition/response -- \"answer\" especially sounds like answering a question, not mounting a biological response.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "heavy_dense",
+      "sentence_group_index": 27,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:respond->answer"
+    },
+    {
+      "uid": "P8B-organic-027-1",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "When the virulent version of an agent is encountered, the body recognizes the protein coat on the agent, and thus is prepared to respond.",
+      "reformulated_text": "When the virulent version of an agent is encountered, the body knows the protein coat on the agent, and thus is prepared to answer.",
+      "changed_word_pair": [
+        "recognizes",
+        "knows"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": []
+      },
+      "human_rationale": "\"knows the protein coat\" and \"prepared to answer\" are both non-standard for immunological recognition/response -- \"answer\" especially sounds like answering a question, not mounting a biological response.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "heavy_dense",
+      "sentence_group_index": 27,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:recognizes->knows"
+    },
+    {
+      "uid": "P8B-organic-028",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Vaccines led to the eradication of smallpox, one of the most contagious and deadly diseases in humans.",
+      "reformulated_text": "Vaccines led to the eradication of vaccination, one of the most contagious and deadly diseases in humans.",
+      "changed_word_pair": [
+        "smallpox",
+        "vaccination"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FACTUAL_OR_LOGICAL_REVERSAL",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"Vaccines led to the eradication of vaccination, one of the most contagious and deadly diseases in humans\" -- calls the cure a disease and claims the treatment itself was eradicated; a complete logical inversion of the actual, well-known historical claim (smallpox was eradicated).",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "heavy_dense",
+      "sentence_group_index": 28,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:smallpox->vaccination"
+    },
+    {
+      "uid": "P8B-organic-029",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "The model builds on the concept of continental drift, an idea developed during the first decades of the 20th century.",
+      "reformulated_text": "The model builds on the concept of continental drift, an idea developed during the first decades of the 20th period.",
+      "changed_word_pair": [
+        "century",
+        "period"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": []
+      },
+      "human_rationale": "\"the first decades of the 20th period\" breaks the fixed calendar unit \"century\".",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "sentence_group_index": 29,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:century->period"
+    },
+    {
+      "uid": "P8B-organic-030-0",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Plate tectonics came to be accepted by geoscientists after seafloor spreading was validated in the mid to late 1960s.",
+      "reformulated_text": "Plate tectonics came to be accepted by geoscientists after deep-sea dissemination was validated in the mid to late 1960s.",
+      "changed_word_pair": [
+        "seafloor",
+        "deep-sea"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FIXED_TERM_OR_IDIOM",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"deep-sea dissemination\" completely breaks the specific, named geological mechanism \"seafloor spreading\" (the core evidence for plate tectonics) into an unrelated and incorrect substitute.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "sentence_group_index": 30,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:seafloor->deep-sea"
+    },
+    {
+      "uid": "P8B-organic-030-1",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Plate tectonics came to be accepted by geoscientists after seafloor spreading was validated in the mid to late 1960s.",
+      "reformulated_text": "Plate tectonics came to be accepted by geoscientists after deep-sea dissemination was validated in the mid to late 1960s.",
+      "changed_word_pair": [
+        "spreading",
+        "dissemination"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FIXED_TERM_OR_IDIOM",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"deep-sea dissemination\" completely breaks the specific, named geological mechanism \"seafloor spreading\" (the core evidence for plate tectonics) into an unrelated and incorrect substitute.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "sentence_group_index": 30,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:spreading->dissemination"
+    },
+    {
+      "uid": "P8B-organic-031",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "The processes that result in plates and shape Earth's crust is called tectonics.",
+      "reformulated_text": "The processes that produce in plates and shape Earth's crust is called tectonics.",
+      "changed_word_pair": [
+        "result",
+        "produce"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "GRAMMAR",
+        "secondary": []
+      },
+      "human_rationale": "\"The processes that produce in plates\" does not parse -- \"produce\" is transitive and needs a direct object; \"result in\" does not substitute this way.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "sentence_group_index": 31,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:result->produce"
+    },
+    {
+      "uid": "P8B-organic-032",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Where the plates meet, their relative motion determines the type of plate boundary, convergent, divergent, or transform.",
+      "reformulated_text": "Where the plates meet, their corresponding motion determines the type of plate boundary, convergent, divergent, or transform.",
+      "changed_word_pair": [
+        "relative",
+        "corresponding"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": [
+          "FIXED_TERM_OR_IDIOM"
+        ]
+      },
+      "human_rationale": "\"their corresponding motion\" for \"their relative motion\" loses the specific geophysical meaning (motion measured relative to a reference frame/other plate).",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "sentence_group_index": 32,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:relative->corresponding"
+    },
+    {
+      "uid": "P8B-organic-033",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "restructuring",
+      "original_text": "The relative movement of the plates typically range from zero to 10 centimeters annually.",
+      "reformulated_text": "Typically, the absolute movement of the plates is from zero to 10 centimetres annually.",
+      "changed_word_pair": null,
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FACTUAL_OR_LOGICAL_REVERSAL",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"the absolute movement of the plates\" for \"the relative movement\" changes the actual measurement paradigm being described -- plate motion is conventionally described relative to other plates/reference frames, not in absolute terms; a real technical/factual claim change, not just a register shift.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "sentence_group_index": 33,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "text:the relative movement of the plates typically range from zero to 10 centimeters annually.=>typically, the absolute movement of the plates is from zero to 10 centimetres annually."
+    },
+    {
+      "uid": "P8B-organic-034-0",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Tectonic plates are relatively rigid and float across the ductile asthenosphere beneath.",
+      "reformulated_text": "Tectonic plates are about fixed and float across the ductile asthenosphere beneath.",
+      "changed_word_pair": [
+        "rigid",
+        "fixed"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FACTUAL_OR_LOGICAL_REVERSAL",
+        "secondary": [
+          "GRAMMAR"
+        ]
+      },
+      "human_rationale": "\"Tectonic plates are about fixed\" -- \"fixed\" (stationary) contradicts the basic premise of the article it appears in (plate TECTONICS is specifically that plates move); \"rigid\" (stiff/non-deforming) and \"fixed\" (immobile) are different properties, and this substitution asserts the wrong one. \"about fixed\" also does not parse naturally.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "sentence_group_index": 34,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:rigid->fixed"
+    },
+    {
+      "uid": "P8B-organic-034-1",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Tectonic plates are relatively rigid and float across the ductile asthenosphere beneath.",
+      "reformulated_text": "Tectonic plates are about fixed and float across the ductile asthenosphere beneath.",
+      "changed_word_pair": [
+        "relatively",
+        "about"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FACTUAL_OR_LOGICAL_REVERSAL",
+        "secondary": [
+          "GRAMMAR"
+        ]
+      },
+      "human_rationale": "\"Tectonic plates are about fixed\" -- \"fixed\" (stationary) contradicts the basic premise of the article it appears in (plate TECTONICS is specifically that plates move); \"rigid\" (stiff/non-deforming) and \"fixed\" (immobile) are different properties, and this substitution asserts the wrong one. \"about fixed\" also does not parse naturally.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "sentence_group_index": 34,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:relatively->about"
+    },
+    {
+      "uid": "P8B-organic-035",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "The lithosphere is cooler and more rigid, while the asthenosphere is hotter and flows more easily.",
+      "reformulated_text": "The lithosphere is cooler and more fixed, while the asthenosphere is hotter and flows more easily.",
+      "changed_word_pair": [
+        "rigid",
+        "fixed"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FACTUAL_OR_LOGICAL_REVERSAL",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"the lithosphere is cooler and more fixed\" -- same rigid->fixed defect as case 34, independently occurring; asserts plates are immobile in an article whose entire subject is that they move.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "plate_tectonics",
+      "profile": "heavy_dense",
+      "sentence_group_index": 35,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:rigid->fixed"
+    },
+    {
+      "uid": "P8B-organic-036",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Misuse and improper management of antimicrobial is primary drivers of this resistance, though it can also occur naturally through genetic mutations.",
+      "reformulated_text": "Misuse and improper management of antimicrobial is primary drivers of this opposition, though it can also occur naturally through genetic mutations.",
+      "changed_word_pair": [
+        "resistance",
+        "opposition"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": [
+          "FIXED_TERM_OR_IDIOM"
+        ]
+      },
+      "human_rationale": "\"primary drivers of this opposition\" -- \"opposition\" loses the specific scientific/medical meaning of \"antimicrobial resistance\" (a defined term), reading instead as political/social resistance.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "antimicrobial_resistance",
+      "profile": "heavy_dense",
+      "sentence_group_index": 36,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:resistance->opposition"
+    },
+    {
+      "uid": "P8B-organic-037",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Antimicrobial resistance is driven largely by the misuse and overuse of antimicrobial.",
+      "reformulated_text": "Antimicrobial condition is driven largely by the misuse and overuse of antimicrobial.",
+      "changed_word_pair": [
+        "resistance",
+        "condition"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FIXED_TERM_OR_IDIOM",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"Antimicrobial condition is driven largely by...\" breaks the article's own core named subject term (\"antimicrobial resistance\") entirely.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "antimicrobial_resistance",
+      "profile": "heavy_dense",
+      "sentence_group_index": 37,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:resistance->condition"
+    },
+    {
+      "uid": "P8B-organic-038",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "With the increased use of antimicrobial agents, there is a speeding up of this natural process.",
+      "reformulated_text": "With the increased use of antimicrobial agents, there is a accelerating up of this natural process.",
+      "changed_word_pair": [
+        "speeding",
+        "accelerating"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "GRAMMAR",
+        "secondary": [
+          "FIXED_TERM_OR_IDIOM"
+        ]
+      },
+      "human_rationale": "\"a accelerating up of this natural process\" has an article-agreement error (\"a\" before a vowel sound) and breaks the fixed phrasal verb \"speeding up\".",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "antimicrobial_resistance",
+      "profile": "heavy_dense",
+      "sentence_group_index": 38,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:speeding->accelerating"
+    },
+    {
+      "uid": "P8B-organic-039",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Overuse of disinfectants can lead to mutations that induce antimicrobial resistance.",
+      "reformulated_text": "Overuse of disinfectants can lead to mutations that induce antimicrobial condition.",
+      "changed_word_pair": [
+        "resistance",
+        "condition"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FIXED_TERM_OR_IDIOM",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"induce antimicrobial condition\" -- same resistance->condition fixed-term erosion as case 37, independently occurring.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "antimicrobial_resistance",
+      "profile": "heavy_dense",
+      "sentence_group_index": 39,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:resistance->condition"
+    },
+    {
+      "uid": "P8B-organic-040-0",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Natural selection means that organisms that are able to adapt to their environment survive and continue to produce offspring.",
+      "reformulated_text": "Natural choice means that organisms that are able to adapt to their environment last and continue to produce offspring.",
+      "changed_word_pair": [
+        "survive",
+        "last"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FIXED_TERM_OR_IDIOM",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"Natural choice\" breaks one of the most well-known fixed scientific terms in biology (\"natural selection\"); \"survive\"->\"last\" is also a real sense shift (duration vs. overcoming a threat).",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "antimicrobial_resistance",
+      "profile": "heavy_dense",
+      "sentence_group_index": 40,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:survive->last"
+    },
+    {
+      "uid": "P8B-organic-040-1",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Natural selection means that organisms that are able to adapt to their environment survive and continue to produce offspring.",
+      "reformulated_text": "Natural choice means that organisms that are able to adapt to their environment last and continue to produce offspring.",
+      "changed_word_pair": [
+        "selection",
+        "choice"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FIXED_TERM_OR_IDIOM",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"Natural choice\" breaks one of the most well-known fixed scientific terms in biology (\"natural selection\"); \"survive\"->\"last\" is also a real sense shift (duration vs. overcoming a threat).",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "antimicrobial_resistance",
+      "profile": "heavy_dense",
+      "sentence_group_index": 40,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:selection->choice"
+    },
+    {
+      "uid": "P8B-organic-041",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "It postulates that, holding all else equal, the unit price for a particular good in a perfectly competitive market will vary until it settles at the market-clearing price.",
+      "reformulated_text": "It postulates that, holding all else equal, the unit price for a particular good in a perfectly competitive market will vary until it places at the market-clearing price.",
+      "changed_word_pair": [
+        "settles",
+        "places"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "GRAMMAR",
+        "secondary": [
+          "FIXED_TERM_OR_IDIOM"
+        ]
+      },
+      "human_rationale": "\"it places at the market-clearing price\" does not parse (\"place\" is transitive, needs an object) and breaks the fixed equilibrium phrase \"settles at [price]\".",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "supply_and_demand",
+      "profile": "heavy_dense",
+      "sentence_group_index": 41,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:settles->places"
+    },
+    {
+      "uid": "P8B-organic-042",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "restructuring",
+      "original_text": "A fall in production costs would increase supply, shifting the supply curve to the right or down.",
+      "reformulated_text": "A fall in production costs would increase demand, shifting the demand curve to the left or down.",
+      "changed_word_pair": null,
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FACTUAL_OR_LOGICAL_REVERSAL",
+        "secondary": []
+      },
+      "human_rationale": "\"A fall in production costs would increase demand, shifting the demand curve to the left\" -- production costs are a SUPPLY-side factor, not a demand-side one; swapping supply->demand is a substantive economic-logic error, compounded by an internally inconsistent direction (an increase in demand should shift the demand curve right, not left).",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "supply_and_demand",
+      "profile": "heavy_dense",
+      "sentence_group_index": 42,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "text:a fall in production costs would increase supply, shifting the supply curve to the right or down.=>a fall in production costs would increase demand, shifting the demand curve to the left or down."
+    },
+    {
+      "uid": "P8B-organic-043",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "When consumers increase the quantity demanded at a given price, it is referred to as an increase in demand.",
+      "reformulated_text": "When consumers increase the quantity demanded at a given price, it is mentioned to as an increase in demand.",
+      "changed_word_pair": [
+        "referred",
+        "mentioned"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "GRAMMAR",
+        "secondary": [
+          "FIXED_TERM_OR_IDIOM"
+        ]
+      },
+      "human_rationale": "\"it is mentioned to as an increase in demand\" is not standard English and breaks the fixed phrasal verb \"referred to as\".",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "supply_and_demand",
+      "profile": "heavy_dense",
+      "sentence_group_index": 43,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:referred->mentioned"
+    },
+    {
+      "uid": "P8B-organic-044",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "As a result of a supply curve shift, the price and the quantity move in opposite directions.",
+      "reformulated_text": "As a result of a add curve shift, the price and the quantity move in opposite directions.",
+      "changed_word_pair": [
+        "supply",
+        "add"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "GRAMMAR",
+        "secondary": [
+          "FIXED_TERM_OR_IDIOM"
+        ]
+      },
+      "human_rationale": "\"a add curve shift\" has an article-agreement error and breaks the fixed economic term \"supply curve\" into nonsense.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "supply_and_demand",
+      "profile": "heavy_dense",
+      "sentence_group_index": 44,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:supply->add"
+    },
+    {
+      "uid": "P8B-organic-045",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "If the quantity supplied decreases, the opposite happens.",
+      "reformulated_text": "If the quantity providing decreases, the opposite happens.",
+      "changed_word_pair": [
+        "supplied",
+        "providing"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "GRAMMAR",
+        "secondary": [
+          "FIXED_TERM_OR_IDIOM"
+        ]
+      },
+      "human_rationale": "\"the quantity providing decreases\" does not parse and breaks the specific fixed economic term \"quantity supplied\".",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "supply_and_demand",
+      "profile": "heavy_dense",
+      "sentence_group_index": 45,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:supplied->providing"
+    },
+    {
+      "uid": "P8B-organic-046-0",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "The demand for money intersects with the money supply to determine the interest rate.",
+      "reformulated_text": "The demand for money intersects with the money issue to determine the interest charge.",
+      "changed_word_pair": [
+        "rate",
+        "charge"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FIXED_TERM_OR_IDIOM",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"the money issue\" breaks the specific macroeconomic term \"money supply\"; \"the interest charge\" is a different, non-equivalent concept from \"the interest rate\".",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "supply_and_demand",
+      "profile": "heavy_dense",
+      "sentence_group_index": 46,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:rate->charge"
+    },
+    {
+      "uid": "P8B-organic-046-1",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "The demand for money intersects with the money supply to determine the interest rate.",
+      "reformulated_text": "The demand for money intersects with the money issue to determine the interest charge.",
+      "changed_word_pair": [
+        "supply",
+        "issue"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FIXED_TERM_OR_IDIOM",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"the money issue\" breaks the specific macroeconomic term \"money supply\"; \"the interest charge\" is a different, non-equivalent concept from \"the interest rate\".",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "supply_and_demand",
+      "profile": "heavy_dense",
+      "sentence_group_index": 46,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:supply->issue"
+    },
+    {
+      "uid": "P8B-organic-047",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "If desire for goods increases while its availability decreases, its price rises.",
+      "reformulated_text": "If desire for goods increases while its availability decreases, its price increases.",
+      "changed_word_pair": [
+        "rises",
+        "increases"
+      ],
+      "human_acceptability": "CLEAN",
+      "human_severity": "CLEAN",
+      "human_defect_labels": {
+        "primary": "CLEAN",
+        "secondary": []
+      },
+      "human_rationale": "\"its price increases\" is a valid, natural synonym for \"its price rises\".",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "supply_and_demand",
+      "profile": "heavy_dense",
+      "sentence_group_index": 47,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:rises->increases"
+    },
+    {
+      "uid": "P8B-organic-048-0",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "The agent stimulates the immune system to recognize the agent as a threat, destroy it, and recognize further and destroy any of the microorganisms associated with that agent that it may encounter in the future.",
+      "reformulated_text": "The agent causes the immune organization to recognize the agent as a threat, destroy it, and recognize further and destroy any of the microorganisms associated with that agent that it may encounter in the future.",
+      "changed_word_pair": [
+        "system",
+        "organization"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FIXED_TERM_OR_IDIOM",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"the immune organization\" breaks the standard biological/medical term \"immune system\" into a nonsensical substitute (an organization is a social structure, not a body system).",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "single_common_sound",
+      "sentence_group_index": 48,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:system->organization"
+    },
+    {
+      "uid": "P8B-organic-048-1",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "The agent stimulates the immune system to recognize the agent as a threat, destroy it, and recognize further and destroy any of the microorganisms associated with that agent that it may encounter in the future.",
+      "reformulated_text": "The agent causes the immune organization to recognize the agent as a threat, destroy it, and recognize further and destroy any of the microorganisms associated with that agent that it may encounter in the future.",
+      "changed_word_pair": [
+        "stimulates",
+        "causes"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FIXED_TERM_OR_IDIOM",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"the immune organization\" breaks the standard biological/medical term \"immune system\" into a nonsensical substitute (an organization is a social structure, not a body system).",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "single_common_sound",
+      "sentence_group_index": 48,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:stimulates->causes"
+    },
+    {
+      "uid": "P8B-organic-049-0",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Widespread immunity due to vaccination is largely responsible for the worldwide eradication of smallpox and the restriction of diseases such as polio, measles, and tetanus from much of the world.",
+      "reformulated_text": "Widespread immunity due to vaccination is largely responsible for the worldwide eradication of vaccination and the restriction of diseases much as polio, measles, and tetanus from much of the world.",
+      "changed_word_pair": [
+        "smallpox",
+        "vaccination"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FACTUAL_OR_LOGICAL_REVERSAL",
+        "secondary": [
+          "GRAMMAR"
+        ]
+      },
+      "human_rationale": "\"the worldwide eradication of vaccination\" -- same self-contradictory eradication claim as case 28, independently occurring; also breaks the \"such as\" listing construction (\"much as polio...\").",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "single_common_sound",
+      "sentence_group_index": 49,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:smallpox->vaccination"
+    },
+    {
+      "uid": "P8B-organic-049-1",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Widespread immunity due to vaccination is largely responsible for the worldwide eradication of smallpox and the restriction of diseases such as polio, measles, and tetanus from much of the world.",
+      "reformulated_text": "Widespread immunity due to vaccination is largely responsible for the worldwide eradication of vaccination and the restriction of diseases much as polio, measles, and tetanus from much of the world.",
+      "changed_word_pair": [
+        "such",
+        "much"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FACTUAL_OR_LOGICAL_REVERSAL",
+        "secondary": [
+          "GRAMMAR"
+        ]
+      },
+      "human_rationale": "\"the worldwide eradication of vaccination\" -- same self-contradictory eradication claim as case 28, independently occurring; also breaks the \"such as\" listing construction (\"much as polio...\").",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "single_common_sound",
+      "sentence_group_index": 49,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:such->much"
+    },
+    {
+      "uid": "P8B-organic-050",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "The immune system recognizes vaccine agents as foreign, destroys them, and remembers them.",
+      "reformulated_text": "The immune organization recognizes vaccine agents as foreign, destroys them, and remembers them.",
+      "changed_word_pair": [
+        "system",
+        "organization"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FIXED_TERM_OR_IDIOM",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"The immune organization recognizes vaccine agents\" -- same immune-system->immune-organization defect as case 48, independently occurring.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "vaccine",
+      "profile": "single_common_sound",
+      "sentence_group_index": 50,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:system->organization"
+    },
+    {
+      "uid": "P8B-organic-051-0",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Plate tectonics are the scientific theory that Earth's lithosphere comprises a number of large tectonic plates, which have been slowly moving since 3 to 4 billion years ago.",
+      "reformulated_text": "Plate tectonics are the technical theory that Earth's lithosphere comprises a number of large tectonic plates, which have been late moving since 3 to 4 billion years ago.",
+      "changed_word_pair": [
+        "slowly",
+        "late"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": [
+          "GRAMMAR"
+        ]
+      },
+      "human_rationale": "\"have been late moving\" -- \"late\" (tardiness/timing) does not substitute for \"slowly\" (rate of movement); a category confusion that also does not parse naturally.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "plate_tectonics",
+      "profile": "single_common_sound",
+      "sentence_group_index": 51,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:slowly->late"
+    },
+    {
+      "uid": "P8B-organic-051-1",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Plate tectonics are the scientific theory that Earth's lithosphere comprises a number of large tectonic plates, which have been slowly moving since 3 to 4 billion years ago.",
+      "reformulated_text": "Plate tectonics are the technical theory that Earth's lithosphere comprises a number of large tectonic plates, which have been late moving since 3 to 4 billion years ago.",
+      "changed_word_pair": [
+        "scientific",
+        "technical"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": [
+          "GRAMMAR"
+        ]
+      },
+      "human_rationale": "\"have been late moving\" -- \"late\" (tardiness/timing) does not substitute for \"slowly\" (rate of movement); a category confusion that also does not parse naturally.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "plate_tectonics",
+      "profile": "single_common_sound",
+      "sentence_group_index": 51,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:scientific->technical"
+    },
+    {
+      "uid": "P8B-organic-052",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "The relative movement of the plates typically range from zero to 10 centimeters annually.",
+      "reformulated_text": "The relative movement of the plates typically range from zero to 10 cms annually.",
+      "changed_word_pair": [
+        "centimeters",
+        "cms"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "MINOR",
+      "human_defect_labels": {
+        "primary": "NATURALNESS_OR_REGISTER",
+        "secondary": []
+      },
+      "human_rationale": "\"10 cms annually\" uses a nonstandard abbreviation (\"cm\" is the correct SI form) -- an informal/imprecise rendering, not a meaning change.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "plate_tectonics",
+      "profile": "single_common_sound",
+      "sentence_group_index": 52,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:centimeters->cms"
+    },
+    {
+      "uid": "P8B-organic-053-0",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Resistance arises through spontaneous mutation, horizontal gene transfer, and increased selective pressure from antibiotic overuse, which accelerates resistance development.",
+      "reformulated_text": "Resistance arises through natural mutation, horizontal gene transfer, and increased exclusive pressure from antibiotic overuse, which accelerates resistance development.",
+      "changed_word_pair": [
+        "selective",
+        "exclusive"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FIXED_TERM_OR_IDIOM",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"increased exclusive pressure\" breaks the specific fixed evolutionary-biology term \"selective pressure\" (same class of error as case 12); \"spontaneous\"->\"natural\" is comparatively minor.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "antimicrobial_resistance",
+      "profile": "single_common_sound",
+      "sentence_group_index": 53,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:selective->exclusive"
+    },
+    {
+      "uid": "P8B-organic-053-1",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Resistance arises through spontaneous mutation, horizontal gene transfer, and increased selective pressure from antibiotic overuse, which accelerates resistance development.",
+      "reformulated_text": "Resistance arises through natural mutation, horizontal gene transfer, and increased exclusive pressure from antibiotic overuse, which accelerates resistance development.",
+      "changed_word_pair": [
+        "spontaneous",
+        "natural"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FIXED_TERM_OR_IDIOM",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"increased exclusive pressure\" breaks the specific fixed evolutionary-biology term \"selective pressure\" (same class of error as case 12); \"spontaneous\"->\"natural\" is comparatively minor.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "antimicrobial_resistance",
+      "profile": "single_common_sound",
+      "sentence_group_index": 53,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:spontaneous->natural"
+    },
+    {
+      "uid": "P8B-organic-054",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "Microbes may naturally develop resistance through genetic mutations that occur during cell division.",
+      "reformulated_text": "Microbes may naturally develop resistance through genetic mutations that occur during case division.",
+      "changed_word_pair": [
+        "cell",
+        "case"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FIXED_TERM_OR_IDIOM",
+        "secondary": []
+      },
+      "human_rationale": "\"occur during case division\" breaks the fundamental, extremely well-known fixed biological term \"cell division\".",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "antimicrobial_resistance",
+      "profile": "single_common_sound",
+      "sentence_group_index": 54,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:cell->case"
+    },
+    {
+      "uid": "P8B-organic-055",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "These inappropriate uses of antimicrobial agents promote the evolution of antimicrobial resistance by supporting the bacteria in developing genetic alterations that lead to resistance.",
+      "reformulated_text": "These inappropriate uses of antimicrobial agents promote the evolution of antimicrobial resistance by backing the bacteria in developing genetic alterations that lead to resistance.",
+      "changed_word_pair": [
+        "supporting",
+        "backing"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "MINOR",
+      "human_defect_labels": {
+        "primary": "NATURALNESS_OR_REGISTER",
+        "secondary": []
+      },
+      "human_rationale": "\"backing the bacteria\" is a valid but slightly more informal near-synonym for \"supporting the bacteria\".",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "antimicrobial_resistance",
+      "profile": "single_common_sound",
+      "sentence_group_index": 55,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:supporting->backing"
+    },
+    {
+      "uid": "P8B-organic-056-0",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "This process, known as horizontal gene transfer, allows resistance genes to spread rapidly between different bacterial species.",
+      "reformulated_text": "This process, known as horizontal gene transfer, allows resistance genes to continue rapidly between different bacterial manners.",
+      "changed_word_pair": [
+        "spread",
+        "continue"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": [
+          "GRAMMAR"
+        ]
+      },
+      "human_rationale": "\"allows resistance genes to continue rapidly between different bacterial manners\" -- \"continue\" (persisting) does not mean the same as \"spread\" (transmitting/expanding) and reads ungrammatically here; \"manners\" (ways of behaving) is nonsensical for \"species\" (a biological classification).",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "antimicrobial_resistance",
+      "profile": "single_common_sound",
+      "sentence_group_index": 56,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:spread->continue"
+    },
+    {
+      "uid": "P8B-organic-056-1",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "This process, known as horizontal gene transfer, allows resistance genes to spread rapidly between different bacterial species.",
+      "reformulated_text": "This process, known as horizontal gene transfer, allows resistance genes to continue rapidly between different bacterial manners.",
+      "changed_word_pair": [
+        "species",
+        "manners"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "WRONG_WORD_OR_SENSE",
+        "secondary": [
+          "GRAMMAR"
+        ]
+      },
+      "human_rationale": "\"allows resistance genes to continue rapidly between different bacterial manners\" -- \"continue\" (persisting) does not mean the same as \"spread\" (transmitting/expanding) and reads ungrammatically here; \"manners\" (ways of behaving) is nonsensical for \"species\" (a biological classification).",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "antimicrobial_resistance",
+      "profile": "single_common_sound",
+      "sentence_group_index": 56,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:species->manners"
+    },
+    {
+      "uid": "P8B-organic-057-0",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "A fall in production costs would increase supply, shifting the supply curve to the right or down.",
+      "reformulated_text": "A fall in production costs would increase add, shifting the issue curve to the right or down.",
+      "changed_word_pair": [
+        "supply",
+        "add"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "OTHER_DEFECT",
+        "secondary": [
+          "GRAMMAR"
+        ]
+      },
+      "human_rationale": "\"increase add, shifting the issue curve\" -- the same original word (\"supply\") was replaced with two DIFFERENT wrong substitutes within one reformulation pass, producing a doubly-garbled, non-parsing sentence distinct from case 42's cleaner supply->demand swap.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "supply_and_demand",
+      "profile": "single_common_sound",
+      "sentence_group_index": 57,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:supply->add"
+    },
+    {
+      "uid": "P8B-organic-057-1",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "A fall in production costs would increase supply, shifting the supply curve to the right or down.",
+      "reformulated_text": "A fall in production costs would increase add, shifting the issue curve to the right or down.",
+      "changed_word_pair": [
+        "supply",
+        "issue"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "OTHER_DEFECT",
+        "secondary": [
+          "GRAMMAR"
+        ]
+      },
+      "human_rationale": "\"increase add, shifting the issue curve\" -- the same original word (\"supply\") was replaced with two DIFFERENT wrong substitutes within one reformulation pass, producing a doubly-garbled, non-parsing sentence distinct from case 42's cleaner supply->demand swap.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "supply_and_demand",
+      "profile": "single_common_sound",
+      "sentence_group_index": 57,
+      "n_distinct_changes_in_sentence": 2,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:supply->issue"
+    },
+    {
+      "uid": "P8B-organic-058",
+      "provenance": [
+        "R50-Phase8B-organic-harvest"
+      ],
+      "evidence_quality": "ORGANIC_OBSERVED",
+      "granularity": "substitution",
+      "original_text": "The demand for money intersects with the money supply to determine the interest rate.",
+      "reformulated_text": "The demand for money intersects with the money issue to determine the interest rate.",
+      "changed_word_pair": [
+        "supply",
+        "issue"
+      ],
+      "human_acceptability": "DEFECTIVE",
+      "human_severity": "SEVERE",
+      "human_defect_labels": {
+        "primary": "FIXED_TERM_OR_IDIOM",
+        "secondary": [
+          "WRONG_WORD_OR_SENSE"
+        ]
+      },
+      "human_rationale": "\"the money issue to determine the interest rate\" -- breaks the fixed macroeconomic term \"money supply\", independently of case 46's combined defect.",
+      "human_rationale_source": "fresh-blind-whole-sentence-2026-08-24",
+      "rater_id": "claude-primary",
+      "labeling_protocol": "blind, WHOLE-DELIVERED-SENTENCE convention (Phase 8B task 3): judged the complete original->reformulated pair, not an isolated word change; same verdict applied to every word-pair that produced this sentence.",
+      "topic_source": "supply_and_demand",
+      "profile": "single_common_sound",
+      "sentence_group_index": 58,
+      "n_distinct_changes_in_sentence": 1,
+      "automated": {
+        "contextual_fit": null,
+        "sbert_sim": null,
+        "antonym_check": null
+      },
+      "dedup_key": "wordpair:supply->issue"
+    }
+  ]
+}
