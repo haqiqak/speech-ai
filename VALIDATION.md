@@ -4408,3 +4408,93 @@ No production code changed in this investigation beyond the disclosed
 `PhonemeConstraintLogitsProcessor` fix (§39.1), which is a correctness
 fix to already-shipped-but-unused-in-production code
 (`reformulate_v2()` is opt-in, off by default), not a new capability.
+
+## 40. R50 Phase 2/3/7/9 — dataset construction, defect-typed labeling, and baseline report (executed 2026-08-24)
+
+Per direct instruction, following the user's own R50 proposal: before any
+custom-validator prototyping, turn the evidence accumulated across
+R40–R49 into a scientifically usable, defect-typed, provenance-tracked
+dataset, and answer one question — is there enough trustworthy labeled
+data to justify training a validator, or is a dedicated labeling phase
+needed first. **Research/dataset-construction only; no model trained, no
+production code touched.** Full report: `eval/r50_dataset_report.md`;
+scripts: `eval/r50_build_dataset.py`, `eval/r50_dataset_stats.py`,
+`eval/r50_make_split.py`; outputs: `eval/r50_dataset/labeled_dataset.json`,
+`stats_summary.json`, `split.json`.
+
+**[FACT] R48's 12 escalation successes were never attached to per-case
+verdicts beyond 3 of the 12** — `VALIDATION.md` §38.3 recorded only an
+aggregate "5 CLEAN, 4 MINOR, 3 SEVERE" tally plus prose detail for the 3
+most consequential SEVERE cases. Per instruction not to infer where
+evidence is ambiguous, those 3 keep their documented verdict; the other 9
+were given a fresh, dated, distinctly-tagged read from the actual stored
+sentence text rather than a fabricated "reconstruction" of the original
+tally. One (`R48-17`) reads slightly worse on this fresh pass than R48's
+prose said — left visible, not reconciled away.
+
+**[FACT] Assembled dataset: 135 labeled records, 88 unique underlying
+cases** (word-pair or normalized-sentence deduplication) from R40 (112),
+R47 (11 defensible + 5 no-change baselines), R48 (11 + 1 reconstructed
+negative example), enriched with v5's human 1–5 ratings (16 records) and
+R44's automated NLI/grammar flags (47 records) where they match by text.
+Every record carries a structured defect taxonomy (primary + optional
+secondary label) alongside — not replacing — the existing CLEAN/MINOR/
+SEVERE severity, per instruction. Human labels were assigned from the
+actual sentence text (and, for R40, the case's own original R40-time
+rationale) and never from an automated score.
+
+**[FINDING] Raw counts overstate how much independent evidence exists.**
+R40's corpus reuses the same word-pair substitution across many sentences
+("small"→"little" appears 9 times). At the unique-case level, class sizes
+are: WRONG_WORD_OR_SENSE 33, NATURALNESS_OR_REGISTER 12, GRAMMAR 9,
+FIXED_TERM_OR_IDIOM 8, CLEAN 7, OTHER_DEFECT 7,
+**FACTUAL_OR_LOGICAL_REVERSAL 7**. The two classes this research thread
+exists to close — factual/logical reversal, and fixed-term erosion — are
+among the thinnest, at 7–8 unique cases each.
+
+**[FINDING, new] Fixed-term-idiom erosion is a third, previously
+undifferentiated blind spot.** Broken out by defect type for the first
+time (R44 only measured an undifferentiated SEVERE bucket): combined
+NLI+grammar recall is 57% on GRAMMAR and FACTUAL_OR_LOGICAL_REVERSAL
+defects, 33% on OTHER_DEFECT, 24% on WRONG_WORD_OR_SENSE, and **0/5 (0%)
+on FIXED_TERM_OR_IDIOM** — a complete miss, not a weak signal.
+
+**[FINDING, new and sharper than R41's] contextual_fit is actively
+counter-indicative for factual/logical reversals, not just unreliable.**
+Median contextual_fit by defect type: FACTUAL_OR_LOGICAL_REVERSAL 0.305
+vs. CLEAN 0.0078 — roughly 40× *higher* for the defect class than for
+genuinely good substitutions, across all 7 unique factual-reversal cases
+now measured together (R40/R41 had only anecdotally noted this on single
+examples like pre-industrial→palaeolithic's 0.999). A fluent factual
+reversal reads as more contextually plausible by construction, not less;
+this signal points the wrong way for this class by design, not by
+weakness.
+
+**[RECOMMENDATION] Sufficiency assessment: (C) leaning (B), not (A).**
+Enough data exists for baseline comparison of existing signals (done
+above) and arguably a first directional validator experiment on
+WRONG_WORD_OR_SENSE (33 unique cases). **Not enough exists for training or
+trustworthy held-out evaluation on FACTUAL_OR_LOGICAL_REVERSAL (7) or
+FIXED_TERM_OR_IDIOM (8)** — the two classes motivating this work. A
+frozen, leakage-safe 62/13/13-group train/val/test split
+(`eval/r50_dataset/split.json`) is created for future use but explicitly
+not to be touched for label refinement, threshold selection, or training.
+
+**[RECOMMENDATION] Central-question answer:** we do not yet have enough
+trustworthy, defect-typed human data to justify training a small custom
+validator for the two blind-spot classes. A dedicated labeling phase is
+needed first, targeted specifically at FACTUAL_OR_LOGICAL_REVERSAL and
+FIXED_TERM_OR_IDIOM — roughly 40–60 more unique examples of each would
+bring those classes to where WRONG_WORD_OR_SENSE sits today (itself only
+borderline-sufficient). This cannot be produced by re-reading R40–R49
+again; the evidence base has been fully extracted.
+
+**[LIMITATION]** Defect-type labels are Claude-assigned (same epistemic
+status as R40's original audit), not independently human-rated except
+where v5's 16 matched records provide real human 1–5 ratings alongside.
+Text-matching between v5 and R40 failed for 4/20 v5 pairs due to minor
+pre-existing grammar differences between the two corpora (e.g. "tend" vs.
+"tends") — noted, not silently patched. The reconstructed "rational"→
+"irrational" case's exact sentence text is unverified against any stored
+artifact (flagged `UNCERTAIN` in the dataset) though its defect
+classification is well-documented at the word level.

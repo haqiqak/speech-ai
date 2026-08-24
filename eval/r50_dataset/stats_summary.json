@@ -1,0 +1,50 @@
+{
+  "n_records": 135,
+  "by_source": {
+    "R40": 65,
+    "R40,R44,v5": 16,
+    "R40,R44": 31,
+    "R47": 11,
+    "R48": 11,
+    "R48,R49-llm-judge-crosscheck": 1
+  },
+  "severity": {
+    "SEVERE": 92,
+    "MINOR": 29,
+    "CLEAN": 9,
+    "ORIGINAL_NO_CHANGE": 5
+  },
+  "primary_defect": {
+    "WRONG_WORD_OR_SENSE": 44,
+    "GRAMMAR": 16,
+    "NATURALNESS_OR_REGISTER": 19,
+    "CLEAN": 9,
+    "FIXED_TERM_OR_IDIOM": 18,
+    "OTHER_DEFECT": 12,
+    "FACTUAL_OR_LOGICAL_REVERSAL": 12,
+    "ORIGINAL_NO_CHANGE": 5
+  },
+  "secondary_defect": {
+    "WRONG_WORD_OR_SENSE": 10,
+    "FACTUAL_OR_LOGICAL_REVERSAL": 6,
+    "OTHER_DEFECT": 2,
+    "FIXED_TERM_OR_IDIOM": 1,
+    "NATURALNESS_OR_REGISTER": 1
+  },
+  "n_multi_label": 20,
+  "n_uncertain": 1,
+  "granularity": {
+    "substitution": 114,
+    "restructuring": 15,
+    "n/a": 5,
+    "n/a (unintended pipeline mutation)": 1
+  },
+  "clean_vs_defect": {
+    "defective (MINOR or SEVERE)": 121,
+    "CLEAN/no-change": 14
+  },
+  "n_v5_ratings": 16,
+  "n_r44_flags": 47,
+  "n_dedup_groups": 88,
+  "n_dup_groups_gt1": 33
+}

@@ -6,6 +6,23 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-24, fourth** docs: R50 Phase 2/3/7/9 — dataset construction,
+  defect-typed labeling, and baseline report. Joined/deduped R40/R44/
+  R47/R48/v5 into 135 labeled records / 88 unique cases, added a
+  structured defect taxonomy alongside existing severity, repaired R48's
+  under-documented per-case verdicts (3/12 documented, 9/12 freshly
+  re-read and tagged), benchmarked NLI/grammar/contextual_fit against
+  the new taxonomy, froze a leakage-safe split. Finding:
+  FACTUAL_OR_LOGICAL_REVERSAL and FIXED_TERM_OR_IDIOM (the two R49
+  blind-spot classes) have only 7-8 unique labeled cases each — not
+  enough to train or trustworthily evaluate a validator. Fixed-term
+  erosion turns out to be a third, previously undifferentiated blind
+  spot (0/5 caught); contextual_fit scores factual reversals ~40x
+  higher than CLEAN cases, actively counter-indicative for that class.
+  Sufficiency: (C) leaning (B) — a dedicated labeling pass is the
+  evidenced next step, not validator training on what exists today.
+  Research-only, no model trained, no production changes. →
+  `DECISION_LOG.md` 2026-08-24-D.
 - **2026-08-24, third** feat: R49 — the two remaining cheap escalation
   levers, both tried, both hit a real wall. Wider candidate sampling
   (beam 13-21 + independent temp/top_p sampling, n=23-24) on the 11

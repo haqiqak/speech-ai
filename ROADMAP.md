@@ -1500,6 +1500,34 @@ specific gaps only. This is not a claim that the substitution tier,
 the safety gates, or R48's escalation-quality gains are obsolete; they
 stand independently and are unaffected by this result.
 
+### R50 (Phase 2/3/7/9). Dataset construction, defect-typed labeling, and baseline report — **DONE, 2026-08-24**
+**Linked finding:** direct instruction, following the user's own R50
+proposal — before prototyping a custom validator, turn R40–R49's
+accumulated evidence into a scientifically usable dataset and answer
+whether it's actually enough to train on. Full record: `VALIDATION.md`
+§40, `eval/r50_dataset_report.md`.
+**What was done:** joined/deduped R40/R44/R47/R48/v5 (and one
+reconstructed R48/R49 cross-check negative example) into 135 labeled
+records / 88 unique underlying cases, added a structured defect taxonomy
+(WRONG_WORD_OR_SENSE / FACTUAL_OR_LOGICAL_REVERSAL / GRAMMAR /
+FIXED_TERM_OR_IDIOM / NATURALNESS_OR_REGISTER / OTHER_DEFECT / CLEAN)
+alongside the existing severity, repaired R48's under-documented per-case
+verdicts (3/12 documented, 9/12 freshly re-read and tagged as such),
+benchmarked existing signals against the new taxonomy, and froze a
+leakage-safe train/val/test split.
+**Result:** at the unique-case level, class sizes are much thinner than
+raw N suggests — FACTUAL_OR_LOGICAL_REVERSAL and FIXED_TERM_OR_IDIOM (the
+two classes R49 flagged) sit at only 7-8 unique cases each. Two findings
+sharper than R40-R49's: fixed-term-idiom erosion is a third, previously
+undifferentiated blind spot (NLI+grammar catch 0/5); contextual_fit
+scores factual/logical reversals ~40× higher than CLEAN substitutions at
+the median — actively counter-indicative for that class, not just weak.
+**Labeled as:** sufficiency is (C) leaning (B) — enough for baseline
+comparison, not enough to train or trustworthily evaluate a validator on
+the two blind-spot classes. A dedicated labeling pass (~40-60 more unique
+examples per thin class) is the evidenced next step before Phase 4
+(validator prototyping), not training on what exists today.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

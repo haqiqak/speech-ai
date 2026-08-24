@@ -3124,3 +3124,45 @@ gains all stand independent of this finding.
 disclosed correctness fix to already-shipped, opt-in-only code (the
 `-inf`/NaN bug); no new production capability, no threshold, no model
 change. Full record: `VALIDATION.md` §39.
+
+### 2026-08-24-D — R50 Phase 2/3/7/9: dataset construction, defect-typed labeling, and baseline report
+
+**What was done:** per direct instruction, following the user's own R50
+proposal — before any custom-validator prototyping, join and dedupe the
+labeled evidence across R40/R44/R47/R48/R49/v5 into one provenance-
+tracked dataset, add a structured defect taxonomy (CLEAN /
+WRONG_WORD_OR_SENSE / FACTUAL_OR_LOGICAL_REVERSAL / GRAMMAR /
+FIXED_TERM_OR_IDIOM / NATURALNESS_OR_REGISTER / OTHER_DEFECT / UNCERTAIN)
+alongside the existing CLEAN/MINOR/SEVERE severity, benchmark existing
+signals against it, and produce a frozen leakage-safe test split.
+**Research/dataset-construction only — no model trained, no production
+code touched.**
+
+**Repair:** R48's 12 escalation successes only had 3/12 documented at
+per-case granularity in `VALIDATION.md` §38.3 (an aggregate "5 CLEAN, 4
+MINOR, 3 SEVERE" tally, not attached to specific sentences). Rather than
+infer, the 3 documented cases kept their documented verdict; the other 9
+got a fresh, distinctly-tagged read of the actual stored text.
+
+**Result:** 135 labeled records, 88 unique underlying cases after
+deduplication. Class sizes at the unique-case level are much thinner than
+raw counts suggest — WRONG_WORD_OR_SENSE 33, down to
+**FACTUAL_OR_LOGICAL_REVERSAL 7** and FIXED_TERM_OR_IDIOM 8, the two
+classes this work exists to address. Two new findings sharper than
+anything in R40–R49: fixed-term-idiom erosion is caught by NLI+grammar
+0/5 (0%), a third complete blind spot; and contextual_fit scores
+factual/logical reversals ~40× *higher* than CLEAN substitutions at the
+median (0.305 vs 0.0078) — actively counter-indicative for this class by
+construction, not just weak.
+
+**Decision:** sufficiency assessment is (C) leaning (B) — enough for
+baseline comparison and a directional WRONG_WORD_OR_SENSE experiment, not
+enough to train or trustworthily evaluate a validator for
+FACTUAL_OR_LOGICAL_REVERSAL or FIXED_TERM_OR_IDIOM. A dedicated labeling
+pass (~40-60 more unique examples per thin class) is needed before Phase
+4 (validator prototyping) can proceed on the two classes that motivated
+R49's "build something custom" conclusion.
+
+**Category:** Dataset construction and analysis, on direct instruction.
+No model trained, no threshold changed, no production code touched. Full
+record: `VALIDATION.md` §40, `eval/r50_dataset_report.md`.
