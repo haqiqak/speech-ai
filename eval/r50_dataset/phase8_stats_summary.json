@@ -1,0 +1,50 @@
+{
+  "n_total_records": 118,
+  "n_overlap_with_r50": 2,
+  "n_new_records": 116,
+  "n_new_dedup_groups": 116,
+  "n_dup_groups_within_phase8": 0,
+  "acceptability": {
+    "CLEAN": 22,
+    "DEFECTIVE": 94
+  },
+  "severity": {
+    "CLEAN": 22,
+    "SEVERE": 85,
+    "MINOR": 9
+  },
+  "primary_defect_raw": {
+    "CLEAN": 22,
+    "WRONG_WORD_OR_SENSE": 24,
+    "GRAMMAR": 9,
+    "FIXED_TERM_OR_IDIOM": 33,
+    "NATURALNESS_OR_REGISTER": 5,
+    "OTHER_DEFECT": 2,
+    "FACTUAL_OR_LOGICAL_REVERSAL": 21
+  },
+  "primary_defect_unique_groups": {
+    "CLEAN": 22,
+    "WRONG_WORD_OR_SENSE": 24,
+    "GRAMMAR": 9,
+    "FIXED_TERM_OR_IDIOM": 33,
+    "NATURALNESS_OR_REGISTER": 5,
+    "OTHER_DEFECT": 2,
+    "FACTUAL_OR_LOGICAL_REVERSAL": 21
+  },
+  "n_multi_label": 16,
+  "granularity": {
+    "substitution": 63,
+    "restructuring": 3,
+    "n/a (constructed)": 50
+  },
+  "r50_baseline_unique_groups": {
+    "WRONG_WORD_OR_SENSE": 33,
+    "GRAMMAR": 9,
+    "CLEAN": 7,
+    "FIXED_TERM_OR_IDIOM": 8,
+    "NATURALNESS_OR_REGISTER": 12,
+    "OTHER_DEFECT": 7,
+    "FACTUAL_OR_LOGICAL_REVERSAL": 7,
+    "ORIGINAL_NO_CHANGE": 5
+  }
+}

@@ -1,0 +1,233 @@
+{
+  "P8-constructed-c-term-06": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "MINOR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "The fixed idiom 'reached a breaking point' (a limit of tolerance before failure) is rewritten as 'reached a splitting point,' which is not an established phrase. The general sense of tension/division survives loosely, but the precise idiomatic meaning is lost."
+  },
+  "P8-organic-055": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "'sets its own policies' becomes 'puts its own policies,' which is missing a required complement (e.g. 'puts in place'/'puts forward'); as written it does not parse as a complete, valid English clause."
+  },
+  "P8-constructed-c-term-07": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "MINOR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "The fixed idiom 'gave the proposal the green light' (approval) is changed to 'the green signal.' The approval sense is still roughly recoverable (the phrase is used this way in some English varieties), but it breaks the standard American idiom."
+  },
+  "P8-organic-011": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "'protoplanetary disc' (the specific astronomical term for the pre-planet gas/dust disc) is replaced with 'planetary disc,' a different concept (implying planets/rings already exist). This changes the scientific claim, not just the wording."
+  },
+  "P8-organic-059": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "The chemistry term 'water splitting' (decomposition of water into H2/O2) becomes 'water breaking,' which strongly evokes an unrelated meaning (amniotic sac rupture in childbirth) and is misleading in context."
+  },
+  "P8-organic-047": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "MINOR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "'textile spinning' (a specific historical/technical process) is replaced with 'textile twisting.' Twisting is related to spinning but is not the same established term; 'Rapid'->'Fast' is an unproblematic synonym."
+  },
+  "P8-organic-049": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'earliest recorded use' becomes 'earliest shown use'; 'shown' is an odd, slightly wrong-sense substitute for 'recorded' (documented) though the overall meaning is still inferable. 'race'->'competition' is an unproblematic synonym."
+  },
+  "P8-organic-036": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'than it would while resting' becomes 'than it would while placing,' which is nonsensical in context -- 'placing' has no coherent referent here and the sentence no longer makes sense."
+  },
+  "P8-organic-012": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'bound to it by gravity' becomes 'bound to it by extent,' removing the actual (and correct) physical mechanism and replacing it with a word that does not make sense in this slot, turning a factual statement into nonsense."
+  },
+  "P8-organic-066": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "MINOR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "'spun and woven' (textile-specific verb) becomes 'twisted and woven.' Related in meaning but not the correct technical term for the process being described; general sense of processing raw cotton is still conveyed."
+  },
+  "P8-organic-013": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'gravitational collapse' (the precise scientific cause) becomes 'heavy collapse,' which drops the actual causal mechanism (gravity) in favor of a vague, roughly-related adjective that doesn't accurately convey the physics."
+  },
+  "P8-organic-003": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "MINOR",
+    "primary_defect": "NATURALNESS_OR_REGISTER",
+    "secondary_defects": [],
+    "rationale": "'a system of biological processes' becomes 'a system of biological works.' 'Works' is an unusual, register-mismatched substitute for 'processes' here, though the meaning is still roughly recoverable."
+  },
+  "P8-constructed-c-fact-19": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "'from the heart to the lungs' is reversed to 'from the lungs to the heart,' inverting the actual direction of blood flow through the pulmonary artery -- a factual reversal that reads fluently but is wrong."
+  },
+  "P8-constructed-c-fact-11": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "'developed before the outbreak had spread' is changed to 'developed after the outbreak had spread,' reversing the temporal/causal claim of the sentence."
+  },
+  "P8-constructed-c-fact-10": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "'profits rose sharply' is changed to 'profits fell sharply,' inverting the direction of the reported financial outcome."
+  },
+  "P8-constructed-c-fact-03": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "'began in Britain before spreading to continental Europe' becomes 'began in Britain after spreading to continental Europe,' which is self-contradictory and reverses the historical sequence."
+  },
+  "P8-constructed-c-fact-06": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "'created before the modern Internet took shape' becomes 'created after the modern Internet took shape,' reversing the actual historical order (ARPANET predates the modern Internet)."
+  },
+  "P8-constructed-c-fact-14": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "'tend to reduce consumer borrowing' becomes 'tend to increase consumer borrowing,' reversing the causal/economic relationship stated in the original."
+  },
+  "P8-organic-042": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "'had spread to continental Europe' becomes 'had distributed to continental Europe.' Used intransitively like this, 'distributed' is an odd, somewhat ungrammatical substitute for 'spread,' though the intended meaning (reaching new regions) is still inferable."
+  },
+  "P8-organic-043": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "MINOR",
+    "primary_defect": "NATURALNESS_OR_REGISTER",
+    "secondary_defects": [],
+    "rationale": "'the most important event' becomes 'the most key event.' 'Key' is not naturally used in this superlative comparative form, producing an awkward but still comprehensible phrase."
+  },
+  "P8-organic-009": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'the gravitationally bound system' becomes 'the thus bound system.' 'Thus' has no valid antecedent here and the substitution removes the actual causal mechanism (gravity), producing a phrase that doesn't cohere. 'most prominently'->'most widely' is a lesser, secondary sense shift."
+  },
+  "P8-organic-038": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'ability to recover from strenuous exercise' becomes 'ability to better from intensive exercise.' 'Better' used as a bare verb after 'to' this way is not valid English and does not parse cleanly, which would confuse a listener."
+  },
+  "P8-organic-017": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "MINOR",
+    "primary_defect": "NATURALNESS_OR_REGISTER",
+    "secondary_defects": [],
+    "rationale": "'modern production methods' becomes 'modern making methods.' 'Making methods' is an unusual, slightly awkward collocation compared to 'production methods,' though the meaning is unaffected."
+  },
+  "P8-organic-026": {
+    "human_acceptability": "CLEAN",
+    "human_severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "'critical role'->'critical part' and 'supplies'->'gives' are both natural, meaning-preserving synonym substitutions; the sentence remains faithful and fluent."
+  },
+  "P8-organic-052": {
+    "human_acceptability": "CLEAN",
+    "human_severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "'local to global scope' becomes 'local to global extent.' 'Extent' is a close, natural synonym for 'scope' in this range expression and preserves the original meaning."
+  },
+  "P8-organic-016": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "MINOR",
+    "primary_defect": "OTHER_DEFECT",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "'This transition included going from hand production methods to machines...' becomes 'This transition included the transition from hand-producing methods to machines...' -- the word 'transition' is redundantly duplicated, and 'hand-producing methods' is an awkward, non-standard adjective form. The sentence is still readable despite the clumsiness."
+  },
+  "P8-organic-032": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "primary_defect": "OTHER_DEFECT",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "'releasing energy that is emitted' becomes 'going energy that is emitted.' 'Going energy' is garbled and does not form a coherent grammatical phrase, breaking the sentence."
+  },
+  "P8-organic-025": {
+    "human_acceptability": "CLEAN",
+    "human_severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "Duplicate of the organic-026 pair: 'critical role'->'critical part' and 'supplies'->'gives' are natural, meaning-preserving substitutions."
+  },
+  "P8-organic-006": {
+    "human_acceptability": "CLEAN",
+    "human_severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "'primarily'->'mostly' is a faithful, natural synonym substitution with no change in meaning."
+  },
+  "P8-organic-046": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "MINOR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "Duplicate of the organic-047 pair: 'textile spinning' (specific technical term) is replaced with 'textile twisting,' a related but distinct process/term."
+  },
+  "P8-organic-050": {
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "Duplicate of the organic-049 pair: 'earliest recorded use' becomes 'earliest shown use,' an odd, slightly wrong-sense substitute for 'recorded,' though still roughly comprehensible."
+  },
+  "P8-organic-028": {
+    "human_acceptability": "CLEAN",
+    "human_severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "'two stages'->'two phases' is a standard, faithful synonym substitution commonly used interchangeably for photosynthesis's light-dependent/independent parts."
+  },
+  "P8-constructed-c-clean-06": {
+    "human_acceptability": "CLEAN",
+    "human_severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "'critical point'->'crucial point' is a faithful, natural synonym substitution with no meaning change."
+  }
+}

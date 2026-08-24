@@ -1528,6 +1528,37 @@ the two blind-spot classes. A dedicated labeling pass (~40-60 more unique
 examples per thin class) is the evidenced next step before Phase 4
 (validator prototyping), not training on what exists today.
 
+### R50 Phase 8. Building the missing human-labeled dataset — **DONE, 2026-08-24**
+**Linked finding:** direct instruction, following the user's Phase 8
+proposal — R50 found a data-scarcity problem, not another signal
+question; collect deliberate new evidence rather than re-mining
+R40–R50. Full record: `VALIDATION.md` §41, `eval/r50p8_report.md`.
+**What was done:** 54 new real sentences (5 Wikipedia topics never used
+before: photosynthesis, solar system, exercise, industrial revolution,
+internet) run through today's live `reformulate()` across R40's 4
+profiles — R40's own methodology, new material — yielding 68 unique
+cases, blind-labeled from text alone. Supplemented with 50 disclosed
+non-blind constructed examples (20 FACTUAL_OR_LOGICAL_REVERSAL, 20
+FIXED_TERM_OR_IDIOM, 10 hard-CLEAN controls). A second, independent
+subagent rater checked a 33-case stratified sample blind to the primary
+rater's labels; a separate, frozen Phase 8 split was created alongside
+R50's own (both untouched).
+**Result:** 116 new independent records. Combined unique-case counts:
+FACTUAL_OR_LOGICAL_REVERSAL 7→28 (organic yield only 1/68 — this class
+is almost entirely constructed evidence), FIXED_TERM_OR_IDIOM 8→41
+(organic yield 13/68 — well above the ~8% estimate, these topics are
+dense with fixed technical terms the engine keeps breaking). Second-rater
+agreement: 88% acceptability, 70% primary defect type overall, but only
+25%/33% on GRAMMAR/NATURALNESS_OR_REGISTER — a real taxonomy-boundary
+problem, plus a separate labeling-convention confound (per-word-isolation
+vs. whole-sentence judgment) identified independently.
+**Labeled as:** sufficiency is (B) — a learnable signal clearly exists
+(88% acceptability agreement, 100% on two classes), but
+FACTUAL_OR_LOGICAL_REVERSAL needs more organic (not constructed)
+examples specifically, three classes' boundaries need refinement or a
+coarser evaluation axis, and the labeling convention needs reconciling
+before validator training can proceed. No training performed.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

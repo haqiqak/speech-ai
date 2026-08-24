@@ -1,0 +1,1035 @@
+{
+  "P8-constructed-c-term-06": {
+    "uid": "P8-constructed-c-term-06",
+    "provenance": [
+      "R50-Phase8-constructed"
+    ],
+    "granularity": "n/a (constructed)",
+    "original_text": "The negotiations reached a breaking point.",
+    "reformulated_text": "The negotiations reached a splitting point.",
+    "changed_word_pair": null,
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "FIXED_TERM_OR_IDIOM",
+      "secondary": []
+    },
+    "human_rationale": "\"breaking point\" is a fixed expression; \"splitting point\" is not an attested substitute.",
+    "human_rationale_source": "constructed-realistic-2026-08-24",
+    "rater_id": "claude-primary (author)",
+    "labeling_protocol": "not blind -- self-authored to instantiate a named defect subtype; see Phase 8 report limitations",
+    "topic_source": "constructed/fixed_expression",
+    "profile": null,
+    "automated": {
+      "contextual_fit": null,
+      "sbert_sim": null,
+      "antonym_check": null
+    },
+    "dedup_key": "text:the negotiations reached a breaking point.=>the negotiations reached a splitting point.",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-055": {
+    "uid": "P8-organic-055",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "Each constituent network sets its own policies.",
+    "reformulated_text": "Each constituent network puts its own policies.",
+    "changed_word_pair": [
+      "sets",
+      "puts"
+    ],
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "FIXED_TERM_OR_IDIOM",
+      "secondary": []
+    },
+    "human_rationale": "\"network puts its own policies\" breaks the fixed collocation \"sets policies\"; \"puts policies\" is not standard English (one \"puts a policy in place\" but does not simply \"put policies\").",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "internet",
+    "profile": "heavy_dense",
+    "automated": {
+      "contextual_fit": 0.00015871820505708456,
+      "sbert_sim": 0.9784,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:sets->puts",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-constructed-c-term-07": {
+    "uid": "P8-constructed-c-term-07",
+    "provenance": [
+      "R50-Phase8-constructed"
+    ],
+    "granularity": "n/a (constructed)",
+    "original_text": "The committee gave the proposal the green light.",
+    "reformulated_text": "The committee gave the proposal the green signal.",
+    "changed_word_pair": null,
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "FIXED_TERM_OR_IDIOM",
+      "secondary": []
+    },
+    "human_rationale": "Breaks the fixed idiom for approval (\"green light\").",
+    "human_rationale_source": "constructed-realistic-2026-08-24",
+    "rater_id": "claude-primary (author)",
+    "labeling_protocol": "not blind -- self-authored to instantiate a named defect subtype; see Phase 8 report limitations",
+    "topic_source": "constructed/idiom",
+    "profile": null,
+    "automated": {
+      "contextual_fit": null,
+      "sbert_sim": null,
+      "antonym_check": null
+    },
+    "dedup_key": "text:the committee gave the proposal the green light.=>the committee gave the proposal the green signal.",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-011": {
+    "uid": "P8-organic-011",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "The system formed about 4.6 billion years ago when a dense region of a molecular cloud collapsed, creating the Sun and a protoplanetary disc from which the orbiting bodies assembled.",
+    "reformulated_text": "The system formed about 4.6 billion years ago when a dense region of a molecular cloud collapsed, creating the Sun and a planetary disc from which the orbiting bodies assembled.",
+    "changed_word_pair": [
+      "protoplanetary",
+      "planetary"
+    ],
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "FIXED_TERM_OR_IDIOM",
+      "secondary": [
+        "WRONG_WORD_OR_SENSE"
+      ]
+    },
+    "human_rationale": "\"protoplanetary disc\" is the specific, fixed astronomical term for the pre-planet-formation disc; \"planetary disc\" is a different, vaguer term that changes the claim (implies a disc of/around already-formed planets).",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "solar_system",
+    "profile": "moderate_mixed",
+    "automated": {
+      "contextual_fit": 0.023311251774430275,
+      "sbert_sim": 0.9868,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:protoplanetary->planetary",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-059": {
+    "uid": "P8-organic-059",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "The term photosynthesis usually refers to oxygenic photosynthesis, a process that releases oxygen as a byproduct of water splitting.",
+    "reformulated_text": "The term photosynthesis usually refers to oxygenic photosynthesis, a process that releases oxygen as a byproduct of water breaking.",
+    "changed_word_pair": [
+      "splitting",
+      "breaking"
+    ],
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "FIXED_TERM_OR_IDIOM",
+      "secondary": []
+    },
+    "human_rationale": "\"water breaking\" for \"water splitting\" breaks the specific fixed scientific term for the photolysis process, and (notably) collides with a completely unrelated, very common fixed idiom -- \"water breaking\" as in going into labor -- producing an unintentionally jarring misreading.",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "photosynthesis",
+    "profile": "single_common_sound",
+    "automated": {
+      "contextual_fit": 4.8061997404147405e-06,
+      "sbert_sim": 0.9628,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:splitting->breaking",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-047": {
+    "uid": "P8-organic-047",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "Rapid adoption of mechanized textile spinning occurred in Britain in the 1780s.",
+    "reformulated_text": "Fast adoption of mechanized textile twisting occurred in Britain in the 1780s.",
+    "changed_word_pair": [
+      "spinning",
+      "twisting"
+    ],
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "FIXED_TERM_OR_IDIOM",
+      "secondary": [
+        "WRONG_WORD_OR_SENSE"
+      ]
+    },
+    "human_rationale": "\"mechanized textile twisting\" breaks the specific historical/technical term \"textile spinning\" (turning fiber into thread) -- central to the actual Industrial Revolution narrative being described; \"twisting\" is a different, non-standard substitute in this industry context.",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "industrial_revolution",
+    "profile": "heavy_dense",
+    "automated": {
+      "contextual_fit": 1.8145054809792782e-06,
+      "sbert_sim": 0.8732,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:spinning->twisting",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-049": {
+    "uid": "P8-organic-049",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "The earliest recorded use of the phrase Industrial Revolution was in 1799 by a French envoy announcing that France had entered the race to industrialist.",
+    "reformulated_text": "The earliest shown use of the phrase Industrial Revolution was in 1799 by a French envoy announcing that France had entered the competition to industrialist.",
+    "changed_word_pair": [
+      "recorded",
+      "shown"
+    ],
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "MINOR",
+    "human_defect_labels": {
+      "primary": "WRONG_WORD_OR_SENSE",
+      "secondary": []
+    },
+    "human_rationale": "\"the earliest shown use\" for \"the earliest recorded use\" -- \"shown\" (demonstrated) is a real but moderate sense shift from \"recorded\" (documented in writing), which fits the historical-citation context specifically; still roughly comprehensible.",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "industrial_revolution",
+    "profile": "heavy_dense",
+    "automated": {
+      "contextual_fit": 1.936270018632058e-05,
+      "sbert_sim": 0.9967,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:recorded->shown",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-036": {
+    "uid": "P8-organic-036",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "Aerobic exercise is any physical activity that uses large muscle groups and cause the body to use more oxygen than it would while resting.",
+    "reformulated_text": "Aerobic exercise is any physical activity that uses large muscle groups and cause the body to use more oxygen than it would while placing.",
+    "changed_word_pair": [
+      "resting",
+      "placing"
+    ],
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "WRONG_WORD_OR_SENSE",
+      "secondary": []
+    },
+    "human_rationale": "\"more oxygen than it would while placing\" is nonsensical -- \"placing\" requires an object and does not substitute for the intransitive \"resting\".",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "exercise",
+    "profile": "heavy_dense",
+    "automated": {
+      "contextual_fit": 1.945094027178129e-06,
+      "sbert_sim": 0.9797,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:resting->placing",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-012": {
+    "uid": "P8-organic-012",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "The Solar System includes the Sun and all objects that are bound to it by gravity and orbit it.",
+    "reformulated_text": "The Solar System includes the Sun and all objects that are bound to it by extent and orbit it.",
+    "changed_word_pair": [
+      "gravity",
+      "extent"
+    ],
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "WRONG_WORD_OR_SENSE",
+      "secondary": []
+    },
+    "human_rationale": "\"bound to it by extent\" -- \"extent\" does not fit the \"bound by [force]\" construction; nonsensical substitute for \"gravity\".",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "solar_system",
+    "profile": "moderate_mixed",
+    "automated": {
+      "contextual_fit": 2.8837965260208875e-07,
+      "sbert_sim": 0.9652,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:gravity->extent",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-066": {
+    "uid": "P8-organic-066",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "restructuring",
+    "original_text": "In 1750, Britain imported 2.5 million pounds of raw cotton, most of which was spun and woven by the cottage industry in Lancashire.",
+    "reformulated_text": "In 1750, Britain imported 2.5 million pounds of raw cotton, most of which was twisted and woven by the cottage industry in Lancashire.",
+    "changed_word_pair": null,
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "WRONG_WORD_OR_SENSE",
+      "secondary": [
+        "FIXED_TERM_OR_IDIOM"
+      ]
+    },
+    "human_rationale": "Restructuring changes \"spun and woven\" to \"twisted and woven\" -- \"spun\" is the specific, historically-accurate textile-industry term for turning raw cotton fiber into thread; \"twisted\" is a related but different, non-standard description of this specific historical process.",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "industrial_revolution",
+    "profile": "single_common_sound",
+    "automated": {
+      "contextual_fit": null,
+      "sbert_sim": 0.9856,
+      "antonym_check": "n/a_sentence_level"
+    },
+    "dedup_key": "text:in 1750, britain imported 2.5 million pounds of raw cotton, most of which was spun and woven by the cottage industry in lancashire.=>in 1750, britain imported 2.5 million pounds of raw cotton, most of which was twisted and woven by the cottage industry in lancashire.",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-013": {
+    "uid": "P8-organic-013",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "The Solar System formed at least 4.568 billion years ago from the gravitational collapse of a region within a large molecular cloud.",
+    "reformulated_text": "The Solar System formed at least 4.568 billion years ago from the heavy collapse of a region within a large molecular cloud.",
+    "changed_word_pair": [
+      "gravitational",
+      "heavy"
+    ],
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "WRONG_WORD_OR_SENSE",
+      "secondary": []
+    },
+    "human_rationale": "\"the heavy collapse of a region\" -- \"heavy\" describes weight, not the causal force (gravity) driving the collapse; loses the actual physical mechanism.",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "solar_system",
+    "profile": "moderate_mixed",
+    "automated": {
+      "contextual_fit": 0.0001117607462219894,
+      "sbert_sim": 0.9787,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:gravitational->heavy",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-003": {
+    "uid": "P8-organic-003",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "Photosynthesis is a system of biological processes by which photopigment-bearing autotrophic organisms, such as most plants, algae and cyanobacteria, convert light energy into the chemical energy necessary to fuel their metabolism.",
+    "reformulated_text": "Photosynthesis is a system of biological works by which photopigment-bearing autotrophic organisms, such as most plants, algae and cyanobacteria, convert light energy into the chemical energy necessary to fuel their metabolism.",
+    "changed_word_pair": [
+      "processes",
+      "works"
+    ],
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "WRONG_WORD_OR_SENSE",
+      "secondary": []
+    },
+    "human_rationale": "\"a system of biological works\" is an unusual, near-nonsensical plural; \"works\" does not naturally substitute for \"processes\" in this register.",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "photosynthesis",
+    "profile": "moderate_mixed",
+    "automated": {
+      "contextual_fit": 3.1791500077815726e-05,
+      "sbert_sim": 0.9919,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:processes->works",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-constructed-c-fact-19": {
+    "uid": "P8-constructed-c-fact-19",
+    "provenance": [
+      "R50-Phase8-constructed"
+    ],
+    "granularity": "n/a (constructed)",
+    "original_text": "Blood is pumped from the heart to the lungs through the pulmonary artery.",
+    "reformulated_text": "Blood is pumped from the lungs to the heart through the pulmonary artery.",
+    "changed_word_pair": null,
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "FACTUAL_OR_LOGICAL_REVERSAL",
+      "secondary": []
+    },
+    "human_rationale": "Swaps source and destination, reversing the actual direction of pulmonary circulation.",
+    "human_rationale_source": "constructed-realistic-2026-08-24",
+    "rater_id": "claude-primary (author)",
+    "labeling_protocol": "not blind -- self-authored to instantiate a named defect subtype; see Phase 8 report limitations",
+    "topic_source": "constructed/directionality",
+    "profile": null,
+    "automated": {
+      "contextual_fit": null,
+      "sbert_sim": null,
+      "antonym_check": null
+    },
+    "dedup_key": "text:blood is pumped from the heart to the lungs through the pulmonary artery.=>blood is pumped from the lungs to the heart through the pulmonary artery.",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-constructed-c-fact-11": {
+    "uid": "P8-constructed-c-fact-11",
+    "provenance": [
+      "R50-Phase8-constructed"
+    ],
+    "granularity": "n/a (constructed)",
+    "original_text": "The vaccine was developed before the outbreak had spread widely.",
+    "reformulated_text": "The vaccine was developed after the outbreak had spread widely.",
+    "changed_word_pair": null,
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "FACTUAL_OR_LOGICAL_REVERSAL",
+      "secondary": []
+    },
+    "human_rationale": "Reverses the temporal relationship between development and outbreak spread.",
+    "human_rationale_source": "constructed-realistic-2026-08-24",
+    "rater_id": "claude-primary (author)",
+    "labeling_protocol": "not blind -- self-authored to instantiate a named defect subtype; see Phase 8 report limitations",
+    "topic_source": "constructed/temporal",
+    "profile": null,
+    "automated": {
+      "contextual_fit": null,
+      "sbert_sim": null,
+      "antonym_check": null
+    },
+    "dedup_key": "text:the vaccine was developed before the outbreak had spread widely.=>the vaccine was developed after the outbreak had spread widely.",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-constructed-c-fact-10": {
+    "uid": "P8-constructed-c-fact-10",
+    "provenance": [
+      "R50-Phase8-constructed"
+    ],
+    "granularity": "n/a (constructed)",
+    "original_text": "The company's profits rose sharply after the merger.",
+    "reformulated_text": "The company's profits fell sharply after the merger.",
+    "changed_word_pair": null,
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "FACTUAL_OR_LOGICAL_REVERSAL",
+      "secondary": []
+    },
+    "human_rationale": "Reverses the direction of a specific factual claim about financial outcome.",
+    "human_rationale_source": "constructed-realistic-2026-08-24",
+    "rater_id": "claude-primary (author)",
+    "labeling_protocol": "not blind -- self-authored to instantiate a named defect subtype; see Phase 8 report limitations",
+    "topic_source": "constructed/factual_scope",
+    "profile": null,
+    "automated": {
+      "contextual_fit": null,
+      "sbert_sim": null,
+      "antonym_check": null
+    },
+    "dedup_key": "text:the company's profits rose sharply after the merger.=>the company's profits fell sharply after the merger.",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-constructed-c-fact-03": {
+    "uid": "P8-constructed-c-fact-03",
+    "provenance": [
+      "R50-Phase8-constructed"
+    ],
+    "granularity": "n/a (constructed)",
+    "original_text": "The Industrial Revolution began in Britain before spreading to continental Europe.",
+    "reformulated_text": "The Industrial Revolution began in Britain after spreading to continental Europe.",
+    "changed_word_pair": null,
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "FACTUAL_OR_LOGICAL_REVERSAL",
+      "secondary": []
+    },
+    "human_rationale": "Reverses the documented sequence of events (Britain first, then continental Europe).",
+    "human_rationale_source": "constructed-realistic-2026-08-24",
+    "rater_id": "claude-primary (author)",
+    "labeling_protocol": "not blind -- self-authored to instantiate a named defect subtype; see Phase 8 report limitations",
+    "topic_source": "constructed/temporal",
+    "profile": null,
+    "automated": {
+      "contextual_fit": null,
+      "sbert_sim": null,
+      "antonym_check": null
+    },
+    "dedup_key": "text:the industrial revolution began in britain before spreading to continental europe.=>the industrial revolution began in britain after spreading to continental europe.",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-constructed-c-fact-06": {
+    "uid": "P8-constructed-c-fact-06",
+    "provenance": [
+      "R50-Phase8-constructed"
+    ],
+    "granularity": "n/a (constructed)",
+    "original_text": "The ARPANET was created before the modern Internet took shape.",
+    "reformulated_text": "The ARPANET was created after the modern Internet took shape.",
+    "changed_word_pair": null,
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "FACTUAL_OR_LOGICAL_REVERSAL",
+      "secondary": []
+    },
+    "human_rationale": "Reverses the historical order (ARPANET predates the modern Internet, not the other way round).",
+    "human_rationale_source": "constructed-realistic-2026-08-24",
+    "rater_id": "claude-primary (author)",
+    "labeling_protocol": "not blind -- self-authored to instantiate a named defect subtype; see Phase 8 report limitations",
+    "topic_source": "constructed/temporal",
+    "profile": null,
+    "automated": {
+      "contextual_fit": null,
+      "sbert_sim": null,
+      "antonym_check": null
+    },
+    "dedup_key": "text:the arpanet was created before the modern internet took shape.=>the arpanet was created after the modern internet took shape.",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-constructed-c-fact-14": {
+    "uid": "P8-constructed-c-fact-14",
+    "provenance": [
+      "R50-Phase8-constructed"
+    ],
+    "granularity": "n/a (constructed)",
+    "original_text": "Rising interest rates tend to reduce consumer borrowing.",
+    "reformulated_text": "Rising interest rates tend to increase consumer borrowing.",
+    "changed_word_pair": null,
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "FACTUAL_OR_LOGICAL_REVERSAL",
+      "secondary": []
+    },
+    "human_rationale": "Reverses a standard economic causal relationship between interest rates and borrowing.",
+    "human_rationale_source": "constructed-realistic-2026-08-24",
+    "rater_id": "claude-primary (author)",
+    "labeling_protocol": "not blind -- self-authored to instantiate a named defect subtype; see Phase 8 report limitations",
+    "topic_source": "constructed/causal",
+    "profile": null,
+    "automated": {
+      "contextual_fit": null,
+      "sbert_sim": null,
+      "antonym_check": null
+    },
+    "dedup_key": "text:rising interest rates tend to reduce consumer borrowing.=>rising interest rates tend to increase consumer borrowing.",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-042": {
+    "uid": "P8-organic-042",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "Beginning in Great Britain around 1760, the Industrial Revolution had spread to continental Europe and the United States by about 1840.",
+    "reformulated_text": "Beginning in Great Britain around 1760, the Industrial Revolution had distributed to continental Europe and the United States by about 1840.",
+    "changed_word_pair": [
+      "spread",
+      "distributed"
+    ],
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "GRAMMAR",
+      "secondary": [
+        "WRONG_WORD_OR_SENSE"
+      ]
+    },
+    "human_rationale": "\"had distributed to continental Europe\" -- \"distribute\" is not idiomatically used intransitively this way (unlike \"spread to\"); also implies active dissemination rather than organic diffusion, a real sense shift.",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "industrial_revolution",
+    "profile": "heavy_dense",
+    "automated": {
+      "contextual_fit": 1.3657211184181506e-06,
+      "sbert_sim": 0.9811,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:spread->distributed",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-043": {
+    "uid": "P8-organic-043",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "Economic historians agree that the onset of the Industrial Revolution is the most important event in human history.",
+    "reformulated_text": "Economic historians agree that the onset of the Industrial Revolution is the most key event in human history.",
+    "changed_word_pair": [
+      "important",
+      "key"
+    ],
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "GRAMMAR",
+      "secondary": []
+    },
+    "human_rationale": "\"the most key event\" is a non-standard comparative construction -- \"key\" does not take \"most\" the way \"important\" does in standard usage.",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "industrial_revolution",
+    "profile": "heavy_dense",
+    "automated": {
+      "contextual_fit": 0.0003546498774085194,
+      "sbert_sim": 0.9763,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:important->key",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-009": {
+    "uid": "P8-organic-009",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "The Solar System is the gravitationally bound system of the Sun and the masses that orbit it, most prominently its eight planets, of which Earth is one.",
+    "reformulated_text": "The Solar System is the thus bound system of the Sun and the masses that orbit it, most widely its eight planets, of which Earth is one.",
+    "changed_word_pair": [
+      "gravitationally",
+      "thus"
+    ],
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "GRAMMAR",
+      "secondary": []
+    },
+    "human_rationale": "\"the thus bound system\" -- \"thus\" (a conjunctive adverb) is inserted where an adjective/participle is grammatically required; does not parse.",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "solar_system",
+    "profile": "moderate_mixed",
+    "automated": {
+      "contextual_fit": 4.3052705223090015e-06,
+      "sbert_sim": 0.9838,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:gravitationally->thus",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-038": {
+    "uid": "P8-organic-038",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "Overstraining occurs when a person exceeds their body's ability to recover from strenuous exercise.",
+    "reformulated_text": "Overstraining occurs when a person exceeds their body's ability to better from intensive exercise.",
+    "changed_word_pair": [
+      "recover",
+      "better"
+    ],
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "GRAMMAR",
+      "secondary": []
+    },
+    "human_rationale": "\"ability to better from intensive exercise\" -- \"better\" is used as a verb where none exists in standard English; does not parse.",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "exercise",
+    "profile": "heavy_dense",
+    "automated": {
+      "contextual_fit": 4.413844635564601e-06,
+      "sbert_sim": 0.9922,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:recover->better",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-017": {
+    "uid": "P8-organic-017",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "The textile industry was the first to use modern production methods, and textiles became the dominant industry in terms of employment.",
+    "reformulated_text": "The textile industry was the first to use modern making methods, and textiles became the dominant industry in terms of employment.",
+    "changed_word_pair": [
+      "production",
+      "making"
+    ],
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "MINOR",
+    "human_defect_labels": {
+      "primary": "NATURALNESS_OR_REGISTER",
+      "secondary": []
+    },
+    "human_rationale": "\"modern making methods\" is an unusual collocation for \"modern production methods\" but roughly conveys the same idea.",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "industrial_revolution",
+    "profile": "moderate_mixed",
+    "automated": {
+      "contextual_fit": 0.00026757686282508075,
+      "sbert_sim": 0.9934,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:production->making",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-026": {
+    "uid": "P8-organic-026",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "Photosynthesis plays a critical role in producing and maintaining the oxygen content of the Earth's atmosphere, and it supplies most of the biological energy necessary for complex life on Earth.",
+    "reformulated_text": "Photosynthesis plays a critical part in producing and maintaining the oxygen content of the Earth's atmosphere, and it gives most of the biological energy necessary for complex life on Earth.",
+    "changed_word_pair": [
+      "supplies",
+      "gives"
+    ],
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "MINOR",
+    "human_defect_labels": {
+      "primary": "NATURALNESS_OR_REGISTER",
+      "secondary": []
+    },
+    "human_rationale": "\"it gives most of the biological energy\" for \"it supplies\" is a looser, more casual synonym; meaning is preserved but precision/register is slightly reduced.",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "photosynthesis",
+    "profile": "heavy_dense",
+    "automated": {
+      "contextual_fit": 0.0030988899525254965,
+      "sbert_sim": 0.9843,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:supplies->gives",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-052": {
+    "uid": "P8-organic-052",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "It is a network of networks that comprises private, public, academic, business, and government networks of local to global scope.",
+    "reformulated_text": "It is a network of networks that comprises private, public, academic, business, and government networks of local to global extent.",
+    "changed_word_pair": [
+      "scope",
+      "extent"
+    ],
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "MINOR",
+    "human_defect_labels": {
+      "primary": "NATURALNESS_OR_REGISTER",
+      "secondary": []
+    },
+    "human_rationale": "\"local to global extent\" for \"local to global scope\" is a slightly less natural collocation but remains comprehensible and meaning-preserving.",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "internet",
+    "profile": "heavy_dense",
+    "automated": {
+      "contextual_fit": 0.0010382492328062654,
+      "sbert_sim": 0.9919,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:scope->extent",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-016": {
+    "uid": "P8-organic-016",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "restructuring",
+    "original_text": "This transition included going from hand production methods to machines, new chemical manufacturing and iron production processes, and the increasing use of steam power.",
+    "reformulated_text": "This transition included the transition from hand-producing methods to machines, new chemical manufacturing and iron manufacturing methods, and the increasing use of steam power.",
+    "changed_word_pair": null,
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "OTHER_DEFECT",
+      "secondary": [
+        "GRAMMAR"
+      ]
+    },
+    "human_rationale": "Restructuring produces a circular self-reference (\"the transition included the transition from...\") and an odd adjectival form (\"hand-producing methods\"); reads as garbled rather than merely awkward.",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "industrial_revolution",
+    "profile": "moderate_mixed",
+    "automated": {
+      "contextual_fit": null,
+      "sbert_sim": 0.9808,
+      "antonym_check": "n/a_sentence_level"
+    },
+    "dedup_key": "text:this transition included going from hand production methods to machines, new chemical manufacturing and iron production processes, and the increasing use of steam power.=>this transition included the transition from hand-producing methods to machines, new chemical manufacturing and iron manufacturing methods, and the increasing use of steam power.",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-032": {
+    "uid": "P8-organic-032",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "Inside the Sun's core, hydrogen is fused into helium, releasing energy that is emitted through the Sun's photosphere.",
+    "reformulated_text": "Inside the Sun's core, hydrogen is fused into helium, going energy that is emitted through the Sun's photosphere.",
+    "changed_word_pair": [
+      "releasing",
+      "going"
+    ],
+    "human_acceptability": "DEFECTIVE",
+    "human_severity": "SEVERE",
+    "human_defect_labels": {
+      "primary": "OTHER_DEFECT",
+      "secondary": []
+    },
+    "human_rationale": "\"going energy that is emitted\" does not parse -- \"going\" cannot modify \"energy\" this way; a nonsense substitution similar in kind to R40's \"gas gas\" duplication artifacts.",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "solar_system",
+    "profile": "heavy_dense",
+    "automated": {
+      "contextual_fit": 5.378601144911954e-06,
+      "sbert_sim": 0.9849,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:releasing->going",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-025": {
+    "uid": "P8-organic-025",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "Photosynthesis plays a critical role in producing and maintaining the oxygen content of the Earth's atmosphere, and it supplies most of the biological energy necessary for complex life on Earth.",
+    "reformulated_text": "Photosynthesis plays a critical part in producing and maintaining the oxygen content of the Earth's atmosphere, and it gives most of the biological energy necessary for complex life on Earth.",
+    "changed_word_pair": [
+      "role",
+      "part"
+    ],
+    "human_acceptability": "CLEAN",
+    "human_severity": "CLEAN",
+    "human_defect_labels": {
+      "primary": "CLEAN",
+      "secondary": []
+    },
+    "human_rationale": "\"critical part\" for \"critical role\" is a valid, natural near-synonym.",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "photosynthesis",
+    "profile": "heavy_dense",
+    "automated": {
+      "contextual_fit": 0.011735396459698677,
+      "sbert_sim": 0.991,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:role->part",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-006": {
+    "uid": "P8-organic-006",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "Plants absorb light primarily using the pigment chlorophyll.",
+    "reformulated_text": "Plants absorb light mostly using the pigment chlorophyll.",
+    "changed_word_pair": [
+      "primarily",
+      "mostly"
+    ],
+    "human_acceptability": "CLEAN",
+    "human_severity": "CLEAN",
+    "human_defect_labels": {
+      "primary": "CLEAN",
+      "secondary": []
+    },
+    "human_rationale": "\"mostly\" is a valid, natural synonym for \"primarily\".",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "photosynthesis",
+    "profile": "moderate_mixed",
+    "automated": {
+      "contextual_fit": 0.005605276674032211,
+      "sbert_sim": 0.9972,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:primarily->mostly",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-046": {
+    "uid": "P8-organic-046",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "Rapid adoption of mechanized textile spinning occurred in Britain in the 1780s.",
+    "reformulated_text": "Fast adoption of mechanized textile twisting occurred in Britain in the 1780s.",
+    "changed_word_pair": [
+      "Rapid",
+      "Fast"
+    ],
+    "human_acceptability": "CLEAN",
+    "human_severity": "CLEAN",
+    "human_defect_labels": {
+      "primary": "CLEAN",
+      "secondary": []
+    },
+    "human_rationale": "\"Fast adoption\" for \"Rapid adoption\" is a valid, natural synonym on its own (case 47, in the same sentence, is the actual defect).",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "industrial_revolution",
+    "profile": "heavy_dense",
+    "automated": {
+      "contextual_fit": 3.325228681205772e-05,
+      "sbert_sim": 0.9953,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:rapid->fast",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-050": {
+    "uid": "P8-organic-050",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "The earliest recorded use of the phrase Industrial Revolution was in 1799 by a French envoy announcing that France had entered the race to industrialist.",
+    "reformulated_text": "The earliest shown use of the phrase Industrial Revolution was in 1799 by a French envoy announcing that France had entered the competition to industrialist.",
+    "changed_word_pair": [
+      "race",
+      "competition"
+    ],
+    "human_acceptability": "CLEAN",
+    "human_severity": "CLEAN",
+    "human_defect_labels": {
+      "primary": "CLEAN",
+      "secondary": []
+    },
+    "human_rationale": "\"entered the competition to industrialise\" for \"entered the race to industrialise\" is a valid, natural synonym (co-occurs with case 49's defect in the same sentence, but is fine on its own).",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "industrial_revolution",
+    "profile": "heavy_dense",
+    "automated": {
+      "contextual_fit": 0.00027975483681075275,
+      "sbert_sim": 0.9669,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:race->competition",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-organic-028": {
+    "uid": "P8-organic-028",
+    "provenance": [
+      "R50-Phase8-organic-harvest"
+    ],
+    "granularity": "substitution",
+    "original_text": "Photosynthesis occurs in two stages.",
+    "reformulated_text": "Photosynthesis occurs in two phases.",
+    "changed_word_pair": [
+      "stages",
+      "phases"
+    ],
+    "human_acceptability": "CLEAN",
+    "human_severity": "CLEAN",
+    "human_defect_labels": {
+      "primary": "CLEAN",
+      "secondary": []
+    },
+    "human_rationale": "\"two phases\" is a valid, natural synonym for \"two stages\".",
+    "human_rationale_source": "fresh-blind-2026-08-24",
+    "rater_id": "claude-primary",
+    "labeling_protocol": "blind: rater saw only original/reformulated text + word pair, no automated scores, no defect-class target, no experiment/profile metadata",
+    "topic_source": "photosynthesis",
+    "profile": "heavy_dense",
+    "automated": {
+      "contextual_fit": 0.10880958288908005,
+      "sbert_sim": 0.9194,
+      "antonym_check": "pass"
+    },
+    "dedup_key": "wordpair:stages->phases",
+    "_shares_source_sentence_with_r50": false
+  },
+  "P8-constructed-c-clean-06": {
+    "uid": "P8-constructed-c-clean-06",
+    "provenance": [
+      "R50-Phase8-constructed"
+    ],
+    "granularity": "n/a (constructed)",
+    "original_text": "The negotiations reached a critical point.",
+    "reformulated_text": "The negotiations reached a crucial point.",
+    "changed_word_pair": null,
+    "human_acceptability": "CLEAN",
+    "human_severity": "CLEAN",
+    "human_defect_labels": {
+      "primary": "CLEAN",
+      "secondary": []
+    },
+    "human_rationale": "Valid synonym; adjacent phrasing to c-term-06's \"breaking point\" but not itself a fixed expression.",
+    "human_rationale_source": "constructed-realistic-2026-08-24",
+    "rater_id": "claude-primary (author)",
+    "labeling_protocol": "not blind -- self-authored hard-CLEAN control; see Phase 8 report limitations",
+    "topic_source": "constructed/clean_control",
+    "profile": null,
+    "automated": {
+      "contextual_fit": null,
+      "sbert_sim": null,
+      "antonym_check": null
+    },
+    "dedup_key": "text:the negotiations reached a critical point.=>the negotiations reached a crucial point.",
+    "_shares_source_sentence_with_r50": false
+  }
+}

@@ -3166,3 +3166,40 @@ R49's "build something custom" conclusion.
 **Category:** Dataset construction and analysis, on direct instruction.
 No model trained, no threshold changed, no production code touched. Full
 record: `VALIDATION.md` §40, `eval/r50_dataset_report.md`.
+
+### 2026-08-24-E — R50 Phase 8: building the missing human-labeled dataset
+
+**What was done:** per direct instruction, following the user's Phase 8
+proposal — collect deliberate new evidence for the two data-scarce
+classes R50 identified, rather than re-mining R40-R50. **Data collection
+only.** 54 new real sentences (5 Wikipedia topics never used before) run
+through today's live `reformulate()` across R40's 4 profiles (R40's own
+methodology, new material) — 68 unique cases, blind-labeled. Supplemented
+with 50 disclosed-non-blind constructed examples (20
+FACTUAL_OR_LOGICAL_REVERSAL, 20 FIXED_TERM_OR_IDIOM, 10 hard-CLEAN
+controls). A second, independent subagent rater checked a 33-case
+stratified sample blind to the primary rater's labels.
+
+**Result:** 116 new independent records (2 excluded as R50-duplicate
+lexical phenomena). Combined unique-case counts:
+FACTUAL_OR_LOGICAL_REVERSAL 7->28 (21 new, 95% constructed - organic
+yield was 1/68), FIXED_TERM_OR_IDIOM 8->41 (33 new, 13 organic/20
+constructed - well above R50's ~8% base-rate estimate, these topics are
+dense with fixed technical terminology). Second-rater agreement:
+acceptability 88%, severity 64%, primary defect type 70% overall; 100%
+on FACTUAL_OR_LOGICAL_REVERSAL and OTHER_DEFECT, but only 25% on GRAMMAR
+and 33% on NATURALNESS_OR_REGISTER - a real taxonomy-boundary problem,
+plus a separate labeling-convention confound (per-word-isolation vs.
+whole-sentence judgment) identified as a distinct source of
+disagreement.
+
+**Decision:** sufficiency is (B), not (A) or (C) - a learnable signal
+clearly exists, but FACTUAL_OR_LOGICAL_REVERSAL needs more organic (not
+constructed) examples, the GRAMMAR/WRONG_WORD_OR_SENSE/NATURALNESS_OR_
+REGISTER boundary needs refinement or a coarser evaluation axis, and the
+labeling-convention needs reconciling before training. No training
+proceeds from this phase.
+
+**Category:** Data collection, on direct instruction. No model trained,
+no threshold changed, no production code touched. Full record:
+`VALIDATION.md` §41, `eval/r50p8_report.md`.

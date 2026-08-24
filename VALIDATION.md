@@ -4498,3 +4498,81 @@ pre-existing grammar differences between the two corpora (e.g. "tend" vs.
 "irrational" case's exact sentence text is unverified against any stored
 artifact (flagged `UNCERTAIN` in the dataset) though its defect
 classification is well-documented at the word level.
+
+## 41. R50 Phase 8 — building the missing human-labeled dataset (executed 2026-08-24)
+
+Per direct instruction, following the user's own Phase 8 proposal: R50
+established a data-scarcity problem, not another signal-investigation
+one; this phase collects deliberate new evidence rather than re-reading
+R40–R50 again. **Data collection only — no model trained, no production
+code touched.** Full report: `eval/r50p8_report.md`; scripts:
+`eval/r50p8_corpus.py`, `_harvest.py`, `_labels.py`, `_constructed.py`,
+`_build.py`, `_stats.py`, `_make_split.py`, `_agreement.py`; outputs in
+`eval/r50_dataset/phase8_*.json`.
+
+**[FACT] 54 real sentences, verbatim from 5 Wikipedia articles never used
+in R40–R50** (Photosynthesis, Solar System, Exercise, Industrial
+Revolution, Internet — chosen for causal/temporal/directional claim
+density), run through today's live `reformulate.reformulate()` across
+R40's exact 4 profiles (216 combinations) — R40's own methodology, reused
+on genuinely new material. Yielded 68 unique cases, blind-labeled from a
+text-only sheet (no automated scores, no metadata). Supplemented with 50
+deliberately-constructed examples (20 `FACTUAL_OR_LOGICAL_REVERSAL`, 20
+`FIXED_TERM_OR_IDIOM`, 10 hard-CLEAN controls built on matching
+templates) — disclosed as non-blind, not presented as pipeline output.
+
+**[FINDING] Organic yield split sharply by class.** `FIXED_TERM_OR_IDIOM`
+organically yielded 13 real cases (well above R50's ~8% estimate — these
+new topics are dense with fixed technical terminology the substitution
+engine keeps breaking, e.g. "cellular respiration"→"cell-like
+respiration", "water splitting"→"water breaking" — the latter
+accidentally colliding with the unrelated idiom for going into labor).
+`FACTUAL_OR_LOGICAL_REVERSAL` organic yield was **1/68** — confirming R50's
+estimate was if anything optimistic for this class in substitution-heavy
+output; nearly all of this class's occurrences (in R40 and here) trace to
+restructuring, which is rare in ordinary pipeline output.
+
+**[FACT] 2 harvested cases duplicated R50-baseline lexical phenomena**
+(the recurring "such"→"much" and "surface"→"open" structural bugs, now
+confirmed on a third and fourth unrelated topic) and were excluded from
+independent-evidence counts, per instruction. **116 new records, 0
+further internal duplication.**
+
+**[FACT] Combined unique-case counts, R50 baseline + Phase 8:**
+`FACTUAL_OR_LOGICAL_REVERSAL` 7→28 (21 new, 20/21 constructed);
+`FIXED_TERM_OR_IDIOM` 8→41 (33 new, 13 organic/20 constructed). Target
+was 40-60 new per class; `FIXED_TERM_OR_IDIOM` came close and crosses 40
+combined, `FACTUAL_OR_LOGICAL_REVERSAL` fell short and is weighted
+heavily toward constructed rather than organic evidence.
+
+**[FINDING] Independent second-rater check (a separate subagent, blind
+to the primary rater's labels, on a stratified 33-record sample):**
+acceptability agreement 88%, severity (exact) 64%, primary defect type
+(exact) 70%. By class: `FACTUAL_OR_LOGICAL_REVERSAL` and `OTHER_DEFECT`
+100%, `FIXED_TERM_OR_IDIOM` 83%, but **`GRAMMAR` only 25%** and
+`NATURALNESS_OR_REGISTER` only 33% — a genuine taxonomy-boundary problem
+between those three classes, not just a data-quantity gap. A second,
+distinct source of disagreement was also isolated: a labeling-convention
+confound (per-word-in-isolation vs. whole-delivered-sentence judgment)
+accounts for most of the CLEAN/DEFECTIVE mismatches, not disagreement
+about the text itself.
+
+**[LIMITATION]** Both raters are Claude, not independent humans.
+Constructed examples are typically more obvious than organic failures;
+`FACTUAL_OR_LOGICAL_REVERSAL`'s near-perfect inter-rater agreement was
+measured only on its (unanimously constructed) sampled cases, not on
+subtle organic ones, of which only 1 exists in the whole dataset.
+
+**[RECOMMENDATION] Sufficiency: (B), not (A) or (C).** A learnable
+signal clearly exists (88% acceptability agreement, 100% on two classes),
+so the taxonomy is not fundamentally broken — but `FACTUAL_OR_LOGICAL_
+REVERSAL` needs more *organic* (not constructed) examples specifically,
+the GRAMMAR/WRONG_WORD_OR_SENSE/NATURALNESS_OR_REGISTER boundary needs
+either refinement or acceptance that validator evaluation should rest on
+the coarser, more reliable CLEAN/DEFECTIVE+severity axes for those three
+classes, and the isolation-vs-whole-sentence labeling convention needs
+reconciling before training. No training proceeds from this phase, per
+instruction. A separate, frozen Phase 8 split
+(`eval/r50_dataset/phase8_split.json`) exists alongside — not merged
+into, and independent of — R50's own frozen split, both untouched for
+label refinement, threshold selection, or training.

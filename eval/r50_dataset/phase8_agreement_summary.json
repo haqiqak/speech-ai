@@ -1,0 +1,17 @@
+{
+  "n": 33,
+  "acceptability_agreement": 0.8787878787878788,
+  "severity_exact_agreement": 0.6363636363636364,
+  "severity_collapsed_agreement": 0.7575757575757576,
+  "primary_defect_exact_agreement": 0.696969696969697,
+  "primary_defect_loose_agreement": 0.7575757575757576,
+  "by_class_primary_agreement": {
+    "FIXED_TERM_OR_IDIOM": 0.8333333333333334,
+    "WRONG_WORD_OR_SENSE": 0.6666666666666666,
+    "FACTUAL_OR_LOGICAL_REVERSAL": 1.0,
+    "GRAMMAR": 0.25,
+    "NATURALNESS_OR_REGISTER": 0.3333333333333333,
+    "OTHER_DEFECT": 1.0,
+    "CLEAN": 0.6666666666666666
+  }
+}

@@ -1,0 +1,272 @@
+1. [strenuous] -> [demanding]
+   ORIG: Overstraining occurs when a person exceeds their body's ability to recover from strenuous exercise.
+   REFM: Overstraining occurs when a person exceeds their body's ability to recover from demanding exercise.
+
+2. [strength] -> [property]
+   ORIG: Resistance training and subsequent consumption of a protein-rich meal promotes muscle hypertrophy and gains in muscle strength.
+   REFM: Resistance training and subsequent consumption of a protein-rich meal promotes muscle hypertrophy and gains in muscle property.
+
+3. [processes] -> [works]
+   ORIG: Photosynthesis is a system of biological processes by which photopigment-bearing autotrophic organisms, such as most plants, algae and cyanobacteria, convert light energy into the chemical energy necessary to fuel their metabolism.
+   REFM: Photosynthesis is a system of biological works by which photopigment-bearing autotrophic organisms, such as most plants, algae and cyanobacteria, convert light energy into the chemical energy necessary to fuel their metabolism.
+
+4. [process] -> [work]
+   ORIG: The term photosynthesis usually refers to oxygenic photosynthesis, a process that releases oxygen as a byproduct of water splitting.
+   REFM: The term photosynthesis usually refers to oxygenic photosynthesis, a work that releases oxygen as a byproduct of water splitting.
+
+5. [producing] -> [creating]
+   ORIG: Photosynthesis plays a critical role in producing and maintaining the oxygen content of the Earth's atmosphere, and it supplies most of the biological energy necessary for complex life on Earth.
+   REFM: Photosynthesis plays a critical role in creating and maintaining the oxygen content of the Earth's atmosphere, and it supplies most of the biological energy necessary for complex life on Earth.
+
+6. [primarily] -> [mostly]
+   ORIG: Plants absorb light primarily using the pigment chlorophyll.
+   REFM: Plants absorb light mostly using the pigment chlorophyll.
+
+7. [green] -> [light-green]
+   ORIG: The green part of the light spectrum is not absorbed but is reflected, which is the reason that most plants have a green color.
+   REFM: The light-green part of the light spectrum is not absorbed but is reflected, which is the reason that most plants have a light-green color.
+
+8. [process] -> [act]
+   ORIG: Carbon dioxide is converted into sugars in a process called carbon fixation.
+   REFM: Carbon dioxide is converted into sugars in a act called carbon fixation.
+
+9. [gravitationally] -> [thus]
+   ORIG: The Solar System is the gravitationally bound system of the Sun and the masses that orbit it, most prominently its eight planets, of which Earth is one.
+   REFM: The Solar System is the thus bound system of the Sun and the masses that orbit it, most widely its eight planets, of which Earth is one.
+
+10. [prominently] -> [widely]
+   ORIG: The Solar System is the gravitationally bound system of the Sun and the masses that orbit it, most prominently its eight planets, of which Earth is one.
+   REFM: The Solar System is the thus bound system of the Sun and the masses that orbit it, most widely its eight planets, of which Earth is one.
+
+11. [protoplanetary] -> [planetary]
+   ORIG: The system formed about 4.6 billion years ago when a dense region of a molecular cloud collapsed, creating the Sun and a protoplanetary disc from which the orbiting bodies assembled.
+   REFM: The system formed about 4.6 billion years ago when a dense region of a molecular cloud collapsed, creating the Sun and a planetary disc from which the orbiting bodies assembled.
+
+12. [gravity] -> [extent]
+   ORIG: The Solar System includes the Sun and all objects that are bound to it by gravity and orbit it.
+   REFM: The Solar System includes the Sun and all objects that are bound to it by extent and orbit it.
+
+13. [gravitational] -> [heavy]
+   ORIG: The Solar System formed at least 4.568 billion years ago from the gravitational collapse of a region within a large molecular cloud.
+   REFM: The Solar System formed at least 4.568 billion years ago from the heavy collapse of a region within a large molecular cloud.
+
+14. [problems] -> [troubles]
+   ORIG: In terms of health benefits, usually, 150 minutes of moderate-intensity exercise per week is recommended for reducing the risk of health problems.
+   REFM: In terms of health benefits, usually, 150 minutes of moderate-intensity exercise per week is recommended for reducing the risk of health troubles.
+
+15. [groups] -> [classes]
+   ORIG: Aerobic exercise is any physical activity that uses large muscle groups and cause the body to use more oxygen than it would while resting.
+   REFM: Aerobic exercise is any physical activity that uses large muscle classes and cause the body to use more oxygen than it would while resting.
+
+16. [This transition included going from hand production methods to machines, new chemical manufacturing and iron production processes, and the increasing use of steam power.] -> [This transition included the transition from hand-producing methods to machines, new chemical manufacturing and iron manufacturing methods, and the increasing use of steam power.]
+   ORIG: This transition included going from hand production methods to machines, new chemical manufacturing and iron production processes, and the increasing use of steam power.
+   REFM: This transition included the transition from hand-producing methods to machines, new chemical manufacturing and iron manufacturing methods, and the increasing use of steam power.
+
+17. [production] -> [making]
+   ORIG: The textile industry was the first to use modern production methods, and textiles became the dominant industry in terms of employment.
+   REFM: The textile industry was the first to use modern making methods, and textiles became the dominant industry in terms of employment.
+
+18. [Prior] -> [Before]
+   ORIG: Prior to the Industrial Revolution, most manufacturing occurred in China and India; after the Industrial Revolution, most manufacturing took place in North America and Western Europe.
+   REFM: Before to the Industrial Revolution, most manufacturing occurred in China and India; after the Industrial Revolution, most manufacturing took place in North America and Western Europe.
+
+19. [protocol] -> [convention]
+   ORIG: The Internet is the global system of interconnected computer networks that uses the Internet protocol suite to communicate between networks and devices.
+   REFM: The Internet is the global system of interconnected computer networks that uses the Internet convention suite to communicate between networks and devices.
+
+20. [private] -> [personal]
+   ORIG: It is a network of networks that comprises private, public, academic, business, and government networks of local to global scope.
+   REFM: It is a network of networks that comprises personal, public, academic, business, and government networks of local to global scope.
+
+21. [proposal] -> [request]
+   ORIG: In 1974, researchers published a proposal for a protocol for packet network intercommunication.
+   REFM: In 1974, researchers published a request for a design for packet network intercommunication.
+
+22. [protocol] -> [design]
+   ORIG: In 1974, researchers published a proposal for a protocol for packet network intercommunication.
+   REFM: In 1974, researchers published a request for a design for packet network intercommunication.
+
+23. [system] -> [organization]
+   ORIG: Photosynthesis is a system of biological processes by which photopigment-bearing autotrophic organisms, such as most plants, algae and cyanobacteria, convert light energy into the chemical energy necessary to fuel their metabolism.
+   REFM: Photosynthesis is a organization of biological processes by which photopigment-bearing autotrophic organisms, much as most plants, algae and cyanobacteria, convert light energy into the chemical energy necessary to fuel their metabolism.
+
+24. [such] -> [much]
+   ORIG: Photosynthesis is a system of biological processes by which photopigment-bearing autotrophic organisms, such as most plants, algae and cyanobacteria, convert light energy into the chemical energy necessary to fuel their metabolism.
+   REFM: Photosynthesis is a organization of biological processes by which photopigment-bearing autotrophic organisms, much as most plants, algae and cyanobacteria, convert light energy into the chemical energy necessary to fuel their metabolism.
+
+25. [role] -> [part]
+   ORIG: Photosynthesis plays a critical role in producing and maintaining the oxygen content of the Earth's atmosphere, and it supplies most of the biological energy necessary for complex life on Earth.
+   REFM: Photosynthesis plays a critical part in producing and maintaining the oxygen content of the Earth's atmosphere, and it gives most of the biological energy necessary for complex life on Earth.
+
+26. [supplies] -> [gives]
+   ORIG: Photosynthesis plays a critical role in producing and maintaining the oxygen content of the Earth's atmosphere, and it supplies most of the biological energy necessary for complex life on Earth.
+   REFM: Photosynthesis plays a critical part in producing and maintaining the oxygen content of the Earth's atmosphere, and it gives most of the biological energy necessary for complex life on Earth.
+
+27. [cells] -> [cases]
+   ORIG: In plants, these pigments are chlorophyll held inside chloroplasts, abundant in leaf cells.
+   REFM: In plants, these pigments are chlorophyll held inside chloroplasts, abundant in leaf cases.
+
+28. [stages] -> [phases]
+   ORIG: Photosynthesis occurs in two stages.
+   REFM: Photosynthesis occurs in two phases.
+
+29. [soil] -> [land]
+   ORIG: Photosynthesis was discovered in 1779 by Jan Ingenhousz who showed that plants need light, not just soil and water.
+   REFM: Photosynthesis was discovered in 1779 by Jan Ingenhousz who showed that plants need light, not just land and water.
+
+30. [system] -> [establishment]
+   ORIG: The system formed about 4.6 billion years ago when a dense region of a molecular cloud collapsed, creating the Sun and a protoplanetary disc from which the orbiting bodies assembled.
+   REFM: The establishment formed about 4.6 billion years ago when a dense part of a molecular cloud collapsed, creating the Sun and a protoplanetary disc from which the orbiting bodies assembled.
+
+31. [region] -> [part]
+   ORIG: The system formed about 4.6 billion years ago when a dense region of a molecular cloud collapsed, creating the Sun and a protoplanetary disc from which the orbiting bodies assembled.
+   REFM: The establishment formed about 4.6 billion years ago when a dense part of a molecular cloud collapsed, creating the Sun and a protoplanetary disc from which the orbiting bodies assembled.
+
+32. [releasing] -> [going]
+   ORIG: Inside the Sun's core, hydrogen is fused into helium, releasing energy that is emitted through the Sun's photosphere.
+   REFM: Inside the Sun's core, hydrogen is fused into helium, going energy that is emitted through the Sun's photosphere.
+
+33. [sunlight] -> [daylight]
+   ORIG: Earth and Mars is the only planets that orbit within the Sun's habitable zone, in which sunlight can keep surface water liquid.
+   REFM: Earth and Mars is the only planets that orbit within the Sun's habitable zone, in which daylight can keep open water liquid.
+
+34. [surface] -> [open]
+   ORIG: Earth and Mars is the only planets that orbit within the Sun's habitable zone, in which sunlight can keep surface water liquid.
+   REFM: Earth and Mars is the only planets that orbit within the Sun's habitable zone, in which daylight can keep open water liquid.
+
+35. [rotates] -> [turn]
+   ORIG: As the pre-solar nebula collapsed, conservation of angular momentum caused it to rotates faster.
+   REFM: As the pre-solar nebula collapsed, conservation of angular momentum caused it to turn faster.
+
+36. [resting] -> [placing]
+   ORIG: Aerobic exercise is any physical activity that uses large muscle groups and cause the body to use more oxygen than it would while resting.
+   REFM: Aerobic exercise is any physical activity that uses large muscle groups and cause the body to use more oxygen than it would while placing.
+
+37. [respiratory] -> [lung]
+   ORIG: Moderate exercise has been associated with a 29% decreased incidence of upper respiratory tract infections.
+   REFM: Moderate exercise has been associated with a 29 % decreased incidence of upper lung tract infections.
+
+38. [recover] -> [better]
+   ORIG: Overstraining occurs when a person exceeds their body's ability to recover from strenuous exercise.
+   REFM: Overstraining occurs when a person exceeds their body's ability to better from intensive exercise.
+
+39. [strenuous] -> [intensive]
+   ORIG: Overstraining occurs when a person exceeds their body's ability to recover from strenuous exercise.
+   REFM: Overstraining occurs when a person exceeds their body's ability to better from intensive exercise.
+
+40. [Resistance training and subsequent consumption of a protein-rich meal promotes muscle hypertrophy and gains in muscle strength.] -> [Muscle hypertrophy and muscle gains in the following consumption of a protein-rich meal promote muscle training.]
+   ORIG: Resistance training and subsequent consumption of a protein-rich meal promotes muscle hypertrophy and gains in muscle strength.
+   REFM: Muscle hypertrophy and muscle gains in the following consumption of a protein-rich meal promote muscle training.
+
+41. [system] -> [administration]
+   ORIG: The beneficial effect of exercise on the cardiovascular system is well documented.
+   REFM: The beneficial effect of exercise on the cardiovascular administration is well documented.
+
+42. [spread] -> [distributed]
+   ORIG: Beginning in Great Britain around 1760, the Industrial Revolution had spread to continental Europe and the United States by about 1840.
+   REFM: Beginning in Great Britain around 1760, the Industrial Revolution had distributed to continental Europe and the United States by about 1840.
+
+43. [important] -> [key]
+   ORIG: Economic historians agree that the onset of the Industrial Revolution is the most important event in human history.
+   REFM: Economic historians agree that the onset of the Industrial Revolution is the most key event in human history.
+
+44. [steam] -> [machine]
+   ORIG: This transition included going from hand production methods to machines, new chemical manufacturing and iron production processes, and the increasing use of steam power.
+   REFM: This transition included going from hand production methods to machines, new chemical manufacturing and iron production processes, and the increasing use of machine power.
+
+45. [century] -> [period]
+   ORIG: By the mid-18th century, Britain was the leading commercial nation, with GDP per capita considerably over the world average.
+   REFM: By the mid-18th period, Britain was the leading commercial nation, with GDP per capita considerably over the world average.
+
+46. [Rapid] -> [Fast]
+   ORIG: Rapid adoption of mechanized textile spinning occurred in Britain in the 1780s.
+   REFM: Fast adoption of mechanized textile twisting occurred in Britain in the 1780s.
+
+47. [spinning] -> [twisting]
+   ORIG: Rapid adoption of mechanized textile spinning occurred in Britain in the 1780s.
+   REFM: Fast adoption of mechanized textile twisting occurred in Britain in the 1780s.
+
+48. [spread] -> [open]
+   ORIG: Mechanized textile production spread from Britain to continental Europe and the US in the early 19th century.
+   REFM: Mechanized textile production open from Britain to continental Europe and the US in the early 19th period.
+
+49. [recorded] -> [shown]
+   ORIG: The earliest recorded use of the phrase Industrial Revolution was in 1799 by a French envoy announcing that France had entered the race to industrialist.
+   REFM: The earliest shown use of the phrase Industrial Revolution was in 1799 by a French envoy announcing that France had entered the competition to industrialist.
+
+50. [race] -> [competition]
+   ORIG: The earliest recorded use of the phrase Industrial Revolution was in 1799 by a French envoy announcing that France had entered the race to industrialist.
+   REFM: The earliest shown use of the phrase Industrial Revolution was in 1799 by a French envoy announcing that France had entered the competition to industrialist.
+
+51. [suite] -> [collection]
+   ORIG: The Internet is the global system of interconnected computer networks that uses the Internet protocol suite to communicate between networks and devices.
+   REFM: The Internet is the global organization of interconnected computer networks that uses the Internet protocol collection to communicate between networks and devices.
+
+52. [scope] -> [extent]
+   ORIG: It is a network of networks that comprises private, public, academic, business, and government networks of local to global scope.
+   REFM: It is a network of networks that comprises private, public, academic, business, and government networks of local to global extent.
+
+53. [single] -> [one]
+   ORIG: The Internet has no single centralized governance in either technological implementation or policies for access and usage.
+   REFM: The Internet has no one concentrated governance in either technological implementation or policies for access and usage.
+
+54. [centralized] -> [concentrated]
+   ORIG: The Internet has no single centralized governance in either technological implementation or policies for access and usage.
+   REFM: The Internet has no one concentrated governance in either technological implementation or policies for access and usage.
+
+55. [sets] -> [puts]
+   ORIG: Each constituent network sets its own policies.
+   REFM: Each constituent network puts its own policies.
+
+56. [researchers] -> [authors]
+   ORIG: In 1974, researchers published a proposal for a protocol for packet network intercommunication.
+   REFM: In 1974, authors published a proposal for a protocol for packet network intercommunication.
+
+57. [research] -> [finding]
+   ORIG: ARPANET development began with two network nodes which were interconnected between two research institutions on 29 October 1969.
+   REFM: ARPANET development began with two network nodes which were interconnected between two finding institutions on 29 October 1969.
+
+58. [sites] -> [places]
+   ORIG: By the end of 1971, 15 sites were connected to the young ARPANET, mainly in metropolitan areas of Los Angeles, San Francisco, and Boston.
+   REFM: By the end of 1971, 15 places were connected to the young ARPANET, mainly in metropolitan areas of Los Angeles, San Francisco, and Boston.
+
+59. [splitting] -> [breaking]
+   ORIG: The term photosynthesis usually refers to oxygenic photosynthesis, a process that releases oxygen as a byproduct of water splitting.
+   REFM: The term photosynthesis usually refers to oxygenic photosynthesis, a process that releases oxygen as a byproduct of water breaking.
+
+60. [species] -> [manners]
+   ORIG: While the details may differ between species, the process always begins when light energy is absorbed by the reaction centers, proteins that contain photosynthetic pigments or chromophore.
+   REFM: While the details may differ between manners, the process always begins when light energy is absorbed by the reaction places, proteins that contain photosynthetic pigments or chromophore.
+
+61. [centers] -> [places]
+   ORIG: While the details may differ between species, the process always begins when light energy is absorbed by the reaction centers, proteins that contain photosynthetic pigments or chromophore.
+   REFM: While the details may differ between manners, the process always begins when light energy is absorbed by the reaction places, proteins that contain photosynthetic pigments or chromophore.
+
+62. [spectrum] -> [landscape]
+   ORIG: The green part of the light spectrum is not absorbed but is reflected, which is the reason that most plants have a green color.
+   REFM: The green part of the light landscape is not absorbed but is reflected, which is the reason that most plants have a green color.
+
+63. [cellular] -> [cell-like]
+   ORIG: In general outline, photosynthesis is the opposite of cellular respiration, while cellular respiration is the oxidation of carbohydrates to carbon dioxide.
+   REFM: In general outline, photosynthesis is the opposite of cell-like respiration, while cell-like respiration is the oxidation of carbohydrates to carbon dioxide.
+
+64. [system] -> [regime]
+   ORIG: The system formed about 4.6 billion years ago when a dense region of a molecular cloud collapsed, creating the Sun and a protoplanetary disc from which the orbiting bodies assembled.
+   REFM: The regime formed about 4.6 billion years ago when a dense region of a molecular cloud collapsed, creating the Sun and a protoplanetary disc from which the orbiting bodies assembled.
+
+65. [subsequent] -> [after]
+   ORIG: Resistance training and subsequent consumption of a protein-rich meal promotes muscle hypertrophy and gains in muscle strength.
+   REFM: Resistance training and after consumption of a protein-rich meal promotes muscle hypertrophy and gains in muscle property.
+
+66. [In 1750, Britain imported 2.5 million pounds of raw cotton, most of which was spun and woven by the cottage industry in Lancashire.] -> [In 1750, Britain imported 2.5 million pounds of raw cotton, most of which was twisted and woven by the cottage industry in Lancashire.]
+   ORIG: In 1750, Britain imported 2.5 million pounds of raw cotton, most of which was spun and woven by the cottage industry in Lancashire.
+   REFM: In 1750, Britain imported 2.5 million pounds of raw cotton, most of which was twisted and woven by the cottage industry in Lancashire.
+
+67. [scope] -> [range]
+   ORIG: It is a network of networks that comprises private, public, academic, business, and government networks of local to global scope.
+   REFM: It is a network of networks that comprises private, public, academic, business, and government networks of local to global range.
+
+68. [services] -> [helps]
+   ORIG: The Internet carries a vast range of information services and resources, such as the interlinked hypertext documents of the World Wide Web, electronic mail, and file sharing.
+   REFM: The Internet carries a vast range of information helps and resources, much as the interlinked hypertext documents of the World Wide Web, electronic mail, and file sharing.
+

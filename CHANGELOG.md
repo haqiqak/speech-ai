@@ -6,6 +6,22 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-24, fifth** docs: R50 Phase 8 — building the missing
+  human-labeled dataset. 54 new real sentences (5 Wikipedia topics never
+  used before) through today's live reformulate() across R40's 4
+  profiles, yielding 68 unique blind-labeled cases; supplemented with 50
+  disclosed non-blind constructed examples targeting the two thin
+  classes; a second, independent subagent rater checked a 33-case
+  stratified sample blind to the primary labels. Combined unique-case
+  counts: FACTUAL_OR_LOGICAL_REVERSAL 7->28 (95% constructed, organic
+  yield only 1/68), FIXED_TERM_OR_IDIOM 8->41 (organic yield 13/68,
+  well above the ~8% estimate). Second-rater agreement: 88%
+  acceptability, 70% primary defect type overall, but only 25%/33% on
+  GRAMMAR/NATURALNESS_OR_REGISTER - a real taxonomy-boundary problem.
+  Sufficiency: (B) - more organic factual-reversal data and a
+  taxonomy-boundary refinement needed before training. Data collection
+  only, no model trained, no production changes. →
+  `DECISION_LOG.md` 2026-08-24-E.
 - **2026-08-24, fourth** docs: R50 Phase 2/3/7/9 — dataset construction,
   defect-typed labeling, and baseline report. Joined/deduped R40/R44/
   R47/R48/v5 into 135 labeled records / 88 unique cases, added a

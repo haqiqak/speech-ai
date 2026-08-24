@@ -1,0 +1,2334 @@
+{
+  "changes": [
+    {
+      "source": "exercise",
+      "profile": "light_single_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "strenuous",
+      "replacement_word": "demanding",
+      "original_sentence": "Overstraining occurs when a person exceeds their body's ability to recover from strenuous exercise.",
+      "reformulated_sentence": "Overstraining occurs when a person exceeds their body's ability to recover from demanding exercise.",
+      "contextual_fit": 4.524382529780269e-05,
+      "sbert_sim": 0.984,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "exercise",
+      "profile": "light_single_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "strength",
+      "replacement_word": "property",
+      "original_sentence": "Resistance training and subsequent consumption of a protein-rich meal promotes muscle hypertrophy and gains in muscle strength.",
+      "reformulated_sentence": "Resistance training and subsequent consumption of a protein-rich meal promotes muscle hypertrophy and gains in muscle property.",
+      "contextual_fit": 1.9721954231499694e-05,
+      "sbert_sim": 0.9888,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "processes",
+      "replacement_word": "works",
+      "original_sentence": "Photosynthesis is a system of biological processes by which photopigment-bearing autotrophic organisms, such as most plants, algae and cyanobacteria, convert light energy into the chemical energy necessary to fuel their metabolism.",
+      "reformulated_sentence": "Photosynthesis is a system of biological works by which photopigment-bearing autotrophic organisms, such as most plants, algae and cyanobacteria, convert light energy into the chemical energy necessary to fuel their metabolism.",
+      "contextual_fit": 3.1791500077815726e-05,
+      "sbert_sim": 0.9919,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "process",
+      "replacement_word": "work",
+      "original_sentence": "The term photosynthesis usually refers to oxygenic photosynthesis, a process that releases oxygen as a byproduct of water splitting.",
+      "reformulated_sentence": "The term photosynthesis usually refers to oxygenic photosynthesis, a work that releases oxygen as a byproduct of water splitting.",
+      "contextual_fit": 3.694923361763358e-05,
+      "sbert_sim": 0.9875,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "producing",
+      "replacement_word": "creating",
+      "original_sentence": "Photosynthesis plays a critical role in producing and maintaining the oxygen content of the Earth's atmosphere, and it supplies most of the biological energy necessary for complex life on Earth.",
+      "reformulated_sentence": "Photosynthesis plays a critical role in creating and maintaining the oxygen content of the Earth's atmosphere, and it supplies most of the biological energy necessary for complex life on Earth.",
+      "contextual_fit": 0.18174132704734802,
+      "sbert_sim": 0.9973,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "primarily",
+      "replacement_word": "mostly",
+      "original_sentence": "Plants absorb light primarily using the pigment chlorophyll.",
+      "reformulated_sentence": "Plants absorb light mostly using the pigment chlorophyll.",
+      "contextual_fit": 0.005605276674032211,
+      "sbert_sim": 0.9972,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "green",
+      "replacement_word": "light-green",
+      "original_sentence": "The green part of the light spectrum is not absorbed but is reflected, which is the reason that most plants have a green color.",
+      "reformulated_sentence": "The light-green part of the light spectrum is not absorbed but is reflected, which is the reason that most plants have a light-green color.",
+      "contextual_fit": 0.44298069675763446,
+      "sbert_sim": 0.9958,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "green",
+      "replacement_word": "light-green",
+      "original_sentence": "The green part of the light spectrum is not absorbed but is reflected, which is the reason that most plants have a green color.",
+      "reformulated_sentence": "The light-green part of the light spectrum is not absorbed but is reflected, which is the reason that most plants have a light-green color.",
+      "contextual_fit": 0.44298069675763446,
+      "sbert_sim": 0.991,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "process",
+      "replacement_word": "act",
+      "original_sentence": "Carbon dioxide is converted into sugars in a process called carbon fixation.",
+      "reformulated_sentence": "Carbon dioxide is converted into sugars in a act called carbon fixation.",
+      "contextual_fit": 3.9020278563839383e-07,
+      "sbert_sim": 0.9832,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "solar_system",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "gravitationally",
+      "replacement_word": "thus",
+      "original_sentence": "The Solar System is the gravitationally bound system of the Sun and the masses that orbit it, most prominently its eight planets, of which Earth is one.",
+      "reformulated_sentence": "The Solar System is the thus bound system of the Sun and the masses that orbit it, most widely its eight planets, of which Earth is one.",
+      "contextual_fit": 4.3052705223090015e-06,
+      "sbert_sim": 0.9838,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "solar_system",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "prominently",
+      "replacement_word": "widely",
+      "original_sentence": "The Solar System is the gravitationally bound system of the Sun and the masses that orbit it, most prominently its eight planets, of which Earth is one.",
+      "reformulated_sentence": "The Solar System is the thus bound system of the Sun and the masses that orbit it, most widely its eight planets, of which Earth is one.",
+      "contextual_fit": 1.4752594324818347e-05,
+      "sbert_sim": 0.9817,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "solar_system",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "protoplanetary",
+      "replacement_word": "planetary",
+      "original_sentence": "The system formed about 4.6 billion years ago when a dense region of a molecular cloud collapsed, creating the Sun and a protoplanetary disc from which the orbiting bodies assembled.",
+      "reformulated_sentence": "The system formed about 4.6 billion years ago when a dense region of a molecular cloud collapsed, creating the Sun and a planetary disc from which the orbiting bodies assembled.",
+      "contextual_fit": 0.023311251774430275,
+      "sbert_sim": 0.9868,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "solar_system",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "gravity",
+      "replacement_word": "extent",
+      "original_sentence": "The Solar System includes the Sun and all objects that are bound to it by gravity and orbit it.",
+      "reformulated_sentence": "The Solar System includes the Sun and all objects that are bound to it by extent and orbit it.",
+      "contextual_fit": 2.8837965260208875e-07,
+      "sbert_sim": 0.9652,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "solar_system",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "gravitational",
+      "replacement_word": "heavy",
+      "original_sentence": "The Solar System formed at least 4.568 billion years ago from the gravitational collapse of a region within a large molecular cloud.",
+      "reformulated_sentence": "The Solar System formed at least 4.568 billion years ago from the heavy collapse of a region within a large molecular cloud.",
+      "contextual_fit": 0.0001117607462219894,
+      "sbert_sim": 0.9787,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "exercise",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "problems",
+      "replacement_word": "troubles",
+      "original_sentence": "In terms of health benefits, usually, 150 minutes of moderate-intensity exercise per week is recommended for reducing the risk of health problems.",
+      "reformulated_sentence": "In terms of health benefits, usually, 150 minutes of moderate-intensity exercise per week is recommended for reducing the risk of health troubles.",
+      "contextual_fit": 0.00019336561672389507,
+      "sbert_sim": 0.9983,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "exercise",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "groups",
+      "replacement_word": "classes",
+      "original_sentence": "Aerobic exercise is any physical activity that uses large muscle groups and cause the body to use more oxygen than it would while resting.",
+      "reformulated_sentence": "Aerobic exercise is any physical activity that uses large muscle classes and cause the body to use more oxygen than it would while resting.",
+      "contextual_fit": 1.5732362953713164e-05,
+      "sbert_sim": 0.9946,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "moderate_mixed",
+      "change_source": "restructuring",
+      "triggered_by": [
+        "multiple_difficulties_or_no_valid_substitution"
+      ],
+      "original_word": "This transition included going from hand production methods to machines, new chemical manufacturing and iron production processes, and the increasing use of steam power.",
+      "replacement_word": "This transition included the transition from hand-producing methods to machines, new chemical manufacturing and iron manufacturing methods, and the increasing use of steam power.",
+      "original_sentence": "This transition included going from hand production methods to machines, new chemical manufacturing and iron production processes, and the increasing use of steam power.",
+      "reformulated_sentence": "This transition included the transition from hand-producing methods to machines, new chemical manufacturing and iron manufacturing methods, and the increasing use of steam power.",
+      "contextual_fit": null,
+      "sbert_sim": 0.9808,
+      "antonym_check": "n/a_sentence_level"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "production",
+      "replacement_word": "making",
+      "original_sentence": "The textile industry was the first to use modern production methods, and textiles became the dominant industry in terms of employment.",
+      "reformulated_sentence": "The textile industry was the first to use modern making methods, and textiles became the dominant industry in terms of employment.",
+      "contextual_fit": 0.00026757686282508075,
+      "sbert_sim": 0.9934,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "production",
+      "replacement_word": "making",
+      "original_sentence": "Mechanized textile production spread from Britain to continental Europe and the US in the early 19th century.",
+      "reformulated_sentence": "Mechanized textile making spread from Britain to continental Europe and the US in the early 19th century.",
+      "contextual_fit": 0.003829260589554906,
+      "sbert_sim": 0.9842,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "Prior",
+      "replacement_word": "Before",
+      "original_sentence": "Prior to the Industrial Revolution, most manufacturing occurred in China and India; after the Industrial Revolution, most manufacturing took place in North America and Western Europe.",
+      "reformulated_sentence": "Before to the Industrial Revolution, most manufacturing occurred in China and India; after the Industrial Revolution, most manufacturing took place in North America and Western Europe.",
+      "contextual_fit": 0.000275801052339375,
+      "sbert_sim": 0.9937,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "protocol",
+      "replacement_word": "convention",
+      "original_sentence": "The Internet is the global system of interconnected computer networks that uses the Internet protocol suite to communicate between networks and devices.",
+      "reformulated_sentence": "The Internet is the global system of interconnected computer networks that uses the Internet convention suite to communicate between networks and devices.",
+      "contextual_fit": 2.1654143438354367e-06,
+      "sbert_sim": 0.9584,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "private",
+      "replacement_word": "personal",
+      "original_sentence": "It is a network of networks that comprises private, public, academic, business, and government networks of local to global scope.",
+      "reformulated_sentence": "It is a network of networks that comprises personal, public, academic, business, and government networks of local to global scope.",
+      "contextual_fit": 0.0007542044622823596,
+      "sbert_sim": 0.9829,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "proposal",
+      "replacement_word": "request",
+      "original_sentence": "In 1974, researchers published a proposal for a protocol for packet network intercommunication.",
+      "reformulated_sentence": "In 1974, researchers published a request for a design for packet network intercommunication.",
+      "contextual_fit": 0.0023352450225502253,
+      "sbert_sim": 0.9671,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "moderate_mixed",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "protocol",
+      "replacement_word": "design",
+      "original_sentence": "In 1974, researchers published a proposal for a protocol for packet network intercommunication.",
+      "reformulated_sentence": "In 1974, researchers published a request for a design for packet network intercommunication.",
+      "contextual_fit": 0.0017951554618775845,
+      "sbert_sim": 0.9236,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "system",
+      "replacement_word": "organization",
+      "original_sentence": "Photosynthesis is a system of biological processes by which photopigment-bearing autotrophic organisms, such as most plants, algae and cyanobacteria, convert light energy into the chemical energy necessary to fuel their metabolism.",
+      "reformulated_sentence": "Photosynthesis is a organization of biological processes by which photopigment-bearing autotrophic organisms, much as most plants, algae and cyanobacteria, convert light energy into the chemical energy necessary to fuel their metabolism.",
+      "contextual_fit": 8.491251355735585e-05,
+      "sbert_sim": 0.9879,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "such",
+      "replacement_word": "much",
+      "original_sentence": "Photosynthesis is a system of biological processes by which photopigment-bearing autotrophic organisms, such as most plants, algae and cyanobacteria, convert light energy into the chemical energy necessary to fuel their metabolism.",
+      "reformulated_sentence": "Photosynthesis is a organization of biological processes by which photopigment-bearing autotrophic organisms, much as most plants, algae and cyanobacteria, convert light energy into the chemical energy necessary to fuel their metabolism.",
+      "contextual_fit": 1.0044369446404744e-05,
+      "sbert_sim": 0.9878,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "role",
+      "replacement_word": "part",
+      "original_sentence": "Photosynthesis plays a critical role in producing and maintaining the oxygen content of the Earth's atmosphere, and it supplies most of the biological energy necessary for complex life on Earth.",
+      "reformulated_sentence": "Photosynthesis plays a critical part in producing and maintaining the oxygen content of the Earth's atmosphere, and it gives most of the biological energy necessary for complex life on Earth.",
+      "contextual_fit": 0.011735396459698677,
+      "sbert_sim": 0.991,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "supplies",
+      "replacement_word": "gives",
+      "original_sentence": "Photosynthesis plays a critical role in producing and maintaining the oxygen content of the Earth's atmosphere, and it supplies most of the biological energy necessary for complex life on Earth.",
+      "reformulated_sentence": "Photosynthesis plays a critical part in producing and maintaining the oxygen content of the Earth's atmosphere, and it gives most of the biological energy necessary for complex life on Earth.",
+      "contextual_fit": 0.0030988899525254965,
+      "sbert_sim": 0.9843,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "cells",
+      "replacement_word": "cases",
+      "original_sentence": "In plants, these pigments are chlorophyll held inside chloroplasts, abundant in leaf cells.",
+      "reformulated_sentence": "In plants, these pigments are chlorophyll held inside chloroplasts, abundant in leaf cases.",
+      "contextual_fit": 0.0003997196035925299,
+      "sbert_sim": 0.9846,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "stages",
+      "replacement_word": "phases",
+      "original_sentence": "Photosynthesis occurs in two stages.",
+      "reformulated_sentence": "Photosynthesis occurs in two phases.",
+      "contextual_fit": 0.10880958288908005,
+      "sbert_sim": 0.9194,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "soil",
+      "replacement_word": "land",
+      "original_sentence": "Photosynthesis was discovered in 1779 by Jan Ingenhousz who showed that plants need light, not just soil and water.",
+      "reformulated_sentence": "Photosynthesis was discovered in 1779 by Jan Ingenhousz who showed that plants need light, not just land and water.",
+      "contextual_fit": 0.0008136495598591864,
+      "sbert_sim": 0.9844,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "solar_system",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "system",
+      "replacement_word": "organization",
+      "original_sentence": "The Solar System is the gravitationally bound system of the Sun and the masses that orbit it, most prominently its eight planets, of which Earth is one.",
+      "reformulated_sentence": "The Solar System is the gravitationally bound organization of the Sun and the masses that orbit it, most prominently its eight planets, of which Earth is one.",
+      "contextual_fit": 0.0005561541183851659,
+      "sbert_sim": 0.9822,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "solar_system",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "system",
+      "replacement_word": "establishment",
+      "original_sentence": "The system formed about 4.6 billion years ago when a dense region of a molecular cloud collapsed, creating the Sun and a protoplanetary disc from which the orbiting bodies assembled.",
+      "reformulated_sentence": "The establishment formed about 4.6 billion years ago when a dense part of a molecular cloud collapsed, creating the Sun and a protoplanetary disc from which the orbiting bodies assembled.",
+      "contextual_fit": 1.0213336736342171e-06,
+      "sbert_sim": 0.938,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "solar_system",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "region",
+      "replacement_word": "part",
+      "original_sentence": "The system formed about 4.6 billion years ago when a dense region of a molecular cloud collapsed, creating the Sun and a protoplanetary disc from which the orbiting bodies assembled.",
+      "reformulated_sentence": "The establishment formed about 4.6 billion years ago when a dense part of a molecular cloud collapsed, creating the Sun and a protoplanetary disc from which the orbiting bodies assembled.",
+      "contextual_fit": 0.0035051442682743073,
+      "sbert_sim": 0.9351,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "solar_system",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "releasing",
+      "replacement_word": "going",
+      "original_sentence": "Inside the Sun's core, hydrogen is fused into helium, releasing energy that is emitted through the Sun's photosphere.",
+      "reformulated_sentence": "Inside the Sun's core, hydrogen is fused into helium, going energy that is emitted through the Sun's photosphere.",
+      "contextual_fit": 5.378601144911954e-06,
+      "sbert_sim": 0.9849,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "solar_system",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "sunlight",
+      "replacement_word": "daylight",
+      "original_sentence": "Earth and Mars is the only planets that orbit within the Sun's habitable zone, in which sunlight can keep surface water liquid.",
+      "reformulated_sentence": "Earth and Mars is the only planets that orbit within the Sun's habitable zone, in which daylight can keep open water liquid.",
+      "contextual_fit": 8.221214375225827e-05,
+      "sbert_sim": 0.9755,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "solar_system",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "surface",
+      "replacement_word": "open",
+      "original_sentence": "Earth and Mars is the only planets that orbit within the Sun's habitable zone, in which sunlight can keep surface water liquid.",
+      "reformulated_sentence": "Earth and Mars is the only planets that orbit within the Sun's habitable zone, in which daylight can keep open water liquid.",
+      "contextual_fit": 0.0004433664435055107,
+      "sbert_sim": 0.9528,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "solar_system",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "rotates",
+      "replacement_word": "turn",
+      "original_sentence": "As the pre-solar nebula collapsed, conservation of angular momentum caused it to rotates faster.",
+      "reformulated_sentence": "As the pre-solar nebula collapsed, conservation of angular momentum caused it to turn faster.",
+      "contextual_fit": 0.0010401413310319185,
+      "sbert_sim": 0.957,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "solar_system",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "region",
+      "replacement_word": "part",
+      "original_sentence": "The Solar System formed at least 4.568 billion years ago from the gravitational collapse of a region within a large molecular cloud.",
+      "reformulated_sentence": "The Solar System formed at least 4.568 billion years ago from the gravitational collapse of a part within a large molecular cloud.",
+      "contextual_fit": 1.8792570699588396e-05,
+      "sbert_sim": 0.9952,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "exercise",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "resting",
+      "replacement_word": "placing",
+      "original_sentence": "Aerobic exercise is any physical activity that uses large muscle groups and cause the body to use more oxygen than it would while resting.",
+      "reformulated_sentence": "Aerobic exercise is any physical activity that uses large muscle groups and cause the body to use more oxygen than it would while placing.",
+      "contextual_fit": 1.945094027178129e-06,
+      "sbert_sim": 0.9797,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "exercise",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "respiratory",
+      "replacement_word": "lung",
+      "original_sentence": "Moderate exercise has been associated with a 29% decreased incidence of upper respiratory tract infections.",
+      "reformulated_sentence": "Moderate exercise has been associated with a 29 % decreased incidence of upper lung tract infections.",
+      "contextual_fit": 2.211749233538285e-06,
+      "sbert_sim": 0.9714,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "exercise",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "recover",
+      "replacement_word": "better",
+      "original_sentence": "Overstraining occurs when a person exceeds their body's ability to recover from strenuous exercise.",
+      "reformulated_sentence": "Overstraining occurs when a person exceeds their body's ability to better from intensive exercise.",
+      "contextual_fit": 4.413844635564601e-06,
+      "sbert_sim": 0.9922,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "exercise",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "strenuous",
+      "replacement_word": "intensive",
+      "original_sentence": "Overstraining occurs when a person exceeds their body's ability to recover from strenuous exercise.",
+      "reformulated_sentence": "Overstraining occurs when a person exceeds their body's ability to better from intensive exercise.",
+      "contextual_fit": 0.008566290140151978,
+      "sbert_sim": 0.9781,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "exercise",
+      "profile": "heavy_dense",
+      "change_source": "restructuring",
+      "triggered_by": [
+        "multiple_difficulties_or_no_valid_substitution"
+      ],
+      "original_word": "Resistance training and subsequent consumption of a protein-rich meal promotes muscle hypertrophy and gains in muscle strength.",
+      "replacement_word": "Muscle hypertrophy and muscle gains in the following consumption of a protein-rich meal promote muscle training.",
+      "original_sentence": "Resistance training and subsequent consumption of a protein-rich meal promotes muscle hypertrophy and gains in muscle strength.",
+      "reformulated_sentence": "Muscle hypertrophy and muscle gains in the following consumption of a protein-rich meal promote muscle training.",
+      "contextual_fit": null,
+      "sbert_sim": 0.9136,
+      "antonym_check": "n/a_sentence_level"
+    },
+    {
+      "source": "exercise",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "system",
+      "replacement_word": "administration",
+      "original_sentence": "The beneficial effect of exercise on the cardiovascular system is well documented.",
+      "reformulated_sentence": "The beneficial effect of exercise on the cardiovascular administration is well documented.",
+      "contextual_fit": 3.5258071875432506e-05,
+      "sbert_sim": 0.9396,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "spread",
+      "replacement_word": "distributed",
+      "original_sentence": "Beginning in Great Britain around 1760, the Industrial Revolution had spread to continental Europe and the United States by about 1840.",
+      "reformulated_sentence": "Beginning in Great Britain around 1760, the Industrial Revolution had distributed to continental Europe and the United States by about 1840.",
+      "contextual_fit": 1.3657211184181506e-06,
+      "sbert_sim": 0.9811,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "declared_word"
+      ],
+      "original_word": "important",
+      "replacement_word": "key",
+      "original_sentence": "Economic historians agree that the onset of the Industrial Revolution is the most important event in human history.",
+      "reformulated_sentence": "Economic historians agree that the onset of the Industrial Revolution is the most key event in human history.",
+      "contextual_fit": 0.0003546498774085194,
+      "sbert_sim": 0.9763,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "steam",
+      "replacement_word": "machine",
+      "original_sentence": "This transition included going from hand production methods to machines, new chemical manufacturing and iron production processes, and the increasing use of steam power.",
+      "reformulated_sentence": "This transition included going from hand production methods to machines, new chemical manufacturing and iron production processes, and the increasing use of machine power.",
+      "contextual_fit": 0.0028935864102095366,
+      "sbert_sim": 0.9188,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "century",
+      "replacement_word": "period",
+      "original_sentence": "By the mid-18th century, Britain was the leading commercial nation, with GDP per capita considerably over the world average.",
+      "reformulated_sentence": "By the mid-18th period, Britain was the leading commercial nation, with GDP per capita considerably over the world average.",
+      "contextual_fit": 7.136711133171048e-07,
+      "sbert_sim": 0.99,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "Rapid",
+      "replacement_word": "Fast",
+      "original_sentence": "Rapid adoption of mechanized textile spinning occurred in Britain in the 1780s.",
+      "reformulated_sentence": "Fast adoption of mechanized textile twisting occurred in Britain in the 1780s.",
+      "contextual_fit": 3.325228681205772e-05,
+      "sbert_sim": 0.9953,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "spinning",
+      "replacement_word": "twisting",
+      "original_sentence": "Rapid adoption of mechanized textile spinning occurred in Britain in the 1780s.",
+      "reformulated_sentence": "Fast adoption of mechanized textile twisting occurred in Britain in the 1780s.",
+      "contextual_fit": 1.8145054809792782e-06,
+      "sbert_sim": 0.8732,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "spread",
+      "replacement_word": "open",
+      "original_sentence": "Mechanized textile production spread from Britain to continental Europe and the US in the early 19th century.",
+      "reformulated_sentence": "Mechanized textile production open from Britain to continental Europe and the US in the early 19th period.",
+      "contextual_fit": 3.664780763301678e-07,
+      "sbert_sim": 0.9616,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "century",
+      "replacement_word": "period",
+      "original_sentence": "Mechanized textile production spread from Britain to continental Europe and the US in the early 19th century.",
+      "reformulated_sentence": "Mechanized textile production open from Britain to continental Europe and the US in the early 19th period.",
+      "contextual_fit": 3.1692641186964465e-06,
+      "sbert_sim": 0.9606,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "recorded",
+      "replacement_word": "shown",
+      "original_sentence": "The earliest recorded use of the phrase Industrial Revolution was in 1799 by a French envoy announcing that France had entered the race to industrialist.",
+      "reformulated_sentence": "The earliest shown use of the phrase Industrial Revolution was in 1799 by a French envoy announcing that France had entered the competition to industrialist.",
+      "contextual_fit": 1.936270018632058e-05,
+      "sbert_sim": 0.9967,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "race",
+      "replacement_word": "competition",
+      "original_sentence": "The earliest recorded use of the phrase Industrial Revolution was in 1799 by a French envoy announcing that France had entered the race to industrialist.",
+      "reformulated_sentence": "The earliest shown use of the phrase Industrial Revolution was in 1799 by a French envoy announcing that France had entered the competition to industrialist.",
+      "contextual_fit": 0.00027975483681075275,
+      "sbert_sim": 0.9669,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "system",
+      "replacement_word": "organization",
+      "original_sentence": "The Internet is the global system of interconnected computer networks that uses the Internet protocol suite to communicate between networks and devices.",
+      "reformulated_sentence": "The Internet is the global organization of interconnected computer networks that uses the Internet protocol collection to communicate between networks and devices.",
+      "contextual_fit": 0.01119676511734724,
+      "sbert_sim": 0.9799,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "suite",
+      "replacement_word": "collection",
+      "original_sentence": "The Internet is the global system of interconnected computer networks that uses the Internet protocol suite to communicate between networks and devices.",
+      "reformulated_sentence": "The Internet is the global organization of interconnected computer networks that uses the Internet protocol collection to communicate between networks and devices.",
+      "contextual_fit": 1.0032350473920815e-05,
+      "sbert_sim": 0.9619,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "scope",
+      "replacement_word": "extent",
+      "original_sentence": "It is a network of networks that comprises private, public, academic, business, and government networks of local to global scope.",
+      "reformulated_sentence": "It is a network of networks that comprises private, public, academic, business, and government networks of local to global extent.",
+      "contextual_fit": 0.0010382492328062654,
+      "sbert_sim": 0.9919,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "single",
+      "replacement_word": "one",
+      "original_sentence": "The Internet has no single centralized governance in either technological implementation or policies for access and usage.",
+      "reformulated_sentence": "The Internet has no one concentrated governance in either technological implementation or policies for access and usage.",
+      "contextual_fit": 0.0007208761526271701,
+      "sbert_sim": 0.9889,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "centralized",
+      "replacement_word": "concentrated",
+      "original_sentence": "The Internet has no single centralized governance in either technological implementation or policies for access and usage.",
+      "reformulated_sentence": "The Internet has no one concentrated governance in either technological implementation or policies for access and usage.",
+      "contextual_fit": 1.278041054320056e-06,
+      "sbert_sim": 0.958,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "sets",
+      "replacement_word": "puts",
+      "original_sentence": "Each constituent network sets its own policies.",
+      "reformulated_sentence": "Each constituent network puts its own policies.",
+      "contextual_fit": 0.00015871820505708456,
+      "sbert_sim": 0.9784,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "researchers",
+      "replacement_word": "authors",
+      "original_sentence": "In 1974, researchers published a proposal for a protocol for packet network intercommunication.",
+      "reformulated_sentence": "In 1974, authors published a proposal for a protocol for packet network intercommunication.",
+      "contextual_fit": 0.00013590091839432716,
+      "sbert_sim": 0.9802,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "research",
+      "replacement_word": "finding",
+      "original_sentence": "ARPANET development began with two network nodes which were interconnected between two research institutions on 29 October 1969.",
+      "reformulated_sentence": "ARPANET development began with two network nodes which were interconnected between two finding institutions on 29 October 1969.",
+      "contextual_fit": 4.6973661937954603e-07,
+      "sbert_sim": 0.9791,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "heavy_dense",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "sites",
+      "replacement_word": "places",
+      "original_sentence": "By the end of 1971, 15 sites were connected to the young ARPANET, mainly in metropolitan areas of Los Angeles, San Francisco, and Boston.",
+      "reformulated_sentence": "By the end of 1971, 15 places were connected to the young ARPANET, mainly in metropolitan areas of Los Angeles, San Francisco, and Boston.",
+      "contextual_fit": 0.00025554164312779903,
+      "sbert_sim": 0.9402,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "system",
+      "replacement_word": "organization",
+      "original_sentence": "Photosynthesis is a system of biological processes by which photopigment-bearing autotrophic organisms, such as most plants, algae and cyanobacteria, convert light energy into the chemical energy necessary to fuel their metabolism.",
+      "reformulated_sentence": "Photosynthesis is a organization of biological processes by which photopigment-bearing autotrophic organisms, much as most plants, algae and cyanobacteria, convert light energy into the chemical energy necessary to fuel their metabolism.",
+      "contextual_fit": 8.491251355735585e-05,
+      "sbert_sim": 0.9879,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "such",
+      "replacement_word": "much",
+      "original_sentence": "Photosynthesis is a system of biological processes by which photopigment-bearing autotrophic organisms, such as most plants, algae and cyanobacteria, convert light energy into the chemical energy necessary to fuel their metabolism.",
+      "reformulated_sentence": "Photosynthesis is a organization of biological processes by which photopigment-bearing autotrophic organisms, much as most plants, algae and cyanobacteria, convert light energy into the chemical energy necessary to fuel their metabolism.",
+      "contextual_fit": 1.0044369446404744e-05,
+      "sbert_sim": 0.9878,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "splitting",
+      "replacement_word": "breaking",
+      "original_sentence": "The term photosynthesis usually refers to oxygenic photosynthesis, a process that releases oxygen as a byproduct of water splitting.",
+      "reformulated_sentence": "The term photosynthesis usually refers to oxygenic photosynthesis, a process that releases oxygen as a byproduct of water breaking.",
+      "contextual_fit": 4.8061997404147405e-06,
+      "sbert_sim": 0.9628,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "supplies",
+      "replacement_word": "gives",
+      "original_sentence": "Photosynthesis plays a critical role in producing and maintaining the oxygen content of the Earth's atmosphere, and it supplies most of the biological energy necessary for complex life on Earth.",
+      "reformulated_sentence": "Photosynthesis plays a critical role in producing and maintaining the oxygen content of the Earth's atmosphere, and it gives most of the biological energy necessary for complex life on Earth.",
+      "contextual_fit": 0.002914240350946784,
+      "sbert_sim": 0.9954,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "species",
+      "replacement_word": "manners",
+      "original_sentence": "While the details may differ between species, the process always begins when light energy is absorbed by the reaction centers, proteins that contain photosynthetic pigments or chromophore.",
+      "reformulated_sentence": "While the details may differ between manners, the process always begins when light energy is absorbed by the reaction places, proteins that contain photosynthetic pigments or chromophore.",
+      "contextual_fit": 2.685050458239857e-05,
+      "sbert_sim": 0.9657,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "centers",
+      "replacement_word": "places",
+      "original_sentence": "While the details may differ between species, the process always begins when light energy is absorbed by the reaction centers, proteins that contain photosynthetic pigments or chromophore.",
+      "reformulated_sentence": "While the details may differ between manners, the process always begins when light energy is absorbed by the reaction places, proteins that contain photosynthetic pigments or chromophore.",
+      "contextual_fit": 1.0119704711541999e-05,
+      "sbert_sim": 0.962,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "cells",
+      "replacement_word": "cases",
+      "original_sentence": "In plants, these pigments are chlorophyll held inside chloroplasts, abundant in leaf cells.",
+      "reformulated_sentence": "In plants, these pigments are chlorophyll held inside chloroplasts, abundant in leaf cases.",
+      "contextual_fit": 0.0003997196035925299,
+      "sbert_sim": 0.9846,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "stages",
+      "replacement_word": "phases",
+      "original_sentence": "Photosynthesis occurs in two stages.",
+      "reformulated_sentence": "Photosynthesis occurs in two phases.",
+      "contextual_fit": 0.10880958288908005,
+      "sbert_sim": 0.9194,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "spectrum",
+      "replacement_word": "landscape",
+      "original_sentence": "The green part of the light spectrum is not absorbed but is reflected, which is the reason that most plants have a green color.",
+      "reformulated_sentence": "The green part of the light landscape is not absorbed but is reflected, which is the reason that most plants have a green color.",
+      "contextual_fit": 5.820195656269789e-05,
+      "sbert_sim": 0.9556,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "cellular",
+      "replacement_word": "cell-like",
+      "original_sentence": "In general outline, photosynthesis is the opposite of cellular respiration, while cellular respiration is the oxidation of carbohydrates to carbon dioxide.",
+      "reformulated_sentence": "In general outline, photosynthesis is the opposite of cell-like respiration, while cell-like respiration is the oxidation of carbohydrates to carbon dioxide.",
+      "contextual_fit": 0.7274873852729797,
+      "sbert_sim": 0.9884,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "cellular",
+      "replacement_word": "cell-like",
+      "original_sentence": "In general outline, photosynthesis is the opposite of cellular respiration, while cellular respiration is the oxidation of carbohydrates to carbon dioxide.",
+      "reformulated_sentence": "In general outline, photosynthesis is the opposite of cell-like respiration, while cell-like respiration is the oxidation of carbohydrates to carbon dioxide.",
+      "contextual_fit": 0.7274873852729797,
+      "sbert_sim": 0.9589,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "soil",
+      "replacement_word": "land",
+      "original_sentence": "Photosynthesis was discovered in 1779 by Jan Ingenhousz who showed that plants need light, not just soil and water.",
+      "reformulated_sentence": "Photosynthesis was discovered in 1779 by Jan Ingenhousz who showed that plants need light, not just land and water.",
+      "contextual_fit": 0.0008136495598591864,
+      "sbert_sim": 0.9844,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "solar_system",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "system",
+      "replacement_word": "organization",
+      "original_sentence": "The Solar System is the gravitationally bound system of the Sun and the masses that orbit it, most prominently its eight planets, of which Earth is one.",
+      "reformulated_sentence": "The Solar System is the gravitationally bound organization of the Sun and the masses that orbit it, most prominently its eight planets, of which Earth is one.",
+      "contextual_fit": 0.0005561541183851659,
+      "sbert_sim": 0.9822,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "solar_system",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "system",
+      "replacement_word": "regime",
+      "original_sentence": "The system formed about 4.6 billion years ago when a dense region of a molecular cloud collapsed, creating the Sun and a protoplanetary disc from which the orbiting bodies assembled.",
+      "reformulated_sentence": "The regime formed about 4.6 billion years ago when a dense region of a molecular cloud collapsed, creating the Sun and a protoplanetary disc from which the orbiting bodies assembled.",
+      "contextual_fit": 9.943357326847035e-06,
+      "sbert_sim": 0.9399,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "solar_system",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "sunlight",
+      "replacement_word": "daylight",
+      "original_sentence": "Earth and Mars is the only planets that orbit within the Sun's habitable zone, in which sunlight can keep surface water liquid.",
+      "reformulated_sentence": "Earth and Mars is the only planets that orbit within the Sun's habitable zone, in which daylight can keep open water liquid.",
+      "contextual_fit": 8.221214375225827e-05,
+      "sbert_sim": 0.9755,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "solar_system",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "surface",
+      "replacement_word": "open",
+      "original_sentence": "Earth and Mars is the only planets that orbit within the Sun's habitable zone, in which sunlight can keep surface water liquid.",
+      "reformulated_sentence": "Earth and Mars is the only planets that orbit within the Sun's habitable zone, in which daylight can keep open water liquid.",
+      "contextual_fit": 0.0004433664435055107,
+      "sbert_sim": 0.9528,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "exercise",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "strenuous",
+      "replacement_word": "demanding",
+      "original_sentence": "Overstraining occurs when a person exceeds their body's ability to recover from strenuous exercise.",
+      "reformulated_sentence": "Overstraining occurs when a person exceeds their body's ability to recover from demanding exercise.",
+      "contextual_fit": 4.524382529780269e-05,
+      "sbert_sim": 0.984,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "exercise",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "subsequent",
+      "replacement_word": "after",
+      "original_sentence": "Resistance training and subsequent consumption of a protein-rich meal promotes muscle hypertrophy and gains in muscle strength.",
+      "reformulated_sentence": "Resistance training and after consumption of a protein-rich meal promotes muscle hypertrophy and gains in muscle property.",
+      "contextual_fit": 0.00025610902230255306,
+      "sbert_sim": 0.9959,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "exercise",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "strength",
+      "replacement_word": "property",
+      "original_sentence": "Resistance training and subsequent consumption of a protein-rich meal promotes muscle hypertrophy and gains in muscle strength.",
+      "reformulated_sentence": "Resistance training and after consumption of a protein-rich meal promotes muscle hypertrophy and gains in muscle property.",
+      "contextual_fit": 2.158160350518301e-05,
+      "sbert_sim": 0.9864,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "exercise",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "system",
+      "replacement_word": "regime",
+      "original_sentence": "The beneficial effect of exercise on the cardiovascular system is well documented.",
+      "reformulated_sentence": "The beneficial effect of exercise on the cardiovascular regime is well documented.",
+      "contextual_fit": 0.0005724240909330547,
+      "sbert_sim": 0.9571,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "spread",
+      "replacement_word": "distributed",
+      "original_sentence": "Beginning in Great Britain around 1760, the Industrial Revolution had spread to continental Europe and the United States by about 1840.",
+      "reformulated_sentence": "Beginning in Great Britain around 1760, the Industrial Revolution had distributed to continental Europe and the United States by about 1840.",
+      "contextual_fit": 1.3657211184181506e-06,
+      "sbert_sim": 0.9811,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "steam",
+      "replacement_word": "machine",
+      "original_sentence": "This transition included going from hand production methods to machines, new chemical manufacturing and iron production processes, and the increasing use of steam power.",
+      "reformulated_sentence": "This transition included going from hand production methods to machines, new chemical manufacturing and iron production processes, and the increasing use of machine power.",
+      "contextual_fit": 0.0028935864102095366,
+      "sbert_sim": 0.9188,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "century",
+      "replacement_word": "period",
+      "original_sentence": "By the mid-18th century, Britain was the leading commercial nation, with GDP per capita considerably over the world average.",
+      "reformulated_sentence": "By the mid-18th period, Britain was the leading commercial nation, with GDP per capita considerably over the world average.",
+      "contextual_fit": 7.136711133171048e-07,
+      "sbert_sim": 0.99,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "spinning",
+      "replacement_word": "twisting",
+      "original_sentence": "Rapid adoption of mechanized textile spinning occurred in Britain in the 1780s.",
+      "reformulated_sentence": "Rapid adoption of mechanized textile twisting occurred in Britain in the 1780s.",
+      "contextual_fit": 1.6358745824618381e-06,
+      "sbert_sim": 0.8748,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "spread",
+      "replacement_word": "open",
+      "original_sentence": "Mechanized textile production spread from Britain to continental Europe and the US in the early 19th century.",
+      "reformulated_sentence": "Mechanized textile production open from Britain to continental Europe and the US in the early 19th period.",
+      "contextual_fit": 3.664780763301678e-07,
+      "sbert_sim": 0.9616,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "century",
+      "replacement_word": "period",
+      "original_sentence": "Mechanized textile production spread from Britain to continental Europe and the US in the early 19th century.",
+      "reformulated_sentence": "Mechanized textile production open from Britain to continental Europe and the US in the early 19th period.",
+      "contextual_fit": 3.1692641186964465e-06,
+      "sbert_sim": 0.9606,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "single_common_sound",
+      "change_source": "restructuring",
+      "triggered_by": [
+        "multiple_difficulties_or_no_valid_substitution"
+      ],
+      "original_word": "In 1750, Britain imported 2.5 million pounds of raw cotton, most of which was spun and woven by the cottage industry in Lancashire.",
+      "replacement_word": "In 1750, Britain imported 2.5 million pounds of raw cotton, most of which was twisted and woven by the cottage industry in Lancashire.",
+      "original_sentence": "In 1750, Britain imported 2.5 million pounds of raw cotton, most of which was spun and woven by the cottage industry in Lancashire.",
+      "reformulated_sentence": "In 1750, Britain imported 2.5 million pounds of raw cotton, most of which was twisted and woven by the cottage industry in Lancashire.",
+      "contextual_fit": null,
+      "sbert_sim": 0.9856,
+      "antonym_check": "n/a_sentence_level"
+    },
+    {
+      "source": "internet",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "system",
+      "replacement_word": "organization",
+      "original_sentence": "The Internet is the global system of interconnected computer networks that uses the Internet protocol suite to communicate between networks and devices.",
+      "reformulated_sentence": "The Internet is the global organization of interconnected computer networks that uses the Internet protocol collection to communicate between networks and devices.",
+      "contextual_fit": 0.01119676511734724,
+      "sbert_sim": 0.9799,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "suite",
+      "replacement_word": "collection",
+      "original_sentence": "The Internet is the global system of interconnected computer networks that uses the Internet protocol suite to communicate between networks and devices.",
+      "reformulated_sentence": "The Internet is the global organization of interconnected computer networks that uses the Internet protocol collection to communicate between networks and devices.",
+      "contextual_fit": 1.0032350473920815e-05,
+      "sbert_sim": 0.9619,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "scope",
+      "replacement_word": "range",
+      "original_sentence": "It is a network of networks that comprises private, public, academic, business, and government networks of local to global scope.",
+      "reformulated_sentence": "It is a network of networks that comprises private, public, academic, business, and government networks of local to global range.",
+      "contextual_fit": 1.0798750736285001e-05,
+      "sbert_sim": 0.9894,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "services",
+      "replacement_word": "helps",
+      "original_sentence": "The Internet carries a vast range of information services and resources, such as the interlinked hypertext documents of the World Wide Web, electronic mail, and file sharing.",
+      "reformulated_sentence": "The Internet carries a vast range of information helps and resources, much as the interlinked hypertext documents of the World Wide Web, electronic mail, and file sharing.",
+      "contextual_fit": 9.785319434740813e-07,
+      "sbert_sim": 0.9552,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "such",
+      "replacement_word": "much",
+      "original_sentence": "The Internet carries a vast range of information services and resources, such as the interlinked hypertext documents of the World Wide Web, electronic mail, and file sharing.",
+      "reformulated_sentence": "The Internet carries a vast range of information helps and resources, much as the interlinked hypertext documents of the World Wide Web, electronic mail, and file sharing.",
+      "contextual_fit": 2.8013536734761146e-07,
+      "sbert_sim": 0.95,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "single",
+      "replacement_word": "one",
+      "original_sentence": "The Internet has no single centralized governance in either technological implementation or policies for access and usage.",
+      "reformulated_sentence": "The Internet has no one concentrated governance in either technological implementation or policies for access and usage.",
+      "contextual_fit": 0.0007208761526271701,
+      "sbert_sim": 0.9889,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "centralized",
+      "replacement_word": "concentrated",
+      "original_sentence": "The Internet has no single centralized governance in either technological implementation or policies for access and usage.",
+      "reformulated_sentence": "The Internet has no one concentrated governance in either technological implementation or policies for access and usage.",
+      "contextual_fit": 1.278041054320056e-06,
+      "sbert_sim": 0.958,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "sets",
+      "replacement_word": "puts",
+      "original_sentence": "Each constituent network sets its own policies.",
+      "reformulated_sentence": "Each constituent network puts its own policies.",
+      "contextual_fit": 0.00015871820505708456,
+      "sbert_sim": 0.9784,
+      "antonym_check": "pass"
+    },
+    {
+      "source": "internet",
+      "profile": "single_common_sound",
+      "change_source": "substitution",
+      "triggered_by": [
+        "global_sound"
+      ],
+      "original_word": "sites",
+      "replacement_word": "places",
+      "original_sentence": "By the end of 1971, 15 sites were connected to the young ARPANET, mainly in metropolitan areas of Los Angeles, San Francisco, and Boston.",
+      "reformulated_sentence": "By the end of 1971, 15 places were connected to the young ARPANET, mainly in metropolitan areas of Los Angeles, San Francisco, and Boston.",
+      "contextual_fit": 0.00025554164312779903,
+      "sbert_sim": 0.9402,
+      "antonym_check": "pass"
+    }
+  ],
+  "no_change": [
+    {
+      "source": "photosynthesis",
+      "profile": "light_single_sound",
+      "original_text": "Photosynthesis is a system of biological processes by which photopigment-bearing autotrophic organisms, such as most plants, algae and cyanobacteria, convert light energy into the chemical energy necessary to fuel their metabolism.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "light_single_sound",
+      "original_text": "The term photosynthesis usually refers to oxygenic photosynthesis, a process that releases oxygen as a byproduct of water splitting.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "light_single_sound",
+      "original_text": "Photosynthesis plays a critical role in producing and maintaining the oxygen content of the Earth's atmosphere, and it supplies most of the biological energy necessary for complex life on Earth.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "light_single_sound",
+      "original_text": "While the details may differ between species, the process always begins when light energy is absorbed by the reaction centers, proteins that contain photosynthetic pigments or chromophore.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "light_single_sound",
+      "original_text": "In plants, these pigments are chlorophyll held inside chloroplasts, abundant in leaf cells.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "light_single_sound",
+      "original_text": "Photosynthesis occurs in two stages.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "light_single_sound",
+      "original_text": "In plants and algae, photosynthesis takes place in organelles called chloroplasts.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "light_single_sound",
+      "original_text": "Plants absorb light primarily using the pigment chlorophyll.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "light_single_sound",
+      "original_text": "The green part of the light spectrum is not absorbed but is reflected, which is the reason that most plants have a green color.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "light_single_sound",
+      "original_text": "Carbon dioxide is converted into sugars in a process called carbon fixation.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "light_single_sound",
+      "original_text": "In general outline, photosynthesis is the opposite of cellular respiration, while cellular respiration is the oxidation of carbohydrates to carbon dioxide.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "light_single_sound",
+      "original_text": "Photosynthesis was discovered in 1779 by Jan Ingenhousz who showed that plants need light, not just soil and water.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "light_single_sound",
+      "original_text": "The Solar System is the gravitationally bound system of the Sun and the masses that orbit it, most prominently its eight planets, of which Earth is one.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "light_single_sound",
+      "original_text": "The Solar System is an isolated single-star planetary system within the Milky Way Galaxy.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "light_single_sound",
+      "original_text": "The system formed about 4.6 billion years ago when a dense region of a molecular cloud collapsed, creating the Sun and a protoplanetary disc from which the orbiting bodies assembled.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "light_single_sound",
+      "original_text": "The Sun accounts for 99.86% of the Solar System's total mass.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "light_single_sound",
+      "original_text": "Inside the Sun's core, hydrogen is fused into helium, releasing energy that is emitted through the Sun's photosphere.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "light_single_sound",
+      "original_text": "Closest to the Sun in order of increasing distance is the terrestrial planets, Mercury, Venus, Earth and Mars.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "light_single_sound",
+      "original_text": "Earth and Mars is the only planets that orbit within the Sun's habitable zone, in which sunlight can keep surface water liquid.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "light_single_sound",
+      "original_text": "Jupiter and Saturn possesses nearly 90 % of the non-stellar mass of the Solar System.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "light_single_sound",
+      "original_text": "The Solar System includes the Sun and all objects that are bound to it by gravity and orbit it.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "light_single_sound",
+      "original_text": "As the pre-solar nebula collapsed, conservation of angular momentum caused it to rotates faster.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "light_single_sound",
+      "original_text": "Hundreds of protoplasts may have existed in the early Solar System, but they either merged or were destroyed or ejected.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "light_single_sound",
+      "original_text": "The Solar System formed at least 4.568 billion years ago from the gravitational collapse of a region within a large molecular cloud.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "light_single_sound",
+      "original_text": "Exercise or working out is physical activity that enhances or maintains fitness and overall health.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "light_single_sound",
+      "original_text": "In terms of health benefits, usually, 150 minutes of moderate-intensity exercise per week is recommended for reducing the risk of health problems.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "light_single_sound",
+      "original_text": "Aerobic exercise is any physical activity that uses large muscle groups and cause the body to use more oxygen than it would while resting.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "light_single_sound",
+      "original_text": "A lack of physical activity causes approximately 6% of the burden of disease from coronary heart disease worldwide.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "light_single_sound",
+      "original_text": "Moderate exercise has been associated with a 29% decreased incidence of upper respiratory tract infections.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "light_single_sound",
+      "original_text": "The beneficial effect of exercise on the cardiovascular system is well documented.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "light_single_sound",
+      "original_text": "Aerobic exercise may affect both self-esteem and overall well-being with consistent, long term participation.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "light_single_sound",
+      "original_text": "Studies have shown that strenuous stress for long durations can suppress the immune system by decreasing the concentration of lymphocytes.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "light_single_sound",
+      "original_text": "Beginning in Great Britain around 1760, the Industrial Revolution had spread to continental Europe and the United States by about 1840.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "light_single_sound",
+      "original_text": "Economic historians agree that the onset of the Industrial Revolution is the most important event in human history.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "light_single_sound",
+      "original_text": "This transition included going from hand production methods to machines, new chemical manufacturing and iron production processes, and the increasing use of steam power.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "light_single_sound",
+      "original_text": "By the mid-18th century, Britain was the leading commercial nation, with GDP per capita considerably over the world average.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "light_single_sound",
+      "original_text": "The textile industry was the first to use modern production methods, and textiles became the dominant industry in terms of employment.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "light_single_sound",
+      "original_text": "Rapid adoption of mechanized textile spinning occurred in Britain in the 1780s.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "light_single_sound",
+      "original_text": "Mechanized textile production spread from Britain to continental Europe and the US in the early 19th century.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "light_single_sound",
+      "original_text": "Prior to the Industrial Revolution, most manufacturing occurred in China and India; after the Industrial Revolution, most manufacturing took place in North America and Western Europe.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "light_single_sound",
+      "original_text": "The earliest recorded use of the phrase Industrial Revolution was in 1799 by a French envoy announcing that France had entered the race to industrialist.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "light_single_sound",
+      "original_text": "In 1750, Britain imported 2.5 million pounds of raw cotton, most of which was spun and woven by the cottage industry in Lancashire.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "light_single_sound",
+      "original_text": "The Internet is the global system of interconnected computer networks that uses the Internet protocol suite to communicate between networks and devices.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "light_single_sound",
+      "original_text": "It is a network of networks that comprises private, public, academic, business, and government networks of local to global scope.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "light_single_sound",
+      "original_text": "The Internet carries a vast range of information services and resources, such as the interlinked hypertext documents of the World Wide Web, electronic mail, and file sharing.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "light_single_sound",
+      "original_text": "The Internet has no single centralized governance in either technological implementation or policies for access and usage.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "light_single_sound",
+      "original_text": "Each constituent network sets its own policies.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "light_single_sound",
+      "original_text": "The word interested was used as early as 1849, meaning interconnected or interwoven.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "light_single_sound",
+      "original_text": "In 1974, researchers published a proposal for a protocol for packet network intercommunication.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "light_single_sound",
+      "original_text": "ARPANET development began with two network nodes which were interconnected between two research institutions on 29 October 1969.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "light_single_sound",
+      "original_text": "By the end of 1971, 15 sites were connected to the young ARPANET, mainly in metropolitan areas of Los Angeles, San Francisco, and Boston.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "light_single_sound",
+      "original_text": "The ARPANET was decommissioned in 1990.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "moderate_mixed",
+      "original_text": "While the details may differ between species, the process always begins when light energy is absorbed by the reaction centers, proteins that contain photosynthetic pigments or chromophore.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "moderate_mixed",
+      "original_text": "In plants, these pigments are chlorophyll held inside chloroplasts, abundant in leaf cells.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "moderate_mixed",
+      "original_text": "Photosynthesis occurs in two stages.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "moderate_mixed",
+      "original_text": "In plants and algae, photosynthesis takes place in organelles called chloroplasts.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "moderate_mixed",
+      "original_text": "In general outline, photosynthesis is the opposite of cellular respiration, while cellular respiration is the oxidation of carbohydrates to carbon dioxide.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "moderate_mixed",
+      "original_text": "Photosynthesis was discovered in 1779 by Jan Ingenhousz who showed that plants need light, not just soil and water.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "moderate_mixed",
+      "original_text": "The Solar System is an isolated single-star planetary system within the Milky Way Galaxy.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "moderate_mixed",
+      "original_text": "The Sun accounts for 99.86% of the Solar System's total mass.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "moderate_mixed",
+      "original_text": "Inside the Sun's core, hydrogen is fused into helium, releasing energy that is emitted through the Sun's photosphere.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "moderate_mixed",
+      "original_text": "Closest to the Sun in order of increasing distance is the terrestrial planets, Mercury, Venus, Earth and Mars.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "moderate_mixed",
+      "original_text": "Earth and Mars is the only planets that orbit within the Sun's habitable zone, in which sunlight can keep surface water liquid.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "moderate_mixed",
+      "original_text": "Jupiter and Saturn possesses nearly 90 % of the non-stellar mass of the Solar System.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "moderate_mixed",
+      "original_text": "As the pre-solar nebula collapsed, conservation of angular momentum caused it to rotates faster.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "solar_system",
+      "profile": "moderate_mixed",
+      "original_text": "Hundreds of protoplasts may have existed in the early Solar System, but they either merged or were destroyed or ejected.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "exercise",
+      "profile": "moderate_mixed",
+      "original_text": "Exercise or working out is physical activity that enhances or maintains fitness and overall health.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "moderate_mixed",
+      "original_text": "A lack of physical activity causes approximately 6% of the burden of disease from coronary heart disease worldwide.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "moderate_mixed",
+      "original_text": "Moderate exercise has been associated with a 29% decreased incidence of upper respiratory tract infections.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "moderate_mixed",
+      "original_text": "Overstraining occurs when a person exceeds their body's ability to recover from strenuous exercise.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "moderate_mixed",
+      "original_text": "Resistance training and subsequent consumption of a protein-rich meal promotes muscle hypertrophy and gains in muscle strength.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "exercise",
+      "profile": "moderate_mixed",
+      "original_text": "The beneficial effect of exercise on the cardiovascular system is well documented.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "moderate_mixed",
+      "original_text": "Aerobic exercise may affect both self-esteem and overall well-being with consistent, long term participation.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "moderate_mixed",
+      "original_text": "Studies have shown that strenuous stress for long durations can suppress the immune system by decreasing the concentration of lymphocytes.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "moderate_mixed",
+      "original_text": "Beginning in Great Britain around 1760, the Industrial Revolution had spread to continental Europe and the United States by about 1840.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "moderate_mixed",
+      "original_text": "Economic historians agree that the onset of the Industrial Revolution is the most important event in human history.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "moderate_mixed",
+      "original_text": "By the mid-18th century, Britain was the leading commercial nation, with GDP per capita considerably over the world average.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "moderate_mixed",
+      "original_text": "Rapid adoption of mechanized textile spinning occurred in Britain in the 1780s.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "moderate_mixed",
+      "original_text": "The earliest recorded use of the phrase Industrial Revolution was in 1799 by a French envoy announcing that France had entered the race to industrialist.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "moderate_mixed",
+      "original_text": "In 1750, Britain imported 2.5 million pounds of raw cotton, most of which was spun and woven by the cottage industry in Lancashire.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "moderate_mixed",
+      "original_text": "The Internet carries a vast range of information services and resources, such as the interlinked hypertext documents of the World Wide Web, electronic mail, and file sharing.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "moderate_mixed",
+      "original_text": "The Internet has no single centralized governance in either technological implementation or policies for access and usage.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "moderate_mixed",
+      "original_text": "Each constituent network sets its own policies.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "moderate_mixed",
+      "original_text": "The word interested was used as early as 1849, meaning interconnected or interwoven.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "moderate_mixed",
+      "original_text": "ARPANET development began with two network nodes which were interconnected between two research institutions on 29 October 1969.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "moderate_mixed",
+      "original_text": "By the end of 1971, 15 sites were connected to the young ARPANET, mainly in metropolitan areas of Los Angeles, San Francisco, and Boston.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "moderate_mixed",
+      "original_text": "The ARPANET was decommissioned in 1990.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "heavy_dense",
+      "original_text": "The term photosynthesis usually refers to oxygenic photosynthesis, a process that releases oxygen as a byproduct of water splitting.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "heavy_dense",
+      "original_text": "While the details may differ between species, the process always begins when light energy is absorbed by the reaction centers, proteins that contain photosynthetic pigments or chromophore.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "heavy_dense",
+      "original_text": "In plants and algae, photosynthesis takes place in organelles called chloroplasts.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "heavy_dense",
+      "original_text": "Plants absorb light primarily using the pigment chlorophyll.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "heavy_dense",
+      "original_text": "The green part of the light spectrum is not absorbed but is reflected, which is the reason that most plants have a green color.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "heavy_dense",
+      "original_text": "Carbon dioxide is converted into sugars in a process called carbon fixation.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "heavy_dense",
+      "original_text": "In general outline, photosynthesis is the opposite of cellular respiration, while cellular respiration is the oxidation of carbohydrates to carbon dioxide.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "solar_system",
+      "profile": "heavy_dense",
+      "original_text": "The Solar System is an isolated single-star planetary system within the Milky Way Galaxy.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "solar_system",
+      "profile": "heavy_dense",
+      "original_text": "The Sun accounts for 99.86% of the Solar System's total mass.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "heavy_dense",
+      "original_text": "Closest to the Sun in order of increasing distance is the terrestrial planets, Mercury, Venus, Earth and Mars.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "heavy_dense",
+      "original_text": "Jupiter and Saturn possesses nearly 90 % of the non-stellar mass of the Solar System.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "heavy_dense",
+      "original_text": "The Solar System includes the Sun and all objects that are bound to it by gravity and orbit it.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "heavy_dense",
+      "original_text": "Hundreds of protoplasts may have existed in the early Solar System, but they either merged or were destroyed or ejected.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "heavy_dense",
+      "original_text": "Exercise or working out is physical activity that enhances or maintains fitness and overall health.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "heavy_dense",
+      "original_text": "In terms of health benefits, usually, 150 minutes of moderate-intensity exercise per week is recommended for reducing the risk of health problems.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "exercise",
+      "profile": "heavy_dense",
+      "original_text": "A lack of physical activity causes approximately 6% of the burden of disease from coronary heart disease worldwide.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "heavy_dense",
+      "original_text": "Aerobic exercise may affect both self-esteem and overall well-being with consistent, long term participation.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "exercise",
+      "profile": "heavy_dense",
+      "original_text": "Studies have shown that strenuous stress for long durations can suppress the immune system by decreasing the concentration of lymphocytes.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "heavy_dense",
+      "original_text": "The textile industry was the first to use modern production methods, and textiles became the dominant industry in terms of employment.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "heavy_dense",
+      "original_text": "Prior to the Industrial Revolution, most manufacturing occurred in China and India; after the Industrial Revolution, most manufacturing took place in North America and Western Europe.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "heavy_dense",
+      "original_text": "In 1750, Britain imported 2.5 million pounds of raw cotton, most of which was spun and woven by the cottage industry in Lancashire.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "internet",
+      "profile": "heavy_dense",
+      "original_text": "The Internet carries a vast range of information services and resources, such as the interlinked hypertext documents of the World Wide Web, electronic mail, and file sharing.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "internet",
+      "profile": "heavy_dense",
+      "original_text": "The word interested was used as early as 1849, meaning interconnected or interwoven.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "heavy_dense",
+      "original_text": "The ARPANET was decommissioned in 1990.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "single_common_sound",
+      "original_text": "In plants and algae, photosynthesis takes place in organelles called chloroplasts.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "single_common_sound",
+      "original_text": "Plants absorb light primarily using the pigment chlorophyll.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "photosynthesis",
+      "profile": "single_common_sound",
+      "original_text": "Carbon dioxide is converted into sugars in a process called carbon fixation.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "single_common_sound",
+      "original_text": "The Solar System is an isolated single-star planetary system within the Milky Way Galaxy.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "solar_system",
+      "profile": "single_common_sound",
+      "original_text": "The Sun accounts for 99.86% of the Solar System's total mass.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "single_common_sound",
+      "original_text": "Inside the Sun's core, hydrogen is fused into helium, releasing energy that is emitted through the Sun's photosphere.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "single_common_sound",
+      "original_text": "Closest to the Sun in order of increasing distance is the terrestrial planets, Mercury, Venus, Earth and Mars.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "single_common_sound",
+      "original_text": "Jupiter and Saturn possesses nearly 90 % of the non-stellar mass of the Solar System.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "single_common_sound",
+      "original_text": "The Solar System includes the Sun and all objects that are bound to it by gravity and orbit it.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "single_common_sound",
+      "original_text": "As the pre-solar nebula collapsed, conservation of angular momentum caused it to rotates faster.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "single_common_sound",
+      "original_text": "Hundreds of protoplasts may have existed in the early Solar System, but they either merged or were destroyed or ejected.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "solar_system",
+      "profile": "single_common_sound",
+      "original_text": "The Solar System formed at least 4.568 billion years ago from the gravitational collapse of a region within a large molecular cloud.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "single_common_sound",
+      "original_text": "Exercise or working out is physical activity that enhances or maintains fitness and overall health.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "single_common_sound",
+      "original_text": "In terms of health benefits, usually, 150 minutes of moderate-intensity exercise per week is recommended for reducing the risk of health problems.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "single_common_sound",
+      "original_text": "Aerobic exercise is any physical activity that uses large muscle groups and cause the body to use more oxygen than it would while resting.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "single_common_sound",
+      "original_text": "A lack of physical activity causes approximately 6% of the burden of disease from coronary heart disease worldwide.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "single_common_sound",
+      "original_text": "Moderate exercise has been associated with a 29% decreased incidence of upper respiratory tract infections.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "exercise",
+      "profile": "single_common_sound",
+      "original_text": "Aerobic exercise may affect both self-esteem and overall well-being with consistent, long term participation.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "exercise",
+      "profile": "single_common_sound",
+      "original_text": "Studies have shown that strenuous stress for long durations can suppress the immune system by decreasing the concentration of lymphocytes.",
+      "status": "could_not_safely_reformulate"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "single_common_sound",
+      "original_text": "Economic historians agree that the onset of the Industrial Revolution is the most important event in human history.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "single_common_sound",
+      "original_text": "The textile industry was the first to use modern production methods, and textiles became the dominant industry in terms of employment.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "single_common_sound",
+      "original_text": "Prior to the Industrial Revolution, most manufacturing occurred in China and India; after the Industrial Revolution, most manufacturing took place in North America and Western Europe.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "industrial_revolution",
+      "profile": "single_common_sound",
+      "original_text": "The earliest recorded use of the phrase Industrial Revolution was in 1799 by a French envoy announcing that France had entered the race to industrialist.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "single_common_sound",
+      "original_text": "The word interested was used as early as 1849, meaning interconnected or interwoven.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "single_common_sound",
+      "original_text": "In 1974, researchers published a proposal for a protocol for packet network intercommunication.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "single_common_sound",
+      "original_text": "ARPANET development began with two network nodes which were interconnected between two research institutions on 29 October 1969.",
+      "status": "no_change_needed"
+    },
+    {
+      "source": "internet",
+      "profile": "single_common_sound",
+      "original_text": "The ARPANET was decommissioned in 1990.",
+      "status": "no_change_needed"
+    }
+  ]
+}
