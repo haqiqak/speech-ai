@@ -6,6 +6,22 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-25, first** feat: Phase 9 — learned validator prototype,
+  training run diverged. Assembled the final 313-record dataset (252
+  unique groups) and a unified leakage-safe split respecting R50's/
+  Phase 8's frozen test assignments; computed existing-signal baselines
+  fresh (best combo: SBERT<0.95 OR NLI OR grammar = 60% DEFECTIVE
+  recall / 90% precision / 63% CLEAN recall). Fine-tuned a small
+  cross-encoder (deberta-v3-xsmall, binary ACCEPT/REJECT,
+  pos_weight~11) — training diverged to NaN at epoch 3.08 after a
+  warning-sign gradient spike at epoch 2.69; saved model confirmed
+  100% NaN weights. Evaluation ran exactly as planned and is reported
+  in full, including that its output only numerically matched the
+  reject-everything baseline by coincidence of `nan >= threshold`
+  semantics — not a real result. None of the three gate questions
+  answered. Root-cause hypothesis and fix recommended for a future
+  attempt, not executed — no re-run performed, per instruction. →
+  `DECISION_LOG.md` 2026-08-25-A.
 - **2026-08-24, sixth** docs: R50 Phase 8B — targeted finalization,
   final GO/NO-GO decision. Targeted organic harvest on 4 causal-dense
   topics raised organic FACTUAL_OR_LOGICAL_REVERSAL yield ~6x (1/68 to

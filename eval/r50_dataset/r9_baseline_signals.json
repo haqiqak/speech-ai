@@ -1,0 +1,359 @@
+[
+  {
+    "uid": "P8-constructed-c-clean-01",
+    "acceptability": "CLEAN",
+    "sbert": 0.9868442416191101,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-constructed-c-clean-02",
+    "acceptability": "CLEAN",
+    "sbert": 0.949787437915802,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-constructed-c-clean-08",
+    "acceptability": "CLEAN",
+    "sbert": 0.9889789819717407,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-constructed-c-clean-10",
+    "acceptability": "CLEAN",
+    "sbert": 0.8550853133201599,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-constructed-c-fact-05",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9350205063819885,
+    "nli_contradiction": true,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-constructed-c-fact-08",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9741116166114807,
+    "nli_contradiction": true,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-constructed-c-fact-17",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.916202962398529,
+    "nli_contradiction": true,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-constructed-c-fact-19",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9976102113723755,
+    "nli_contradiction": true,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-constructed-c-term-01",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.8920329213142395,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-constructed-c-term-02",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.8845102190971375,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-constructed-c-term-03",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.721142590045929,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-constructed-c-term-07",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.8608903288841248,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-constructed-c-term-09",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9001312851905823,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-constructed-c-term-16",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.972043514251709,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-constructed-c-term-20",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.8177213668823242,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-organic-009",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9816553592681885,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-organic-012",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9651703238487244,
+    "nli_contradiction": true,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-organic-013",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.97870934009552,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-organic-014",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9982610940933228,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-organic-016",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9807612299919128,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-organic-027",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9845902919769287,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-organic-043",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9762781262397766,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-organic-045",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9900268316268921,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8-organic-066",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9855945110321045,
+    "nli_contradiction": true,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8B-organic-002",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9682169556617737,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8B-organic-003",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9660526514053345,
+    "nli_contradiction": true,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8B-organic-009-0",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9421623945236206,
+    "nli_contradiction": true,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8B-organic-009-1",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9421623945236206,
+    "nli_contradiction": true,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8B-organic-011",
+    "acceptability": "CLEAN",
+    "sbert": 0.9946893453598022,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8B-organic-012",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9771546721458435,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8B-organic-017",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.8750776052474976,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8B-organic-042",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9256060123443604,
+    "nli_contradiction": true,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8B-organic-052",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9725354909896851,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "P8B-organic-054",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9531279802322388,
+    "nli_contradiction": true,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "R40-014",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.984039843082428,
+    "nli_contradiction": false,
+    "grammar_issues": 1
+  },
+  {
+    "uid": "R40-016",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9282106161117554,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "R40-024",
+    "acceptability": "CLEAN",
+    "sbert": 0.9632793068885803,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "R40-050",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.8860787153244019,
+    "nli_contradiction": true,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "R40-094",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.8860787153244019,
+    "nli_contradiction": true,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "R47-grab_presentation-v1v2",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.917685329914093,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "R47-review_documents-v1v2",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9179838299751282,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "R47-struggled_quantum-nochange",
+    "acceptability": "CLEAN",
+    "sbert": 1.0,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "R48-02",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9970929622650146,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "R48-03",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9502663016319275,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "R48-04",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.8801442384719849,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "R48-08",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9509252309799194,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "R48-11",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9765130281448364,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "R48-12",
+    "acceptability": "CLEAN",
+    "sbert": 0.8814274072647095,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "R48-13",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9862148761749268,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "R48-15",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.9623986482620239,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  },
+  {
+    "uid": "R48-17",
+    "acceptability": "DEFECTIVE",
+    "sbert": 0.8691089153289795,
+    "nli_contradiction": false,
+    "grammar_issues": 0
+  }
+]

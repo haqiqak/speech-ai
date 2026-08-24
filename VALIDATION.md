@@ -4649,3 +4649,58 @@ possible.
 humans. The NATURALNESS_OR_REGISTER retirement rests on n=27. Organic
 FACTUAL_OR_LOGICAL_REVERSAL examples (6) establish existence and a rough
 rate, not a representative sample of the failure mode's full shape.
+
+## 43. Phase 9 — learned validator prototype: training run diverged (executed 2026-08-25)
+
+Per direct instruction, following the Phase 9 proposal (build a small
+cross-encoder ACCEPT/REJECT validator prototype, not production
+integration): assembled the final dataset, built a unified leakage-safe
+split, computed existing-signal baselines, fine-tuned a small
+cross-encoder, and evaluated — **the fine-tuning run diverged to NaN**.
+Full record: `eval/r9_report.md`. **Prototype only; nothing touched
+`reformulate.py`/`app.py`; the broken checkpoint is not committed.**
+
+**[FACT] Dataset/split assembled correctly:** 313 records from R50+
+Phase8+Phase8B (convention-corrected, NATURALNESS_OR_REGISTER demoted to
+secondary-only per §42), 252 unique groups, split 205 train/57 val/51
+test respecting R50's and Phase 8's frozen test assignments (their first
+real consumption, as reserved) plus a fresh stratified split of Phase
+8B's new groups.
+
+**[FACT] Baselines, the only trustworthy numbers this phase produced:**
+computed fresh on all 51 test records (never run on most Phase 8/8B
+records before). Reject-everything trivial baseline: 84% accuracy but
+0% CLEAN recall (blocks every good reformulation) — a reminder that raw
+accuracy is the wrong metric given the 84%-DEFECTIVE class skew. Best
+simple combined rule (SBERT<0.95 OR NLI-contradiction OR grammar-issue):
+60% DEFECTIVE recall / 90% DEFECTIVE precision / 63% CLEAN recall
+simultaneously — this is the real floor a learned validator needs to
+clear.
+
+**[FACT] Fine-tuning diverged, confirmed by direct inspection.**
+`microsoft/deberta-v3-xsmall` cross-encoder, `pos_weight≈11` (for the
+17:188 CLEAN:DEFECTIVE train imbalance), lr=2e-5, 8 epochs. Training log
+shows normal-but-noisy loss/grad_norm through epoch ~2.7 (grad_norm
+spiked to 24.5 there), then `grad_norm` became `nan` at epoch 3.08 and
+stayed `nan` for the remaining 5 epochs. Direct inspection of the saved
+`model.safetensors`: **100% of 70,830,337 parameters are NaN.** Every
+prediction is `nan`.
+
+**[FINDING, disclosed rather than hidden]** The evaluation script's
+output numerically matched the reject-everything baseline exactly —
+**this is a coincidence of Python's `nan >= threshold` always evaluating
+`False`, not a real result.** The model has no learned behavior; it
+cannot be said to generalize, to beat the baseline, or to have any
+precision/coverage tradeoff. **None of Phase 9's three gate questions
+were answered by this run.**
+
+**[RECOMMENDATION, not executed]** Root-cause hypothesis: an aggressive
+`pos_weight`(~11×) combined with a relatively high learning rate on a
+very small (205-example) training set is a known gradient-explosion
+recipe for `BCEWithLogitsLoss`-style training, consistent with the
+observed timing. A corrected attempt would want a lower learning rate,
+explicit aggressive gradient clipping, a less extreme imbalance
+correction (cap pos_weight ~3-5x and/or oversample CLEAN), and early
+stopping on eval_loss (which was already trending worse, 1.75→1.85,
+before the collapse). **Per direct instruction, this run was not altered
+or repeated** — a corrected attempt is a decision left to the user.

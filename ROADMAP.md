@@ -1585,6 +1585,36 @@ proceeds too but any reported performance on it must be labeled
 directional/low-confidence pending more organic evidence. A decision,
 not a deferral — no further data-collection phase follows automatically.
 
+### Phase 9. Learned validator prototype — training run diverged — **DONE (negative result), 2026-08-25**
+**Linked finding:** direct instruction, following the Phase 9 proposal —
+build a small cross-encoder ACCEPT/REJECT validator prototype (research
+only, not production integration). Full record: `VALIDATION.md` §43,
+`eval/r9_report.md`.
+**What was done:** assembled the final dataset (313 records, 252 unique
+groups) and a unified leakage-safe split respecting R50's/Phase 8's
+frozen test assignments; computed existing-signal baselines fresh on the
+test set; fine-tuned `microsoft/deberta-v3-xsmall` as a binary
+ACCEPT/REJECT cross-encoder with pos_weight≈11 for the 17:188
+CLEAN:DEFECTIVE train imbalance; ran the full planned evaluation
+(threshold sweep, unseen-word-pair generalization check,
+evidence-quality-stratified factual-reversal breakdown).
+**Result:** dataset/split/baselines all completed correctly — best
+simple combined rule (SBERT<0.95 OR NLI OR grammar) gets 60% DEFECTIVE
+recall / 90% precision / 63% CLEAN recall, the real floor to beat. The
+fine-tuning run diverged (grad_norm → nan at epoch 3.08, after a
+warning-sign spike at epoch 2.69); the saved model is confirmed 100%
+NaN weights. The evaluation output numerically matched the
+reject-everything baseline only by coincidence of `nan >= threshold`
+semantics, not as a real result. None of the three gate questions
+(generalize? beat baseline? precision/coverage tradeoff?) were answered.
+**Labeled as:** a genuine negative result of this specific
+hyperparameter configuration, reported in full rather than re-run or
+concealed, per direct instruction not to alter the experiment. A
+root-caused fix (lower learning rate, explicit gradient clipping, a
+less extreme imbalance correction, early stopping) is recommended for a
+future attempt but was not executed — that decision is left to the
+user.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

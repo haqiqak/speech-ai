@@ -3238,3 +3238,39 @@ data-collection phase follows automatically.
 **Category:** Data/analysis phase, on direct instruction. No model
 trained, no threshold changed, no production code touched. Full record:
 `VALIDATION.md` §42, `eval/r50p8b_report.md`.
+
+### 2026-08-25-A — Phase 9: learned validator prototype, training run diverged
+
+**What was done:** per direct instruction, following the Phase 9
+proposal - assemble the final labeled dataset, build a unified
+leakage-safe split (respecting R50's and Phase 8's frozen test
+assignments), compute existing-signal baselines fresh, fine-tune a small
+cross-encoder (microsoft/deberta-v3-xsmall, binary ACCEPT/REJECT,
+pos_weight~11 for the 17:188 CLEAN:DEFECTIVE train imbalance), and
+evaluate on the frozen test set with unseen-word-pair and
+evidence-quality-stratified breakdowns.
+
+**Result:** dataset/split/baselines completed correctly - the best
+simple combined rule (SBERT<0.95 OR NLI OR grammar) gets 60% DEFECTIVE
+recall / 90% precision / 63% CLEAN recall, the real floor to beat. The
+fine-tuning run diverged: grad_norm went nan at epoch 3.08 (after a
+warning-sign spike to 24.5 at epoch 2.69) and stayed nan for the
+remaining 5 epochs. Direct inspection confirmed 100% of the saved
+model's 70.8M parameters are NaN. The evaluation script's output
+numerically matched the reject-everything baseline, but only because
+Python's `nan >= threshold` always evaluates False - not a real result.
+None of Phase 9's three gate questions (generalize? beat baseline?
+precision/coverage tradeoff?) were answered.
+
+**Decision:** reported exactly as it happened, per instruction not to
+alter or re-run the experiment. Root-cause hypothesis (pos_weight
+~11x + lr=2e-5 on n=205 -> gradient explosion) documented with a
+recommended fix for a future attempt, but no retraining performed
+automatically - that decision is left to the user. The broken checkpoint
+is not committed (already gitignored, and not worth preserving given
+it's confirmed non-functional); the training log fully documents the
+divergence.
+
+**Category:** Prototype/research, on direct instruction. No production
+code touched, no model integrated. Full record: `VALIDATION.md` §43,
+`eval/r9_report.md`.
