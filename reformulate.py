@@ -57,6 +57,7 @@ import phonetic as ph
 import semantic as sem
 import naturalness as nat
 import rephrase
+from freq import zipf_frequency as _zipf_frequency
 from difficulty_profile import DifficultyProfile
 from grammar import _SUBSTITUTABLE, _STOP, _wn_pos, lemmatize, inflect, _preserve_case, _detokenize
 
@@ -72,6 +73,7 @@ class ReformulateSettings:
     degenerate_fraction: float = 0.6    # >this fraction of content words flagged -> escalate (§24.F)
     t5_candidates: int = 5
     phrase_window_radius: int = 5       # tokens of context on each side of an idiom span, for the phrase tier (§5 item 4)
+    escalation_max_rounds: int = 4      # _try_escalation_v3 only (§38) — A2's own bound, unused by v1/v2 escalation
 
 
 _ABBREVS = {
@@ -509,6 +511,116 @@ def _try_escalation_v2(
     }
 
 
+def _try_escalation_v3(
+    sentence: str, flagged: list[dict], profile: DifficultyProfile, settings: ReformulateSettings,
+) -> tuple[str | None, dict | None]:
+    """Combines the two mechanisms that each independently worked, tested
+    together for the first time (VALIDATION.md §38): _try_escalation_v2's
+    phoneme-aware decoding (leak-free 4% -> 100%, R45 Prototype 2) with
+    A2's iterative generate-verify-regenerate loop (accept rate 9% -> 26%
+    on its own, VALIDATION.md §36.2's Part 2/§35's A2 finding).
+
+    A2's own retry signal (re-block whatever LEAKED) doesn't apply once
+    leaks are structurally prevented every round by the phoneme
+    processor. **A first version of this function re-blocked every
+    content word of the best below-threshold near-miss instead — found,
+    by direct tracing, to be a real bug, not a safe adaptation**: by
+    round 2 that blocks nearly the sentence's entire ordinary vocabulary,
+    and T5 degenerates into gibberish word-lists within 2-3 rounds
+    (VALIDATION.md §38.2). Fixed here: at most `_MAX_NEW_BLOCKS_PER_ROUND`
+    new words per round, non-stopwords only, preferring the RAREST (most
+    content-specific, by Zipf frequency) words in the near-miss — a
+    narrow, targeted nudge toward a different lexical choice, not a
+    vocabulary lockout.
+
+    Same three post-generation gates as _try_escalation_v2 every round
+    (SBERT, negation, a leak re-check kept as a safety net even though
+    the phoneme processor should already guarantee it). Bounded to
+    `settings.escalation_max_rounds` calls, same discipline as A2."""
+    min_semantic = settings.sbert_threshold if settings.sbert_threshold is not None else sem.MIN_SEMANTIC
+    literal_blocked = {item["word"].lower() for item in flagged}
+    sound_patterns = profile.sound_values()
+    extra_blocked: set[str] = set()
+    total_beam_kills = 0
+
+    for round_i in range(settings.escalation_max_rounds):
+        candidates, gen_stats = rephrase.generate_candidates_phoneme_constrained(
+            sentence, k=settings.t5_candidates,
+            blocked_words=literal_blocked | extra_blocked, blocked_patterns=sound_patterns,
+        )
+        total_beam_kills += gen_stats.get("beam_kills", 0)
+
+        best = None
+        best_near_miss = None  # highest-sim candidate this round, even if rejected — seeds next round's block set
+        for cand in candidates:
+            if cand.strip().lower() == sentence.strip().lower():
+                continue
+            sim = sem.semantic_similarity(cand, sentence)
+            content_words = re.findall(r"[A-Za-z][A-Za-z'-]*", cand)
+            leaked = any(ph.matches_any(w, sound_patterns) or w.lower() in literal_blocked for w in content_words)
+            rank_score = sim if sim is not None else -1.0
+            if best_near_miss is None or rank_score > best_near_miss["rank_score"]:
+                best_near_miss = {"text": cand, "sim": sim, "rank_score": rank_score, "words": content_words}
+            if sim is not None and sim < min_semantic:
+                continue
+            if not sem.negation_consistent(sentence, cand):
+                continue
+            if leaked:
+                continue  # should not happen given the phoneme processor — safety net, not the expected path
+            if best is not None and rank_score <= best["rank_score"]:
+                continue  # already have a better-ranked candidate; skip the extra NLI call
+            # A REAL gate here, not just a report (VALIDATION.md §38.3): a
+            # live case found during this same pass, "rational"->
+            # "irrational", cleared SBERT/negation/leak cleanly (a direct
+            # antonym is still a fluent, meaning-similar-looking sentence)
+            # and was only caught by NLI — reported-only would have
+            # shipped it with nothing but a dismissable banner. Escalation
+            # has no per-word antonym check at all (free-form text, no
+            # fixed position to check against); this is the one signal
+            # standing between a sentence-level antonym flip and the
+            # user, so it gates here, unlike reformulate_v2()'s existing
+            # whole-output validation pass (kept, for the classes NLI
+            # doesn't cover, e.g. grammar).
+            nli = sem.logical_consistency_check(sentence, cand)
+            if nli is not None and nli["contradiction"]:
+                continue
+            best = {"text": cand, "sim": sim, "rank_score": rank_score, "nli": nli}
+
+        if best is not None:
+            return best["text"], {
+                "sentence_index": None, "position": None, "span_text": sentence,
+                "original": sentence, "replacement": best["text"], "source": "restructuring_v3",
+                "triggered_by": ["multiple_difficulties_or_no_valid_substitution"],
+                "verification": {
+                    "antonym_check": "n/a_sentence_level",
+                    "sbert_sim": round(best["sim"], 4) if best["sim"] is not None else None,
+                    "nli": best["nli"],
+                    "phoneme_ok": True,
+                    "difficulty_before": round(ph.sentence_difficulty(re.findall(r"[A-Za-z]+", sentence)), 4),
+                    "difficulty_after": round(ph.sentence_difficulty(re.findall(r"[A-Za-z]+", best["text"])), 4),
+                    "beam_kills": total_beam_kills,
+                    "rounds_used": round_i + 1,
+                },
+            }
+
+        if best_near_miss is None:
+            break  # T5 produced nothing but the input itself — no signal to iterate on
+        candidate_words = {w.lower() for w in best_near_miss["words"]} - literal_blocked - extra_blocked - _STOP
+        if not candidate_words:
+            break  # converged — nothing new (non-stopword) to block, another round won't explore anything different
+        # Rarest words first — a cheap, content-specificity proxy for "most
+        # likely to be the actual source of meaning drift," per this
+        # function's own docstring on why blocking everything was wrong.
+        ranked = sorted(candidate_words, key=lambda w: _zipf_frequency(w, "en"))
+        new_words = set(ranked[:_MAX_NEW_BLOCKS_PER_ROUND])
+        extra_blocked |= new_words
+
+    return None, None
+
+
+_MAX_NEW_BLOCKS_PER_ROUND = 2
+
+
 def _try_phrase_replacement(
     sentence: str, tokens: list[str], span: tuple[int, int], span_matches: list[dict],
     profile: DifficultyProfile, settings: ReformulateSettings,
@@ -887,8 +999,12 @@ def reformulate_v2(text: str, profile: DifficultyProfile, settings: ReformulateS
             rebuilt.append(rebuilt_sentence)
             continue
 
-        # The one substantive change from reformulate(): phoneme-aware escalation.
-        restructured_text, change = _try_escalation_v2(sentence, flagged, profile, settings)
+        # R47/§38: phoneme-aware decoding combined with iterative
+        # regeneration — the two independently-validated mechanisms,
+        # tested together for the first time. _try_escalation_v2 (single-
+        # round phoneme-only) stays defined and available above for
+        # direct comparison; reformulate_v2() now uses v3.
+        restructured_text, change = _try_escalation_v3(sentence, flagged, profile, settings)
         if restructured_text is not None:
             change["sentence_index"] = sid
             all_changes.append(change)

@@ -6,6 +6,20 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-24, second** feat: R47/R48 — architecture pushed to its
+  evidenced ceiling. R47: 10 fresh sentences through both pipelines,
+  found a third independent instance of the sanitize_input() SVA bug.
+  R48: a substitution-tier fix hypothesis tested and correctly
+  abandoned (fails against R31's own known-good cases); an escalation
+  fix (phoneme constraint + iterative regeneration combined) built,
+  found to have a real over-blocking bug (degenerates to gibberish),
+  fixed, then found to ship a "rational"->"irrational" antonym flip
+  that only NLI caught - fixed by making NLI a real gate inside
+  escalation. Final: 12/23 (52%, same count, safer set) - antonym flip
+  now refused, "starch"->"glucose" replaced by correct "cornstarch".
+  Manual read: 5 CLEAN/4 MINOR/3 SEVERE of 12, down from R40's 74%
+  severe. Full suite passes throughout. → `DECISION_LOG.md`
+  2026-08-24-B.
 - **2026-08-24, first** feat: R46 wired into app.py behind an opt-in
   sidebar toggle ("Try next-gen escalation"), defaulting to unchecked.
   Off = byte-identical to before (full app_test.py suite passes

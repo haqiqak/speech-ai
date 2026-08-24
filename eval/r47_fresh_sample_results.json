@@ -1,0 +1,325 @@
+{
+  "results": [
+    {
+      "id": "grab_presentation",
+      "sounds": [
+        "pr"
+      ],
+      "original_text": "I need to grab my presentation materials before the meeting starts.",
+      "v1": {
+        "status": "reformulated",
+        "reformulated_text": "I need to grab my showing materials before the meeting starts.",
+        "sources": [
+          "substitution"
+        ],
+        "n_changes": 1,
+        "sbert": 0.9177,
+        "validation": null
+      },
+      "v2": {
+        "status": "reformulated",
+        "reformulated_text": "I need to grab my showing materials before the meeting starts.",
+        "sources": [
+          "substitution"
+        ],
+        "n_changes": 1,
+        "sbert": 0.9177,
+        "validation": {
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "grammar_issue_count": 0,
+          "flagged": false
+        }
+      }
+    },
+    {
+      "id": "quickly_finished",
+      "sounds": [
+        "r",
+        "w"
+      ],
+      "original_text": "She quickly finished writing the report and sent it to her supervisor.",
+      "v1": {
+        "status": "could_not_safely_reformulate",
+        "reformulated_text": "She quickly finished writing the report and sent it to her supervisor.",
+        "sources": [],
+        "n_changes": 0,
+        "sbert": 1.0,
+        "validation": null
+      },
+      "v2": {
+        "status": "could_not_safely_reformulate",
+        "reformulated_text": "She quickly finished writing the report and sent it to her supervisor.",
+        "sources": [],
+        "n_changes": 0,
+        "sbert": 1.0,
+        "validation": {
+          "nli": null,
+          "grammar_issue_count": null,
+          "flagged": false
+        }
+      }
+    },
+    {
+      "id": "review_documents",
+      "sounds": [
+        "r",
+        "th",
+        "f"
+      ],
+      "original_text": "Can you please review these three documents before Friday?",
+      "v1": {
+        "status": "reformulated",
+        "reformulated_text": "Can you please critique these three documents before Friday?",
+        "sources": [
+          "substitution"
+        ],
+        "n_changes": 1,
+        "sbert": 0.918,
+        "validation": null
+      },
+      "v2": {
+        "status": "reformulated",
+        "reformulated_text": "Can you please critique these three documents before Friday?",
+        "sources": [
+          "substitution"
+        ],
+        "n_changes": 1,
+        "sbert": 0.918,
+        "validation": {
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "grammar_issue_count": 0,
+          "flagged": false
+        }
+      }
+    },
+    {
+      "id": "restaurant_quiet",
+      "sounds": [
+        "r",
+        "s"
+      ],
+      "original_text": "The restaurant was surprisingly quiet for a Saturday evening.",
+      "v1": {
+        "status": "reformulated",
+        "reformulated_text": "The diner was amazingly quiet for a Saturday evening.",
+        "sources": [
+          "substitution"
+        ],
+        "n_changes": 2,
+        "sbert": 0.9122,
+        "validation": null
+      },
+      "v2": {
+        "status": "reformulated",
+        "reformulated_text": "The diner was amazingly quiet for a Saturday evening.",
+        "sources": [
+          "substitution"
+        ],
+        "n_changes": 2,
+        "sbert": 0.9122,
+        "validation": {
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "grammar_issue_count": 0,
+          "flagged": false
+        }
+      }
+    },
+    {
+      "id": "reschedule_strategy",
+      "sounds": [
+        "r",
+        "s",
+        "str"
+      ],
+      "original_text": "We should probably reschedule the strategy session for next week.",
+      "v1": {
+        "status": "could_not_safely_reformulate",
+        "reformulated_text": "We should probably reschedule the strategy session for next week.",
+        "sources": [],
+        "n_changes": 0,
+        "sbert": 1.0,
+        "validation": null
+      },
+      "v2": {
+        "status": "could_not_safely_reformulate",
+        "reformulated_text": "We should probably reschedule the strategy session for next week.",
+        "sources": [],
+        "n_changes": 0,
+        "sbert": 1.0,
+        "validation": {
+          "nli": null,
+          "grammar_issue_count": null,
+          "flagged": false
+        }
+      }
+    },
+    {
+      "id": "children_playing",
+      "sounds": [
+        "pl",
+        "h"
+      ],
+      "original_text": "The children were playing happily in the garden all afternoon.",
+      "v1": {
+        "status": "reformulated",
+        "reformulated_text": "The children were acting joyfully in the garden all afternoon.",
+        "sources": [
+          "substitution"
+        ],
+        "n_changes": 2,
+        "sbert": 0.9173,
+        "validation": null
+      },
+      "v2": {
+        "status": "reformulated",
+        "reformulated_text": "The children were acting joyfully in the garden all afternoon.",
+        "sources": [
+          "substitution"
+        ],
+        "n_changes": 2,
+        "sbert": 0.9173,
+        "validation": {
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "grammar_issue_count": 0,
+          "flagged": false
+        }
+      }
+    },
+    {
+      "id": "presentation_renewable",
+      "sounds": [
+        "pr",
+        "r"
+      ],
+      "original_text": "His presentation about renewable energy sources was really impressive.",
+      "v1": {
+        "status": "could_not_safely_reformulate",
+        "reformulated_text": "His presentation about renewable energy sources were really impressive.",
+        "sources": [],
+        "n_changes": 0,
+        "sbert": 1.0,
+        "validation": null
+      },
+      "v2": {
+        "status": "reformulated",
+        "reformulated_text": "His expositions about alternative energy sources were very impressive.",
+        "sources": [
+          "restructuring_v2"
+        ],
+        "n_changes": 1,
+        "sbert": 0.8531,
+        "validation": {
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "grammar_issue_count": 0,
+          "flagged": false
+        }
+      }
+    },
+    {
+      "id": "struggled_quantum",
+      "sounds": [
+        "str",
+        "kw"
+      ],
+      "original_text": "I struggled to understand the professor's explanation of quantum mechanics.",
+      "v1": {
+        "status": "could_not_safely_reformulate",
+        "reformulated_text": "I struggled to understand the professor's explanation of quantum mechanics.",
+        "sources": [],
+        "n_changes": 0,
+        "sbert": 1.0,
+        "validation": null
+      },
+      "v2": {
+        "status": "could_not_safely_reformulate",
+        "reformulated_text": "I struggled to understand the professor's explanation of quantum mechanics.",
+        "sources": [],
+        "n_changes": 0,
+        "sbert": 1.0,
+        "validation": {
+          "nli": null,
+          "grammar_issue_count": null,
+          "flagged": false
+        }
+      }
+    },
+    {
+      "id": "weather_forecast",
+      "sounds": [
+        "w",
+        "pr",
+        "r"
+      ],
+      "original_text": "The weather forecast predicts heavy rain throughout the weekend.",
+      "v1": {
+        "status": "could_not_safely_reformulate",
+        "reformulated_text": "The weather forecast predicts heavy rain throughout the weekend.",
+        "sources": [],
+        "n_changes": 0,
+        "sbert": 1.0,
+        "validation": null
+      },
+      "v2": {
+        "status": "could_not_safely_reformulate",
+        "reformulated_text": "The weather forecast predicts heavy rain throughout the weekend.",
+        "sources": [],
+        "n_changes": 0,
+        "sbert": 1.0,
+        "validation": {
+          "nli": null,
+          "grammar_issue_count": null,
+          "flagged": false
+        }
+      }
+    },
+    {
+      "id": "research_discovered",
+      "sounds": [
+        "r",
+        "s",
+        "d"
+      ],
+      "original_text": "Our research team discovered a surprising pattern in the data.",
+      "v1": {
+        "status": "could_not_safely_reformulate",
+        "reformulated_text": "Our research team discovered a surprising pattern in the data.",
+        "sources": [],
+        "n_changes": 0,
+        "sbert": 1.0,
+        "validation": null
+      },
+      "v2": {
+        "status": "could_not_safely_reformulate",
+        "reformulated_text": "Our research team discovered a surprising pattern in the data.",
+        "sources": [],
+        "n_changes": 0,
+        "sbert": 1.0,
+        "validation": {
+          "nli": null,
+          "grammar_issue_count": null,
+          "flagged": false
+        }
+      }
+    }
+  ]
+}

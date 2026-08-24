@@ -4149,3 +4149,163 @@ behavior change unless they explicitly check the box. Whether to
 eventually flip the default, or promote `validation.flagged` from a
 diagnostic banner into a real gate, remains undecided, per R45's own
 scope.
+
+## 38. R47/R48 — pushing the current architecture as far as it goes, before the final decision (executed 2026-08-24)
+
+Per direct instruction: exhaust the well-evidenced engineering moves
+still available within the existing architecture, integrate them, and
+measure the honest result, before answering "is this enough, or do we
+need something new." Two threads: a fresh, hand-picked, non-Wikipedia
+sample run through both `reformulate()` and `reformulate_v2()` side by
+side (R47); and a substitution-tier fix hypothesis that was tested and
+correctly abandoned, followed by an escalation-tier fix that was tested,
+found to have a real bug, fixed, and found to genuinely work (R48).
+
+### 38.1 R47 — a fresh sample surfaces a third instance of a known bug, unprompted
+
+Ten everyday sentences (not reused from R40's corpus), paired with
+profiles of increasing density, run through both pipelines directly.
+**[FINDING]** 5/10 correctly and safely refused (both pipelines) — the
+"never ship a bad guess" principle holding on genuinely hard input. 4/10
+were substitution-only, identical in both pipelines by design; direct
+reading found one clean ("review"→"critique"), one mildly weakened
+("restaurant"→"diner"), one **wrong-sense** ("playing"→"acting" — see
+§38.2). 1/10 diverged: `reformulate()` refused, `reformulate_v2()`
+produced a real if imperfect result ("presentation"→"expositions",
+"renewable"→"alternative" — a genuine, if subtle, sense narrowing,
+unflagged by either check).
+
+**[FINDING, unprompted]** The same sentence's `reformulate()` output —
+even in its **zero-change, refused** form — already contained "energy
+sources **were** really impressive" where the correct form is "was"
+(subject is "presentation," singular; "sources" is a nearby plural
+attractor noun). Confirmed via direct reproduction that this predates
+reformulation entirely, originating in `sanitize_input()`'s own
+subject-verb-agreement layer — the same bug class as the "gases was/
+were" case (R40 §33.6, R43-A4). A third independent instance, found on
+a sentence nobody had used before, without looking for it — real
+evidence this is a systemic, recurring issue in ordinary text, not a
+corpus artifact.
+
+### 38.2 A substitution-tier fix hypothesis, tested and correctly abandoned
+
+R47's "playing"→"acting" case traced precisely: `disambiguate_synset()`
+correctly picked the right WordNet sense of "play"
+(`play.v.05`, "be at play... amuse oneself... characteristic of
+children") — the WSD mechanism is not at fault. "act" enters via that
+synset's own **hypernym** (`act.v.08`), the exact structural pattern R29
+found and investigated, but with `zipf_delta` **negative** (-0.31) —
+"act" is *less* common than "play," not anomalously more common — so
+R29's own combined rule (as validated) would not even flag this case;
+this is a different mechanism than what R29 targeted.
+
+**[FINDING, negative, tested before building anything]** Hypothesized a
+new combined gate: `depth_delta < 0` (hypernym-generic) AND
+`contextual_fit` below a threshold (unnatural in this specific slot).
+Tested directly against R31's own known-good guard cases before writing
+any production code: **`contextual_fit("acting", ...) = 0.000236` — but
+`contextual_fit("seize", ...) = 0.000143` and `contextual_fit("clutch",
+...) = 0.000179`, both LOWER than the bad case, and both confirmed
+legitimate substitutions by direct human rating in R31.** No threshold
+separates them; contextual_fit penalizes rare-but-correct words for the
+same reason it penalizes wrong ones (both are "surprising" to a masked-
+LM). **[RECOMMENDATION]** This specific combination is not a safe
+substitution-tier fix — not implemented, per the same discipline that
+correctly stopped R29 itself from being promoted. Recorded as a real,
+useful negative result, not silently dropped.
+
+### 38.3 The escalation-tier fix: combining two mechanisms that each worked alone
+
+New `_try_escalation_v3()`, wired into `reformulate_v2()` in place of
+the single-round `_try_escalation_v2()` (kept, unchanged, available for
+direct comparison): phoneme-aware decoding (R45 Prototype 2) plus A2's
+iterative generate-verify-regenerate loop, tried together for the first
+time.
+
+**[FINDING, a real bug, caught before trusting any number]** The first
+version re-blocked *every* content word of the best below-threshold
+near-miss each round — A2's own retry signal (re-block only what
+*leaked*) doesn't apply once leaks are structurally prevented, so this
+was the naive adaptation. Traced directly on the "Gradient descent"
+case: round 2 already blocks nearly the sentence's entire ordinary
+vocabulary, and generation degenerates into pure gibberish by round 3
+("Continuity - Detainment - Optimization - An Optimal - Sorting -
+Index..."). **Fixed**: at most 2 new words blocked per round,
+non-stopwords only, preferring the rarest (most content-specific) words
+in the near-miss — re-traced on the same case and confirmed candidates
+stay coherent and grammatical across all 4 rounds now, even when they
+still don't clear the threshold.
+
+**[FINDING, a second real bug, also caught before trusting the number]**
+Initial full-corpus run (unbounded to `escalation_max_rounds=4`, blocking
+fixed): 14/23 (61%), beating v2's 52%. Reading the two newly-rescued
+cases directly (same discipline as R40): one is genuinely fine
+("small talk"→"short talk", with one real grammar slip). **The other,
+"rational agent" → "irrational agent," is a direct semantic inversion —
+the single worst class of error this project tracks — that cleared
+SBERT (0.8777), negation-consistency, and the leak check cleanly, and
+was caught only by NLI**, which `reformulate_v2()`'s existing validation
+reports but does not gate. Reported-only would have shipped this with
+nothing but a dismissable banner.
+
+**[RECOMMENDATION, implemented]** Unlike the whole-output validation
+pass (kept reported-only, unchanged, for the classes NLI doesn't cover),
+`_try_escalation_v3()` now applies `logical_consistency_check()` as a
+**real, per-candidate gate** — a contradiction verdict removes that
+candidate from consideration outright, same round, in favor of the next
+one. Escalation output has no per-word antonym check at all (free-form
+text has no fixed position to check against, unlike substitution); this
+closes that gap specifically, using a signal already validated (R41,
+R45) rather than a new one.
+
+**[FACT] Final, gated result: 12/23 (52%) — the same count as v2's
+phoneme-only single round, not higher, but a different and safer set.**
+The "rational"/"irrational" case correctly reverts to
+`could_not_safely_reformulate` (no other safe candidate exists for it
+in this corpus) rather than shipping. **The restructuring case R40 had
+flagged as scientifically backwards ("starch"→"glucose") is gone,
+replaced by "starch"→"**cornstarch**" — a genuinely correct example of
+a long-chain sugar** — the iteration mechanism finding a real
+improvement once the bad candidate was excluded, not just a safer
+refusal. `0/12` reformulated cases are now flagged by the (still-active,
+still-reported) whole-output validation pass, down from `3/12` in the
+ungated version.
+
+**[FINDING, honest, from direct reading of all 12 final successes]**
+Manual read, same CLEAN/MINOR/SEVERE discipline as R40: **5 CLEAN, 4
+MINOR, 3 SEVERE** (25%) — down sharply from R40's original 74% severe
+rate on the full substitution corpus, but not zero. Two of the three
+remaining SEVERE cases are defects NLI does not catch by nature: "no
+longer replaced by new trees" → "not **displaced** by new trees" (the
+same wrong-word error A2 already surfaced, recurring independently) and
+"radiating into space" → "emitted into the **atmosphere**" (a real
+physics-claim reversal — heat escaping vs. heat staying — that reads
+fluently and topically coherent, so nothing in this pipeline catches
+it). The third is "small talk"→"little talk," the long-standing
+fixed-term-erosion gap (`REFORMULATION_PROBLEM_MAP.md` §3.1), unrelated
+to anything built this pass.
+
+### 38.4 Verification
+
+Full existing suite (`reformulate_test.py` 31 tests, `app_test.py`,
+`rephrase_test.py`, `semantic_test.py`, `contextual_fit_test.py`) passes
+unchanged after every change in this section; `smoke.py` confirmed
+byte-identical to baseline (mod line endings) at each step —
+`reformulate()` remains completely unaffected throughout. `tests/
+reformulate_v2_test.py` extended to 20 tests: the round-bound test, and
+a new test confirming an antonym-flip candidate is never selected over
+a clean alternative when both are offered. All pass.
+
+### 38.5 Assessment
+
+**[RECOMMENDATION]** This is the honest ceiling of the well-evidenced,
+low-risk moves available within the current architecture, tested to
+completion rather than left as an open question: escalation-tier
+recall tops out around 52% on hard, dense-profile sentences even after
+combining every validated mechanism; quality among what does ship is
+now mostly CLEAN/MINOR (75%) rather than mostly SEVERE, a real,
+measured reversal of R40's original finding — but a genuine 25% SEVERE
+residual remains, concentrated specifically in defect classes (wrong-
+word substitution, factual/physical-claim reversal, fixed-term erosion)
+that no signal currently in this pipeline is built to catch. Whether
+this is "enough" is the decision this section hands off, not decides.

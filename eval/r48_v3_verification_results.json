@@ -1,0 +1,420 @@
+{
+  "results": [
+    {
+      "profile": "moderate_mixed",
+      "source": "ai",
+      "original_text": "Many of these algorithms were insufficient for solving large reasoning problems because they experienced a combinatorial explosion, meaning they become exponentially slower as the problems grow.",
+      "reformulated_text": "Many of these algorithms were insufficient for solving large reasoning issues because they experienced a combinatorial explosion, meaning that they become exponentially slower as the issues develop.",
+      "status": "reformulated",
+      "escalated": true,
+      "rounds_used": 1,
+      "beam_kills": 17,
+      "sbert": 0.9844,
+      "validation": {
+        "nli": {
+          "fwd_label": "entailment",
+          "rev_label": "entailment",
+          "contradiction": false
+        },
+        "grammar_issue_count": 0,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "ai",
+      "original_text": "Gradient descent is a type of local search that optimists a set of numerical parameters by incrementally adjusting them to minimize a loss function.",
+      "reformulated_text": "Gradient descent is a type of local search that optimists a set of numerical parameters by incrementally adjusting them to minimize a loss function.",
+      "status": "could_not_safely_reformulate",
+      "escalated": false,
+      "rounds_used": null,
+      "beam_kills": null,
+      "sbert": null,
+      "validation": {
+        "nli": null,
+        "grammar_issue_count": null,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "moderate_mixed",
+      "source": "ai",
+      "original_text": "Generative pre-trained transformers are large language models that generate text based on the semantic relationships between words in sentences.",
+      "reformulated_text": "Generative-pre-trained transformers are large language models that generate text based on the semantic relationships between words in sentences.",
+      "status": "reformulated",
+      "escalated": true,
+      "rounds_used": 1,
+      "beam_kills": 24,
+      "sbert": 0.9971,
+      "validation": {
+        "nli": {
+          "fwd_label": "entailment",
+          "rev_label": "entailment",
+          "contradiction": false
+        },
+        "grammar_issue_count": 0,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "ai",
+      "original_text": "Artificial intelligence (AI) is the capability of computational systems to perform tasks typically associated with human intelligence, such as learning, reasoning, problem-solving, perception, and decision-making.",
+      "reformulated_text": "Artificial Intelligence (AI) is the capability of computational networks to perform tasks typically associated with human intelligence, including learning, analyzing, problem-solving, perception and decision-making.",
+      "status": "reformulated",
+      "escalated": true,
+      "rounds_used": 1,
+      "beam_kills": 33,
+      "sbert": 0.9503,
+      "validation": {
+        "nli": {
+          "fwd_label": "neutral",
+          "rev_label": "entailment",
+          "contradiction": false
+        },
+        "grammar_issue_count": 0,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "ai",
+      "original_text": "Early researchers developed algorithms that imitated step-by-step reasoning that humans use when solving puzzles or making logical deductions.",
+      "reformulated_text": "Early physicists developed algorithms that imitated the process of logical deductions, which humans use when completing puzzles or making logical conclusions.",
+      "status": "reformulated",
+      "escalated": true,
+      "rounds_used": 1,
+      "beam_kills": 83,
+      "sbert": 0.8801,
+      "validation": {
+        "nli": {
+          "fwd_label": "neutral",
+          "rev_label": "entailment",
+          "contradiction": false
+        },
+        "grammar_issue_count": 0,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "ai",
+      "original_text": "Many of these algorithms were insufficient for solving large reasoning problems because they experienced a combinatorial explosion, meaning they become exponentially slower as the problems grow.",
+      "reformulated_text": "Many of these algorithms were insufficient for solving large reasoning problems because they experienced a combinatorial explosion, meaning they become exponentially slower as the problems grow.",
+      "status": "could_not_safely_reformulate",
+      "escalated": false,
+      "rounds_used": null,
+      "beam_kills": null,
+      "sbert": null,
+      "validation": {
+        "nli": null,
+        "grammar_issue_count": null,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "ai",
+      "original_text": "A rational agent has goals or preferences and take actions to make them happen.",
+      "reformulated_text": "A rational agent has goals or preferences and take actions to make them happen.",
+      "status": "could_not_safely_reformulate",
+      "escalated": false,
+      "rounds_used": null,
+      "beam_kills": null,
+      "sbert": null,
+      "validation": {
+        "nli": null,
+        "grammar_issue_count": null,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "ai",
+      "original_text": "State space search searches through a tree of possible states to try to find a goal state.",
+      "reformulated_text": "State space search searches through a tree of possible states to try to find a goal state.",
+      "status": "could_not_safely_reformulate",
+      "escalated": false,
+      "rounds_used": null,
+      "beam_kills": null,
+      "sbert": null,
+      "validation": {
+        "nli": null,
+        "grammar_issue_count": null,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "ai",
+      "original_text": "Generative pre-trained transformers are large language models that generate text based on the semantic relationships between words in sentences.",
+      "reformulated_text": "Generative pre-trained transformers are large language models that generate text based on the meaning of words in phrases.",
+      "status": "reformulated",
+      "escalated": true,
+      "rounds_used": 1,
+      "beam_kills": 27,
+      "sbert": 0.9509,
+      "validation": {
+        "nli": {
+          "fwd_label": "entailment",
+          "rev_label": "entailment",
+          "contradiction": false
+        },
+        "grammar_issue_count": 0,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "climate",
+      "original_text": "The upper atmosphere is cooling, because greenhouse gases are trapping heat near the Earth's surface, and so less heat is radiating into space.",
+      "reformulated_text": "The upper atmosphere is cooling, because greenhouse gases are trapping heat near the Earth's top and thus less heat is emitted into the atmosphere.",
+      "status": "reformulated",
+      "escalated": true,
+      "rounds_used": 1,
+      "beam_kills": 26,
+      "sbert": 0.9623,
+      "validation": {
+        "nli": {
+          "fwd_label": "entailment",
+          "rev_label": "entailment",
+          "contradiction": false
+        },
+        "grammar_issue_count": 0,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "climate",
+      "original_text": "Since the pre-industrial period, the average surface temperature over land regions has increased almost twice as fast as the global average surface temperature.",
+      "reformulated_text": "Since the pre-industrial period, the average surface temperature over land regions has increased almost twice as fast as the global average surface temperature.",
+      "status": "could_not_safely_reformulate",
+      "escalated": false,
+      "rounds_used": null,
+      "beam_kills": null,
+      "sbert": null,
+      "validation": {
+        "nli": null,
+        "grammar_issue_count": null,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "climate",
+      "original_text": "Deforestation is the main land use change contributor to global warming, as the destroyed trees release carbon dioxide, and are not replaced by new trees.",
+      "reformulated_text": "Deforestation is the main contributor to the global warming of land use change, as the destroyed trees emit carbon dioxide and are not displaced by new trees.",
+      "status": "reformulated",
+      "escalated": true,
+      "rounds_used": 1,
+      "beam_kills": 9,
+      "sbert": 0.9765,
+      "validation": {
+        "nli": {
+          "fwd_label": "entailment",
+          "rev_label": "entailment",
+          "contradiction": false
+        },
+        "grammar_issue_count": 0,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "cooking",
+      "original_text": "Long-chain sugars such as starch tends to break down into more digestible simpler sugars.",
+      "reformulated_text": "Long-chain sugars like cornstarch tend to break down into more digestible sugars.",
+      "status": "reformulated",
+      "escalated": true,
+      "rounds_used": 1,
+      "beam_kills": 24,
+      "sbert": 0.8814,
+      "validation": {
+        "nli": {
+          "fwd_label": "entailment",
+          "rev_label": "neutral",
+          "contradiction": false
+        },
+        "grammar_issue_count": 0,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "cooking",
+      "original_text": "Fats can reach temperatures above the boiling point of water and is often used to transfer high heat to other ingredients, such as in frying or sautéing.",
+      "reformulated_text": "Fats can attain temperatures above the boiling point of water and is often used to transfer high heat to other ingredients, like in frying or cooking.",
+      "status": "reformulated",
+      "escalated": true,
+      "rounds_used": 1,
+      "beam_kills": 16,
+      "sbert": 0.9862,
+      "validation": {
+        "nli": {
+          "fwd_label": "entailment",
+          "rev_label": "entailment",
+          "contradiction": false
+        },
+        "grammar_issue_count": 0,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "cooking",
+      "original_text": "Steaming works by continuously boiling water, which vaporizes into steam; the steam then transfers heat to the food, cooking it.",
+      "reformulated_text": "Steaming works by continuously boiling water, which vaporizes into steam; the steam then transfers heat to the food, cooking it.",
+      "status": "could_not_safely_reformulate",
+      "escalated": false,
+      "rounds_used": null,
+      "beam_kills": null,
+      "sbert": null,
+      "validation": {
+        "nli": null,
+        "grammar_issue_count": null,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "smalltalk",
+      "original_text": "Phatic communication, or small talk, is not used to exchange important information; instead it is used to build and maintain interpersonal relationships.",
+      "reformulated_text": "Phatic communication, or little talk, is not used to exchange valuable information; instead, it is used to build and maintain interpersonal connections.",
+      "status": "reformulated",
+      "escalated": true,
+      "rounds_used": 1,
+      "beam_kills": 36,
+      "sbert": 0.9624,
+      "validation": {
+        "nli": {
+          "fwd_label": "entailment",
+          "rev_label": "entailment",
+          "contradiction": false
+        },
+        "grammar_issue_count": 0,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "smalltalk",
+      "original_text": "Small talk is a bonding ritual and a strategy for managing interpersonal distance.",
+      "reformulated_text": "Small talk is a bonding ritual and a strategy for managing interpersonal distance.",
+      "status": "could_not_safely_reformulate",
+      "escalated": false,
+      "rounds_used": null,
+      "beam_kills": null,
+      "sbert": null,
+      "validation": {
+        "nli": null,
+        "grammar_issue_count": null,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "smalltalk",
+      "original_text": "The topics of small talk conversations are generally less important than their social function.",
+      "reformulated_text": "The topics of short talk conversations are generally a lesser importance than their function in the community.",
+      "status": "reformulated",
+      "escalated": true,
+      "rounds_used": 2,
+      "beam_kills": 82,
+      "sbert": 0.8691,
+      "validation": {
+        "nli": {
+          "fwd_label": "entailment",
+          "rev_label": "entailment",
+          "contradiction": false
+        },
+        "grammar_issue_count": 0,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "heavy_dense",
+      "source": "smalltalk",
+      "original_text": "Finland and Sweden have been cited as countries where there are little culture of small talk and people are more comfortable with silence.",
+      "reformulated_text": "Finland and Sweden have been cited as countries where there are little culture of small talk and people are more comfortable with silence.",
+      "status": "could_not_safely_reformulate",
+      "escalated": false,
+      "rounds_used": null,
+      "beam_kills": null,
+      "sbert": null,
+      "validation": {
+        "nli": null,
+        "grammar_issue_count": null,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "ai",
+      "original_text": "State space search searches through a tree of possible states to try to find a goal state.",
+      "reformulated_text": "State space search searches through a tree of possible states to try to find a goal state.",
+      "status": "could_not_safely_reformulate",
+      "escalated": false,
+      "rounds_used": null,
+      "beam_kills": null,
+      "sbert": null,
+      "validation": {
+        "nli": null,
+        "grammar_issue_count": null,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "cooking",
+      "original_text": "Long-chain sugars such as starch tends to break down into more digestible simpler sugars.",
+      "reformulated_text": "Long-chain sugars like cornstarch tend to break down into more digestible sugars.",
+      "status": "reformulated",
+      "escalated": true,
+      "rounds_used": 1,
+      "beam_kills": 24,
+      "sbert": 0.8814,
+      "validation": {
+        "nli": {
+          "fwd_label": "entailment",
+          "rev_label": "neutral",
+          "contradiction": false
+        },
+        "grammar_issue_count": 0,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "cooking",
+      "original_text": "Steaming works by continuously boiling water, which vaporizes into steam; the steam then transfers heat to the food, cooking it.",
+      "reformulated_text": "Steaming works by continuously boiling water, which vaporizes into steam; the steam then transfers heat to the food, cooking it.",
+      "status": "could_not_safely_reformulate",
+      "escalated": false,
+      "rounds_used": null,
+      "beam_kills": null,
+      "sbert": null,
+      "validation": {
+        "nli": null,
+        "grammar_issue_count": null,
+        "flagged": false
+      }
+    },
+    {
+      "profile": "single_common_sound",
+      "source": "smalltalk",
+      "original_text": "Finland and Sweden have been cited as countries where there are little culture of small talk and people are more comfortable with silence.",
+      "reformulated_text": "Finland and Sweden have been cited as countries where there are little culture of small talk and people are more comfortable with silence.",
+      "status": "could_not_safely_reformulate",
+      "escalated": false,
+      "rounds_used": null,
+      "beam_kills": null,
+      "sbert": null,
+      "validation": {
+        "nli": null,
+        "grammar_issue_count": null,
+        "flagged": false
+      }
+    }
+  ]
+}

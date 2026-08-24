@@ -3050,3 +3050,37 @@ promote the validator into a real gate remains undecided.
 
 **Category:** UI change, on direct instruction. Full record:
 `VALIDATION.md` §37.3.
+
+### 2026-08-24-B — R47/R48: architecture pushed to its evidenced ceiling before the final decision
+
+**What was done:** per direct instruction, exhaust the remaining well-
+evidenced engineering moves and integrate them before deciding whether
+the current architecture is enough. R47: 10 fresh, non-Wikipedia
+sentences run through both pipelines directly. R48: one substitution-
+tier fix hypothesis tested and correctly abandoned; one escalation-tier
+fix (combine the phoneme constraint with A2's iterative regeneration)
+built, found to have a real over-blocking bug, fixed, then found to
+have shipped a dangerous antonym-flip case, fixed by making the NLI
+check a real per-candidate gate inside escalation specifically.
+
+**Key results:** R47 surfaced a third, independent, unprompted instance
+of the `sanitize_input()` subject-verb-agreement bug (`was`→`were`),
+present even in a fully-refused (zero-change) output. R48's substitution
+hypothesis (genericness + contextual_fit) failed against R31's own
+known-good guard cases (seize/clutch score lower than the bad case it
+was meant to catch) — correctly not implemented. R48's escalation fix,
+after both bugs were caught and fixed: final gated result 12/23 (52%,
+matching phoneme-constraint-alone), but a materially safer and better
+set — the "rational"→"irrational" antonym flip correctly refused, the
+"starch"→"glucose" scientifically-backwards case replaced by the
+correct "starch"→"cornstarch". Direct manual read of all 12 final
+successes: 5 CLEAN, 4 MINOR, 3 SEVERE (25%) — down sharply from R40's
+original 74% severe rate, not zero.
+
+**Decision:** this is the honest ceiling of the low-risk moves available
+within the current architecture, tested to completion. Full existing
+suite passes throughout; `reformulate()` confirmed unaffected at every
+step. Whether this is "enough" is handed to the user, not decided here.
+
+**Category:** Architecture completion + comprehensive re-test, on direct
+instruction. Full record: `VALIDATION.md` §38.

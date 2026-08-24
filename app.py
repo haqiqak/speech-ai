@@ -714,9 +714,10 @@ with col_results:
                     for i, change in enumerate(result["changes"]):
                         keep = st.session_state.change_choices.get(i, True)
                         source = change["source"]
-                        tag_cls = "restructuring" if source in ("restructuring", "restructuring_v2") \
+                        tag_cls = "restructuring" if source in ("restructuring", "restructuring_v2", "restructuring_v3") \
                             else ("phrase" if source == "phrase" else "")
-                        tag_label = "restructuring (v2)" if source == "restructuring_v2" else source
+                        tag_label = {"restructuring_v2": "restructuring (v2)",
+                                     "restructuring_v3": "restructuring (v3)"}.get(source, source)
                         col_text, col_toggle = st.columns([5, 1])
                         with col_text:
                             st.markdown(

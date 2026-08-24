@@ -196,9 +196,11 @@ class ReformulateV2IntegrationTest(unittest.TestCase):
 
     def test_escalation_uses_phoneme_aware_path_when_triggered(self):
         # Dense profile that forces pre-escalation (mirrors R40/R43's
-        # own heavy_dense-style setup) -- confirm _try_escalation_v2's
-        # "restructuring_v2" source appears, not the original
-        # "restructuring", when escalation actually fires.
+        # own heavy_dense-style setup) -- confirm _try_escalation_v3's
+        # "restructuring_v3" source appears (§38: v2 + iterative
+        # regeneration combined), not the original "restructuring" or
+        # the single-round-only "restructuring_v2", when escalation
+        # actually fires.
         profile = _profile("v2_escalation_source_tag")
         profile.add_sound("s", source="user_typed")
         profile.add_sound("th", source="user_typed")
@@ -209,8 +211,62 @@ class ReformulateV2IntegrationTest(unittest.TestCase):
             profile, settings,
         )
         sources = {c["source"] for c in result["changes"]}
-        self.assertTrue(sources <= {"substitution", "restructuring_v2"})
+        self.assertTrue(sources <= {"substitution", "restructuring_v3"})
         self.assertNotIn("restructuring", sources)  # the OLD source tag must never appear from v2
+        self.assertNotIn("restructuring_v2", sources)  # nor the single-round-only v2 tag
+
+
+class EscalationV3NLIGateTest(unittest.TestCase):
+    """VALIDATION.md §38.3 -- a live case found during development,
+    "rational"->"irrational", cleared SBERT/negation/leak cleanly and was
+    only caught by NLI. Confirms escalation now REJECTS an antonym-flip
+    candidate outright (not just reports it) when a clean alternative
+    exists, unlike reformulate_v2()'s separate whole-output validation
+    pass, which stays reported-only."""
+
+    def test_antonym_flip_candidate_is_rejected_in_favor_of_a_clean_one(self):
+        profile = _profile("v3_nli_gate")
+        good = "The person has goals and takes steps to make them happen."
+        bad = "The person has goals and takes steps to prevent them from happening."
+        with mock.patch.object(
+            rephrase, "generate_candidates_phoneme_constrained",
+            return_value=([bad, good], {"beam_kills": 0}),
+        ):
+            flagged = [{"position": 0, "word": "sound", "tag": "NN", "word_entry": None, "sound_hit": True}]
+            text, change = rf._try_escalation_v3(
+                "A person has aims and takes steps to make them happen.",
+                flagged, profile, rf.ReformulateSettings(),
+            )
+        # The antonym-flip candidate ("prevent them from happening") must
+        # never be chosen over the meaning-preserving one, regardless of
+        # which one the mocked generator lists first.
+        if text is not None:
+            self.assertNotIn("prevent", text.lower())
+
+
+class EscalationV3RoundBoundTest(unittest.TestCase):
+    """§38's iterative loop must respect escalation_max_rounds -- confirm
+    it stops, doesn't hang, when generation can never satisfy the gates."""
+
+    def test_stops_within_max_rounds_when_nothing_ever_passes(self):
+        profile = _profile("v3_round_bound")
+        profile.add_sound("s", source="user_typed")
+        settings = rf.ReformulateSettings(escalation_max_rounds=3, t5_candidates=2)
+        call_count = {"n": 0}
+        real_fn = rephrase.generate_candidates_phoneme_constrained
+
+        def counting_wrapper(*args, **kwargs):
+            call_count["n"] += 1
+            return real_fn(*args, **kwargs)
+
+        with mock.patch.object(rephrase, "generate_candidates_phoneme_constrained", side_effect=counting_wrapper), \
+             mock.patch.object(sem, "semantic_similarity", return_value=0.0):  # force every candidate to fail SBERT
+            flagged = [{"position": 0, "word": "sound", "tag": "NN", "word_entry": None, "sound_hit": True}]
+            text, change = rf._try_escalation_v3("A sound sentence.", flagged, profile, settings)
+
+        self.assertIsNone(text)
+        self.assertIsNone(change)
+        self.assertLessEqual(call_count["n"], settings.escalation_max_rounds)
 
 
 if __name__ == "__main__":

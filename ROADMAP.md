@@ -1422,6 +1422,44 @@ feature. `reformulate_v2()` is not called by `app.py`. Wiring it in,
 and whether `validation` becomes a real gate, is a separate decision,
 not made here.
 
+**Update, 2026-08-24:** wired into `app.py` behind an opt-in sidebar
+toggle, defaulting off — see `VALIDATION.md` §37.3.
+
+### R47/R48. Architecture pushed to its evidenced ceiling, before the final decision — **DONE, 2026-08-24**
+**Linked finding:** direct instruction to exhaust the remaining well-
+evidenced engineering moves and integrate them, before deciding whether
+the current architecture is enough or a custom model is warranted. Full
+record: `VALIDATION.md` §38.
+**What was done:** R47 — 10 fresh, hand-picked, non-Wikipedia sentences
+through both `reformulate()` and `reformulate_v2()` directly. R48 — a
+substitution-tier fix hypothesis (genericness + contextual_fit,
+targeting R47's "playing"→"acting" case) tested against R31's own
+known-good guard cases *before* writing any production code, and
+correctly abandoned when it failed. An escalation-tier fix
+(`_try_escalation_v3`: phoneme constraint + A2's iterative regeneration,
+combined for the first time) built, found via direct tracing to have a
+real over-blocking bug (degenerates to gibberish by round 3), fixed
+(bounded, rarity-ranked retry), then found to have shipped a genuine
+antonym-flip ("rational"→"irrational") that only NLI caught — fixed by
+making NLI a real per-candidate gate inside escalation, not just a
+report.
+**Result:** R47 found a third, independent instance of the
+`sanitize_input()` SVA bug, unprompted. R48's substitution hypothesis:
+negative, correctly not built (seize/clutch score lower on
+contextual_fit than the bad case it was meant to catch). R48's
+escalation fix, final and gated: 12/23 (52%, same count as phoneme-
+constraint-alone) but a safer, better set — the antonym flip correctly
+refused, "starch"→"glucose" (flagged scientifically backwards in R40)
+replaced by the correct "starch"→"cornstarch". Manual read of all 12
+final successes: 5 CLEAN, 4 MINOR, 3 SEVERE (25%) — down sharply from
+R40's 74%, not zero. Two of the three remaining SEVERE cases are defect
+classes (wrong-word substitution, factual/physical-claim reversal) that
+nothing in this pipeline currently catches by design, not by omission.
+**Labeled as:** the honest ceiling of the low-risk architectural moves
+available, tested to completion rather than left open. Full existing
+suite passes throughout; `reformulate()` confirmed unaffected. Whether
+this is "enough" is handed to the user next, not decided here.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)
