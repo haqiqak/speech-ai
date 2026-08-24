@@ -6,6 +6,13 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-24, first** feat: R46 wired into app.py behind an opt-in
+  sidebar toggle ("Try next-gen escalation"), defaulting to unchecked.
+  Off = byte-identical to before (full app_test.py suite passes
+  unchanged). On = routes to reformulate_v2(), shows a diagnostic
+  validator banner (never blocking), adds NLI/grammar detail to the
+  Verification tab. Verified with a new headless toggle smoke test and
+  a live app launch. → `DECISION_LOG.md` 2026-08-24-A.
 - **2026-08-23, fourth** feat: R46 — R45's architecture built as real,
   tested, additive code. rephrase.generate_candidates_phoneme_
   constrained(), semantic.logical_consistency_check()/

@@ -477,6 +477,19 @@ idiom or pick the wrong sense of a word; review the Changes tab yourself.</span>
 <span style="font-size:.82rem">SBERT unavailable — changes aren't screened for meaning drift right now.</span></div>""",
             unsafe_allow_html=True)
 
+    use_v2 = st.checkbox(
+        "🧪 Try next-gen escalation (experimental)",
+        value=False,
+        help="R46: when a sentence needs full-sentence rewriting, use a "
+             "phoneme-aware generator that steers away from your flagged "
+             "sounds while writing, instead of writing freely and checking "
+             "afterward — measured to succeed far more often on hard "
+             "sentences. Also adds an extra logic/grammar check on the "
+             "final result, shown as a diagnostic note only — it never "
+             "blocks a result from being shown. Off by default; nothing "
+             "else about the app changes when this is unchecked.",
+    )
+
     with st.expander("Advanced", expanded=False):
         sem_threshold = st.slider(
             "Meaning-preservation strictness", min_value=0.60, max_value=0.95,
@@ -602,7 +615,10 @@ with col_compose:
                 sbert_threshold=sem_threshold, top_k=top_k,
             )
             with st.spinner("Reformulating…"):
-                result = reformulate.reformulate(corrected_text, difficulty_profile, settings)
+                if use_v2:
+                    result = reformulate.reformulate_v2(corrected_text, difficulty_profile, settings)
+                else:
+                    result = reformulate.reformulate(corrected_text, difficulty_profile, settings)
             st.session_state.reformulate_result = result
             st.session_state.reformulate_source_text = query.strip()
             st.session_state.grammar_fixes = [
@@ -673,6 +689,15 @@ with col_results:
                         unsafe_allow_html=True,
                     )
 
+                validation = result.get("validation")
+                if validation and validation.get("flagged"):
+                    st.markdown(
+                        '<div class="status-banner status-warn">🧪 Experimental check: this result may '
+                        'have a meaning, logic, or grammar issue the usual checks don\'t catch — see the '
+                        'Verification tab for details. Diagnostic only, shown either way.</div>',
+                        unsafe_allow_html=True,
+                    )
+
                 st.markdown(f'<div class="output-box">{_fmt(final_text)}</div>', unsafe_allow_html=True)
                 st.code(final_text, language=None)
 
@@ -688,12 +713,15 @@ with col_results:
                 if result["changes"]:
                     for i, change in enumerate(result["changes"]):
                         keep = st.session_state.change_choices.get(i, True)
-                        tag_cls = change["source"] if change["source"] in ("restructuring", "phrase") else ""
+                        source = change["source"]
+                        tag_cls = "restructuring" if source in ("restructuring", "restructuring_v2") \
+                            else ("phrase" if source == "phrase" else "")
+                        tag_label = "restructuring (v2)" if source == "restructuring_v2" else source
                         col_text, col_toggle = st.columns([5, 1])
                         with col_text:
                             st.markdown(
                                 f'<div class="change-card">'
-                                f'<span class="change-tag {tag_cls}">{change["source"]}</span> '
+                                f'<span class="change-tag {tag_cls}">{_fmt(tag_label)}</span> '
                                 f'<div class="change-arrow">'
                                 f'<span class="change-before">{_fmt(change["original"])}</span>'
                                 f'<span>&rarr;</span>'
@@ -772,6 +800,28 @@ with col_results:
                     "disagreement between them as a reason to read the result yourself, not "
                     "as a tie needing a winner."
                 )
+
+                validation = result.get("validation")
+                if validation is not None:
+                    st.markdown("##### 🧪 Experimental validator (R46)")
+                    nli = validation.get("nli")
+                    grammar_count = validation.get("grammar_issue_count")
+                    if nli is None and grammar_count is None:
+                        st.caption("Nothing to check — this text wasn't changed.")
+                    else:
+                        nli_desc = (
+                            f"{nli['fwd_label']} / {nli['rev_label']}" if nli is not None else "n/a"
+                        )
+                        st.markdown(
+                            f"- Logical consistency (NLI, both directions): **{nli_desc}**\n"
+                            f"- Grammar issues found: **{grammar_count if grammar_count is not None else 'n/a'}**"
+                        )
+                    st.caption(
+                        "New signals, checked against a 79-sentence audit before shipping here "
+                        "(VALIDATION.md §36-37) — not a human judgment, and not a guarantee. "
+                        "Diagnostic only: never blocks a result from being shown, whether or not "
+                        "it flags something."
+                    )
 
 # ── Session history ────────────────────────────────────────────────────────
 if st.session_state.get("session_history"):

@@ -4107,18 +4107,45 @@ review alone until now.
 
 ### 37.2 What this is not
 
-**[LIMITATION]** `reformulate_v2()` is not called anywhere in `app.py`
-or by any part of the running application — it exists as tested,
-verified, additive code, not as a shipped feature. Wiring it in (and
-whether the `validation` block should stay reported-only or become an
-actual gate — R45 deliberately left that undecided) is a separate,
-explicit decision, not made here. The compound-word leak-check gap
-noted in R45 was specific to that diagnostic script's own measurement
-code, not present in `PhonemeConstraintLogitsProcessor` itself (which
-checks decoded text directly, not token-membership), but has not been
-independently re-verified absent in this pass either — worth confirming
-before any production decision.
+**[LIMITATION, at the time this section was first written]**
+`reformulate_v2()` was not called anywhere in `app.py` — see §37.3 for
+what changed, same day, on direct instruction. The compound-word leak-
+check gap noted in R45 was specific to that diagnostic script's own
+measurement code, not present in `PhonemeConstraintLogitsProcessor`
+itself (which checks decoded text directly, not token-membership), but
+has not been independently re-verified absent — worth confirming before
+this ever becomes the default.
 
-No existing production code path changed. `reformulate()`, `app.py`,
-`generate_candidates()`, and every function `reformulate()` calls remain
-exactly as they were before this pass.
+No existing production code path was changed by §37.1's work.
+`reformulate()`, `generate_candidates()`, and every function
+`reformulate()` calls remain exactly as they were.
+
+### 37.3 Wired into app.py, behind an opt-in toggle (same day)
+
+**[FACT]** A sidebar checkbox, "🧪 Try next-gen escalation (experimental)",
+**defaulting to unchecked**. When off (the default, and the only state
+any existing user has ever seen), `app.py`'s behavior is byte-identical
+to before §37 — confirmed by `tests/app_test.py`'s full suite passing
+unchanged after this edit, exactly as it did after §37.1's library-level
+changes. When on, the Reformulate button calls `reformulate.
+reformulate_v2()` instead of `reformulate.reformulate()`; the Output tab
+shows a diagnostic banner if the new validator flags something (never
+blocking the result from displaying); the Verification tab shows the
+raw NLI/grammar detail; `restructuring_v2`-sourced changes render with
+the same tag styling as `restructuring`, labeled "restructuring (v2)"
+for readability.
+
+**[FACT]** Verified with a new headless AppTest smoke check
+(`eval/r46_toggle_smoke.py`, not added to `tests/` as a permanent
+suite — a one-time confirmation the wiring works, not an ongoing
+regression guard the way `app_test.py` is): checks the toggle, forces a
+dense profile, clicks Reformulate, confirms the run completes without
+exception and both new UI elements render. Passed. The app was also
+launched live (`streamlit run app.py`) and confirmed responding.
+
+**[LIMITATION]** This makes the R46 architecture reachable by an actual
+user for the first time, but still strictly opt-in — nobody sees any
+behavior change unless they explicitly check the box. Whether to
+eventually flip the default, or promote `validation.flagged` from a
+diagnostic banner into a real gate, remains undecided, per R45's own
+scope.

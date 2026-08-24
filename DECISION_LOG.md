@@ -3027,3 +3027,26 @@ gate, remains a separate, explicit decision, not made here.
 **Category:** Implementation of a prior architecture decision, on direct
 instruction. No existing production code path changed. Full record:
 `VALIDATION.md` §37; `ROADMAP.md` R46.
+
+### 2026-08-24-A — R46 wired into app.py behind an opt-in toggle
+
+**What was done:** per direct instruction, a sidebar checkbox ("🧪 Try
+next-gen escalation (experimental)"), defaulting to unchecked, routes
+the Reformulate button to `reformulate_v2()` instead of `reformulate()`
+when checked. Off (default) is byte-identical to before — confirmed by
+the full `app_test.py` suite passing unchanged. On, the Output tab
+shows a diagnostic banner if the new validator flags something (never
+blocking the result) and the Verification tab shows the raw NLI/grammar
+detail.
+
+**Verification:** a new one-time headless AppTest check
+(`eval/r46_toggle_smoke.py`) confirmed the toggle actually reaches
+`reformulate_v2()` and both new UI elements render without exception;
+the app was also launched live and confirmed responding.
+
+**Decision:** this makes R46's architecture reachable by an actual user
+for the first time, strictly opt-in. Whether to flip the default or
+promote the validator into a real gate remains undecided.
+
+**Category:** UI change, on direct instruction. Full record:
+`VALIDATION.md` §37.3.
