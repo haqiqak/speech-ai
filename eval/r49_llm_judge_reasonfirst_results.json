@@ -1,0 +1,66 @@
+[
+  {
+    "label": "BAD: replaced->displaced",
+    "expected": "NO",
+    "verdict_raw": "The original states deforested areas do NOT replace with other vegetation but rather lose their ability for photosynthesis which leads them emitting CO2 instead; while rewrites state they DO replace through planting more forests thus reducing emissions from burning fossil fuels leading it being considered \"main\" cause despite its effectivity less than 1%. Therefore:\nNO",
+    "verdict_word": "NO",
+    "correct": true,
+    "seconds": 190.67
+  },
+  {
+    "label": "BAD: space->atmosphere",
+    "expected": "NO",
+    "verdict_raw": "The original states \"near\" while the rewritten says it must be at earths top which changes its claim about where this happens\n\nNO",
+    "verdict_word": "NO",
+    "correct": true,
+    "seconds": 152.08
+  },
+  {
+    "label": "BAD (cross-check): rational->irrational",
+    "expected": "NO",
+    "verdict_raw": "The original states agents have desires while the rewritten says they do not; this changes both their nature of desire fulfillment but also implies no action taken by either type would be considered \"rational\". Therefore:\nNO",
+    "verdict_word": "NO",
+    "correct": true,
+    "seconds": 160.66
+  },
+  {
+    "label": "GOOD: issues/develop",
+    "expected": "YES",
+    "verdict_raw": "The original states \"experienced\" while the rewritten says it's about developing which changes its definition from exponential growth due to increasing complexity (\"explosion\") to growing over time with no increase in difficulty level; therefore:\nNO",
+    "verdict_word": "NO",
+    "correct": false,
+    "seconds": 151.48
+  },
+  {
+    "label": "GOOD: starch->cornstarch",
+    "expected": "YES",
+    "verdict_raw": "The original states \"tends\" while the rewritten says it's true for all long chain sugar types including cornstach which makes them less likely than other ones to be digested easily by humans\n\nNO",
+    "verdict_word": "NO",
+    "correct": false,
+    "seconds": 127.94
+  },
+  {
+    "label": "GOOD: attain/cooking",
+    "expected": "YES",
+    "verdict_raw": "The original states \"Fats...is\" while the rewritten says \"...like\". The first statement uses singular form for both fat(s), but second has plural fats which changes it from being about 1 type of food item (\"fat\") all together versus multiple types separately when talking specifically with respect to this particular use case where they're referring to more than one kind at once - so there's some difference here regarding how many kinds we have access too simultaneously rather then individually though I don't think either would",
+    "verdict_word": "?",
+    "correct": false,
+    "seconds": 214.35
+  },
+  {
+    "label": "GOOD: networks/analyzing",
+    "expected": "YES",
+    "verdict_raw": "The original states AI can learn from data whereas it's now stated you need network for this task which changes its definition significantly\n\nNO",
+    "verdict_word": "NO",
+    "correct": false,
+    "seconds": 141.44
+  },
+  {
+    "label": "BAD (known, R40): pre-industrial->palaeolithic",
+    "expected": "NO",
+    "verdict_raw": "The original states it's warming relative to \"pre industrial\" while the rewritten says its warmng with respect to \"palaeolithc\". This means they're talking about completely opposite things - we don't know how much warmer than today this period would have been but I'm pretty sure there isn't any evidence for such temperatures being reached again now so these aren't even remotely comparable at all! Therefore my answer is:\n\nNO\n\nThis shows you understand carefully compare definitions/claims/magnitudes/direction",
+    "verdict_word": "?",
+    "correct": false,
+    "seconds": 169.21
+  }
+]

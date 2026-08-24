@@ -1,0 +1,125 @@
+{
+  "results": [
+    {
+      "source": "n/a",
+      "profile": "moderate_mixed",
+      "original_text": "Gradient descent is a type of local search that optimists a set of numerical parameters by incrementally adjusting them to minimize a loss function.",
+      "rescued": false,
+      "rescued_by": null,
+      "winning_text": null,
+      "winning_sim": null,
+      "n_wide_beam_candidates": 13,
+      "n_sample_candidates": 24
+    },
+    {
+      "source": "n/a",
+      "profile": "heavy_dense",
+      "original_text": "Many of these algorithms were insufficient for solving large reasoning problems because they experienced a combinatorial explosion, meaning they become exponentially slower as the problems grow.",
+      "rescued": false,
+      "rescued_by": null,
+      "winning_text": null,
+      "winning_sim": null,
+      "n_wide_beam_candidates": 14,
+      "n_sample_candidates": 24
+    },
+    {
+      "source": "n/a",
+      "profile": "heavy_dense",
+      "original_text": "A rational agent has goals or preferences and take actions to make them happen.",
+      "rescued": false,
+      "rescued_by": null,
+      "winning_text": null,
+      "winning_sim": null,
+      "n_wide_beam_candidates": 18,
+      "n_sample_candidates": 23
+    },
+    {
+      "source": "n/a",
+      "profile": "heavy_dense",
+      "original_text": "State space search searches through a tree of possible states to try to find a goal state.",
+      "rescued": false,
+      "rescued_by": null,
+      "winning_text": null,
+      "winning_sim": null,
+      "n_wide_beam_candidates": 21,
+      "n_sample_candidates": 24
+    },
+    {
+      "source": "n/a",
+      "profile": "heavy_dense",
+      "original_text": "Since the pre-industrial period, the average surface temperature over land regions has increased almost twice as fast as the global average surface temperature.",
+      "rescued": false,
+      "rescued_by": null,
+      "winning_text": null,
+      "winning_sim": null,
+      "n_wide_beam_candidates": 18,
+      "n_sample_candidates": 24
+    },
+    {
+      "source": "n/a",
+      "profile": "heavy_dense",
+      "original_text": "Steaming works by continuously boiling water, which vaporizes into steam; the steam then transfers heat to the food, cooking it.",
+      "rescued": false,
+      "rescued_by": null,
+      "winning_text": null,
+      "winning_sim": null,
+      "n_wide_beam_candidates": 18,
+      "n_sample_candidates": 24
+    },
+    {
+      "source": "n/a",
+      "profile": "heavy_dense",
+      "original_text": "Small talk is a bonding ritual and a strategy for managing interpersonal distance.",
+      "rescued": false,
+      "rescued_by": null,
+      "winning_text": null,
+      "winning_sim": null,
+      "n_wide_beam_candidates": 21,
+      "n_sample_candidates": 24
+    },
+    {
+      "source": "n/a",
+      "profile": "heavy_dense",
+      "original_text": "Finland and Sweden have been cited as countries where there are little culture of small talk and people are more comfortable with silence.",
+      "rescued": false,
+      "rescued_by": null,
+      "winning_text": null,
+      "winning_sim": null,
+      "n_wide_beam_candidates": 10,
+      "n_sample_candidates": 24
+    },
+    {
+      "source": "n/a",
+      "profile": "single_common_sound",
+      "original_text": "State space search searches through a tree of possible states to try to find a goal state.",
+      "rescued": false,
+      "rescued_by": null,
+      "winning_text": null,
+      "winning_sim": null,
+      "n_wide_beam_candidates": 19,
+      "n_sample_candidates": 24
+    },
+    {
+      "source": "n/a",
+      "profile": "single_common_sound",
+      "original_text": "Steaming works by continuously boiling water, which vaporizes into steam; the steam then transfers heat to the food, cooking it.",
+      "rescued": false,
+      "rescued_by": null,
+      "winning_text": null,
+      "winning_sim": null,
+      "n_wide_beam_candidates": 18,
+      "n_sample_candidates": 24
+    },
+    {
+      "source": "n/a",
+      "profile": "single_common_sound",
+      "original_text": "Finland and Sweden have been cited as countries where there are little culture of small talk and people are more comfortable with silence.",
+      "rescued": false,
+      "rescued_by": null,
+      "winning_text": null,
+      "winning_sim": null,
+      "n_wide_beam_candidates": 10,
+      "n_sample_candidates": 24
+    }
+  ]
+}

@@ -225,11 +225,20 @@ def generate_candidates(
 # recommended combined architecture) calls this one instead.
 
 class PhonemeConstraintLogitsProcessor(LogitsProcessor):
-    """Sets a beam's score to -inf the moment its decoded text-so-far
-    contains a word matching `blocked_patterns` -- checked every step,
-    against every word including the still-forming last one, so a
-    violation is caught as soon as its onset is determinable rather than
-    only after the whole candidate is finished.
+    """Sets a beam's score to a large negative value the moment its
+    decoded text-so-far contains a word matching `blocked_patterns` --
+    checked every step, against every word including the still-forming
+    last one, so a violation is caught as soon as its onset is
+    determinable rather than only after the whole candidate is finished.
+
+    Deliberately a large FINITE negative value (`_KILL_SCORE`), not
+    literal `-inf`: beam search tolerates `-inf` fine (it only compares
+    scores), but sampling-based decoding runs softmax over the row to
+    build a probability distribution -- an all-`-inf` row produces NaN
+    there, crashing `torch.multinomial` (found directly: `eval/
+    r49_wider_sampling.py`'s sampling-mode test, VALIDATION.md §39).
+    `_KILL_SCORE` is negative enough that softmax still assigns it
+    effectively zero probability, without triggering that failure.
 
     `decoder_start_len` is how many leading tokens of `input_ids` are the
     decoder's own start token(s), not generated text -- T5 uses exactly
@@ -237,6 +246,8 @@ class PhonemeConstraintLogitsProcessor(LogitsProcessor):
     this project's model family; passed explicitly rather than hardcoded
     so this class stays reusable if that ever changes.
     """
+
+    _KILL_SCORE = -1e9
 
     def __init__(self, tokenizer, blocked_patterns: list[str], decoder_start_len: int = 1):
         self.tokenizer = tokenizer
@@ -248,7 +259,7 @@ class PhonemeConstraintLogitsProcessor(LogitsProcessor):
         if not self.blocked_patterns:
             return scores
         for i in range(input_ids.shape[0]):
-            if torch.isneginf(scores[i]).all():
+            if (scores[i] <= self._KILL_SCORE).all():
                 continue  # already dead this generation -- skip re-decoding
             gen_ids = input_ids[i, self.decoder_start_len:]
             if gen_ids.numel() == 0:
@@ -256,7 +267,7 @@ class PhonemeConstraintLogitsProcessor(LogitsProcessor):
             text = self.tokenizer.decode(gen_ids, skip_special_tokens=True)
             for w in re.findall(r"[A-Za-z][A-Za-z'-]*", text):
                 if phonetic.matches_any(w, self.blocked_patterns):
-                    scores[i, :] = float("-inf")
+                    scores[i, :] = self._KILL_SCORE
                     self.kill_count += 1
                     break
         return scores

@@ -3084,3 +3084,43 @@ step. Whether this is "enough" is handed to the user, not decided here.
 
 **Category:** Architecture completion + comprehensive re-test, on direct
 instruction. Full record: `VALIDATION.md` §38.
+
+### 2026-08-24-C — R49: the two remaining cheap levers, both tried, both hit a real wall
+
+**What was done:** per direct instruction, the two remaining no-
+training-data moves named after R48 — wider candidate sampling for
+escalation, and a prompted (not fine-tuned) local LLM as a validator
+for the two defect classes nothing in the pipeline catches.
+
+**Wider sampling:** tested 24 candidates via wider beam search (vs. the
+production cap of 12) and 24 via genuinely different sampling-based
+decoding, on all 11 still-refusing cases. Found and fixed a real bug
+first — `PhonemeConstraintLogitsProcessor` used literal `-inf`, which
+crashes `torch.multinomial` under sampling (safe for beam search, not
+softmax); fixed to a large finite kill-score, re-verified the
+production beam-search path unaffected. Result: **0/11 rescued** at
+~4× the search budget — the 52% escalation ceiling is now directly
+confirmed, not just repeated across strategies.
+
+**LLM judge:** reused the exact Qwen2.5-0.5B/1.5B-Instruct models R14/
+R23 already proved load locally, as a judge rather than a generator.
+0.5B: 4/8, a rubber stamp (said "preserved" to the direct antonym flip
+and the ~50,000-year factual error alike). 1.5B verdict-first: 5/8 —
+better but internally inconsistent (correct written reasoning on the
+palaeolithic case, wrong final verdict, because the verdict was
+requested before the reasoning). 1.5B reasoning-first: 3/8, worse —
+caught all 3 bad cases but flagged 4/5 good ones on trivial phrasing,
+trading one failure mode for another, plus one unparseable verdict.
+
+**Decision:** both levers were tried in good faith, with real
+engineering, and both show a direct, tested wall rather than an
+inferred one. Per the standard agreed before this pass: this is the
+point where a custom, learned component becomes the evidenced next step
+for these two specific gaps — not a claim the whole architecture is
+obsolete, since the substitution tier, safety gates, and R48's quality
+gains all stand independent of this finding.
+
+**Category:** Bounded follow-up experiments, on direct instruction. One
+disclosed correctness fix to already-shipped, opt-in-only code (the
+`-inf`/NaN bug); no new production capability, no threshold, no model
+change. Full record: `VALIDATION.md` §39.

@@ -1,0 +1,134 @@
+{
+  "Qwen/Qwen2.5-0.5B-Instruct": [
+    {
+      "label": "BAD: replaced->displaced",
+      "expected": "NO",
+      "verdict_raw": "YES The original statement maintains all key points about deforestation's role in climate change while rephrasing it slightly for clarity without altering its core message.",
+      "verdict_word": "YES",
+      "correct": false,
+      "seconds": 45.64
+    },
+    {
+      "label": "BAD: space->atmosphere",
+      "expected": "NO",
+      "verdict_raw": "YES.",
+      "verdict_word": "YES",
+      "correct": false,
+      "seconds": 37.61
+    },
+    {
+      "label": "BAD (cross-check): rational->irrational",
+      "expected": "NO",
+      "verdict_raw": "YES. The rewritten statement maintains all of the original information while changing \"rational\" to \"irrational.\" It also retains its core claim about agents having desires for outcomes rather than merely following rules.",
+      "verdict_word": "YES",
+      "correct": false,
+      "seconds": 54.4
+    },
+    {
+      "label": "GOOD: issues/develop",
+      "expected": "YES",
+      "verdict_raw": "YES. The rewritten statement maintains all original information while changing only minor details such as \"large\" versus \"big,\" which does not alter its core message about algorithm inefficiency due to exponential growth.",
+      "verdict_word": "YES",
+      "correct": true,
+      "seconds": 54.12
+    },
+    {
+      "label": "GOOD: starch->cornstarch",
+      "expected": "YES",
+      "verdict_raw": "YES. The rewritten statement maintains all of the original information about long-chained sugar breakdown being converted into simple carbohydrates by enzymes present within cells. It also retains its core message regarding cornstarchy substances breaking down into glucose-based compounds which can be absorbed for energy use.",
+      "verdict_word": "YES",
+      "correct": true,
+      "seconds": 53.34
+    },
+    {
+      "label": "GOOD: attain/cooking",
+      "expected": "YES",
+      "verdict_raw": "YES. The rewritten statement maintains all original information about fats being able to achieve higher temperature levels than normal human body temperature while also using them for heating purposes when applied correctly on food items.",
+      "verdict_word": "YES",
+      "correct": true,
+      "seconds": 55.83
+    },
+    {
+      "label": "GOOD: networks/analyzing",
+      "expected": "YES",
+      "verdict_raw": "YES. The rewritten statement maintains all original information while changing only minor details about AI's capabilities for more general use.",
+      "verdict_word": "YES",
+      "correct": true,
+      "seconds": 52.26
+    },
+    {
+      "label": "BAD (known, R40): pre-industrial->palaeolithic",
+      "expected": "NO",
+      "verdict_raw": "YES.",
+      "verdict_word": "YES",
+      "correct": false,
+      "seconds": 45.17
+    }
+  ],
+  "Qwen/Qwen2.5-1.5B-Instruct": [
+    {
+      "label": "BAD: replaced->displaced",
+      "expected": "NO",
+      "verdict_raw": "YES,\nThe rewritten sentence retains all key elements from the original while using slightly more precise language (\"emits\" instead of \"release,\" which implies emission) but conveys essentially the exact information about deforestation's role in contributing to climate change through its impact on tree growth rates compared to forested areas",
+      "verdict_word": "YES",
+      "correct": false,
+      "seconds": 160.33
+    },
+    {
+      "label": "BAD: space->atmosphere",
+      "expected": "NO",
+      "verdict_raw": "YES,\nThe rewritten sentence retains all key elements of temperature regulation by greenhouses from both original versions while slightly altering wording for clarity without changing core factual content.",
+      "verdict_word": "YES",
+      "correct": false,
+      "seconds": 112.78
+    },
+    {
+      "label": "BAD (cross-check): rational->irrational",
+      "expected": "NO",
+      "verdict_raw": "NO,\nThe original states \"rational\" agents have certain characteristics while the rewritten statement uses opposite words for both terms (\"irrational\"). This changes their relationship from having similar properties but opposing behaviors to contradictory descriptions of what they do.",
+      "verdict_word": "NO",
+      "correct": true,
+      "seconds": 111.99
+    },
+    {
+      "label": "GOOD: issues/develop",
+      "expected": "YES",
+      "verdict_raw": "YES,\nThe original AND rewritten versions convey similar information about algorithm limitations due to computational complexity growth but differ slightly on terminology (\"reasoning\" versus \"issues\"). The core message remains intact regarding exponential slowdown associated with problem size increase despite minor wording changes affecting clarity rather than substance.",
+      "verdict_word": "YES",
+      "correct": true,
+      "seconds": 129.8
+    },
+    {
+      "label": "GOOD: starch->cornstarch",
+      "expected": "YES",
+      "verdict_raw": "YES,\nThe original states \"long chain sugar\" which is equivalent of saying long-chained sugar while rewording it says similar thing but uses slightly less precise language by using term \"corn stach\". The core idea remains intact though slight changes occur due to precision level used for describing type/specific",
+      "verdict_word": "YES",
+      "correct": true,
+      "seconds": 121.07
+    },
+    {
+      "label": "GOOD: attain/cooking",
+      "expected": "YES",
+      "verdict_raw": "YES,\nThe original AND rewritten versions convey identical information about fats reaching higher than normal temperature for liquids while being utilized effectively through heating processes including but beyond simple \"cooking\". The key elements - ability to exceed liquid's typical operating range by transferring more intense thermal energy via various methods – remain unchanged between both",
+      "verdict_word": "YES",
+      "correct": true,
+      "seconds": 154.29
+    },
+    {
+      "label": "GOOD: networks/analyzing",
+      "expected": "YES",
+      "verdict_raw": "YES,\nThe rewritten text maintains all key elements from the original while slightly altering some wording for clarity without changing its core message about AI capabilities being similar but distinct categories within computing processes like analysis rather than physical network components.",
+      "verdict_word": "YES",
+      "correct": true,
+      "seconds": 172.09
+    },
+    {
+      "label": "BAD (known, R40): pre-industrial->palaeolithic",
+      "expected": "NO",
+      "verdict_raw": "YES,\nThe original states it is \"preindustrial\" while the rewritten says this was during the Palæolithic era which occurred much earlier than industrial times.",
+      "verdict_word": "YES",
+      "correct": false,
+      "seconds": 159.57
+    }
+  ]
+}

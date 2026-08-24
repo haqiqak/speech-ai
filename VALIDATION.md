@@ -4309,3 +4309,102 @@ residual remains, concentrated specifically in defect classes (wrong-
 word substitution, factual/physical-claim reversal, fixed-term erosion)
 that no signal currently in this pipeline is built to catch. Whether
 this is "enough" is the decision this section hands off, not decides.
+
+## 39. R49 — the two remaining cheap levers, both tried, both hit a real wall (executed 2026-08-24)
+
+Per direct instruction: try the two remaining untested, no-training-data
+moves before deciding whether the architecture's ceiling is proven or
+still a hypothesis — wider candidate sampling for escalation, and a
+prompted (not fine-tuned) local LLM as a validator for the two defect
+classes §38.3 found nothing in the pipeline could see.
+
+### 39.1 Wider candidate sampling — the escalation ceiling is now directly confirmed, not just repeated
+
+Tested on the 11 cases still refusing under `_try_escalation_v3`: 24
+candidates via wider beam search (vs. the production cap of 12,
+`rephrase.py:181/295`) AND 24 via genuinely different sampling-based
+decoding (`do_sample=True`, temperature 1.1, top-p 0.92) — a
+structurally different diversity source than beam search's tendency
+toward closely related top-N sequences, not just a bigger number
+through the same mechanism.
+
+**[FINDING, a real bug caught before trusting the result]**
+`PhonemeConstraintLogitsProcessor` set a killed beam's score to literal
+`-inf` — safe for beam search's comparative selection, but softmax over
+an all-`-inf` row during sampling produces NaN, crashing
+`torch.multinomial`. Fixed in `rephrase.py` itself (not just this
+diagnostic): a large finite `_KILL_SCORE = -1e9` instead, softmax-safe
+either way. Re-verified the existing phoneme-constraint test still
+passes (beam-search path, what `_try_escalation_v3` actually uses, is
+unaffected by this fix).
+
+**[FACT] 0 of 11 cases rescued, by either method, despite roughly 4× the
+search budget per case (24+24 vs. 5 candidates).** This directly tests,
+rather than infers, whether the 52% ceiling held across three different
+combination strategies (§38.3) was a real limit or an artifact of a
+small default `k`. It is real: `t5_candidates` was never the bottleneck.
+
+### 39.2 A prompted local LLM as a validator — real signal, not a reliable one
+
+New `eval/r49_llm_judge.py`. Reuses the exact models R14/R23 already
+downloaded and proved load locally without `trust_remote_code`
+(Qwen2.5-0.5B/1.5B-Instruct) — no new dependency, no API call (this
+project's own standing rule against an API-based frontier LLM as a
+default path, `REFORMULATION_RESEARCH.md` §15, unaffected — this stays
+fully local). Prompted as a **judge**, not a generator — a structurally
+different task from what R23 tested and found Qwen poor at. Tested
+against the two known blind-spot cases plus known-good cases from
+§38.3's own final 12 successes, before drawing any conclusion.
+
+**[FINDING] Qwen2.5-0.5B is a rubber stamp: 4/8 (exactly a constant-YES
+baseline), including saying "YES, preserved" to the direct "rational"→
+"irrational" antonym flip and the ~50,000-year "palaeolithic" factual
+error.** Not real judgment at this size.
+
+**[FINDING] Qwen2.5-1.5B (verdict-first prompting): 5/8 — better, but
+internally inconsistent, not just weak.** It correctly caught the
+antonym flip this time. For the palaeolithic case, its own written
+reasoning states *"this was during the Palaeolithic era which occurred
+much earlier than industria[l]"* — genuinely correct — **and then still
+answered YES.** The verdict was requested before the reasoning; the
+correct reasoning had no chance to correct the pre-committed answer.
+
+**[FINDING] Reasoning-first prompting (explain, then answer) made it
+worse, not better: 3/8.** It did catch all 3 bad cases this time
+(including palaeolithic, reasoning correctly that they're "talking
+about completely opposite things") — but flagged 4 of 5 *good* cases as
+failures, fixating on trivial phrasing ("tends" vs. "true for all,"
+singular vs. plural "fat(s)") as if they were meaning changes. Trading
+false negatives for false positives, not resolving the underlying
+unreliability. One response's verdict couldn't even be parsed — genuine
+reasoning capability at this scale doesn't reliably translate into a
+consistent, machine-checkable output.
+
+### 39.3 Assessment — the threshold from R48's own framing is now met
+
+**[RECOMMENDATION]** Both of the two remaining no-training-data, no-
+big-investment levers were tried in good faith, with real engineering
+(two genuine bugs found and fixed along the way, not superficial
+attempts), and both show a direct, not inferred, wall:
+- Escalation coverage does not move past ~52% even at ~4× the search
+  budget, tested with two structurally different diversity sources.
+- No locally-available instruction-tuned model, at either size tested
+  or either prompt ordering tried, is a reliable validator for the
+  wrong-word-substitution and factual-reversal defect classes — the
+  best result (63%) is not close to trustworthy, and the failure mode
+  differs by prompt order (rubber-stamping vs. over-flagging) rather
+  than converging toward reliability.
+
+Per the standard agreed before this pass began: **this is the point
+where "the current architecture needs a custom, learned component to
+go further" stops being a hypothesis and becomes the evidenced
+conclusion for these two specific gaps** — not a claim that the entire
+architecture is obsolete (the substitution tier, the safety gates, and
+§38's real quality gains all stand independent of this finding), but a
+direct, tested answer to the two questions this pass was designed to
+resolve.
+
+No production code changed in this investigation beyond the disclosed
+`PhonemeConstraintLogitsProcessor` fix (§39.1), which is a correctness
+fix to already-shipped-but-unused-in-production code
+(`reformulate_v2()` is opt-in, off by default), not a new capability.

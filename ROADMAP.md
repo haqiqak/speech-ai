@@ -1460,6 +1460,46 @@ available, tested to completion rather than left open. Full existing
 suite passes throughout; `reformulate()` confirmed unaffected. Whether
 this is "enough" is handed to the user next, not decided here.
 
+### R49. The two remaining cheap levers, both tried, both hit a real wall — **DONE, 2026-08-24**
+**Linked finding:** direct instruction to try the two remaining
+low-cost, no-training-data escalation levers — wider candidate sampling,
+and a prompted local-LLM validator for the two blind-spot defect classes
+(wrong-word substitution, factual/physical-claim reversal) — before
+treating "build something custom" as the evidenced answer rather than a
+hypothesis. Full record: `VALIDATION.md` §39.
+**What was done:** (1) Wider candidate sampling — beam width raised to
+13-21 (from the production default) plus a second, independent
+diversity mechanism (temperature 1.1, top_p 0.92, n=23-24 sampled
+candidates), run directly on the 11 cases `_try_escalation_v3` still
+refuses. Found and fixed two bugs along the way: a `KeyError` from
+comparing sanitized vs. raw `original_text` (removed the unnecessary
+lookup), and a literal `float("-inf")` in
+`PhonemeConstraintLogitsProcessor` producing NaN under
+`torch.multinomial` sampling — safe for beam search, fatal for
+sampling; fixed by switching to a large finite `_KILL_SCORE = -1e9`
+class constant, with the "already dead" check updated to match. (2) A
+prompted local-LLM validator — Qwen2.5-0.5B-Instruct and
+Qwen2.5-1.5B-Instruct (both already cached from R23, used here as a
+judge rather than a generator), tested on 8 hand-picked cases (3 known
+BAD substitutions including the R48 antonym-flip and the R40
+pre-industrial/palaeolithic case, 4 known GOOD, one deliberate
+cross-check), each model tried with verdict-first and reasoning-first
+prompt orderings.
+**Result:** Wider sampling rescued 0/11. The LLM judge: 0.5B = 4/8,
+1.5B verdict-first = 5/8, 1.5B reasoning-first = 3/8 — no configuration
+reliable, and the two prompt orderings fail in different, non-
+convergent ways (0.5B and 1.5B-verdict-first both rubber-stamp almost
+everything YES; 1.5B-reasoning-first over-flags GOOD cases instead).
+Neither lever closes the wrong-word-substitution or factual-reversal
+blind spots.
+**Labeled as:** per the threshold the user themselves set before this
+work started ("if both of those also hit a wall, that's the point
+where 'build something custom' stops being a hypothesis and becomes
+the evidenced answer"), that threshold is now met — for these two
+specific gaps only. This is not a claim that the substitution tier,
+the safety gates, or R48's escalation-quality gains are obsolete; they
+stand independently and are unaffected by this result.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

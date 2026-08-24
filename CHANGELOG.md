@@ -6,6 +6,22 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-24, third** feat: R49 — the two remaining cheap escalation
+  levers, both tried, both hit a real wall. Wider candidate sampling
+  (beam 13-21 + independent temp/top_p sampling, n=23-24) on the 11
+  cases v3 still refuses: rescued 0/11. Found/fixed a KeyError (raw vs.
+  sanitized text mismatch) and a literal -inf in
+  PhonemeConstraintLogitsProcessor that produced NaN under sampling
+  (do_sample) though it was safe for beam search - switched to a finite
+  _KILL_SCORE=-1e9. A prompted local-LLM validator (Qwen2.5-0.5B/1.5B,
+  both already cached, verdict-first and reasoning-first prompts) on 8
+  hand-picked BAD/GOOD cases: 0.5B=4/8, 1.5B verdict-first=5/8, 1.5B
+  reasoning-first=3/8 - unreliable in different, non-convergent ways
+  per configuration. Per the user's own pre-set threshold, this marks
+  "build something custom" as the evidenced answer for the wrong-word-
+  substitution and factual-reversal blind spots specifically - not a
+  claim the rest of the architecture is obsolete. → `DECISION_LOG.md`
+  2026-08-24-C.
 - **2026-08-24, second** feat: R47/R48 — architecture pushed to its
   evidenced ceiling. R47: 10 fresh sentences through both pipelines,
   found a third independent instance of the sanitize_input() SVA bug.
