@@ -1615,6 +1615,34 @@ less extreme imbalance correction, early stopping) is recommended for a
 future attempt but was not executed — that decision is left to the
 user.
 
+### Phase 9B. Training instability fixed, controlled retry succeeded — **DONE, 2026-08-25**
+**Linked finding:** direct instruction — diagnose R9's NaN failure
+precisely, retrain with a conservative config, sanity-check before the
+full run, evaluate against the unchanged baseline/dataset/split. Full
+record: `VALIDATION.md` §44, `eval/r9b_report.md`.
+**What was done:** confirmed R9's own "missing gradient clipping"
+hypothesis was wrong (clipping and fp32 were already active by
+default) and revised it to pos_weight~11 + lr=2e-5 + a too-small
+adam_epsilon destabilizing DeBERTa within ~3 epochs. Retrained with
+lr=3e-6, pos_weight=4.0 (capped), explicit clipping, adam_epsilon=1e-6,
+early stopping, and a new abort-on-non-finite safety callback — same
+dataset/split as R9, unchanged. A 10-step sanity pass confirmed
+stability before the full run.
+**Result:** full 8-epoch run completed with zero non-finite events
+(confirmed: 0 NaN/0 Inf across 70.8M parameters), best eval_loss 0.676
+at epoch 6. Caught and fixed two evaluation bugs before reporting (a
+too-coarse threshold grid that missed the model's real narrow output
+range, and an initial threshold selected via test-set leakage). On the
+frozen, unchanged test set: val-selected threshold gets defect recall
+0.77 vs baseline's 0.60, precision 0.92 vs 0.90, clean recall 0.62 vs
+0.62 tied; a more conservative threshold beats baseline on all three
+simultaneously.
+**Labeled as:** justifies further development, directionally, on real
+evidence — not a production-ready result. Small test set (51 records, 8
+CLEAN), poor score calibration despite real ranking signal, single
+run/seed. A second independent training run is the sensible next step,
+not performed automatically.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

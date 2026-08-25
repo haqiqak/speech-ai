@@ -3274,3 +3274,48 @@ divergence.
 **Category:** Prototype/research, on direct instruction. No production
 code touched, no model integrated. Full record: `VALIDATION.md` §43,
 `eval/r9_report.md`.
+
+### 2026-08-25-B — Phase 9B: training instability fixed, controlled retry succeeded
+
+**What was done:** per direct instruction - diagnose R9's NaN failure
+precisely, retrain with a conservative config, sanity-check before the
+full run, evaluate against the unchanged baseline/dataset/split.
+
+**Diagnosis correction:** R9's report guessed missing gradient clipping
+as the cause. Checked against actual library defaults -
+max_grad_norm=1.0 and fp32 were already active throughout the failed
+run; that guess was wrong and is corrected here rather than left
+standing. Revised hypothesis: pos_weight~11 + lr=2e-5 +
+adam_epsilon=1e-8 (smaller than DeBERTa's commonly-recommended 1e-6)
+destabilized the model within ~3 epochs despite clipping.
+
+**Conservative config:** lr=3e-6, pos_weight=4.0 (capped),
+max_grad_norm=1.0 (explicit), adam_epsilon=1e-6, early stopping on
+eval_loss, plus a new abort-on-non-finite safety callback. Same
+dataset/split as R9, unchanged. 10-step sanity pass passed; full
+8-epoch run completed with zero non-finite events (confirmed: 0 NaN/0
+Inf across 70.8M parameters). Best eval_loss 0.676 at epoch 6.
+
+**Two evaluation bugs caught and fixed before reporting:** (1) an
+initial coarse threshold grid missed the model's narrow real output
+range (0.528-0.625), producing a false "no signal" read - a fine sweep
+found real separation. (2) an initial "best threshold" was read
+directly off test-set performance (leakage) - fixed to select on val
+only, applied to test exactly once.
+
+**Result:** on the frozen, unchanged test set (100% out-of-distribution
+word-pairs), the val-selected threshold gets defect recall 0.77 vs
+baseline's 0.60, defect precision 0.92 vs 0.90, clean recall 0.62 vs
+0.62 (tied). A second, more conservative threshold beats baseline on
+all three simultaneously (0.65/0.93/0.75). Real, not favorable
+after-the-fact threshold-picking.
+
+**Decision:** justifies further development, directionally, on real
+evidence - not a production-ready result. Test set is small (51
+records, 8 CLEAN), confidence is poorly calibrated despite real ranking
+signal, single run/seed not repeated for variance. A second independent
+training run is the sensible next step, not performed here.
+
+**Category:** Prototype/research, on direct instruction. No production
+code touched, no model integrated. Full record: `VALIDATION.md` §44,
+`eval/r9b_report.md`.

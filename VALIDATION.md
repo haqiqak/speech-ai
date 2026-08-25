@@ -4704,3 +4704,63 @@ correction (cap pos_weight ~3-5x and/or oversample CLEAN), and early
 stopping on eval_loss (which was already trending worse, 1.75→1.85,
 before the collapse). **Per direct instruction, this run was not altered
 or repeated** — a corrected attempt is a decision left to the user.
+
+## 44. Phase 9B — training instability fixed, controlled retry succeeded (executed 2026-08-25)
+
+Per direct instruction: diagnose the R9 NaN failure precisely, retrain
+with a conservative configuration, sanity-check before committing to a
+full run, and evaluate against the unchanged baseline/dataset/split.
+**Prototype only; not integrated into `reformulate.py`/`app.py`.** Full
+record: `eval/r9b_report.md`, `eval/r9b_diagnosis.md`.
+
+**[FINDING, corrects R9's own hypothesis]** R9's report guessed missing
+gradient clipping as a cause. Checked directly against
+`CrossEncoderTrainingArguments` defaults: `max_grad_norm=1.0` and
+`fp16=bf16=False` were **already** active throughout the failed run —
+that guess was wrong, disclosed rather than left standing. Revised
+hypothesis: `pos_weight≈11` combined with `lr=2e-5` and the library's
+default `adam_epsilon=1e-8` (smaller than the `1e-6` commonly
+recommended for DeBERTa-family stability) was still sufficient to
+destabilize the model within ~3 epochs despite clipping.
+
+**[FACT] Conservative config:** `lr=3e-6`, `pos_weight=4.0` (capped),
+`max_grad_norm=1.0` (explicit), `adam_epsilon=1e-6`, early stopping on
+`eval_loss` (patience 2), plus a new safety callback that aborts
+immediately on any non-finite weight rather than burning through dead
+epochs. Same dataset/split as R9, unchanged.
+
+**[FACT] Sanity pass (10 steps) passed** — loss/grad_norm stayed
+bounded throughout. **Full 8-epoch run completed with zero non-finite
+events**, confirmed by direct inspection: 0 NaN / 0 Inf across
+70,830,337 parameters. eval_loss reached a best of 0.676 at epoch 6
+(restored via `load_best_model_at_end`), after dipping at epoch 4 and
+recovering — real, if noisy, convergence, not a repeat of R9's collapse.
+
+**[FINDING, two evaluation bugs caught and fixed in place before
+reporting]** (1) The first evaluation pass used a coarse threshold grid
+that missed the model's actual, narrow output range (0.528-0.625),
+producing a degenerate result that looked like no signal existed — a
+fine-grained sweep found real separation (CLEAN-truth mean 0.584 vs.
+DEFECTIVE-truth mean 0.555). (2) The first "best threshold" was selected
+by reading test-set performance directly — test-set leakage. Fixed:
+threshold selected on validation only, applied to test exactly once.
+
+**[FACT] Test-set result (val-selected threshold, applied once,
+unchanged frozen test set, 100% out-of-distribution word-pairs by
+construction):** defect recall 0.77 vs. baseline's 0.60, defect
+precision 0.92 vs. 0.90, CLEAN recall 0.62 vs. 0.62 (tied). A second,
+more conservative val-selected threshold beats the baseline on all three
+axes simultaneously (0.65/0.93/0.75). Both operating points are genuine
+improvements over the best existing-signal baseline, not favorable
+threshold-picking after the fact.
+
+**[LIMITATION]** Test set is small (51 records, 8 CLEAN) — each CLEAN
+error moves clean-recall 12.5 points. Model confidence is poorly
+calibrated (scores compressed near 0.55) despite carrying real ranking
+signal. Single run, single seed — not repeated to check variance.
+`FACTUAL_OR_LOGICAL_REVERSAL`'s 7-case breakdown is illustrative only.
+
+**[RECOMMENDATION] Justifies further development, directionally, on
+real evidence — not a production-ready result.** A second independent
+run (different seed) to check whether the recall/precision numbers hold
+is the sensible next step, not attempted here.

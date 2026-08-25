@@ -6,6 +6,22 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-25, second** feat: Phase 9B — training instability fixed,
+  controlled retry succeeded. Corrected R9's own diagnosis (gradient
+  clipping and fp32 were already active by default; the real culprit
+  was pos_weight~11 + lr=2e-5 + too-small adam_epsilon destabilizing
+  DeBERTa). Retrained with lr=3e-6, pos_weight=4.0, explicit clipping,
+  adam_epsilon=1e-6, early stopping, and a new abort-on-non-finite
+  safety net — same unchanged dataset/split. Sanity pass then full
+  8-epoch run both completed stably (confirmed: 0 NaN/0 Inf across
+  70.8M params). Caught and fixed two evaluation bugs (a too-coarse
+  threshold grid, and test-set leakage in threshold selection) before
+  reporting. Final, methodologically clean result on the frozen test
+  set: defect recall 0.77 vs baseline's 0.60, precision 0.92 vs 0.90,
+  clean recall tied at 0.62 — a real improvement, not favorable
+  threshold-picking. Justifies further development, not yet
+  production-ready. No production changes. →
+  `DECISION_LOG.md` 2026-08-25-B.
 - **2026-08-25, first** feat: Phase 9 — learned validator prototype,
   training run diverged. Assembled the final 313-record dataset (252
   unique groups) and a unified leakage-safe split respecting R50's/

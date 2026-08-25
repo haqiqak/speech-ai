@@ -30,9 +30,12 @@ nltk_data/
 # run.  Do NOT commit — too large and regenerates automatically.
 .cache/
 
-# ── Phase 9 validator prototype — fine-tuned weights, not source, reproducible
-# from eval/r9_train_validator.py. Do NOT commit.
+# ── Phase 9/9B validator prototype — fine-tuned weights, not source,
+# reproducible from eval/r9_train_validator.py / r9b_train_validator.py.
+# Do NOT commit.
 eval/r9_validator_model/
+eval/r9b_validator_model/
+eval/r9b_sanity_checkpoints/
 
 # ── User data written at runtime ──────────────────────────────────────────────
 users/*.fluency_profile.json
