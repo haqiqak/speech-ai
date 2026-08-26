@@ -6,6 +6,23 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-26, first** feat: Phase 10 — broad stratified stress test
+  of the current architecture. 133 new sentences (0 contamination vs
+  154 prior sentences), 398 (sentence,profile) runs frozen before
+  execution, harvested via live production reformulate(), blind-judged
+  by 5 parallel subagents (no domain/category/difficulty shown), plus
+  the frozen Phase 9B/9C validator checkpoints run unmodified on the
+  same new material. Result: 26% CLEAN / 74% DEFECTIVE overall.
+  Domain only a 6pt gap - content density/length predict failure far
+  better than subject-matter label (chemistry/engineering/narrative
+  0% CLEAN, math/stats 83% CLEAN). Difficulty gradient not smooth -
+  moderate (18% CLEAN) worse than hard (30%). Profile constraint
+  density is the cleanest predictor: multi_word profiles 0% CLEAN.
+  Escalation ties substitution on quality, not a rescue mechanism.
+  Neither validator checkpoint generalizes cleanly - 9C predicts
+  DEFECTIVE 99% of the time (non-functional), 9B's CLEAN retention
+  collapsed 62%->34% on new material. Evaluation only, no production
+  changes, no training. → `DECISION_LOG.md` 2026-08-26-A.
 - **2026-08-25, third** feat: Phase 9C — independent replication, seed
   change only. Exact re-run of 9B's pipeline (seed 42→123), paused
   mid-run and resumed cleanly via checkpoint. Conservative threshold's

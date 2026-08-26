@@ -1,0 +1,242 @@
+[
+  {
+    "run_id": "R10-001-core-word",
+    "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "reformulated_text": "Digestion involves the breakdown of food into smaller and smaller parts, until they can be absorbed and absorbed into the body."
+  },
+  {
+    "run_id": "R10-001-core-sparse_common_sound",
+    "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "reformulated_text": "Digestion involves the breakdown of food into least and finer components, until they can be absorbed and assimilated into the body."
+  },
+  {
+    "run_id": "R10-001-calib-single_word",
+    "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "reformulated_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and absorbed into the body."
+  },
+  {
+    "run_id": "R10-001-calib-word_plus_sound",
+    "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "reformulated_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and absorbed into the body."
+  },
+  {
+    "run_id": "R10-001-calib-multi_sound",
+    "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "reformulated_text": "Digestion involves the breakdown of food into least and finer components, until they can be absorbed and assimilated into the body."
+  },
+  {
+    "run_id": "R10-001-calib-dense_mixed_generic",
+    "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "reformulated_text": "Digestion involves the breakdown of food into least and finer components, until they can be absorbed and assimilated into the body."
+  },
+  {
+    "run_id": "R10-002-core-word",
+    "original_text": "Chewing mixes the food with saliva to produce a food bolus to be swallowed down the esophagus to enter the stomach.",
+    "reformulated_text": "Chewing mixes the food with saliva to create a food bolus to swallow down the esophageal to enter the stomach."
+  },
+  {
+    "run_id": "R10-003-core-word",
+    "original_text": "Peristalsis is the rhythmic contraction of muscles that begins in the esophagus and continues along the wall of the stomach and the rest of the gastrointestinal tract.",
+    "reformulated_text": "Peristalaxis is the rhythmic contracting of muscles that begins in the esophagum and continues along the wall of the stomach and the rest of the intestines."
+  },
+  {
+    "run_id": "R10-004-core-word",
+    "original_text": "Most of the digestion of food takes place in the small intestine.",
+    "reformulated_text": "Most of the digestion of food takes place in the small bowel."
+  },
+  {
+    "run_id": "R10-004-core-sparse_common_sound",
+    "original_text": "Most of the digestion of food takes place in the small intestine.",
+    "reformulated_text": "Most of the digestion of food takes place in the little intestine."
+  },
+  {
+    "run_id": "R10-005-core-word",
+    "original_text": "Water and some minerals are reabsorbed back into the blood in the large intestine.",
+    "reformulated_text": "Water and some minerals are assumed back into the blood in the large intestine."
+  },
+  {
+    "run_id": "R10-006-core-word",
+    "original_text": "Bile acts partly as a surfactant which lowers the surface tension between either two liquids or a solid and a liquid and helps to emulsify the fats in the chyme.",
+    "reformulated_text": "Bile acts partly as a lubricant which lowers the surface pressure between either two solids or a solid and a liquid and helps to emollidate the fats in the chyme."
+  },
+  {
+    "run_id": "R10-007-core-word",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "Nutrition is the chemical and physical process by which an organism uses food and water to support its life."
+  },
+  {
+    "run_id": "R10-007-core-dense_mixed_generic",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to give its life."
+  },
+  {
+    "run_id": "R10-007-calib-single_word",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "Nutrition is the biochemical and physical process by which an organism uses food and water to support its life."
+  },
+  {
+    "run_id": "R10-007-calib-multi_word",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "The nutritional process is the biological and physiochemical process by which an organism uses food and water to support its life."
+  },
+  {
+    "run_id": "R10-007-calib-word_plus_sound",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "Nutrition is the biochemical and physical act by which an organism uses food and water to support its life."
+  },
+  {
+    "run_id": "R10-007-calib-multi_sound",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to give its life."
+  },
+  {
+    "run_id": "R10-007-calib-sparse_common_sound",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to give its life."
+  },
+  {
+    "run_id": "R10-008-core-word",
+    "original_text": "Over-nutrition of micronutrient is a major cause of obesity and increases the risk of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, stroke, hypertension, coronary heart disease, osteoporosis, and some forms of cancer.",
+    "reformulated_text": "Overnutrition of micronutrients is a major cause of obesity, and increases the risk of developing various noncommunicable diseases ( NCDs ), including type 2 diabetes, stroke, high blood pressure, coronary heart disease, osteoporosis and some forms of cancer."
+  },
+  {
+    "run_id": "R10-008-core-dense_mixed_generic",
+    "original_text": "Over-nutrition of micronutrient is a major cause of obesity and increases the risk of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, stroke, hypertension, coronary heart disease, osteoporosis, and some forms of cancer.",
+    "reformulated_text": "Over-nutrition of micronutrient is a major cause of obesity and increases the chance of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, shot, hypertension, coronary heart disease, osteoporosis, and some forms of cancer."
+  },
+  {
+    "run_id": "R10-009-core-word",
+    "original_text": "All forms of life require carbon, energy, and water as well as various other molecules.",
+    "reformulated_text": "All forms of life require carbon, energy, and water as well as various other compounds."
+  },
+  {
+    "run_id": "R10-010-core-word",
+    "original_text": "Animals require complex nutrients such as carbohydrates, lipids, and proteins, obtaining them by consuming other organisms.",
+    "reformulated_text": "Animals require complex nutrients such as sugars, lipids, and proteins, obtaining them by consuming other beings."
+  },
+  {
+    "run_id": "R10-011-core-word",
+    "original_text": "Nutrients are absorbed by the cells and used in metabolic biochemical reactions.",
+    "reformulated_text": "Nutritions are absorbed by the cells and used in metabolic biological reactions."
+  },
+  {
+    "run_id": "R10-011-core-sparse_common_sound",
+    "original_text": "Nutrients are absorbed by the cells and used in metabolic biochemical reactions.",
+    "reformulated_text": "Nutrients are absorbed by the cases and used in metabolic biochemical reactions."
+  },
+  {
+    "run_id": "R10-012-core-word",
+    "original_text": "Nutrient deficiency may be caused by a sudden decrease in nutrient intake or by an inability to absorb essential nutrients.",
+    "reformulated_text": "Nutrient deficiencies can be caused by a sudden decrease in nutrient intake or by an incapacity to absorb vital nutrients."
+  },
+  {
+    "run_id": "R10-012-core-dense_mixed_generic",
+    "original_text": "Nutrient deficiency may be caused by a sudden decrease in nutrient intake or by an inability to absorb essential nutrients.",
+    "reformulated_text": "Nutrient deficiency may be caused by a quick decrease in nutrient intake or by an inability to absorb essential nutrients."
+  },
+  {
+    "run_id": "R10-013-core-word",
+    "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+    "reformulated_text": "When chemical reactions occur, the atoms are arranged and the reaction is followed by an energy change as new products are generated."
+  },
+  {
+    "run_id": "R10-013-calib-single_word",
+    "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+    "reformulated_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new products are generated."
+  },
+  {
+    "run_id": "R10-013-calib-multi_word",
+    "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+    "reformulated_text": "When chemical reaction occur, the atoms are arranged and the reaction is followed by an energy change as new products are generated."
+  },
+  {
+    "run_id": "R10-013-calib-word_plus_sound",
+    "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+    "reformulated_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new chemicals are generated."
+  },
+  {
+    "run_id": "R10-014-core-word",
+    "original_text": "Chemical reactions are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the reactants.",
+    "reformulated_text": "Chemical reactions are usually characterised by a chemical change and they yield one or more products, which usually have different characteristics from the reactionants."
+  },
+  {
+    "run_id": "R10-014-core-dense_mixed_generic",
+    "original_text": "Chemical reactions are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the reactants.",
+    "reformulated_text": "Chemical answers are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the chemicals."
+  },
+  {
+    "run_id": "R10-015-core-word",
+    "original_text": "Typically, reaction rates increase with increasing temperature because there is more thermal energy available to reach the activation energy necessary for breaking bonds between atoms.",
+    "reformulated_text": "Usually, reaction rates increase with rising temperatures because there is more thermal energy available to reach the activated energy necessary for breaking bonds between atoms."
+  },
+  {
+    "run_id": "R10-016-core-word",
+    "original_text": "In a bimolecular reaction, two molecules collide and react with each other.",
+    "reformulated_text": "Two molecules collide and react with each other in a bimolécular reaction."
+  },
+  {
+    "run_id": "R10-017-core-word",
+    "original_text": "The forward and reverse reactions are competing with each other and differ in reaction rates.",
+    "reformulated_text": "The forward and reverse results are rivaling with each other and differ in reaction rates."
+  },
+  {
+    "run_id": "R10-019-core-word",
+    "original_text": "A body remains at rest, or in motion at a constant speed in a straight line, unless it is acted upon by a force.",
+    "reformulated_text": "A body stays at rest or in motion at a steady speed in a line unless it is acted upon by a force."
+  },
+  {
+    "run_id": "R10-019-core-sparse_common_sound",
+    "original_text": "A body remains at rest, or in motion at a constant speed in a straight line, unless it is acted upon by a force.",
+    "reformulated_text": "A body remains at rest, or in motion at a constant rate in a right line, unless it is acted upon by a force."
+  },
+  {
+    "run_id": "R10-020-core-word",
+    "original_text": "At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the rate at which the body's momentum is changing with time.",
+    "reformulated_text": "At any instant of time, the net force on a body is equal to the body's accelerated mass or the rate at which the movement of the body is changing with time."
+  },
+  {
+    "run_id": "R10-020-core-dense_mixed_generic",
+    "original_text": "At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the rate at which the body's momentum is changing with time.",
+    "reformulated_text": "At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the value at which the body's momentum is changing with time."
+  },
+  {
+    "run_id": "R10-021-core-word",
+    "original_text": "If two bodies exert forces on each other, these forces have the same magnitude but opposite directions.",
+    "reformulated_text": "If two bodies exert forces on each other, these forces have the same size, but opposing direction."
+  },
+  {
+    "run_id": "R10-021-core-sparse_common_sound",
+    "original_text": "If two bodies exert forces on each other, these forces have the same magnitude but opposite directions.",
+    "reformulated_text": "If two bodies exert forces on each other, these forces have the one magnitude but opposite directions."
+  },
+  {
+    "run_id": "R10-022-core-word",
+    "original_text": "Newton's first law expresses the principle of inertia: the natural behavior of a body is to move in a straight line at constant speed.",
+    "reformulated_text": "Newton's first law states the rule of inertia: the natural behavior of a body is to move in a straight line at constant speed."
+  },
+  {
+    "run_id": "R10-022-core-multi_sound",
+    "original_text": "Newton's first law expresses the principle of inertia: the natural behavior of a body is to move in a straight line at constant speed.",
+    "reformulated_text": "Newton's first law expresses the principle of inertia: the natural behavior of a body is to move in a true line at constant velocity."
+  },
+  {
+    "run_id": "R10-023-core-word",
+    "original_text": "When the net force on a body is equal to zero, then by Newton's second law, the body do not accelerate, and it is said to be in mechanical equilibrium.",
+    "reformulated_text": "When the net force on a body is equal to zero, then by Newton's second law the body does not accelerated, and it is said to be in a physical balance."
+  },
+  {
+    "run_id": "R10-024-core-word",
+    "original_text": "In other words, if one body exerts a force on a second body, the second body is also exerting a force on the first body, of equal magnitude in the opposite direction.",
+    "reformulated_text": "In other words, if a body exerts a force on a second body, the second body also exerts force on the first body of equal force in the opposing directions."
+  },
+  {
+    "run_id": "R10-024-core-dense_mixed_generic",
+    "original_text": "In other words, if one body exerts a force on a second body, the second body is also exerting a force on the first body, of equal magnitude in the opposite direction.",
+    "reformulated_text": "In other words, if one body exerts a force on a 2nd body, the 2nd body is also exerting a force on the first body, of equal magnitude in the opposite direction."
+  },
+  {
+    "run_id": "R10-025-core-word",
+    "original_text": "A star is a luminous spheroid of plasma held together by self-gravity.",
+    "reformulated_text": "A star is a luminous spheroid of plasma, which is surrounded by self gravity."
+  }
+]

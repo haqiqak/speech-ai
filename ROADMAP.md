@@ -1659,6 +1659,34 @@ threshold; the 77-91% recall headline numbers were partly
 threshold-selection luck and should not be quoted as representative.
 ~65% recall is the honest, reproducible number.
 
+### Phase 10. Broad stratified stress test of the current architecture — **DONE, 2026-08-26**
+**Linked finding:** direct instruction (approved plan) — a deliberately
+wide, stratified, difficulty-graded evaluation of the current
+architecture across ordinary and technical language, disjoint from
+every prior corpus, plus a Phase 9B/9C validator generalization test.
+Full record: `VALIDATION.md` §46, `eval/r10_report.md`.
+**What was done:** froze 133 new sentences (0 contamination against
+154 prior sentences), froze 398 (sentence,profile) runs, harvested via
+live production `reformulate()`, blind-judged all 238 reformulated
+outputs via 5 parallel subagents (no domain/category/difficulty
+shown), ran the frozen Phase 9B/9C checkpoints unmodified on the same
+new material.
+**Result:** 26% CLEAN / 74% DEFECTIVE overall. Domain only a 6-point
+gap (general 71% vs technical 77% defective) — content density
+(terminology, length) predicts failure far better than subject-matter
+label; chemistry/engineering/narrative all 0% CLEAN, math/stats 83%
+CLEAN. Difficulty gradient not smooth — moderate (18% CLEAN) scored
+worse than hard (30%). Profile constraint density is the cleanest
+predictor: multi_word profiles 0% CLEAN (0/13). Escalation ties
+substitution on quality (26-27% CLEAN), not a rescue mechanism.
+Neither validator checkpoint generalizes cleanly: 9C predicts
+DEFECTIVE 99% of the time (non-functional), 9B's CLEAN retention
+collapsed 62%→34% on new material despite higher recall.
+**Labeled as:** confirms the architecture's real failure predictors
+(density/length/constraint-count, not domain label) and directly
+answers Phase 9B/9C's own generalization question — partially yes for
+9B, no for 9C. Evaluation only, no production changes, no training.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

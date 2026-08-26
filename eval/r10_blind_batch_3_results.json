@@ -1,0 +1,338 @@
+{
+  "R10-055-calib-single_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'economics' (the discipline) becomes 'economies' (plural of economy), changing what the sentence is introducing even though the core definition of inflation remains intact."
+  },
+  "R10-055-calib-word_plus_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "Same economics->economies sense shift as the single-word variant; 'price'->'cost' is an acceptable near-synonym and not itself a defect."
+  },
+  "R10-055-calib-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'services' was replaced with 'helps', producing 'goods and helps in terms of money', which is nonsensical and destroys the definition."
+  },
+  "R10-055-calib-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "Identical to the multi_sound variant: 'services' becomes 'helps', yielding the nonsensical 'goods and helps'."
+  },
+  "R10-056-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "'services' becomes singular 'service', a number-agreement error ('goods and service'); separately 'currency' is narrowed to 'the dollar', a scope change from a general concept to one specific currency."
+  },
+  "R10-056-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'services' is replaced with 'helps', producing the nonsensical 'goods and helps'."
+  },
+  "R10-057-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "The fixed economic term 'money supply' is broken into 'money issue', a non-standard phrase that no longer names the standard concept being attributed to inflation."
+  },
+  "R10-058-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": ["FIXED_TERM_OR_IDIOM"],
+    "rationale": "'negative effects' is flipped to 'positive effects', reversing the polarity of the claim; additionally the fixed term 'opportunity cost' is broken into 'chance cost'."
+  },
+  "R10-059-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "'reducing unemployment' becomes 'a reduction of employment' -- these describe opposite outcomes (more people working vs. fewer people working)."
+  },
+  "R10-059-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "'nominal wage rigidity' (a specific economic term for wages resisting downward adjustment) becomes 'nominal wage toughness', which does not convey the same concept; 'reducing' -> 'breaking' also muddies the causal claim."
+  },
+  "R10-060-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "The sentence is reordered and uses standard synonyms (enabling/allowing, likelihood/probability, recessions/recession); meaning and grammar are fully preserved."
+  },
+  "R10-060-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'recessions' is replaced with 'economies', producing the nonsensical 'economic economies' and losing the original claim about recessions."
+  },
+  "R10-061-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["OTHER", "WRONG_WORD_OR_SENSE"],
+    "rationale": "'Civil engineering is' becomes 'Civil engineers is', a subject-verb disagreement; separately 'construction' is replaced by a duplicated 'design, design and maintenance', dropping the concept of construction entirely."
+  },
+  "R10-061-calib-single_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'construction' is replaced with 'business', which is unrelated to what civil engineering does and materially changes the content of the definition."
+  },
+  "R10-061-calib-multi_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["OTHER", "WRONG_WORD_OR_SENSE"],
+    "rationale": "Same defects as the core-word variant: 'Civil engineers is' is a subject-verb disagreement, and 'construction' is replaced by a duplicated 'design, design and maintenance', dropping the concept of construction."
+  },
+  "R10-061-calib-word_plus_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "'construction' -> 'business' materially changes the definition's content; also 'a expert' is an article-agreement error (should be 'an expert')."
+  },
+  "R10-061-calib-single_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'structural components' becomes 'functional components', a different technical concept (load-bearing structure vs. function) within an otherwise unchanged list."
+  },
+  "R10-062-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'sub-disciplines' becomes singular 'sub-discipline', disagreeing with 'a number of'; meaning is still clear despite the number mismatch."
+  },
+  "R10-064-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'self-proclaimed' (he called himself this) becomes 'so-called' (a term others use, often skeptically), a subtle shift in agency/connotation; 'constructed'->'built' is a fine synonym."
+  },
+  "R10-064-core-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "'self-proclaimed' (an unofficial, self-applied label) becomes 'declared official', which asserts close to the opposite -- formal/official recognition rather than self-declaration; 'civil' is also dropped from 'civil engineer'."
+  },
+  "R10-065-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'surveyors' (people) becomes 'surveys' (documents/activity), so the sentence now describes working with documents rather than professionals alongside civil engineers."
+  },
+  "R10-067-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "'completely' -> 'entirely' is a standard synonym with no meaning change."
+  },
+  "R10-067-calib-single_word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "'completely' -> 'entirely' is a standard synonym with no meaning change."
+  },
+  "R10-067-calib-multi_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'I totally forgotten' is not a valid past-tense form (needs 'forgot' or 'had forgotten'); meaning is still understandable."
+  },
+  "R10-067-calib-word_plus_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "'completely' -> 'entirely' is a standard synonym with no meaning change."
+  },
+  "R10-068-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "'meeting' -> 'gathering' is a mild register/specificity shift but still names the same kind of event with no real meaning loss."
+  },
+  "R10-068-core-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'starts' -> 'goes' is an odd substitution; 'before the meeting goes' does not idiomatically mean 'before it starts' and could be misread."
+  },
+  "R10-069-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "'a little late' becomes the ungrammatical 'a least late'; separately 'traffic' (the stated cause) is changed to 'driving', altering the reason given for lateness."
+  },
+  "R10-069-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'She told she might...' is missing a required object/complementizer ('told [someone]' or 'said'); meaning is still clear."
+  },
+  "R10-070-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'that restaurant' (a specific place) becomes plural 'restaurants', turning a claim about one restaurant into a generalization about restaurants as a category -- a real change in what is being claimed."
+  },
+  "R10-071-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'driving' (operating the vehicle) becomes 'riding', which no longer contrasts cleanly with 'taking the train' (riding could itself describe train travel), leaving it unclear what the two options actually are."
+  },
+  "R10-072-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'probably' (higher likelihood) is replaced with 'maybe' (more neutral/uncertain), a subtle shift in the reported degree of certainty."
+  },
+  "R10-073-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "'professor' -> 'prof' is an informal abbreviation with identical meaning."
+  },
+  "R10-073-calib-single_word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "'professor' -> 'prof' is an informal abbreviation with identical meaning."
+  },
+  "R10-073-calib-word_plus_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'professor' (an individual) becomes 'faculty' (the collective teaching staff), changing who is described as doing the explaining."
+  },
+  "R10-074-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'encouraged' becomes 'furthered', which does not mean 'encouraged' and produces the nonsensical 'is furthered to attend office hours'."
+  },
+  "R10-074-core-single_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'struggle with' (difficulty understanding) becomes 'conflict with' (disagreement/friction), changing the reason a student would need office hours."
+  },
+  "R10-075-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'everything' is replaced with the adverb 'altogether', producing 'covers altogether we studied', which does not parse as valid English."
+  },
+  "R10-075-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'studied' becomes 'considered', a slightly weaker/different sense of academic engagement than exam preparation implies."
+  },
+  "R10-076-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "'every'->'all' and 'teacher'->'instructor' are standard synonyms; 'methods'->'method' (singular) remains grammatical, describing one adaptable method."
+  },
+  "R10-076-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "'student' becomes 'university', a category change (institutions do not 'learn' the way the sentence describes), and 'the same way' becomes the ungrammatical 'the very way'."
+  },
+  "R10-077-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "The sentence is reordered with standard synonyms (improved/increased, significantly/greatly); meaning is fully preserved."
+  },
+  "R10-079-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'everyone' is replaced with the adjective 'entire', producing the ungrammatical 'asked entire to submit', which breaks who is being addressed."
+  },
+  "R10-079-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'submit' (hand in) becomes 'take', which suggests removing/carrying away reports rather than turning them in -- a potentially misleading change to the instruction."
+  },
+  "R10-079-calib-single_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'everyone' is replaced with the adjective 'entire', producing the ungrammatical 'asked entire to submit', which breaks who is being addressed."
+  },
+  "R10-079-calib-multi_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'manager' (an individual) becomes 'management' (a collective), a subtle shift in who is depicted as making the request; 'reports'->'report' (singular) is a minor number change but still idiomatically usable."
+  },
+  "R10-079-calib-word_plus_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'everyone' is replaced with the adjective 'entire', producing the ungrammatical 'asked entire to submit', which breaks who is being addressed."
+  },
+  "R10-080-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'deadlines' (plural, general) becomes 'the deadline' (singular, definite), narrowing a general statement about deadlines to one specific deadline."
+  }
+}

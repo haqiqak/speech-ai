@@ -1,0 +1,242 @@
+[
+  {
+    "run_id": "R10-055-calib-single_word",
+    "original_text": "In economics, inflation is an increase in the average price of goods and services in terms of money.",
+    "reformulated_text": "In economies, inflation is an increase in the average price of goods and services in terms of money."
+  },
+  {
+    "run_id": "R10-055-calib-word_plus_sound",
+    "original_text": "In economics, inflation is an increase in the average price of goods and services in terms of money.",
+    "reformulated_text": "In economies, inflation is an increase in the average cost of goods and services in terms of money."
+  },
+  {
+    "run_id": "R10-055-calib-multi_sound",
+    "original_text": "In economics, inflation is an increase in the average price of goods and services in terms of money.",
+    "reformulated_text": "In economics, inflation is an increase in the average price of goods and helps in terms of money."
+  },
+  {
+    "run_id": "R10-055-calib-sparse_common_sound",
+    "original_text": "In economics, inflation is an increase in the average price of goods and services in terms of money.",
+    "reformulated_text": "In economics, inflation is an increase in the average price of goods and helps in terms of money."
+  },
+  {
+    "run_id": "R10-056-core-word",
+    "original_text": "When the general price level rises, each unit of currency buys fewer goods and services.",
+    "reformulated_text": "When the overall price level rises, each unit of the dollar buys fewer goods and service."
+  },
+  {
+    "run_id": "R10-056-core-sparse_common_sound",
+    "original_text": "When the general price level rises, each unit of currency buys fewer goods and services.",
+    "reformulated_text": "When the general price level rises, each unit of currency buys fewer goods and helps."
+  },
+  {
+    "run_id": "R10-057-core-sparse_common_sound",
+    "original_text": "Changes in inflation is widely attributed to increases in the money supply.",
+    "reformulated_text": "Changes in inflation is widely attributed to increases in the money issue."
+  },
+  {
+    "run_id": "R10-058-core-word",
+    "original_text": "The negative effects would include an increase in the opportunity cost of holding money.",
+    "reformulated_text": "The positive effects would include a rise in the chance cost of holding money."
+  },
+  {
+    "run_id": "R10-059-core-word",
+    "original_text": "Positive effects include reducing unemployment due to nominal wage rigidity.",
+    "reformulated_text": "Positive effects include a reduction of employment due to nominal wage rigidities."
+  },
+  {
+    "run_id": "R10-059-core-dense_mixed_generic",
+    "original_text": "Positive effects include reducing unemployment due to nominal wage rigidity.",
+    "reformulated_text": "Positive effects include breaking unemployment due to nominal wage toughness."
+  },
+  {
+    "run_id": "R10-060-core-word",
+    "original_text": "Low inflation reduces the likelihood of economic recessions by enabling the labor market to adjust more quickly.",
+    "reformulated_text": "By allowing the labor market to adjust more quickly, a low-inflation rate reduces the probability of economic recession."
+  },
+  {
+    "run_id": "R10-060-core-dense_mixed_generic",
+    "original_text": "Low inflation reduces the likelihood of economic recessions by enabling the labor market to adjust more quickly.",
+    "reformulated_text": "Low inflation decreases the likelihood of economic economies by enabling the labor market to adjust more quickly."
+  },
+  {
+    "run_id": "R10-061-core-word",
+    "original_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+    "reformulated_text": "Civil engineers is a technical discipline that deals with the design, design and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings and railways."
+  },
+  {
+    "run_id": "R10-061-calib-single_word",
+    "original_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+    "reformulated_text": "Civil engineering is a professional engineering discipline that deals with the design, business, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways."
+  },
+  {
+    "run_id": "R10-061-calib-multi_word",
+    "original_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+    "reformulated_text": "Civil engineers is a technical discipline that deals with the design, design and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings and railways."
+  },
+  {
+    "run_id": "R10-061-calib-word_plus_sound",
+    "original_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+    "reformulated_text": "Civil engineering is a expert engineering discipline that deals with the design, business, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways."
+  },
+  {
+    "run_id": "R10-061-calib-single_sound",
+    "original_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+    "reformulated_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, functional components of buildings, and railways."
+  },
+  {
+    "run_id": "R10-062-core-word",
+    "original_text": "Civil engineering is traditionally broken into a number of sub-disciplines.",
+    "reformulated_text": "Civil engineering is traditionally broken into a number of sub-discipline."
+  },
+  {
+    "run_id": "R10-064-core-word",
+    "original_text": "The first self-proclaimed civil engineer was John Smeaton, who constructed the Eddystone Lighthouse.",
+    "reformulated_text": "The first so-called civil engineer was John Smeaton, who built the Eddystone Lighthouse."
+  },
+  {
+    "run_id": "R10-064-core-multi_sound",
+    "original_text": "The first self-proclaimed civil engineer was John Smeaton, who constructed the Eddystone Lighthouse.",
+    "reformulated_text": "The first declared official engineer was John Smeaton, who constructed the Eddystone Lighthouse."
+  },
+  {
+    "run_id": "R10-065-core-word",
+    "original_text": "General civil engineers work closely with surveyors and specialized civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communications supply.",
+    "reformulated_text": "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communication supply."
+  },
+  {
+    "run_id": "R10-067-core-word",
+    "original_text": "I was going to call you earlier, but I completely forgot.",
+    "reformulated_text": "I was going to call you earlier, but I entirely forgot."
+  },
+  {
+    "run_id": "R10-067-calib-single_word",
+    "original_text": "I was going to call you earlier, but I completely forgot.",
+    "reformulated_text": "I was going to call you earlier, but I entirely forgot."
+  },
+  {
+    "run_id": "R10-067-calib-multi_word",
+    "original_text": "I was going to call you earlier, but I completely forgot.",
+    "reformulated_text": "I was going to call you before, but I totally forgotten."
+  },
+  {
+    "run_id": "R10-067-calib-word_plus_sound",
+    "original_text": "I was going to call you earlier, but I completely forgot.",
+    "reformulated_text": "I was going to call you earlier, but I entirely forgot."
+  },
+  {
+    "run_id": "R10-068-core-word",
+    "original_text": "Do you want to grab a coffee before the meeting starts?",
+    "reformulated_text": "Do you want to grab a coffee before the gathering starts?"
+  },
+  {
+    "run_id": "R10-068-core-multi_sound",
+    "original_text": "Do you want to grab a coffee before the meeting starts?",
+    "reformulated_text": "Do you want to grab a coffee before the meeting goes?"
+  },
+  {
+    "run_id": "R10-069-core-word",
+    "original_text": "She said she might be a little late because of traffic.",
+    "reformulated_text": "She said she might be a least late because of driving."
+  },
+  {
+    "run_id": "R10-069-core-dense_mixed_generic",
+    "original_text": "She said she might be a little late because of traffic.",
+    "reformulated_text": "She told she might be a little late because of traffic."
+  },
+  {
+    "run_id": "R10-070-core-word",
+    "original_text": "Honestly, I don't think that restaurant is as good as everyone says.",
+    "reformulated_text": "Honestly, I don't think that restaurants are as good as everybody says."
+  },
+  {
+    "run_id": "R10-071-core-word",
+    "original_text": "We haven't decided yet whether we're driving or taking the train.",
+    "reformulated_text": "We haven't chosen yet whether we're riding or taking the train."
+  },
+  {
+    "run_id": "R10-072-core-word",
+    "original_text": "He mentioned that he'd probably need more time to finish the report.",
+    "reformulated_text": "He said that he'd maybe need more time to finish the report."
+  },
+  {
+    "run_id": "R10-073-core-word",
+    "original_text": "The professor explained the concept twice before moving on to the next topic.",
+    "reformulated_text": "The prof explained the concept twice before moving on to the next topic."
+  },
+  {
+    "run_id": "R10-073-calib-single_word",
+    "original_text": "The professor explained the concept twice before moving on to the next topic.",
+    "reformulated_text": "The prof explained the concept twice before moving on to the next topic."
+  },
+  {
+    "run_id": "R10-073-calib-word_plus_sound",
+    "original_text": "The professor explained the concept twice before moving on to the next topic.",
+    "reformulated_text": "The faculty explained the concept twice before moving on to the next topic."
+  },
+  {
+    "run_id": "R10-074-core-word",
+    "original_text": "Students who struggle with the material is encouraged to attend office hours.",
+    "reformulated_text": "Students who struggle with the stuff is furthered to attend office hours."
+  },
+  {
+    "run_id": "R10-074-core-single_sound",
+    "original_text": "Students who struggle with the material is encouraged to attend office hours.",
+    "reformulated_text": "Students who conflict with the material is encouraged to attend office hours."
+  },
+  {
+    "run_id": "R10-075-core-word",
+    "original_text": "The exam covers everything we studied in the first six chapters.",
+    "reformulated_text": "The exam covers altogether we studied in the first six chapters."
+  },
+  {
+    "run_id": "R10-075-core-dense_mixed_generic",
+    "original_text": "The exam covers everything we studied in the first six chapters.",
+    "reformulated_text": "The exam covers everything we considered in the first six chapters."
+  },
+  {
+    "run_id": "R10-076-core-word",
+    "original_text": "Not every student learns the same way, so the teacher varies her methods.",
+    "reformulated_text": "Not all students learn in the same way, so the instructor varies her method."
+  },
+  {
+    "run_id": "R10-076-core-sparse_common_sound",
+    "original_text": "Not every student learns the same way, so the teacher varies her methods.",
+    "reformulated_text": "Not every university learns the very way, so the teacher varies her methods."
+  },
+  {
+    "run_id": "R10-077-core-word",
+    "original_text": "He improved his grade significantly after he started reviewing his notes every night.",
+    "reformulated_text": "After he started to review his notes every night, he greatly increased his grade."
+  },
+  {
+    "run_id": "R10-079-core-word",
+    "original_text": "The manager asked everyone to submit their reports by the end of the day.",
+    "reformulated_text": "The manager asked entire to submit their reports by the end of the day."
+  },
+  {
+    "run_id": "R10-079-core-sparse_common_sound",
+    "original_text": "The manager asked everyone to submit their reports by the end of the day.",
+    "reformulated_text": "The manager asked everyone to take their reports by the end of the day."
+  },
+  {
+    "run_id": "R10-079-calib-single_word",
+    "original_text": "The manager asked everyone to submit their reports by the end of the day.",
+    "reformulated_text": "The manager asked entire to submit their reports by the end of the day."
+  },
+  {
+    "run_id": "R10-079-calib-multi_word",
+    "original_text": "The manager asked everyone to submit their reports by the end of the day.",
+    "reformulated_text": "The management asked all to submit their report by the end of the day."
+  },
+  {
+    "run_id": "R10-079-calib-word_plus_sound",
+    "original_text": "The manager asked everyone to submit their reports by the end of the day.",
+    "reformulated_text": "The manager asked entire to submit their reports by the end of the day."
+  },
+  {
+    "run_id": "R10-080-core-word",
+    "original_text": "We're understaffed this week, so deadlines might slip a little.",
+    "reformulated_text": "We're under-staffed this week, so the deadline could slip a little."
+  }
+]

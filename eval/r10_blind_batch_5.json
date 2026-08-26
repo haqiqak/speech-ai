@@ -1,0 +1,232 @@
+[
+  {
+    "run_id": "R10-107-core-dense_mixed_generic",
+    "original_text": "The car's engine made a strange noise whenever it idled for too long.",
+    "reformulated_text": "The car's engine made a weird noise whenever it idled for too long."
+  },
+  {
+    "run_id": "R10-108-core-word",
+    "original_text": "The room was dimly lit, with only a single lamp in the corner.",
+    "reformulated_text": "The room was dimly lit, with only a one lamp in the edge."
+  },
+  {
+    "run_id": "R10-109-core-word",
+    "original_text": "Turn off the power before you attempt to replace the light fixture.",
+    "reformulated_text": "Turn off the power before replacing the light bulb."
+  },
+  {
+    "run_id": "R10-109-calib-single_word",
+    "original_text": "Turn off the power before you attempt to replace the light fixture.",
+    "reformulated_text": "Turn off the power before you attempt to substitute the light fixture."
+  },
+  {
+    "run_id": "R10-109-calib-multi_word",
+    "original_text": "Turn off the power before you attempt to replace the light fixture.",
+    "reformulated_text": "Turn off the power before replacing the light bulb."
+  },
+  {
+    "run_id": "R10-109-calib-word_plus_sound",
+    "original_text": "Turn off the power before you attempt to replace the light fixture.",
+    "reformulated_text": "Turn off the power before you attempt to substitute the light fixture."
+  },
+  {
+    "run_id": "R10-111-core-word",
+    "original_text": "Press and hold the button for five seconds until the light turns green.",
+    "reformulated_text": "Press and hold the click for five times until the light turns green."
+  },
+  {
+    "run_id": "R10-112-core-word",
+    "original_text": "If the printer jams, remove the paper carefully to avoid tearing it.",
+    "reformulated_text": "If the printing machine jams, remove the paper gently to avoid ripping it up."
+  },
+  {
+    "run_id": "R10-112-core-dense_mixed_generic",
+    "original_text": "If the printer jams, remove the paper carefully to avoid tearing it.",
+    "reformulated_text": "If the printer jams, take the paper carefully to avoid tearing it."
+  },
+  {
+    "run_id": "R10-113-core-dense_mixed_generic",
+    "original_text": "Assemble the shelf according to the numbered steps in the manual.",
+    "reformulated_text": "Assemble the shelf according to the numbered paces in the manual."
+  },
+  {
+    "run_id": "R10-114-core-word",
+    "original_text": "Store the medication somewhere cool and out of reach of children.",
+    "reformulated_text": "Store the medicine there cool and out of reach of children."
+  },
+  {
+    "run_id": "R10-114-core-sparse_common_sound",
+    "original_text": "Store the medication somewhere cool and out of reach of children.",
+    "reformulated_text": "Store the medication there cool and out of reach of children."
+  },
+  {
+    "run_id": "R10-115-core-word",
+    "original_text": "I think the new update make the ape harder to use, not easier.",
+    "reformulated_text": "I think that the new updates make the ape more difficult to use, not more easy to use."
+  },
+  {
+    "run_id": "R10-115-calib-single_word",
+    "original_text": "I think the new update make the ape harder to use, not easier.",
+    "reformulated_text": "I think the new update make the ape more to use, not easier."
+  },
+  {
+    "run_id": "R10-115-calib-multi_word",
+    "original_text": "I think the new update make the ape harder to use, not easier.",
+    "reformulated_text": "I think that the new updates make the ape more difficult to use, not more easy to use."
+  },
+  {
+    "run_id": "R10-115-calib-word_plus_sound",
+    "original_text": "I think the new update make the ape harder to use, not easier.",
+    "reformulated_text": "I think the new update make the ape more to use, not easier."
+  },
+  {
+    "run_id": "R10-115-calib-multi_sound",
+    "original_text": "I think the new update make the ape harder to use, not easier.",
+    "reformulated_text": "I believe the new update make the ape harder to use, not easier."
+  },
+  {
+    "run_id": "R10-115-calib-dense_mixed_generic",
+    "original_text": "I think the new update make the ape harder to use, not easier.",
+    "reformulated_text": "I believe the new update make the ape harder to use, not easier."
+  },
+  {
+    "run_id": "R10-118-core-word",
+    "original_text": "The book was overrated, in my opinion, though the ending was genuinely moving.",
+    "reformulated_text": "The book was overestimated, in my opinion, though the ending was really moving."
+  },
+  {
+    "run_id": "R10-120-core-word",
+    "original_text": "Honestly, this is the best decision the company has made in years.",
+    "reformulated_text": "Seriously, this is the best decision the company has made in years."
+  },
+  {
+    "run_id": "R10-121-core-word",
+    "original_text": "The library closes at nine on weekdays and six on weekends.",
+    "reformulated_text": "The library closes at nine on tuesdays and six on sundays."
+  },
+  {
+    "run_id": "R10-121-calib-single_word",
+    "original_text": "The library closes at nine on weekdays and six on weekends.",
+    "reformulated_text": "The library closes at nine on tuesdays and six on weekends."
+  },
+  {
+    "run_id": "R10-121-calib-word_plus_sound",
+    "original_text": "The library closes at nine on weekdays and six on weekends.",
+    "reformulated_text": "The library closes at nine on tuesdays and six on weekends."
+  },
+  {
+    "run_id": "R10-122-core-word",
+    "original_text": "Most of the town's residents work in the two factories nearby.",
+    "reformulated_text": "Most of the town's residents work in the two manufacturings nearby."
+  },
+  {
+    "run_id": "R10-123-core-word",
+    "original_text": "The bridge was built in the early twentieth century and renovated twice since then.",
+    "reformulated_text": "The bridge was built in the early 20th century and restored twice since then."
+  },
+  {
+    "run_id": "R10-123-core-sparse_common_sound",
+    "original_text": "The bridge was built in the early twentieth century and renovated twice since then.",
+    "reformulated_text": "The bridge was built in the early twentieth period and renovated twice since then."
+  },
+  {
+    "run_id": "R10-124-core-word",
+    "original_text": "There are more public parks on the east side of the city than on the west.",
+    "reformulated_text": "On the east side of the city there are more park areas than on the west side."
+  },
+  {
+    "run_id": "R10-124-core-multi_sound",
+    "original_text": "There are more public parks on the east side of the city than on the west.",
+    "reformulated_text": "There are more public parks on the east part of the town than on the west."
+  },
+  {
+    "run_id": "R10-125-core-word",
+    "original_text": "The store doesn't open until ten, but the café next door opens earlier.",
+    "reformulated_text": "The shop doesn't open until ten, but the café next door opens newer."
+  },
+  {
+    "run_id": "R10-125-core-multi_sound",
+    "original_text": "The store doesn't open until ten, but the café next door opens earlier.",
+    "reformulated_text": "The shop doesn't open until ten, but the café next door opens earlier."
+  },
+  {
+    "run_id": "R10-126-core-word",
+    "original_text": "Fewer people ride the bus now than they did a decade ago.",
+    "reformulated_text": "There are now less passengers on the bus than they did ten years ago."
+  },
+  {
+    "run_id": "R10-127-calib-multi_sound",
+    "original_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the third of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
+    "reformulated_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the fourth of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer."
+  },
+  {
+    "run_id": "R10-127-calib-dense_mixed_generic",
+    "original_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the third of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
+    "reformulated_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the fourth of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer."
+  },
+  {
+    "run_id": "R10-128-core-word",
+    "original_text": "Hugh Fleming had four surviving children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven.",
+    "reformulated_text": "Hugh Fleming had four lasting children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven."
+  },
+  {
+    "run_id": "R10-128-core-sparse_common_sound",
+    "original_text": "Hugh Fleming had four surviving children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven.",
+    "reformulated_text": "Hugh Fleming had four lasting children from his first marriage. He was 59 at the time of his 2nd marriage to Grace, and died when Alexander was seven."
+  },
+  {
+    "run_id": "R10-129-core-word",
+    "original_text": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year scholarship to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.",
+    "reformulated_text": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year studies to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution."
+  },
+  {
+    "run_id": "R10-129-core-dense_mixed_generic",
+    "original_text": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year scholarship to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.",
+    "reformulated_text": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year learning to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution."
+  },
+  {
+    "run_id": "R10-130-core-word",
+    "original_text": "After working in a shipping office for four years, the twenty-year-old Alexander Fleming inherited some money from an uncle, John Fleming.",
+    "reformulated_text": "After working in a shipping office for four years, twenty-one-year-old Alexander Fleming acquired some money from an uncle, John Flaming."
+  },
+  {
+    "run_id": "R10-131-core-word",
+    "original_text": "His elder brother, Tom, was already a physician and suggested that he should follow the same career.",
+    "reformulated_text": "His elder brother, Tom, was already a physician and indicated that he should follow the same career."
+  },
+  {
+    "run_id": "R10-133-core-word",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he qualified with a MBBS degree from the school with note."
+  },
+  {
+    "run_id": "R10-133-calib-single_word",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he qualified with a MBBS degree from the school with note."
+  },
+  {
+    "run_id": "R10-133-calib-multi_word",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he graduated with a MBBS degree from the institution."
+  },
+  {
+    "run_id": "R10-133-calib-word_plus_sound",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he qualified with a MBBS degree from the school with note."
+  },
+  {
+    "run_id": "R10-133-calib-multi_sound",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he qualified with a MBBS degree from the education with distinction."
+  },
+  {
+    "run_id": "R10-133-calib-sparse_common_sound",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he qualified with a MBBS degree from the education with distinction."
+  },
+  {
+    "run_id": "R10-133-calib-dense_mixed_generic",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he qualified with a MBBS degree from the education with distinction."
+  }
+]

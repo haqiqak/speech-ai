@@ -1,0 +1,1944 @@
+{
+  "corpus_version_hash": "9e47e382ddbbea5c56fdeeb7b17422a098e91e649056c5f954a1445c7bb449d7",
+  "n_sentences": 133,
+  "n_technical": 66,
+  "n_general": 67,
+  "prior_corpora_checked": [
+    "R40 (48)",
+    "Phase8 (54)",
+    "Phase8B (42)",
+    "R47 (10)"
+  ],
+  "n_collisions_found_and_excluded": 0,
+  "records": [
+    {
+      "sentence_id": "R10-001",
+      "domain": "technical",
+      "subcategory": "biology",
+      "linguistic_tags": [
+        "causal",
+        "technical_terminology"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+      "sentence_length_words": 21,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Human digestive system"
+    },
+    {
+      "sentence_id": "R10-002",
+      "domain": "technical",
+      "subcategory": "biology",
+      "linguistic_tags": [
+        "technical_terminology",
+        "long",
+        "clausal_restructuring"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "Chewing mixes the food with saliva to produce a food bolus to be swallowed down the esophagus to enter the stomach.",
+      "sentence_length_words": 21,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Human digestive system"
+    },
+    {
+      "sentence_id": "R10-003",
+      "domain": "technical",
+      "subcategory": "biology",
+      "linguistic_tags": [
+        "technical_terminology",
+        "fixed_expression",
+        "long"
+      ],
+      "expected_opportunity": "very_hard",
+      "sentence_text": "Peristalsis is the rhythmic contraction of muscles that begins in the esophagus and continues along the wall of the stomach and the rest of the gastrointestinal tract.",
+      "sentence_length_words": 27,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Human digestive system"
+    },
+    {
+      "sentence_id": "R10-004",
+      "domain": "technical",
+      "subcategory": "biology",
+      "linguistic_tags": [
+        "simple_substitution",
+        "short"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "Most of the digestion of food takes place in the small intestine.",
+      "sentence_length_words": 12,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Human digestive system"
+    },
+    {
+      "sentence_id": "R10-005",
+      "domain": "technical",
+      "subcategory": "biology",
+      "linguistic_tags": [
+        "simple_substitution",
+        "short"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "Water and some minerals are reabsorbed back into the blood in the large intestine.",
+      "sentence_length_words": 14,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Human digestive system"
+    },
+    {
+      "sentence_id": "R10-006",
+      "domain": "technical",
+      "subcategory": "biology",
+      "linguistic_tags": [
+        "scientific_causal_claim",
+        "technical_terminology",
+        "long"
+      ],
+      "expected_opportunity": "very_hard",
+      "sentence_text": "Bile acts partly as a surfactant which lowers the surface tension between either two liquids or a solid and a liquid and helps to emulsify the fats in the chyme.",
+      "sentence_length_words": 30,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Human digestive system"
+    },
+    {
+      "sentence_id": "R10-007",
+      "domain": "technical",
+      "subcategory": "medicine_healthcare",
+      "linguistic_tags": [
+        "technical_terminology",
+        "definitional"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+      "sentence_length_words": 19,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Nutrition"
+    },
+    {
+      "sentence_id": "R10-008",
+      "domain": "technical",
+      "subcategory": "medicine_healthcare",
+      "linguistic_tags": [
+        "causal",
+        "lists_coordination",
+        "technical_terminology",
+        "long"
+      ],
+      "expected_opportunity": "very_hard",
+      "sentence_text": "Over-nutrition of macronutrients is a major cause of obesity and increases the risk of developing various non-communicable diseases (NCDs), including type 2 diabetes, stroke, hypertension, coronary heart disease, osteoporosis, and some forms of cancer.",
+      "sentence_length_words": 34,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Nutrition"
+    },
+    {
+      "sentence_id": "R10-009",
+      "domain": "technical",
+      "subcategory": "medicine_healthcare",
+      "linguistic_tags": [
+        "lists_coordination",
+        "simple_substitution"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "All forms of life require carbon, energy, and water as well as various other molecules.",
+      "sentence_length_words": 15,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Nutrition"
+    },
+    {
+      "sentence_id": "R10-010",
+      "domain": "technical",
+      "subcategory": "medicine_healthcare",
+      "linguistic_tags": [
+        "technical_terminology",
+        "lists_coordination"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Animals require complex nutrients such as carbohydrates, lipids, and proteins, obtaining them by consuming other organisms.",
+      "sentence_length_words": 16,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Nutrition"
+    },
+    {
+      "sentence_id": "R10-011",
+      "domain": "technical",
+      "subcategory": "medicine_healthcare",
+      "linguistic_tags": [
+        "passive_construction",
+        "technical_terminology"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Nutrients are absorbed by the cells and used in metabolic biochemical reactions.",
+      "sentence_length_words": 12,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Nutrition"
+    },
+    {
+      "sentence_id": "R10-012",
+      "domain": "technical",
+      "subcategory": "medicine_healthcare",
+      "linguistic_tags": [
+        "causal",
+        "negation"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "Nutrient deficiency may be caused by a sudden decrease in nutrient intake or by an inability to absorb essential nutrients.",
+      "sentence_length_words": 20,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Nutrition"
+    },
+    {
+      "sentence_id": "R10-013",
+      "domain": "technical",
+      "subcategory": "chemistry",
+      "linguistic_tags": [
+        "causal",
+        "technical_terminology"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+      "sentence_length_words": 22,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Chemical reaction"
+    },
+    {
+      "sentence_id": "R10-014",
+      "domain": "technical",
+      "subcategory": "chemistry",
+      "linguistic_tags": [
+        "comparison",
+        "technical_terminology",
+        "long"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "Chemical reactions are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the reactants.",
+      "sentence_length_words": 24,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Chemical reaction"
+    },
+    {
+      "sentence_id": "R10-015",
+      "domain": "technical",
+      "subcategory": "chemistry",
+      "linguistic_tags": [
+        "causal",
+        "comparison",
+        "scientific_causal_claim",
+        "long"
+      ],
+      "expected_opportunity": "very_hard",
+      "sentence_text": "Typically, reaction rates increase with increasing temperature because there is more thermal energy available to reach the activation energy necessary for breaking bonds between atoms.",
+      "sentence_length_words": 25,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Chemical reaction"
+    },
+    {
+      "sentence_id": "R10-016",
+      "domain": "technical",
+      "subcategory": "chemistry",
+      "linguistic_tags": [
+        "technical_terminology",
+        "short"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "In a bimolecular reaction, two molecules collide and react with each other.",
+      "sentence_length_words": 12,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Chemical reaction"
+    },
+    {
+      "sentence_id": "R10-017",
+      "domain": "technical",
+      "subcategory": "chemistry",
+      "linguistic_tags": [
+        "comparison",
+        "technical_terminology"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "The forward and reverse reactions are competing with each other and differ in reaction rates.",
+      "sentence_length_words": 15,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Chemical reaction"
+    },
+    {
+      "sentence_id": "R10-018",
+      "domain": "technical",
+      "subcategory": "chemistry",
+      "linguistic_tags": [
+        "negation",
+        "causal",
+        "simple_substitution"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "A catalyst is not destroyed or changed during a reaction, so it can be used again.",
+      "sentence_length_words": 16,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Chemical reaction"
+    },
+    {
+      "sentence_id": "R10-019",
+      "domain": "technical",
+      "subcategory": "physics",
+      "linguistic_tags": [
+        "negation",
+        "scientific_causal_claim",
+        "comparison"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "A body remains at rest, or in motion at a constant speed in a straight line, unless it is acted upon by a force.",
+      "sentence_length_words": 24,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Newton's laws of motion"
+    },
+    {
+      "sentence_id": "R10-020",
+      "domain": "technical",
+      "subcategory": "physics",
+      "linguistic_tags": [
+        "quantities",
+        "technical_terminology",
+        "long"
+      ],
+      "expected_opportunity": "very_hard",
+      "sentence_text": "At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the rate at which the body's momentum is changing with time.",
+      "sentence_length_words": 34,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Newton's laws of motion"
+    },
+    {
+      "sentence_id": "R10-021",
+      "domain": "technical",
+      "subcategory": "physics",
+      "linguistic_tags": [
+        "comparison",
+        "scientific_causal_claim"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "If two bodies exert forces on each other, these forces have the same magnitude but opposite directions.",
+      "sentence_length_words": 17,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Newton's laws of motion"
+    },
+    {
+      "sentence_id": "R10-022",
+      "domain": "technical",
+      "subcategory": "physics",
+      "linguistic_tags": [
+        "technical_terminology",
+        "fixed_expression"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Newton's first law expresses the principle of inertia: the natural behavior of a body is to move in a straight line at constant speed.",
+      "sentence_length_words": 24,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Newton's laws of motion"
+    },
+    {
+      "sentence_id": "R10-023",
+      "domain": "technical",
+      "subcategory": "physics",
+      "linguistic_tags": [
+        "negation",
+        "quantities",
+        "technical_terminology"
+      ],
+      "expected_opportunity": "very_hard",
+      "sentence_text": "When the net force on a body is equal to zero, then by Newton's second law, the body does not accelerate, and it is said to be in mechanical equilibrium.",
+      "sentence_length_words": 30,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Newton's laws of motion"
+    },
+    {
+      "sentence_id": "R10-024",
+      "domain": "technical",
+      "subcategory": "physics",
+      "linguistic_tags": [
+        "scientific_causal_claim",
+        "referential",
+        "comparison"
+      ],
+      "expected_opportunity": "very_hard",
+      "sentence_text": "In other words, if one body exerts a force on a second body, the second body is also exerting a force on the first body, of equal magnitude in the opposite direction.",
+      "sentence_length_words": 32,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Newton's laws of motion"
+    },
+    {
+      "sentence_id": "R10-025",
+      "domain": "technical",
+      "subcategory": "astronomy",
+      "linguistic_tags": [
+        "technical_terminology",
+        "definitional",
+        "short"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "A star is a luminous spheroid of plasma held together by self-gravity.",
+      "sentence_length_words": 12,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Star"
+    },
+    {
+      "sentence_id": "R10-026",
+      "domain": "technical",
+      "subcategory": "astronomy",
+      "linguistic_tags": [
+        "simple_substitution",
+        "short"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "The nearest star to Earth is the Sun.",
+      "sentence_length_words": 8,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Star"
+    },
+    {
+      "sentence_id": "R10-027",
+      "domain": "technical",
+      "subcategory": "astronomy",
+      "linguistic_tags": [
+        "causal",
+        "technical_terminology",
+        "scientific_causal_claim"
+      ],
+      "expected_opportunity": "very_hard",
+      "sentence_text": "A star shines for most of its active life due to the thermonuclear fusion of hydrogen into helium in its core.",
+      "sentence_length_words": 21,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Star"
+    },
+    {
+      "sentence_id": "R10-028",
+      "domain": "technical",
+      "subcategory": "astronomy",
+      "linguistic_tags": [
+        "causal",
+        "technical_terminology"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "This process releases energy that traverses the star's interior and radiates into outer space.",
+      "sentence_length_words": 14,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Star"
+    },
+    {
+      "sentence_id": "R10-029",
+      "domain": "technical",
+      "subcategory": "astronomy",
+      "linguistic_tags": [
+        "causal",
+        "lists_coordination",
+        "technical_terminology",
+        "long"
+      ],
+      "expected_opportunity": "very_hard",
+      "sentence_text": "At the end of a star's lifetime, fusion ceases and its core becomes a stellar remnant: a white dwarf, a neutron star, or if it is sufficiently massive a black hole.",
+      "sentence_length_words": 31,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Star"
+    },
+    {
+      "sentence_id": "R10-030",
+      "domain": "technical",
+      "subcategory": "astronomy",
+      "linguistic_tags": [
+        "technical_terminology",
+        "comparison",
+        "causal"
+      ],
+      "expected_opportunity": "very_hard",
+      "sentence_text": "Stellar nucleosynthesis in stars or their remnants creates almost all naturally occurring chemical elements heavier than lithium.",
+      "sentence_length_words": 17,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Star"
+    },
+    {
+      "sentence_id": "R10-031",
+      "domain": "technical",
+      "subcategory": "geology",
+      "linguistic_tags": [
+        "definitional",
+        "lists_coordination",
+        "long",
+        "technical_terminology"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+      "sentence_length_words": 31,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Volcano"
+    },
+    {
+      "sentence_id": "R10-032",
+      "domain": "technical",
+      "subcategory": "geology",
+      "linguistic_tags": [
+        "comparison",
+        "causal",
+        "technical_terminology"
+      ],
+      "expected_opportunity": "very_hard",
+      "sentence_text": "Volcanoes resulting from divergent tectonic activity are usually non-explosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
+      "sentence_length_words": 19,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Volcano"
+    },
+    {
+      "sentence_id": "R10-033",
+      "domain": "technical",
+      "subcategory": "geology",
+      "linguistic_tags": [
+        "causal",
+        "scientific_causal_claim",
+        "technical_terminology",
+        "long"
+      ],
+      "expected_opportunity": "very_hard",
+      "sentence_text": "The decrease of pressure in the rising mantle rock leads to adiabatic expansion and the partial melting of the rock, causing volcanism and creating new oceanic crust.",
+      "sentence_length_words": 27,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Volcano"
+    },
+    {
+      "sentence_id": "R10-034",
+      "domain": "technical",
+      "subcategory": "geology",
+      "linguistic_tags": [
+        "causal",
+        "scientific_causal_claim"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "Magma commonly explodes as the gas dissolved in it comes out of solution as the pressure decreases when it flows to the surface.",
+      "sentence_length_words": 23,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Volcano"
+    },
+    {
+      "sentence_id": "R10-035",
+      "domain": "technical",
+      "subcategory": "geology",
+      "linguistic_tags": [
+        "quantities",
+        "definitional",
+        "technical_terminology"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Solid particles smaller than 2 mm in diameter (sand-sized or smaller) are called volcanic ash.",
+      "sentence_length_words": 15,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Volcano"
+    },
+    {
+      "sentence_id": "R10-036",
+      "domain": "technical",
+      "subcategory": "geology",
+      "linguistic_tags": [
+        "causal",
+        "referential",
+        "long"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "Because tectonic plates move across mantle plumes, each volcano becomes inactive as it drifts off the plume, and new volcanoes are created where the plate advances over the plume.",
+      "sentence_length_words": 29,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Volcano"
+    },
+    {
+      "sentence_id": "R10-037",
+      "domain": "technical",
+      "subcategory": "climate_environment",
+      "linguistic_tags": [
+        "definitional",
+        "simple_substitution"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+      "sentence_length_words": 13,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Renewable energy"
+    },
+    {
+      "sentence_id": "R10-038",
+      "domain": "technical",
+      "subcategory": "climate_environment",
+      "linguistic_tags": [
+        "lists_coordination",
+        "technical_terminology"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Solar power, wind power, hydroelectricity, geothermal energy, and biomass are widely agreed to be the main types of renewable energy.",
+      "sentence_length_words": 20,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Renewable energy"
+    },
+    {
+      "sentence_id": "R10-039",
+      "domain": "technical",
+      "subcategory": "climate_environment",
+      "linguistic_tags": [
+        "comparison",
+        "lists_coordination",
+        "quantities"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "In contrast, fossil fuel power plants, nuclear power plants and hydropower are usually able to produce precisely the amount of energy an electricity grid requires at a given time.",
+      "sentence_length_words": 29,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Renewable energy"
+    },
+    {
+      "sentence_id": "R10-040",
+      "domain": "technical",
+      "subcategory": "climate_environment",
+      "linguistic_tags": [
+        "negation",
+        "simple_substitution"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "Solar energy can only be captured during the day, and ideally in cloudless conditions.",
+      "sentence_length_words": 14,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Renewable energy"
+    },
+    {
+      "sentence_id": "R10-041",
+      "domain": "technical",
+      "subcategory": "climate_environment",
+      "linguistic_tags": [
+        "comparison",
+        "simple_substitution"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "In general, renewable energy sources pollute much less than fossil fuels.",
+      "sentence_length_words": 11,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Renewable energy"
+    },
+    {
+      "sentence_id": "R10-042",
+      "domain": "technical",
+      "subcategory": "climate_environment",
+      "linguistic_tags": [
+        "quantities",
+        "comparison",
+        "technical_terminology"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "Water can generate electricity with a conversion efficiency of about 90%, which is the highest rate in renewable energy.",
+      "sentence_length_words": 19,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Renewable energy"
+    },
+    {
+      "sentence_id": "R10-043",
+      "domain": "technical",
+      "subcategory": "computer_science",
+      "linguistic_tags": [
+        "definitional",
+        "technical_terminology",
+        "long"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+      "sentence_length_words": 30,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Algorithm"
+    },
+    {
+      "sentence_id": "R10-044",
+      "domain": "technical",
+      "subcategory": "computer_science",
+      "linguistic_tags": [
+        "technical_terminology",
+        "passive_construction",
+        "short"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Algorithms are used as specifications for performing calculations and data processing.",
+      "sentence_length_words": 11,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Algorithm"
+    },
+    {
+      "sentence_id": "R10-045",
+      "domain": "technical",
+      "subcategory": "computer_science",
+      "linguistic_tags": [
+        "technical_terminology",
+        "comparison"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "More advanced algorithms can use conditionals to divert the code execution through various routes and deduce valid inferences.",
+      "sentence_length_words": 18,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Algorithm"
+    },
+    {
+      "sentence_id": "R10-046",
+      "domain": "technical",
+      "subcategory": "computer_science",
+      "linguistic_tags": [
+        "comparison",
+        "negation",
+        "technical_terminology"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "In contrast, a heuristic is an approach to solving problems without well-defined correct or optimal results.",
+      "sentence_length_words": 16,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Algorithm"
+    },
+    {
+      "sentence_id": "R10-047",
+      "domain": "technical",
+      "subcategory": "computer_science",
+      "linguistic_tags": [
+        "clausal_restructuring",
+        "technical_terminology"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Starting from an initial state and input, a computation occurs at each step, eventually producing output and terminating.",
+      "sentence_length_words": 18,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Algorithm"
+    },
+    {
+      "sentence_id": "R10-048",
+      "domain": "technical",
+      "subcategory": "computer_science",
+      "linguistic_tags": [
+        "negation",
+        "short",
+        "technical_terminology"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "In general, a program is an algorithm only if it stops eventually.",
+      "sentence_length_words": 12,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Algorithm"
+    },
+    {
+      "sentence_id": "R10-049",
+      "domain": "technical",
+      "subcategory": "mathematics_statistics",
+      "linguistic_tags": [
+        "quantities",
+        "comparison",
+        "definitional"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "The probability of an event is a number between 0 and 1; the larger the probability, the more likely an event is to occur.",
+      "sentence_length_words": 24,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Probability"
+    },
+    {
+      "sentence_id": "R10-050",
+      "domain": "technical",
+      "subcategory": "mathematics_statistics",
+      "linguistic_tags": [
+        "quantities",
+        "short"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "This number is often expressed as a percentage (%), ranging from 0% to 100%.",
+      "sentence_length_words": 14,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Probability"
+    },
+    {
+      "sentence_id": "R10-051",
+      "domain": "technical",
+      "subcategory": "mathematics_statistics",
+      "linguistic_tags": [
+        "quantities",
+        "negation",
+        "comparison",
+        "long"
+      ],
+      "expected_opportunity": "very_hard",
+      "sentence_text": "Since the coin is fair, the two outcomes (heads and tails) are both equally probable; the probability of heads equals the probability of tails; and since no other outcomes are possible, the probability of either heads or tails is 1/2 (which could also be written as 0.5 or 50%).",
+      "sentence_length_words": 49,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Probability"
+    },
+    {
+      "sentence_id": "R10-052",
+      "domain": "technical",
+      "subcategory": "mathematics_statistics",
+      "linguistic_tags": [
+        "quantities"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "The probability of getting an outcome of head-head is 1 out of 4 outcomes, or, in numerical terms, 1/4, 0.25 or 25%.",
+      "sentence_length_words": 22,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Probability"
+    },
+    {
+      "sentence_id": "R10-053",
+      "domain": "technical",
+      "subcategory": "mathematics_statistics",
+      "linguistic_tags": [
+        "quantities",
+        "comparison"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "The probability of getting an outcome of at least one head is 3 out of 4, or 0.75, and this event is more likely to occur.",
+      "sentence_length_words": 26,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Probability"
+    },
+    {
+      "sentence_id": "R10-054",
+      "domain": "technical",
+      "subcategory": "mathematics_statistics",
+      "linguistic_tags": [
+        "technical_terminology",
+        "fixed_expression",
+        "long"
+      ],
+      "expected_opportunity": "very_hard",
+      "sentence_text": "The most popular version of objective probability is frequentist probability, which claims that the probability of a random event denotes the relative frequency of occurrence of an experiment's outcome when the experiment is repeated indefinitely.",
+      "sentence_length_words": 35,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Probability"
+    },
+    {
+      "sentence_id": "R10-055",
+      "domain": "technical",
+      "subcategory": "economics",
+      "linguistic_tags": [
+        "definitional",
+        "quantities"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "In economics, inflation is an increase in the average price of goods and services in terms of money.",
+      "sentence_length_words": 18,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Inflation"
+    },
+    {
+      "sentence_id": "R10-056",
+      "domain": "technical",
+      "subcategory": "economics",
+      "linguistic_tags": [
+        "causal",
+        "comparison",
+        "quantities"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "When the general price level rises, each unit of currency buys fewer goods and services.",
+      "sentence_length_words": 15,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Inflation"
+    },
+    {
+      "sentence_id": "R10-057",
+      "domain": "technical",
+      "subcategory": "economics",
+      "linguistic_tags": [
+        "causal",
+        "technical_terminology",
+        "passive_construction"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "Changes in inflation are widely attributed to increases in the money supply.",
+      "sentence_length_words": 12,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Inflation"
+    },
+    {
+      "sentence_id": "R10-058",
+      "domain": "technical",
+      "subcategory": "economics",
+      "linguistic_tags": [
+        "technical_terminology",
+        "causal"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "The negative effects would include an increase in the opportunity cost of holding money.",
+      "sentence_length_words": 14,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Inflation"
+    },
+    {
+      "sentence_id": "R10-059",
+      "domain": "technical",
+      "subcategory": "economics",
+      "linguistic_tags": [
+        "causal",
+        "technical_terminology"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "Positive effects include reducing unemployment due to nominal wage rigidity.",
+      "sentence_length_words": 10,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Inflation"
+    },
+    {
+      "sentence_id": "R10-060",
+      "domain": "technical",
+      "subcategory": "economics",
+      "linguistic_tags": [
+        "causal",
+        "comparison",
+        "technical_terminology"
+      ],
+      "expected_opportunity": "very_hard",
+      "sentence_text": "Low inflation reduces the likelihood of economic recessions by enabling the labor market to adjust more quickly.",
+      "sentence_length_words": 17,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Inflation"
+    },
+    {
+      "sentence_id": "R10-061",
+      "domain": "technical",
+      "subcategory": "engineering",
+      "linguistic_tags": [
+        "definitional",
+        "lists_coordination",
+        "long"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+      "sentence_length_words": 41,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Civil engineering"
+    },
+    {
+      "sentence_id": "R10-062",
+      "domain": "technical",
+      "subcategory": "engineering",
+      "linguistic_tags": [
+        "simple_substitution",
+        "short"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "Civil engineering is traditionally broken into a number of sub-disciplines.",
+      "sentence_length_words": 10,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Civil engineering"
+    },
+    {
+      "sentence_id": "R10-063",
+      "domain": "technical",
+      "subcategory": "engineering",
+      "linguistic_tags": [
+        "definitional",
+        "long",
+        "technical_terminology"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "Civil engineering is the application of physical and scientific principles for solving the problems of society, and its history is intricately linked to advances in the understanding of physics and mathematics throughout history.",
+      "sentence_length_words": 33,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Civil engineering"
+    },
+    {
+      "sentence_id": "R10-064",
+      "domain": "technical",
+      "subcategory": "engineering",
+      "linguistic_tags": [
+        "referential",
+        "factual"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "The first self-proclaimed civil engineer was John Smeaton, who constructed the Eddystone Lighthouse.",
+      "sentence_length_words": 13,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Civil engineering"
+    },
+    {
+      "sentence_id": "R10-065",
+      "domain": "technical",
+      "subcategory": "engineering",
+      "linguistic_tags": [
+        "lists_coordination",
+        "technical_terminology",
+        "long"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "General civil engineers work closely with surveyors and specialized civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communications supply.",
+      "sentence_length_words": 25,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Civil engineering"
+    },
+    {
+      "sentence_id": "R10-066",
+      "domain": "technical",
+      "subcategory": "engineering",
+      "linguistic_tags": [
+        "lists_coordination",
+        "technical_terminology",
+        "long"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "Structural engineering is concerned with the structural design and structural analysis of buildings, bridges, towers, flyovers, tunnels, off shore structures like oil and gas fields in the sea, aerostructure and other structures.",
+      "sentence_length_words": 32,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Civil engineering"
+    },
+    {
+      "sentence_id": "R10-067",
+      "domain": "general",
+      "subcategory": "everyday_conversation",
+      "linguistic_tags": [
+        "negation",
+        "short"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "I was going to call you earlier, but I completely forgot.",
+      "sentence_length_words": 11,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-068",
+      "domain": "general",
+      "subcategory": "everyday_conversation",
+      "linguistic_tags": [
+        "simple_substitution",
+        "short"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "Do you want to grab a coffee before the meeting starts?",
+      "sentence_length_words": 11,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-069",
+      "domain": "general",
+      "subcategory": "everyday_conversation",
+      "linguistic_tags": [
+        "causal",
+        "hedged"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "She said she might be a little late because of traffic.",
+      "sentence_length_words": 11,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-070",
+      "domain": "general",
+      "subcategory": "everyday_conversation",
+      "linguistic_tags": [
+        "negation",
+        "comparison",
+        "opinion"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Honestly, I don't think that restaurant is as good as everyone says.",
+      "sentence_length_words": 12,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-071",
+      "domain": "general",
+      "subcategory": "everyday_conversation",
+      "linguistic_tags": [
+        "negation",
+        "comparison"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "We haven't decided yet whether we're driving or taking the train.",
+      "sentence_length_words": 11,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-072",
+      "domain": "general",
+      "subcategory": "everyday_conversation",
+      "linguistic_tags": [
+        "quantities",
+        "referential"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "He mentioned that he'd probably need more time to finish the report.",
+      "sentence_length_words": 12,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-073",
+      "domain": "general",
+      "subcategory": "education",
+      "linguistic_tags": [
+        "quantities",
+        "sequence"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "The professor explained the concept twice before moving on to the next topic.",
+      "sentence_length_words": 13,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-074",
+      "domain": "general",
+      "subcategory": "education",
+      "linguistic_tags": [
+        "passive_construction",
+        "referential"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Students who struggle with the material are encouraged to attend office hours.",
+      "sentence_length_words": 12,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-075",
+      "domain": "general",
+      "subcategory": "education",
+      "linguistic_tags": [
+        "quantities",
+        "referential"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "The exam covers everything we studied in the first six chapters.",
+      "sentence_length_words": 11,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-076",
+      "domain": "general",
+      "subcategory": "education",
+      "linguistic_tags": [
+        "negation",
+        "comparison",
+        "causal"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "Not every student learns the same way, so the teacher varies her methods.",
+      "sentence_length_words": 13,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-077",
+      "domain": "general",
+      "subcategory": "education",
+      "linguistic_tags": [
+        "causal",
+        "comparison",
+        "quantities"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "He improved his grade significantly after he started reviewing his notes every night.",
+      "sentence_length_words": 13,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-078",
+      "domain": "general",
+      "subcategory": "education",
+      "linguistic_tags": [
+        "negation",
+        "comparison",
+        "short"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "The assignment is due before Friday, not on Friday.",
+      "sentence_length_words": 9,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-079",
+      "domain": "general",
+      "subcategory": "workplace",
+      "linguistic_tags": [
+        "instruction",
+        "quantities"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "The manager asked everyone to submit their reports by the end of the day.",
+      "sentence_length_words": 14,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-080",
+      "domain": "general",
+      "subcategory": "workplace",
+      "linguistic_tags": [
+        "causal",
+        "hedged"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "We're understaffed this week, so deadlines might slip a little.",
+      "sentence_length_words": 10,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-081",
+      "domain": "general",
+      "subcategory": "workplace",
+      "linguistic_tags": [
+        "causal",
+        "comparison"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "She was promoted because her performance consistently exceeded expectations.",
+      "sentence_length_words": 9,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-082",
+      "domain": "general",
+      "subcategory": "workplace",
+      "linguistic_tags": [
+        "negation",
+        "comparison",
+        "referential"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "The new policy doesn't apply to employees who joined before last year.",
+      "sentence_length_words": 12,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-083",
+      "domain": "general",
+      "subcategory": "workplace",
+      "linguistic_tags": [
+        "negation",
+        "comparison",
+        "causal"
+      ],
+      "expected_opportunity": "very_hard",
+      "sentence_text": "He didn't get the job, even though he had more experience than the other candidates.",
+      "sentence_length_words": 15,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-084",
+      "domain": "general",
+      "subcategory": "workplace",
+      "linguistic_tags": [
+        "sequence",
+        "referential"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "The team meets every Monday to review what went wrong the previous week.",
+      "sentence_length_words": 13,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-085",
+      "domain": "general",
+      "subcategory": "travel",
+      "linguistic_tags": [
+        "causal",
+        "quantities"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Our flight was delayed by almost three hours because of bad weather.",
+      "sentence_length_words": 12,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-086",
+      "domain": "general",
+      "subcategory": "travel",
+      "linguistic_tags": [
+        "instruction",
+        "quantities",
+        "comparison"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Make sure you arrive at the airport at least two hours before departure.",
+      "sentence_length_words": 13,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-087",
+      "domain": "general",
+      "subcategory": "travel",
+      "linguistic_tags": [
+        "comparison",
+        "referential"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "The hotel is closer to the train station than the one we stayed at last time.",
+      "sentence_length_words": 16,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-088",
+      "domain": "general",
+      "subcategory": "travel",
+      "linguistic_tags": [
+        "negation",
+        "causal",
+        "quantities"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "We didn't have enough time to see everything, so we skipped the museum.",
+      "sentence_length_words": 13,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-089",
+      "domain": "general",
+      "subcategory": "travel",
+      "linguistic_tags": [
+        "comparison",
+        "quantities"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Locals recommended a smaller, less crowded beach a few miles further north.",
+      "sentence_length_words": 12,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-090",
+      "domain": "general",
+      "subcategory": "travel",
+      "linguistic_tags": [
+        "instruction",
+        "negation",
+        "causal"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Remember to check whether your passport is still valid before you book anything.",
+      "sentence_length_words": 13,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-091",
+      "domain": "general",
+      "subcategory": "food",
+      "linguistic_tags": [
+        "comparison",
+        "quantities"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "This recipe calls for slightly less sugar than the original version.",
+      "sentence_length_words": 11,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-092",
+      "domain": "general",
+      "subcategory": "food",
+      "linguistic_tags": [
+        "instruction",
+        "sequence"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "Add the onions first, then let them cook until they turn golden brown.",
+      "sentence_length_words": 13,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-093",
+      "domain": "general",
+      "subcategory": "food",
+      "linguistic_tags": [
+        "comparison",
+        "causal"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "The soup tastes better the next day once the flavors have had time to develop.",
+      "sentence_length_words": 15,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-094",
+      "domain": "general",
+      "subcategory": "food",
+      "linguistic_tags": [
+        "causal"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "He's allergic to shellfish, so he always checks the menu carefully.",
+      "sentence_length_words": 11,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-095",
+      "domain": "general",
+      "subcategory": "food",
+      "linguistic_tags": [
+        "negation",
+        "causal",
+        "instruction"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "Don't overcook the pasta, or it will turn mushy.",
+      "sentence_length_words": 9,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-096",
+      "domain": "general",
+      "subcategory": "food",
+      "linguistic_tags": [
+        "comparison",
+        "referential"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "The bakery down the street makes bread that's noticeably fresher than the supermarket's.",
+      "sentence_length_words": 13,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-097",
+      "domain": "general",
+      "subcategory": "social_situations",
+      "linguistic_tags": [
+        "causal",
+        "short"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "She apologized for showing up late to the party.",
+      "sentence_length_words": 9,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-098",
+      "domain": "general",
+      "subcategory": "social_situations",
+      "linguistic_tags": [
+        "negation",
+        "instruction"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "It's considered impolite to interrupt someone while they're speaking.",
+      "sentence_length_words": 9,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-099",
+      "domain": "general",
+      "subcategory": "social_situations",
+      "linguistic_tags": [
+        "negation",
+        "causal"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "He didn't mean to offend anyone, but his comment came across the wrong way.",
+      "sentence_length_words": 14,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-100",
+      "domain": "general",
+      "subcategory": "social_situations",
+      "linguistic_tags": [
+        "negation",
+        "comparison",
+        "causal"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "They've been friends since childhood, even though they don't see each other often now.",
+      "sentence_length_words": 14,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-101",
+      "domain": "general",
+      "subcategory": "social_situations",
+      "linguistic_tags": [
+        "negation",
+        "causal"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Everyone was surprised when she declined the invitation.",
+      "sentence_length_words": 8,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-102",
+      "domain": "general",
+      "subcategory": "social_situations",
+      "linguistic_tags": [
+        "causal",
+        "sequence"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "It's normal to feel nervous before meeting someone for the first time.",
+      "sentence_length_words": 12,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-103",
+      "domain": "general",
+      "subcategory": "descriptions",
+      "linguistic_tags": [
+        "descriptive",
+        "referential"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "The old house had a narrow staircase that creaked with every step.",
+      "sentence_length_words": 12,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-104",
+      "domain": "general",
+      "subcategory": "descriptions",
+      "linguistic_tags": [
+        "comparison",
+        "descriptive"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "Her office was small but surprisingly well organized.",
+      "sentence_length_words": 8,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-105",
+      "domain": "general",
+      "subcategory": "descriptions",
+      "linguistic_tags": [
+        "comparison",
+        "descriptive"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "The mountain trail was steeper and rockier than the map suggested.",
+      "sentence_length_words": 11,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-106",
+      "domain": "general",
+      "subcategory": "descriptions",
+      "linguistic_tags": [
+        "descriptive",
+        "sequence"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "A thin layer of fog settled over the valley just after sunrise.",
+      "sentence_length_words": 12,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-107",
+      "domain": "general",
+      "subcategory": "descriptions",
+      "linguistic_tags": [
+        "causal",
+        "quantities"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "The car's engine made a strange noise whenever it idled for too long.",
+      "sentence_length_words": 13,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-108",
+      "domain": "general",
+      "subcategory": "descriptions",
+      "linguistic_tags": [
+        "descriptive",
+        "negation"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "The room was dimly lit, with only a single lamp in the corner.",
+      "sentence_length_words": 13,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-109",
+      "domain": "general",
+      "subcategory": "instructions",
+      "linguistic_tags": [
+        "instruction",
+        "sequence",
+        "causal"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Turn off the power before you attempt to replace the light fixture.",
+      "sentence_length_words": 12,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-110",
+      "domain": "general",
+      "subcategory": "instructions",
+      "linguistic_tags": [
+        "negation",
+        "instruction",
+        "short"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "Do not use this appliance near water.",
+      "sentence_length_words": 7,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-111",
+      "domain": "general",
+      "subcategory": "instructions",
+      "linguistic_tags": [
+        "instruction",
+        "quantities",
+        "sequence"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Press and hold the button for five seconds until the light turns green.",
+      "sentence_length_words": 13,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-112",
+      "domain": "general",
+      "subcategory": "instructions",
+      "linguistic_tags": [
+        "causal",
+        "negation",
+        "instruction"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "If the printer jams, remove the paper carefully to avoid tearing it.",
+      "sentence_length_words": 12,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-113",
+      "domain": "general",
+      "subcategory": "instructions",
+      "linguistic_tags": [
+        "instruction",
+        "referential"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "Assemble the shelf according to the numbered steps in the manual.",
+      "sentence_length_words": 11,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-114",
+      "domain": "general",
+      "subcategory": "instructions",
+      "linguistic_tags": [
+        "instruction",
+        "negation"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Store the medication somewhere cool and out of reach of children.",
+      "sentence_length_words": 11,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-115",
+      "domain": "general",
+      "subcategory": "opinions",
+      "linguistic_tags": [
+        "negation",
+        "comparison",
+        "opinion"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "I think the new update makes the app harder to use, not easier.",
+      "sentence_length_words": 13,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-116",
+      "domain": "general",
+      "subcategory": "opinions",
+      "linguistic_tags": [
+        "negation",
+        "comparison",
+        "opinion"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "In my view, the sequel wasn't as good as the original film.",
+      "sentence_length_words": 12,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-117",
+      "domain": "general",
+      "subcategory": "opinions",
+      "linguistic_tags": [
+        "comparison",
+        "negation",
+        "opinion"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "Some people argue that remote work is more productive, but I'm not convinced.",
+      "sentence_length_words": 13,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-118",
+      "domain": "general",
+      "subcategory": "opinions",
+      "linguistic_tags": [
+        "comparison",
+        "opinion"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "The book was overrated, in my opinion, though the ending was genuinely moving.",
+      "sentence_length_words": 13,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-119",
+      "domain": "general",
+      "subcategory": "opinions",
+      "linguistic_tags": [
+        "comparison",
+        "opinion"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "I'd rather wait a little longer than settle for something mediocre.",
+      "sentence_length_words": 11,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-120",
+      "domain": "general",
+      "subcategory": "opinions",
+      "linguistic_tags": [
+        "comparison",
+        "opinion",
+        "quantities"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "Honestly, this is the best decision the company has made in years.",
+      "sentence_length_words": 12,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-121",
+      "domain": "general",
+      "subcategory": "ordinary_factual",
+      "linguistic_tags": [
+        "quantities",
+        "comparison"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "The library closes at nine on weekdays and six on weekends.",
+      "sentence_length_words": 11,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-122",
+      "domain": "general",
+      "subcategory": "ordinary_factual",
+      "linguistic_tags": [
+        "quantities",
+        "referential"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "Most of the town's residents work in the two factories nearby.",
+      "sentence_length_words": 11,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-123",
+      "domain": "general",
+      "subcategory": "ordinary_factual",
+      "linguistic_tags": [
+        "quantities",
+        "sequence"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "The bridge was built in the early twentieth century and renovated twice since then.",
+      "sentence_length_words": 14,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-124",
+      "domain": "general",
+      "subcategory": "ordinary_factual",
+      "linguistic_tags": [
+        "comparison",
+        "referential"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "There are more public parks on the east side of the city than on the west.",
+      "sentence_length_words": 16,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-125",
+      "domain": "general",
+      "subcategory": "ordinary_factual",
+      "linguistic_tags": [
+        "negation",
+        "comparison",
+        "causal"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "The store doesn't open until ten, but the cafe next door opens earlier.",
+      "sentence_length_words": 13,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-126",
+      "domain": "general",
+      "subcategory": "ordinary_factual",
+      "linguistic_tags": [
+        "comparison",
+        "quantities"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "Fewer people ride the bus now than they did a decade ago.",
+      "sentence_length_words": 12,
+      "source_type": "authored",
+      "source_reference": "authored"
+    },
+    {
+      "sentence_id": "R10-127",
+      "domain": "general",
+      "subcategory": "narrative",
+      "linguistic_tags": [
+        "narrative",
+        "referential",
+        "long",
+        "quantities"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the third of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighbouring farmer.",
+      "sentence_length_words": 35,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Alexander Fleming"
+    },
+    {
+      "sentence_id": "R10-128",
+      "domain": "general",
+      "subcategory": "narrative",
+      "linguistic_tags": [
+        "narrative",
+        "quantities",
+        "sequence"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "Hugh Fleming had four surviving children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven.",
+      "sentence_length_words": 28,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Alexander Fleming"
+    },
+    {
+      "sentence_id": "R10-129",
+      "domain": "general",
+      "subcategory": "narrative",
+      "linguistic_tags": [
+        "narrative",
+        "referential",
+        "long",
+        "sequence"
+      ],
+      "expected_opportunity": "hard",
+      "sentence_text": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year scholarship to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.",
+      "sentence_length_words": 28,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Alexander Fleming"
+    },
+    {
+      "sentence_id": "R10-130",
+      "domain": "general",
+      "subcategory": "narrative",
+      "linguistic_tags": [
+        "narrative",
+        "quantities",
+        "causal"
+      ],
+      "expected_opportunity": "moderate",
+      "sentence_text": "After working in a shipping office for four years, the twenty-year-old Alexander Fleming inherited some money from an uncle, John Fleming.",
+      "sentence_length_words": 21,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Alexander Fleming"
+    },
+    {
+      "sentence_id": "R10-131",
+      "domain": "general",
+      "subcategory": "narrative",
+      "linguistic_tags": [
+        "narrative",
+        "referential"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "His elder brother, Tom, was already a physician and suggested that he should follow the same career.",
+      "sentence_length_words": 17,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Alexander Fleming"
+    },
+    {
+      "sentence_id": "R10-132",
+      "domain": "general",
+      "subcategory": "narrative",
+      "linguistic_tags": [
+        "narrative",
+        "referential",
+        "quantities"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "In 1901, the younger Alexander enrolled at St Mary's Hospital Medical School in Paddington, now part of Imperial College London.",
+      "sentence_length_words": 20,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Alexander Fleming"
+    },
+    {
+      "sentence_id": "R10-133",
+      "domain": "general",
+      "subcategory": "narrative",
+      "linguistic_tags": [
+        "narrative",
+        "short"
+      ],
+      "expected_opportunity": "easy",
+      "sentence_text": "In 1906, he qualified with an MBBS degree from the school with distinction.",
+      "sentence_length_words": 13,
+      "source_type": "verbatim_wikipedia",
+      "source_reference": "Alexander Fleming"
+    }
+  ]
+}

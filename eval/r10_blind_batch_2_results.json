@@ -1,0 +1,338 @@
+{
+  "R10-025-calib-single_word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "Adds a relative clause ('that is held together by') and drops the hyphen in self-gravity; meaning and grammar fully preserved."
+  },
+  "R10-025-calib-multi_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "OTHER",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "'Held together by self-gravity' becomes 'surrounded by self-gravitational gravity', a redundant, garbled phrase that also changes the physical relationship from cohesion to mere proximity."
+  },
+  "R10-025-calib-word_plus_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "Identical safe paraphrase to the single_word variant; meaning and grammar preserved."
+  },
+  "R10-026-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "'nearest' to 'closest' is a faithful synonym swap."
+  },
+  "R10-027-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "Drops 'of hydrogen into' so 'fusion of hydrogen into helium' becomes just 'fusion of helium', changing the described nuclear process from hydrogen-to-helium conversion to helium fusion; also contains 'activity life' and the typo 'thermonuklear'."
+  },
+  "R10-028-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "Subject-verb agreement breaks: 'energy that traverses... and radiate' should be 'radiates'; meaning otherwise intact ('interior'->'inner space' is a fine paraphrase)."
+  },
+  "R10-029-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "'neutron star' (a specific, real astronomical object) is corrupted to 'neutral star', a non-existent term; also 'sufficiently massive' becomes the ungrammatical 'sufficient mass'."
+  },
+  "R10-030-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "'remnants'->'remains' and 'naturally occurring'->'natural' are faithful synonyms; pluralizing 'nucleosyntheses' is unusual but doesn't change the claim."
+  },
+  "R10-031-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "'volcanic ash' is broken into 'volcano ash', and the fixed geological term 'magma chamber' becomes 'magma cave', which wrongly suggests an empty hollow rather than a magma-filled reservoir."
+  },
+  "R10-031-calib-single_word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "Only change is removing the hyphen in 'planetary-mass'; fully faithful."
+  },
+  "R10-031-calib-multi_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "Same defects as R10-031-core-word: 'volcanic ash'->'volcano ash' and 'magma chamber'->'magma cave' (wrong physical concept)."
+  },
+  "R10-031-calib-word_plus_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "Only the hyphen in 'planetary-mass' is dropped; fully faithful."
+  },
+  "R10-031-calib-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'below the surface' becomes 'below the open', a wrong/nonsensical word choice that leaves the ending unclear."
+  },
+  "R10-031-calib-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "Same 'surface'->'open' substitution, making the final clause confusing."
+  },
+  "R10-031-calib-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "Same 'surface'->'open' substitution as the other calib variants."
+  },
+  "R10-032-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["OTHER"],
+    "rationale": "'non-explosive'->'non-explosives' misuses the adjective as a plural noun, and 'convergent'->'converged tectic' introduces the non-word 'tectic' (for 'tectonic'); intended meaning still recoverable."
+  },
+  "R10-032-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'resulting from'->'causing from' and the second 'resulting from'->'happening from' are both ungrammatical prepositional constructions, though the intended meaning is still recoverable."
+  },
+  "R10-034-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'dissolved' (already in solution) is replaced by 'soluble' (merely capable of dissolving), which weakens the logic of 'comes out of solution' since something only soluble need not currently be in solution."
+  },
+  "R10-034-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "OTHER",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "'comes out of solution' becomes the nonsensical 'comes out of answer', and 'flows to the surface' becomes 'flows to the open'; the ending no longer makes sense."
+  },
+  "R10-035-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "'particles'->'particle' and 'sand-sized'->'sand-size' are trivial number/form changes that don't alter the definition of volcanic ash."
+  },
+  "R10-036-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'new volcanoes are created' becomes 'new volcanic eruptions are created' -- a volcano (a geological structure) and an eruption (an event) are different things, so the claim about what forms as the plate advances is now wrong."
+  },
+  "R10-037-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "'continuously'->'non-stop' preserves meaning but is more informal in register for a definitional sentence."
+  },
+  "R10-037-calib-single_word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "Identical to the core-word variant: 'continuously'->'non-stop', meaning preserved."
+  },
+  "R10-037-calib-multi_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'phenomena' (plural) is changed to 'phenomenon' (singular), a number-agreement slip; 'understood as'->'thought of as' and 'continuously'->'continually' are fine synonyms."
+  },
+  "R10-037-calib-word_plus_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "Same 'continuously'->'non-stop' swap as the other variants."
+  },
+  "R10-038-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "'hydroelectricity'->'electricity' and 'geothermal energy'->'thermal energy' strip the defining prefixes from these compound terms, turning two specific renewable-energy types into a generic energy carrier and a generic heat concept -- 'electricity' is not itself a type of renewable energy."
+  },
+  "R10-038-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'Solar power' (a specific renewable type) is replaced with 'Renewable power' (the umbrella category), making the list circular and dropping solar power as a named example."
+  },
+  "R10-039-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "'precisely'->'exactly', 'hydropower'->'hydro power', and 'electricity grid'->'electric grid' are all faithful, standard synonyms."
+  },
+  "R10-040-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'cloudless conditions'->'cloudless terms' is a wrong word choice that renders the phrase nonsensical/unclear."
+  },
+  "R10-041-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'renewable energy sources'->'alternative energy sources' swaps a specific technical category for a broader/different one (alternative energy can include non-renewable sources like nuclear); the overall claim about pollution is still roughly preserved."
+  },
+  "R10-042-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "The specific engineering term 'conversion efficiency' is replaced by 'convertibility', a different and vaguer concept, obscuring the precise 90% metric being described."
+  },
+  "R10-042-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "'renewable energy' (the named category) is corrupted to the nonsensical 'extended energy', breaking the sentence's final claim."
+  },
+  "R10-043-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "'mathematically rigorous'->'numerically rigorous' shifts the meaning from formal/logical rigor to numerical-computation rigor, a different technical concept; 'instructions'->'instruction' also drops the plural, an agreement slip."
+  },
+  "R10-043-calib-single_word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "'mathematically rigorous'->'formally rigorous' is an apt, faithful synonym in this logic/CS context."
+  },
+  "R10-043-calib-multi_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "Same defects as R10-043-core-word: 'numerically rigorous' for 'mathematically rigorous', and singular 'instruction'."
+  },
+  "R10-043-calib-word_plus_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'formally rigorous' is a fine substitute, but 'class of specific problems'->'class of specific jobs' loses the precise CS sense of 'problem' (as in computational problem)."
+  },
+  "R10-044-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "'specifications'->'descriptions' loosens a precise CS term (a specification is formal, a description need not be), and 'calculations'->'maths' shifts from the act of computing to the field of mathematics, also more informal."
+  },
+  "R10-044-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'specifications'->'descriptions' loosens the precise technical meaning as in the core-word variant."
+  },
+  "R10-045-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "'conditionals'->'conditional methods' and 'inferences'->'conclusions' are workable paraphrases; 'conditional methods' is slightly non-standard phrasing but the meaning is still clear."
+  },
+  "R10-047-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'a computation'->'a computing' is ungrammatical (computing doesn't normally take an indefinite article this way), and the parallel structure 'producing output and terminating' becomes the non-parallel 'producing output and end'; meaning still recoverable."
+  },
+  "R10-048-core-multi_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "'stops'->'quits' is a faithful synonym for termination in this context."
+  },
+  "R10-049-calib-single_word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "'probability'->'chance' is applied consistently and is a faithful synonym."
+  },
+  "R10-049-calib-word_plus_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "Same faithful 'probability'->'chance' substitution."
+  },
+  "R10-050-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "'percentage'->'percent' is a minor, acceptable register shift; meaning and numbers unchanged."
+  },
+  "R10-051-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'written as 0.5'->'printed as 0.5' is an odd word choice for mathematical notation ('written' is the standard term for representing a value), though the equivalence being stated is still clear."
+  },
+  "R10-052-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "'probability'->'chance' and 'numerical terms'->'mathematical terms' are faithful synonyms."
+  },
+  "R10-053-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "'probability'->'likelihood' and 'getting an outcome'->'obtaining a result' are faithful synonyms; meaning fully preserved."
+  },
+  "R10-055-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "The fixed economic term 'goods and services' is broken by replacing 'services' with 'helps', producing a nonsensical phrase in the definition of inflation."
+  }
+}

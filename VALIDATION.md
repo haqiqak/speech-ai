@@ -4812,3 +4812,89 @@ selection unreliable and should not be used without a larger CLEAN
 sample first. This still justifies further development — now with
 somewhat *more* confidence than 9B alone provided (two seeds, correlated
 rankings), but the honest headline number is ~65% recall, not 77-91%.
+
+## 46. Phase 10 — broad stratified stress test of the current architecture (executed 2026-08-26)
+
+Per direct instruction, following the approved Phase 10 plan
+(`C:\Users\BURRAQ LAPTOPS\.claude\plans\gleaming-swinging-nova.md`): a
+deliberately wide, stratified, difficulty-graded evaluation of the
+current production reformulation engine, entirely disjoint from every
+prior corpus, judged blind, plus a generalization test of the frozen
+Phase 9B/9C validator checkpoints. **Evaluation only — no production
+code touched, no training.** Full record: `eval/r10_report.md`.
+
+**[FACT] Corpus frozen before any run:** 133 sentences (66
+technical across 11 subcategories, 67 general across 11), 0
+contamination collisions against the full prior sentence set (R40+
+Phase8+Phase8B+R47, 154 sentences), hash-recorded
+(`eval/r10_corpus.json`). 398 (sentence, profile) runs planned and
+frozen before execution (`eval/r10_run_plan.json`).
+
+**[FACT] Harvest completed cleanly:** all 398 runs via today's live
+`reformulate()` (v1, production path), 238 `reformulated` (60%), 98
+`no_change_needed` (25%), 62 `could_not_safely_reformulate` (16%), 0
+errors. Output frozen (`eval/r10_raw_results.json`) before any judging.
+
+**[FACT] Blind evaluation:** all 238 reformulated outputs judged by 5
+independent subagents in parallel, each given only
+`(original_text, reformulated_text)` — no domain, category, or
+difficulty label. Result: **62 CLEAN (26%), 176 DEFECTIVE (74%)** — 106
+SEVERE, 70 MINOR. Primary defects: WRONG_WORD_OR_SENSE 95 (54%),
+GRAMMAR 37 (21%), FACTUAL_OR_LOGICAL_REVERSAL 20 (11%),
+FIXED_TERM_OR_IDIOM 16 (9%) — same ranking as R40/Phase 8/8B, now at
+new scale on fresh material.
+
+**[FINDING] Domain (general vs. technical) is a weak predictor — 71%
+vs. 77% defective, only a 6-point gap.** Subcategory tells the real
+story: `chemistry`/`engineering` (technical) and `narrative` (general)
+all scored 0% CLEAN, while `mathematics_statistics` (technical, 83%
+CLEAN) and `computer_science` (technical, 0% SEVERE) were among the
+best. The `technical_terminology` tag (17% CLEAN) and the `long` tag
+(12% CLEAN, worst of all) predict failure far better than subject-matter
+label — the "science is hard" hypothesis is not what the evidence
+supports; content density and length are.
+
+**[FINDING] The difficulty gradient is not smooth.** `easy`=40% CLEAN
+(as expected) but `moderate`=18% CLEAN — *worse* than `hard`'s 30%. Not
+a capability cliff; ambiguity about *which* substitution is correct
+(moderate's defining property) appears to be a distinct, currently
+unaddressed risk factor from sheer *count* of constraints (hard's
+defining property).
+
+**[FINDING, confirms hypothesis cleanly] Profile constraint density is
+the single cleanest predictor in the dataset.** `multi_word` profiles
+(3-4 flagged words at once): **0% CLEAN (0/13)**, a near-total failure
+mode. `single_word`/`word_plus_sound` profiles: 38-48% CLEAN, the
+system's best case by a wide margin.
+
+**[FINDING] Escalation is a lateral move, not a safety net, on
+quality.** Substitution-only clean rate 26% (44/171); escalation-invoked
+clean rate 27% (18/67) — essentially tied, despite escalation handling
+cases substitution alone couldn't safely resolve. 62/398 runs (16%)
+refused outright — the safety gate is a real, working backstop.
+
+**[FINDING, most consequential result of this phase] Neither Phase 9B
+nor 9C validator checkpoint generalizes cleanly to new material.**
+Run unmodified (frozen thresholds, no retraining) on this corpus
+(disjoint from their own training data and every prior R-phase):
+
+| | Own test set (Aug 25) | This corpus |
+|---|---|---|
+| 9B recall/precision/clean-recall | 77%/92%/62% | 90%/80%/**34%** |
+| 9C recall/precision/clean-recall | 91%/89%/38% | 99%/74%/**3%** |
+
+9C predicts DEFECTIVE for 235/238 rows (99%) — its near-perfect recall
+is the same reject-everything degenerate behavior Phase 9C's own report
+already flagged, now fully realized on genuinely new data, not a real
+signal. 9B is directionally useful (recall improved) but its CLEAN
+retention collapsed on new material; 9B/9C agree with each other on
+only 84% of rows. This directly answers Phase 9B/9C's own open
+question about whether the validator's advantage survives on genuinely
+new domains — partially for 9B, not at all for 9C.
+
+**[LIMITATION]** Full domain×category factorial not attempted
+(disclosed in the approved plan). `expected_opportunity` is a
+design-time prediction, not ground truth. All 5 blind evaluators are
+Claude instances. Hand-authored general-domain sentences and verbatim
+technical sentences remain methodologically different sources, as
+flagged in the plan.

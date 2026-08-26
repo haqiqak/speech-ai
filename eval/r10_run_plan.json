@@ -1,0 +1,5495 @@
+{
+  "corpus_version_hash": "9e47e382ddbbea5c56fdeeb7b17422a098e91e649056c5f954a1445c7bb449d7",
+  "n_runs": 398,
+  "calibration_sentence_ids": [
+    "R10-001",
+    "R10-007",
+    "R10-013",
+    "R10-025",
+    "R10-031",
+    "R10-037",
+    "R10-043",
+    "R10-049",
+    "R10-055",
+    "R10-061",
+    "R10-067",
+    "R10-073",
+    "R10-079",
+    "R10-085",
+    "R10-091",
+    "R10-097",
+    "R10-103",
+    "R10-109",
+    "R10-115",
+    "R10-121",
+    "R10-127",
+    "R10-133"
+  ],
+  "generic_sound_profiles": {
+    "single_sound": {
+      "sounds": [
+        "str"
+      ],
+      "words": [],
+      "phrases": []
+    },
+    "multi_sound": {
+      "sounds": [
+        "s",
+        "th",
+        "r"
+      ],
+      "words": [],
+      "phrases": []
+    },
+    "sparse_common_sound": {
+      "sounds": [
+        "s"
+      ],
+      "words": [],
+      "phrases": []
+    },
+    "dense_mixed_generic": {
+      "sounds": [
+        "s",
+        "th",
+        "r"
+      ],
+      "words": [
+        "important",
+        "significant"
+      ],
+      "phrases": []
+    }
+  },
+  "runs": [
+    {
+      "sentence_id": "R10-001",
+      "profile_id": "R10-001-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "assimilated",
+          "components"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-001",
+      "profile_id": "R10-001-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-001",
+      "profile_id": "R10-001-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "assimilated"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-001",
+      "profile_id": "R10-001-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "assimilated",
+          "components",
+          "digestion"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-001",
+      "profile_id": "R10-001-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "assimilated"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-001",
+      "profile_id": "R10-001-calib-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-001",
+      "profile_id": "R10-001-calib-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-001",
+      "profile_id": "R10-001-calib-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-002",
+      "profile_id": "R10-002-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "swallowed",
+          "esophagus",
+          "produce"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-002",
+      "profile_id": "R10-002-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-003",
+      "profile_id": "R10-003-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "gastrointestinal",
+          "peristalsis",
+          "contraction",
+          "esophagus"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-003",
+      "profile_id": "R10-003-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-004",
+      "profile_id": "R10-004-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "intestine"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-004",
+      "profile_id": "R10-004-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-005",
+      "profile_id": "R10-005-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "reabsorbed"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-005",
+      "profile_id": "R10-005-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-006",
+      "profile_id": "R10-006-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "surfactant",
+          "emulsify",
+          "tension",
+          "liquids"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-006",
+      "profile_id": "R10-006-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-007",
+      "profile_id": "R10-007-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "physiological",
+          "biochemical"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-007",
+      "profile_id": "R10-007-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-007",
+      "profile_id": "R10-007-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "physiological"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-007",
+      "profile_id": "R10-007-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "physiological",
+          "biochemical",
+          "nutrition"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-007",
+      "profile_id": "R10-007-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "physiological"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-007",
+      "profile_id": "R10-007-calib-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-007",
+      "profile_id": "R10-007-calib-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-007",
+      "profile_id": "R10-007-calib-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-008",
+      "profile_id": "R10-008-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "non-communicable",
+          "macronutrients",
+          "over-nutrition",
+          "hypertension"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-008",
+      "profile_id": "R10-008-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-009",
+      "profile_id": "R10-009-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "molecules"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-009",
+      "profile_id": "R10-009-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-010",
+      "profile_id": "R10-010-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "carbohydrates",
+          "organisms"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-010",
+      "profile_id": "R10-010-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-011",
+      "profile_id": "R10-011-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "biochemical",
+          "nutrients"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-011",
+      "profile_id": "R10-011-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-012",
+      "profile_id": "R10-012-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "deficiency",
+          "inability",
+          "essential"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-012",
+      "profile_id": "R10-012-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-013",
+      "profile_id": "R10-013-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "accompanied",
+          "rearranged"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-013",
+      "profile_id": "R10-013-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-013",
+      "profile_id": "R10-013-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "accompanied"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-013",
+      "profile_id": "R10-013-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "accompanied",
+          "rearranged",
+          "reactions"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-013",
+      "profile_id": "R10-013-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "accompanied"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-013",
+      "profile_id": "R10-013-calib-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-013",
+      "profile_id": "R10-013-calib-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-013",
+      "profile_id": "R10-013-calib-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-014",
+      "profile_id": "R10-014-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "characterized",
+          "properties",
+          "reactants"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-014",
+      "profile_id": "R10-014-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-015",
+      "profile_id": "R10-015-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "temperature",
+          "increasing",
+          "activation",
+          "typically"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-015",
+      "profile_id": "R10-015-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-016",
+      "profile_id": "R10-016-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "bimolecular"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-016",
+      "profile_id": "R10-016-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-017",
+      "profile_id": "R10-017-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "competing",
+          "reactions"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-017",
+      "profile_id": "R10-017-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-018",
+      "profile_id": "R10-018-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "destroyed",
+          "catalyst"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-018",
+      "profile_id": "R10-018-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-019",
+      "profile_id": "R10-019-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "straight",
+          "constant",
+          "remains"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-019",
+      "profile_id": "R10-019-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-020",
+      "profile_id": "R10-020-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "acceleration",
+          "equivalently",
+          "multiplied",
+          "momentum"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-020",
+      "profile_id": "R10-020-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-021",
+      "profile_id": "R10-021-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "directions",
+          "magnitude",
+          "opposite"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-021",
+      "profile_id": "R10-021-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-022",
+      "profile_id": "R10-022-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "principle",
+          "expresses"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-022",
+      "profile_id": "R10-022-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-023",
+      "profile_id": "R10-023-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "equilibrium",
+          "mechanical",
+          "accelerate",
+          "newton's"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-023",
+      "profile_id": "R10-023-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-024",
+      "profile_id": "R10-024-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "direction",
+          "magnitude",
+          "opposite",
+          "exerting"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-024",
+      "profile_id": "R10-024-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-025",
+      "profile_id": "R10-025-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "self-gravity",
+          "together"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-025",
+      "profile_id": "R10-025-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-025",
+      "profile_id": "R10-025-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "self-gravity"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-025",
+      "profile_id": "R10-025-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "self-gravity",
+          "together",
+          "spheroid"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-025",
+      "profile_id": "R10-025-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "self-gravity"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-025",
+      "profile_id": "R10-025-calib-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-025",
+      "profile_id": "R10-025-calib-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-025",
+      "profile_id": "R10-025-calib-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-026",
+      "profile_id": "R10-026-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "nearest"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-026",
+      "profile_id": "R10-026-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-027",
+      "profile_id": "R10-027-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "thermonuclear",
+          "hydrogen",
+          "shines",
+          "active"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-027",
+      "profile_id": "R10-027-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-028",
+      "profile_id": "R10-028-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "traverses",
+          "interior",
+          "radiates"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-028",
+      "profile_id": "R10-028-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-029",
+      "profile_id": "R10-029-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "sufficiently",
+          "lifetime",
+          "massive",
+          "neutron"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-029",
+      "profile_id": "R10-029-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-030",
+      "profile_id": "R10-030-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "nucleosynthesis",
+          "naturally",
+          "occurring",
+          "remnants"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-030",
+      "profile_id": "R10-030-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-031",
+      "profile_id": "R10-031-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "planetary-mass",
+          "volcanic",
+          "chamber"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-031",
+      "profile_id": "R10-031-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-031",
+      "profile_id": "R10-031-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "planetary-mass"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-031",
+      "profile_id": "R10-031-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "planetary-mass",
+          "volcanic",
+          "chamber"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-031",
+      "profile_id": "R10-031-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "planetary-mass"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-031",
+      "profile_id": "R10-031-calib-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-031",
+      "profile_id": "R10-031-calib-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-031",
+      "profile_id": "R10-031-calib-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-032",
+      "profile_id": "R10-032-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "non-explosive",
+          "convergent",
+          "resulting",
+          "divergent"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-032",
+      "profile_id": "R10-032-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-033",
+      "profile_id": "R10-033-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "expansion",
+          "volcanism",
+          "adiabatic",
+          "decrease"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-033",
+      "profile_id": "R10-033-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-034",
+      "profile_id": "R10-034-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "dissolved",
+          "decreases",
+          "commonly"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-034",
+      "profile_id": "R10-034-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-035",
+      "profile_id": "R10-035-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "sand-sized",
+          "particles"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-035",
+      "profile_id": "R10-035-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-036",
+      "profile_id": "R10-036-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "volcanoes",
+          "inactive",
+          "advances"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-036",
+      "profile_id": "R10-036-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-037",
+      "profile_id": "R10-037-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "continuously"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-037",
+      "profile_id": "R10-037-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-037",
+      "profile_id": "R10-037-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "continuously"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-037",
+      "profile_id": "R10-037-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "continuously",
+          "understood",
+          "phenomena"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-037",
+      "profile_id": "R10-037-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "continuously"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-037",
+      "profile_id": "R10-037-calib-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-037",
+      "profile_id": "R10-037-calib-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-037",
+      "profile_id": "R10-037-calib-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-038",
+      "profile_id": "R10-038-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "hydroelectricity",
+          "geothermal"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-038",
+      "profile_id": "R10-038-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-039",
+      "profile_id": "R10-039-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "electricity",
+          "hydropower",
+          "precisely"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-039",
+      "profile_id": "R10-039-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-040",
+      "profile_id": "R10-040-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "conditions"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-040",
+      "profile_id": "R10-040-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-041",
+      "profile_id": "R10-041-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "renewable",
+          "pollute"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-041",
+      "profile_id": "R10-041-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-042",
+      "profile_id": "R10-042-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "electricity",
+          "conversion",
+          "efficiency"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-042",
+      "profile_id": "R10-042-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-043",
+      "profile_id": "R10-043-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "mathematically",
+          "instructions",
+          "mathematics"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-043",
+      "profile_id": "R10-043-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-043",
+      "profile_id": "R10-043-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "mathematically"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-043",
+      "profile_id": "R10-043-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "mathematically",
+          "instructions",
+          "mathematics"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-043",
+      "profile_id": "R10-043-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "mathematically"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-043",
+      "profile_id": "R10-043-calib-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-043",
+      "profile_id": "R10-043-calib-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-043",
+      "profile_id": "R10-043-calib-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-044",
+      "profile_id": "R10-044-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "specifications",
+          "calculations"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-044",
+      "profile_id": "R10-044-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-045",
+      "profile_id": "R10-045-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "conditionals",
+          "inferences",
+          "algorithms"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-045",
+      "profile_id": "R10-045-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-046",
+      "profile_id": "R10-046-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "well-defined",
+          "heuristic",
+          "approach"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-046",
+      "profile_id": "R10-046-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-047",
+      "profile_id": "R10-047-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "terminating",
+          "computation"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-047",
+      "profile_id": "R10-047-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-048",
+      "profile_id": "R10-048-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "eventually",
+          "algorithm"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-048",
+      "profile_id": "R10-048-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-049",
+      "profile_id": "R10-049-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "probability",
+          "between",
+          "likely"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-049",
+      "profile_id": "R10-049-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-049",
+      "profile_id": "R10-049-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "probability"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-049",
+      "profile_id": "R10-049-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "probability",
+          "between",
+          "likely"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-049",
+      "profile_id": "R10-049-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "probability"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-049",
+      "profile_id": "R10-049-calib-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-049",
+      "profile_id": "R10-049-calib-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-049",
+      "profile_id": "R10-049-calib-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-050",
+      "profile_id": "R10-050-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "percentage"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-050",
+      "profile_id": "R10-050-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-051",
+      "profile_id": "R10-051-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "probability",
+          "outcomes",
+          "possible",
+          "probable"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-051",
+      "profile_id": "R10-051-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-052",
+      "profile_id": "R10-052-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "probability",
+          "numerical"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-052",
+      "profile_id": "R10-052-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-053",
+      "profile_id": "R10-053-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "probability",
+          "getting",
+          "outcome"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-053",
+      "profile_id": "R10-053-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-054",
+      "profile_id": "R10-054-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "indefinitely",
+          "experiment's",
+          "frequentist",
+          "probability"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-054",
+      "profile_id": "R10-054-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-055",
+      "profile_id": "R10-055-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "economics",
+          "inflation"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-055",
+      "profile_id": "R10-055-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-055",
+      "profile_id": "R10-055-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "economics"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-055",
+      "profile_id": "R10-055-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "economics",
+          "inflation",
+          "increase"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-055",
+      "profile_id": "R10-055-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "economics"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-055",
+      "profile_id": "R10-055-calib-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-055",
+      "profile_id": "R10-055-calib-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-055",
+      "profile_id": "R10-055-calib-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-056",
+      "profile_id": "R10-056-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "currency",
+          "services",
+          "general"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-056",
+      "profile_id": "R10-056-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-057",
+      "profile_id": "R10-057-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "attributed",
+          "increases",
+          "inflation"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-057",
+      "profile_id": "R10-057-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-058",
+      "profile_id": "R10-058-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "opportunity",
+          "negative",
+          "increase"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-058",
+      "profile_id": "R10-058-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-059",
+      "profile_id": "R10-059-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "unemployment",
+          "reducing",
+          "rigidity"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-059",
+      "profile_id": "R10-059-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-060",
+      "profile_id": "R10-060-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "recessions",
+          "likelihood",
+          "inflation",
+          "enabling"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-060",
+      "profile_id": "R10-060-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-061",
+      "profile_id": "R10-061-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "construction",
+          "professional",
+          "engineering"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-061",
+      "profile_id": "R10-061-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-061",
+      "profile_id": "R10-061-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "construction"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-061",
+      "profile_id": "R10-061-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "construction",
+          "professional",
+          "engineering"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-061",
+      "profile_id": "R10-061-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "construction"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-061",
+      "profile_id": "R10-061-calib-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-061",
+      "profile_id": "R10-061-calib-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-061",
+      "profile_id": "R10-061-calib-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-062",
+      "profile_id": "R10-062-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "sub-disciplines"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-062",
+      "profile_id": "R10-062-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-063",
+      "profile_id": "R10-063-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "understanding",
+          "intricately",
+          "engineering"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-063",
+      "profile_id": "R10-063-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-064",
+      "profile_id": "R10-064-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "self-proclaimed",
+          "constructed"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-064",
+      "profile_id": "R10-064-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-065",
+      "profile_id": "R10-065-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "communications",
+          "specialized",
+          "surveyors"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-065",
+      "profile_id": "R10-065-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-066",
+      "profile_id": "R10-066-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "aerostructure",
+          "engineering",
+          "structural"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-066",
+      "profile_id": "R10-066-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-067",
+      "profile_id": "R10-067-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "completely"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-067",
+      "profile_id": "R10-067-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-067",
+      "profile_id": "R10-067-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "completely"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-067",
+      "profile_id": "R10-067-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "completely",
+          "earlier",
+          "forgot"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-067",
+      "profile_id": "R10-067-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "completely"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-067",
+      "profile_id": "R10-067-calib-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-067",
+      "profile_id": "R10-067-calib-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-067",
+      "profile_id": "R10-067-calib-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-068",
+      "profile_id": "R10-068-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "meeting"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-068",
+      "profile_id": "R10-068-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-069",
+      "profile_id": "R10-069-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "traffic",
+          "little"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-069",
+      "profile_id": "R10-069-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-070",
+      "profile_id": "R10-070-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "restaurant",
+          "everyone"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-070",
+      "profile_id": "R10-070-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-071",
+      "profile_id": "R10-071-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "decided",
+          "driving"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-071",
+      "profile_id": "R10-071-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-072",
+      "profile_id": "R10-072-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "mentioned",
+          "probably"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-072",
+      "profile_id": "R10-072-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-073",
+      "profile_id": "R10-073-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "professor"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-073",
+      "profile_id": "R10-073-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-073",
+      "profile_id": "R10-073-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "professor"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-073",
+      "profile_id": "R10-073-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "professor",
+          "explained",
+          "concept"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-073",
+      "profile_id": "R10-073-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "professor"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-073",
+      "profile_id": "R10-073-calib-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-073",
+      "profile_id": "R10-073-calib-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-073",
+      "profile_id": "R10-073-calib-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-074",
+      "profile_id": "R10-074-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "encouraged",
+          "material"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-074",
+      "profile_id": "R10-074-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-075",
+      "profile_id": "R10-075-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "everything"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-075",
+      "profile_id": "R10-075-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-076",
+      "profile_id": "R10-076-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "methods",
+          "teacher",
+          "student"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-076",
+      "profile_id": "R10-076-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-077",
+      "profile_id": "R10-077-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "significantly",
+          "reviewing",
+          "improved"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-077",
+      "profile_id": "R10-077-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-078",
+      "profile_id": "R10-078-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "assignment",
+          "before"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-078",
+      "profile_id": "R10-078-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-079",
+      "profile_id": "R10-079-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "everyone"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-079",
+      "profile_id": "R10-079-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-079",
+      "profile_id": "R10-079-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "everyone"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-079",
+      "profile_id": "R10-079-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "everyone",
+          "manager",
+          "reports"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-079",
+      "profile_id": "R10-079-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "everyone"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-079",
+      "profile_id": "R10-079-calib-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-079",
+      "profile_id": "R10-079-calib-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-079",
+      "profile_id": "R10-079-calib-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-080",
+      "profile_id": "R10-080-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "understaffed",
+          "deadlines"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-080",
+      "profile_id": "R10-080-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-081",
+      "profile_id": "R10-081-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "expectations",
+          "consistently",
+          "performance"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-081",
+      "profile_id": "R10-081-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-082",
+      "profile_id": "R10-082-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "employees",
+          "doesn't",
+          "policy"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-082",
+      "profile_id": "R10-082-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-083",
+      "profile_id": "R10-083-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "candidates",
+          "experience",
+          "didn't",
+          "though"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-083",
+      "profile_id": "R10-083-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-084",
+      "profile_id": "R10-084-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "previous",
+          "monday"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-084",
+      "profile_id": "R10-084-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-085",
+      "profile_id": "R10-085-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "weather",
+          "delayed"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-085",
+      "profile_id": "R10-085-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-085",
+      "profile_id": "R10-085-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "weather"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-085",
+      "profile_id": "R10-085-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "weather",
+          "delayed",
+          "flight"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-085",
+      "profile_id": "R10-085-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "weather"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-085",
+      "profile_id": "R10-085-calib-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-085",
+      "profile_id": "R10-085-calib-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-085",
+      "profile_id": "R10-085-calib-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-086",
+      "profile_id": "R10-086-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "departure",
+          "airport"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-086",
+      "profile_id": "R10-086-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-087",
+      "profile_id": "R10-087-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "station",
+          "stayed",
+          "closer"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-087",
+      "profile_id": "R10-087-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-088",
+      "profile_id": "R10-088-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "everything",
+          "skipped",
+          "museum"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-088",
+      "profile_id": "R10-088-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-089",
+      "profile_id": "R10-089-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "recommended",
+          "crowded"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-089",
+      "profile_id": "R10-089-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-090",
+      "profile_id": "R10-090-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "remember",
+          "passport"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-090",
+      "profile_id": "R10-090-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-091",
+      "profile_id": "R10-091-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "original",
+          "slightly"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-091",
+      "profile_id": "R10-091-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-091",
+      "profile_id": "R10-091-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "original"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-091",
+      "profile_id": "R10-091-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "original",
+          "slightly",
+          "version"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-091",
+      "profile_id": "R10-091-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "original"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-091",
+      "profile_id": "R10-091-calib-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-091",
+      "profile_id": "R10-091-calib-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-091",
+      "profile_id": "R10-091-calib-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-092",
+      "profile_id": "R10-092-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "golden"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-092",
+      "profile_id": "R10-092-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-093",
+      "profile_id": "R10-093-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "develop",
+          "flavors"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-093",
+      "profile_id": "R10-093-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-094",
+      "profile_id": "R10-094-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "carefully",
+          "shellfish"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-094",
+      "profile_id": "R10-094-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-095",
+      "profile_id": "R10-095-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "overcook",
+          "pasta",
+          "don't"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-095",
+      "profile_id": "R10-095-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-096",
+      "profile_id": "R10-096-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "supermarket's",
+          "noticeably"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-096",
+      "profile_id": "R10-096-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-097",
+      "profile_id": "R10-097-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "apologized"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-097",
+      "profile_id": "R10-097-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-097",
+      "profile_id": "R10-097-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "apologized"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-097",
+      "profile_id": "R10-097-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "apologized",
+          "showing",
+          "party"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-097",
+      "profile_id": "R10-097-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "apologized"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-097",
+      "profile_id": "R10-097-calib-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-097",
+      "profile_id": "R10-097-calib-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-097",
+      "profile_id": "R10-097-calib-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-098",
+      "profile_id": "R10-098-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "considered",
+          "interrupt"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-098",
+      "profile_id": "R10-098-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-099",
+      "profile_id": "R10-099-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "comment",
+          "anyone",
+          "didn't"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-099",
+      "profile_id": "R10-099-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-100",
+      "profile_id": "R10-100-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "childhood",
+          "they've",
+          "friends"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-100",
+      "profile_id": "R10-100-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-101",
+      "profile_id": "R10-101-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "invitation",
+          "surprised"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-101",
+      "profile_id": "R10-101-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-102",
+      "profile_id": "R10-102-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "nervous"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-102",
+      "profile_id": "R10-102-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-103",
+      "profile_id": "R10-103-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "staircase",
+          "creaked"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-103",
+      "profile_id": "R10-103-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-103",
+      "profile_id": "R10-103-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "staircase"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-103",
+      "profile_id": "R10-103-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "staircase",
+          "creaked",
+          "narrow"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-103",
+      "profile_id": "R10-103-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "staircase"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-103",
+      "profile_id": "R10-103-calib-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-103",
+      "profile_id": "R10-103-calib-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-103",
+      "profile_id": "R10-103-calib-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-104",
+      "profile_id": "R10-104-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "surprisingly"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-104",
+      "profile_id": "R10-104-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-105",
+      "profile_id": "R10-105-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "suggested",
+          "mountain",
+          "rockier"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-105",
+      "profile_id": "R10-105-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-106",
+      "profile_id": "R10-106-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "settled",
+          "sunrise"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-106",
+      "profile_id": "R10-106-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-107",
+      "profile_id": "R10-107-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "whenever",
+          "strange"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-107",
+      "profile_id": "R10-107-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-108",
+      "profile_id": "R10-108-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "corner",
+          "single"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-108",
+      "profile_id": "R10-108-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-109",
+      "profile_id": "R10-109-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "replace",
+          "fixture"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-109",
+      "profile_id": "R10-109-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-109",
+      "profile_id": "R10-109-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "replace"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-109",
+      "profile_id": "R10-109-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "replace",
+          "fixture",
+          "attempt"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-109",
+      "profile_id": "R10-109-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "replace"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-109",
+      "profile_id": "R10-109-calib-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-109",
+      "profile_id": "R10-109-calib-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-109",
+      "profile_id": "R10-109-calib-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-110",
+      "profile_id": "R10-110-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "appliance"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-110",
+      "profile_id": "R10-110-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-111",
+      "profile_id": "R10-111-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "seconds",
+          "button"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-111",
+      "profile_id": "R10-111-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-112",
+      "profile_id": "R10-112-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "carefully",
+          "tearing",
+          "printer"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-112",
+      "profile_id": "R10-112-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-113",
+      "profile_id": "R10-113-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "according"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-113",
+      "profile_id": "R10-113-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-114",
+      "profile_id": "R10-114-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "medication",
+          "somewhere"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-114",
+      "profile_id": "R10-114-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-115",
+      "profile_id": "R10-115-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "harder",
+          "update",
+          "easier"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-115",
+      "profile_id": "R10-115-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-115",
+      "profile_id": "R10-115-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "harder"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-115",
+      "profile_id": "R10-115-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "harder",
+          "update",
+          "easier"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-115",
+      "profile_id": "R10-115-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "harder"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-115",
+      "profile_id": "R10-115-calib-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-115",
+      "profile_id": "R10-115-calib-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-115",
+      "profile_id": "R10-115-calib-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-116",
+      "profile_id": "R10-116-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "original",
+          "sequel"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-116",
+      "profile_id": "R10-116-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-117",
+      "profile_id": "R10-117-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "productive",
+          "convinced",
+          "remote"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-117",
+      "profile_id": "R10-117-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-118",
+      "profile_id": "R10-118-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "overrated",
+          "genuinely"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-118",
+      "profile_id": "R10-118-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-119",
+      "profile_id": "R10-119-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "something",
+          "mediocre"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-119",
+      "profile_id": "R10-119-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-120",
+      "profile_id": "R10-120-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "honestly"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-120",
+      "profile_id": "R10-120-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-121",
+      "profile_id": "R10-121-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "weekdays",
+          "weekends"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-121",
+      "profile_id": "R10-121-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-121",
+      "profile_id": "R10-121-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "weekdays"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-121",
+      "profile_id": "R10-121-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "weekdays",
+          "weekends",
+          "library"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-121",
+      "profile_id": "R10-121-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "weekdays"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-121",
+      "profile_id": "R10-121-calib-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-121",
+      "profile_id": "R10-121-calib-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-121",
+      "profile_id": "R10-121-calib-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-122",
+      "profile_id": "R10-122-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "factories"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-122",
+      "profile_id": "R10-122-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-123",
+      "profile_id": "R10-123-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "twentieth",
+          "renovated"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-123",
+      "profile_id": "R10-123-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-124",
+      "profile_id": "R10-124-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "public",
+          "parks"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-124",
+      "profile_id": "R10-124-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-125",
+      "profile_id": "R10-125-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "doesn't",
+          "earlier",
+          "store"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-125",
+      "profile_id": "R10-125-core-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-126",
+      "profile_id": "R10-126-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "people",
+          "decade",
+          "fewer"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-126",
+      "profile_id": "R10-126-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-127",
+      "profile_id": "R10-127-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "neighbouring",
+          "lochfield"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-127",
+      "profile_id": "R10-127-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-127",
+      "profile_id": "R10-127-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "neighbouring"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-127",
+      "profile_id": "R10-127-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "neighbouring",
+          "lochfield",
+          "alexander"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-127",
+      "profile_id": "R10-127-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "neighbouring"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-127",
+      "profile_id": "R10-127-calib-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-127",
+      "profile_id": "R10-127-calib-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-127",
+      "profile_id": "R10-127-calib-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-128",
+      "profile_id": "R10-128-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "alexander",
+          "surviving"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-128",
+      "profile_id": "R10-128-core-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-129",
+      "profile_id": "R10-129-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "scholarship",
+          "institution",
+          "polytechnic"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-129",
+      "profile_id": "R10-129-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-130",
+      "profile_id": "R10-130-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "twenty-year-old",
+          "inherited"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-130",
+      "profile_id": "R10-130-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-131",
+      "profile_id": "R10-131-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "suggested"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-131",
+      "profile_id": "R10-131-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-132",
+      "profile_id": "R10-132-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "paddington"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-132",
+      "profile_id": "R10-132-core-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-133",
+      "profile_id": "R10-133-core-word",
+      "profile_type": "sentence_specific_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "distinction"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-133",
+      "profile_id": "R10-133-core-single_sound",
+      "profile_type": "single_sound",
+      "spec": {
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-133",
+      "profile_id": "R10-133-calib-single_word",
+      "profile_type": "single_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "distinction"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-133",
+      "profile_id": "R10-133-calib-multi_word",
+      "profile_type": "multi_word",
+      "spec": {
+        "sounds": [],
+        "words": [
+          "distinction",
+          "qualified",
+          "school"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-133",
+      "profile_id": "R10-133-calib-word_plus_sound",
+      "profile_type": "word_plus_sound",
+      "spec": {
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "distinction"
+        ],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-133",
+      "profile_id": "R10-133-calib-multi_sound",
+      "profile_type": "multi_sound",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-133",
+      "profile_id": "R10-133-calib-sparse_common_sound",
+      "profile_type": "sparse_common_sound",
+      "spec": {
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      }
+    },
+    {
+      "sentence_id": "R10-133",
+      "profile_id": "R10-133-calib-dense_mixed_generic",
+      "profile_type": "dense_mixed_generic",
+      "spec": {
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      }
+    }
+  ]
+}

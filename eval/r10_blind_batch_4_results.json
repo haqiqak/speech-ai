@@ -1,0 +1,338 @@
+{
+  "R10-080-core-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"slip\" (deadlines slipping = becoming delayed) was replaced with \"trip\", which is not used to describe deadlines and produces a nonsensical claim; the sentence no longer states that deadlines may be delayed."
+  },
+  "R10-081-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"expectation\" was left singular/bare (\"exceeded expectation\") where the plural \"expectations\" is expected, producing a mildly ungrammatical result; meaning is otherwise preserved."
+  },
+  "R10-082-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"policy\"->\"policies\" and \"employees\"->\"workers\" are natural synonymous substitutions that preserve the original claim and remain grammatical."
+  },
+  "R10-083-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"experience\"->\"example\" and \"candidates\"->\"elections\" are both wrong-sense substitutions that turn the sentence into nonsense (\"more example than the other elections\"), losing the original meaning entirely."
+  },
+  "R10-084-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"previous week\"->\"past week\" is a natural near-synonymous substitution that preserves the meaning of the sentence."
+  },
+  "R10-084-core-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"went wrong\"->\"went faulty\" narrows a general statement about problems to one implying mechanical/equipment failure, an unnatural collocation (\"faulty\" is not normally paired with \"go\") that shifts the meaning."
+  },
+  "R10-085-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"delayed\"->\"waited\" produces an ungrammatical passive construction (\"was waited\") that does not convey the original claim that the flight was late."
+  },
+  "R10-085-calib-single_word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "Only \"weather\"->\"conditions\" changed, a faithful synonym that preserves meaning and grammar."
+  },
+  "R10-085-calib-word_plus_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "Identical to the calib-single_word variant; \"weather\"->\"conditions\" is a faithful synonym substitution."
+  },
+  "R10-086-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"airport\"->\"airline\" replaces the physical location one arrives at with a company name, producing a factually wrong claim (\"arrive at the airline\")."
+  },
+  "R10-087-core-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "\"stayed at\"->\"continued at\" no longer conveys lodging at a hotel, and \"train station\"->\"train place\" is vague; together they obscure what is being compared to the current hotel."
+  },
+  "R10-088-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"skipped the museum\" (did not go) was changed to \"went to the museums instead\" (did go), directly reversing the stated outcome."
+  },
+  "R10-088-core-sparse_common_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"see\"->\"watch\" and \"skipped\"->\"missed\" are acceptable near-synonyms that preserve the original claim that the museum was not visited."
+  },
+  "R10-089-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"crowded\"->\"bunched\" is an odd word choice for describing a beach's crowd level; the intended meaning is still inferable but the usage is nonstandard."
+  },
+  "R10-089-core-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"smaller\"->\"least\" leaves an incomplete, ungrammatical fragment (\"a least, less crowded beach\") that does not parse as valid English."
+  },
+  "R10-091-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"original version\"->\"new version\" swaps in a near-opposite term, reversing which version is being compared to; \"little less\" also drops the article \"a\"."
+  },
+  "R10-091-core-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"recipe\"->\"cooking\" is a category mismatch (\"this cooking calls for\" is odd since a process, not a recipe, doesn't \"call for\" ingredients); \"little less\" also omits the article \"a\"."
+  },
+  "R10-091-calib-single_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"original version\"->\"new version\" reverses which version is the point of comparison, the same reversal as in the core-word variant."
+  },
+  "R10-091-calib-multi_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "OTHER",
+    "secondary_defects": [],
+    "rationale": "\"the original version\"->\"the originally adapted recipe\" introduces an unwarranted implication (that the recipe was adapted from something else) not present in the source, a confusing restructuring even though \"slightly less\"->\"a little less\" is fine."
+  },
+  "R10-091-calib-word_plus_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "Same \"original\"->\"new\" reversal as the other calib variants of this sentence."
+  },
+  "R10-091-calib-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"slightly less\"->\"little less\" drops the article \"a\", a mild ungrammaticality; \"original version\" is preserved correctly."
+  },
+  "R10-091-calib-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"recipe\"->\"cooking\" is a category mismatch as in the core-multi_sound variant, and \"little less\" again drops the article \"a\"; \"original version\" is correctly preserved."
+  },
+  "R10-092-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "\"golden brown\" is a fixed culinary color term; substituting \"gold\" breaks the idiom into the nonstandard \"gold brown\", though the intended color is still roughly understood."
+  },
+  "R10-093-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"develop\" (flavors intensify/mature over time) was replaced with \"produce\", which normally requires an object and leaves \"time to produce\" incomplete and unclear about what is being produced."
+  },
+  "R10-094-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"shellfish\"->\"shell\" drops the food referent entirely (an allergy to \"shell\" is a different, ambiguous claim), and \"carefully\"->\"severely\" is the wrong sense (severely does not mean carefully)."
+  },
+  "R10-096-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"noticeably\"->\"notably\" is a faithful synonym substitution."
+  },
+  "R10-096-core-single_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"street\"->\"road\" is a faithful synonym substitution that preserves meaning."
+  },
+  "R10-097-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"apologized\"->\"apologised\" is only a British-spelling variant; meaning and grammar are unchanged."
+  },
+  "R10-097-calib-single_word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "Same spelling-only variant as above; no meaning change."
+  },
+  "R10-097-calib-word_plus_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "Same spelling-only variant; no meaning change."
+  },
+  "R10-098-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"considered impolite\"->\"taken impolite\" omits the required \"as\" (\"taken as impolite\"), a grammatical defect, though the meaning is still inferable; the pre-existing \"interrupts\" typo in the original is unchanged and not attributable to this rewrite."
+  },
+  "R10-098-core-dense_mixed_generic": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"someone\"->\"people\" and \"speaking\"->\"talking\" are natural synonymous substitutions that preserve meaning; the pre-existing \"interrupts\" error is carried over unchanged from the original, not introduced by this rewrite."
+  },
+  "R10-099-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"anyone\"->\"guy\" narrows a general, gender-neutral statement to a specific male referent not supported by the original, and drops the article (\"offend guy\"), changing both meaning and grammaticality."
+  },
+  "R10-100-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"friends\"->\"friendships\" creates a subject-complement mismatch (\"they've been friendships\"), and \"childhood\"->\"child\" drops the \"-hood\" suffix, together producing a badly malformed sentence."
+  },
+  "R10-100-core-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"see each other\"->\"find each other\" is an odd substitution that could suggest difficulty locating one another rather than simply meeting infrequently, though the overall gist about reduced contact still comes through."
+  },
+  "R10-101-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"surprised\" (everyone felt surprise) was changed to \"surprising\" (everyone caused surprise), reversing the subject's role in the event."
+  },
+  "R10-101-core-sparse_common_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"surprised\"->\"shocked\" is a faithful, slightly stronger synonym that preserves the original meaning."
+  },
+  "R10-102-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"nervous\"->\"anxious\" is an acceptable near-synonym in this context; the pre-existing \"feels\" agreement error in the original is unchanged."
+  },
+  "R10-102-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"someone\"->\"person\" drops the required article (\"meeting person\" should be \"meeting a person\"), a mild grammatical defect; meaning is otherwise preserved."
+  },
+  "R10-103-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"creaked\"->\"noised\" uses \"noise\" as an intransitive verb in a way that is not standard modern English, leaving \"stairs that noised\" unclear/unnatural to a listener."
+  },
+  "R10-103-calib-single_word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"staircase\"->\"stairs\" is a natural near-synonym that preserves meaning; \"creaked\" is unchanged."
+  },
+  "R10-103-calib-word_plus_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "Same \"staircase\"->\"stairs\" substitution as the single_word variant; meaning fully preserved."
+  },
+  "R10-104-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"surprisingly\"->\"unusually\" is a faithful synonym that preserves the original meaning."
+  },
+  "R10-104-core-dense_mixed_generic": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"small\"->\"little\" and \"surprisingly\"->\"oddly\" are acceptable near-synonyms that keep the sentence's overall meaning intact."
+  },
+  "R10-105-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"rockier\" was rendered as the misspelled/nonstandard comparative \"rockyer\", and \"suggested\"->\"suggests\" breaks tense agreement with the past-tense \"was\", together making the sentence read as broken English."
+  },
+  "R10-105-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"steeper\"->\"higher\" swaps one physical property (incline/steepness) for a different one (elevation), asserting a different physical characteristic of the trail than the original stated."
+  },
+  "R10-106-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"settled\"->\"decided\" anthropomorphizes the fog with a verb of intention that fog cannot perform, producing a nonsensical claim (\"fog decided over the valley\")."
+  },
+  "R10-107-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"strange\"->\"weird\" is a faithful synonym substitution that preserves the original meaning."
+  }
+}

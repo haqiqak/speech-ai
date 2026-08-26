@@ -1,0 +1,2148 @@
+{
+  "r9b_threshold": 0.5791,
+  "r9c_threshold": 0.5845,
+  "predictions": [
+    {
+      "run_id": "R10-001-core-word",
+      "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+      "reformulated_text": "Digestion involves the breakdown of food into smaller and smaller parts, until they can be absorbed and absorbed into the body.",
+      "p_clean_9b": 0.5416209697723389,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5266014337539673,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-001-core-sparse_common_sound",
+      "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+      "reformulated_text": "Digestion involves the breakdown of food into least and finer components, until they can be absorbed and assimilated into the body.",
+      "p_clean_9b": 0.5328505635261536,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5217605233192444,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-001-calib-single_word",
+      "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+      "reformulated_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and absorbed into the body.",
+      "p_clean_9b": 0.5457094311714172,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5269209742546082,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-001-calib-word_plus_sound",
+      "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+      "reformulated_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and absorbed into the body.",
+      "p_clean_9b": 0.5457094311714172,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5269209742546082,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-001-calib-multi_sound",
+      "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+      "reformulated_text": "Digestion involves the breakdown of food into least and finer components, until they can be absorbed and assimilated into the body.",
+      "p_clean_9b": 0.5328505635261536,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5217605233192444,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-001-calib-dense_mixed_generic",
+      "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+      "reformulated_text": "Digestion involves the breakdown of food into least and finer components, until they can be absorbed and assimilated into the body.",
+      "p_clean_9b": 0.5328505635261536,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5217605233192444,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-002-core-word",
+      "original_text": "Chewing mixes the food with saliva to produce a food bolus to be swallowed down the esophagus to enter the stomach.",
+      "reformulated_text": "Chewing mixes the food with saliva to create a food bolus to swallow down the esophageal to enter the stomach.",
+      "p_clean_9b": 0.5553749203681946,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5299932360649109,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-003-core-word",
+      "original_text": "Peristalsis is the rhythmic contraction of muscles that begins in the esophagus and continues along the wall of the stomach and the rest of the gastrointestinal tract.",
+      "reformulated_text": "Peristalaxis is the rhythmic contracting of muscles that begins in the esophagum and continues along the wall of the stomach and the rest of the intestines.",
+      "p_clean_9b": 0.5398627519607544,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5193689465522766,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-004-core-word",
+      "original_text": "Most of the digestion of food takes place in the small intestine.",
+      "reformulated_text": "Most of the digestion of food takes place in the small bowel.",
+      "p_clean_9b": 0.5768399834632874,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5843304991722107,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-004-core-sparse_common_sound",
+      "original_text": "Most of the digestion of food takes place in the small intestine.",
+      "reformulated_text": "Most of the digestion of food takes place in the little intestine.",
+      "p_clean_9b": 0.5458002090454102,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5577850937843323,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-005-core-word",
+      "original_text": "Water and some minerals are reabsorbed back into the blood in the large intestine.",
+      "reformulated_text": "Water and some minerals are assumed back into the blood in the large intestine.",
+      "p_clean_9b": 0.5359182357788086,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5194451212882996,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-006-core-word",
+      "original_text": "Bile acts partly as a surfactant which lowers the surface tension between either two liquids or a solid and a liquid and helps to emulsify the fats in the chyme.",
+      "reformulated_text": "Bile acts partly as a lubricant which lowers the surface pressure between either two solids or a solid and a liquid and helps to emollidate the fats in the chyme.",
+      "p_clean_9b": 0.5341569185256958,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5175403952598572,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-007-core-word",
+      "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+      "reformulated_text": "Nutrition is the chemical and physical process by which an organism uses food and water to support its life.",
+      "p_clean_9b": 0.5503959059715271,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5347340106964111,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-007-core-dense_mixed_generic",
+      "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+      "reformulated_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to give its life.",
+      "p_clean_9b": 0.5379517674446106,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5280771255493164,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-007-calib-single_word",
+      "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+      "reformulated_text": "Nutrition is the biochemical and physical process by which an organism uses food and water to support its life.",
+      "p_clean_9b": 0.5457699298858643,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5316957235336304,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-007-calib-multi_word",
+      "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+      "reformulated_text": "The nutritional process is the biological and physiochemical process by which an organism uses food and water to support its life.",
+      "p_clean_9b": 0.5514227747917175,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5302821397781372,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-007-calib-word_plus_sound",
+      "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+      "reformulated_text": "Nutrition is the biochemical and physical act by which an organism uses food and water to support its life.",
+      "p_clean_9b": 0.5350376963615417,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5252470970153809,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-007-calib-multi_sound",
+      "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+      "reformulated_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to give its life.",
+      "p_clean_9b": 0.5379517674446106,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5280771255493164,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-007-calib-sparse_common_sound",
+      "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+      "reformulated_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to give its life.",
+      "p_clean_9b": 0.5379517674446106,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5280771255493164,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-008-core-word",
+      "original_text": "Over-nutrition of micronutrient is a major cause of obesity and increases the risk of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, stroke, hypertension, coronary heart disease, osteoporosis, and some forms of cancer.",
+      "reformulated_text": "Overnutrition of micronutrients is a major cause of obesity, and increases the risk of developing various noncommunicable diseases ( NCDs ), including type 2 diabetes, stroke, high blood pressure, coronary heart disease, osteoporosis and some forms of cancer.",
+      "p_clean_9b": 0.5379214286804199,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5214559435844421,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-008-core-dense_mixed_generic",
+      "original_text": "Over-nutrition of micronutrient is a major cause of obesity and increases the risk of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, stroke, hypertension, coronary heart disease, osteoporosis, and some forms of cancer.",
+      "reformulated_text": "Over-nutrition of micronutrient is a major cause of obesity and increases the chance of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, shot, hypertension, coronary heart disease, osteoporosis, and some forms of cancer.",
+      "p_clean_9b": 0.5288528203964233,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5172203779220581,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-009-core-word",
+      "original_text": "All forms of life require carbon, energy, and water as well as various other molecules.",
+      "reformulated_text": "All forms of life require carbon, energy, and water as well as various other compounds.",
+      "p_clean_9b": 0.5482502579689026,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5517850518226624,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-010-core-word",
+      "original_text": "Animals require complex nutrients such as carbohydrates, lipids, and proteins, obtaining them by consuming other organisms.",
+      "reformulated_text": "Animals require complex nutrients such as sugars, lipids, and proteins, obtaining them by consuming other beings.",
+      "p_clean_9b": 0.5380427837371826,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5215321183204651,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-011-core-word",
+      "original_text": "Nutrients are absorbed by the cells and used in metabolic biochemical reactions.",
+      "reformulated_text": "Nutritions are absorbed by the cells and used in metabolic biological reactions.",
+      "p_clean_9b": 0.541742205619812,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.534339189529419,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-011-core-sparse_common_sound",
+      "original_text": "Nutrients are absorbed by the cells and used in metabolic biochemical reactions.",
+      "reformulated_text": "Nutrients are absorbed by the cases and used in metabolic biochemical reactions.",
+      "p_clean_9b": 0.5310117602348328,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5307989716529846,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-012-core-word",
+      "original_text": "Nutrient deficiency may be caused by a sudden decrease in nutrient intake or by an inability to absorb essential nutrients.",
+      "reformulated_text": "Nutrient deficiencies can be caused by a sudden decrease in nutrient intake or by an incapacity to absorb vital nutrients.",
+      "p_clean_9b": 0.5554351806640625,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.527027428150177,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-012-core-dense_mixed_generic",
+      "original_text": "Nutrient deficiency may be caused by a sudden decrease in nutrient intake or by an inability to absorb essential nutrients.",
+      "reformulated_text": "Nutrient deficiency may be caused by a quick decrease in nutrient intake or by an inability to absorb essential nutrients.",
+      "p_clean_9b": 0.5522982478141785,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5276359915733337,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-013-core-word",
+      "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+      "reformulated_text": "When chemical reactions occur, the atoms are arranged and the reaction is followed by an energy change as new products are generated.",
+      "p_clean_9b": 0.5414997935295105,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5238618850708008,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-013-calib-single_word",
+      "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+      "reformulated_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new products are generated.",
+      "p_clean_9b": 0.5423482656478882,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5246229767799377,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-013-calib-multi_word",
+      "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+      "reformulated_text": "When chemical reaction occur, the atoms are arranged and the reaction is followed by an energy change as new products are generated.",
+      "p_clean_9b": 0.5358878970146179,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5229483246803284,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-013-calib-word_plus_sound",
+      "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+      "reformulated_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new chemicals are generated.",
+      "p_clean_9b": 0.5373752117156982,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5225067734718323,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-014-core-word",
+      "original_text": "Chemical reactions are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the reactants.",
+      "reformulated_text": "Chemical reactions are usually characterised by a chemical change and they yield one or more products, which usually have different characteristics from the reactionants.",
+      "p_clean_9b": 0.5309053659439087,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.519201397895813,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-014-core-dense_mixed_generic",
+      "original_text": "Chemical reactions are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the reactants.",
+      "reformulated_text": "Chemical answers are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the chemicals.",
+      "p_clean_9b": 0.5311181545257568,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5176928043365479,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-015-core-word",
+      "original_text": "Typically, reaction rates increase with increasing temperature because there is more thermal energy available to reach the activation energy necessary for breaking bonds between atoms.",
+      "reformulated_text": "Usually, reaction rates increase with rising temperatures because there is more thermal energy available to reach the activated energy necessary for breaking bonds between atoms.",
+      "p_clean_9b": 0.5322124361991882,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5195822715759277,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-016-core-word",
+      "original_text": "In a bimolecular reaction, two molecules collide and react with each other.",
+      "reformulated_text": "Two molecules collide and react with each other in a bimol\u00e9cular reaction.",
+      "p_clean_9b": 0.5754090547561646,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.539165198802948,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-017-core-word",
+      "original_text": "The forward and reverse reactions are competing with each other and differ in reaction rates.",
+      "reformulated_text": "The forward and reverse results are rivaling with each other and differ in reaction rates.",
+      "p_clean_9b": 0.5371627807617188,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5241206884384155,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-019-core-word",
+      "original_text": "A body remains at rest, or in motion at a constant speed in a straight line, unless it is acted upon by a force.",
+      "reformulated_text": "A body stays at rest or in motion at a steady speed in a line unless it is acted upon by a force.",
+      "p_clean_9b": 0.5439839363098145,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5251100659370422,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-019-core-sparse_common_sound",
+      "original_text": "A body remains at rest, or in motion at a constant speed in a straight line, unless it is acted upon by a force.",
+      "reformulated_text": "A body remains at rest, or in motion at a constant rate in a right line, unless it is acted upon by a force.",
+      "p_clean_9b": 0.5319388508796692,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5185157060623169,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-020-core-word",
+      "original_text": "At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the rate at which the body's momentum is changing with time.",
+      "reformulated_text": "At any instant of time, the net force on a body is equal to the body's accelerated mass or the rate at which the movement of the body is changing with time.",
+      "p_clean_9b": 0.5401053428649902,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.522796094417572,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-020-core-dense_mixed_generic",
+      "original_text": "At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the rate at which the body's momentum is changing with time.",
+      "reformulated_text": "At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the value at which the body's momentum is changing with time.",
+      "p_clean_9b": 0.537466287612915,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5212274789810181,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-021-core-word",
+      "original_text": "If two bodies exert forces on each other, these forces have the same magnitude but opposite directions.",
+      "reformulated_text": "If two bodies exert forces on each other, these forces have the same size, but opposing direction.",
+      "p_clean_9b": 0.5446802973747253,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5291569232940674,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-021-core-sparse_common_sound",
+      "original_text": "If two bodies exert forces on each other, these forces have the same magnitude but opposite directions.",
+      "reformulated_text": "If two bodies exert forces on each other, these forces have the one magnitude but opposite directions.",
+      "p_clean_9b": 0.5313917994499207,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5201154947280884,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-022-core-word",
+      "original_text": "Newton's first law expresses the principle of inertia: the natural behavior of a body is to move in a straight line at constant speed.",
+      "reformulated_text": "Newton's first law states the rule of inertia: the natural behavior of a body is to move in a straight line at constant speed.",
+      "p_clean_9b": 0.5364039540290833,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5212579369544983,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-022-core-multi_sound",
+      "original_text": "Newton's first law expresses the principle of inertia: the natural behavior of a body is to move in a straight line at constant speed.",
+      "reformulated_text": "Newton's first law expresses the principle of inertia: the natural behavior of a body is to move in a true line at constant velocity.",
+      "p_clean_9b": 0.5334582328796387,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5182871222496033,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-023-core-word",
+      "original_text": "When the net force on a body is equal to zero, then by Newton's second law, the body do not accelerate, and it is said to be in mechanical equilibrium.",
+      "reformulated_text": "When the net force on a body is equal to zero, then by Newton's second law the body does not accelerated, and it is said to be in a physical balance.",
+      "p_clean_9b": 0.5291113257408142,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5172813534736633,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-024-core-word",
+      "original_text": "In other words, if one body exerts a force on a second body, the second body is also exerting a force on the first body, of equal magnitude in the opposite direction.",
+      "reformulated_text": "In other words, if a body exerts a force on a second body, the second body also exerts force on the first body of equal force in the opposing directions.",
+      "p_clean_9b": 0.5387102365493774,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5204353928565979,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-024-core-dense_mixed_generic",
+      "original_text": "In other words, if one body exerts a force on a second body, the second body is also exerting a force on the first body, of equal magnitude in the opposite direction.",
+      "reformulated_text": "In other words, if one body exerts a force on a 2nd body, the 2nd body is also exerting a force on the first body, of equal magnitude in the opposite direction.",
+      "p_clean_9b": 0.5421058535575867,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5265558362007141,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-025-core-word",
+      "original_text": "A star is a luminous spheroid of plasma held together by self-gravity.",
+      "reformulated_text": "A star is a luminous spheroid of plasma, which is surrounded by self gravity.",
+      "p_clean_9b": 0.5625970959663391,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5280771255493164,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-025-calib-single_word",
+      "original_text": "A star is a luminous spheroid of plasma held together by self-gravity.",
+      "reformulated_text": "A star is a luminous spheroid of plasma that is held together by self gravity.",
+      "p_clean_9b": 0.5522680878639221,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.549368679523468,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-025-calib-multi_word",
+      "original_text": "A star is a luminous spheroid of plasma held together by self-gravity.",
+      "reformulated_text": "A star is a luminous sph\u00e9roid of plasma, surrounded by self-gravitational gravity.",
+      "p_clean_9b": 0.5534147620201111,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5257797241210938,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-025-calib-word_plus_sound",
+      "original_text": "A star is a luminous spheroid of plasma held together by self-gravity.",
+      "reformulated_text": "A star is a luminous spheroid of plasma that is held together by self gravity.",
+      "p_clean_9b": 0.5522680878639221,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.549368679523468,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-026-core-word",
+      "original_text": "The nearest star to Earth is the Sun.",
+      "reformulated_text": "The closest star to Earth is the Sun.",
+      "p_clean_9b": 0.5760054588317871,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5627773404121399,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-027-core-word",
+      "original_text": "A star shines for most of its active life due to the thermonuclear fusion of hydrogen into helium in its core.",
+      "reformulated_text": "A star glows in its core for most of its activity life due to the thermonuklear fusion of helium in it.",
+      "p_clean_9b": 0.5428330302238464,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.519902229309082,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-028-core-word",
+      "original_text": "This process releases energy that traverses the star's interior and radiates into outer space.",
+      "reformulated_text": "This process releases energy that passes through the star's inner space and radiate into outer space.",
+      "p_clean_9b": 0.5654786825180054,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5374055504798889,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-029-core-word",
+      "original_text": "At the end of a star's lifetime, fusion ceases and its core becomes a stellar remnant: a white dwarf, a neutron star, or if it is sufficiently massive a black hole.",
+      "reformulated_text": "At the end of a star's life, fusion ceases and its core becomes a stellar remnant: a white dwarf, a neutral star or a black hole if it is sufficient mass.",
+      "p_clean_9b": 0.5337012410163879,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5179519057273865,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-030-core-word",
+      "original_text": "Stellar nucleosynthesis in stars or their remnants create almost all naturally occurring chemical elements heavier than lithium.",
+      "reformulated_text": "Stellar nucleosyntheses in stars or their remains create almost all natural chemical elements heavier than lithium.",
+      "p_clean_9b": 0.5388011932373047,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5217605233192444,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-031-core-word",
+      "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+      "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary mass object that allows hot lava, volcano ash and gases to escape from a magma cave below the surface.",
+      "p_clean_9b": 0.5306469202041626,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5179519057273865,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-031-calib-single_word",
+      "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+      "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+      "p_clean_9b": 0.5442867279052734,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5271187424659729,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-031-calib-multi_word",
+      "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+      "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary mass object that allows hot lava, volcano ash and gases to escape from a magma cave below the surface.",
+      "p_clean_9b": 0.5306469202041626,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5179519057273865,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-031-calib-word_plus_sound",
+      "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+      "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+      "p_clean_9b": 0.5442867279052734,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5271187424659729,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-031-calib-multi_sound",
+      "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+      "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the open.",
+      "p_clean_9b": 0.5323947668075562,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5188204646110535,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-031-calib-sparse_common_sound",
+      "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+      "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the open.",
+      "p_clean_9b": 0.5323947668075562,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5188204646110535,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-031-calib-dense_mixed_generic",
+      "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+      "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the open.",
+      "p_clean_9b": 0.5323947668075562,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5188204646110535,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-032-core-word",
+      "original_text": "Volcanoes resulting from divergent tectonic activity is usually non-explosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
+      "reformulated_text": "Volcanoes arising from divergence of tectonic activity are usually non-explosives, whereas those that result from converged tectic activity cause violent eruptions.",
+      "p_clean_9b": 0.5385282039642334,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.523603081703186,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-032-core-dense_mixed_generic",
+      "original_text": "Volcanoes resulting from divergent tectonic activity is usually non-explosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
+      "reformulated_text": "Volcanoes causing from divergent tectonic activity is usually non-explosive whereas those happening from convergent tectonic activity cause violent eruptions.",
+      "p_clean_9b": 0.5299172401428223,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5236943960189819,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-034-core-word",
+      "original_text": "Magma commonly explodes as the gas dissolved in it comes out of solution as the pressure decreases when it flows to the surface.",
+      "reformulated_text": "Magma often explodes as the gas soluble in it comes out of the solution as the pressure drops when it flows to the surface.",
+      "p_clean_9b": 0.549610435962677,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5231615304946899,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-034-core-dense_mixed_generic",
+      "original_text": "Magma commonly explodes as the gas dissolved in it comes out of solution as the pressure decreases when it flows to the surface.",
+      "reformulated_text": "Magma commonly explodes as the gas dissolved in it comes out of answer as the pressure decreases when it flows to the open.",
+      "p_clean_9b": 0.5297651886940002,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.517829954624176,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-035-core-word",
+      "original_text": "Solid particles smaller than 2 my in diameter ( sand-sized or smaller ) is called volcanic ash.",
+      "reformulated_text": "Solid particle smaller than 2 my in diameter ( sand-size or smaller ) is called volcanic ash.",
+      "p_clean_9b": 0.5365861058235168,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5322124361991882,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-036-core-word",
+      "original_text": "Because tectonic plates move across mantle plumes, each volcano becomes inactive as it drifts off the plume, and new volcanoes are created where the plate advances over the plume.",
+      "reformulated_text": "Because tectonic plates move across mantle plumes, each volcano becomes inactivated as it drifts off the plume, and new volcanic eruptions are created where the plate moves over the plumes.",
+      "p_clean_9b": 0.535736083984375,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5184090733528137,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-037-core-word",
+      "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+      "reformulated_text": "Renewable energy is usually understood as energy harnessed from non-stop occurring natural phenomena.",
+      "p_clean_9b": 0.5500938296318054,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5529320240020752,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-037-calib-single_word",
+      "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+      "reformulated_text": "Renewable energy is usually understood as energy harnessed from non-stop occurring natural phenomena.",
+      "p_clean_9b": 0.5500938296318054,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5529320240020752,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-037-calib-multi_word",
+      "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+      "reformulated_text": "Renewable energy is usually thought of as energy that is harnessed from continually occurring natural phenomenon.",
+      "p_clean_9b": 0.5410754680633545,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.56193608045578,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-037-calib-word_plus_sound",
+      "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+      "reformulated_text": "Renewable energy is usually understood as energy harnessed from non-stop occurring natural phenomena.",
+      "p_clean_9b": 0.5500938296318054,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5529320240020752,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-038-core-word",
+      "original_text": "Solar power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy.",
+      "reformulated_text": "Solar power, wind power, electricity, thermal energy, and biomass is widely agreed to be the main types of renewable energy.",
+      "p_clean_9b": 0.5357968211174011,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5189270973205566,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-038-core-sparse_common_sound",
+      "original_text": "Solar power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy.",
+      "reformulated_text": "Renewable power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy.",
+      "p_clean_9b": 0.5401356220245361,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5188509225845337,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-039-core-word",
+      "original_text": "In contrast, fossil fuel power plants, nuclear power plants and hydropower are usually able to produce precisely the amount of energy an electricity grid requires at a given time.",
+      "reformulated_text": "In contrast, fossil fuel power plants, nuclear power plants and hydro power are usually able to produce exactly the amount of energy that an electric grid requires at a given time.",
+      "p_clean_9b": 0.5376179814338684,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5208162069320679,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-040-core-word",
+      "original_text": "Solar energy can only be captured during the day, and ideally in cloudless conditions.",
+      "reformulated_text": "Solar energy can only be captured during the day, and ideally in cloudless terms.",
+      "p_clean_9b": 0.5335493683815002,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5278793573379517,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-041-core-word",
+      "original_text": "In general, renewable energy sources pollute much less than fossil fuels.",
+      "reformulated_text": "In general, alternative energy sources are much less polluting than fossil fuels.",
+      "p_clean_9b": 0.5485827922821045,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5294610857963562,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-042-core-word",
+      "original_text": "Water can generate electricity with a conversion efficiency of about 90%, which is the highest rate in renewable energy.",
+      "reformulated_text": "Water can generate power with a convertibility of about 90%, which is the highest rate in renewable energy.",
+      "p_clean_9b": 0.5345821380615234,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5197955369949341,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-042-core-dense_mixed_generic",
+      "original_text": "Water can generate electricity with a conversion efficiency of about 90%, which is the highest rate in renewable energy.",
+      "reformulated_text": "Water can generate electricity with a conversion efficiency of about 90 %, which is the highest value in extended energy.",
+      "p_clean_9b": 0.5278337001800537,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.519201397895813,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-043-core-word",
+      "original_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+      "reformulated_text": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction, typically used to solve a class of specific problems or to perform a computation.",
+      "p_clean_9b": 0.5311790108680725,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5200088620185852,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-043-calib-single_word",
+      "original_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+      "reformulated_text": "In mathematics and computer science, an algorithm is a finite sequence of formally rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+      "p_clean_9b": 0.5326682329177856,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5191556811332703,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-043-calib-multi_word",
+      "original_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+      "reformulated_text": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction, typically used to solve a class of specific problems or to perform a computation.",
+      "p_clean_9b": 0.5311790108680725,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5200088620185852,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-043-calib-word_plus_sound",
+      "original_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+      "reformulated_text": "In mathematics and computer science, an algorithm is a finite sequence of formally rigorous logical instructions, typically used to solve a class of specific jobs or to perform a computation.",
+      "p_clean_9b": 0.5279706716537476,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5170069932937622,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-044-core-word",
+      "original_text": "Algorithms is used as specifications for performing calculations and data processing.",
+      "reformulated_text": "Algorithms is used as descriptions for performing maths and data processing.",
+      "p_clean_9b": 0.5350984334945679,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.532181978225708,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-044-core-dense_mixed_generic",
+      "original_text": "Algorithms is used as specifications for performing calculations and data processing.",
+      "reformulated_text": "Algorithms is used as descriptions for performing calculations and data processing.",
+      "p_clean_9b": 0.5371324419975281,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5362218022346497,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-045-core-word",
+      "original_text": "More advanced algorithms can use conditionals to divert the code execution through various routes and deduce valid inferences.",
+      "reformulated_text": "A more advanced algorithm can use conditional methods to divert the code execution through various routes and to deduce valid conclusions.",
+      "p_clean_9b": 0.5385282039642334,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5191556811332703,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-047-core-word",
+      "original_text": "Starting from an initial state and input, a computation occurs at each step, eventually producing output and terminating.",
+      "reformulated_text": "Starting from an initial state and input, a computing occurs at each step, eventually producing output and end.",
+      "p_clean_9b": 0.532759428024292,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5221869945526123,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-048-core-multi_sound",
+      "original_text": "In general, a program is an algorithm only if it stops eventually.",
+      "reformulated_text": "In general, a program is an algorithm only if it quits eventually.",
+      "p_clean_9b": 0.5506376028060913,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5545608997344971,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-049-calib-single_word",
+      "original_text": "The probability of an event is a number between 0 and 1; the larger the probability, the more likely an event is to occur.",
+      "reformulated_text": "The chance of an event is a number between 0 and 1; the larger the chance, the more likely an event is to occur.",
+      "p_clean_9b": 0.5533846020698547,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5318781137466431,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-049-calib-word_plus_sound",
+      "original_text": "The probability of an event is a number between 0 and 1; the larger the probability, the more likely an event is to occur.",
+      "reformulated_text": "The chance of an event is a number between 0 and 1; the larger the chance, the more likely an event is to occur.",
+      "p_clean_9b": 0.5533846020698547,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5318781137466431,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-050-core-word",
+      "original_text": "This number is often expressed as a percentage (%), ranging from 0% to 100%.",
+      "reformulated_text": "This number is often expressed as a percent ( % ), ranging from 0 % to 100 %.",
+      "p_clean_9b": 0.5609742999076843,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5496708154678345,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-051-core-dense_mixed_generic",
+      "original_text": "Since the coin is fair, the two outcomes ( heads and tails ) are both equally probable; the probability of heads equals the probability of tails; and since no other outcomes are possible, the probability of either heads or tails are 1/2 ( which could also be written as 0.5 or 50 % ).",
+      "reformulated_text": "Since the coin is fair, the two outcomes ( heads and tails ) are both equally probable; the probability of heads equals the probability of tails; and since no other outcomes are possible, the probability of either heads or tails are 1/2 ( which could also be printed as 0.5 or 50 % ).",
+      "p_clean_9b": 0.5361003875732422,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5204353928565979,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-052-core-word",
+      "original_text": "The probability of getting an outcome of head-head is 1 out of 4 outcomes, or, in numerical terms, 1/4, 0.25 or 25%.",
+      "reformulated_text": "The chance of getting an outcome of head-head is 1 out of 4 outcomes, or, in mathematical terms, 1/4, 0.25 or 25 %.",
+      "p_clean_9b": 0.5398324131965637,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5202983021736145,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-053-core-word",
+      "original_text": "The probability of getting an outcome of at least one head is 3 out of 4, or 0.75, and this event is more likely to occur.",
+      "reformulated_text": "The likelihood of obtaining a result of at least one head is 3 out of 4, or 0.75 and this event is more likely to occur.",
+      "p_clean_9b": 0.5431056022644043,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5237705111503601,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-055-core-dense_mixed_generic",
+      "original_text": "In economics, inflation is an increase in the average price of goods and services in terms of money.",
+      "reformulated_text": "In economics, inflation is an increase in the average price of goods and helps in terms of money.",
+      "p_clean_9b": 0.5298107862472534,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5185157060623169,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-055-calib-single_word",
+      "original_text": "In economics, inflation is an increase in the average price of goods and services in terms of money.",
+      "reformulated_text": "In economies, inflation is an increase in the average price of goods and services in terms of money.",
+      "p_clean_9b": 0.544861912727356,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5219128131866455,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-055-calib-word_plus_sound",
+      "original_text": "In economics, inflation is an increase in the average price of goods and services in terms of money.",
+      "reformulated_text": "In economies, inflation is an increase in the average cost of goods and services in terms of money.",
+      "p_clean_9b": 0.5379517674446106,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5196889042854309,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-055-calib-multi_sound",
+      "original_text": "In economics, inflation is an increase in the average price of goods and services in terms of money.",
+      "reformulated_text": "In economics, inflation is an increase in the average price of goods and helps in terms of money.",
+      "p_clean_9b": 0.5298107862472534,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5185157060623169,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-055-calib-sparse_common_sound",
+      "original_text": "In economics, inflation is an increase in the average price of goods and services in terms of money.",
+      "reformulated_text": "In economics, inflation is an increase in the average price of goods and helps in terms of money.",
+      "p_clean_9b": 0.5298107862472534,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5185157060623169,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-056-core-word",
+      "original_text": "When the general price level rises, each unit of currency buys fewer goods and services.",
+      "reformulated_text": "When the overall price level rises, each unit of the dollar buys fewer goods and service.",
+      "p_clean_9b": 0.5498823523521423,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5201459527015686,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-056-core-sparse_common_sound",
+      "original_text": "When the general price level rises, each unit of currency buys fewer goods and services.",
+      "reformulated_text": "When the general price level rises, each unit of currency buys fewer goods and helps.",
+      "p_clean_9b": 0.5350680947303772,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5211513042449951,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-057-core-sparse_common_sound",
+      "original_text": "Changes in inflation is widely attributed to increases in the money supply.",
+      "reformulated_text": "Changes in inflation is widely attributed to increases in the money issue.",
+      "p_clean_9b": 0.5313613414764404,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5188204646110535,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-058-core-word",
+      "original_text": "The negative effects would include an increase in the opportunity cost of holding money.",
+      "reformulated_text": "The positive effects would include a rise in the chance cost of holding money.",
+      "p_clean_9b": 0.5376179814338684,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5204353928565979,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-059-core-word",
+      "original_text": "Positive effects include reducing unemployment due to nominal wage rigidity.",
+      "reformulated_text": "Positive effects include a reduction of employment due to nominal wage rigidities.",
+      "p_clean_9b": 0.5513925552368164,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5241511464118958,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-059-core-dense_mixed_generic",
+      "original_text": "Positive effects include reducing unemployment due to nominal wage rigidity.",
+      "reformulated_text": "Positive effects include breaking unemployment due to nominal wage toughness.",
+      "p_clean_9b": 0.5414391756057739,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5247600078582764,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-060-core-word",
+      "original_text": "Low inflation reduces the likelihood of economic recessions by enabling the labor market to adjust more quickly.",
+      "reformulated_text": "By allowing the labor market to adjust more quickly, a low-inflation rate reduces the probability of economic recession.",
+      "p_clean_9b": 0.5527811646461487,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5260536074638367,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-060-core-dense_mixed_generic",
+      "original_text": "Low inflation reduces the likelihood of economic recessions by enabling the labor market to adjust more quickly.",
+      "reformulated_text": "Low inflation decreases the likelihood of economic economies by enabling the labor market to adjust more quickly.",
+      "p_clean_9b": 0.5340961813926697,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5197498798370361,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-061-core-word",
+      "original_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+      "reformulated_text": "Civil engineers is a technical discipline that deals with the design, design and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings and railways.",
+      "p_clean_9b": 0.5330936312675476,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5181804895401001,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-061-calib-single_word",
+      "original_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+      "reformulated_text": "Civil engineering is a professional engineering discipline that deals with the design, business, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+      "p_clean_9b": 0.5312701463699341,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5188509225845337,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-061-calib-multi_word",
+      "original_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+      "reformulated_text": "Civil engineers is a technical discipline that deals with the design, design and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings and railways.",
+      "p_clean_9b": 0.5330936312675476,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5181804895401001,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-061-calib-word_plus_sound",
+      "original_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+      "reformulated_text": "Civil engineering is a expert engineering discipline that deals with the design, business, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+      "p_clean_9b": 0.5287615656852722,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5173727869987488,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-061-calib-single_sound",
+      "original_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+      "reformulated_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, functional components of buildings, and railways.",
+      "p_clean_9b": 0.5319388508796692,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5188813805580139,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-062-core-word",
+      "original_text": "Civil engineering is traditionally broken into a number of sub-disciplines.",
+      "reformulated_text": "Civil engineering is traditionally broken into a number of sub-discipline.",
+      "p_clean_9b": 0.5585979223251343,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5875290632247925,
+      "pred_9c": "CLEAN"
+    },
+    {
+      "run_id": "R10-064-core-word",
+      "original_text": "The first self-proclaimed civil engineer was John Smeaton, who constructed the Eddystone Lighthouse.",
+      "reformulated_text": "The first so-called civil engineer was John Smeaton, who built the Eddystone Lighthouse.",
+      "p_clean_9b": 0.5592900514602661,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5296587347984314,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-064-core-multi_sound",
+      "original_text": "The first self-proclaimed civil engineer was John Smeaton, who constructed the Eddystone Lighthouse.",
+      "reformulated_text": "The first declared official engineer was John Smeaton, who constructed the Eddystone Lighthouse.",
+      "p_clean_9b": 0.5454370379447937,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5197955369949341,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-065-core-word",
+      "original_text": "General civil engineers work closely with surveyors and specialized civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communications supply.",
+      "reformulated_text": "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communication supply.",
+      "p_clean_9b": 0.5421058535575867,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5232833027839661,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-067-core-word",
+      "original_text": "I was going to call you earlier, but I completely forgot.",
+      "reformulated_text": "I was going to call you earlier, but I entirely forgot.",
+      "p_clean_9b": 0.5912513136863708,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5647587180137634,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-067-calib-single_word",
+      "original_text": "I was going to call you earlier, but I completely forgot.",
+      "reformulated_text": "I was going to call you earlier, but I entirely forgot.",
+      "p_clean_9b": 0.5912513136863708,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5647587180137634,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-067-calib-multi_word",
+      "original_text": "I was going to call you earlier, but I completely forgot.",
+      "reformulated_text": "I was going to call you before, but I totally forgotten.",
+      "p_clean_9b": 0.5995438098907471,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5520869493484497,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-067-calib-word_plus_sound",
+      "original_text": "I was going to call you earlier, but I completely forgot.",
+      "reformulated_text": "I was going to call you earlier, but I entirely forgot.",
+      "p_clean_9b": 0.5912513136863708,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5647587180137634,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-068-core-word",
+      "original_text": "Do you want to grab a coffee before the meeting starts?",
+      "reformulated_text": "Do you want to grab a coffee before the gathering starts?",
+      "p_clean_9b": 0.5861083269119263,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5783886909484863,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-068-core-multi_sound",
+      "original_text": "Do you want to grab a coffee before the meeting starts?",
+      "reformulated_text": "Do you want to grab a coffee before the meeting goes?",
+      "p_clean_9b": 0.5733798742294312,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5528716444969177,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-069-core-word",
+      "original_text": "She said she might be a little late because of traffic.",
+      "reformulated_text": "She said she might be a least late because of driving.",
+      "p_clean_9b": 0.5382551550865173,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.520922839641571,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-069-core-dense_mixed_generic",
+      "original_text": "She said she might be a little late because of traffic.",
+      "reformulated_text": "She told she might be a little late because of traffic.",
+      "p_clean_9b": 0.5626571774482727,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5558571815490723,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-070-core-word",
+      "original_text": "Honestly, I don't think that restaurant is as good as everyone says.",
+      "reformulated_text": "Honestly, I don't think that restaurants are as good as everybody says.",
+      "p_clean_9b": 0.5615454316139221,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.544861912727356,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-071-core-word",
+      "original_text": "We haven't decided yet whether we're driving or taking the train.",
+      "reformulated_text": "We haven't chosen yet whether we're riding or taking the train.",
+      "p_clean_9b": 0.5756476521492004,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5464355945587158,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-072-core-word",
+      "original_text": "He mentioned that he'd probably need more time to finish the report.",
+      "reformulated_text": "He said that he'd maybe need more time to finish the report.",
+      "p_clean_9b": 0.6114979386329651,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5785672068595886,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-073-core-word",
+      "original_text": "The professor explained the concept twice before moving on to the next topic.",
+      "reformulated_text": "The prof explained the concept twice before moving on to the next topic.",
+      "p_clean_9b": 0.5924307703971863,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5900707244873047,
+      "pred_9c": "CLEAN"
+    },
+    {
+      "run_id": "R10-073-calib-single_word",
+      "original_text": "The professor explained the concept twice before moving on to the next topic.",
+      "reformulated_text": "The prof explained the concept twice before moving on to the next topic.",
+      "p_clean_9b": 0.5924307703971863,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5900707244873047,
+      "pred_9c": "CLEAN"
+    },
+    {
+      "run_id": "R10-073-calib-word_plus_sound",
+      "original_text": "The professor explained the concept twice before moving on to the next topic.",
+      "reformulated_text": "The faculty explained the concept twice before moving on to the next topic.",
+      "p_clean_9b": 0.5763035416603088,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5533846020698547,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-074-core-word",
+      "original_text": "Students who struggle with the material is encouraged to attend office hours.",
+      "reformulated_text": "Students who struggle with the stuff is furthered to attend office hours.",
+      "p_clean_9b": 0.543832540512085,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5273469686508179,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-074-core-single_sound",
+      "original_text": "Students who struggle with the material is encouraged to attend office hours.",
+      "reformulated_text": "Students who conflict with the material is encouraged to attend office hours.",
+      "p_clean_9b": 0.5641584992408752,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5411057472229004,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-075-core-word",
+      "original_text": "The exam covers everything we studied in the first six chapters.",
+      "reformulated_text": "The exam covers altogether we studied in the first six chapters.",
+      "p_clean_9b": 0.5520265698432922,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5593201518058777,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-075-core-dense_mixed_generic",
+      "original_text": "The exam covers everything we studied in the first six chapters.",
+      "reformulated_text": "The exam covers everything we considered in the first six chapters.",
+      "p_clean_9b": 0.5617257356643677,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.547191858291626,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-076-core-word",
+      "original_text": "Not every student learns the same way, so the teacher varies her methods.",
+      "reformulated_text": "Not all students learn in the same way, so the instructor varies her method.",
+      "p_clean_9b": 0.5695533752441406,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5359485745429993,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-076-core-sparse_common_sound",
+      "original_text": "Not every student learns the same way, so the teacher varies her methods.",
+      "reformulated_text": "Not every university learns the very way, so the teacher varies her methods.",
+      "p_clean_9b": 0.532181978225708,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5214864015579224,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-077-core-word",
+      "original_text": "He improved his grade significantly after he started reviewing his notes every night.",
+      "reformulated_text": "After he started to review his notes every night, he greatly increased his grade.",
+      "p_clean_9b": 0.6213685870170593,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5408025979995728,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-079-core-word",
+      "original_text": "The manager asked everyone to submit their reports by the end of the day.",
+      "reformulated_text": "The manager asked entire to submit their reports by the end of the day.",
+      "p_clean_9b": 0.5616356134414673,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5485827922821045,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-079-core-sparse_common_sound",
+      "original_text": "The manager asked everyone to submit their reports by the end of the day.",
+      "reformulated_text": "The manager asked everyone to take their reports by the end of the day.",
+      "p_clean_9b": 0.5856344699859619,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5352199077606201,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-079-calib-single_word",
+      "original_text": "The manager asked everyone to submit their reports by the end of the day.",
+      "reformulated_text": "The manager asked entire to submit their reports by the end of the day.",
+      "p_clean_9b": 0.5616356134414673,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5485827922821045,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-079-calib-multi_word",
+      "original_text": "The manager asked everyone to submit their reports by the end of the day.",
+      "reformulated_text": "The management asked all to submit their report by the end of the day.",
+      "p_clean_9b": 0.6029386520385742,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5548925995826721,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-079-calib-word_plus_sound",
+      "original_text": "The manager asked everyone to submit their reports by the end of the day.",
+      "reformulated_text": "The manager asked entire to submit their reports by the end of the day.",
+      "p_clean_9b": 0.5616356134414673,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5485827922821045,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-080-core-word",
+      "original_text": "We're understaffed this week, so deadlines might slip a little.",
+      "reformulated_text": "We're under-staffed this week, so the deadline could slip a little.",
+      "p_clean_9b": 0.5873515009880066,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5395594835281372,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-080-core-multi_sound",
+      "original_text": "We're understaffed this week, so deadlines might slip a little.",
+      "reformulated_text": "We're understaffed this week, so deadlines might trip a little.",
+      "p_clean_9b": 0.5699723362922668,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5329416990280151,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-081-core-word",
+      "original_text": "She was promoted because her performance consistently exceeded expectations.",
+      "reformulated_text": "She was promoted because of her consistent performances that exceeded expectation.",
+      "p_clean_9b": 0.5825504064559937,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5495197772979736,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-082-core-word",
+      "original_text": "The new policy doesn't apply to employees who joined before last year.",
+      "reformulated_text": "The new policies don't apply to workers who joined before last year.",
+      "p_clean_9b": 0.5622366070747375,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5319996476173401,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-083-core-word",
+      "original_text": "He didn't get the job, even though he had more experience than the other candidates.",
+      "reformulated_text": "He didn't get the job, even though he had more example than the other elections.",
+      "p_clean_9b": 0.5278337001800537,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5179519057273865,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-084-core-word",
+      "original_text": "The team meets every Monday to review what went wrong the previous week.",
+      "reformulated_text": "The team meets every Monday to review what went wrong the past week.",
+      "p_clean_9b": 0.5709893107414246,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5703911185264587,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-084-core-multi_sound",
+      "original_text": "The team meets every Monday to review what went wrong the previous week.",
+      "reformulated_text": "The team meets every Monday to critique what went faulty the previous week.",
+      "p_clean_9b": 0.5690146684646606,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5591095089912415,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-085-core-word",
+      "original_text": "Our flight was delayed by almost three hours because of bad weather.",
+      "reformulated_text": "Our flight was waited by almost three hours because of bad conditions.",
+      "p_clean_9b": 0.5770187377929688,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5319085121154785,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-085-calib-single_word",
+      "original_text": "Our flight was delayed by almost three hours because of bad weather.",
+      "reformulated_text": "Our flight was delayed by almost three hours because of bad conditions.",
+      "p_clean_9b": 0.5824910402297974,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5758265852928162,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-085-calib-word_plus_sound",
+      "original_text": "Our flight was delayed by almost three hours because of bad weather.",
+      "reformulated_text": "Our flight was delayed by almost three hours because of bad conditions.",
+      "p_clean_9b": 0.5824910402297974,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5758265852928162,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-086-core-word",
+      "original_text": "Make sure you arrive at the airport at least two hours before departure.",
+      "reformulated_text": "Make sure you arrive at the airline at least two hours before leaving.",
+      "p_clean_9b": 0.594904363155365,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5361307859420776,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-087-core-multi_sound",
+      "original_text": "The hotel is closer to the train station than the one we stayed at last time.",
+      "reformulated_text": "The hotel is closer to the train place than the one we continued at last time.",
+      "p_clean_9b": 0.5303885340690613,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5183480978012085,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-088-core-word",
+      "original_text": "We didn't have enough time to see everything, so we skipped the museum.",
+      "reformulated_text": "We didn't have enough time to see all the things, so we went to the museums instead.",
+      "p_clean_9b": 0.5927255153656006,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5337012410163879,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-088-core-sparse_common_sound",
+      "original_text": "We didn't have enough time to see everything, so we skipped the museum.",
+      "reformulated_text": "We didn't have enough time to watch everything, so we missed the museum.",
+      "p_clean_9b": 0.566138505935669,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5308749675750732,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-089-core-word",
+      "original_text": "Locals recommended a smaller, less crowded beach a few miles further north.",
+      "reformulated_text": "Locals advised a smaller, less bunched beach a few miles further north.",
+      "p_clean_9b": 0.5548925995826721,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5306773781776428,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-089-core-multi_sound",
+      "original_text": "Locals recommended a smaller, less crowded beach a few miles further north.",
+      "reformulated_text": "Locals advised a least, less crowded beach a few miles further north.",
+      "p_clean_9b": 0.5315437316894531,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5217605233192444,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-091-core-word",
+      "original_text": "This recipe calls for slightly less sugar than the original version.",
+      "reformulated_text": "This recipe calls for little less sugar than the new version.",
+      "p_clean_9b": 0.5637983083724976,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5397111177444458,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-091-core-multi_sound",
+      "original_text": "This recipe calls for slightly less sugar than the original version.",
+      "reformulated_text": "This cooking calls for little less sugar than the original version.",
+      "p_clean_9b": 0.5475850105285645,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5486735105514526,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-091-calib-single_word",
+      "original_text": "This recipe calls for slightly less sugar than the original version.",
+      "reformulated_text": "This recipe calls for slightly less sugar than the new version.",
+      "p_clean_9b": 0.5711687207221985,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5566104650497437,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-091-calib-multi_word",
+      "original_text": "This recipe calls for slightly less sugar than the original version.",
+      "reformulated_text": "This recipe calls for a little less sugar than the originally adapted recipe.",
+      "p_clean_9b": 0.5708099007606506,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5552845597267151,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-091-calib-word_plus_sound",
+      "original_text": "This recipe calls for slightly less sugar than the original version.",
+      "reformulated_text": "This recipe calls for slightly less sugar than the new version.",
+      "p_clean_9b": 0.5711687207221985,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5566104650497437,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-091-calib-sparse_common_sound",
+      "original_text": "This recipe calls for slightly less sugar than the original version.",
+      "reformulated_text": "This recipe calls for little less sugar than the original version.",
+      "p_clean_9b": 0.5688949227333069,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5719459056854248,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-091-calib-dense_mixed_generic",
+      "original_text": "This recipe calls for slightly less sugar than the original version.",
+      "reformulated_text": "This cooking calls for little less sugar than the original version.",
+      "p_clean_9b": 0.5475850105285645,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5486735105514526,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-092-core-word",
+      "original_text": "Add the onions first, then let them cook until they turn golden brown.",
+      "reformulated_text": "Add the onions first, then let them cook until they turn gold brown.",
+      "p_clean_9b": 0.5851604342460632,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5681762099266052,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-093-core-word",
+      "original_text": "The soup tastes better the next day once the flavors have had time to develop.",
+      "reformulated_text": "The soup tastes better the next day once the flavours have had time to produce.",
+      "p_clean_9b": 0.5433176159858704,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5277272462844849,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-094-core-word",
+      "original_text": "He's allergic to shellfish, so he always checks the menu carefully.",
+      "reformulated_text": "He's allergic to shell, so he always checks the menu severely.",
+      "p_clean_9b": 0.5750511288642883,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5387102365493774,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-096-core-word",
+      "original_text": "The bakery down the street makes breads that's noticeably fresher than the supermarket's.",
+      "reformulated_text": "The bakery down the street makes breads that's notably fresher than the supermarket's.",
+      "p_clean_9b": 0.580173671245575,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5818971991539001,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-096-core-single_sound",
+      "original_text": "The bakery down the street makes breads that's noticeably fresher than the supermarket's.",
+      "reformulated_text": "The bakery down the road makes breads that's noticeably fresher than the supermarket's.",
+      "p_clean_9b": 0.5780314207077026,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5687152743339539,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-097-core-word",
+      "original_text": "She apologized for showing up late to the party.",
+      "reformulated_text": "She apologised for showing up late to the party.",
+      "p_clean_9b": 0.5863452553749084,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.579697847366333,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-097-calib-single_word",
+      "original_text": "She apologized for showing up late to the party.",
+      "reformulated_text": "She apologised for showing up late to the party.",
+      "p_clean_9b": 0.5863452553749084,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.579697847366333,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-097-calib-word_plus_sound",
+      "original_text": "She apologized for showing up late to the party.",
+      "reformulated_text": "She apologised for showing up late to the party.",
+      "p_clean_9b": 0.5863452553749084,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.579697847366333,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-098-core-word",
+      "original_text": "It's considered impolite to interrupts someone while they're speaking.",
+      "reformulated_text": "It's taken impolite to interrupts someone while they're speaking.",
+      "p_clean_9b": 0.5385888814926147,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5500636100769043,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-098-core-dense_mixed_generic",
+      "original_text": "It's considered impolite to interrupts someone while they're speaking.",
+      "reformulated_text": "It's considered impolite to interrupts people while they're talking.",
+      "p_clean_9b": 0.5842118263244629,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5730214715003967,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-099-core-word",
+      "original_text": "He didn't mean to offend anyone, but his comment came across the wrong way.",
+      "reformulated_text": "He didn't mean to offend guy, but his remark came across the wrong way.",
+      "p_clean_9b": 0.5434085130691528,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.527027428150177,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-100-core-word",
+      "original_text": "They've been friends since childhood, even though they don't see each other often now.",
+      "reformulated_text": "They've been friendships since child, even though they don't see each other often now.",
+      "p_clean_9b": 0.5428026914596558,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5276359915733337,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-100-core-multi_sound",
+      "original_text": "They've been friends since childhood, even though they don't see each other often now.",
+      "reformulated_text": "They've been friends since childhood, even though they don't find each other often now.",
+      "p_clean_9b": 0.5630776286125183,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5471011400222778,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-101-core-word",
+      "original_text": "Everyone was surprised when she declined the invitation.",
+      "reformulated_text": "Everyone was surprising when she declined the invite.",
+      "p_clean_9b": 0.6103954315185547,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5590192079544067,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-101-core-sparse_common_sound",
+      "original_text": "Everyone was surprised when she declined the invitation.",
+      "reformulated_text": "Everyone was shocked when she declined the invitation.",
+      "p_clean_9b": 0.6176279783248901,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5550433397293091,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-102-core-word",
+      "original_text": "It's normal to feels nervous before meeting someone for the first time.",
+      "reformulated_text": "It's normal to feels anxious before meeting someone for the first time.",
+      "p_clean_9b": 0.5573936104774475,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5495499968528748,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-102-core-dense_mixed_generic",
+      "original_text": "It's normal to feels nervous before meeting someone for the first time.",
+      "reformulated_text": "It's normal to feels nervous before meeting person for the first time.",
+      "p_clean_9b": 0.5515133738517761,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5595006346702576,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-103-core-word",
+      "original_text": "The old house had a narrow staircase that creaked with every step.",
+      "reformulated_text": "The old house had a narrow stairs that noised with every step.",
+      "p_clean_9b": 0.5467683672904968,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.519612729549408,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-103-calib-single_word",
+      "original_text": "The old house had a narrow staircase that creaked with every step.",
+      "reformulated_text": "The old house had a narrow stairs that creaked with every step.",
+      "p_clean_9b": 0.5442867279052734,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5252470970153809,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-103-calib-word_plus_sound",
+      "original_text": "The old house had a narrow staircase that creaked with every step.",
+      "reformulated_text": "The old house had a narrow stairs that creaked with every step.",
+      "p_clean_9b": 0.5442867279052734,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5252470970153809,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-104-core-word",
+      "original_text": "Her office was small but surprisingly well organized.",
+      "reformulated_text": "Her office was small but unusually well organized.",
+      "p_clean_9b": 0.5895982384681702,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5798168182373047,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-104-core-dense_mixed_generic",
+      "original_text": "Her office was small but surprisingly well organized.",
+      "reformulated_text": "Her office was little but oddly well organized.",
+      "p_clean_9b": 0.5745141506195068,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5450133085250854,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-105-core-word",
+      "original_text": "The mountain trail was steeper and rockier than the map suggested.",
+      "reformulated_text": "The trail was steeper and rockyer than the map suggests.",
+      "p_clean_9b": 0.5588085651397705,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5345214009284973,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-105-core-sparse_common_sound",
+      "original_text": "The mountain trail was steeper and rockier than the map suggested.",
+      "reformulated_text": "The mountain trail was higher and rockier than the map advised.",
+      "p_clean_9b": 0.5607337951660156,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5319692492485046,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-106-core-word",
+      "original_text": "A thin layer of fog settled over the valley just after sunrise.",
+      "reformulated_text": "A thin layer of fog decided over the valley just after dawn.",
+      "p_clean_9b": 0.5411360859870911,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5277272462844849,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-107-core-word",
+      "original_text": "The car's engine made a strange noise whenever it idled for too long.",
+      "reformulated_text": "The car's engine made a weird noise whenever it idled for too long.",
+      "p_clean_9b": 0.5870556235313416,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.575289785861969,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-107-core-dense_mixed_generic",
+      "original_text": "The car's engine made a strange noise whenever it idled for too long.",
+      "reformulated_text": "The car's engine made a weird noise whenever it idled for too long.",
+      "p_clean_9b": 0.5870556235313416,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.575289785861969,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-108-core-word",
+      "original_text": "The room was dimly lit, with only a single lamp in the corner.",
+      "reformulated_text": "The room was dimly lit, with only a one lamp in the edge.",
+      "p_clean_9b": 0.5342480540275574,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.520999014377594,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-109-core-word",
+      "original_text": "Turn off the power before you attempt to replace the light fixture.",
+      "reformulated_text": "Turn off the power before replacing the light bulb.",
+      "p_clean_9b": 0.6191259622573853,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5341873168945312,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-109-calib-single_word",
+      "original_text": "Turn off the power before you attempt to replace the light fixture.",
+      "reformulated_text": "Turn off the power before you attempt to substitute the light fixture.",
+      "p_clean_9b": 0.5709295272827148,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5666781067848206,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-109-calib-multi_word",
+      "original_text": "Turn off the power before you attempt to replace the light fixture.",
+      "reformulated_text": "Turn off the power before replacing the light bulb.",
+      "p_clean_9b": 0.6191259622573853,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5341873168945312,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-109-calib-word_plus_sound",
+      "original_text": "Turn off the power before you attempt to replace the light fixture.",
+      "reformulated_text": "Turn off the power before you attempt to substitute the light fixture.",
+      "p_clean_9b": 0.5709295272827148,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5666781067848206,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-111-core-word",
+      "original_text": "Press and hold the button for five seconds until the light turns green.",
+      "reformulated_text": "Press and hold the click for five times until the light turns green.",
+      "p_clean_9b": 0.5966094732284546,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.534946620464325,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-112-core-word",
+      "original_text": "If the printer jams, remove the paper carefully to avoid tearing it.",
+      "reformulated_text": "If the printing machine jams, remove the paper gently to avoid ripping it up.",
+      "p_clean_9b": 0.6136417984962463,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.529567539691925,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-112-core-dense_mixed_generic",
+      "original_text": "If the printer jams, remove the paper carefully to avoid tearing it.",
+      "reformulated_text": "If the printer jams, take the paper carefully to avoid tearing it.",
+      "p_clean_9b": 0.586641252040863,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5412269830703735,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-113-core-dense_mixed_generic",
+      "original_text": "Assemble the shelf according to the numbered steps in the manual.",
+      "reformulated_text": "Assemble the shelf according to the numbered paces in the manual.",
+      "p_clean_9b": 0.5498521327972412,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5478874444961548,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-114-core-word",
+      "original_text": "Store the medication somewhere cool and out of reach of children.",
+      "reformulated_text": "Store the medicine there cool and out of reach of children.",
+      "p_clean_9b": 0.571647047996521,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5533544421195984,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-114-core-sparse_common_sound",
+      "original_text": "Store the medication somewhere cool and out of reach of children.",
+      "reformulated_text": "Store the medication there cool and out of reach of children.",
+      "p_clean_9b": 0.5688350200653076,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5617558360099792,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-115-core-word",
+      "original_text": "I think the new update make the ape harder to use, not easier.",
+      "reformulated_text": "I think that the new updates make the ape more difficult to use, not more easy to use.",
+      "p_clean_9b": 0.5578151941299438,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5337316393852234,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-115-calib-single_word",
+      "original_text": "I think the new update make the ape harder to use, not easier.",
+      "reformulated_text": "I think the new update make the ape more to use, not easier.",
+      "p_clean_9b": 0.538285493850708,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5225828886032104,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-115-calib-multi_word",
+      "original_text": "I think the new update make the ape harder to use, not easier.",
+      "reformulated_text": "I think that the new updates make the ape more difficult to use, not more easy to use.",
+      "p_clean_9b": 0.5578151941299438,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5337316393852234,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-115-calib-word_plus_sound",
+      "original_text": "I think the new update make the ape harder to use, not easier.",
+      "reformulated_text": "I think the new update make the ape more to use, not easier.",
+      "p_clean_9b": 0.538285493850708,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5225828886032104,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-115-calib-multi_sound",
+      "original_text": "I think the new update make the ape harder to use, not easier.",
+      "reformulated_text": "I believe the new update make the ape harder to use, not easier.",
+      "p_clean_9b": 0.5525699257850647,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5341569185256958,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-115-calib-dense_mixed_generic",
+      "original_text": "I think the new update make the ape harder to use, not easier.",
+      "reformulated_text": "I believe the new update make the ape harder to use, not easier.",
+      "p_clean_9b": 0.5525699257850647,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5341569185256958,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-118-core-word",
+      "original_text": "The book was overrated, in my opinion, though the ending was genuinely moving.",
+      "reformulated_text": "The book was overestimated, in my opinion, though the ending was really moving.",
+      "p_clean_9b": 0.5517246723175049,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5306773781776428,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-120-core-word",
+      "original_text": "Honestly, this is the best decision the company has made in years.",
+      "reformulated_text": "Seriously, this is the best decision the company has made in years.",
+      "p_clean_9b": 0.5714079141616821,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.556369423866272,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-121-core-word",
+      "original_text": "The library closes at nine on weekdays and six on weekends.",
+      "reformulated_text": "The library closes at nine on tuesdays and six on sundays.",
+      "p_clean_9b": 0.6024124622344971,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5357968211174011,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-121-calib-single_word",
+      "original_text": "The library closes at nine on weekdays and six on weekends.",
+      "reformulated_text": "The library closes at nine on tuesdays and six on weekends.",
+      "p_clean_9b": 0.5864636301994324,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5273469686508179,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-121-calib-word_plus_sound",
+      "original_text": "The library closes at nine on weekdays and six on weekends.",
+      "reformulated_text": "The library closes at nine on tuesdays and six on weekends.",
+      "p_clean_9b": 0.5864636301994324,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5273469686508179,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-122-core-word",
+      "original_text": "Most of the town's residents work in the two factories nearby.",
+      "reformulated_text": "Most of the town's residents work in the two manufacturings nearby.",
+      "p_clean_9b": 0.5365254282951355,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.533822774887085,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-123-core-word",
+      "original_text": "The bridge was built in the early twentieth century and renovated twice since then.",
+      "reformulated_text": "The bridge was built in the early 20th century and restored twice since then.",
+      "p_clean_9b": 0.5422573685646057,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5286094546318054,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-123-core-sparse_common_sound",
+      "original_text": "The bridge was built in the early twentieth century and renovated twice since then.",
+      "reformulated_text": "The bridge was built in the early twentieth period and renovated twice since then.",
+      "p_clean_9b": 0.531604528427124,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5221108198165894,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-124-core-word",
+      "original_text": "There are more public parks on the east side of the city than on the west.",
+      "reformulated_text": "On the east side of the city there are more park areas than on the west side.",
+      "p_clean_9b": 0.5551036596298218,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5360396504402161,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-124-core-multi_sound",
+      "original_text": "There are more public parks on the east side of the city than on the west.",
+      "reformulated_text": "There are more public parks on the east part of the town than on the west.",
+      "p_clean_9b": 0.5394988059997559,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5233594179153442,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-125-core-word",
+      "original_text": "The store doesn't open until ten, but the caf\u00e9 next door opens earlier.",
+      "reformulated_text": "The shop doesn't open until ten, but the caf\u00e9 next door opens newer.",
+      "p_clean_9b": 0.5539879202842712,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5336708426475525,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-125-core-multi_sound",
+      "original_text": "The store doesn't open until ten, but the caf\u00e9 next door opens earlier.",
+      "reformulated_text": "The shop doesn't open until ten, but the caf\u00e9 next door opens earlier.",
+      "p_clean_9b": 0.5925487279891968,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5540482401847839,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-126-core-word",
+      "original_text": "Fewer people ride the bus now than they did a decade ago.",
+      "reformulated_text": "There are now less passengers on the bus than they did ten years ago.",
+      "p_clean_9b": 0.6005983948707581,
+      "pred_9b": "CLEAN",
+      "p_clean_9c": 0.5331239700317383,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-127-calib-multi_sound",
+      "original_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the third of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
+      "reformulated_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the fourth of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
+      "p_clean_9b": 0.5373448729515076,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5193384885787964,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-127-calib-dense_mixed_generic",
+      "original_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the third of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
+      "reformulated_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the fourth of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
+      "p_clean_9b": 0.5373448729515076,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5193384885787964,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-128-core-word",
+      "original_text": "Hugh Fleming had four surviving children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven.",
+      "reformulated_text": "Hugh Fleming had four lasting children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven.",
+      "p_clean_9b": 0.5278793573379517,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5178909301757812,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-128-core-sparse_common_sound",
+      "original_text": "Hugh Fleming had four surviving children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven.",
+      "reformulated_text": "Hugh Fleming had four lasting children from his first marriage. He was 59 at the time of his 2nd marriage to Grace, and died when Alexander was seven.",
+      "p_clean_9b": 0.5277272462844849,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5175709128379822,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-129-core-word",
+      "original_text": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year scholarship to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.",
+      "reformulated_text": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year studies to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.",
+      "p_clean_9b": 0.5288071632385254,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5176622867584229,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-129-core-dense_mixed_generic",
+      "original_text": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year scholarship to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.",
+      "reformulated_text": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year learning to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.",
+      "p_clean_9b": 0.5283661484718323,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5177994966506958,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-130-core-word",
+      "original_text": "After working in a shipping office for four years, the twenty-year-old Alexander Fleming inherited some money from an uncle, John Fleming.",
+      "reformulated_text": "After working in a shipping office for four years, twenty-one-year-old Alexander Fleming acquired some money from an uncle, John Flaming.",
+      "p_clean_9b": 0.5479781031608582,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5219584703445435,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-131-core-word",
+      "original_text": "His elder brother, Tom, was already a physician and suggested that he should follow the same career.",
+      "reformulated_text": "His elder brother, Tom, was already a physician and indicated that he should follow the same career.",
+      "p_clean_9b": 0.5462843179702759,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5246686935424805,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-133-core-word",
+      "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+      "reformulated_text": "In 1906, he qualified with a MBBS degree from the school with note.",
+      "p_clean_9b": 0.5356450080871582,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5288071632385254,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-133-calib-single_word",
+      "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+      "reformulated_text": "In 1906, he qualified with a MBBS degree from the school with note.",
+      "p_clean_9b": 0.5356450080871582,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5288071632385254,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-133-calib-multi_word",
+      "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+      "reformulated_text": "In 1906, he graduated with a MBBS degree from the institution.",
+      "p_clean_9b": 0.5586881637573242,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5346124768257141,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-133-calib-word_plus_sound",
+      "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+      "reformulated_text": "In 1906, he qualified with a MBBS degree from the school with note.",
+      "p_clean_9b": 0.5356450080871582,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.5288071632385254,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-133-calib-multi_sound",
+      "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+      "reformulated_text": "In 1906, he qualified with a MBBS degree from the education with distinction.",
+      "p_clean_9b": 0.5326682329177856,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.523405134677887,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-133-calib-sparse_common_sound",
+      "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+      "reformulated_text": "In 1906, he qualified with a MBBS degree from the education with distinction.",
+      "p_clean_9b": 0.5326682329177856,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.523405134677887,
+      "pred_9c": "DEFECTIVE"
+    },
+    {
+      "run_id": "R10-133-calib-dense_mixed_generic",
+      "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+      "reformulated_text": "In 1906, he qualified with a MBBS degree from the education with distinction.",
+      "p_clean_9b": 0.5326682329177856,
+      "pred_9b": "DEFECTIVE",
+      "p_clean_9c": 0.523405134677887,
+      "pred_9c": "DEFECTIVE"
+    }
+  ]
+}

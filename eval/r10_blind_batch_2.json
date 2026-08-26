@@ -1,0 +1,242 @@
+[
+  {
+    "run_id": "R10-025-calib-single_word",
+    "original_text": "A star is a luminous spheroid of plasma held together by self-gravity.",
+    "reformulated_text": "A star is a luminous spheroid of plasma that is held together by self gravity."
+  },
+  {
+    "run_id": "R10-025-calib-multi_word",
+    "original_text": "A star is a luminous spheroid of plasma held together by self-gravity.",
+    "reformulated_text": "A star is a luminous sphéroid of plasma, surrounded by self-gravitational gravity."
+  },
+  {
+    "run_id": "R10-025-calib-word_plus_sound",
+    "original_text": "A star is a luminous spheroid of plasma held together by self-gravity.",
+    "reformulated_text": "A star is a luminous spheroid of plasma that is held together by self gravity."
+  },
+  {
+    "run_id": "R10-026-core-word",
+    "original_text": "The nearest star to Earth is the Sun.",
+    "reformulated_text": "The closest star to Earth is the Sun."
+  },
+  {
+    "run_id": "R10-027-core-word",
+    "original_text": "A star shines for most of its active life due to the thermonuclear fusion of hydrogen into helium in its core.",
+    "reformulated_text": "A star glows in its core for most of its activity life due to the thermonuklear fusion of helium in it."
+  },
+  {
+    "run_id": "R10-028-core-word",
+    "original_text": "This process releases energy that traverses the star's interior and radiates into outer space.",
+    "reformulated_text": "This process releases energy that passes through the star's inner space and radiate into outer space."
+  },
+  {
+    "run_id": "R10-029-core-word",
+    "original_text": "At the end of a star's lifetime, fusion ceases and its core becomes a stellar remnant: a white dwarf, a neutron star, or if it is sufficiently massive a black hole.",
+    "reformulated_text": "At the end of a star's life, fusion ceases and its core becomes a stellar remnant: a white dwarf, a neutral star or a black hole if it is sufficient mass."
+  },
+  {
+    "run_id": "R10-030-core-word",
+    "original_text": "Stellar nucleosynthesis in stars or their remnants create almost all naturally occurring chemical elements heavier than lithium.",
+    "reformulated_text": "Stellar nucleosyntheses in stars or their remains create almost all natural chemical elements heavier than lithium."
+  },
+  {
+    "run_id": "R10-031-core-word",
+    "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+    "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary mass object that allows hot lava, volcano ash and gases to escape from a magma cave below the surface."
+  },
+  {
+    "run_id": "R10-031-calib-single_word",
+    "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+    "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface."
+  },
+  {
+    "run_id": "R10-031-calib-multi_word",
+    "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+    "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary mass object that allows hot lava, volcano ash and gases to escape from a magma cave below the surface."
+  },
+  {
+    "run_id": "R10-031-calib-word_plus_sound",
+    "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+    "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface."
+  },
+  {
+    "run_id": "R10-031-calib-multi_sound",
+    "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+    "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the open."
+  },
+  {
+    "run_id": "R10-031-calib-sparse_common_sound",
+    "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+    "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the open."
+  },
+  {
+    "run_id": "R10-031-calib-dense_mixed_generic",
+    "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+    "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the open."
+  },
+  {
+    "run_id": "R10-032-core-word",
+    "original_text": "Volcanoes resulting from divergent tectonic activity is usually non-explosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
+    "reformulated_text": "Volcanoes arising from divergence of tectonic activity are usually non-explosives, whereas those that result from converged tectic activity cause violent eruptions."
+  },
+  {
+    "run_id": "R10-032-core-dense_mixed_generic",
+    "original_text": "Volcanoes resulting from divergent tectonic activity is usually non-explosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
+    "reformulated_text": "Volcanoes causing from divergent tectonic activity is usually non-explosive whereas those happening from convergent tectonic activity cause violent eruptions."
+  },
+  {
+    "run_id": "R10-034-core-word",
+    "original_text": "Magma commonly explodes as the gas dissolved in it comes out of solution as the pressure decreases when it flows to the surface.",
+    "reformulated_text": "Magma often explodes as the gas soluble in it comes out of the solution as the pressure drops when it flows to the surface."
+  },
+  {
+    "run_id": "R10-034-core-dense_mixed_generic",
+    "original_text": "Magma commonly explodes as the gas dissolved in it comes out of solution as the pressure decreases when it flows to the surface.",
+    "reformulated_text": "Magma commonly explodes as the gas dissolved in it comes out of answer as the pressure decreases when it flows to the open."
+  },
+  {
+    "run_id": "R10-035-core-word",
+    "original_text": "Solid particles smaller than 2 my in diameter ( sand-sized or smaller ) is called volcanic ash.",
+    "reformulated_text": "Solid particle smaller than 2 my in diameter ( sand-size or smaller ) is called volcanic ash."
+  },
+  {
+    "run_id": "R10-036-core-word",
+    "original_text": "Because tectonic plates move across mantle plumes, each volcano becomes inactive as it drifts off the plume, and new volcanoes are created where the plate advances over the plume.",
+    "reformulated_text": "Because tectonic plates move across mantle plumes, each volcano becomes inactivated as it drifts off the plume, and new volcanic eruptions are created where the plate moves over the plumes."
+  },
+  {
+    "run_id": "R10-037-core-word",
+    "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+    "reformulated_text": "Renewable energy is usually understood as energy harnessed from non-stop occurring natural phenomena."
+  },
+  {
+    "run_id": "R10-037-calib-single_word",
+    "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+    "reformulated_text": "Renewable energy is usually understood as energy harnessed from non-stop occurring natural phenomena."
+  },
+  {
+    "run_id": "R10-037-calib-multi_word",
+    "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+    "reformulated_text": "Renewable energy is usually thought of as energy that is harnessed from continually occurring natural phenomenon."
+  },
+  {
+    "run_id": "R10-037-calib-word_plus_sound",
+    "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+    "reformulated_text": "Renewable energy is usually understood as energy harnessed from non-stop occurring natural phenomena."
+  },
+  {
+    "run_id": "R10-038-core-word",
+    "original_text": "Solar power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy.",
+    "reformulated_text": "Solar power, wind power, electricity, thermal energy, and biomass is widely agreed to be the main types of renewable energy."
+  },
+  {
+    "run_id": "R10-038-core-sparse_common_sound",
+    "original_text": "Solar power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy.",
+    "reformulated_text": "Renewable power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy."
+  },
+  {
+    "run_id": "R10-039-core-word",
+    "original_text": "In contrast, fossil fuel power plants, nuclear power plants and hydropower are usually able to produce precisely the amount of energy an electricity grid requires at a given time.",
+    "reformulated_text": "In contrast, fossil fuel power plants, nuclear power plants and hydro power are usually able to produce exactly the amount of energy that an electric grid requires at a given time."
+  },
+  {
+    "run_id": "R10-040-core-word",
+    "original_text": "Solar energy can only be captured during the day, and ideally in cloudless conditions.",
+    "reformulated_text": "Solar energy can only be captured during the day, and ideally in cloudless terms."
+  },
+  {
+    "run_id": "R10-041-core-word",
+    "original_text": "In general, renewable energy sources pollute much less than fossil fuels.",
+    "reformulated_text": "In general, alternative energy sources are much less polluting than fossil fuels."
+  },
+  {
+    "run_id": "R10-042-core-word",
+    "original_text": "Water can generate electricity with a conversion efficiency of about 90%, which is the highest rate in renewable energy.",
+    "reformulated_text": "Water can generate power with a convertibility of about 90%, which is the highest rate in renewable energy."
+  },
+  {
+    "run_id": "R10-042-core-dense_mixed_generic",
+    "original_text": "Water can generate electricity with a conversion efficiency of about 90%, which is the highest rate in renewable energy.",
+    "reformulated_text": "Water can generate electricity with a conversion efficiency of about 90 %, which is the highest value in extended energy."
+  },
+  {
+    "run_id": "R10-043-core-word",
+    "original_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+    "reformulated_text": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction, typically used to solve a class of specific problems or to perform a computation."
+  },
+  {
+    "run_id": "R10-043-calib-single_word",
+    "original_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+    "reformulated_text": "In mathematics and computer science, an algorithm is a finite sequence of formally rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation."
+  },
+  {
+    "run_id": "R10-043-calib-multi_word",
+    "original_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+    "reformulated_text": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction, typically used to solve a class of specific problems or to perform a computation."
+  },
+  {
+    "run_id": "R10-043-calib-word_plus_sound",
+    "original_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+    "reformulated_text": "In mathematics and computer science, an algorithm is a finite sequence of formally rigorous logical instructions, typically used to solve a class of specific jobs or to perform a computation."
+  },
+  {
+    "run_id": "R10-044-core-word",
+    "original_text": "Algorithms is used as specifications for performing calculations and data processing.",
+    "reformulated_text": "Algorithms is used as descriptions for performing maths and data processing."
+  },
+  {
+    "run_id": "R10-044-core-dense_mixed_generic",
+    "original_text": "Algorithms is used as specifications for performing calculations and data processing.",
+    "reformulated_text": "Algorithms is used as descriptions for performing calculations and data processing."
+  },
+  {
+    "run_id": "R10-045-core-word",
+    "original_text": "More advanced algorithms can use conditionals to divert the code execution through various routes and deduce valid inferences.",
+    "reformulated_text": "A more advanced algorithm can use conditional methods to divert the code execution through various routes and to deduce valid conclusions."
+  },
+  {
+    "run_id": "R10-047-core-word",
+    "original_text": "Starting from an initial state and input, a computation occurs at each step, eventually producing output and terminating.",
+    "reformulated_text": "Starting from an initial state and input, a computing occurs at each step, eventually producing output and end."
+  },
+  {
+    "run_id": "R10-048-core-multi_sound",
+    "original_text": "In general, a program is an algorithm only if it stops eventually.",
+    "reformulated_text": "In general, a program is an algorithm only if it quits eventually."
+  },
+  {
+    "run_id": "R10-049-calib-single_word",
+    "original_text": "The probability of an event is a number between 0 and 1; the larger the probability, the more likely an event is to occur.",
+    "reformulated_text": "The chance of an event is a number between 0 and 1; the larger the chance, the more likely an event is to occur."
+  },
+  {
+    "run_id": "R10-049-calib-word_plus_sound",
+    "original_text": "The probability of an event is a number between 0 and 1; the larger the probability, the more likely an event is to occur.",
+    "reformulated_text": "The chance of an event is a number between 0 and 1; the larger the chance, the more likely an event is to occur."
+  },
+  {
+    "run_id": "R10-050-core-word",
+    "original_text": "This number is often expressed as a percentage (%), ranging from 0% to 100%.",
+    "reformulated_text": "This number is often expressed as a percent ( % ), ranging from 0 % to 100 %."
+  },
+  {
+    "run_id": "R10-051-core-dense_mixed_generic",
+    "original_text": "Since the coin is fair, the two outcomes ( heads and tails ) are both equally probable; the probability of heads equals the probability of tails; and since no other outcomes are possible, the probability of either heads or tails are 1/2 ( which could also be written as 0.5 or 50 % ).",
+    "reformulated_text": "Since the coin is fair, the two outcomes ( heads and tails ) are both equally probable; the probability of heads equals the probability of tails; and since no other outcomes are possible, the probability of either heads or tails are 1/2 ( which could also be printed as 0.5 or 50 % )."
+  },
+  {
+    "run_id": "R10-052-core-word",
+    "original_text": "The probability of getting an outcome of head-head is 1 out of 4 outcomes, or, in numerical terms, 1/4, 0.25 or 25%.",
+    "reformulated_text": "The chance of getting an outcome of head-head is 1 out of 4 outcomes, or, in mathematical terms, 1/4, 0.25 or 25 %."
+  },
+  {
+    "run_id": "R10-053-core-word",
+    "original_text": "The probability of getting an outcome of at least one head is 3 out of 4, or 0.75, and this event is more likely to occur.",
+    "reformulated_text": "The likelihood of obtaining a result of at least one head is 3 out of 4, or 0.75 and this event is more likely to occur."
+  },
+  {
+    "run_id": "R10-055-core-dense_mixed_generic",
+    "original_text": "In economics, inflation is an increase in the average price of goods and services in terms of money.",
+    "reformulated_text": "In economics, inflation is an increase in the average price of goods and helps in terms of money."
+  }
+]

@@ -1,0 +1,338 @@
+{
+  "R10-001-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["OTHER"],
+    "rationale": "\"assimilated\" was replaced with \"absorbed\", producing the redundant \"absorbed and absorbed\" instead of two distinct processes (absorption then assimilation); overall meaning is still roughly conveyed but the duplication is confusing."
+  },
+  "R10-001-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"smaller and smaller\" became \"least and finer\" — \"least\" does not mean progressively smaller and does not parallel \"finer\", producing a semantically confusing phrase."
+  },
+  "R10-001-calib-single_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["OTHER"],
+    "rationale": "Same as the core-word variant: \"assimilated\" -> \"absorbed\" creates the redundant \"absorbed and absorbed\", losing the distinction between the two named processes."
+  },
+  "R10-001-calib-word_plus_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["OTHER"],
+    "rationale": "Identical defect to the other single-word-change variants: \"assimilated\" replaced by \"absorbed\", yielding the redundant \"absorbed and absorbed\"."
+  },
+  "R10-001-calib-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "Same \"least and finer\" substitution for \"smaller and smaller\" seen in the sparse_common_sound variant — semantically wrong and confusing."
+  },
+  "R10-001-calib-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "Same \"least and finer\" substitution for \"smaller and smaller\" — \"least\" does not function as a valid parallel comparative here."
+  },
+  "R10-002-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"esophagus\" (noun) was replaced with \"esophageal\" (adjective only), leaving \"swallow down the esophageal to enter the stomach\" without a noun — ungrammatical and confusing to parse."
+  },
+  "R10-003-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "OTHER",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"Peristalsis\" and \"esophagus\" were turned into non-existent words (\"Peristalaxis\", \"esophagum\"), and \"gastrointestinal tract\" was narrowed to \"intestines\", excluding the esophagus/stomach the original term covered."
+  },
+  "R10-004-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"small bowel\" is an accepted clinical synonym for \"small intestine\"; meaning is fully preserved."
+  },
+  "R10-004-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "\"small intestine\" is a fixed anatomical term; \"little intestine\" is not standard terminology, though the organ referred to remains clear."
+  },
+  "R10-005-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"reabsorbed\" was replaced with \"assumed\", an unrelated word (meaning presumed) — \"assumed back into the blood\" is nonsensical."
+  },
+  "R10-006-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE", "OTHER"],
+    "rationale": "\"two liquids\" was changed to \"two solids\", reversing the physical claim (surfactants act between liquid interfaces, not solid-solid ones); additionally \"surfactant\"->\"lubricant\" and \"surface tension\"->\"surface pressure\" are wrong technical substitutions, and \"emulsify\"->\"emollidate\" is an invented word."
+  },
+  "R10-007-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"physiological\" (organism-function specific) was flattened to \"physical\" (generic), losing precision, though the overall definition of nutrition still basically holds."
+  },
+  "R10-007-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["FIXED_TERM_OR_IDIOM"],
+    "rationale": "\"support its life\" became \"give its life\", which idiomatically means to sacrifice/lose one's life — nearly the opposite of sustaining life."
+  },
+  "R10-007-calib-single_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "Same \"physiological\"->\"physical\" precision loss as the core-word variant."
+  },
+  "R10-007-calib-multi_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "OTHER",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "Restructured to \"The nutritional process is the ... process by which...\", a circular/redundant construction (\"process is...process\"), and \"biochemical and physiological\" was reordered to \"biological and physiochemical\" — awkward but meaning is still roughly recoverable."
+  },
+  "R10-007-calib-word_plus_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"physiological process\" became \"physical act\" — \"act\" implies a single action rather than an ongoing biological process, and \"physical\" again loses the biology-specific sense of \"physiological\"."
+  },
+  "R10-007-calib-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["FIXED_TERM_OR_IDIOM"],
+    "rationale": "Same as the dense_mixed_generic variant: \"support its life\" -> \"give its life\", idiomatically inverting the intended meaning of sustaining life."
+  },
+  "R10-007-calib-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["FIXED_TERM_OR_IDIOM"],
+    "rationale": "Same \"support its life\" -> \"give its life\" substitution, which idiomatically suggests sacrificing life rather than sustaining it."
+  },
+  "R10-008-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"hypertension\"->\"high blood pressure\" is an accurate synonym and the remaining changes are cosmetic (hyphenation, pluralization); meaning fully preserved."
+  },
+  "R10-008-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"stroke\" was replaced with \"shot\", an unrelated word that does not belong in a list of diseases, producing a nonsensical item in the disease list."
+  },
+  "R10-009-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"molecules\" was narrowed to \"compounds\" (compounds are a subset of molecules requiring two or more distinct elements), a minor taxonomic narrowing of the claim."
+  },
+  "R10-010-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"carbohydrates\" was narrowed to \"sugars\" (sugars are only one subtype of carbohydrate, alongside starches and fiber), narrowing the scientific claim; \"organisms\"->\"beings\" is an acceptable synonym."
+  },
+  "R10-011-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"Nutrients\" was changed to \"Nutritions\" — \"nutrition\" is an uncountable/abstract noun and pluralizing it this way is ungrammatical; \"biochemical\"->\"biological\" also loses precision."
+  },
+  "R10-011-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"cells\" was replaced with \"cases\", an unrelated word that makes \"absorbed by the cases\" nonsensical in this biological context."
+  },
+  "R10-012-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "All substitutions (\"deficiencies\"/\"can\"/\"incapacity\"/\"vital\") are accurate synonyms; meaning fully preserved."
+  },
+  "R10-012-core-dense_mixed_generic": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"sudden\"->\"quick\" is a close enough synonym in this context; meaning is preserved."
+  },
+  "R10-013-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"rearranged\" was shortened to \"arranged\", dropping the \"re-\" that conveys atoms being reconfigured from an existing state, a subtle but real meaning shift; \"accompanied by\"->\"followed by\" also shifts simultaneity to sequence."
+  },
+  "R10-013-calib-single_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"accompanied by\" (simultaneous) became \"followed by\" (sequential/after), a subtle shift in the temporal relationship between the reaction and the energy change."
+  },
+  "R10-013-calib-multi_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"chemical reactions occur\" became \"chemical reaction occur\" — singular subject with plural verb, a clear subject-verb agreement error; it also carries the \"arranged\"/\"followed by\" precision losses seen in other variants."
+  },
+  "R10-013-calib-word_plus_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "Same \"accompanied by\"->\"followed by\" temporal-nuance shift; \"products\"->\"chemicals\" is an acceptable loose synonym."
+  },
+  "R10-014-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "OTHER",
+    "secondary_defects": [],
+    "rationale": "\"reactants\" was corrupted into \"reactionants\", a non-existent word; the intended term is still inferable from context but is not valid English."
+  },
+  "R10-014-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Chemical reactions\" became \"Chemical answers\" — \"answers\" is an unrelated word, making the sentence's subject nonsensical."
+  },
+  "R10-015-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "The fixed term \"activation energy\" was changed to \"activated energy\", a non-standard variant of the technical term, though the overall meaning is still recoverable."
+  },
+  "R10-016-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "\"bimolecular\" was rendered with an accent as \"bimolécular\", an incorrect spelling of the technical term; the restructuring of the sentence itself is fine and meaning-preserving."
+  },
+  "R10-017-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"reactions\" was replaced with \"results\", removing the core chemistry concept (forward/reverse reactions) and leaving an incoherent claim that \"results...differ in reaction rates\"."
+  },
+  "R10-019-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"straight line\" was shortened to just \"line\", dropping a qualifier essential to Newton's first law (constant-speed motion along a curved line still involves acceleration), weakening the physical accuracy of the stated law."
+  },
+  "R10-019-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "\"straight line\" became \"right line\", an archaic term for straight line that a modern listener is likely to misread as \"correct line\" or a directional \"right\" line, creating ambiguity despite technically being an old synonym."
+  },
+  "R10-020-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"acceleration multiplied by its mass\" became \"accelerated mass\", turning the product of two distinct quantities (F=ma) into a garbled single compound; separately, \"momentum\" was replaced by the vague \"movement\", dropping the specific physical quantity the rate-of-change definition depends on."
+  },
+  "R10-020-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"the rate at which...is changing\" became \"the value at which...is changing\" — \"rate\" (a change-per-time concept) is not equivalent to \"value\", making the statement imprecise though still roughly interpretable."
+  },
+  "R10-021-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"magnitude\"->\"size\" and \"opposite directions\"->\"opposing direction\" are acceptable lay paraphrases; the core physical claim (equal size, opposite direction) is preserved."
+  },
+  "R10-021-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "\"same magnitude\" became \"one magnitude\", an unusual dialectal phrasing (\"the one X\" = \"the same X\") likely to read as confusing or ungrammatical to a general audience, even though the intended meaning is recoverable."
+  },
+  "R10-022-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"expresses the principle\"->\"states the rule\" is an acceptable paraphrase; meaning fully preserved."
+  },
+  "R10-022-core-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"straight line\" became \"true line\", a non-standard substitution that risks being read as \"accurate/real line\" rather than \"straight\"; \"speed\"->\"velocity\" is redundant with the line description but not itself a factual error."
+  },
+  "R10-023-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["FIXED_TERM_OR_IDIOM"],
+    "rationale": "\"does not accelerated\" is an ungrammatical verb form (should be \"accelerate\"); additionally the fixed term \"mechanical equilibrium\" was replaced with the vaguer \"physical balance\"."
+  },
+  "R10-024-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "OTHER",
+    "secondary_defects": [],
+    "rationale": "\"of equal magnitude\" became \"of equal force\", creating a circular/redundant phrase (\"exerts force...of equal force\") that is awkward though the intended meaning (equal-sized opposing forces) still comes through."
+  },
+  "R10-024-core-dense_mixed_generic": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"second\"->\"2nd\" is purely a numeral-formatting change with no effect on meaning or spoken form."
+  },
+  "R10-025-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"held together by self-gravity\" (gravity as an internal cohesive force) became \"surrounded by self gravity\" (gravity as an external envelope), reversing the physical relationship between the star's matter and its own gravity."
+  }
+}

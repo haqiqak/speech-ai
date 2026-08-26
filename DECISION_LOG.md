@@ -3352,3 +3352,38 @@ recall.
 
 **Category:** Prototype/research, on direct instruction. No production
 code touched, no model integrated. Full record: `VALIDATION.md` §45.
+
+### 2026-08-26-A — Phase 10: broad stratified stress test of the current architecture
+
+**What was done:** per the approved plan (EnterPlanMode/ExitPlanMode
+cycle), a deliberately wide, stratified, difficulty-graded evaluation:
+133 new sentences (11 technical + 11 general domains), 0 contamination
+with any prior corpus, 398 (sentence,profile) runs frozen before
+execution, harvested via today's live reformulate() (238 reformulated/
+98 no-change/62 refused), blind-judged by 5 parallel subagents (no
+domain/category/difficulty shown), plus the frozen Phase 9B/9C
+validator checkpoints run unmodified on the same new material.
+
+**Result:** 26% CLEAN / 74% DEFECTIVE overall (harder corpus than any
+prior phase by design). Domain (general vs technical) only a 6-point
+gap - content density (terminology, length) predicts failure far
+better than subject-matter label; chemistry/engineering/narrative all
+0% CLEAN while math/stats hit 83% CLEAN. Difficulty gradient not
+smooth - moderate (18% CLEAN) scored worse than hard (30%). Profile
+constraint density is the cleanest predictor in the dataset:
+multi_word profiles 0% CLEAN (0/13). Escalation ties substitution on
+quality (26% vs 27% CLEAN), not a safety net. Most consequential:
+neither validator checkpoint generalizes cleanly - 9C predicts
+DEFECTIVE 99% of the time (non-functional, the same instability its
+own report flagged), 9B's CLEAN retention collapsed 62%->34% on new
+material despite higher recall.
+
+**Decision:** confirms the architecture's real, specific failure
+predictors (density/length/profile-constraint-count, not domain
+label), and directly answers Phase 9B/9C's open generalization
+question - partially yes for 9B, no for 9C. Evaluation only, no
+production changes, no training.
+
+**Category:** Evaluation, on direct instruction and approved plan. No
+production code touched, no model trained. Full record:
+`VALIDATION.md` §46, `eval/r10_report.md`.

@@ -1,0 +1,242 @@
+[
+  {
+    "run_id": "R10-080-core-multi_sound",
+    "original_text": "We're understaffed this week, so deadlines might slip a little.",
+    "reformulated_text": "We're understaffed this week, so deadlines might trip a little."
+  },
+  {
+    "run_id": "R10-081-core-word",
+    "original_text": "She was promoted because her performance consistently exceeded expectations.",
+    "reformulated_text": "She was promoted because of her consistent performances that exceeded expectation."
+  },
+  {
+    "run_id": "R10-082-core-word",
+    "original_text": "The new policy doesn't apply to employees who joined before last year.",
+    "reformulated_text": "The new policies don't apply to workers who joined before last year."
+  },
+  {
+    "run_id": "R10-083-core-word",
+    "original_text": "He didn't get the job, even though he had more experience than the other candidates.",
+    "reformulated_text": "He didn't get the job, even though he had more example than the other elections."
+  },
+  {
+    "run_id": "R10-084-core-word",
+    "original_text": "The team meets every Monday to review what went wrong the previous week.",
+    "reformulated_text": "The team meets every Monday to review what went wrong the past week."
+  },
+  {
+    "run_id": "R10-084-core-multi_sound",
+    "original_text": "The team meets every Monday to review what went wrong the previous week.",
+    "reformulated_text": "The team meets every Monday to critique what went faulty the previous week."
+  },
+  {
+    "run_id": "R10-085-core-word",
+    "original_text": "Our flight was delayed by almost three hours because of bad weather.",
+    "reformulated_text": "Our flight was waited by almost three hours because of bad conditions."
+  },
+  {
+    "run_id": "R10-085-calib-single_word",
+    "original_text": "Our flight was delayed by almost three hours because of bad weather.",
+    "reformulated_text": "Our flight was delayed by almost three hours because of bad conditions."
+  },
+  {
+    "run_id": "R10-085-calib-word_plus_sound",
+    "original_text": "Our flight was delayed by almost three hours because of bad weather.",
+    "reformulated_text": "Our flight was delayed by almost three hours because of bad conditions."
+  },
+  {
+    "run_id": "R10-086-core-word",
+    "original_text": "Make sure you arrive at the airport at least two hours before departure.",
+    "reformulated_text": "Make sure you arrive at the airline at least two hours before leaving."
+  },
+  {
+    "run_id": "R10-087-core-multi_sound",
+    "original_text": "The hotel is closer to the train station than the one we stayed at last time.",
+    "reformulated_text": "The hotel is closer to the train place than the one we continued at last time."
+  },
+  {
+    "run_id": "R10-088-core-word",
+    "original_text": "We didn't have enough time to see everything, so we skipped the museum.",
+    "reformulated_text": "We didn't have enough time to see all the things, so we went to the museums instead."
+  },
+  {
+    "run_id": "R10-088-core-sparse_common_sound",
+    "original_text": "We didn't have enough time to see everything, so we skipped the museum.",
+    "reformulated_text": "We didn't have enough time to watch everything, so we missed the museum."
+  },
+  {
+    "run_id": "R10-089-core-word",
+    "original_text": "Locals recommended a smaller, less crowded beach a few miles further north.",
+    "reformulated_text": "Locals advised a smaller, less bunched beach a few miles further north."
+  },
+  {
+    "run_id": "R10-089-core-multi_sound",
+    "original_text": "Locals recommended a smaller, less crowded beach a few miles further north.",
+    "reformulated_text": "Locals advised a least, less crowded beach a few miles further north."
+  },
+  {
+    "run_id": "R10-091-core-word",
+    "original_text": "This recipe calls for slightly less sugar than the original version.",
+    "reformulated_text": "This recipe calls for little less sugar than the new version."
+  },
+  {
+    "run_id": "R10-091-core-multi_sound",
+    "original_text": "This recipe calls for slightly less sugar than the original version.",
+    "reformulated_text": "This cooking calls for little less sugar than the original version."
+  },
+  {
+    "run_id": "R10-091-calib-single_word",
+    "original_text": "This recipe calls for slightly less sugar than the original version.",
+    "reformulated_text": "This recipe calls for slightly less sugar than the new version."
+  },
+  {
+    "run_id": "R10-091-calib-multi_word",
+    "original_text": "This recipe calls for slightly less sugar than the original version.",
+    "reformulated_text": "This recipe calls for a little less sugar than the originally adapted recipe."
+  },
+  {
+    "run_id": "R10-091-calib-word_plus_sound",
+    "original_text": "This recipe calls for slightly less sugar than the original version.",
+    "reformulated_text": "This recipe calls for slightly less sugar than the new version."
+  },
+  {
+    "run_id": "R10-091-calib-sparse_common_sound",
+    "original_text": "This recipe calls for slightly less sugar than the original version.",
+    "reformulated_text": "This recipe calls for little less sugar than the original version."
+  },
+  {
+    "run_id": "R10-091-calib-dense_mixed_generic",
+    "original_text": "This recipe calls for slightly less sugar than the original version.",
+    "reformulated_text": "This cooking calls for little less sugar than the original version."
+  },
+  {
+    "run_id": "R10-092-core-word",
+    "original_text": "Add the onions first, then let them cook until they turn golden brown.",
+    "reformulated_text": "Add the onions first, then let them cook until they turn gold brown."
+  },
+  {
+    "run_id": "R10-093-core-word",
+    "original_text": "The soup tastes better the next day once the flavors have had time to develop.",
+    "reformulated_text": "The soup tastes better the next day once the flavours have had time to produce."
+  },
+  {
+    "run_id": "R10-094-core-word",
+    "original_text": "He's allergic to shellfish, so he always checks the menu carefully.",
+    "reformulated_text": "He's allergic to shell, so he always checks the menu severely."
+  },
+  {
+    "run_id": "R10-096-core-word",
+    "original_text": "The bakery down the street makes breads that's noticeably fresher than the supermarket's.",
+    "reformulated_text": "The bakery down the street makes breads that's notably fresher than the supermarket's."
+  },
+  {
+    "run_id": "R10-096-core-single_sound",
+    "original_text": "The bakery down the street makes breads that's noticeably fresher than the supermarket's.",
+    "reformulated_text": "The bakery down the road makes breads that's noticeably fresher than the supermarket's."
+  },
+  {
+    "run_id": "R10-097-core-word",
+    "original_text": "She apologized for showing up late to the party.",
+    "reformulated_text": "She apologised for showing up late to the party."
+  },
+  {
+    "run_id": "R10-097-calib-single_word",
+    "original_text": "She apologized for showing up late to the party.",
+    "reformulated_text": "She apologised for showing up late to the party."
+  },
+  {
+    "run_id": "R10-097-calib-word_plus_sound",
+    "original_text": "She apologized for showing up late to the party.",
+    "reformulated_text": "She apologised for showing up late to the party."
+  },
+  {
+    "run_id": "R10-098-core-word",
+    "original_text": "It's considered impolite to interrupts someone while they're speaking.",
+    "reformulated_text": "It's taken impolite to interrupts someone while they're speaking."
+  },
+  {
+    "run_id": "R10-098-core-dense_mixed_generic",
+    "original_text": "It's considered impolite to interrupts someone while they're speaking.",
+    "reformulated_text": "It's considered impolite to interrupts people while they're talking."
+  },
+  {
+    "run_id": "R10-099-core-word",
+    "original_text": "He didn't mean to offend anyone, but his comment came across the wrong way.",
+    "reformulated_text": "He didn't mean to offend guy, but his remark came across the wrong way."
+  },
+  {
+    "run_id": "R10-100-core-word",
+    "original_text": "They've been friends since childhood, even though they don't see each other often now.",
+    "reformulated_text": "They've been friendships since child, even though they don't see each other often now."
+  },
+  {
+    "run_id": "R10-100-core-multi_sound",
+    "original_text": "They've been friends since childhood, even though they don't see each other often now.",
+    "reformulated_text": "They've been friends since childhood, even though they don't find each other often now."
+  },
+  {
+    "run_id": "R10-101-core-word",
+    "original_text": "Everyone was surprised when she declined the invitation.",
+    "reformulated_text": "Everyone was surprising when she declined the invite."
+  },
+  {
+    "run_id": "R10-101-core-sparse_common_sound",
+    "original_text": "Everyone was surprised when she declined the invitation.",
+    "reformulated_text": "Everyone was shocked when she declined the invitation."
+  },
+  {
+    "run_id": "R10-102-core-word",
+    "original_text": "It's normal to feels nervous before meeting someone for the first time.",
+    "reformulated_text": "It's normal to feels anxious before meeting someone for the first time."
+  },
+  {
+    "run_id": "R10-102-core-dense_mixed_generic",
+    "original_text": "It's normal to feels nervous before meeting someone for the first time.",
+    "reformulated_text": "It's normal to feels nervous before meeting person for the first time."
+  },
+  {
+    "run_id": "R10-103-core-word",
+    "original_text": "The old house had a narrow staircase that creaked with every step.",
+    "reformulated_text": "The old house had a narrow stairs that noised with every step."
+  },
+  {
+    "run_id": "R10-103-calib-single_word",
+    "original_text": "The old house had a narrow staircase that creaked with every step.",
+    "reformulated_text": "The old house had a narrow stairs that creaked with every step."
+  },
+  {
+    "run_id": "R10-103-calib-word_plus_sound",
+    "original_text": "The old house had a narrow staircase that creaked with every step.",
+    "reformulated_text": "The old house had a narrow stairs that creaked with every step."
+  },
+  {
+    "run_id": "R10-104-core-word",
+    "original_text": "Her office was small but surprisingly well organized.",
+    "reformulated_text": "Her office was small but unusually well organized."
+  },
+  {
+    "run_id": "R10-104-core-dense_mixed_generic",
+    "original_text": "Her office was small but surprisingly well organized.",
+    "reformulated_text": "Her office was little but oddly well organized."
+  },
+  {
+    "run_id": "R10-105-core-word",
+    "original_text": "The mountain trail was steeper and rockier than the map suggested.",
+    "reformulated_text": "The trail was steeper and rockyer than the map suggests."
+  },
+  {
+    "run_id": "R10-105-core-sparse_common_sound",
+    "original_text": "The mountain trail was steeper and rockier than the map suggested.",
+    "reformulated_text": "The mountain trail was higher and rockier than the map advised."
+  },
+  {
+    "run_id": "R10-106-core-word",
+    "original_text": "A thin layer of fog settled over the valley just after sunrise.",
+    "reformulated_text": "A thin layer of fog decided over the valley just after dawn."
+  },
+  {
+    "run_id": "R10-107-core-word",
+    "original_text": "The car's engine made a strange noise whenever it idled for too long.",
+    "reformulated_text": "The car's engine made a weird noise whenever it idled for too long."
+  }
+]
