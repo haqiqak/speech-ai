@@ -2889,12 +2889,12 @@ promoted; no fix implemented. Full record: `VALIDATION.md` §34;
 ### 2026-08-23-A — R42/R43/R43-A: architecture reassessment, escalation instrumentation, four bounded fixes tested and stacked
 
 **What was done:** on direct instruction, a full architecture
-reassessment (`ARCHITECTURE_REASSESSMENT_R42.md`) reading the actual
-implementation and prior research fresh, followed by R43
-(`ARCHITECTURE_TRANSITION_R43.md`): instrumenting the T5 escalation path
-on the 23 (sentence, profile) pairs from R40's corpus that actually
-invoke it. Then four candidate fixes tested in isolation and stacked
-(`ARCHITECTURE_TRANSITION_R43A_RESULTS.md`, A1-A5).
+reassessment reading the actual implementation and prior research
+fresh, followed by R43: instrumenting the T5 escalation path on the 23
+(sentence, profile) pairs from R40's corpus that actually invoke it.
+Then four candidate fixes tested in isolation and stacked (A1-A5). Full
+original text consolidated 2026-08-26 into
+`ARCHITECTURE_RESEARCH_R42_R43.md` (Parts 1-3).
 
 **Key results:** T5 escalation fails 96% of the time not from poor
 generation (76% of candidates clear a strict SBERT floor) but from
@@ -3387,3 +3387,31 @@ production changes, no training.
 **Category:** Evaluation, on direct instruction and approved plan. No
 production code touched, no model trained. Full record:
 `VALIDATION.md` §46, `eval/r10_report.md`.
+
+### 2026-08-26-B — Documentation hygiene: consolidated the orphaned R42/R43/R43-A architecture documents
+
+**What was done:** per direct instruction ("declutter documentation...
+there are a few new ones you made, make sure they're organized in a
+singular place... or remove if not needed"). Three standalone documents
+(`ARCHITECTURE_REASSESSMENT_R42.md`, `ARCHITECTURE_TRANSITION_R43.md`,
+`ARCHITECTURE_TRANSITION_R43A_RESULTS.md`) existed in the repo root
+since 2026-08-22/23 but were never added to `CLAUDE.md`'s reading order
+or `DOCS.md`'s file table - genuinely orphaned, exactly the confusion
+raised. Consolidated all three, in full and in original chronological
+order, into one archival file: `ARCHITECTURE_RESEARCH_R42_R43.md`.
+Updated every cross-reference in `VALIDATION.md`, `DECISION_LOG.md`
+(the 2026-08-23-A entry above), and `ROADMAP.md` to point at the new
+file instead of the three old filenames. Added a `DOCS.md` row for the
+new file, explicit that it is archival/frozen and not part of the
+standard reading chain - every recommendation in it was already carried
+out and is documented with results starting at `VALIDATION.md` §35.
+Removed the three original files (recoverable from git history).
+
+**Why now:** these three documents' entire purpose was to justify a
+decision (R45's "two bounded prototypes") that has since been fully
+implemented, tested, and independently replicated (R46 through Phase
+10) - their standalone existence outside the documented chain had
+become pure clutter, not a live reference.
+
+**Category:** Documentation hygiene, on direct instruction. No code,
+data, or evaluation content touched - text-only reorganization.

@@ -1320,9 +1320,9 @@ investigation.
 
 ### R42/R43/R43-A. Architecture reassessment, escalation instrumentation, four bounded fixes — **DONE, 2026-08-22/23**
 **Linked finding:** R41's own recommendation above, executed. Full
-records are three standalone documents, not folded into this file's
-usual R-item length: `ARCHITECTURE_REASSESSMENT_R42.md`,
-`ARCHITECTURE_TRANSITION_R43.md`, `ARCHITECTURE_TRANSITION_R43A_RESULTS.md`.
+record was three standalone documents, consolidated 2026-08-26 into one
+archival file, not folded into this file's usual R-item length:
+`ARCHITECTURE_RESEARCH_R42_R43.md` (Parts 1-3).
 **What was done:** R42 reassessed the architecture fresh against the
 actual code and prior research. R43 instrumented every T5 candidate in
 the 23 escalation-invoked cases from R40's corpus, not just the

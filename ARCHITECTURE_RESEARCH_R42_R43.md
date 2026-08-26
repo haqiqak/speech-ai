@@ -1,3 +1,45 @@
+# Architecture Research Archive — R42/R43/R43-A
+
+**Status: historical/archival record, consolidated 2026-08-26. Not part
+of the standard CLAUDE.md reading chain (see CLAUDE.md's numbered
+reading order) — read this only if you need the full original
+reasoning behind a decision already summarized in `VALIDATION.md`/
+`DECISION_LOG.md`.**
+
+This file merges three previously separate, now-superseded documents
+that were scattered in the repo root and never integrated into the
+project's standard documentation chain:
+
+1. `ARCHITECTURE_REASSESSMENT_R42.md` — the original "current architecture
+   vs. complete new model?" research pass (R42): diagnosis, failure
+   taxonomy, architecture comparison (A–D), and a recommended target
+   architecture.
+2. `ARCHITECTURE_TRANSITION_R43.md` — R43's instrumented analysis of the
+   T5 escalation path specifically, refining R42's taxonomy and
+   architecture comparison with direct evidence.
+3. `ARCHITECTURE_TRANSITION_R43A_RESULTS.md` — R43-A's bounded
+   experiment results (A1 inflected-form blocking, A2 generate-verify-
+   regenerate, A3 NLI logical-consistency, A4 grammar re-test, A5
+   stacked combination), plus the v5 human-rating corpus.
+
+**What happened to their recommendations:** every actionable
+recommendation in these three documents was later carried out and is
+documented, with results, in `VALIDATION.md` §35 onward (R44 human
+eval) through §46 (Phase 10) — most directly, R45's "two bounded
+prototypes" decision (validator + phoneme-aware decoding), built in R46
+and evaluated through Phase 9/9B/9C/10. **These three documents are the
+reasoning that led there, not a live plan** — if you want to know
+*what was decided and what actually happened*, read `VALIDATION.md`/
+`DECISION_LOG.md`/`ROADMAP.md` first; come here only for the original,
+fuller research argument behind those decisions.
+
+The three documents below are reproduced in full, unedited, in their
+original chronological order (R42 → R43 → R43-A), separated by rules.
+
+---
+
+# Part 1 of 3 — R42: Architecture Reassessment
+
 # ARCHITECTURE_REASSESSMENT_R42.md — R42: From Candidate Substitution to Reliable Speaker-Specific Reformulation
 
 **Status: investigation only. No production code, threshold, gate, model, or
@@ -715,3 +757,693 @@ In order, each directly justified by a specific finding above:
 
 No production code, threshold, or model changes in this report. Waiting for
 review before any of the above is scoped further or started.
+
+---
+
+# Part 2 of 3 — R43: Architecture Transition Investigation
+
+# ARCHITECTURE_TRANSITION_R43.md — R43: Instrumented Escalation Analysis and Transition Decision
+
+**Status: investigation only.** No production code, threshold, gate, or model
+was changed. This document extends `ARCHITECTURE_REASSESSMENT_R42.md` — it
+does not repeat R42's full code walkthrough or R17–R41 recap verbatim;
+where content is unchanged from R42 it is cited, not re-derived. What's new
+here: (1) R43's instrumentation of the T5 escalation path — an actual
+measurement, not a hypothesis, of *why* it fails; (2) a refined, 7-category
+failure taxonomy; (3) the four architectures reframed exactly as specified
+for this pass, with Architecture D (hybrid constrained generation) given the
+deep treatment requested; (4) a corrected mechanism-level answer to "how
+should difficulty be represented to a generator," which changes one of
+R42's own proposals. Evidence tags per Practice.md §5 throughout.
+
+---
+
+## A. Current architecture
+
+Unchanged from `ARCHITECTURE_REASSESSMENT_R42.md` §B.1 — re-verified against
+`reformulate.py`/`semantic.py`/`engine.py`/`rephrase.py`/`phonetic.py` again
+this pass, no discrepancy found. Restated in one paragraph: tag flagged
+positions → if too many are flagged at once (>2 words or >60% of content
+words), skip straight to escalation → otherwise attempt substitution
+all-or-nothing (every flagged position needs a candidate clearing SBERT +
+antonym + phoneme + profile-collision gates, or the whole sentence
+escalates) → escalation calls T5 (`Vamsi/T5_Paraphrase_Paws`) for up to 5
+whole-sentence paraphrases, each gated by SBERT similarity, a negation-
+marker-count parity check, and a post-hoc scan for the flagged sound/words
+in every content word of the candidate → best-by-similarity wins, or the
+sentence ships unchanged and is reported as `could_not_safely_reformulate`.
+**Substitution is primary; generation is a rarely-reached fallback** — this
+characterization, given in the task prompt, is confirmed accurate by the
+code, not merely assumed.
+
+---
+
+## B. Evidence from R17–R42 (cited, not re-derived — full detail in R42 §C)
+
+The load-bearing findings, in one line each: R29/R31 — a real structural
+signal (candidate genericness) whose assumed consequence was directly
+contradicted by human evidence twice; not promoted. R32 — multi-substitution
+"interaction" isn't real (5/5 cases trace to one bad substitution), but
+named a genuine mechanism: wrong grammatical form landing in the wrong slot.
+R33–R37 — `contextual_fit` validated as a real fluency signal, shipped
+reported-only. R40 — 192 real sentence×profile pairs; 74% of 112 individual
+substitutions have a real defect; T5 escalation succeeded in 2/192 runs (one
+sentence). R41 — `contextual_fit` has real signal (~200× median separation)
+but no threshold safely gates on it (0.01 catches 94% of defects, wrongly
+rejects 62% of good output); structurally blind to fluent-but-wrong
+factual/logical errors. R12/R21, R14/R23 — two independent attempts to fix
+T5's escalation output by changing the *model* (reason-prompted flan-t5;
+decoder-only Qwen) both failed, in opposite ways (meaning vs. constraint
+satisfaction), at up to 3.5× and 3.1× model scale respectively.
+
+**[INTERPRETATION, carried from R42, now sharpened by R43]** R12/R21 and
+R14/R23 already showed that changing *what generates* the candidate doesn't
+close the gap. R43 (§C below) answers the question those two experiments
+left open: *why not* — down to the mechanism, not just the outcome.
+
+---
+
+## C. R43 results — instrumenting the T5 escalation path
+
+### C.1 Method
+
+Per instruction: reuse R40's existing 192-case corpus, no new sentences. Of
+the 192 (sentence, profile) pairs, exactly **23** ever invoked
+`_try_escalation` (21 ended `could_not_safely_reformulate`, 2 succeeded —
+both the same sentence, confirmed independently, matching R40's finding
+exactly). New script `eval/r43_escalation_instrumentation.py` calls the
+same library functions production code calls
+(`rephrase.generate_candidates`, `semantic.semantic_similarity`,
+`semantic.negation_consistent`, `phonetic.matches_any`) — `reformulate.py`
+and `rephrase.py` are not modified — but logs **every individual T5
+candidate's fate**, not just the single best one `_try_escalation` keeps.
+Every one of T5's 5 candidates per case was independently checked against
+all three gates (not short-circuited on first failure), so a candidate's
+*complete* gate profile is visible, not just which gate happened to reject
+it first.
+
+### C.2 The headline number: it is not fluency, and it is not meaning
+
+**[FACT]** Across 23 cases, T5 generated 115 candidates (5/case). 92 (80%)
+were non-duplicates of the input (T5 is not simply refusing/returning the
+input — it is actively trying). Of those 92:
+
+| Gate | Pass rate |
+|---|---|
+| SBERT similarity ≥ 0.85 | **76% (70/92)** |
+| Negation-marker parity | **100% (92/92)** |
+| Leak-free (no flagged sound/word in any content word) | **4% (4/92)** |
+| **Accepted (all three)** | **2% (2/92)** |
+
+**[FINDING]** T5 is, on this evidence, a reasonably competent local
+paraphraser — three-quarters of its candidates preserve enough meaning to
+clear a strict 0.85 SBERT floor, and negation is never the problem. **The
+escalation tier's near-total failure (2/192 across the full R40 corpus, 2/92
+non-duplicate candidates here) is overwhelmingly a constraint-satisfaction
+failure, not a generation-quality failure.** This directly answers §5 of the
+task's list of candidate causes: not (1) generation quality, not (5) SBERT
+being too restrictive (it's the least-limiting gate here), not (6)
+negation. It is (3)/(4): how the constraint is represented and enforced.
+
+### C.3 The mechanism, read directly from the leaked candidates
+
+**[FINDING, corrects R42's own hypothesis]** R42 §F.2 hypothesized the
+leak mechanism was "T5 is free to use *other* common words that happen to
+share the flagged sound." Reading the actual 92 candidates and classifying
+every leaked word:
+
+| Leak type | Count | Share |
+|---|---|---|
+| The exact blocked word, appearing **verbatim** | 14 | 9% |
+| A **morphological/orthographic variant** of a blocked word (different case, hyphenation, or inflection) | 87 | 59% |
+| A genuinely **unrelated** word merely sharing the flagged sound | 48 | 32% |
+
+Concrete examples of the dominant pattern (blocked = `["pre-trained"]`, all
+four T5 candidates for the same sentence):
+`"pretrained"`, `"pre-training"`, `"pre-trainers"` — three different
+respellings/re-inflections of the **same blocked root**, none a genuinely
+different word. Blocked = `["reasoning", "such", "systems"]`: the word
+**"reasoning" appears verbatim** in multiple candidates despite being
+explicitly blocked — `rephrase.py::_bad_words_ids()`'s own docstring already
+documents a precedent for this exact class of leak (case/spacing variants
+producing different token-ID sequences than the one encoded and blocked,
+`VALIDATION.md` §6.3 Cause A) — **this is that same class of leak,
+recurring at the escalation-tier level specifically, not fully closed by
+the existing fix.**
+
+**[INTERPRETATION]** T5, as a paraphrase-tuned model, is trained to stay
+close to its input. When a word is blocked, the path of least resistance is
+not "find a different concept" — it's "keep using essentially the same
+word in a form that technically isn't the one blocked." This is a different,
+more specific, and cheaper-to-fix problem than R42's original hypothesis:
+the fix isn't primarily "block a wider vocabulary of same-sound words" (that
+addresses only the 32% "unrelated word" category) — it's primarily "block
+the flagged word more robustly across its own inflections/spellings," which
+addresses the 59%+9%=68% majority.
+
+### C.4 What happens when T5 *does* try harder to avoid the word (the SBERT-failing cases)
+
+**[FINDING]** In the cases where none of T5's candidates cleared SBERT (4
+of 23), reading the actual text shows T5 reaching for a genuinely different
+word — and landing on the **same defect classes R40 already found in
+WordNet/Datamuse substitution**: "surface"→"topography" (wrong technical
+term — the same failure shape as R40's "surface"→"layer"/"open"/"rise"),
+"steaming"→"soaking" (a different, incompatible cooking process — a
+meaning-breaking substitution, not a style change), "small"→"Klein" (a
+hallucinated proper noun where a plain adjective was needed), "strategy"→
+"strategic" (wrong word class — the exact "wrong grammatical form in the
+wrong slot" mechanism R32 already named). **[INTERPRETATION]** This is
+strong, direct evidence that the *quality* problem in R40's substitution
+audit and the *quality* problem visible here inside T5's own generation are
+the **same underlying gap** — no signal anywhere in this pipeline checks
+propositional correctness or grammatical fit, regardless of whether the
+candidate came from WordNet, Datamuse, or T5. Swapping which component
+*generates* the candidate does not touch this gap, because the gap is in
+what happens *after* generation, identically for both sources.
+
+### C.5 The one working case, re-examined
+
+**[FACT, revising a small overclaim in R42]** The 2 accepted candidates
+(both the same sentence) are "Long-chain sugars **like glucose** tend to
+break down into more digestible sugars," replacing "such as starch." R42
+§33.6 already flagged this as scientifically backwards on manual review
+(glucose is the simple sugar starch breaks *into*, not an example of a
+long-chain sugar). **This pass's aggregate confirms it more starkly: the
+escalation tier's only success in 92 candidates is itself a quality-
+questionable output.** Not one candidate across the full instrumented set
+is an unambiguously clean win.
+
+---
+
+## D. Failure taxonomy (refined, per the 7-category structure requested)
+
+| Category | Example | Origin, now precisely located |
+|---|---|---|
+| **A. Surface/candidate corruption** | `sulfur→s`; `gas gases`; `optimises→optimists` | Mixed origins, now separated: `optimises→optimists` is `sanitize_input()`'s spellchecker (`grammar.py`), confirmed by direct reproduction (R40 §33.6) — **not** the reformulation engine at all. `sulfur→s`/`gas gases` are substitution-tier candidate-ranking failures (a low-information candidate cleared SBERT because a one-word change rarely moves sentence-embedding similarity enough to reject) |
+| **B. Grammatical failure** | `programs→softwares`; four `was→were` cases; T5's `strategy→strategic` (C.4) | No re-inflection/agreement check on the assembled sentence, in *either* substitution or escalation output (C.4 confirms this is not substitution-specific) — a missing verification stage, not a candidate-source-specific bug |
+| **C. Contextual/collocational failure** | `small talk→little talk`; `serves→helps` | The curated `IDIOM_PHRASES` list only protects what's on it (a disclosed, deliberate tradeoff, `REFORMULATION_PROBLEM_MAP.md` §3.1); collocation has no detector at all (§4's own feasibility table already names this, unbuilt) |
+| **D. Semantic/sense failure** | `space→place`; `surface→topography` (T5, C.4) | SBERT/MeaningBERT both measure embedding similarity, which one wrong-sense word in an otherwise-similar sentence rarely moves enough to fail; occurs identically in substitution and escalation output |
+| **E. Logical/factual relation failure** | `slower→easier` (substitution); `pre-industrial→palaeolithic` | No signal anywhere checks propositional/factual correctness; `is_known_antonym()` only catches *lexical* antonym pairs, not context-specific inversion — confirmed by direct reproduction that `antonym_check` recorded `"pass"` |
+| **F. Constraint-satisfaction failure** | 96% of T5's non-duplicate candidates leak (C.2/C.3) | **Now precisely measured, not inferred**: 68% of leaks are the blocked word (or a variant of it) surviving `bad_words_ids`; 32% are a different word sharing the sound. `bad_words_ids` operates on exact tokenized strings, is not morphology-aware, and (per the existing case-variant precedent in `rephrase.py`'s own docstring) is not fully robust to tokenization-context differences either |
+| **G. Dense-profile failure** | `heavy_dense` 31% both-tiers-failure rate (R40) | Compounds B/D/F: more flagged positions means more chances for one substitution to fail, and pre-escalation routes dense sentences to the tier F shows is the weakest link — not a separate mechanism, an amplifier of the others |
+
+**[INTERPRETATION]** Categories B and D are now confirmed, by C.4's direct
+reading, to occur identically whether the candidate comes from WordNet/
+Datamuse or from T5. This is the single most important structural fact this
+pass adds: **the bottleneck is not which component generates the candidate,
+it is the absence of two verification stages (propositional/logical
+correctness, and grammatical re-check on the assembled sentence) that would
+catch these regardless of source.**
+
+---
+
+## E. Ceiling analysis — what exactly is the ceiling
+
+Per §4 of the task: separate bad candidate generation, bad constraint
+representation, inadequate verification, inadequate sentence-level
+generation, or a combination.
+
+**[RECOMMENDATION, the honest read of C+D together]** It is a combination,
+but not an equal one — **inadequate verification is the dominant,
+common-mode cause**, present in both substitution and escalation output
+identically (categories B, D, E). **Constraint representation is the
+dominant cause specifically within the escalation tier** (category F,
+now measured at 96% failure and mechanistically explained in §C.3).
+**Generation quality itself — T5's raw ability to produce a fluent,
+meaning-preserving paraphrase — is not the bottleneck**: 76% of its
+candidates clear a strict SBERT floor, and two independent prior
+experiments (R12/R21, R14/R23) already showed that neither a differently-
+prompted nor a differently-architected model closes the gap, because
+the gap isn't there.
+
+What the current architecture is genuinely good at, restated precisely
+from R42 §B.2 and reconfirmed here: hard safety gates (0/112 phoneme/
+profile-collision violations across the full R40 audit), zero-training-
+data operation, and the light-profile case (R40's `light_single_sound`:
+3/3 correct). What it fundamentally struggles with — restated with C.4's
+addition — is **exactly the shape of problem the task names**: generating
+or selecting a sentence that simultaneously satisfies an arbitrary,
+speaker-specific avoidance constraint while preserving meaning, logic,
+grammar, and naturalness, **regardless of whether that sentence comes from
+local substitution or whole-sentence generation.** Adding more synonym
+sources will not fix categories B/D/E — they occur after candidate
+generation, at the verification stage, identically for any source.
+
+---
+
+## F. Architecture comparison (A/B/C/D as specified for this pass)
+
+### Architecture A — Current candidate substitution (unmodified baseline)
+
+Strengths/weaknesses unchanged from R42 §E.1. **New in this pass:** C.4's
+finding that T5 output has the *same* quality problems as substitution
+output means Architecture A's core weakness (missing propositional/
+grammatical verification) is not a substitution-specific defect that a
+different generation source would sidestep — it would need fixing
+regardless of which architecture is chosen. **Ceiling: the 7% CLEAN rate
+from R40, bounded above by the missing verification stages, not by the
+substitution mechanism itself.**
+
+### Architecture B — Stronger substitution (A + NLI + grammar check + better ranking, escalation unchanged)
+
+This is R42 §E.2, unchanged in substance. **New in this pass:** because
+categories B/D/E occur identically in escalation output, adding NLI and a
+grammaticality re-check to the *final assembled output* (not just
+substitution's per-candidate loop) would catch these defects **regardless
+of whether the sentence came from substitution or from T5** — meaning
+Architecture B's verification additions are not wasted even if the
+escalation mechanism is later redesigned; they sit downstream of both.
+**This is the highest confidence-to-effort option of the four**, precisely
+because C.4 shows it targets the common-mode cause, not a source-specific
+one. **Does not address category F** (the escalation tier's near-total
+practical failure) — `heavy_dense`'s 31% failure rate would not
+meaningfully improve from B alone.
+
+### Architecture C — Generator-first (generation becomes primary, not fallback)
+
+**[RECOMMENDATION, directly evidenced]** Not supported as a standalone
+change. Making generation primary means *every* sentence, not just the 11%
+substitution can't handle today, would be exposed to category F's 96%
+constraint-leak rate. Flipping the order without also fixing how the
+constraint is represented and enforced would very likely be a regression,
+not an improvement — R43's own numbers show this precisely: only 2% of
+T5's candidates currently pass every gate, dramatically below substitution's
+demonstrated (if imperfect, 26% CLEAN+MINOR) success rate. **Architecture C
+only becomes viable paired with Architecture D's constraint-mechanism
+fix** — as a standalone reordering, it is not recommended.
+
+### Architecture D — Hybrid constrained generation (generation + independent multi-signal verification) — the option most wanted for this pass
+
+This is the architecture worth building toward, but §C.3's finding changes
+*what the generation side needs*, compared to R42's original proposal.
+
+**[RECOMMENDATION]** Two candidate fixes for the constraint-representation
+problem, now ranked by C.3's actual leak-composition data rather than
+assumption:
+
+1. **Robust morphological/orthographic blocking of the named flagged
+   words** (addresses the 68% majority of leaks — literal-word and
+   morphological-variant leaks combined). Concretely: encode every
+   inflected form of each blocked word (not just case/spacing variants,
+   which `_bad_words_ids()` already handles) before calling
+   `generate_candidates`. **Lower effort than R42's original proposal**,
+   because it targets a precisely-measured majority cause with a narrow,
+   well-scoped fix — generate the inflected forms via the same
+   `grammar.inflect()`/lemmatization machinery `reformulate.py` already
+   uses for substitution, no new dependency.
+2. **Generate → verify → regenerate with targeted feedback**, instead of a
+   static pre-generation blocklist: when a candidate leaks, tell the model
+   *specifically which word leaked* and ask for a genuine alternative,
+   rather than silently trying a fixed beam-search budget and giving up.
+   This directly targets the *behavioral* pattern C.3 observed (T5's
+   default move is a minimal edit that dodges the letter of the block, not
+   the spirit of it) by making the failure explicit in the next prompt
+   rather than implicit in a blocklist it can route around.
+3. Sound-class-aware blocking (R42's original proposal) remains worth
+   doing but is now correctly sized as addressing the smaller, 32%
+   minority of leaks — a secondary improvement, not the primary fix.
+
+Layered on top, per R42 §F.1/F.4 (unchanged by this pass): an NLI/logical-
+consistency check and a grammaticality re-check on the assembled output,
+run identically regardless of candidate source, per §E's finding that
+categories B/D/E are source-agnostic.
+
+**Strengths:** directly targets the two dominant, now-measured cause
+classes (verification gaps, constraint-representation mechanism) rather
+than a source swap. **Weaknesses:** more moving pieces than B; the
+generate-verify-regenerate loop (item 2) adds latency (multiple T5 calls
+per sentence in the worst case) not yet measured. **Data requirements:**
+none for items 1/2/3 above or the verification additions — all inference-
+time mechanism changes, no training. **Engineering complexity:**
+moderate — item 1 is small (reuses existing inflection code); item 2 is a
+real control-flow change to `_try_escalation`; item 3 is small. **Research
+value:** item 2 (targeted regeneration) is, per this project's own prior
+literature review, not templated anywhere found — a genuine, if modest,
+contribution. **Likely ceiling:** unknown without building it — stated
+honestly, not guessed. **Fit to objective:** the best fit of the four,
+*because* it's now aimed at measured causes rather than a hypothesized one.
+
+---
+
+## G. Fine-tuning decision
+
+**Not yet — and R43 strengthens, not weakens, this conclusion.** R42 §G
+already found 2 of 5 preconditions unmet (no training data, no collection
+pipeline). R43 adds a sharper reason specific to the escalation tier: fine-
+tuning implicitly assumes the *model* is the limiting factor. C.2 shows
+T5's raw output quality (76% clear a strict meaning-similarity floor) is
+**not** the limiting factor — the limiting factor is a **mechanism**
+(how the constraint is enforced) that a fine-tuned model driven through the
+*same* `bad_words_ids`-based application would inherit unchanged. Fine-
+tuning a model without first fixing the constraint-application mechanism
+would very plausibly reproduce the same 96% leak rate on a better-sounding
+model — an expensive way to not fix the actual problem. **Fix the mechanism
+first (§F.3's items 1–2); only reconsider fine-tuning if a mechanism fix,
+properly measured, still leaves a gap that looks like a generation-capacity
+problem rather than a constraint-representation one.**
+
+---
+
+## H. Data strategy
+
+Unchanged from R42 §H — no new data-scale claims are made or needed by
+R43's findings, since none of §F.3's recommended next steps require
+training data. Restated once: no dataset of the required shape exists
+today; realistic scale estimates (low hundreds for proof-of-concept, low
+thousands for a useful fine-tune, tens of thousands for a robust research
+model) remain explicitly labeled as literature-derived estimates, not
+measurements, per R42 §H.4's own fabrication warning.
+
+---
+
+## I. Next bounded experiments
+
+Only what's needed to resolve remaining architectural uncertainty, in
+order:
+
+1. **Implement and test §F.3 item 1 (robust inflected-form blocking) as an
+   isolated diagnostic, not production code** — re-run against the same 23
+   escalation-invoked cases from this pass. If the 68%-majority leak class
+   drops substantially, this is strong, cheap, evidence-based grounds to
+   propose it for production (a separate, future decision). If it doesn't
+   move the number much, that itself is important — it would mean the
+   leak-composition read in §C.3 needs revisiting.
+2. **Prototype §F.3 item 2 (generate-verify-regenerate with targeted
+   feedback) as a standalone script**, same 23-case corpus, measuring
+   acceptance rate and latency — both currently unmeasured for this
+   specific mechanism.
+3. **Test an NLI check against R40's 112-change labeled ground truth**
+   (unchanged from R42 §J item 2) — still not done, still the right next
+   step for category E.
+4. **Re-test a grammaticality checker against R40's specific grammar-
+   corruption cases** (unchanged from R42 §J item 3) — for category B,
+   which C.4 confirms also occurs in escalation output, so this check's
+   value is not substitution-specific.
+
+Each of these is a diagnostic script against existing corpora — no new
+large uncontrolled corpus, no production change, matching the constraint
+given for this phase.
+
+---
+
+## J. Final recommendation
+
+**Begin building a bounded, separate research prototype around the
+constraint-representation fixes in §F.3 (items 1–2) and the two missing
+verification stages (NLI, grammaticality re-check), evaluated against the
+existing R40/R43 corpora — without replacing or modifying the current
+production substitution-first system, which continues serving as the
+baseline, safety fallback, and source of both training-adjacent examples
+(§H) and regression tests.** This is a hybrid-transition strategy, not a
+full swap: Architecture A stays in production; Architecture D's specific,
+now-evidenced components are prototyped and measured against it, in
+isolation, before any of them is proposed for production integration. Fine-
+tuning remains explicitly not started, and not justified by anything found
+in this pass — if anything, R43 makes the case *against* fine-tuning as the
+next step slightly stronger, by showing the dominant escalation-tier
+failure is a fixable mechanism problem, not a raw model-capability one.
+
+---
+
+# Part 3 of 3 — R43-A: Bounded Experiment Results
+
+# ARCHITECTURE_TRANSITION_R43A_RESULTS.md — R43-A: Bounded Experiment Results (A1–A4) + Track C
+
+**Status: diagnostic scripts only, run against existing corpora (R40's 23
+escalation cases / 79 audited sentences). No production code, threshold,
+or gate was changed.** This is the evidence you asked for before making
+the extend-hybrid / redesign-generation-tier / begin-fine-tuning-prep
+decision. Each of A1–A4 tests one candidate fix named in
+`ARCHITECTURE_TRANSITION_R43.md` §F.3/§I; Track C builds the next human-
+rating corpus, stratified directly against R40's own severity labels.
+
+---
+
+## A1 — Robust inflected-form blocking
+
+**What it tests:** §F.3 item 1 — block every inflected/orthographic form
+of each flagged word (via `pyinflect.getAllInflections`, reused
+`grammar.inflect`-adjacent machinery) instead of just the literal string
+`_bad_words_ids()` already handles. Same 23 escalation cases, same T5
+call, only the `blocked_words` argument is richer (avg. 7.7× more entries
+per case).
+
+| | Baseline (R43) | A1 (expanded blocking) |
+|---|---|---|
+| Non-duplicate candidates | 92 | 92 |
+| SBERT pass | 76% (70/92) | 75% (69/92) — unchanged, as expected |
+| **Leak-free** | **4% (4/92)** | **11% (10/92)** |
+| **Accepted (all gates)** | **2% (2/92)** | **9% (8/92)** |
+| Cases with ≥1 accepted candidate | 2/23 (9%) | 3/23 (13%) |
+
+**Reading it straight:** real improvement, same direction R43 §C.3
+predicted (68% of leaks were the blocked word or a variant of it) — but
+smaller than that 68% figure might suggest. Expanding the blocklist wins
+back roughly a third of the gap, not most of it. **[INTERPRETATION]**
+T5 still has other escape routes even with a much larger blocklist —
+consistent with §C.4's separate finding that a good chunk of failures are
+T5 reaching for a *different* word that's simply a poor choice, not a
+blocking-mechanism gap at all. This fix is worth doing (cheap, no
+downside found), but it is not sufficient alone.
+
+---
+
+## A2 — Generate → verify → regenerate with targeted feedback
+
+**What it tests:** §F.3 item 2 — instead of a static blocklist, generate
+5 candidates, and if none pass, tell the model *specifically which word
+leaked* and regenerate, up to 4 rounds. Same 23 cases.
+
+| | Baseline | A2 (regenerate loop) |
+|---|---|---|
+| **Accepted** | 2/23 (9%) | **6/23 (26%)** |
+| Avg. rounds used | 1 | 2.5 / 4 max |
+| **Avg. time/case** | ~2.5s | **~15.1s (≈6×)** |
+
+**The bigger win of the four — with a real cost and a real caveat.**
+26% is the best raw acceptance rate of anything tested here. But reading
+the 6 accepted outputs directly (not just trusting the gate-pass count,
+the same discipline R40 applied everywhere):
+
+- 2 are genuinely clean ("problems"→"issues", "grow"→"develop"; "release"→"emit").
+- 1 has a real wrong-word error inside an otherwise fine sentence:
+  *"the destroyed trees... are not **displaced** by new trees"* — should
+  be "replaced"; "displaced" changes the meaning (physically moved, not
+  substituted).
+- 1 has a subtler drift: *"less heat is emitted into **the universe**"*
+  for "radiating into space" — overstated/wrong register, not nonsense
+  but not right either.
+- 2 are the same already-known "glucose" (scientifically backwards
+  restructuring) and "little talk" cases from R40.
+
+**[FINDING]** More rounds mechanically gets more candidates through the
+*existing* gates, but the existing gates still don't check propositional
+correctness — so a meaningful share of the "wins" here are wins only in
+the narrow sense of "passed SBERT/negation/leak," not in the sense of
+"actually good." This is the same throughline as A1: fixing the
+constraint-application mechanism helps, but doesn't substitute for the
+missing verification layer.
+
+---
+
+## A3 — NLI as a logical-consistency check
+
+**What it tests:** whether `cross-encoder/nli-deberta-v3-xsmall`, run
+bidirectionally (premise=original / hypothesis=reformulated, and the
+reverse), flags R40's SEVERE cases as `contradiction` more than it flags
+CLEAN/MINOR cases — the same validation discipline R41 applied to
+`contextual_fit`. All 79 R40 audited sentences.
+
+*(Model note: `nli-deberta-v3-small` failed 3 separate download attempts
+— `httpcore.RemoteProtocolError`, the connection resetting consistently
+around 50–60MB regardless of file size, not a timeout. Switched to the
+smaller `xsmall` variant and downloaded file-by-file with a resume-retry
+loop; loaded successfully. Named as a real environment constraint, not
+glossed over.)*
+
+| Verdict | n | Flagged as contradiction (either direction) |
+|---|---|---|
+| CLEAN | 5 | **0% (0/5)** |
+| MINOR | 9 | 22% (2/9) |
+| SEVERE | 65 | **18% (12/65)** |
+
+**[FINDING] Low recall, but the recall it has is precisely targeted at
+the category it was proposed for — and nothing else.** What it *catches*:
+"pre-industrial"→"palaeolithic" (correctly flagged, both directions,
+confirming the smoke-test result), the "slower"→"easier" logical
+inversion, the "glucose" restructuring case, and a few others. **What it
+misses, almost entirely:** grammar corruption ("softwares", "Words
+patterns" — 0 caught), nonsense/duplicate tokens ("gas gases", "lot of
+objects, telling" — 0 caught), and fixed-term erosion ("small talk"→
+"little talk" — 0/8 occurrences caught, in either direction, across the
+whole corpus). **[INTERPRETATION]** This is not an NLI failure — it's
+confirmation that NLI answers a narrow question (does the hypothesis
+logically contradict the premise) and R40's taxonomy has several defect
+classes that aren't logical contradictions at all, just corrupted or
+malformed language. NLI is a precise complement to the missing
+grammaticality/nonsense checks, not a replacement for them.
+
+**[FINDING] A real false-positive cost exists too**: 22% of MINOR cases
+(2/9) — "proteins"→"peptides" and "step-by-step"→"detailed" — were
+flagged as contradiction despite being acceptable simplifications. Small
+absolute numbers (n=9), but not zero.
+
+**[FINDING, incidental, worth flagging on its own]** One SEVERE case NLI
+flagged turned out not to be a reformulation-engine defect at all:
+*"chatbots"→"**chariots**"* appears in the corpus's own base text,
+confirmed present regardless of which profile/reformulation is applied —
+the same class of bug as R40 §33.6's "optimises"→"optimists"
+(`sanitize_input()`'s spellchecker corrupting a word before reformulation
+ever runs), now a **third** independently-found instance. Not counted
+against the reformulation engine's own numbers; flagged here so it isn't
+mistakenly folded into "NLI validates the reformulation engine's defect
+rate" — it validates the *pipeline's* defect rate, which includes at
+least two subsystems.
+
+---
+
+## A4 — Re-testing grammaticality (LanguageTool) against R40's specific class
+
+**What it tests:** §F.4 — R28 found LanguageTool 0/7 against a *different*
+error class ("syntactically well-formed sentences built from the wrong
+word"). Re-tested here against R40's actual grammar-corruption cases —
+5 SEVERE-grammar sentences, the "was"/"were" pair (correct vs. corrupted,
+side by side), and 6 CLEAN sentences as a false-positive check.
+
+| Case | Result |
+|---|---|
+| "study of **softwares**" | **Caught** — `SOFTWARES` rule, correct and specific |
+| "practices **device** greenhouse gases" (noun-as-verb) | Flagged, but for the *wrong* reason (`POSSESSIVE_APOSTROPHE`, unrelated to the actual defect) — not a real catch |
+| "quiets between two people" | Missed |
+| "Words patterns between women" | Missed |
+| "gases **was**" (correct) vs. "gases **were**" (corrupted) | **Both** return 0 matches — cannot distinguish grammatical from ungrammatical here at all |
+| 5 of 6 CLEAN sentences | Correctly silent |
+| 1 of 6 CLEAN sentences (`"( AI )"` spacing) | A benign false positive — parenthesis-spacing, pre-existing in the base text, unrelated to any substitution |
+
+**[FINDING]** A real, if narrow, positive this time — not R28's clean
+negative. LanguageTool catches the one case that's a *textbook* rule
+violation (uncountable-noun pluralization) but misses the subject-verb
+agreement case entirely (the attractor-noun pattern — "gases" sitting
+between the true singular subject and the verb — is a documented hard
+case for rule-based checkers generally, not specific to this tool) and
+both non-standard-plural cases. **Recall on R40's actual grammar-
+corruption class: 1/5 clean, 1/5 wrong-reason, 3/5 missed — roughly 20%
+real recall.** Confirms R42 §F.4's read: worth having as a supplementary
+check, not sufficient alone, and not free of false positives either.
+
+---
+
+## Track C — v5 human-rating corpus, built and ready
+
+New `eval/pilot_select_pairs_v5.py`: 20 sentences selected directly from
+R40's frozen output (no new `reformulate()` run — the exact captured
+text is reused), stratified 4 CLEAN / 4 MINOR / 12 SEVERE across all 4
+profile densities, spanning every named defect class (nonsense/duplicate,
+wrong-sense/factual, grammar corruption, fixed-term erosion, the
+"slower→easier" logical inversion, the scientifically-backwards
+restructuring case, and more). Written to `eval/pilot_pairs.json`
+(v4's data archived to `eval/archive_v4/` first, untouched, mirroring the
+v3→v4 precedent). `eval/pilot_app.py` needs no changes — it already
+reads `pair_id`/`original_text`/`reformulated_text` generically.
+
+**What this buys, once rated:** the first independent human check of
+whether R40's CLEAN/MINOR/SEVERE classification (the evidentiary basis
+for R42/R43's entire architecture argument) matches real human judgment,
+not just Claude's own reading. `claude_audit_verdict` is stored as
+metadata for POST-HOC comparison only — never shown to the rater, never
+blended into their scores, same discipline as `profile_match` in every
+prior pilot round. **Not yet rated — needs a human session**, same as
+every pilot round before it.
+
+---
+
+## Synthesis — what A1–A4 collectively say
+
+Four different, independent fixes, each targeting a different named gap:
+
+| Fix | Targets | Result |
+|---|---|---|
+| A1: expanded blocking | Constraint-application mechanism (the 68% majority leak cause) | Leak-free 4%→11%, accepted 2%→9%. Real, partial. |
+| A2: regenerate loop | Same mechanism, different approach | Accepted 9%→26%, but ~6× slower, and ~half the "wins" still carry real defects on direct reading. |
+| A3: NLI | Missing logical-consistency check | Catches 18% of SEVERE (precisely the logical/factual class), 0% FP on CLEAN, some FP on MINOR. Narrow but real, no overlap with A1/A2's target. |
+| A4: LanguageTool | Missing grammaticality check | ~20% real recall on the grammar-corruption class specifically, one clean genuine catch, real misses on the harder agreement cases. Narrow but real, no overlap with A1/A2/A3. |
+
+**[INTERPRETATION, direct]** No single fix here is close to sufficient on
+its own — none reaches even 30% on the dimension it targets. But they
+target **different, non-overlapping** failure classes (§D's taxonomy),
+and none of the four showed evidence of *hurting* anything else measured.
+This is consistent with — and now measured evidence for — R42/R43's
+standing read: the current architecture's problems are a **set of
+specific, addressable gaps**, not one root cause a single change would
+close. Stacking A1+A3+A4 (mechanism fix + logical check + grammar check)
+would plausibly compound rather than substitute for each other, since
+they don't overlap in what they catch — but that compounding has not
+been measured, only argued; the honest next step, if you want that number
+before deciding, would be running all three together on the same 23/79
+cases rather than assuming additivity.
+
+**What this does not do:** none of A1–A4 individually demonstrated
+recovering anywhere near 74%→low-defect-rate territory on this evidence.
+Whether stacking them closes enough of that gap is answered directly
+below, not left open.
+
+---
+
+## A5 — The stacked experiment: A1 (expanded blocking) + A3 (NLI) + A4 (grammar), together
+
+**What it tests:** exactly the open question above. Same 23 escalation
+cases, generation uses A1's expanded blocking, and every candidate must
+now clear five checks instead of three: SBERT, negation, phoneme/word
+leak (unchanged), **plus** NLI (neither direction predicts contradiction)
+**plus** LanguageTool (zero matches). A2's iterative regeneration is
+deliberately excluded — a different kind of change (control-flow, not a
+filter), tested separately so this measures the filter-stack question
+cleanly.
+
+| | Baseline | A1 alone | **A5 (A1+A3+A4 stacked)** |
+|---|---|---|---|
+| Non-duplicate candidates | 92 | 92 | 92 |
+| Accepted | 2 (2%) | 8 (9%) | **4 (4%)** |
+| **Cases with ≥1 accepted candidate** | 2/23 (9%) | 3/23 (13%) | **1/23 (4%)** |
+
+**[FINDING, the decisive number]** Stacking more checks *lowered* the
+acceptance rate relative to A1 alone — mechanically expected (each added
+gate is a stricter AND, so it can only hold or shrink the pool) — but
+this is the honest ceiling, not a regression to explain away. NLI alone
+rejected 29 of the 92 candidates and grammar rejected 13, on top of what
+SBERT/negation/leak already rejected — real, additional problems the
+three original gates were letting through, now caught. **Only 1 of the 23
+hard, dense-profile sentences produced any candidate that survives a
+genuinely comprehensive check.** Read directly, its 4 surviving
+candidates are actually clean:
+
+> "Many of these algorithms were insufficient for solving large reasoning
+> **issues** because they experienced a combinatorial explosion,
+> **that**/**which** means they become exponentially slower as the
+> **issues** **develop**/**increase**." (sbert ≈ 0.984)
+
+That single success is a genuine, trustworthy win — but it is 1 sentence
+out of 23. **[INTERPRETATION]** This is the clearest single data point in
+the whole R42–R43A arc for the architecture decision: even after
+implementing every validated fix together — better constraint blocking,
+a logical-consistency check, a grammar check — the escalation tier still
+fails on 96% of the dense-profile cases it's meant to rescue. The
+ceiling isn't being missed because the checks aren't strict enough; it's
+that **T5's candidate pool for these sentences rarely contains a
+genuinely good option to begin with**. Verification can filter a bad
+pool down to a trustworthy remainder, but it cannot make a bad pool
+larger. That points specifically at the *generation* side of the
+escalation tier — not the verification side — as the actual ceiling,
+which bears directly on whether "add more checks to the current hybrid"
+(Architecture B/E.2) has room left to close this gap, versus needing a
+different generation mechanism (Architecture C/D) to have a real pool to
+verify against in the first place.
+
+---
+
+Whether this residual gap is large enough to justify the generation-tier
+redesign or fine-tuning-prep track — versus accepting the current
+architecture's ceiling on dense profiles as a known, documented
+limitation and shipping the cheaper fixes (A1/A4, and NLI for the
+substitution tier) as incremental improvement — is the actual decision in
+front of you. This document supplies the numbers, not the call.

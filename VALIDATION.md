@@ -3751,9 +3751,9 @@ weights touched; no threshold promoted; no fix implemented.
 
 ## 35. R44 — bounded v5 human evaluation, the final human-rated baseline before the generation-tier redesign (executed 2026-08-23)
 
-R42/R43's architecture reassessment (`ARCHITECTURE_REASSESSMENT_R42.md`,
-`ARCHITECTURE_TRANSITION_R43.md`, `ARCHITECTURE_TRANSITION_R43A_RESULTS.md`
-— kept as standalone documents, not folded in here, per their own scope)
+R42/R43's architecture reassessment (consolidated 2026-08-26 into
+`ARCHITECTURE_RESEARCH_R42_R43.md`, Parts 1-3 — kept as a standalone
+archival document, not folded in here, per its own scope)
 concluded that no combination of validated fixes closes the escalation
 tier's gap, and recommended a generation-tier redesign. Before that
 redesign starts, per direct instruction: rate the v5 corpus (§34's Track
