@@ -6,6 +6,17 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-25, third** feat: Phase 9C — independent replication, seed
+  change only. Exact re-run of 9B's pipeline (seed 42→123), paused
+  mid-run and resumed cleanly via checkpoint. Conservative threshold's
+  recall identical across seeds (0.65, both beat baseline on all three
+  metrics). Aggressive threshold-selection not robust — healthy in 9B,
+  but clean_recall crashed to 0.38 (below baseline) in 9C due to a
+  tiny 6-example val CLEAN sample. Ranking stability: Spearman ρ=0.90,
+  Pearson r=0.92 (p<0.0001) between the two models' scores. 9B's core
+  finding replicates; the 77-91% recall headlines were partly
+  threshold-selection luck, ~65% is the honest number. No production
+  changes. → `DECISION_LOG.md` 2026-08-25-C.
 - **2026-08-25, second** feat: Phase 9B — training instability fixed,
   controlled retry succeeded. Corrected R9's own diagnosis (gradient
   clipping and fp32 were already active by default; the real culprit

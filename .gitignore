@@ -36,6 +36,7 @@ nltk_data/
 eval/r9_validator_model/
 eval/r9b_validator_model/
 eval/r9b_sanity_checkpoints/
+eval/r9c_validator_model/
 
 # ── User data written at runtime ──────────────────────────────────────────────
 users/*.fluency_profile.json

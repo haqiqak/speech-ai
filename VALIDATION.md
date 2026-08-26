@@ -4764,3 +4764,51 @@ signal. Single run, single seed — not repeated to check variance.
 real evidence — not a production-ready result.** A second independent
 run (different seed) to check whether the recall/precision numbers hold
 is the sensible next step, not attempted here.
+
+## 45. Phase 9C — independent replication (executed 2026-08-25)
+
+Per direct instruction: exact re-run of Phase 9B's pipeline (same
+dataset, split, architecture, hyperparameters, threshold-selection
+procedure, evaluation metrics) with only the random seed changed
+(42→123), to test whether Phase 9B's result is reproducible or
+seed-dependent. **Prototype only.** Paused mid-run at the user's request
+(after epoch 1's checkpoint saved) and cleanly resumed later via
+`resume_from_checkpoint`, preserving optimizer/scheduler state exactly.
+
+**[FACT] Full run completed stably, 0 NaN / 0 Inf across 70,830,337
+parameters**, confirmed by direct inspection, same as 9B.
+
+**[FACT] Conservative (lex-selected) threshold result is essentially
+identical across both seeds:** defect recall **0.65 in both 9B and 9C**,
+precision 0.93→0.97, CLEAN retention 0.75→0.88 — both seeds beat the
+baseline (0.60/0.90/0.62) on all three metrics at this operating point.
+**This is the reproducible part of the result.**
+
+**[FINDING] The "aggressive" threshold-selection procedure (max recall
+among val-thresholds that beat baseline on val) is NOT robust across
+seeds.** In 9B it produced a healthy result (recall 0.77, precision
+0.92, clean_recall 0.62 — still ≥ baseline on all three, on test). In
+9C the same procedure, applied identically, produced recall 0.91 but
+**clean_recall crashed to 0.38 — below baseline's 0.62** — a real
+regression, not noise in reporting. Root cause: the validation set's
+CLEAN sample is tiny (6 examples), making that selection criterion
+noisy enough to overfit. **Consequence: 9B's headline 77%-recall number
+should not be treated as the representative result — it was partly
+threshold-selection luck.** The conservative threshold's ~65% recall is
+the number that actually replicated.
+
+**[FACT] Ranking stability, directly measured:** Spearman ρ=0.901,
+Pearson r=0.916 (n=51, p<0.0001) between the two models' raw P(CLEAN)
+scores on the identical test set. The underlying learned judgment is
+highly consistent across seeds even though the two models' absolute
+calibration differs slightly — strong evidence the model is learning a
+real, stable signal rather than seed-specific noise.
+
+**[RECOMMENDATION]** Phase 9B's core finding replicates: a genuine,
+modest, seed-stable improvement over the existing-signal baseline exists
+at a conservative operating point. The dataset's small CLEAN sample
+(both in validation and test) makes aggressive/high-recall threshold
+selection unreliable and should not be used without a larger CLEAN
+sample first. This still justifies further development — now with
+somewhat *more* confidence than 9B alone provided (two seeds, correlated
+rankings), but the honest headline number is ~65% recall, not 77-91%.

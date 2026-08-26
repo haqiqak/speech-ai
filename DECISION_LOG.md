@@ -3319,3 +3319,36 @@ training run is the sensible next step, not performed here.
 **Category:** Prototype/research, on direct instruction. No production
 code touched, no model integrated. Full record: `VALIDATION.md` §44,
 `eval/r9b_report.md`.
+
+### 2026-08-25-C — Phase 9C: independent replication (seed change only)
+
+**What was done:** exact re-run of 9B's pipeline with only the random
+seed changed (42->123) - same dataset, split, architecture,
+hyperparameters, threshold-selection procedure, evaluation metrics.
+Paused mid-run at user's request (checkpoint saved after epoch 1) and
+resumed cleanly later via resume_from_checkpoint.
+
+**Result:** full run completed stably (0 NaN/0 Inf, confirmed by
+inspection). Conservative threshold result nearly identical across
+seeds - defect recall 0.65 in BOTH 9B and 9C, both beating baseline on
+all three metrics. But the "aggressive" threshold-selection procedure
+(max recall among val-thresholds beating baseline on val) is NOT
+robust: it gave a healthy result in 9B (0.77/0.92/0.62) but in 9C
+produced clean_recall=0.38, BELOW baseline's 0.62 - a real regression
+traced to the validation set's tiny CLEAN sample (6 examples) making
+that selection criterion noisy. Ranking stability measured directly:
+Spearman rho=0.901, Pearson r=0.916 (n=51, p<0.0001) between the two
+models' scores on the same test set - the underlying learned judgment
+is highly consistent even though calibration differs.
+
+**Decision:** Phase 9B's core finding replicates at the conservative
+threshold (~65% recall, reproducible). The 77-91% recall numbers from
+aggressive threshold selection are NOT reliable and should not be
+quoted as representative - a small-CLEAN-sample threshold-selection
+fragility, not model instability (rankings stay correlated). Still
+justifies further development, with somewhat more confidence than 9B
+alone (two seeds, correlated rankings), but the honest headline is ~65%
+recall.
+
+**Category:** Prototype/research, on direct instruction. No production
+code touched, no model integrated. Full record: `VALIDATION.md` §45.

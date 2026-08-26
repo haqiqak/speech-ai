@@ -1643,6 +1643,22 @@ CLEAN), poor score calibration despite real ranking signal, single
 run/seed. A second independent training run is the sensible next step,
 not performed automatically.
 
+### Phase 9C. Independent replication (seed change only) — **DONE, 2026-08-25**
+**Linked finding:** direct instruction — re-run 9B's exact pipeline with
+only the seed changed, to test reproducibility. Full record:
+`VALIDATION.md` §45.
+**Result:** conservative threshold's recall is identical across seeds
+(0.65, both beating baseline on all three metrics). The aggressive
+threshold-selection method is NOT robust — healthy in 9B, but
+clean_recall crashed to 0.38 (below baseline) in 9C, traced to a tiny
+6-example validation CLEAN sample. Ranking stability measured directly:
+Spearman ρ=0.90, Pearson r=0.92 (p<0.0001) — the underlying signal is
+consistent across seeds even where calibration isn't.
+**Labeled as:** 9B's core finding replicates at the conservative
+threshold; the 77-91% recall headline numbers were partly
+threshold-selection luck and should not be quoted as representative.
+~65% recall is the honest, reproducible number.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)
