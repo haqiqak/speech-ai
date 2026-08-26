@@ -1,0 +1,222 @@
+{
+  "R10-001-core-word": {
+    "root_cause": "Two independent per-word substitutions ran with no visibility into each other's output; the ranker replaced 'assimilated' with 'absorbed' without checking that 'absorbed' already occurs earlier in the same sentence, creating the redundant 'absorbed and absorbed.'",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-substitution check that rejects (or re-ranks past) any candidate replacement that duplicates a word already present elsewhere in the sentence."
+  },
+  "R10-001-core-sparse_common_sound": {
+    "root_cause": "The two occurrences of 'smaller' in the reduplicated 'smaller and smaller' construction were each independently substituted by the sound-based ranker with no joint/whole-sentence coherence check across the two changes, yielding non-parallel, individually weak candidates 'least' and 'finer' instead of a consistent intensifying pair.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Add a joint substitution step that, before finalizing candidates, detects when multiple flagged occurrences are the same source word in a repeated/parallel construction and picks one coherent replacement applied consistently across all of them (or protects the reduplication pattern outright) instead of ranking each occurrence in isolation."
+  },
+  "R10-001-calib-single_word": {
+    "root_cause": "Same as the core-word variant: the ranker swapped 'assimilated' for 'absorbed' without checking the sentence already contains 'absorbed,' producing 'absorbed and absorbed.'",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Apply the same duplicate-word post-check: reject a candidate that already appears elsewhere in the sentence."
+  },
+  "R10-001-calib-word_plus_sound": {
+    "root_cause": "Identical mechanism to the other single-change variants: the 'assimilated' to 'absorbed' substitution ignores that 'absorbed' is already used earlier in the sentence.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add the same duplicate-word rejection check to the substitution post-processing step."
+  },
+  "R10-001-calib-multi_sound": {
+    "root_cause": "Same as R10-001-core-sparse_common_sound: the two occurrences of 'smaller' were substituted independently by the sound-triggered ranker with no cross-occurrence coherence check, producing 'least and finer.'",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Same joint/consistent-replacement mechanism for repeated occurrences of one flagged source word within a sentence."
+  },
+  "R10-001-calib-dense_mixed_generic": {
+    "root_cause": "Same duplicate-occurrence independent-substitution failure as the other 'smaller and smaller' variants: no coherence check across the two changes to the repeated word.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Same joint/consistent-replacement mechanism for repeated occurrences of the same flagged word."
+  },
+  "R10-002-core-word": {
+    "root_cause": "The escalation tier substituted the noun 'esophagus' with its adjective form 'esophageal' while restructuring, leaving no noun object for 'swallow down the ___ to enter the stomach' — the generation had no part-of-speech/grammaticality check on the phonetically-motivated word choice.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-generation part-of-speech/grammar-agreement check that rejects a candidate replacement whose part of speech doesn't match the syntactic slot it fills (a noun position must not be filled by an adjective-only form)."
+  },
+  "R10-003-core-word": {
+    "root_cause": "The escalation tier's phonetically-driven restructuring invented non-existent words ('Peristalaxis', 'esophagum') in place of real technical terms, and separately swapped the broader 'gastrointestinal tract' for the narrower 'intestines,' with no dictionary-validity check or protected-term list guarding either.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-generation real-word/dictionary validation check that rejects outputs containing non-dictionary tokens, and add 'gastrointestinal tract' to a protected medical-term list so it can't be narrowed to a hyponym."
+  },
+  "R10-004-core-sparse_common_sound": {
+    "root_cause": "'small' inside the fixed anatomical term 'small intestine' was matched and replaced purely because it phonetically/lexically matched the speaker's flagged sound, with no check that it was part of a protected fixed term.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'small intestine' (and similarly 'large intestine') to a protected fixed-term list that blocks substitution of their component words."
+  },
+  "R10-005-core-word": {
+    "root_cause": "The declared-word substitution ranker selected 'assumed' as a replacement candidate for 'reabsorbed' despite it being semantically unrelated, indicating an overly permissive similarity threshold or a bad candidate in the synonym pool for this word.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Raise/enforce a minimum semantic-similarity threshold for candidate acceptance and blocklist the specific 'reabsorbed' to 'assumed' pairing now that it's been observed."
+  },
+  "R10-006-core-word": {
+    "root_cause": "The escalation restructuring, while trying to avoid several phonetically hard technical words at once, flipped 'two liquids' to 'two solids' — reversing the physical claim that surfactants act at liquid interfaces — alongside degrading 'surfactant'/'surface tension'/'emulsify'; correctly avoiding the liquid-to-solid flip requires knowing what a surfactant physically does, not just recognizing a banned word pair.",
+    "fixability": "potentially_requires_custom_model",
+    "fix_sketch": "Would require the generation mechanism to actually understand surfactant/interface physics well enough to know that swapping 'liquid' for 'solid' here breaks the stated physical relationship; a lexical blocklist or glossary protection can catch the invented word and the generic term swaps but can't reliably prevent this class of physically-informed reversal across paraphrases it hasn't seen before."
+  },
+  "R10-007-core-word": {
+    "root_cause": "The declared-word substitution ranker replaced both 'biochemical' and 'physiological' with more generic synonyms ('chemical', 'physical') drawn from a generic similarity space rather than a domain-aware synonym set, losing the organism-specific precision of the originals.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Curate domain-specific synonym candidates for technical/biology vocabulary (map 'physiological' to biology-preserving alternatives rather than generic 'physical') as a data addition to the candidate pool."
+  },
+  "R10-007-core-dense_mixed_generic": {
+    "root_cause": "The sound-triggered ranker replaced 'support' with 'give' purely on phonetic/embedding grounds without checking that 'give its life' is an idiomatic collocation meaning to sacrifice one's life — nearly the opposite of 'support its life.'",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add an idiom/collocation check that blocks 'give' as a substitute for 'support' when followed by 'life' (or checks candidate substitutions against a small set of known life/death idiomatic collocations)."
+  },
+  "R10-007-calib-single_word": {
+    "root_cause": "Same as the core-word variant: 'physiological' flattened to generic 'physical' by the declared-word ranker, losing biology-specific precision.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same domain-aware synonym curation for 'physiological.'"
+  },
+  "R10-007-calib-multi_word": {
+    "root_cause": "The escalation restructuring produced a self-referential, circular phrase ('The nutritional process is the ... process by which...') by reusing 'process' without checking that the sentence already used a form of the word — a redundancy/coherence gap in the restructuring output.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-generation redundancy check that flags outputs repeating the same lemma twice in close proximity and rejects/regenerates or repairs them."
+  },
+  "R10-007-calib-word_plus_sound": {
+    "root_cause": "The sound-triggered ranker replaced 'process' with 'act,' a candidate that collapses an ongoing biological process into a single discrete action — a poor sense match that the similarity ranking accepted.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Exclude 'act' from the synonym-candidate pool for 'process' in technical/biological contexts (restrict to ongoing-activity senses like 'activity'/'function')."
+  },
+  "R10-007-calib-multi_sound": {
+    "root_cause": "Same 'support' to 'give' idiom collision as the dense_mixed_generic variant — the phonetic-similarity ranker had no idiom-collocation check.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same idiom/collocation block on 'give' substituting for 'support' before 'life.'"
+  },
+  "R10-007-calib-sparse_common_sound": {
+    "root_cause": "Same 'support' to 'give' idiom collision, again from unchecked phonetic-similarity substitution.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same idiom/collocation protection."
+  },
+  "R10-008-core-dense_mixed_generic": {
+    "root_cause": "The sound-based ranker replaced 'stroke' — a specific disease name inside an enumerated list of medical conditions — with the phonetically similar but domain-irrelevant 'shot,' with no check that the word was a fixed item in a named-disease list.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist 'stroke' to 'shot' specifically, and/or protect named-disease-list items generally from phonetic substitution using a medical-term glossary."
+  },
+  "R10-009-core-word": {
+    "root_cause": "The declared-word ranker treated 'compounds' as an interchangeable synonym for 'molecules,' but compounds are a narrower hyponym (requiring two or more distinct elements), so the embedding-similarity match didn't account for the taxonomic hypernym/hyponym relationship.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a curated science-glossary check that prevents substituting a general term with a narrower hyponym (block 'molecules' to 'compounds,' or restrict candidates to same-level terms)."
+  },
+  "R10-010-core-word": {
+    "root_cause": "Same taxonomic-narrowing pattern as R10-009: 'carbohydrates' was replaced with its hyponym 'sugars,' narrowing the scientific claim, because the ranker's similarity measure doesn't distinguish hypernym/hyponym relationships.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same curated science-glossary fix: exclude 'sugars' as a same-level synonym candidate for 'carbohydrates.'"
+  },
+  "R10-011-core-word": {
+    "root_cause": "The declared-word ranker replaced the countable plural noun 'Nutrients' with 'Nutritions,' an invalid plural form of an uncountable noun, because the candidate generator had no check on the morphological/grammatical validity of the replacement in context.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a grammaticality/morphology post-check that rejects candidate replacements whose number/countability doesn't match the original word's grammatical role, or that aren't valid word forms at all."
+  },
+  "R10-011-core-sparse_common_sound": {
+    "root_cause": "The sound-based ranker chose 'cases' for 'cells' purely on phonetic proximity, with no minimum semantic-plausibility gate to catch that 'absorbed by the cases' is nonsensical in a biology sentence.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Require sound-triggered candidates to also clear a minimum semantic-similarity/plausibility threshold against sentence context before acceptance, and/or blocklist 'cells' to 'cases.'"
+  },
+  "R10-013-core-word": {
+    "root_cause": "The declared-word ranker stripped the 're-' prefix from 'rearranged' (losing the sense of reconfiguration from an existing state) and mapped 'accompanied by' to 'followed by' (shifting simultaneity to sequence) — both are generic-embedding synonym picks that miss subtle nuance carried by morphology/collocation.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Curate the synonym candidate list to preserve nuance for these words: exclude 'arranged' as a substitute for 'rearranged,' and exclude 'followed by' as a substitute for 'accompanied by' when describing simultaneous phenomena."
+  },
+  "R10-013-calib-single_word": {
+    "root_cause": "Same 'accompanied by' to 'followed by' temporal-nuance shift from the declared-word ranker.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same nuance-preserving synonym curation excluding 'followed by' for 'accompanied by' in this sense."
+  },
+  "R10-013-calib-multi_word": {
+    "root_cause": "The escalation restructuring dropped the plural '-s' from 'reactions' ('chemical reaction occur'), producing a subject-verb agreement error, with no grammar check applied to the generated output.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a subject-verb agreement post-check on escalation outputs that catches and repairs number-agreement mismatches."
+  },
+  "R10-013-calib-word_plus_sound": {
+    "root_cause": "Same 'accompanied by' to 'followed by' nuance shift as the other variants; 'products' to 'chemicals' is a harmless synonym.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same nuance-preserving synonym curation for 'accompanied by.'"
+  },
+  "R10-014-core-word": {
+    "root_cause": "The escalation tier's phonetically-motivated restructuring invented the non-existent word 'reactionants' in place of 'reactants,' with no real-word validation on the generated output.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-generation dictionary/vocabulary validation check that rejects or regenerates outputs containing non-dictionary words."
+  },
+  "R10-014-core-dense_mixed_generic": {
+    "root_cause": "The sound-based ranker chose 'answers' for 'reactions' based on phonetic similarity alone, with no semantic-plausibility gate, producing a nonsensical sentence subject ('Chemical answers').",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Require a minimum semantic-similarity threshold alongside phonetic similarity for sound-triggered candidates, and blocklist 'reactions' to 'answers' specifically."
+  },
+  "R10-015-core-word": {
+    "root_cause": "The escalation restructuring paraphrased around the fixed technical term 'activation energy,' producing the non-standard 'activated energy,' because the term wasn't in a protected-phrase list guarding it from alteration.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'activation energy' to a protected fixed-term/glossary list that the restructuring step must preserve verbatim."
+  },
+  "R10-016-core-word": {
+    "root_cause": "The escalation restructuring's phonetic-constraint generation produced an invalid spelling of the technical term 'bimolecular' ('bimolécular'), with no spellcheck/dictionary validation on the generated technical vocabulary.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a spellcheck/dictionary validation pass on generated technical terms, and protect 'bimolecular' as a fixed-spelling glossary term."
+  },
+  "R10-017-core-word": {
+    "root_cause": "The declared-word ranker replaced 'reactions' with 'results' without checking that the same sentence still references 'reaction rates' later, leaving an internally inconsistent sentence ('results...differ in reaction rates').",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a same-root consistency check that blocks substituting a word when a morphologically related form of it still appears elsewhere in the sentence, or requires consistent handling of all occurrences of the root."
+  },
+  "R10-019-core-word": {
+    "root_cause": "The escalation restructuring dropped 'straight' from 'straight line' while simplifying the sentence, removing a qualifier that's physically load-bearing for Newton's first law, because 'straight line' wasn't protected as an intact fixed term.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'straight line' to a protected fixed-term list (or add a rule that restructuring may substitute but not delete adjectives modifying a noun) so it can't be reduced to just 'line.'"
+  },
+  "R10-019-core-sparse_common_sound": {
+    "root_cause": "The sound-based ranker replaced 'straight' with the archaic synonym 'right,' which is phonetically/lexically valid but creates modern ambiguity (read as 'correct' or a direction), with no naturalness/register check on the candidate.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist 'straight' to 'right' as a substitution candidate, or add a register/ambiguity check that screens out archaic synonyms with strong competing modern senses."
+  },
+  "R10-020-core-word": {
+    "root_cause": "The escalation restructuring compressed the explicit product 'acceleration multiplied by its mass' into the compound 'accelerated mass,' garbling the F=ma relationship, and separately genericized 'momentum' to 'movement,' dropping a precise physical quantity — neither the mathematical-relation phrase nor the technical term was protected from alteration.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a syntactic-pattern rule that blocks restructuring from compressing an explicit 'X multiplied by Y' (or similar operator) phrase into a single compound noun phrase, and add 'momentum' to a protected physics-glossary term list."
+  },
+  "R10-020-core-dense_mixed_generic": {
+    "root_cause": "The sound-based ranker replaced 'rate' with 'value,' a generic-embedding match that doesn't preserve the change-per-time sense 'rate' carries in this physics context.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist 'rate' to 'value' in this context, or restrict 'rate' substitutions to a curated set of change-related synonyms."
+  },
+  "R10-021-core-sparse_common_sound": {
+    "root_cause": "The sound-based ranker replaced 'same' with 'one' purely on phonetic grounds, producing the non-standard 'the one magnitude,' with no fluency/naturalness check on the resulting phrase.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist 'same' to 'one' as a substitution, or add a fluency/n-gram plausibility check that screens out substitutions producing non-standard phrasing."
+  },
+  "R10-022-core-multi_sound": {
+    "root_cause": "The sound-based ranker replaced 'straight' with the ambiguous 'true' (risking a 'correct/real' reading rather than 'not curved'), the same unchecked archaic/ambiguous-synonym pattern seen with 'right' elsewhere.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist 'straight' to 'true' as a substitution candidate, consistent with the fix for the 'straight' to 'right' case."
+  },
+  "R10-023-core-word": {
+    "root_cause": "The escalation restructuring produced the ungrammatical verb form 'does not accelerated' (wrong participle after 'does not') and separately replaced the fixed term 'mechanical equilibrium' with the vaguer 'physical balance,' with neither a grammar check nor a term-protection list applied.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a verb-form/grammar-agreement post-check that catches 'does not [past-participle]' patterns and repairs them to the base form, and protect 'mechanical equilibrium' as a fixed physics term."
+  },
+  "R10-024-core-word": {
+    "root_cause": "The escalation restructuring replaced 'magnitude' with 'force' without checking that 'force' already appears earlier in the same clause ('exerts a force... of equal force'), creating a redundant/circular phrase.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add the same duplicate-word-in-sentence check used elsewhere: reject a candidate replacement that duplicates a word/lemma already used nearby in the sentence."
+  },
+  "R10-025-core-word": {
+    "root_cause": "The escalation restructuring replaced 'held together by self-gravity' (internal cohesive force) with 'surrounded by self gravity' (external envelope), reversing the physical relationship, because the specific collocation 'held together by' wasn't protected from being swapped for a different relational phrase during paraphrasing.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-generation check that blocks/rejects escalation outputs replacing the collocation 'held together by X' with 'surrounded by X,' since these encode different (near-opposite) relations."
+  },
+  "R10-025-calib-multi_word": {
+    "root_cause": "Same cohesion-to-envelope reversal as R10-025-core-word ('held together by' to 'surrounded by'), compounded with a redundant 'self-gravitational gravity' phrase from reusing 'gravity' without a duplication check.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Apply the same collocation-protection check for 'held together by,' plus a duplicate-word/lemma check to catch 'gravitational gravity.'"
+  },
+  "R10-027-core-word": {
+    "root_cause": "The escalation restructuring, while compressing the sentence for phonetic ease, dropped 'of hydrogen into' from 'fusion of hydrogen into helium,' turning a specific nuclear conversion into a vaguer, incorrect 'fusion of helium,' alongside an unrelated dictionary-invalid typo ('thermonuklear') — neither the phrase nor the generated spelling was checked.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Protect the multi-word description 'of hydrogen into helium' as a fixed scientific phrase that restructuring may not truncate, and add a dictionary/spellcheck validation pass to catch 'thermonuklear.'"
+  },
+  "R10-028-core-word": {
+    "root_cause": "The escalation restructuring introduced a subject-verb agreement error ('energy that traverses...and radiate' should be 'radiates'), with no grammar check applied to the generated output.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a subject-verb agreement post-check on escalation outputs, consistent with the fix for the 'chemical reaction occur' case."
+  }
+}

@@ -6,6 +6,25 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-26, third** docs: Phase 10B — detailed failure analysis,
+  architecture-vs-custom-model evidence. All 176 Phase 10 DEFECTIVE
+  outputs re-examined with full mechanism context by 4 independent
+  subagents, classified into fixable-now / needs-new-mechanism /
+  needs-custom-model. Result: 92% fixable within current architecture
+  (GRAMMAR and FIXED_TERM_OR_IDIOM 100% rule-fixable,
+  FACTUAL_OR_LOGICAL_REVERSAL 85%), 7% needs a new but still
+  non-learned mechanism (three recurring patterns: cross-substitution
+  coherence checking, pre-ranking WSD gate, restructuring
+  content-coverage check), only 1% (2 cases, both escalation-tier
+  chemistry causal/state reasoning) potentially needs a custom trained
+  model. Decisive evidence against training something huge now.
+  Analysis only, no fixes implemented, no production changes. →
+  `DECISION_LOG.md` 2026-08-26-C.
+- **2026-08-26, second** docs: consolidated the orphaned R42/R43/R43-A
+  architecture documents into one archival file
+  (`ARCHITECTURE_RESEARCH_R42_R43.md`), updated all cross-references,
+  added a `DOCS.md` entry marking it archival. Documentation hygiene
+  only. → `DECISION_LOG.md` 2026-08-26-B.
 - **2026-08-26, first** feat: Phase 10 — broad stratified stress test
   of the current architecture. 133 new sentences (0 contamination vs
   154 prior sentences), 398 (sentence,profile) runs frozen before

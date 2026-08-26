@@ -3415,3 +3415,40 @@ become pure clutter, not a live reference.
 
 **Category:** Documentation hygiene, on direct instruction. No code,
 data, or evaluation content touched - text-only reorganization.
+
+### 2026-08-26-C — Phase 10B: detailed failure analysis, architecture-vs-custom-model evidence
+
+**What was done:** per direct instruction - "a detailed R10 failure
+analysis... identify exactly what kind of generation capability is
+missing and separate: fixable within current architecture -> needs a
+new generation mechanism -> potentially requires a custom trained
+model... rather than jumping straight into training something huge."
+All 176 Phase 10 DEFECTIVE outputs re-examined with full mechanism
+context (not blind this time, since diagnosing mechanism is a
+different task from judging acceptability) by 4 independent subagents,
+each given the same three-bucket definitions and told not to default
+to the safe middle category.
+
+**Result:** 162/176 (92%) fixable within current architecture, 12/176
+(7%) needs a new but still non-learned/engineerable mechanism, 2/176
+(1%) potentially requires a custom trained model. GRAMMAR and
+FIXED_TERM_OR_IDIOM defects are 100% rule-fixable. FACTUAL_OR_LOGICAL_
+REVERSAL - the class treated as most dangerous throughout this project
+- is 85% rule-fixable. The needs-new-mechanism bucket clusters into
+exactly three patterns (joint cross-substitution coherence checking, a
+pre-ranking WSD gate, a restructuring content-coverage check), none
+requiring a trained model. Both custom-model cases are escalation-tier
+(T5) chemistry-domain state/causal reasoning failures specifically, not
+general fluency problems.
+
+**Decision:** decisive evidence against jumping to a custom trained
+model. Staged path supported: (1) rule/blocklist/check additions for
+the 92%, each grounded in a named instance; (2) three specific new
+engineered mechanisms for the 7%; (3) only then, reconsider a
+custom-trained component for the narrow surviving 1% (escalation-tier
+technical-domain causal claims specifically). No fixes implemented in
+this phase - analysis only, decision left to the user.
+
+**Category:** Evaluation/analysis, on direct instruction. No production
+code touched, no fixes implemented, no training. Full record:
+`VALIDATION.md` §47, `eval/r10b_failure_analysis.md`.

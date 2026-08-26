@@ -1,0 +1,1175 @@
+[
+  {
+    "run_id": "R10-001-core-word",
+    "domain": "technical",
+    "subcategory": "biology",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "reformulated_text": "Digestion involves the breakdown of food into smaller and smaller parts, until they can be absorbed and absorbed into the body.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "components",
+        "replacement": "parts",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "assimilated",
+        "replacement": "absorbed",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "OTHER"
+    ],
+    "rationale": "\"assimilated\" was replaced with \"absorbed\", producing the redundant \"absorbed and absorbed\" instead of two distinct processes (absorption then assimilation); overall meaning is still roughly conveyed but the duplication is confusing."
+  },
+  {
+    "run_id": "R10-001-core-sparse_common_sound",
+    "domain": "technical",
+    "subcategory": "biology",
+    "profile_type": "sparse_common_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "reformulated_text": "Digestion involves the breakdown of food into least and finer components, until they can be absorbed and assimilated into the body.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "smaller",
+        "replacement": "least",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "smaller",
+        "replacement": "finer",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "\"smaller and smaller\" became \"least and finer\" — \"least\" does not mean progressively smaller and does not parallel \"finer\", producing a semantically confusing phrase."
+  },
+  {
+    "run_id": "R10-001-calib-single_word",
+    "domain": "technical",
+    "subcategory": "biology",
+    "profile_type": "single_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "reformulated_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and absorbed into the body.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "assimilated",
+        "replacement": "absorbed",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "OTHER"
+    ],
+    "rationale": "Same as the core-word variant: \"assimilated\" -> \"absorbed\" creates the redundant \"absorbed and absorbed\", losing the distinction between the two named processes."
+  },
+  {
+    "run_id": "R10-001-calib-word_plus_sound",
+    "domain": "technical",
+    "subcategory": "biology",
+    "profile_type": "word_plus_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "reformulated_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and absorbed into the body.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "assimilated",
+        "replacement": "absorbed",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "OTHER"
+    ],
+    "rationale": "Identical defect to the other single-word-change variants: \"assimilated\" replaced by \"absorbed\", yielding the redundant \"absorbed and absorbed\"."
+  },
+  {
+    "run_id": "R10-001-calib-multi_sound",
+    "domain": "technical",
+    "subcategory": "biology",
+    "profile_type": "multi_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "reformulated_text": "Digestion involves the breakdown of food into least and finer components, until they can be absorbed and assimilated into the body.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "smaller",
+        "replacement": "least",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "smaller",
+        "replacement": "finer",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "Same \"least and finer\" substitution for \"smaller and smaller\" seen in the sparse_common_sound variant — semantically wrong and confusing."
+  },
+  {
+    "run_id": "R10-001-calib-dense_mixed_generic",
+    "domain": "technical",
+    "subcategory": "biology",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "moderate",
+    "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "reformulated_text": "Digestion involves the breakdown of food into least and finer components, until they can be absorbed and assimilated into the body.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "smaller",
+        "replacement": "least",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "smaller",
+        "replacement": "finer",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "Same \"least and finer\" substitution for \"smaller and smaller\" — \"least\" does not function as a valid parallel comparative here."
+  },
+  {
+    "run_id": "R10-002-core-word",
+    "domain": "technical",
+    "subcategory": "biology",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "Chewing mixes the food with saliva to produce a food bolus to be swallowed down the esophagus to enter the stomach.",
+    "reformulated_text": "Chewing mixes the food with saliva to create a food bolus to swallow down the esophageal to enter the stomach.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "Chewing mixes the food with saliva to produce a food bolus to be swallowed down the esophagus to enter the stomach.",
+        "replacement": "Chewing mixes the food with saliva to create a food bolus to swallow down the esophageal to enter the stomach.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "\"esophagus\" (noun) was replaced with \"esophageal\" (adjective only), leaving \"swallow down the esophageal to enter the stomach\" without a noun — ungrammatical and confusing to parse."
+  },
+  {
+    "run_id": "R10-003-core-word",
+    "domain": "technical",
+    "subcategory": "biology",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "very_hard",
+    "original_text": "Peristalsis is the rhythmic contraction of muscles that begins in the esophagus and continues along the wall of the stomach and the rest of the gastrointestinal tract.",
+    "reformulated_text": "Peristalaxis is the rhythmic contracting of muscles that begins in the esophagum and continues along the wall of the stomach and the rest of the intestines.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "Peristalsis is the rhythmic contraction of muscles that begins in the esophagus and continues along the wall of the stomach and the rest of the gastrointestinal tract.",
+        "replacement": "Peristalaxis is the rhythmic contracting of muscles that begins in the esophagum and continues along the wall of the stomach and the rest of the intestines.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "OTHER",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "\"Peristalsis\" and \"esophagus\" were turned into non-existent words (\"Peristalaxis\", \"esophagum\"), and \"gastrointestinal tract\" was narrowed to \"intestines\", excluding the esophagus/stomach the original term covered."
+  },
+  {
+    "run_id": "R10-004-core-sparse_common_sound",
+    "domain": "technical",
+    "subcategory": "biology",
+    "profile_type": "sparse_common_sound",
+    "expected_opportunity": "easy",
+    "original_text": "Most of the digestion of food takes place in the small intestine.",
+    "reformulated_text": "Most of the digestion of food takes place in the little intestine.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "small",
+        "replacement": "little",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "\"small intestine\" is a fixed anatomical term; \"little intestine\" is not standard terminology, though the organ referred to remains clear."
+  },
+  {
+    "run_id": "R10-005-core-word",
+    "domain": "technical",
+    "subcategory": "biology",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "easy",
+    "original_text": "Water and some minerals are reabsorbed back into the blood in the large intestine.",
+    "reformulated_text": "Water and some minerals are assumed back into the blood in the large intestine.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "reabsorbed",
+        "replacement": "assumed",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"reabsorbed\" was replaced with \"assumed\", an unrelated word (meaning presumed) — \"assumed back into the blood\" is nonsensical."
+  },
+  {
+    "run_id": "R10-006-core-word",
+    "domain": "technical",
+    "subcategory": "biology",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "very_hard",
+    "original_text": "Bile acts partly as a surfactant which lowers the surface tension between either two liquids or a solid and a liquid and helps to emulsify the fats in the chyme.",
+    "reformulated_text": "Bile acts partly as a lubricant which lowers the surface pressure between either two solids or a solid and a liquid and helps to emollidate the fats in the chyme.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "Bile acts partly as a surfactant which lowers the surface tension between either two liquids or a solid and a liquid and helps to emulsify the fats in the chyme.",
+        "replacement": "Bile acts partly as a lubricant which lowers the surface pressure between either two solids or a solid and a liquid and helps to emollidate the fats in the chyme.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE",
+      "OTHER"
+    ],
+    "rationale": "\"two liquids\" was changed to \"two solids\", reversing the physical claim (surfactants act between liquid interfaces, not solid-solid ones); additionally \"surfactant\"->\"lubricant\" and \"surface tension\"->\"surface pressure\" are wrong technical substitutions, and \"emulsify\"->\"emollidate\" is an invented word."
+  },
+  {
+    "run_id": "R10-007-core-word",
+    "domain": "technical",
+    "subcategory": "medicine_healthcare",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "Nutrition is the chemical and physical process by which an organism uses food and water to support its life.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "biochemical",
+        "replacement": "chemical",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "physiological",
+        "replacement": "physical",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"physiological\" (organism-function specific) was flattened to \"physical\" (generic), losing precision, though the overall definition of nutrition still basically holds."
+  },
+  {
+    "run_id": "R10-007-core-dense_mixed_generic",
+    "domain": "technical",
+    "subcategory": "medicine_healthcare",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "moderate",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to give its life.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "support",
+        "replacement": "give",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "FIXED_TERM_OR_IDIOM"
+    ],
+    "rationale": "\"support its life\" became \"give its life\", which idiomatically means to sacrifice/lose one's life — nearly the opposite of sustaining life."
+  },
+  {
+    "run_id": "R10-007-calib-single_word",
+    "domain": "technical",
+    "subcategory": "medicine_healthcare",
+    "profile_type": "single_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "Nutrition is the biochemical and physical process by which an organism uses food and water to support its life.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "physiological",
+        "replacement": "physical",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "Same \"physiological\"->\"physical\" precision loss as the core-word variant."
+  },
+  {
+    "run_id": "R10-007-calib-multi_word",
+    "domain": "technical",
+    "subcategory": "medicine_healthcare",
+    "profile_type": "multi_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "The nutritional process is the biological and physiochemical process by which an organism uses food and water to support its life.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+        "replacement": "The nutritional process is the biological and physiochemical process by which an organism uses food and water to support its life.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "OTHER",
+    "secondary_defects": [
+      "NATURALNESS_OR_REGISTER"
+    ],
+    "rationale": "Restructured to \"The nutritional process is the ... process by which...\", a circular/redundant construction (\"process is...process\"), and \"biochemical and physiological\" was reordered to \"biological and physiochemical\" — awkward but meaning is still roughly recoverable."
+  },
+  {
+    "run_id": "R10-007-calib-word_plus_sound",
+    "domain": "technical",
+    "subcategory": "medicine_healthcare",
+    "profile_type": "word_plus_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "Nutrition is the biochemical and physical act by which an organism uses food and water to support its life.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "physiological",
+        "replacement": "physical",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "process",
+        "replacement": "act",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"physiological process\" became \"physical act\" — \"act\" implies a single action rather than an ongoing biological process, and \"physical\" again loses the biology-specific sense of \"physiological\"."
+  },
+  {
+    "run_id": "R10-007-calib-multi_sound",
+    "domain": "technical",
+    "subcategory": "medicine_healthcare",
+    "profile_type": "multi_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to give its life.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "support",
+        "replacement": "give",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "FIXED_TERM_OR_IDIOM"
+    ],
+    "rationale": "Same as the dense_mixed_generic variant: \"support its life\" -> \"give its life\", idiomatically inverting the intended meaning of sustaining life."
+  },
+  {
+    "run_id": "R10-007-calib-sparse_common_sound",
+    "domain": "technical",
+    "subcategory": "medicine_healthcare",
+    "profile_type": "sparse_common_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to give its life.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "support",
+        "replacement": "give",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "FIXED_TERM_OR_IDIOM"
+    ],
+    "rationale": "Same \"support its life\" -> \"give its life\" substitution, which idiomatically suggests sacrificing life rather than sustaining it."
+  },
+  {
+    "run_id": "R10-008-core-dense_mixed_generic",
+    "domain": "technical",
+    "subcategory": "medicine_healthcare",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "very_hard",
+    "original_text": "Over-nutrition of micronutrient is a major cause of obesity and increases the risk of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, stroke, hypertension, coronary heart disease, osteoporosis, and some forms of cancer.",
+    "reformulated_text": "Over-nutrition of micronutrient is a major cause of obesity and increases the chance of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, shot, hypertension, coronary heart disease, osteoporosis, and some forms of cancer.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "risk",
+        "replacement": "chance",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "stroke",
+        "replacement": "shot",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"stroke\" was replaced with \"shot\", an unrelated word that does not belong in a list of diseases, producing a nonsensical item in the disease list."
+  },
+  {
+    "run_id": "R10-009-core-word",
+    "domain": "technical",
+    "subcategory": "medicine_healthcare",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "easy",
+    "original_text": "All forms of life require carbon, energy, and water as well as various other molecules.",
+    "reformulated_text": "All forms of life require carbon, energy, and water as well as various other compounds.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "molecules",
+        "replacement": "compounds",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"molecules\" was narrowed to \"compounds\" (compounds are a subset of molecules requiring two or more distinct elements), a minor taxonomic narrowing of the claim."
+  },
+  {
+    "run_id": "R10-010-core-word",
+    "domain": "technical",
+    "subcategory": "medicine_healthcare",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Animals require complex nutrients such as carbohydrates, lipids, and proteins, obtaining them by consuming other organisms.",
+    "reformulated_text": "Animals require complex nutrients such as sugars, lipids, and proteins, obtaining them by consuming other beings.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "carbohydrates",
+        "replacement": "sugars",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "organisms",
+        "replacement": "beings",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"carbohydrates\" was narrowed to \"sugars\" (sugars are only one subtype of carbohydrate, alongside starches and fiber), narrowing the scientific claim; \"organisms\"->\"beings\" is an acceptable synonym."
+  },
+  {
+    "run_id": "R10-011-core-word",
+    "domain": "technical",
+    "subcategory": "medicine_healthcare",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Nutrients are absorbed by the cells and used in metabolic biochemical reactions.",
+    "reformulated_text": "Nutritions are absorbed by the cells and used in metabolic biological reactions.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "Nutrients",
+        "replacement": "Nutritions",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "biochemical",
+        "replacement": "biological",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "\"Nutrients\" was changed to \"Nutritions\" — \"nutrition\" is an uncountable/abstract noun and pluralizing it this way is ungrammatical; \"biochemical\"->\"biological\" also loses precision."
+  },
+  {
+    "run_id": "R10-011-core-sparse_common_sound",
+    "domain": "technical",
+    "subcategory": "medicine_healthcare",
+    "profile_type": "sparse_common_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "Nutrients are absorbed by the cells and used in metabolic biochemical reactions.",
+    "reformulated_text": "Nutrients are absorbed by the cases and used in metabolic biochemical reactions.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "cells",
+        "replacement": "cases",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"cells\" was replaced with \"cases\", an unrelated word that makes \"absorbed by the cases\" nonsensical in this biological context."
+  },
+  {
+    "run_id": "R10-013-core-word",
+    "domain": "technical",
+    "subcategory": "chemistry",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+    "reformulated_text": "When chemical reactions occur, the atoms are arranged and the reaction is followed by an energy change as new products are generated.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "rearranged",
+        "replacement": "arranged",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "accompanied",
+        "replacement": "followed",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"rearranged\" was shortened to \"arranged\", dropping the \"re-\" that conveys atoms being reconfigured from an existing state, a subtle but real meaning shift; \"accompanied by\"->\"followed by\" also shifts simultaneity to sequence."
+  },
+  {
+    "run_id": "R10-013-calib-single_word",
+    "domain": "technical",
+    "subcategory": "chemistry",
+    "profile_type": "single_word",
+    "expected_opportunity": "moderate",
+    "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+    "reformulated_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new products are generated.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "accompanied",
+        "replacement": "followed",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"accompanied by\" (simultaneous) became \"followed by\" (sequential/after), a subtle shift in the temporal relationship between the reaction and the energy change."
+  },
+  {
+    "run_id": "R10-013-calib-multi_word",
+    "domain": "technical",
+    "subcategory": "chemistry",
+    "profile_type": "multi_word",
+    "expected_opportunity": "moderate",
+    "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+    "reformulated_text": "When chemical reaction occur, the atoms are arranged and the reaction is followed by an energy change as new products are generated.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+        "replacement": "When chemical reaction occur, the atoms are arranged and the reaction is followed by an energy change as new products are generated.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "\"chemical reactions occur\" became \"chemical reaction occur\" — singular subject with plural verb, a clear subject-verb agreement error; it also carries the \"arranged\"/\"followed by\" precision losses seen in other variants."
+  },
+  {
+    "run_id": "R10-013-calib-word_plus_sound",
+    "domain": "technical",
+    "subcategory": "chemistry",
+    "profile_type": "word_plus_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+    "reformulated_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new chemicals are generated.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "accompanied",
+        "replacement": "followed",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "products",
+        "replacement": "chemicals",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "Same \"accompanied by\"->\"followed by\" temporal-nuance shift; \"products\"->\"chemicals\" is an acceptable loose synonym."
+  },
+  {
+    "run_id": "R10-014-core-word",
+    "domain": "technical",
+    "subcategory": "chemistry",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "Chemical reactions are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the reactants.",
+    "reformulated_text": "Chemical reactions are usually characterised by a chemical change and they yield one or more products, which usually have different characteristics from the reactionants.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "Chemical reactions are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the reactants.",
+        "replacement": "Chemical reactions are usually characterised by a chemical change and they yield one or more products, which usually have different characteristics from the reactionants.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "OTHER",
+    "secondary_defects": [],
+    "rationale": "\"reactants\" was corrupted into \"reactionants\", a non-existent word; the intended term is still inferable from context but is not valid English."
+  },
+  {
+    "run_id": "R10-014-core-dense_mixed_generic",
+    "domain": "technical",
+    "subcategory": "chemistry",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "hard",
+    "original_text": "Chemical reactions are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the reactants.",
+    "reformulated_text": "Chemical answers are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the chemicals.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "reactions",
+        "replacement": "answers",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "reactants",
+        "replacement": "chemicals",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Chemical reactions\" became \"Chemical answers\" — \"answers\" is an unrelated word, making the sentence's subject nonsensical."
+  },
+  {
+    "run_id": "R10-015-core-word",
+    "domain": "technical",
+    "subcategory": "chemistry",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "very_hard",
+    "original_text": "Typically, reaction rates increase with increasing temperature because there is more thermal energy available to reach the activation energy necessary for breaking bonds between atoms.",
+    "reformulated_text": "Usually, reaction rates increase with rising temperatures because there is more thermal energy available to reach the activated energy necessary for breaking bonds between atoms.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "Typically, reaction rates increase with increasing temperature because there is more thermal energy available to reach the activation energy necessary for breaking bonds between atoms.",
+        "replacement": "Usually, reaction rates increase with rising temperatures because there is more thermal energy available to reach the activated energy necessary for breaking bonds between atoms.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "The fixed term \"activation energy\" was changed to \"activated energy\", a non-standard variant of the technical term, though the overall meaning is still recoverable."
+  },
+  {
+    "run_id": "R10-016-core-word",
+    "domain": "technical",
+    "subcategory": "chemistry",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "easy",
+    "original_text": "In a bimolecular reaction, two molecules collide and react with each other.",
+    "reformulated_text": "Two molecules collide and react with each other in a bimolécular reaction.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "In a bimolecular reaction, two molecules collide and react with each other.",
+        "replacement": "Two molecules collide and react with each other in a bimolécular reaction.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "\"bimolecular\" was rendered with an accent as \"bimolécular\", an incorrect spelling of the technical term; the restructuring of the sentence itself is fine and meaning-preserving."
+  },
+  {
+    "run_id": "R10-017-core-word",
+    "domain": "technical",
+    "subcategory": "chemistry",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "The forward and reverse reactions are competing with each other and differ in reaction rates.",
+    "reformulated_text": "The forward and reverse results are rivaling with each other and differ in reaction rates.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "reactions",
+        "replacement": "results",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "competing",
+        "replacement": "rivaling",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"reactions\" was replaced with \"results\", removing the core chemistry concept (forward/reverse reactions) and leaving an incoherent claim that \"results...differ in reaction rates\"."
+  },
+  {
+    "run_id": "R10-019-core-word",
+    "domain": "technical",
+    "subcategory": "physics",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "A body remains at rest, or in motion at a constant speed in a straight line, unless it is acted upon by a force.",
+    "reformulated_text": "A body stays at rest or in motion at a steady speed in a line unless it is acted upon by a force.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "A body remains at rest, or in motion at a constant speed in a straight line, unless it is acted upon by a force.",
+        "replacement": "A body stays at rest or in motion at a steady speed in a line unless it is acted upon by a force.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"straight line\" was shortened to just \"line\", dropping a qualifier essential to Newton's first law (constant-speed motion along a curved line still involves acceleration), weakening the physical accuracy of the stated law."
+  },
+  {
+    "run_id": "R10-019-core-sparse_common_sound",
+    "domain": "technical",
+    "subcategory": "physics",
+    "profile_type": "sparse_common_sound",
+    "expected_opportunity": "hard",
+    "original_text": "A body remains at rest, or in motion at a constant speed in a straight line, unless it is acted upon by a force.",
+    "reformulated_text": "A body remains at rest, or in motion at a constant rate in a right line, unless it is acted upon by a force.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "speed",
+        "replacement": "rate",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "straight",
+        "replacement": "right",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "NATURALNESS_OR_REGISTER"
+    ],
+    "rationale": "\"straight line\" became \"right line\", an archaic term for straight line that a modern listener is likely to misread as \"correct line\" or a directional \"right\" line, creating ambiguity despite technically being an old synonym."
+  },
+  {
+    "run_id": "R10-020-core-word",
+    "domain": "technical",
+    "subcategory": "physics",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "very_hard",
+    "original_text": "At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the rate at which the body's momentum is changing with time.",
+    "reformulated_text": "At any instant of time, the net force on a body is equal to the body's accelerated mass or the rate at which the movement of the body is changing with time.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the rate at which the body's momentum is changing with time.",
+        "replacement": "At any instant of time, the net force on a body is equal to the body's accelerated mass or the rate at which the movement of the body is changing with time.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"acceleration multiplied by its mass\" became \"accelerated mass\", turning the product of two distinct quantities (F=ma) into a garbled single compound; separately, \"momentum\" was replaced by the vague \"movement\", dropping the specific physical quantity the rate-of-change definition depends on."
+  },
+  {
+    "run_id": "R10-020-core-dense_mixed_generic",
+    "domain": "technical",
+    "subcategory": "physics",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "very_hard",
+    "original_text": "At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the rate at which the body's momentum is changing with time.",
+    "reformulated_text": "At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the value at which the body's momentum is changing with time.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "rate",
+        "replacement": "value",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"the rate at which...is changing\" became \"the value at which...is changing\" — \"rate\" (a change-per-time concept) is not equivalent to \"value\", making the statement imprecise though still roughly interpretable."
+  },
+  {
+    "run_id": "R10-021-core-sparse_common_sound",
+    "domain": "technical",
+    "subcategory": "physics",
+    "profile_type": "sparse_common_sound",
+    "expected_opportunity": "hard",
+    "original_text": "If two bodies exert forces on each other, these forces have the same magnitude but opposite directions.",
+    "reformulated_text": "If two bodies exert forces on each other, these forces have the one magnitude but opposite directions.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "same",
+        "replacement": "one",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "NATURALNESS_OR_REGISTER"
+    ],
+    "rationale": "\"same magnitude\" became \"one magnitude\", an unusual dialectal phrasing (\"the one X\" = \"the same X\") likely to read as confusing or ungrammatical to a general audience, even though the intended meaning is recoverable."
+  },
+  {
+    "run_id": "R10-022-core-multi_sound",
+    "domain": "technical",
+    "subcategory": "physics",
+    "profile_type": "multi_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "Newton's first law expresses the principle of inertia: the natural behavior of a body is to move in a straight line at constant speed.",
+    "reformulated_text": "Newton's first law expresses the principle of inertia: the natural behavior of a body is to move in a true line at constant velocity.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "straight",
+        "replacement": "true",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "speed",
+        "replacement": "velocity",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"straight line\" became \"true line\", a non-standard substitution that risks being read as \"accurate/real line\" rather than \"straight\"; \"speed\"->\"velocity\" is redundant with the line description but not itself a factual error."
+  },
+  {
+    "run_id": "R10-023-core-word",
+    "domain": "technical",
+    "subcategory": "physics",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "very_hard",
+    "original_text": "When the net force on a body is equal to zero, then by Newton's second law, the body do not accelerate, and it is said to be in mechanical equilibrium.",
+    "reformulated_text": "When the net force on a body is equal to zero, then by Newton's second law the body does not accelerated, and it is said to be in a physical balance.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "When the net force on a body is equal to zero, then by Newton's second law, the body do not accelerate, and it is said to be in mechanical equilibrium.",
+        "replacement": "When the net force on a body is equal to zero, then by Newton's second law the body does not accelerated, and it is said to be in a physical balance.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "FIXED_TERM_OR_IDIOM"
+    ],
+    "rationale": "\"does not accelerated\" is an ungrammatical verb form (should be \"accelerate\"); additionally the fixed term \"mechanical equilibrium\" was replaced with the vaguer \"physical balance\"."
+  },
+  {
+    "run_id": "R10-024-core-word",
+    "domain": "technical",
+    "subcategory": "physics",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "very_hard",
+    "original_text": "In other words, if one body exerts a force on a second body, the second body is also exerting a force on the first body, of equal magnitude in the opposite direction.",
+    "reformulated_text": "In other words, if a body exerts a force on a second body, the second body also exerts force on the first body of equal force in the opposing directions.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "In other words, if one body exerts a force on a second body, the second body is also exerting a force on the first body, of equal magnitude in the opposite direction.",
+        "replacement": "In other words, if a body exerts a force on a second body, the second body also exerts force on the first body of equal force in the opposing directions.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "OTHER",
+    "secondary_defects": [],
+    "rationale": "\"of equal magnitude\" became \"of equal force\", creating a circular/redundant phrase (\"exerts force...of equal force\") that is awkward though the intended meaning (equal-sized opposing forces) still comes through."
+  },
+  {
+    "run_id": "R10-025-core-word",
+    "domain": "technical",
+    "subcategory": "astronomy",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "A star is a luminous spheroid of plasma held together by self-gravity.",
+    "reformulated_text": "A star is a luminous spheroid of plasma, which is surrounded by self gravity.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "A star is a luminous spheroid of plasma held together by self-gravity.",
+        "replacement": "A star is a luminous spheroid of plasma, which is surrounded by self gravity.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"held together by self-gravity\" (gravity as an internal cohesive force) became \"surrounded by self gravity\" (gravity as an external envelope), reversing the physical relationship between the star's matter and its own gravity."
+  },
+  {
+    "run_id": "R10-025-calib-multi_word",
+    "domain": "technical",
+    "subcategory": "astronomy",
+    "profile_type": "multi_word",
+    "expected_opportunity": "moderate",
+    "original_text": "A star is a luminous spheroid of plasma held together by self-gravity.",
+    "reformulated_text": "A star is a luminous sphéroid of plasma, surrounded by self-gravitational gravity.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "A star is a luminous spheroid of plasma held together by self-gravity.",
+        "replacement": "A star is a luminous sphéroid of plasma, surrounded by self-gravitational gravity.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "OTHER",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "'Held together by self-gravity' becomes 'surrounded by self-gravitational gravity', a redundant, garbled phrase that also changes the physical relationship from cohesion to mere proximity."
+  },
+  {
+    "run_id": "R10-027-core-word",
+    "domain": "technical",
+    "subcategory": "astronomy",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "very_hard",
+    "original_text": "A star shines for most of its active life due to the thermonuclear fusion of hydrogen into helium in its core.",
+    "reformulated_text": "A star glows in its core for most of its activity life due to the thermonuklear fusion of helium in it.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "A star shines for most of its active life due to the thermonuclear fusion of hydrogen into helium in its core.",
+        "replacement": "A star glows in its core for most of its activity life due to the thermonuklear fusion of helium in it.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "Drops 'of hydrogen into' so 'fusion of hydrogen into helium' becomes just 'fusion of helium', changing the described nuclear process from hydrogen-to-helium conversion to helium fusion; also contains 'activity life' and the typo 'thermonuklear'."
+  },
+  {
+    "run_id": "R10-028-core-word",
+    "domain": "technical",
+    "subcategory": "astronomy",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "This process releases energy that traverses the star's interior and radiates into outer space.",
+    "reformulated_text": "This process releases energy that passes through the star's inner space and radiate into outer space.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "This process releases energy that traverses the star's interior and radiates into outer space.",
+        "replacement": "This process releases energy that passes through the star's inner space and radiate into outer space.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "Subject-verb agreement breaks: 'energy that traverses... and radiate' should be 'radiates'; meaning otherwise intact ('interior'->'inner space' is a fine paraphrase)."
+  }
+]

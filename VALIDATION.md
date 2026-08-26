@@ -4898,3 +4898,82 @@ design-time prediction, not ground truth. All 5 blind evaluators are
 Claude instances. Hand-authored general-domain sentences and verbatim
 technical sentences remain methodologically different sources, as
 flagged in the plan.
+
+## 47. Phase 10B — detailed failure analysis: what generation capability is actually missing (executed 2026-08-26)
+
+Per direct instruction: "a detailed R10 failure analysis... identify
+exactly what kind of generation capability is missing and separate:
+fixable within current architecture → needs a new generation mechanism
+→ potentially requires a custom trained model... so we can make the
+architecture-vs-custom-model decision based on that, rather than
+jumping straight into training something huge." **Analysis only — no
+production code touched, no fixes implemented, no training.** Full
+record: `eval/r10b_failure_analysis.md`.
+
+**[FACT] Method:** all 176 Phase 10 DEFECTIVE outputs re-examined with
+full mechanism context (word-level changes, which tier produced them,
+the prior blind judgment as established fact) — a different task from
+blind acceptability judging, so full context was appropriate here. 4
+independent subagents, each given the same three-bucket definitions
+with worked examples and an explicit instruction not to default to the
+"safe middle" category.
+
+**[FACT] Headline result: 162/176 (92%) fixable within current
+architecture, 12/176 (7%) needs a new — still non-learned, still
+engineerable — generation mechanism, 2/176 (1%) potentially requires a
+custom trained model.** This is a decisive answer to the standing
+"architecture vs. custom model" question this project has circled since
+R42: building a custom trained model is not justified by this failure
+population.
+
+**[FINDING] GRAMMAR (37/37) and FIXED_TERM_OR_IDIOM (16/16) defects are
+100% rule-fixable** — the two most mechanical defect classes close
+almost entirely with a grammar/agreement post-check and an expanded
+fixed-term protection list. **FACTUAL_OR_LOGICAL_REVERSAL — the class
+treated as most dangerous throughout this project — is also 85%
+rule-fixable** (mostly antonym/polarity checks and specific bad-pair
+blocking), with only 1/20 landing in the custom-model bucket.
+
+**[FINDING] `multi_word` profiles (0% CLEAN in the main Phase 10
+report) have 0 custom-model-bucket defects** — 11/13 fixable, 2/13
+needing a new mechanism. The 0% clean rate is evidence of two specific,
+buildable gaps (per-word gating, cross-substitution coherence checking),
+not evidence the architecture needs a learned generator.
+
+**[FACT] The `needs_new_generation_mechanism` bucket (12 cases)
+clusters into exactly three recurring patterns**, none requiring a
+trained model: (1) no joint coherence check across simultaneous
+substitutions in one sentence — the largest sub-pattern; (2) no local
+word-sense-disambiguation gate before the existing semantic-fit ranker
+runs; (3) no content-coverage check confirming every source clause
+survives escalation-tier restructuring. Each is a new *check/gate*, not
+a new *generator*.
+
+**[FINDING, narrow and specific] Both `potentially_requires_custom_model`
+cases are escalation-tier (T5 restructuring) failures involving
+chemistry-domain state/causal reasoning** — a physical-relationship
+reversal ("two liquids"→"two solids," breaking what a surfactant acts
+between) and a state-vs-capability confusion ("dissolved"→"soluble,"
+silently breaking a causal clause). Both are individually fluent and
+grammatical, so no collocation/agreement rule would catch them. **This
+points at a targeted future role for a learned component — verifying/
+constraining escalation-tier causal claims in technical domains — not a
+wholesale generation-architecture replacement.**
+
+**[RECOMMENDATION] Staged path this evidence supports:** (1) a concrete
+batch of rule/blocklist/check additions covering the 92%, each grounded
+in a named failure instance, not speculative; (2) three specific new
+engineered mechanisms (cross-substitution coherence scoring, a
+lightweight pre-ranking WSD gate, a restructuring content-coverage
+check) covering the 7%; (3) only after 1-2, reconsider a custom-trained
+component for the narrow surviving 1% (escalation-tier technical-domain
+causal/state claims specifically) — not the 74%-defective headline
+number Phase 10 reported before this deeper diagnosis.
+
+**[LIMITATION]** All 4 classifying subagents are Claude instances, same
+epistemic status as every prior labeling pass in this project. The
+fixable/needs-new-mechanism boundary is somewhat subjective — full
+per-case `root_cause`/`fix_sketch` reasoning is preserved in
+`eval/r10b_batch_{1-4}_results.json` for re-examination. This diagnoses
+Phase 10's specific 176-case failure population, not a universal claim
+about all future defects.

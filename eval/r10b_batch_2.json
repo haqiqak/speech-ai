@@ -1,0 +1,1142 @@
+[
+  {
+    "run_id": "R10-029-core-word",
+    "domain": "technical",
+    "subcategory": "astronomy",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "very_hard",
+    "original_text": "At the end of a star's lifetime, fusion ceases and its core becomes a stellar remnant: a white dwarf, a neutron star, or if it is sufficiently massive a black hole.",
+    "reformulated_text": "At the end of a star's life, fusion ceases and its core becomes a stellar remnant: a white dwarf, a neutral star or a black hole if it is sufficient mass.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "At the end of a star's lifetime, fusion ceases and its core becomes a stellar remnant: a white dwarf, a neutron star, or if it is sufficiently massive a black hole.",
+        "replacement": "At the end of a star's life, fusion ceases and its core becomes a stellar remnant: a white dwarf, a neutral star or a black hole if it is sufficient mass.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "'neutron star' (a specific, real astronomical object) is corrupted to 'neutral star', a non-existent term; also 'sufficiently massive' becomes the ungrammatical 'sufficient mass'."
+  },
+  {
+    "run_id": "R10-031-core-word",
+    "domain": "technical",
+    "subcategory": "geology",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+    "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary mass object that allows hot lava, volcano ash and gases to escape from a magma cave below the surface.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+        "replacement": "A volcano is a vent or fissure in the crust of a planetary mass object that allows hot lava, volcano ash and gases to escape from a magma cave below the surface.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "'volcanic ash' is broken into 'volcano ash', and the fixed geological term 'magma chamber' becomes 'magma cave', which wrongly suggests an empty hollow rather than a magma-filled reservoir."
+  },
+  {
+    "run_id": "R10-031-calib-multi_word",
+    "domain": "technical",
+    "subcategory": "geology",
+    "profile_type": "multi_word",
+    "expected_opportunity": "hard",
+    "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+    "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary mass object that allows hot lava, volcano ash and gases to escape from a magma cave below the surface.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+        "replacement": "A volcano is a vent or fissure in the crust of a planetary mass object that allows hot lava, volcano ash and gases to escape from a magma cave below the surface.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "Same defects as R10-031-core-word: 'volcanic ash'->'volcano ash' and 'magma chamber'->'magma cave' (wrong physical concept)."
+  },
+  {
+    "run_id": "R10-031-calib-multi_sound",
+    "domain": "technical",
+    "subcategory": "geology",
+    "profile_type": "multi_sound",
+    "expected_opportunity": "hard",
+    "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+    "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the open.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "surface",
+        "replacement": "open",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'below the surface' becomes 'below the open', a wrong/nonsensical word choice that leaves the ending unclear."
+  },
+  {
+    "run_id": "R10-031-calib-sparse_common_sound",
+    "domain": "technical",
+    "subcategory": "geology",
+    "profile_type": "sparse_common_sound",
+    "expected_opportunity": "hard",
+    "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+    "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the open.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "surface",
+        "replacement": "open",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "Same 'surface'->'open' substitution, making the final clause confusing."
+  },
+  {
+    "run_id": "R10-031-calib-dense_mixed_generic",
+    "domain": "technical",
+    "subcategory": "geology",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "hard",
+    "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+    "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the open.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "surface",
+        "replacement": "open",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "Same 'surface'->'open' substitution as the other calib variants."
+  },
+  {
+    "run_id": "R10-032-core-word",
+    "domain": "technical",
+    "subcategory": "geology",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "very_hard",
+    "original_text": "Volcanoes resulting from divergent tectonic activity is usually non-explosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
+    "reformulated_text": "Volcanoes arising from divergence of tectonic activity are usually non-explosives, whereas those that result from converged tectic activity cause violent eruptions.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "Volcanoes resulting from divergent tectonic activity is usually non-explosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
+        "replacement": "Volcanoes arising from divergence of tectonic activity are usually non-explosives, whereas those that result from converged tectic activity cause violent eruptions.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "OTHER"
+    ],
+    "rationale": "'non-explosive'->'non-explosives' misuses the adjective as a plural noun, and 'convergent'->'converged tectic' introduces the non-word 'tectic' (for 'tectonic'); intended meaning still recoverable."
+  },
+  {
+    "run_id": "R10-032-core-dense_mixed_generic",
+    "domain": "technical",
+    "subcategory": "geology",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "very_hard",
+    "original_text": "Volcanoes resulting from divergent tectonic activity is usually non-explosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
+    "reformulated_text": "Volcanoes causing from divergent tectonic activity is usually non-explosive whereas those happening from convergent tectonic activity cause violent eruptions.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "resulting",
+        "replacement": "causing",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "resulting",
+        "replacement": "happening",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'resulting from'->'causing from' and the second 'resulting from'->'happening from' are both ungrammatical prepositional constructions, though the intended meaning is still recoverable."
+  },
+  {
+    "run_id": "R10-034-core-word",
+    "domain": "technical",
+    "subcategory": "geology",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "Magma commonly explodes as the gas dissolved in it comes out of solution as the pressure decreases when it flows to the surface.",
+    "reformulated_text": "Magma often explodes as the gas soluble in it comes out of the solution as the pressure drops when it flows to the surface.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "Magma commonly explodes as the gas dissolved in it comes out of solution as the pressure decreases when it flows to the surface.",
+        "replacement": "Magma often explodes as the gas soluble in it comes out of the solution as the pressure drops when it flows to the surface.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'dissolved' (already in solution) is replaced by 'soluble' (merely capable of dissolving), which weakens the logic of 'comes out of solution' since something only soluble need not currently be in solution."
+  },
+  {
+    "run_id": "R10-034-core-dense_mixed_generic",
+    "domain": "technical",
+    "subcategory": "geology",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "hard",
+    "original_text": "Magma commonly explodes as the gas dissolved in it comes out of solution as the pressure decreases when it flows to the surface.",
+    "reformulated_text": "Magma commonly explodes as the gas dissolved in it comes out of answer as the pressure decreases when it flows to the open.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "solution",
+        "replacement": "answer",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "surface",
+        "replacement": "open",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "OTHER",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "'comes out of solution' becomes the nonsensical 'comes out of answer', and 'flows to the surface' becomes 'flows to the open'; the ending no longer makes sense."
+  },
+  {
+    "run_id": "R10-036-core-word",
+    "domain": "technical",
+    "subcategory": "geology",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "Because tectonic plates move across mantle plumes, each volcano becomes inactive as it drifts off the plume, and new volcanoes are created where the plate advances over the plume.",
+    "reformulated_text": "Because tectonic plates move across mantle plumes, each volcano becomes inactivated as it drifts off the plume, and new volcanic eruptions are created where the plate moves over the plumes.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "Because tectonic plates move across mantle plumes, each volcano becomes inactive as it drifts off the plume, and new volcanoes are created where the plate advances over the plume.",
+        "replacement": "Because tectonic plates move across mantle plumes, each volcano becomes inactivated as it drifts off the plume, and new volcanic eruptions are created where the plate moves over the plumes.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'new volcanoes are created' becomes 'new volcanic eruptions are created' -- a volcano (a geological structure) and an eruption (an event) are different things, so the claim about what forms as the plate advances is now wrong."
+  },
+  {
+    "run_id": "R10-037-calib-multi_word",
+    "domain": "technical",
+    "subcategory": "climate_environment",
+    "profile_type": "multi_word",
+    "expected_opportunity": "easy",
+    "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+    "reformulated_text": "Renewable energy is usually thought of as energy that is harnessed from continually occurring natural phenomenon.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+        "replacement": "Renewable energy is usually thought of as energy that is harnessed from continually occurring natural phenomenon.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'phenomena' (plural) is changed to 'phenomenon' (singular), a number-agreement slip; 'understood as'->'thought of as' and 'continuously'->'continually' are fine synonyms."
+  },
+  {
+    "run_id": "R10-038-core-word",
+    "domain": "technical",
+    "subcategory": "climate_environment",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Solar power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy.",
+    "reformulated_text": "Solar power, wind power, electricity, thermal energy, and biomass is widely agreed to be the main types of renewable energy.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "hydroelectricity",
+        "replacement": "electricity",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "geothermal",
+        "replacement": "thermal",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "'hydroelectricity'->'electricity' and 'geothermal energy'->'thermal energy' strip the defining prefixes from these compound terms, turning two specific renewable-energy types into a generic energy carrier and a generic heat concept -- 'electricity' is not itself a type of renewable energy."
+  },
+  {
+    "run_id": "R10-038-core-sparse_common_sound",
+    "domain": "technical",
+    "subcategory": "climate_environment",
+    "profile_type": "sparse_common_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "Solar power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy.",
+    "reformulated_text": "Renewable power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "Solar",
+        "replacement": "Renewable",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'Solar power' (a specific renewable type) is replaced with 'Renewable power' (the umbrella category), making the list circular and dropping solar power as a named example."
+  },
+  {
+    "run_id": "R10-040-core-word",
+    "domain": "technical",
+    "subcategory": "climate_environment",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "easy",
+    "original_text": "Solar energy can only be captured during the day, and ideally in cloudless conditions.",
+    "reformulated_text": "Solar energy can only be captured during the day, and ideally in cloudless terms.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "conditions",
+        "replacement": "terms",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'cloudless conditions'->'cloudless terms' is a wrong word choice that renders the phrase nonsensical/unclear."
+  },
+  {
+    "run_id": "R10-041-core-word",
+    "domain": "technical",
+    "subcategory": "climate_environment",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "In general, renewable energy sources pollute much less than fossil fuels.",
+    "reformulated_text": "In general, alternative energy sources are much less polluting than fossil fuels.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "In general, renewable energy sources pollute much less than fossil fuels.",
+        "replacement": "In general, alternative energy sources are much less polluting than fossil fuels.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'renewable energy sources'->'alternative energy sources' swaps a specific technical category for a broader/different one (alternative energy can include non-renewable sources like nuclear); the overall claim about pollution is still roughly preserved."
+  },
+  {
+    "run_id": "R10-042-core-word",
+    "domain": "technical",
+    "subcategory": "climate_environment",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "Water can generate electricity with a conversion efficiency of about 90%, which is the highest rate in renewable energy.",
+    "reformulated_text": "Water can generate power with a convertibility of about 90%, which is the highest rate in renewable energy.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "Water can generate electricity with a conversion efficiency of about 90%, which is the highest rate in renewable energy.",
+        "replacement": "Water can generate power with a convertibility of about 90%, which is the highest rate in renewable energy.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "The specific engineering term 'conversion efficiency' is replaced by 'convertibility', a different and vaguer concept, obscuring the precise 90% metric being described."
+  },
+  {
+    "run_id": "R10-042-core-dense_mixed_generic",
+    "domain": "technical",
+    "subcategory": "climate_environment",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "hard",
+    "original_text": "Water can generate electricity with a conversion efficiency of about 90%, which is the highest rate in renewable energy.",
+    "reformulated_text": "Water can generate electricity with a conversion efficiency of about 90 %, which is the highest value in extended energy.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "rate",
+        "replacement": "value",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "renewable",
+        "replacement": "extended",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "'renewable energy' (the named category) is corrupted to the nonsensical 'extended energy', breaking the sentence's final claim."
+  },
+  {
+    "run_id": "R10-043-core-word",
+    "domain": "technical",
+    "subcategory": "computer_science",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+    "reformulated_text": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction, typically used to solve a class of specific problems or to perform a computation.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+        "replacement": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction, typically used to solve a class of specific problems or to perform a computation.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "'mathematically rigorous'->'numerically rigorous' shifts the meaning from formal/logical rigor to numerical-computation rigor, a different technical concept; 'instructions'->'instruction' also drops the plural, an agreement slip."
+  },
+  {
+    "run_id": "R10-043-calib-multi_word",
+    "domain": "technical",
+    "subcategory": "computer_science",
+    "profile_type": "multi_word",
+    "expected_opportunity": "hard",
+    "original_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+    "reformulated_text": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction, typically used to solve a class of specific problems or to perform a computation.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+        "replacement": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction, typically used to solve a class of specific problems or to perform a computation.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "Same defects as R10-043-core-word: 'numerically rigorous' for 'mathematically rigorous', and singular 'instruction'."
+  },
+  {
+    "run_id": "R10-043-calib-word_plus_sound",
+    "domain": "technical",
+    "subcategory": "computer_science",
+    "profile_type": "word_plus_sound",
+    "expected_opportunity": "hard",
+    "original_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+    "reformulated_text": "In mathematics and computer science, an algorithm is a finite sequence of formally rigorous logical instructions, typically used to solve a class of specific jobs or to perform a computation.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "mathematically",
+        "replacement": "formally",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "problems",
+        "replacement": "jobs",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'formally rigorous' is a fine substitute, but 'class of specific problems'->'class of specific jobs' loses the precise CS sense of 'problem' (as in computational problem)."
+  },
+  {
+    "run_id": "R10-044-core-word",
+    "domain": "technical",
+    "subcategory": "computer_science",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Algorithms is used as specifications for performing calculations and data processing.",
+    "reformulated_text": "Algorithms is used as descriptions for performing maths and data processing.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "specifications",
+        "replacement": "descriptions",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "calculations",
+        "replacement": "maths",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "NATURALNESS_OR_REGISTER"
+    ],
+    "rationale": "'specifications'->'descriptions' loosens a precise CS term (a specification is formal, a description need not be), and 'calculations'->'maths' shifts from the act of computing to the field of mathematics, also more informal."
+  },
+  {
+    "run_id": "R10-044-core-dense_mixed_generic",
+    "domain": "technical",
+    "subcategory": "computer_science",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "moderate",
+    "original_text": "Algorithms is used as specifications for performing calculations and data processing.",
+    "reformulated_text": "Algorithms is used as descriptions for performing calculations and data processing.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "specifications",
+        "replacement": "descriptions",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'specifications'->'descriptions' loosens the precise technical meaning as in the core-word variant."
+  },
+  {
+    "run_id": "R10-047-core-word",
+    "domain": "technical",
+    "subcategory": "computer_science",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Starting from an initial state and input, a computation occurs at each step, eventually producing output and terminating.",
+    "reformulated_text": "Starting from an initial state and input, a computing occurs at each step, eventually producing output and end.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "computation",
+        "replacement": "computing",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "terminating",
+        "replacement": "end",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'a computation'->'a computing' is ungrammatical (computing doesn't normally take an indefinite article this way), and the parallel structure 'producing output and terminating' becomes the non-parallel 'producing output and end'; meaning still recoverable."
+  },
+  {
+    "run_id": "R10-051-core-dense_mixed_generic",
+    "domain": "technical",
+    "subcategory": "mathematics_statistics",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "very_hard",
+    "original_text": "Since the coin is fair, the two outcomes ( heads and tails ) are both equally probable; the probability of heads equals the probability of tails; and since no other outcomes are possible, the probability of either heads or tails are 1/2 ( which could also be written as 0.5 or 50 % ).",
+    "reformulated_text": "Since the coin is fair, the two outcomes ( heads and tails ) are both equally probable; the probability of heads equals the probability of tails; and since no other outcomes are possible, the probability of either heads or tails are 1/2 ( which could also be printed as 0.5 or 50 % ).",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "written",
+        "replacement": "printed",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'written as 0.5'->'printed as 0.5' is an odd word choice for mathematical notation ('written' is the standard term for representing a value), though the equivalence being stated is still clear."
+  },
+  {
+    "run_id": "R10-055-core-dense_mixed_generic",
+    "domain": "technical",
+    "subcategory": "economics",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "moderate",
+    "original_text": "In economics, inflation is an increase in the average price of goods and services in terms of money.",
+    "reformulated_text": "In economics, inflation is an increase in the average price of goods and helps in terms of money.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "services",
+        "replacement": "helps",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "The fixed economic term 'goods and services' is broken by replacing 'services' with 'helps', producing a nonsensical phrase in the definition of inflation."
+  },
+  {
+    "run_id": "R10-055-calib-single_word",
+    "domain": "technical",
+    "subcategory": "economics",
+    "profile_type": "single_word",
+    "expected_opportunity": "moderate",
+    "original_text": "In economics, inflation is an increase in the average price of goods and services in terms of money.",
+    "reformulated_text": "In economies, inflation is an increase in the average price of goods and services in terms of money.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "economics",
+        "replacement": "economies",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'economics' (the discipline) becomes 'economies' (plural of economy), changing what the sentence is introducing even though the core definition of inflation remains intact."
+  },
+  {
+    "run_id": "R10-055-calib-word_plus_sound",
+    "domain": "technical",
+    "subcategory": "economics",
+    "profile_type": "word_plus_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "In economics, inflation is an increase in the average price of goods and services in terms of money.",
+    "reformulated_text": "In economies, inflation is an increase in the average cost of goods and services in terms of money.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "economics",
+        "replacement": "economies",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "price",
+        "replacement": "cost",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "Same economics->economies sense shift as the single-word variant; 'price'->'cost' is an acceptable near-synonym and not itself a defect."
+  },
+  {
+    "run_id": "R10-055-calib-multi_sound",
+    "domain": "technical",
+    "subcategory": "economics",
+    "profile_type": "multi_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "In economics, inflation is an increase in the average price of goods and services in terms of money.",
+    "reformulated_text": "In economics, inflation is an increase in the average price of goods and helps in terms of money.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "services",
+        "replacement": "helps",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'services' was replaced with 'helps', producing 'goods and helps in terms of money', which is nonsensical and destroys the definition."
+  },
+  {
+    "run_id": "R10-055-calib-sparse_common_sound",
+    "domain": "technical",
+    "subcategory": "economics",
+    "profile_type": "sparse_common_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "In economics, inflation is an increase in the average price of goods and services in terms of money.",
+    "reformulated_text": "In economics, inflation is an increase in the average price of goods and helps in terms of money.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "services",
+        "replacement": "helps",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "Identical to the multi_sound variant: 'services' becomes 'helps', yielding the nonsensical 'goods and helps'."
+  },
+  {
+    "run_id": "R10-056-core-word",
+    "domain": "technical",
+    "subcategory": "economics",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "When the general price level rises, each unit of currency buys fewer goods and services.",
+    "reformulated_text": "When the overall price level rises, each unit of the dollar buys fewer goods and service.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "When the general price level rises, each unit of currency buys fewer goods and services.",
+        "replacement": "When the overall price level rises, each unit of the dollar buys fewer goods and service.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "'services' becomes singular 'service', a number-agreement error ('goods and service'); separately 'currency' is narrowed to 'the dollar', a scope change from a general concept to one specific currency."
+  },
+  {
+    "run_id": "R10-056-core-sparse_common_sound",
+    "domain": "technical",
+    "subcategory": "economics",
+    "profile_type": "sparse_common_sound",
+    "expected_opportunity": "hard",
+    "original_text": "When the general price level rises, each unit of currency buys fewer goods and services.",
+    "reformulated_text": "When the general price level rises, each unit of currency buys fewer goods and helps.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "services",
+        "replacement": "helps",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'services' is replaced with 'helps', producing the nonsensical 'goods and helps'."
+  },
+  {
+    "run_id": "R10-057-core-sparse_common_sound",
+    "domain": "technical",
+    "subcategory": "economics",
+    "profile_type": "sparse_common_sound",
+    "expected_opportunity": "hard",
+    "original_text": "Changes in inflation is widely attributed to increases in the money supply.",
+    "reformulated_text": "Changes in inflation is widely attributed to increases in the money issue.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "supply",
+        "replacement": "issue",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "The fixed economic term 'money supply' is broken into 'money issue', a non-standard phrase that no longer names the standard concept being attributed to inflation."
+  },
+  {
+    "run_id": "R10-058-core-word",
+    "domain": "technical",
+    "subcategory": "economics",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "The negative effects would include an increase in the opportunity cost of holding money.",
+    "reformulated_text": "The positive effects would include a rise in the chance cost of holding money.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "The negative effects would include an increase in the opportunity cost of holding money.",
+        "replacement": "The positive effects would include a rise in the chance cost of holding money.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [
+      "FIXED_TERM_OR_IDIOM"
+    ],
+    "rationale": "'negative effects' is flipped to 'positive effects', reversing the polarity of the claim; additionally the fixed term 'opportunity cost' is broken into 'chance cost'."
+  },
+  {
+    "run_id": "R10-059-core-word",
+    "domain": "technical",
+    "subcategory": "economics",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "Positive effects include reducing unemployment due to nominal wage rigidity.",
+    "reformulated_text": "Positive effects include a reduction of employment due to nominal wage rigidities.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "Positive effects include reducing unemployment due to nominal wage rigidity.",
+        "replacement": "Positive effects include a reduction of employment due to nominal wage rigidities.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "'reducing unemployment' becomes 'a reduction of employment' -- these describe opposite outcomes (more people working vs. fewer people working)."
+  },
+  {
+    "run_id": "R10-059-core-dense_mixed_generic",
+    "domain": "technical",
+    "subcategory": "economics",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "hard",
+    "original_text": "Positive effects include reducing unemployment due to nominal wage rigidity.",
+    "reformulated_text": "Positive effects include breaking unemployment due to nominal wage toughness.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "reducing",
+        "replacement": "breaking",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "rigidity",
+        "replacement": "toughness",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "'nominal wage rigidity' (a specific economic term for wages resisting downward adjustment) becomes 'nominal wage toughness', which does not convey the same concept; 'reducing' -> 'breaking' also muddies the causal claim."
+  },
+  {
+    "run_id": "R10-060-core-dense_mixed_generic",
+    "domain": "technical",
+    "subcategory": "economics",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "very_hard",
+    "original_text": "Low inflation reduces the likelihood of economic recessions by enabling the labor market to adjust more quickly.",
+    "reformulated_text": "Low inflation decreases the likelihood of economic economies by enabling the labor market to adjust more quickly.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "reduces",
+        "replacement": "decreases",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "recessions",
+        "replacement": "economies",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'recessions' is replaced with 'economies', producing the nonsensical 'economic economies' and losing the original claim about recessions."
+  },
+  {
+    "run_id": "R10-061-core-word",
+    "domain": "technical",
+    "subcategory": "engineering",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+    "reformulated_text": "Civil engineers is a technical discipline that deals with the design, design and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings and railways.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+        "replacement": "Civil engineers is a technical discipline that deals with the design, design and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings and railways.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "OTHER",
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "'Civil engineering is' becomes 'Civil engineers is', a subject-verb disagreement; separately 'construction' is replaced by a duplicated 'design, design and maintenance', dropping the concept of construction entirely."
+  },
+  {
+    "run_id": "R10-061-calib-single_word",
+    "domain": "technical",
+    "subcategory": "engineering",
+    "profile_type": "single_word",
+    "expected_opportunity": "hard",
+    "original_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+    "reformulated_text": "Civil engineering is a professional engineering discipline that deals with the design, business, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "construction",
+        "replacement": "business",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'construction' is replaced with 'business', which is unrelated to what civil engineering does and materially changes the content of the definition."
+  },
+  {
+    "run_id": "R10-061-calib-multi_word",
+    "domain": "technical",
+    "subcategory": "engineering",
+    "profile_type": "multi_word",
+    "expected_opportunity": "hard",
+    "original_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+    "reformulated_text": "Civil engineers is a technical discipline that deals with the design, design and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings and railways.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+        "replacement": "Civil engineers is a technical discipline that deals with the design, design and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings and railways.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "OTHER",
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "Same defects as the core-word variant: 'Civil engineers is' is a subject-verb disagreement, and 'construction' is replaced by a duplicated 'design, design and maintenance', dropping the concept of construction."
+  },
+  {
+    "run_id": "R10-061-calib-word_plus_sound",
+    "domain": "technical",
+    "subcategory": "engineering",
+    "profile_type": "word_plus_sound",
+    "expected_opportunity": "hard",
+    "original_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+    "reformulated_text": "Civil engineering is a expert engineering discipline that deals with the design, business, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "professional",
+        "replacement": "expert",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "construction",
+        "replacement": "business",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "'construction' -> 'business' materially changes the definition's content; also 'a expert' is an article-agreement error (should be 'an expert')."
+  },
+  {
+    "run_id": "R10-061-calib-single_sound",
+    "domain": "technical",
+    "subcategory": "engineering",
+    "profile_type": "single_sound",
+    "expected_opportunity": "hard",
+    "original_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+    "reformulated_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, functional components of buildings, and railways.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "structural",
+        "replacement": "functional",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'structural components' becomes 'functional components', a different technical concept (load-bearing structure vs. function) within an otherwise unchanged list."
+  },
+  {
+    "run_id": "R10-062-core-word",
+    "domain": "technical",
+    "subcategory": "engineering",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "easy",
+    "original_text": "Civil engineering is traditionally broken into a number of sub-disciplines.",
+    "reformulated_text": "Civil engineering is traditionally broken into a number of sub-discipline.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "Civil engineering is traditionally broken into a number of sub-disciplines.",
+        "replacement": "Civil engineering is traditionally broken into a number of sub-discipline.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'sub-disciplines' becomes singular 'sub-discipline', disagreeing with 'a number of'; meaning is still clear despite the number mismatch."
+  },
+  {
+    "run_id": "R10-064-core-word",
+    "domain": "technical",
+    "subcategory": "engineering",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "The first self-proclaimed civil engineer was John Smeaton, who constructed the Eddystone Lighthouse.",
+    "reformulated_text": "The first so-called civil engineer was John Smeaton, who built the Eddystone Lighthouse.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "self-proclaimed",
+        "replacement": "so-called",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "constructed",
+        "replacement": "built",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'self-proclaimed' (he called himself this) becomes 'so-called' (a term others use, often skeptically), a subtle shift in agency/connotation; 'constructed'->'built' is a fine synonym."
+  }
+]

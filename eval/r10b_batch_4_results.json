@@ -1,0 +1,222 @@
+{
+  "R10-100-core-multi_sound": {
+    "root_cause": "The global_sound trigger flagged \"see\" and the substitution ranker chose \"find\" as the closest embedding match, but \"see\" here is used in its social/meeting sense (\"see each other\" = spend time together), not the visual-perception/locate sense that \"find\" fits; independent per-word substitution had no signal that \"see\" was part of the fixed collocation \"see each other.\"",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Protect the collocation \"see each other\" (and similar reciprocal-verb idioms) in a fixed-phrase list, or exclude \"find\" from the candidate set for \"see\" when followed by \"each other,\" forcing a safer synonym like \"meet.\""
+  },
+  "R10-101-core-word": {
+    "root_cause": "The substitution ranker for the declared word \"surprised\" chose the near-identical surface form \"surprising\" (same stem, high embedding similarity) without checking that swapping the -ed participle for the -ing participle flips the psych-verb's semantic role from experiencer (\"she felt surprise\") to causer (\"she caused surprise\"), reversing the sentence's claim.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a morphology-aware filter for psych/experiencer verbs (surprise, bore, excite, interest, etc.) that blocks candidate replacements differing only by an -ed/-ing suffix swap from the source word, since that pair systematically flips agent/experiencer roles."
+  },
+  "R10-102-core-dense_mixed_generic": {
+    "root_cause": "The global-sound substitution swapped the indefinite pronoun \"someone\" for the common noun \"person\" without adjusting the surrounding determiner, because the substitution only replaces the flagged token and has no grammatical-agreement step to insert \"a\" when a pronoun is replaced by a countable noun.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-substitution determiner-agreement check that inserts \"a\"/\"an\" whenever a bare indefinite pronoun (someone/somebody/anything) is replaced by a singular countable noun."
+  },
+  "R10-103-core-word": {
+    "root_cause": "The declared-word substitution for \"creaked\" chose \"noised,\" a candidate derived from the noun \"noise\" with high embedding similarity but not conventionally used as an intransitive sound-making verb in modern English; the ranker has no check on whether a candidate is an attested verb usage.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Curate a vetted synonym list for common sound-verbs (\"creaked,\" \"squeaked,\" \"groaned,\" \"clicked\") instead of relying on raw embedding nearest-neighbors, or add a corpus-attestation check that rejects rare/unattested verb usages like \"noised\" as intransitive."
+  },
+  "R10-105-core-word": {
+    "root_cause": "The T5 escalation model, restructuring the whole sentence under phonetic constraints, generated a malformed comparative (\"rockyer\" instead of \"rockier\") and dropped past-tense agreement (\"suggested\"->\"suggests\") while leaving \"was\" untouched, indicating the restructuring output isn't checked against basic morphology/tense-agreement rules before being accepted.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-generation grammaticality pass (a spellcheck/known-irregular-form check for comparatives, plus a tense-agreement checker matching verbs to the sentence's established tense) that rejects or repairs outputs like \"rockyer\" and tense-mismatched clauses."
+  },
+  "R10-105-core-sparse_common_sound": {
+    "root_cause": "The global-sound substitution for \"steeper\" chose \"higher\" because both are terrain adjectives that are near-neighbors in embedding space, but \"steeper\" denotes incline/gradient while \"higher\" denotes elevation -- two distinct physical properties -- and the independent per-word ranker had no check that these are not interchangeable for \"trail.\"",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist the specific \"steeper\"->\"higher\" pair (and generalize to a small confusable-physical-property set: steep/high, wide/long, deep/tall) so the ranker skips this candidate in favor of a true steepness synonym like \"steeper\"-safe alternatives (\"more sloped\")."
+  },
+  "R10-106-core-word": {
+    "root_cause": "\"settled\" is polysemous (physically coming to rest vs. reaching a decision); the declared-word substitution picked the \"decided\" sense based on word-form embedding similarity alone, ignoring that the subject \"fog\" is inanimate and cannot perform the agentive act of deciding, producing an anthropomorphized, nonsensical claim.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"settled\"->\"decided\" as a substitution pair (protect \"settled\" in physical-description contexts with a curated synonym list like \"hung,\" \"hovered,\" \"spread\") so the agentive \"decided\" sense is never offered as a candidate."
+  },
+  "R10-108-core-word": {
+    "root_cause": "Two independent per-word substitutions each introduced a separate defect: \"single\"->\"one\" produces determiner-doubling (\"a one lamp\") because the ranker never checks the resulting phrase's grammaticality, and \"corner\"->\"edge\" changes the spatial concept (corner = where two walls meet; edge = a boundary) without any check for referent preservation.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a determiner-conflict rule that blocks \"one\" as a replacement immediately following the article \"a\" (or auto-drops the article), and blocklist \"corner\"->\"edge\" as a specific bad spatial-noun pair."
+  },
+  "R10-109-core-word": {
+    "root_cause": "The T5 restructuring model, invoked because the sentence had multiple flagged difficulties, freely regenerated the sentence and substituted the specific object \"light fixture\" with the more common everyday phrase \"light bulb,\" even though \"fixture\" was not itself the flagged difficulty -- the escalation tier has no mechanism to preserve untriggered content words/objects verbatim.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Add a lexically-constrained decoding step to the restructuring tier (constrained/guided generation or a copy mechanism) that pins content nouns not associated with any declared difficulty, so objects like \"fixture\" survive unless specifically flagged."
+  },
+  "R10-109-calib-single_word": {
+    "root_cause": "The declared-word substitution replaced \"replace\" with \"substitute\" based on embedding synonymy, but \"substitute\" conventionally takes the NEW item as its object (\"substitute the bulb for the fixture\") while \"replace\" takes the OLD item as object -- the ranker doesn't check argument-structure/subcategorization differences between near-synonym verbs.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"replace\"->\"substitute\" as a same-slot substitution (or add an argument-structure check on candidate verbs), since the two verbs have swapped object roles and can't be swapped in place without restructuring the clause."
+  },
+  "R10-109-calib-multi_word": {
+    "root_cause": "Same as the core-word \"fixture\"->\"bulb\" case: the restructuring tier substitutes the specific object noun with a more common but different item because it has no content-preservation constraint over words not tied to the declared difficulty.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Add a lexically-constrained decoding step to the restructuring tier that pins untriggered content nouns like \"fixture\" so they survive verbatim in the regenerated sentence."
+  },
+  "R10-109-calib-word_plus_sound": {
+    "root_cause": "Same as the single_word variant: the declared-word substitution swaps \"replace\" for \"substitute\" without checking that the two verbs require the object to fill opposite semantic roles (old item vs. new item).",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"replace\"->\"substitute\" as a same-slot substitution pair so the ranker never offers it for a verb whose object role would be reversed."
+  },
+  "R10-111-core-word": {
+    "root_cause": "Two independent per-word substitutions each picked a candidate from the wrong semantic category: \"button\" (a physical, holdable object) was replaced with \"click\" (an action noun), and \"seconds\" (a duration unit) was replaced with \"times\" (a repetition-count unit); because substitutions are ranked independently, neither check caught that \"hold the click for five times\" no longer describes a physical action performed for a duration.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a semantic-category-consistency check that only accepts a replacement if it shares the source word's type (physical/holdable object for \"button\"; unit-of-time for \"seconds\"), rejecting cross-category picks like \"click\" and \"times.\""
+  },
+  "R10-113-core-dense_mixed_generic": {
+    "root_cause": "\"steps\" is polysemous (instructional/procedural steps vs. physical walking strides); the global-sound substitution picked the walking sense \"paces\" based on generic word-form embedding similarity, without using the surrounding instructional context (\"numbered ... in the manual\") to disambiguate the sense.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"steps\"->\"paces\" as a bad pair, or protect the collocation \"numbered steps\"/\"steps in the manual\" as a fixed instructional phrase so only instructional-sense synonyms (\"stages,\" \"instructions\") are offered."
+  },
+  "R10-114-core-word": {
+    "root_cause": "The declared-word substitution replaced the indefinite locative \"somewhere\" with the definite locative \"there,\" which requires an antecedent that doesn't exist in this sentence, so \"store the medicine there cool\" fails to parse -- the ranker treated the two as simple synonyms without checking they belong to different grammatical classes (indefinite vs. definite locative).",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"somewhere\"->\"there\" as a substitution pair (and more generally block indefinite-locative-to-definite-locative swaps without an antecedent), keeping \"somewhere\" or offering another indefinite locative synonym instead."
+  },
+  "R10-114-core-sparse_common_sound": {
+    "root_cause": "Same defect as the declared_word variant, here triggered by global_sound: \"somewhere\" is replaced with the definite locative \"there,\" which has no antecedent and leaves \"there cool\" unparseable.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"somewhere\"->\"there\" as a substitution pair regardless of trigger source, since the grammatical class mismatch is the same either way."
+  },
+  "R10-115-core-word": {
+    "root_cause": "The T5 restructuring model, regenerating \"not easier\" as \"not more easy to use,\" used a periphrastic comparative for a short adjective that conventionally takes the \"-er\" suffix, indicating the restructuring model wasn't constrained to standard English comparative morphology.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-generation morphology check that flags/corrects periphrastic comparatives (\"more X\") for short/common adjectives with a standard \"-er\" form (easy->easier, big->bigger, etc.)."
+  },
+  "R10-115-calib-single_word": {
+    "root_cause": "The declared-word substitution for the comparative adjective \"harder\" picked the bare degree adverb \"more,\" which is not itself a comparative adjective, so \"more to use\" drops the actual quality being compared and no longer parses.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a POS/completeness check that rejects a substitution candidate for a comparative adjective if the candidate is a bare degree adverb rather than itself a comparative adjective or a valid \"more + adjective\" pair."
+  },
+  "R10-115-calib-multi_word": {
+    "root_cause": "Same as the core-word variant: the T5 restructuring model renders \"easier\" as the non-standard periphrastic \"more easy to use\" instead of using the expected \"-er\" comparative form.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add the same post-generation comparative-morphology check to the restructuring tier, correcting \"more easy\" to \"easier\" for short adjectives."
+  },
+  "R10-115-calib-word_plus_sound": {
+    "root_cause": "Same as the single_word variant: substituting \"harder\" with the bare adverb \"more\" drops the comparative adjective and leaves \"more to use\" ungrammatical and underspecified.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Apply the same POS/completeness check rejecting bare-adverb candidates for comparative-adjective source words."
+  },
+  "R10-118-core-word": {
+    "root_cause": "\"overrated\" (praised more than deserved, an opinion/reputation term) and \"overestimated\" (a quantity or capability judged too high, a measurement term) are near-neighbors in embedding space but belong to different semantic domains; the ranker had no domain check to distinguish them.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"overrated\"->\"overestimated\" and add a curated synonym set for opinion-domain words like \"overrated\" (e.g., \"overhyped,\" \"overpraised\") instead of relying on general embedding similarity."
+  },
+  "R10-121-core-word": {
+    "root_cause": "The declared-word substitutions replaced the plural category nouns \"weekdays\" (Mon-Fri) and \"weekends\" (Sat-Sun) with single specific day names that are subsets, not synonyms, of those categories, because the ranker treated \"tuesdays\"/\"sundays\" as high-similarity day-related terms without checking that they narrow a multi-day category to one day.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist substituting category day-terms (\"weekdays,\" \"weekends\") with single-day names, or add a check that a replacement noun must preserve the source's set-scope/cardinality (category-for-category, not category-for-instance)."
+  },
+  "R10-121-calib-single_word": {
+    "root_cause": "Same defect as the core-word case, limited to \"weekdays\"->\"tuesdays\": the ranker narrows a five-day category to a single day without any scope-preservation check.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"weekdays\"->\"tuesdays\" (and category-to-instance day substitutions generally) so the five-day scope is preserved."
+  },
+  "R10-121-calib-word_plus_sound": {
+    "root_cause": "Same defect as the other \"weekdays\"->\"tuesdays\" variants: a category day-term is narrowed to a single day, changing the factual schedule.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"weekdays\"->\"tuesdays\" as a scope-narrowing substitution pair."
+  },
+  "R10-122-core-word": {
+    "root_cause": "The declared-word substitution picked \"manufacturings,\" treating the uncountable process noun \"manufacturing\" as a countable place noun by adding a plural \"-s,\" because the ranker matched on topical similarity to \"factories\" without checking the candidate's countability/grammatical category.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a countability/POS-category check that rejects candidate nouns whose typical usage is uncountable when the source word is a countable place noun, or blocklist \"factories\"->\"manufacturing(s)\" specifically."
+  },
+  "R10-123-core-sparse_common_sound": {
+    "root_cause": "The global-sound substitution replaced \"century,\" a precisely-defined 100-year unit, with \"period,\" a vague term with no fixed duration, because the ranker optimized for embedding proximity without checking whether the candidate preserves the source's precise quantitative meaning.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"century\"->\"period\" (and generally protect defined time-unit nouns like century/decade/millennium from vague-duration replacements), forcing the ranker to prefer a same-precision synonym or leave the word unchanged."
+  },
+  "R10-124-core-multi_sound": {
+    "root_cause": "The global-sound substitution replaced \"city\" with \"town,\" a related but distinct settlement-size term, because embedding similarity doesn't encode the factual distinction between city and town as different real-world entity types/sizes.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"city\"->\"town\" as a substitution pair (protect settlement-type nouns as a class from cross-substitution), since they denote factually different entities despite being semantically related."
+  },
+  "R10-125-core-word": {
+    "root_cause": "The declared-word substitution for the time-comparative \"earlier\" picked \"newer,\" an age/recency comparative in a related embedding neighborhood, but \"newer\" doesn't describe opening times at all, so \"opens newer\" is nonsensical and destroys the store/cafe timing comparison.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"earlier\"->\"newer\" and tag comparative adjectives by semantic category (time vs. age/recency vs. quality) so candidates are only drawn from the source word's category."
+  },
+  "R10-126-core-word": {
+    "root_cause": "The T5 restructuring model regenerated the sentence using \"less passengers\" instead of \"fewer passengers,\" violating the standard countable-noun agreement rule (fewer for count nouns, less for mass nouns); the restructuring output isn't checked against this common agreement rule before acceptance.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a fewer-vs-less grammar-agreement post-check to the restructuring/verification tier that flags \"less + plural countable noun\" and substitutes \"fewer.\""
+  },
+  "R10-127-calib-multi_sound": {
+    "root_cause": "The global-sound substitution replaced the ordinal \"third\" with the phonetically/embedding-adjacent ordinal \"fourth\" without any check that ordinals in a biographical sentence (\"the third of four children\") encode a specific, non-substitutable fact.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a rule blocking substitution of ordinal/cardinal number words in factual sentences (or specifically forbid swapping one ordinal for a different ordinal), since numbers in narrative/biographical text are essentially never safely interchangeable."
+  },
+  "R10-127-calib-dense_mixed_generic": {
+    "root_cause": "Identical to the multi_sound variant: \"third\" is swapped for \"fourth\" purely on embedding/phonetic proximity with no fact-preservation check on numeric content.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Apply the same number-word protection rule blocking ordinal-to-different-ordinal substitutions."
+  },
+  "R10-128-core-word": {
+    "root_cause": "The declared-word substitution for \"surviving\" (a specific genealogical fact -- children who lived past infancy) picked \"lasting,\" a generic durational synonym that loses the survival-specific meaning; the ranker's embedding similarity treated them as close synonyms without recognizing \"surviving children\" as a fixed genealogical term.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add \"surviving children\"/\"surviving\" (in genealogical contexts) to a protected-term list, or blocklist \"surviving\"->\"lasting\" so the ranker picks a closer synonym like \"living.\""
+  },
+  "R10-128-core-sparse_common_sound": {
+    "root_cause": "Same \"surviving\"->\"lasting\" defect as the core-word variant, here triggered by global_sound; the accompanying \"second\"->\"2nd\" is a harmless abbreviation.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"surviving\"->\"lasting\" regardless of trigger source."
+  },
+  "R10-129-core-word": {
+    "root_cause": "The declared-word substitution replaced \"scholarship\" (a specific merit-based financial award) with \"studies\" (a generic academic-work term), losing the biographically important fact that Fleming won a scholarship, and producing the ungrammatical \"a two-year studies\" since \"studies\" doesn't take a singular count determiner this way; the ranker matched on broad academic-topic similarity rather than precise reference.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"scholarship\"->\"studies\" (protect \"scholarship\" with a curated synonym list like \"grant,\" \"bursary\") and add a countability check rejecting \"a two-year studies.\""
+  },
+  "R10-129-core-dense_mixed_generic": {
+    "root_cause": "The global-sound substitution again replaced \"scholarship\" with a generic academic-process word (\"learning\") that drops the financial-award meaning and produces the awkward, ungrammatical \"a two-year learning.\"",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Protect \"scholarship\" from cross-substitution to generic academic-process nouns (\"learning,\" \"studies,\" \"education\") via a curated replacement list restricted to true synonyms like \"grant\"/\"bursary.\""
+  },
+  "R10-130-core-word": {
+    "root_cause": "The T5 restructuring model, regenerating the whole sentence, introduced a factual age error (\"twenty-year-old\"->\"twenty-one-year-old\"), softened \"inherited\" to the generic \"acquired\" (losing the specific inheritance claim), and corrupted the proper noun \"Fleming\" into \"Flaming\" -- the escalation tier has no fact-preservation or named-entity-integrity constraint when it paraphrases a full sentence.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Add a fact/entity-preservation check to the restructuring tier that diffs numbers and proper nouns between source and output and rejects/regenerates any output where numbers or names were altered without being explicitly targeted by the difficulty profile."
+  },
+  "R10-131-core-word": {
+    "root_cause": "The declared-word substitution replaced \"suggested\" (proposed/recommended) with \"indicated\" (pointed out/implied), a related but communicatively weaker verb picked via embedding proximity, softening the specific claim that Tom recommended the same career.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"suggested\"->\"indicated\" (or add a curated synonym set for the recommendation-sense of \"suggested,\" e.g., \"recommended,\" \"urged\") since the two verbs' communicative force differs enough to matter."
+  },
+  "R10-133-core-word": {
+    "root_cause": "The declared-word substitution replaced \"distinction\" inside the fixed academic-honors idiom \"with distinction\" with \"note,\" breaking the idiom into \"with note,\" which has no equivalent meaning -- the substitution pipeline doesn't recognize \"distinction\" as part of a protected multi-word fixed phrase in this context.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add \"with distinction\" to the fixed-term/idiom protection list so \"distinction\" is never substituted when preceded by \"with\" in an academic-qualification context."
+  },
+  "R10-133-calib-single_word": {
+    "root_cause": "Same defect as the core-word case: the fixed idiom \"with distinction\" is broken by substituting \"note\" for \"distinction,\" producing the meaningless \"with note.\"",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add \"with distinction\" to the fixed-term/idiom protection list."
+  },
+  "R10-133-calib-multi_word": {
+    "root_cause": "The T5 restructuring model, regenerating the sentence to avoid multiple flagged difficulties, silently omitted the entire honors clause \"with distinction\" rather than rephrasing it, indicating the escalation tier has no completeness/information-preservation check ensuring every source clause is represented in the output.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Add a content-coverage check to the restructuring tier (compare key noun/clause phrases between source and output, or use constrained decoding that must retain a rephrased form of every clause) so clauses like \"with distinction\" get rephrased instead of silently dropped."
+  },
+  "R10-133-calib-word_plus_sound": {
+    "root_cause": "Same as the other \"with note\" variants: the fixed academic-honors phrase \"with distinction\" is broken by substituting \"note\" for \"distinction.\"",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add \"with distinction\" to the fixed-term/idiom protection list so it applies regardless of trigger source."
+  },
+  "R10-133-calib-multi_sound": {
+    "root_cause": "The global-sound substitution replaced \"school\" (a concrete institution noun) with \"education\" (an abstract process/mass noun), because the two are topically close in embedding space, but they belong to different grammatical/semantic categories, making \"from the education\" read oddly.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a concrete-vs-abstract noun category check that blocks substituting an institution/place noun with an abstract process noun, or blocklist \"school\"->\"education\" in favor of \"institution\"/\"college.\""
+  },
+  "R10-133-calib-sparse_common_sound": {
+    "root_cause": "Same \"school\"->\"education\" defect as the multi_sound variant: an abstract-process noun stands in for the institution noun, producing an awkward but still recoverable phrase.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"school\"->\"education\" regardless of trigger source."
+  },
+  "R10-133-calib-dense_mixed_generic": {
+    "root_cause": "Same \"school\"->\"education\" defect as the other variants: \"from the education\" is non-standard phrasing for the institution he graduated from, caused by the same concrete/abstract category mismatch.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"school\"->\"education\" as a bad pair across all trigger types."
+  }
+}

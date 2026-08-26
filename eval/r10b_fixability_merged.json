@@ -1,0 +1,882 @@
+{
+  "R10-001-core-word": {
+    "root_cause": "Two independent per-word substitutions ran with no visibility into each other's output; the ranker replaced 'assimilated' with 'absorbed' without checking that 'absorbed' already occurs earlier in the same sentence, creating the redundant 'absorbed and absorbed.'",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-substitution check that rejects (or re-ranks past) any candidate replacement that duplicates a word already present elsewhere in the sentence."
+  },
+  "R10-001-core-sparse_common_sound": {
+    "root_cause": "The two occurrences of 'smaller' in the reduplicated 'smaller and smaller' construction were each independently substituted by the sound-based ranker with no joint/whole-sentence coherence check across the two changes, yielding non-parallel, individually weak candidates 'least' and 'finer' instead of a consistent intensifying pair.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Add a joint substitution step that, before finalizing candidates, detects when multiple flagged occurrences are the same source word in a repeated/parallel construction and picks one coherent replacement applied consistently across all of them (or protects the reduplication pattern outright) instead of ranking each occurrence in isolation."
+  },
+  "R10-001-calib-single_word": {
+    "root_cause": "Same as the core-word variant: the ranker swapped 'assimilated' for 'absorbed' without checking the sentence already contains 'absorbed,' producing 'absorbed and absorbed.'",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Apply the same duplicate-word post-check: reject a candidate that already appears elsewhere in the sentence."
+  },
+  "R10-001-calib-word_plus_sound": {
+    "root_cause": "Identical mechanism to the other single-change variants: the 'assimilated' to 'absorbed' substitution ignores that 'absorbed' is already used earlier in the sentence.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add the same duplicate-word rejection check to the substitution post-processing step."
+  },
+  "R10-001-calib-multi_sound": {
+    "root_cause": "Same as R10-001-core-sparse_common_sound: the two occurrences of 'smaller' were substituted independently by the sound-triggered ranker with no cross-occurrence coherence check, producing 'least and finer.'",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Same joint/consistent-replacement mechanism for repeated occurrences of one flagged source word within a sentence."
+  },
+  "R10-001-calib-dense_mixed_generic": {
+    "root_cause": "Same duplicate-occurrence independent-substitution failure as the other 'smaller and smaller' variants: no coherence check across the two changes to the repeated word.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Same joint/consistent-replacement mechanism for repeated occurrences of the same flagged word."
+  },
+  "R10-002-core-word": {
+    "root_cause": "The escalation tier substituted the noun 'esophagus' with its adjective form 'esophageal' while restructuring, leaving no noun object for 'swallow down the ___ to enter the stomach' — the generation had no part-of-speech/grammaticality check on the phonetically-motivated word choice.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-generation part-of-speech/grammar-agreement check that rejects a candidate replacement whose part of speech doesn't match the syntactic slot it fills (a noun position must not be filled by an adjective-only form)."
+  },
+  "R10-003-core-word": {
+    "root_cause": "The escalation tier's phonetically-driven restructuring invented non-existent words ('Peristalaxis', 'esophagum') in place of real technical terms, and separately swapped the broader 'gastrointestinal tract' for the narrower 'intestines,' with no dictionary-validity check or protected-term list guarding either.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-generation real-word/dictionary validation check that rejects outputs containing non-dictionary tokens, and add 'gastrointestinal tract' to a protected medical-term list so it can't be narrowed to a hyponym."
+  },
+  "R10-004-core-sparse_common_sound": {
+    "root_cause": "'small' inside the fixed anatomical term 'small intestine' was matched and replaced purely because it phonetically/lexically matched the speaker's flagged sound, with no check that it was part of a protected fixed term.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'small intestine' (and similarly 'large intestine') to a protected fixed-term list that blocks substitution of their component words."
+  },
+  "R10-005-core-word": {
+    "root_cause": "The declared-word substitution ranker selected 'assumed' as a replacement candidate for 'reabsorbed' despite it being semantically unrelated, indicating an overly permissive similarity threshold or a bad candidate in the synonym pool for this word.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Raise/enforce a minimum semantic-similarity threshold for candidate acceptance and blocklist the specific 'reabsorbed' to 'assumed' pairing now that it's been observed."
+  },
+  "R10-006-core-word": {
+    "root_cause": "The escalation restructuring, while trying to avoid several phonetically hard technical words at once, flipped 'two liquids' to 'two solids' — reversing the physical claim that surfactants act at liquid interfaces — alongside degrading 'surfactant'/'surface tension'/'emulsify'; correctly avoiding the liquid-to-solid flip requires knowing what a surfactant physically does, not just recognizing a banned word pair.",
+    "fixability": "potentially_requires_custom_model",
+    "fix_sketch": "Would require the generation mechanism to actually understand surfactant/interface physics well enough to know that swapping 'liquid' for 'solid' here breaks the stated physical relationship; a lexical blocklist or glossary protection can catch the invented word and the generic term swaps but can't reliably prevent this class of physically-informed reversal across paraphrases it hasn't seen before."
+  },
+  "R10-007-core-word": {
+    "root_cause": "The declared-word substitution ranker replaced both 'biochemical' and 'physiological' with more generic synonyms ('chemical', 'physical') drawn from a generic similarity space rather than a domain-aware synonym set, losing the organism-specific precision of the originals.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Curate domain-specific synonym candidates for technical/biology vocabulary (map 'physiological' to biology-preserving alternatives rather than generic 'physical') as a data addition to the candidate pool."
+  },
+  "R10-007-core-dense_mixed_generic": {
+    "root_cause": "The sound-triggered ranker replaced 'support' with 'give' purely on phonetic/embedding grounds without checking that 'give its life' is an idiomatic collocation meaning to sacrifice one's life — nearly the opposite of 'support its life.'",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add an idiom/collocation check that blocks 'give' as a substitute for 'support' when followed by 'life' (or checks candidate substitutions against a small set of known life/death idiomatic collocations)."
+  },
+  "R10-007-calib-single_word": {
+    "root_cause": "Same as the core-word variant: 'physiological' flattened to generic 'physical' by the declared-word ranker, losing biology-specific precision.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same domain-aware synonym curation for 'physiological.'"
+  },
+  "R10-007-calib-multi_word": {
+    "root_cause": "The escalation restructuring produced a self-referential, circular phrase ('The nutritional process is the ... process by which...') by reusing 'process' without checking that the sentence already used a form of the word — a redundancy/coherence gap in the restructuring output.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-generation redundancy check that flags outputs repeating the same lemma twice in close proximity and rejects/regenerates or repairs them."
+  },
+  "R10-007-calib-word_plus_sound": {
+    "root_cause": "The sound-triggered ranker replaced 'process' with 'act,' a candidate that collapses an ongoing biological process into a single discrete action — a poor sense match that the similarity ranking accepted.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Exclude 'act' from the synonym-candidate pool for 'process' in technical/biological contexts (restrict to ongoing-activity senses like 'activity'/'function')."
+  },
+  "R10-007-calib-multi_sound": {
+    "root_cause": "Same 'support' to 'give' idiom collision as the dense_mixed_generic variant — the phonetic-similarity ranker had no idiom-collocation check.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same idiom/collocation block on 'give' substituting for 'support' before 'life.'"
+  },
+  "R10-007-calib-sparse_common_sound": {
+    "root_cause": "Same 'support' to 'give' idiom collision, again from unchecked phonetic-similarity substitution.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same idiom/collocation protection."
+  },
+  "R10-008-core-dense_mixed_generic": {
+    "root_cause": "The sound-based ranker replaced 'stroke' — a specific disease name inside an enumerated list of medical conditions — with the phonetically similar but domain-irrelevant 'shot,' with no check that the word was a fixed item in a named-disease list.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist 'stroke' to 'shot' specifically, and/or protect named-disease-list items generally from phonetic substitution using a medical-term glossary."
+  },
+  "R10-009-core-word": {
+    "root_cause": "The declared-word ranker treated 'compounds' as an interchangeable synonym for 'molecules,' but compounds are a narrower hyponym (requiring two or more distinct elements), so the embedding-similarity match didn't account for the taxonomic hypernym/hyponym relationship.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a curated science-glossary check that prevents substituting a general term with a narrower hyponym (block 'molecules' to 'compounds,' or restrict candidates to same-level terms)."
+  },
+  "R10-010-core-word": {
+    "root_cause": "Same taxonomic-narrowing pattern as R10-009: 'carbohydrates' was replaced with its hyponym 'sugars,' narrowing the scientific claim, because the ranker's similarity measure doesn't distinguish hypernym/hyponym relationships.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same curated science-glossary fix: exclude 'sugars' as a same-level synonym candidate for 'carbohydrates.'"
+  },
+  "R10-011-core-word": {
+    "root_cause": "The declared-word ranker replaced the countable plural noun 'Nutrients' with 'Nutritions,' an invalid plural form of an uncountable noun, because the candidate generator had no check on the morphological/grammatical validity of the replacement in context.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a grammaticality/morphology post-check that rejects candidate replacements whose number/countability doesn't match the original word's grammatical role, or that aren't valid word forms at all."
+  },
+  "R10-011-core-sparse_common_sound": {
+    "root_cause": "The sound-based ranker chose 'cases' for 'cells' purely on phonetic proximity, with no minimum semantic-plausibility gate to catch that 'absorbed by the cases' is nonsensical in a biology sentence.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Require sound-triggered candidates to also clear a minimum semantic-similarity/plausibility threshold against sentence context before acceptance, and/or blocklist 'cells' to 'cases.'"
+  },
+  "R10-013-core-word": {
+    "root_cause": "The declared-word ranker stripped the 're-' prefix from 'rearranged' (losing the sense of reconfiguration from an existing state) and mapped 'accompanied by' to 'followed by' (shifting simultaneity to sequence) — both are generic-embedding synonym picks that miss subtle nuance carried by morphology/collocation.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Curate the synonym candidate list to preserve nuance for these words: exclude 'arranged' as a substitute for 'rearranged,' and exclude 'followed by' as a substitute for 'accompanied by' when describing simultaneous phenomena."
+  },
+  "R10-013-calib-single_word": {
+    "root_cause": "Same 'accompanied by' to 'followed by' temporal-nuance shift from the declared-word ranker.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same nuance-preserving synonym curation excluding 'followed by' for 'accompanied by' in this sense."
+  },
+  "R10-013-calib-multi_word": {
+    "root_cause": "The escalation restructuring dropped the plural '-s' from 'reactions' ('chemical reaction occur'), producing a subject-verb agreement error, with no grammar check applied to the generated output.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a subject-verb agreement post-check on escalation outputs that catches and repairs number-agreement mismatches."
+  },
+  "R10-013-calib-word_plus_sound": {
+    "root_cause": "Same 'accompanied by' to 'followed by' nuance shift as the other variants; 'products' to 'chemicals' is a harmless synonym.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same nuance-preserving synonym curation for 'accompanied by.'"
+  },
+  "R10-014-core-word": {
+    "root_cause": "The escalation tier's phonetically-motivated restructuring invented the non-existent word 'reactionants' in place of 'reactants,' with no real-word validation on the generated output.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-generation dictionary/vocabulary validation check that rejects or regenerates outputs containing non-dictionary words."
+  },
+  "R10-014-core-dense_mixed_generic": {
+    "root_cause": "The sound-based ranker chose 'answers' for 'reactions' based on phonetic similarity alone, with no semantic-plausibility gate, producing a nonsensical sentence subject ('Chemical answers').",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Require a minimum semantic-similarity threshold alongside phonetic similarity for sound-triggered candidates, and blocklist 'reactions' to 'answers' specifically."
+  },
+  "R10-015-core-word": {
+    "root_cause": "The escalation restructuring paraphrased around the fixed technical term 'activation energy,' producing the non-standard 'activated energy,' because the term wasn't in a protected-phrase list guarding it from alteration.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'activation energy' to a protected fixed-term/glossary list that the restructuring step must preserve verbatim."
+  },
+  "R10-016-core-word": {
+    "root_cause": "The escalation restructuring's phonetic-constraint generation produced an invalid spelling of the technical term 'bimolecular' ('bimolécular'), with no spellcheck/dictionary validation on the generated technical vocabulary.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a spellcheck/dictionary validation pass on generated technical terms, and protect 'bimolecular' as a fixed-spelling glossary term."
+  },
+  "R10-017-core-word": {
+    "root_cause": "The declared-word ranker replaced 'reactions' with 'results' without checking that the same sentence still references 'reaction rates' later, leaving an internally inconsistent sentence ('results...differ in reaction rates').",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a same-root consistency check that blocks substituting a word when a morphologically related form of it still appears elsewhere in the sentence, or requires consistent handling of all occurrences of the root."
+  },
+  "R10-019-core-word": {
+    "root_cause": "The escalation restructuring dropped 'straight' from 'straight line' while simplifying the sentence, removing a qualifier that's physically load-bearing for Newton's first law, because 'straight line' wasn't protected as an intact fixed term.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'straight line' to a protected fixed-term list (or add a rule that restructuring may substitute but not delete adjectives modifying a noun) so it can't be reduced to just 'line.'"
+  },
+  "R10-019-core-sparse_common_sound": {
+    "root_cause": "The sound-based ranker replaced 'straight' with the archaic synonym 'right,' which is phonetically/lexically valid but creates modern ambiguity (read as 'correct' or a direction), with no naturalness/register check on the candidate.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist 'straight' to 'right' as a substitution candidate, or add a register/ambiguity check that screens out archaic synonyms with strong competing modern senses."
+  },
+  "R10-020-core-word": {
+    "root_cause": "The escalation restructuring compressed the explicit product 'acceleration multiplied by its mass' into the compound 'accelerated mass,' garbling the F=ma relationship, and separately genericized 'momentum' to 'movement,' dropping a precise physical quantity — neither the mathematical-relation phrase nor the technical term was protected from alteration.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a syntactic-pattern rule that blocks restructuring from compressing an explicit 'X multiplied by Y' (or similar operator) phrase into a single compound noun phrase, and add 'momentum' to a protected physics-glossary term list."
+  },
+  "R10-020-core-dense_mixed_generic": {
+    "root_cause": "The sound-based ranker replaced 'rate' with 'value,' a generic-embedding match that doesn't preserve the change-per-time sense 'rate' carries in this physics context.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist 'rate' to 'value' in this context, or restrict 'rate' substitutions to a curated set of change-related synonyms."
+  },
+  "R10-021-core-sparse_common_sound": {
+    "root_cause": "The sound-based ranker replaced 'same' with 'one' purely on phonetic grounds, producing the non-standard 'the one magnitude,' with no fluency/naturalness check on the resulting phrase.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist 'same' to 'one' as a substitution, or add a fluency/n-gram plausibility check that screens out substitutions producing non-standard phrasing."
+  },
+  "R10-022-core-multi_sound": {
+    "root_cause": "The sound-based ranker replaced 'straight' with the ambiguous 'true' (risking a 'correct/real' reading rather than 'not curved'), the same unchecked archaic/ambiguous-synonym pattern seen with 'right' elsewhere.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist 'straight' to 'true' as a substitution candidate, consistent with the fix for the 'straight' to 'right' case."
+  },
+  "R10-023-core-word": {
+    "root_cause": "The escalation restructuring produced the ungrammatical verb form 'does not accelerated' (wrong participle after 'does not') and separately replaced the fixed term 'mechanical equilibrium' with the vaguer 'physical balance,' with neither a grammar check nor a term-protection list applied.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a verb-form/grammar-agreement post-check that catches 'does not [past-participle]' patterns and repairs them to the base form, and protect 'mechanical equilibrium' as a fixed physics term."
+  },
+  "R10-024-core-word": {
+    "root_cause": "The escalation restructuring replaced 'magnitude' with 'force' without checking that 'force' already appears earlier in the same clause ('exerts a force... of equal force'), creating a redundant/circular phrase.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add the same duplicate-word-in-sentence check used elsewhere: reject a candidate replacement that duplicates a word/lemma already used nearby in the sentence."
+  },
+  "R10-025-core-word": {
+    "root_cause": "The escalation restructuring replaced 'held together by self-gravity' (internal cohesive force) with 'surrounded by self gravity' (external envelope), reversing the physical relationship, because the specific collocation 'held together by' wasn't protected from being swapped for a different relational phrase during paraphrasing.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-generation check that blocks/rejects escalation outputs replacing the collocation 'held together by X' with 'surrounded by X,' since these encode different (near-opposite) relations."
+  },
+  "R10-025-calib-multi_word": {
+    "root_cause": "Same cohesion-to-envelope reversal as R10-025-core-word ('held together by' to 'surrounded by'), compounded with a redundant 'self-gravitational gravity' phrase from reusing 'gravity' without a duplication check.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Apply the same collocation-protection check for 'held together by,' plus a duplicate-word/lemma check to catch 'gravitational gravity.'"
+  },
+  "R10-027-core-word": {
+    "root_cause": "The escalation restructuring, while compressing the sentence for phonetic ease, dropped 'of hydrogen into' from 'fusion of hydrogen into helium,' turning a specific nuclear conversion into a vaguer, incorrect 'fusion of helium,' alongside an unrelated dictionary-invalid typo ('thermonuklear') — neither the phrase nor the generated spelling was checked.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Protect the multi-word description 'of hydrogen into helium' as a fixed scientific phrase that restructuring may not truncate, and add a dictionary/spellcheck validation pass to catch 'thermonuklear.'"
+  },
+  "R10-028-core-word": {
+    "root_cause": "The escalation restructuring introduced a subject-verb agreement error ('energy that traverses...and radiate' should be 'radiates'), with no grammar check applied to the generated output.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a subject-verb agreement post-check on escalation outputs, consistent with the fix for the 'chemical reaction occur' case."
+  },
+  "R10-029-core-word": {
+    "root_cause": "The escalation T5 model, restructuring the whole sentence to avoid the phonetically hard word 'neutron', generated the phonetically-similar but semantically wrong real word 'neutral', corrupting the fixed astronomical term 'neutron star' into a non-existent object; it also collapsed 'sufficiently massive' into the ungrammatical noun phrase 'sufficient mass' during the same rewrite.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'neutron star' (and other named astronomical-object terms) to a protected-term list checked at the verification stage against both substitution AND escalation output, rejecting/regenerating if a listed term is altered."
+  },
+  "R10-031-core-word": {
+    "root_cause": "The escalation model, rewriting the sentence to route around multiple simultaneous difficulties, split the compound adjective 'volcanic ash' into 'volcano ash' and replaced the fixed geological term 'magma chamber' with 'magma cave', a different concept (empty hollow vs. magma-filled reservoir).",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'volcanic ash' and 'magma chamber' to a protected multi-word geological-term list enforced on escalation output at verification time."
+  },
+  "R10-031-calib-multi_word": {
+    "root_cause": "Same escalation rewrite of the identical source sentence produces the identical defect: 'volcanic ash' -> 'volcano ash' and 'magma chamber' -> 'magma cave'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix as R10-031-core-word: protect 'volcanic ash' and 'magma chamber' as fixed terms checked on escalation output."
+  },
+  "R10-031-calib-multi_sound": {
+    "root_cause": "'surface' was flagged for a global sound difficulty; the substitution ranker's top embedding-similarity candidate was 'open', which is a poor semantic fit for the collocation 'below the surface' and produces the confusing 'below the open'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist the specific bad candidate pair 'surface'->'open' (it recurs identically across multiple unrelated sentences in this batch, indicating a static bad embedding neighbor rather than a context-dependent sense choice), or raise the minimum semantic-fit threshold for sound-triggered substitutions of 'surface'."
+  },
+  "R10-031-calib-sparse_common_sound": {
+    "root_cause": "Identical mechanism to R10-031-calib-multi_sound: 'surface' flagged for its sound, ranker again selects the poorly-fitting 'open'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix: blocklist 'surface'->'open' as a bad candidate pair for this sound-substitution trigger."
+  },
+  "R10-031-calib-dense_mixed_generic": {
+    "root_cause": "Same recurring 'surface'->'open' substitution triggered by the same sound feature.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix: blocklist 'surface'->'open'."
+  },
+  "R10-032-core-word": {
+    "root_cause": "The escalation model turned the adjective 'non-explosive' into the ungrammatical plural noun-use 'non-explosives', and generated the non-word 'tectic' as a garbled form of 'tectonic' while paraphrasing 'convergent tectonic activity'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-generation dictionary/real-word validator on escalation output that rejects/regenerates outputs containing non-dictionary tokens like 'tectic', plus a basic adjective-vs-noun agreement check for '-ive'/'-ives' forms."
+  },
+  "R10-032-core-dense_mixed_generic": {
+    "root_cause": "The word 'resulting' appears twice in the sentence and each occurrence was substituted independently and inconsistently ('causing', 'happening'), and both replacements were dropped into the fixed 'resulting from' slot without adjusting for the fact that 'cause from' and 'happen from' are not valid English prepositional collocations.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a verb+preposition collocation check that rejects substitution candidates whose combination with the following preposition is not a valid collocation, and enforce a consistency rule that the same source word gets the same replacement everywhere in a sentence."
+  },
+  "R10-034-core-word": {
+    "root_cause": "The escalation model replaced 'dissolved' (already in solution, a completed state) with 'soluble' (merely capable of dissolving) while paraphrasing the sentence; both words are individually grammatical and locally natural, but the substitution breaks the causal chain in the following clause 'comes out of solution', which presupposes the gas was already dissolved.",
+    "fixability": "potentially_requires_custom_model",
+    "fix_sketch": "Would require the generator to understand the chemistry-domain distinction between a completed state (dissolved) and a capability (soluble) well enough to preserve the causal logic of 'comes out of solution' -- no local grammar/collocation/fixed-term rule flags this pairing as wrong since both words are independently valid and fluent."
+  },
+  "R10-034-core-dense_mixed_generic": {
+    "root_cause": "'solution' is genuinely polysemous (chemistry 'solution' vs. generic 'answer'); the substitution ranker picked the 'answer' sense purely by global embedding similarity with no awareness that the surrounding geology/chemistry-domain sentence requires the chemistry sense, producing 'comes out of answer'. The co-occurring 'surface'->'open' swap is the same recurring bad static pair seen elsewhere in this batch.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Add a lightweight local word-sense-disambiguation step before candidate ranking (e.g. using the sentence's domain tag or surrounding technical vocabulary to select among a word's known senses) so a chemistry-context 'solution' is not ranked against generic-sense candidates like 'answer'; separately blocklist the static bad pair 'surface'->'open'."
+  },
+  "R10-036-core-word": {
+    "root_cause": "While paraphrasing the whole sentence, the escalation model swapped the subject noun 'volcanoes' for the related-but-distinct concept 'volcanic eruptions', conflating a geological structure (object) with an eruptive event, changing what the sentence claims is created as a plate advances over a plume.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a core-subject-noun preservation rule: constrain escalation rewrites to keep the head noun of a sentence's declared subject within a curated synonym set (e.g. 'volcano' -> {volcano, volcanic landform, volcanic mountain}), excluding unrelated derived forms like 'eruption'."
+  },
+  "R10-037-calib-multi_word": {
+    "root_cause": "The escalation rewrite dropped the plural marking on 'phenomena', producing 'natural phenomenon' after 'continually occurring', a number-agreement slip introduced during paraphrase.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-generation number-agreement check (plural head noun after 'occurring'/quantifier context) that flags and corrects 'phenomena'->'phenomenon' style singular/plural mismatches."
+  },
+  "R10-038-core-word": {
+    "root_cause": "Both 'hydroelectricity' and 'geothermal' were declared-difficult words; the substitution ranker independently stripped the defining prefix from each compound term ('hydro-', 'geo-'), turning two specific renewable-energy types into a generic energy carrier ('electricity') and a generic heat concept ('thermal energy') with no awareness that these are fixed compound scientific terms.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'hydroelectricity' and 'geothermal energy' to a protected compound-term list so that when a component is flagged as a declared difficulty, the pipeline escalates to a full-sentence rewrite (or offers a whole-term simplification like 'water power'/'earth-heat energy') instead of stripping the defining prefix via naive word substitution."
+  },
+  "R10-038-core-sparse_common_sound": {
+    "root_cause": "'Solar' was flagged for a sound difficulty and replaced with 'Renewable', which duplicates the umbrella category term 'renewable energy' that already appears later in the same sentence, making the list circular and silently dropping solar power as a named example.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a duplicate/redundancy check that rejects a substitution candidate if it (or its stem) already appears elsewhere in the sentence, which would have blocked 'Solar'->'Renewable' given 'renewable energy' later in the same sentence."
+  },
+  "R10-040-core-word": {
+    "root_cause": "'conditions' was a declared difficult word with a substitution candidate 'terms'; 'conditions' is genuinely polysemous (weather-state sense vs. agreement/terms sense), and in many other sentences 'terms' would be a valid substitute, but here it was picked without regard to the weather-collocation context 'cloudless conditions', producing the nonsensical 'cloudless terms'.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Add a local word-sense-disambiguation step before ranking so that candidates for a polysemous declared word are filtered/re-ranked by which sense the immediate local context (here the adjective 'cloudless') actually invokes, rather than ranking all senses of 'conditions' together by a single global embedding."
+  },
+  "R10-041-core-word": {
+    "root_cause": "The escalation rewrite replaced the specific technical category 'renewable energy sources' with the broader/different category 'alternative energy sources' (which can include non-renewable sources like nuclear), a taxonomic scope change introduced while paraphrasing.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'renewable energy' to the same protected fixed-term list used elsewhere in this domain (needed for R10-038/R10-042 too), blocking substitution/restructuring from swapping it for a near-synonym category term like 'alternative energy'."
+  },
+  "R10-042-core-word": {
+    "root_cause": "The escalation model replaced the precise engineering metric term 'conversion efficiency' with the vaguer, different concept 'convertibility' while paraphrasing the sentence, obscuring what the stated 90% figure actually measures.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'conversion efficiency' to a protected engineering-term list checked on escalation output, rejecting/regenerating outputs that replace it with a non-equivalent term."
+  },
+  "R10-042-core-dense_mixed_generic": {
+    "root_cause": "'renewable' was flagged for a sound difficulty and replaced with 'extended', corrupting the named category 'renewable energy' into the nonsensical 'extended energy' at the end of the sentence.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same protected-term fix as R10-041/R10-042-core-word: block substitution of the head modifier in the fixed compound 'renewable energy'."
+  },
+  "R10-043-core-word": {
+    "root_cause": "The escalation rewrite replaced the formal collocation 'mathematically rigorous' with 'numerically rigorous', shifting from formal/logical rigor to numerical-computation rigor (a different CS/math concept), and separately dropped the plural on 'instructions'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist the specific bad substitution 'mathematically'->'numerically' when followed by 'rigorous' (a recognizable formal collocation), and add a number-agreement post-check for 'instructions'/'instruction'."
+  },
+  "R10-043-calib-multi_word": {
+    "root_cause": "Identical escalation rewrite of the same source sentence produces the same 'mathematically rigorous'->'numerically rigorous' and singular 'instruction' defects.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix as R10-043-core-word: collocation blocklist for 'mathematically'->'numerically' plus a number-agreement check."
+  },
+  "R10-043-calib-word_plus_sound": {
+    "root_cause": "'problems' was flagged for a sound difficulty and replaced with 'jobs'; 'problems' has a specific CS technical sense (a computational problem) distinct from its everyday 'task' sense, and the ranker picked the generic sense purely by embedding similarity without regard to the computer-science-definition context of the sentence.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Add a domain-aware local word-sense-disambiguation step before candidate ranking so that in a computer_science/technical-domain sentence, candidates for a polysemous word like 'problems' are filtered to preserve its technical sense rather than defaulting to its everyday sense."
+  },
+  "R10-044-core-word": {
+    "root_cause": "Both 'specifications' and 'calculations' were declared-difficult words; the ranker replaced 'specifications' with the looser 'descriptions' (losing the CS-specific sense of a formal spec) and 'calculations' with the informal 'maths', neither substitution considering the formal register of a technical definition sentence.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a register/formality filter to candidate ranking that excludes informal candidates (like 'maths') for detected formal/technical-definition text, and blocklist 'specifications'->'descriptions' as a precision-losing pair in CS contexts."
+  },
+  "R10-044-core-dense_mixed_generic": {
+    "root_cause": "'specifications' flagged for a sound difficulty and replaced with 'descriptions', the same precision-losing substitution as in the core-word variant.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix as R10-044-core-word: blocklist 'specifications'->'descriptions' in technical/CS-domain text."
+  },
+  "R10-047-core-word": {
+    "root_cause": "'computation' (declared difficulty) was replaced with 'computing', which does not take the indefinite article the same way ('a computing' is ungrammatical), and 'terminating' was replaced with 'end', breaking the parallel gerund structure 'producing output and terminating'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a part-of-speech/morphology-preservation check on substitution candidates (mass noun vs. count noun for 'computing'; gerund-form preservation in coordinated structures like 'producing ... and ___ing') that would reject 'a computing' and 'producing output and end'."
+  },
+  "R10-051-core-dense_mixed_generic": {
+    "root_cause": "'written' was flagged for a sound difficulty and replaced with 'printed'; 'written as 0.5' is the standard idiom for expressing mathematical notation, and 'printed' is an odd substitute that doesn't fit this specific notational collocation.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'written as' (notation sense) to a protected collocation list, or blocklist 'written'->'printed' specifically in mathematical-notation contexts."
+  },
+  "R10-055-core-dense_mixed_generic": {
+    "root_cause": "'services' was flagged for a sound difficulty and replaced with 'helps', a verb-form word substituted for a plural noun, breaking the fixed economic term 'goods and services' into the nonsensical 'goods and helps'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'goods and services' to a protected fixed-term list, and/or add a part-of-speech-preservation filter that rejects a verb-form candidate like 'helps' as a replacement for a plural noun like 'services'."
+  },
+  "R10-055-calib-single_word": {
+    "root_cause": "'economics' (declared difficulty, an uncountable field-of-study noun) was replaced with 'economies' (the countable plural of 'economy'), a mismatch in noun class that changes what the sentence is introducing.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a countability/POS-class preservation check for declared-word substitutions so an uncountable discipline noun like 'economics' cannot be replaced by a countable plural like 'economies'."
+  },
+  "R10-055-calib-word_plus_sound": {
+    "root_cause": "Same 'economics'->'economies' noun-class mismatch as the single_word variant; the co-occurring 'price'->'cost' substitution is a fine near-synonym and not itself defective.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix as R10-055-calib-single_word: countability/POS-class preservation check blocking 'economics'->'economies'."
+  },
+  "R10-055-calib-multi_sound": {
+    "root_cause": "Same 'services'->'helps' substitution as R10-055-core-dense_mixed_generic, breaking 'goods and services'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix: protect 'goods and services' as a fixed term / block the verb-form candidate 'helps' from replacing the plural noun 'services'."
+  },
+  "R10-055-calib-sparse_common_sound": {
+    "root_cause": "Same recurring 'services'->'helps' substitution breaking the fixed term 'goods and services'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix: protected-term/POS-preservation check for 'goods and services'."
+  },
+  "R10-056-core-word": {
+    "root_cause": "During the escalation rewrite, 'services' lost its plural marking ('goods and service', an agreement error) and 'currency' -- a general economic concept -- was narrowed to the specific named instance 'the dollar', changing the scope of the claim.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a number-agreement post-check for 'goods and service(s)', and a genericity-preservation rule that blocks replacing a general category noun ('currency') with a specific named instance ('the dollar') during restructuring."
+  },
+  "R10-056-core-sparse_common_sound": {
+    "root_cause": "'services' flagged for a sound difficulty and replaced with 'helps', the same recurring bad pair breaking 'goods and services'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix: protected-term/POS-preservation check for 'goods and services' blocking the 'helps' candidate."
+  },
+  "R10-057-core-sparse_common_sound": {
+    "root_cause": "'supply' was flagged for a sound difficulty and replaced with 'issue', breaking the fixed macroeconomic term 'money supply' into the non-standard 'money issue'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'money supply' to a protected fixed-term list so substitution cannot alter its head noun."
+  },
+  "R10-058-core-word": {
+    "root_cause": "The escalation rewrite flipped 'negative effects' to 'positive effects', reversing the polarity of the claim, and separately broke the fixed economic term 'opportunity cost' into 'chance cost'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add an antonym/negation post-check comparing original and reformulated text for polarity-flipping word pairs (negative/positive, increase/decrease, etc.) that would have caught this reversal, plus protect 'opportunity cost' as a fixed term."
+  },
+  "R10-059-core-word": {
+    "root_cause": "The escalation rewrite turned 'reducing unemployment' into 'a reduction of employment', dropping the negation prefix 'un-' from the noun and thereby reversing the described outcome (more people working vs. fewer).",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a negation-prefix-preservation check that flags when a restructuring output drops a negation morpheme (un-/in-/non-/dis-) from a noun/adjective present in the original, since this reliably signals a polarity reversal."
+  },
+  "R10-059-core-dense_mixed_generic": {
+    "root_cause": "'reducing' and 'rigidity' were both flagged for sound difficulties; 'rigidity'->'toughness' breaks the fixed economic term 'nominal wage rigidity' into a different concept (strength vs. resistance-to-adjustment), and 'reducing'->'breaking' muddies the causal verb.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'wage rigidity' to a protected economic-term list, and blocklist the low-fit candidate 'reducing'->'breaking' for this causal-verb context."
+  },
+  "R10-060-core-dense_mixed_generic": {
+    "root_cause": "'recessions' was flagged for a sound difficulty and replaced with 'economies', a word that shares a root with 'economic' already present immediately before it in the sentence, producing the redundant nonsense phrase 'economic economies' and losing the original claim about recessions.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a duplicate/shared-stem check that rejects a substitution candidate whose root already appears adjacent to or elsewhere in the sentence, which would have blocked 'recessions'->'economies' next to 'economic'."
+  },
+  "R10-061-core-word": {
+    "root_cause": "The escalation rewrite changed 'Civil engineering is' to 'Civil engineers is' (a subject-verb agreement break caused by switching the subject's grammatical number/referent) and replaced 'construction' with a duplicated 'design, design and maintenance', silently dropping the concept of construction.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a subject-verb agreement post-check, and a duplicate-word check that rejects an output where a list item is repeated verbatim (here 'design' appearing twice) instead of covering the original 'construction' concept."
+  },
+  "R10-061-calib-single_word": {
+    "root_cause": "'construction' (declared difficulty) was replaced with 'business', a low-fit candidate unrelated to what civil engineering does, materially changing the definition's content.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Raise the minimum semantic-fit threshold required to accept a declared-word substitution candidate, or blocklist 'construction'->'business' once identified as a bad pair."
+  },
+  "R10-061-calib-multi_word": {
+    "root_cause": "Same escalation rewrite of the identical source sentence produces the same subject-verb agreement break ('Civil engineers is') and duplicated 'design, design and maintenance'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix as R10-061-core-word: subject-verb agreement check plus duplicate-word check."
+  },
+  "R10-061-calib-word_plus_sound": {
+    "root_cause": "'professional'->'expert' left the original article 'a' unchanged even though 'expert' starts with a vowel sound, producing the ungrammatical 'a expert'; the co-occurring 'construction'->'business' is the same low-fit bad pair as in the single_word variant.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add an a/an article-agreement post-check that adjusts the indefinite article based on the phonetic first sound of the replacement word, plus the same construction->business fit-threshold/blocklist fix."
+  },
+  "R10-061-calib-single_sound": {
+    "root_cause": "'structural' was flagged for a sound difficulty and replaced with 'functional', a different engineering concept (load-bearing structure vs. purpose) within the list of what civil engineering covers.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist the low-fit candidate pair 'structural'->'functional' in engineering-technical contexts, since the two are not genuine synonyms."
+  },
+  "R10-062-core-word": {
+    "root_cause": "The escalation rewrite dropped the plural on 'sub-disciplines', producing 'a number of sub-discipline', a number-agreement slip.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a number-agreement post-check for quantifier phrases like 'a number of ___' requiring a plural head noun."
+  },
+  "R10-064-core-word": {
+    "root_cause": "'self-proclaimed' (declared difficulty) was replaced with 'so-called', a near-synonym that shifts agency/connotation (the subject calling itself something vs. others skeptically labeling it), a subtle nuance the ranker's embedding similarity did not capture.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist the specific pair 'self-proclaimed'->'so-called' and prefer agency-preserving alternatives (e.g. 'self-described') in the candidate set for this declared word."
+  },
+  "R10-064-core-multi_sound": {
+    "root_cause": "Two independent global_sound substitutions were applied to the same noun phrase ('self-proclaimed' -> 'declared' and 'civil' -> 'official') with no check on their combined effect; neither swap alone fully reverses the meaning, but together 'declared official engineer' asserts formal recognition, the near-opposite of the source's 'self-proclaimed' (unofficial, self-applied label). The 'civil' -> 'official' pick also breaks the fixed term 'civil engineer'.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Add a joint-substitution coherence check that re-embeds/compares the fully-substituted sentence against the original before accepting a batch of simultaneous substitutions, rejecting combinations (like this one) whose combined semantic-similarity to the source drops sharply even though each individual swap looked acceptable in isolation."
+  },
+  "R10-065-core-word": {
+    "root_cause": "The escalation (T5) restructuring, faced with multiple flagged difficulties and no valid substitution, rewrote 'surveyors' (a person/agent noun) as 'surveys' (a document/activity noun) -- the model matched surface form/root but not the person-referring '-or' agent sense.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-generation check that flags any output where an agentive noun (matched by common agent suffixes like -or/-er/-ist, or a curated person-noun list) in the source is replaced by a non-agentive form of the same root, and reject/regenerate in that case."
+  },
+  "R10-067-calib-multi_word": {
+    "root_cause": "The restructuring model rewrote 'completely forgot' as 'totally forgotten', dropping the auxiliary needed for a past-participle form and leaving an ungrammatical bare participle instead of a valid past-tense verb.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a grammar-agreement post-check on escalation output that validates verb morphology (e.g. a bare past participle without a preceding auxiliary such as 'had'/'have' is rejected or auto-corrected to simple past)."
+  },
+  "R10-068-core-multi_sound": {
+    "root_cause": "'starts' was flagged for a global sound difficulty and replaced by 'goes', a candidate that passed the phonetic-similarity filter but is only weakly semantically related in this context, producing a non-idiomatic 'before the meeting goes'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Raise the minimum semantic-similarity threshold required for sound-matched candidates (not just phonetic closeness) before they are allowed as substitutions, and/or blocklist this specific 'starts' -> 'goes' pairing."
+  },
+  "R10-069-core-word": {
+    "root_cause": "Two independent declared_word substitutions each failed on their own terms: 'little' -> 'least' swapped a positive-degree quantifier for a superlative form ungrammatical in 'a ___ late', and 'traffic' -> 'driving' replaced the stated cause of lateness (congestion) with an unrelated category (the act of operating a vehicle).",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add an inflectional/POS-agreement check that rejects candidates whose grammatical degree/class doesn't match the original slot (blocks 'little'->'least'), and blocklist the specific 'traffic'->'driving' pairing since they are never valid synonyms."
+  },
+  "R10-069-core-dense_mixed_generic": {
+    "root_cause": "'said' was replaced with 'told' without accounting for their different subcategorization frames -- 'tell' requires a direct object (told [someone]) while 'say' does not, so 'She told she might...' is missing the required object.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a verb-subcategorization check (or simply blocklist say->told without an inserted object) so that substitutes requiring a different argument structure than the original verb are rejected."
+  },
+  "R10-070-core-word": {
+    "root_cause": "The restructuring model turned the definite singular 'that restaurant' into indefinite/plural 'restaurants', changing a claim about one specific place into a generalization about the category -- the paraphrase had no constraint to preserve reference/number of the head noun.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-check comparing key noun phrases' number and definiteness (singular/definite vs plural/generic) between original and rewrite, rejecting escalation outputs that silently change a specific referent into a generic plural."
+  },
+  "R10-071-core-word": {
+    "root_cause": "'driving' was replaced by 'riding' based on the flagged word alone, without checking the rest of the sentence; 'riding' is a legitimate synonym in many contexts (e.g. riding a bike) but here it collides with 'or taking the train' -- since train travel can also be described as 'riding', the substitution destroys the two-way contrast the sentence depends on.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Add a local context-awareness step to candidate ranking that checks a candidate substitute against the rest of the sentence's content (not just the flagged word in isolation) and downranks/rejects candidates that create semantic overlap or ambiguity with other terms already present, such as 'riding' alongside 'taking the train'."
+  },
+  "R10-072-core-word": {
+    "root_cause": "'probably' (higher likelihood) was swapped for 'maybe' (near-neutral possibility) by the declared_word substitution; the synonym set used for ranking did not track the different epistemic strength of the two words.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Tag common epistemic-modal words with a certainty-strength value in the substitution data and require candidate rankings to stay within the same certainty band, or simply blocklist 'probably'->'maybe' as a degree-weakening pair."
+  },
+  "R10-073-calib-word_plus_sound": {
+    "root_cause": "'professor' (a countable, individual-referring noun) was replaced with 'faculty' (a collective/mass noun for the teaching staff as a whole), changing who is depicted as doing the explaining from one person to a group.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a countability/individual-vs-collective agreement check to candidate ranking that rejects substitutes which change a singular person-referring noun into a mass/collective noun, and blocklist 'professor'->'faculty' specifically."
+  },
+  "R10-074-core-word": {
+    "root_cause": "'encouraged' was replaced with 'furthered', which does not mean 'encouraged' in any usage (furthered = advanced/promoted a cause) -- an embedding-ranking artifact that produced a semantically unrelated candidate for the verb slot, yielding the nonsensical 'is furthered to attend office hours'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist 'encouraged'->'furthered' and add a minimum-semantic-similarity floor for declared_word candidates so that low-relatedness matches like this are rejected before ranking."
+  },
+  "R10-074-core-single_sound": {
+    "root_cause": "'struggle' was matched on sound similarity and replaced with 'conflict'; in the frame 'struggle with [a topic]' this means academic difficulty, but 'conflict with' means disagreement/friction -- a wrong-sense pick for this specific frame.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a frame-specific rule/blocklist: when 'struggle' is followed by 'with + abstract/academic noun' (the difficulty sense), exclude 'conflict' and other disagreement-sense synonyms from the candidate set for that pattern."
+  },
+  "R10-075-core-word": {
+    "root_cause": "'everything' (a pronoun) was replaced by 'altogether' (an adverb) because the candidate matched semantically but not in part of speech, producing the ungrammatical 'covers altogether we studied'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a part-of-speech agreement check to the substitution ranker that only allows candidates matching the original word's grammatical category, rejecting pronoun->adverb (and similar cross-POS) substitutions."
+  },
+  "R10-075-core-dense_mixed_generic": {
+    "root_cause": "'studied' (matched for sound) was replaced with 'considered', a weaker/different sense of academic engagement than exam preparation implies -- a minor semantic drift from an over-loose synonym match.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist 'studied'->'considered' for this sound group, or restrict the sound-matched candidate pool to synonyms with a higher semantic-similarity score to the original verb."
+  },
+  "R10-076-core-sparse_common_sound": {
+    "root_cause": "'student' (person) was replaced by 'university' (institution) via sound matching -- a category error, since institutions cannot 'learn' the way described -- and 'same' (adjective) was independently replaced by 'very' (intensifier/adjective misuse), producing the ungrammatical 'the very way'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a semantic-category (person vs. institution) consistency check to reject category-crossing substitutions like student->university, plus a POS/usage check that rejects 'same'->'very' since 'very' cannot head a noun phrase the way 'same' does."
+  },
+  "R10-079-core-word": {
+    "root_cause": "'everyone' (a pronoun) was replaced with 'entire' (an adjective) because it matched semantically as a 'whole/all' concept but not in part of speech, producing the ungrammatical 'asked entire to submit'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a part-of-speech agreement check to the substitution ranker that rejects candidates whose grammatical category (adjective) doesn't match the flagged word's category (pronoun)."
+  },
+  "R10-079-core-sparse_common_sound": {
+    "root_cause": "'submit' (hand in) was replaced by sound-matched 'take', which suggests removing/carrying away rather than turning in -- a wrong-sense candidate that changes the practical instruction.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist 'submit'->'take' for this sound group and require sound-matched candidates to also clear a semantic-similarity threshold against the original verb's sense."
+  },
+  "R10-079-calib-single_word": {
+    "root_cause": "Same defect as R10-079-core-word: 'everyone' (pronoun) is replaced with 'entire' (adjective), producing the ungrammatical 'asked entire to submit'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a part-of-speech agreement check to the substitution ranker that rejects candidates whose grammatical category doesn't match the flagged word's category (pronoun -> adjective)."
+  },
+  "R10-079-calib-multi_word": {
+    "root_cause": "The restructuring model changed 'manager' (an individual) to 'management' (a collective) and 'reports' (plural) to 'report' (singular) while rewriting for multiple flagged difficulties, subtly shifting who is depicted as making the request and how many documents are expected.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-check preserving individual-vs-collective noun class and singular/plural number for key subject/object nouns between the original and the restructured sentence, rejecting or flagging outputs that silently change either."
+  },
+  "R10-079-calib-word_plus_sound": {
+    "root_cause": "Same defect as R10-079-core-word: 'everyone' (pronoun) is replaced with 'entire' (adjective) regardless of the trigger combination, producing the ungrammatical 'asked entire to submit'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a part-of-speech agreement check to the substitution ranker that rejects candidates whose grammatical category doesn't match the flagged word's category (pronoun -> adjective)."
+  },
+  "R10-080-core-word": {
+    "root_cause": "The restructuring model changed general/plural 'deadlines might slip' to specific/singular 'the deadline could slip', narrowing a general statement about deadlines in general to a single definite deadline -- a number/definiteness shift introduced with no reference-preservation constraint.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-check comparing number/definiteness of key noun phrases between original and restructured output, rejecting silent generic-plural-to-definite-singular shifts like 'deadlines' -> 'the deadline'."
+  },
+  "R10-080-core-multi_sound": {
+    "root_cause": "'slip' (a fixed collocation with 'deadlines', meaning become delayed) was replaced by sound-matched 'trip', which is never used to describe deadlines and produces a nonsensical claim.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Protect the 'deadlines slip' collocation (add it to a fixed-collocation list similar to fixed-term protection) so 'slip' is not substituted when governed by a deadline/schedule noun, or simply blocklist 'slip'->'trip'."
+  },
+  "R10-081-core-word": {
+    "root_cause": "The restructuring model dropped the plural on 'expectations', producing 'exceeded expectation' (singular/bare), a mild number-agreement error introduced during the full-sentence rewrite.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a number-agreement post-check on escalation output that verifies plural nouns in the original remain plural (or are grammatically valid as singular) in the rewrite."
+  },
+  "R10-083-core-word": {
+    "root_cause": "'experience' -> 'example' and 'candidates' -> 'elections' are both severely wrong-sense substitutions; neither replacement is ever a valid synonym for the flagged word, indicating the ranker accepted candidates far outside the correct semantic neighborhood for these two declared words.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist both 'experience'->'example' and 'candidates'->'elections', and raise the minimum semantic-similarity threshold required for declared_word candidates so unrelated matches like these are rejected before ranking."
+  },
+  "R10-084-core-multi_sound": {
+    "root_cause": "'wrong' in the fixed phrasal verb 'went wrong' was replaced by sound-matched 'faulty', breaking the idiom into the non-collocating 'went faulty' and narrowing the meaning toward mechanical/equipment failure.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Protect the phrasal verb 'go wrong' as a fixed collocation (extend the fixed-term/idiom list) so its component word is not substituted independently."
+  },
+  "R10-085-core-word": {
+    "root_cause": "'delayed' was replaced by 'waited', a verb with different transitivity/passive-voice behavior; 'was waited' is not a valid English passive, so the substitution broke the sentence grammatically instead of just changing its wording.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a subcategorization/voice-compatibility check to candidate ranking that rejects substitutes which cannot support the same grammatical voice (e.g. passive) as the original verb."
+  },
+  "R10-086-core-word": {
+    "root_cause": "'airport' (a physical location) was replaced with 'airline' (a company), a category error -- the two are only loosely related in embedding space (same travel domain) but refer to fundamentally different kinds of entities, producing the factually wrong 'arrive at the airline'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a semantic-category (place vs. organization) consistency check to candidate ranking that rejects place-noun substitutes crossing into organization-nouns, and blocklist 'airport'->'airline' specifically."
+  },
+  "R10-087-core-multi_sound": {
+    "root_cause": "'stayed at' is a fixed lodging-sense collocation ('stayed at a hotel'); the sound-matched substitute 'continued' uses a different, more general sense of 'stay' (remain/persist) that doesn't fit the lodging context, and 'station'->'place' independently degrades a specific noun into a vague one.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Protect the 'stayed at [place]' lodging collocation from substitution (fixed-collocation list) and add a specificity-preserving rule that avoids replacing a specific compound noun like 'train station' with an overly generic word like 'place'."
+  },
+  "R10-088-core-word": {
+    "root_cause": "The restructuring model rewrote 'we skipped the museum' (did not go) as 'we went to the museums instead' (did go) -- a direct reversal of the stated outcome introduced during full-sentence paraphrase with no polarity/negation-preservation constraint.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a negation/polarity-preservation check on escalation output: tag negative-implicature verbs (skip, miss, avoid, didn't) in the source and reject rewrites whose corresponding clause becomes affirmative (or vice versa)."
+  },
+  "R10-089-core-word": {
+    "root_cause": "'crowded' was replaced with 'advised'-adjacent declared_word candidate 'bunched', an unusual, non-idiomatic word choice for describing a beach's crowd level -- a loosely-related synonym that passed ranking despite awkward usage.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist 'crowded'->'bunched' and add a naturalness/collocation-frequency check (e.g. against an n-gram corpus) that downranks candidates rarely used in the given noun's descriptive context."
+  },
+  "R10-089-core-multi_sound": {
+    "root_cause": "'smaller' (comparative adjective) was replaced by sound-matched 'least' (superlative determiner/adverb), an inflectional-category mismatch that leaves the ungrammatical fragment 'a least, less crowded beach'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add an inflectional-form agreement check to candidate ranking that rejects substitutes changing a comparative form to a superlative (or otherwise mismatched) form."
+  },
+  "R10-091-core-word": {
+    "root_cause": "'original' was replaced with 'new', a near-antonym in this comparison context, reversing which version the recipe is being compared to; independently 'slightly'->'little' dropped the required indefinite article, producing 'little less sugar'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add an antonym/polarity check that blocks 'original'->'new' (and similar opposite-meaning pairs) for declared_word/global_sound candidates, and a grammar post-check that inserts/preserves the article 'a' when 'little' replaces 'slightly'."
+  },
+  "R10-091-core-multi_sound": {
+    "root_cause": "'recipe' (a countable object/document noun) was replaced with 'cooking' (an uncountable activity/gerund noun), a countability/category mismatch producing the odd 'this cooking calls for'; 'slightly'->'little' again drops the required article.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a countability/POS agreement check rejecting substitutes that turn a countable object noun into a mass/gerund noun (blocks recipe->cooking), plus the article-preservation check for little/slightly."
+  },
+  "R10-091-calib-single_word": {
+    "root_cause": "Same antonym reversal as R10-091-core-word: 'original' -> 'new' swaps in a near-opposite comparison term.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add an antonym/polarity check that blocks 'original'->'new' as a declared_word substitution candidate."
+  },
+  "R10-091-calib-multi_word": {
+    "root_cause": "The restructuring model rewrote 'the original version' as 'the originally adapted recipe', inserting the unsupported implication that the recipe was adapted from something else -- content not present or implied in the source, introduced as free paraphrase without a content-grounding constraint.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a content-fidelity post-check on escalation output that flags any rewrite introducing new content words/modifiers (e.g. 'adapted') with no corresponding word or clear paraphrase relationship in the original sentence, and rejects or regenerates in that case."
+  },
+  "R10-091-calib-word_plus_sound": {
+    "root_cause": "Same antonym reversal as the other R10-091 variants: 'original' -> 'new' swaps in a near-opposite comparison term regardless of trigger combination.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add an antonym/polarity check that blocks 'original'->'new' as a substitution candidate."
+  },
+  "R10-091-calib-sparse_common_sound": {
+    "root_cause": "'slightly' was replaced by sound-matched 'little' without adjusting for the article it requires, dropping 'a' and producing 'little less sugar'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a grammar post-check that inserts/preserves the indefinite article 'a' whenever 'little' is substituted into an 'a little less/more X' quantity construction."
+  },
+  "R10-091-calib-dense_mixed_generic": {
+    "root_cause": "'recipe' was replaced by sound-matched 'cooking', the same countability/category mismatch (object/document noun -> activity noun) as in R10-091-core-multi_sound, plus the recurring article-dropping issue with 'little'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add the same countability/POS agreement check blocking recipe->cooking, plus the article-preservation check for little/slightly."
+  },
+  "R10-092-core-word": {
+    "root_cause": "'golden' was substituted with 'gold' as a declared-word synonym without recognizing 'golden brown' as a fixed culinary color idiom -- the substitution broke the compound into the nonstandard 'gold brown'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'golden brown' (and similar fixed color/culinary idioms) to the existing fixed-term/idiom protection list so 'golden' is not substituted when it precedes 'brown'."
+  },
+  "R10-093-core-word": {
+    "root_cause": "'develop' in the fixed culinary collocation 'flavors...have had time to develop' was replaced with 'produce', a transitive verb sense that requires an object, leaving 'time to produce' incomplete and changing the intended meaning (flavors maturing) to an unrelated one (creating something).",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Protect the 'flavors develop' culinary collocation from substitution (extend fixed-collocation list), or add a subcategorization check rejecting substitutes that require a direct object where the original verb was used intransitively."
+  },
+  "R10-094-core-word": {
+    "root_cause": "'shellfish' (a compound food-allergen noun) was truncated to 'shell' by the declared-word substitution, dropping the food referent entirely and turning a safety-relevant allergy statement into an ambiguous one; 'carefully'->'severely' is a wrong-sense pick since severely does not mean carefully.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a rule preventing a flagged compound noun (like 'shellfish') from being substituted with its own root/substring ('shell') when that changes the referent category, and remove/blocklist the 'carefully'->'severely' pairing from the synonym data as they are not synonyms."
+  },
+  "R10-098-core-word": {
+    "root_cause": "'considered' was replaced with 'taken', which requires the preposition 'as' to mean 'regarded as' ('taken as impolite'); the substitution didn't account for the different complementation pattern, dropping the required 'as'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a subcategorization/complementation check (or an auto-insert rule) so that when 'considered X' is replaced by 'taken', the required 'as' is inserted to keep the construction grammatical."
+  },
+  "R10-099-core-word": {
+    "root_cause": "'anyone' (a gender-neutral, indefinite pronoun) was replaced with 'guy' (a countable, gendered noun requiring an article), narrowing the statement to a specific male referent not supported by the original and producing the ungrammatical 'offend guy'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a part-of-speech/countability agreement check that rejects indefinite-pronoun-to-countable-noun substitutions like 'anyone'->'guy', and blocklist this pairing given it also introduces an unwarranted gender specification."
+  },
+  "R10-100-core-word": {
+    "root_cause": "'friends' (a plural people-noun functioning as subject complement) was replaced with 'friendships' (an abstract noun), creating a subject-complement mismatch ('they've been friendships'), and 'childhood' was truncated to 'child' by dropping the '-hood' suffix, changing its meaning and grammaticality.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a part-of-speech/semantic-class agreement check rejecting substitutes that change a concrete plural people-noun into an abstract noun in predicate-complement position (blocks friends->friendships), and a suffix-integrity check preventing a derived word like 'childhood' from being replaced by its bare root 'child'."
+  },
+  "R10-100-core-multi_sound": {
+    "root_cause": "The global_sound trigger flagged \"see\" and the substitution ranker chose \"find\" as the closest embedding match, but \"see\" here is used in its social/meeting sense (\"see each other\" = spend time together), not the visual-perception/locate sense that \"find\" fits; independent per-word substitution had no signal that \"see\" was part of the fixed collocation \"see each other.\"",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Protect the collocation \"see each other\" (and similar reciprocal-verb idioms) in a fixed-phrase list, or exclude \"find\" from the candidate set for \"see\" when followed by \"each other,\" forcing a safer synonym like \"meet.\""
+  },
+  "R10-101-core-word": {
+    "root_cause": "The substitution ranker for the declared word \"surprised\" chose the near-identical surface form \"surprising\" (same stem, high embedding similarity) without checking that swapping the -ed participle for the -ing participle flips the psych-verb's semantic role from experiencer (\"she felt surprise\") to causer (\"she caused surprise\"), reversing the sentence's claim.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a morphology-aware filter for psych/experiencer verbs (surprise, bore, excite, interest, etc.) that blocks candidate replacements differing only by an -ed/-ing suffix swap from the source word, since that pair systematically flips agent/experiencer roles."
+  },
+  "R10-102-core-dense_mixed_generic": {
+    "root_cause": "The global-sound substitution swapped the indefinite pronoun \"someone\" for the common noun \"person\" without adjusting the surrounding determiner, because the substitution only replaces the flagged token and has no grammatical-agreement step to insert \"a\" when a pronoun is replaced by a countable noun.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-substitution determiner-agreement check that inserts \"a\"/\"an\" whenever a bare indefinite pronoun (someone/somebody/anything) is replaced by a singular countable noun."
+  },
+  "R10-103-core-word": {
+    "root_cause": "The declared-word substitution for \"creaked\" chose \"noised,\" a candidate derived from the noun \"noise\" with high embedding similarity but not conventionally used as an intransitive sound-making verb in modern English; the ranker has no check on whether a candidate is an attested verb usage.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Curate a vetted synonym list for common sound-verbs (\"creaked,\" \"squeaked,\" \"groaned,\" \"clicked\") instead of relying on raw embedding nearest-neighbors, or add a corpus-attestation check that rejects rare/unattested verb usages like \"noised\" as intransitive."
+  },
+  "R10-105-core-word": {
+    "root_cause": "The T5 escalation model, restructuring the whole sentence under phonetic constraints, generated a malformed comparative (\"rockyer\" instead of \"rockier\") and dropped past-tense agreement (\"suggested\"->\"suggests\") while leaving \"was\" untouched, indicating the restructuring output isn't checked against basic morphology/tense-agreement rules before being accepted.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-generation grammaticality pass (a spellcheck/known-irregular-form check for comparatives, plus a tense-agreement checker matching verbs to the sentence's established tense) that rejects or repairs outputs like \"rockyer\" and tense-mismatched clauses."
+  },
+  "R10-105-core-sparse_common_sound": {
+    "root_cause": "The global-sound substitution for \"steeper\" chose \"higher\" because both are terrain adjectives that are near-neighbors in embedding space, but \"steeper\" denotes incline/gradient while \"higher\" denotes elevation -- two distinct physical properties -- and the independent per-word ranker had no check that these are not interchangeable for \"trail.\"",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist the specific \"steeper\"->\"higher\" pair (and generalize to a small confusable-physical-property set: steep/high, wide/long, deep/tall) so the ranker skips this candidate in favor of a true steepness synonym like \"steeper\"-safe alternatives (\"more sloped\")."
+  },
+  "R10-106-core-word": {
+    "root_cause": "\"settled\" is polysemous (physically coming to rest vs. reaching a decision); the declared-word substitution picked the \"decided\" sense based on word-form embedding similarity alone, ignoring that the subject \"fog\" is inanimate and cannot perform the agentive act of deciding, producing an anthropomorphized, nonsensical claim.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"settled\"->\"decided\" as a substitution pair (protect \"settled\" in physical-description contexts with a curated synonym list like \"hung,\" \"hovered,\" \"spread\") so the agentive \"decided\" sense is never offered as a candidate."
+  },
+  "R10-108-core-word": {
+    "root_cause": "Two independent per-word substitutions each introduced a separate defect: \"single\"->\"one\" produces determiner-doubling (\"a one lamp\") because the ranker never checks the resulting phrase's grammaticality, and \"corner\"->\"edge\" changes the spatial concept (corner = where two walls meet; edge = a boundary) without any check for referent preservation.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a determiner-conflict rule that blocks \"one\" as a replacement immediately following the article \"a\" (or auto-drops the article), and blocklist \"corner\"->\"edge\" as a specific bad spatial-noun pair."
+  },
+  "R10-109-core-word": {
+    "root_cause": "The T5 restructuring model, invoked because the sentence had multiple flagged difficulties, freely regenerated the sentence and substituted the specific object \"light fixture\" with the more common everyday phrase \"light bulb,\" even though \"fixture\" was not itself the flagged difficulty -- the escalation tier has no mechanism to preserve untriggered content words/objects verbatim.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Add a lexically-constrained decoding step to the restructuring tier (constrained/guided generation or a copy mechanism) that pins content nouns not associated with any declared difficulty, so objects like \"fixture\" survive unless specifically flagged."
+  },
+  "R10-109-calib-single_word": {
+    "root_cause": "The declared-word substitution replaced \"replace\" with \"substitute\" based on embedding synonymy, but \"substitute\" conventionally takes the NEW item as its object (\"substitute the bulb for the fixture\") while \"replace\" takes the OLD item as object -- the ranker doesn't check argument-structure/subcategorization differences between near-synonym verbs.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"replace\"->\"substitute\" as a same-slot substitution (or add an argument-structure check on candidate verbs), since the two verbs have swapped object roles and can't be swapped in place without restructuring the clause."
+  },
+  "R10-109-calib-multi_word": {
+    "root_cause": "Same as the core-word \"fixture\"->\"bulb\" case: the restructuring tier substitutes the specific object noun with a more common but different item because it has no content-preservation constraint over words not tied to the declared difficulty.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Add a lexically-constrained decoding step to the restructuring tier that pins untriggered content nouns like \"fixture\" so they survive verbatim in the regenerated sentence."
+  },
+  "R10-109-calib-word_plus_sound": {
+    "root_cause": "Same as the single_word variant: the declared-word substitution swaps \"replace\" for \"substitute\" without checking that the two verbs require the object to fill opposite semantic roles (old item vs. new item).",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"replace\"->\"substitute\" as a same-slot substitution pair so the ranker never offers it for a verb whose object role would be reversed."
+  },
+  "R10-111-core-word": {
+    "root_cause": "Two independent per-word substitutions each picked a candidate from the wrong semantic category: \"button\" (a physical, holdable object) was replaced with \"click\" (an action noun), and \"seconds\" (a duration unit) was replaced with \"times\" (a repetition-count unit); because substitutions are ranked independently, neither check caught that \"hold the click for five times\" no longer describes a physical action performed for a duration.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a semantic-category-consistency check that only accepts a replacement if it shares the source word's type (physical/holdable object for \"button\"; unit-of-time for \"seconds\"), rejecting cross-category picks like \"click\" and \"times.\""
+  },
+  "R10-113-core-dense_mixed_generic": {
+    "root_cause": "\"steps\" is polysemous (instructional/procedural steps vs. physical walking strides); the global-sound substitution picked the walking sense \"paces\" based on generic word-form embedding similarity, without using the surrounding instructional context (\"numbered ... in the manual\") to disambiguate the sense.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"steps\"->\"paces\" as a bad pair, or protect the collocation \"numbered steps\"/\"steps in the manual\" as a fixed instructional phrase so only instructional-sense synonyms (\"stages,\" \"instructions\") are offered."
+  },
+  "R10-114-core-word": {
+    "root_cause": "The declared-word substitution replaced the indefinite locative \"somewhere\" with the definite locative \"there,\" which requires an antecedent that doesn't exist in this sentence, so \"store the medicine there cool\" fails to parse -- the ranker treated the two as simple synonyms without checking they belong to different grammatical classes (indefinite vs. definite locative).",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"somewhere\"->\"there\" as a substitution pair (and more generally block indefinite-locative-to-definite-locative swaps without an antecedent), keeping \"somewhere\" or offering another indefinite locative synonym instead."
+  },
+  "R10-114-core-sparse_common_sound": {
+    "root_cause": "Same defect as the declared_word variant, here triggered by global_sound: \"somewhere\" is replaced with the definite locative \"there,\" which has no antecedent and leaves \"there cool\" unparseable.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"somewhere\"->\"there\" as a substitution pair regardless of trigger source, since the grammatical class mismatch is the same either way."
+  },
+  "R10-115-core-word": {
+    "root_cause": "The T5 restructuring model, regenerating \"not easier\" as \"not more easy to use,\" used a periphrastic comparative for a short adjective that conventionally takes the \"-er\" suffix, indicating the restructuring model wasn't constrained to standard English comparative morphology.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-generation morphology check that flags/corrects periphrastic comparatives (\"more X\") for short/common adjectives with a standard \"-er\" form (easy->easier, big->bigger, etc.)."
+  },
+  "R10-115-calib-single_word": {
+    "root_cause": "The declared-word substitution for the comparative adjective \"harder\" picked the bare degree adverb \"more,\" which is not itself a comparative adjective, so \"more to use\" drops the actual quality being compared and no longer parses.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a POS/completeness check that rejects a substitution candidate for a comparative adjective if the candidate is a bare degree adverb rather than itself a comparative adjective or a valid \"more + adjective\" pair."
+  },
+  "R10-115-calib-multi_word": {
+    "root_cause": "Same as the core-word variant: the T5 restructuring model renders \"easier\" as the non-standard periphrastic \"more easy to use\" instead of using the expected \"-er\" comparative form.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add the same post-generation comparative-morphology check to the restructuring tier, correcting \"more easy\" to \"easier\" for short adjectives."
+  },
+  "R10-115-calib-word_plus_sound": {
+    "root_cause": "Same as the single_word variant: substituting \"harder\" with the bare adverb \"more\" drops the comparative adjective and leaves \"more to use\" ungrammatical and underspecified.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Apply the same POS/completeness check rejecting bare-adverb candidates for comparative-adjective source words."
+  },
+  "R10-118-core-word": {
+    "root_cause": "\"overrated\" (praised more than deserved, an opinion/reputation term) and \"overestimated\" (a quantity or capability judged too high, a measurement term) are near-neighbors in embedding space but belong to different semantic domains; the ranker had no domain check to distinguish them.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"overrated\"->\"overestimated\" and add a curated synonym set for opinion-domain words like \"overrated\" (e.g., \"overhyped,\" \"overpraised\") instead of relying on general embedding similarity."
+  },
+  "R10-121-core-word": {
+    "root_cause": "The declared-word substitutions replaced the plural category nouns \"weekdays\" (Mon-Fri) and \"weekends\" (Sat-Sun) with single specific day names that are subsets, not synonyms, of those categories, because the ranker treated \"tuesdays\"/\"sundays\" as high-similarity day-related terms without checking that they narrow a multi-day category to one day.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist substituting category day-terms (\"weekdays,\" \"weekends\") with single-day names, or add a check that a replacement noun must preserve the source's set-scope/cardinality (category-for-category, not category-for-instance)."
+  },
+  "R10-121-calib-single_word": {
+    "root_cause": "Same defect as the core-word case, limited to \"weekdays\"->\"tuesdays\": the ranker narrows a five-day category to a single day without any scope-preservation check.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"weekdays\"->\"tuesdays\" (and category-to-instance day substitutions generally) so the five-day scope is preserved."
+  },
+  "R10-121-calib-word_plus_sound": {
+    "root_cause": "Same defect as the other \"weekdays\"->\"tuesdays\" variants: a category day-term is narrowed to a single day, changing the factual schedule.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"weekdays\"->\"tuesdays\" as a scope-narrowing substitution pair."
+  },
+  "R10-122-core-word": {
+    "root_cause": "The declared-word substitution picked \"manufacturings,\" treating the uncountable process noun \"manufacturing\" as a countable place noun by adding a plural \"-s,\" because the ranker matched on topical similarity to \"factories\" without checking the candidate's countability/grammatical category.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a countability/POS-category check that rejects candidate nouns whose typical usage is uncountable when the source word is a countable place noun, or blocklist \"factories\"->\"manufacturing(s)\" specifically."
+  },
+  "R10-123-core-sparse_common_sound": {
+    "root_cause": "The global-sound substitution replaced \"century,\" a precisely-defined 100-year unit, with \"period,\" a vague term with no fixed duration, because the ranker optimized for embedding proximity without checking whether the candidate preserves the source's precise quantitative meaning.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"century\"->\"period\" (and generally protect defined time-unit nouns like century/decade/millennium from vague-duration replacements), forcing the ranker to prefer a same-precision synonym or leave the word unchanged."
+  },
+  "R10-124-core-multi_sound": {
+    "root_cause": "The global-sound substitution replaced \"city\" with \"town,\" a related but distinct settlement-size term, because embedding similarity doesn't encode the factual distinction between city and town as different real-world entity types/sizes.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"city\"->\"town\" as a substitution pair (protect settlement-type nouns as a class from cross-substitution), since they denote factually different entities despite being semantically related."
+  },
+  "R10-125-core-word": {
+    "root_cause": "The declared-word substitution for the time-comparative \"earlier\" picked \"newer,\" an age/recency comparative in a related embedding neighborhood, but \"newer\" doesn't describe opening times at all, so \"opens newer\" is nonsensical and destroys the store/cafe timing comparison.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"earlier\"->\"newer\" and tag comparative adjectives by semantic category (time vs. age/recency vs. quality) so candidates are only drawn from the source word's category."
+  },
+  "R10-126-core-word": {
+    "root_cause": "The T5 restructuring model regenerated the sentence using \"less passengers\" instead of \"fewer passengers,\" violating the standard countable-noun agreement rule (fewer for count nouns, less for mass nouns); the restructuring output isn't checked against this common agreement rule before acceptance.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a fewer-vs-less grammar-agreement post-check to the restructuring/verification tier that flags \"less + plural countable noun\" and substitutes \"fewer.\""
+  },
+  "R10-127-calib-multi_sound": {
+    "root_cause": "The global-sound substitution replaced the ordinal \"third\" with the phonetically/embedding-adjacent ordinal \"fourth\" without any check that ordinals in a biographical sentence (\"the third of four children\") encode a specific, non-substitutable fact.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a rule blocking substitution of ordinal/cardinal number words in factual sentences (or specifically forbid swapping one ordinal for a different ordinal), since numbers in narrative/biographical text are essentially never safely interchangeable."
+  },
+  "R10-127-calib-dense_mixed_generic": {
+    "root_cause": "Identical to the multi_sound variant: \"third\" is swapped for \"fourth\" purely on embedding/phonetic proximity with no fact-preservation check on numeric content.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Apply the same number-word protection rule blocking ordinal-to-different-ordinal substitutions."
+  },
+  "R10-128-core-word": {
+    "root_cause": "The declared-word substitution for \"surviving\" (a specific genealogical fact -- children who lived past infancy) picked \"lasting,\" a generic durational synonym that loses the survival-specific meaning; the ranker's embedding similarity treated them as close synonyms without recognizing \"surviving children\" as a fixed genealogical term.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add \"surviving children\"/\"surviving\" (in genealogical contexts) to a protected-term list, or blocklist \"surviving\"->\"lasting\" so the ranker picks a closer synonym like \"living.\""
+  },
+  "R10-128-core-sparse_common_sound": {
+    "root_cause": "Same \"surviving\"->\"lasting\" defect as the core-word variant, here triggered by global_sound; the accompanying \"second\"->\"2nd\" is a harmless abbreviation.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"surviving\"->\"lasting\" regardless of trigger source."
+  },
+  "R10-129-core-word": {
+    "root_cause": "The declared-word substitution replaced \"scholarship\" (a specific merit-based financial award) with \"studies\" (a generic academic-work term), losing the biographically important fact that Fleming won a scholarship, and producing the ungrammatical \"a two-year studies\" since \"studies\" doesn't take a singular count determiner this way; the ranker matched on broad academic-topic similarity rather than precise reference.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"scholarship\"->\"studies\" (protect \"scholarship\" with a curated synonym list like \"grant,\" \"bursary\") and add a countability check rejecting \"a two-year studies.\""
+  },
+  "R10-129-core-dense_mixed_generic": {
+    "root_cause": "The global-sound substitution again replaced \"scholarship\" with a generic academic-process word (\"learning\") that drops the financial-award meaning and produces the awkward, ungrammatical \"a two-year learning.\"",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Protect \"scholarship\" from cross-substitution to generic academic-process nouns (\"learning,\" \"studies,\" \"education\") via a curated replacement list restricted to true synonyms like \"grant\"/\"bursary.\""
+  },
+  "R10-130-core-word": {
+    "root_cause": "The T5 restructuring model, regenerating the whole sentence, introduced a factual age error (\"twenty-year-old\"->\"twenty-one-year-old\"), softened \"inherited\" to the generic \"acquired\" (losing the specific inheritance claim), and corrupted the proper noun \"Fleming\" into \"Flaming\" -- the escalation tier has no fact-preservation or named-entity-integrity constraint when it paraphrases a full sentence.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Add a fact/entity-preservation check to the restructuring tier that diffs numbers and proper nouns between source and output and rejects/regenerates any output where numbers or names were altered without being explicitly targeted by the difficulty profile."
+  },
+  "R10-131-core-word": {
+    "root_cause": "The declared-word substitution replaced \"suggested\" (proposed/recommended) with \"indicated\" (pointed out/implied), a related but communicatively weaker verb picked via embedding proximity, softening the specific claim that Tom recommended the same career.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"suggested\"->\"indicated\" (or add a curated synonym set for the recommendation-sense of \"suggested,\" e.g., \"recommended,\" \"urged\") since the two verbs' communicative force differs enough to matter."
+  },
+  "R10-133-core-word": {
+    "root_cause": "The declared-word substitution replaced \"distinction\" inside the fixed academic-honors idiom \"with distinction\" with \"note,\" breaking the idiom into \"with note,\" which has no equivalent meaning -- the substitution pipeline doesn't recognize \"distinction\" as part of a protected multi-word fixed phrase in this context.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add \"with distinction\" to the fixed-term/idiom protection list so \"distinction\" is never substituted when preceded by \"with\" in an academic-qualification context."
+  },
+  "R10-133-calib-single_word": {
+    "root_cause": "Same defect as the core-word case: the fixed idiom \"with distinction\" is broken by substituting \"note\" for \"distinction,\" producing the meaningless \"with note.\"",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add \"with distinction\" to the fixed-term/idiom protection list."
+  },
+  "R10-133-calib-multi_word": {
+    "root_cause": "The T5 restructuring model, regenerating the sentence to avoid multiple flagged difficulties, silently omitted the entire honors clause \"with distinction\" rather than rephrasing it, indicating the escalation tier has no completeness/information-preservation check ensuring every source clause is represented in the output.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Add a content-coverage check to the restructuring tier (compare key noun/clause phrases between source and output, or use constrained decoding that must retain a rephrased form of every clause) so clauses like \"with distinction\" get rephrased instead of silently dropped."
+  },
+  "R10-133-calib-word_plus_sound": {
+    "root_cause": "Same as the other \"with note\" variants: the fixed academic-honors phrase \"with distinction\" is broken by substituting \"note\" for \"distinction.\"",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add \"with distinction\" to the fixed-term/idiom protection list so it applies regardless of trigger source."
+  },
+  "R10-133-calib-multi_sound": {
+    "root_cause": "The global-sound substitution replaced \"school\" (a concrete institution noun) with \"education\" (an abstract process/mass noun), because the two are topically close in embedding space, but they belong to different grammatical/semantic categories, making \"from the education\" read oddly.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a concrete-vs-abstract noun category check that blocks substituting an institution/place noun with an abstract process noun, or blocklist \"school\"->\"education\" in favor of \"institution\"/\"college.\""
+  },
+  "R10-133-calib-sparse_common_sound": {
+    "root_cause": "Same \"school\"->\"education\" defect as the multi_sound variant: an abstract-process noun stands in for the institution noun, producing an awkward but still recoverable phrase.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"school\"->\"education\" regardless of trigger source."
+  },
+  "R10-133-calib-dense_mixed_generic": {
+    "root_cause": "Same \"school\"->\"education\" defect as the other variants: \"from the education\" is non-standard phrasing for the institution he graduated from, caused by the same concrete/abstract category mismatch.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist \"school\"->\"education\" as a bad pair across all trigger types."
+  }
+}

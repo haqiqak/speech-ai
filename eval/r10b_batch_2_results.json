@@ -1,0 +1,222 @@
+{
+  "R10-029-core-word": {
+    "root_cause": "The escalation T5 model, restructuring the whole sentence to avoid the phonetically hard word 'neutron', generated the phonetically-similar but semantically wrong real word 'neutral', corrupting the fixed astronomical term 'neutron star' into a non-existent object; it also collapsed 'sufficiently massive' into the ungrammatical noun phrase 'sufficient mass' during the same rewrite.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'neutron star' (and other named astronomical-object terms) to a protected-term list checked at the verification stage against both substitution AND escalation output, rejecting/regenerating if a listed term is altered."
+  },
+  "R10-031-core-word": {
+    "root_cause": "The escalation model, rewriting the sentence to route around multiple simultaneous difficulties, split the compound adjective 'volcanic ash' into 'volcano ash' and replaced the fixed geological term 'magma chamber' with 'magma cave', a different concept (empty hollow vs. magma-filled reservoir).",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'volcanic ash' and 'magma chamber' to a protected multi-word geological-term list enforced on escalation output at verification time."
+  },
+  "R10-031-calib-multi_word": {
+    "root_cause": "Same escalation rewrite of the identical source sentence produces the identical defect: 'volcanic ash' -> 'volcano ash' and 'magma chamber' -> 'magma cave'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix as R10-031-core-word: protect 'volcanic ash' and 'magma chamber' as fixed terms checked on escalation output."
+  },
+  "R10-031-calib-multi_sound": {
+    "root_cause": "'surface' was flagged for a global sound difficulty; the substitution ranker's top embedding-similarity candidate was 'open', which is a poor semantic fit for the collocation 'below the surface' and produces the confusing 'below the open'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist the specific bad candidate pair 'surface'->'open' (it recurs identically across multiple unrelated sentences in this batch, indicating a static bad embedding neighbor rather than a context-dependent sense choice), or raise the minimum semantic-fit threshold for sound-triggered substitutions of 'surface'."
+  },
+  "R10-031-calib-sparse_common_sound": {
+    "root_cause": "Identical mechanism to R10-031-calib-multi_sound: 'surface' flagged for its sound, ranker again selects the poorly-fitting 'open'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix: blocklist 'surface'->'open' as a bad candidate pair for this sound-substitution trigger."
+  },
+  "R10-031-calib-dense_mixed_generic": {
+    "root_cause": "Same recurring 'surface'->'open' substitution triggered by the same sound feature.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix: blocklist 'surface'->'open'."
+  },
+  "R10-032-core-word": {
+    "root_cause": "The escalation model turned the adjective 'non-explosive' into the ungrammatical plural noun-use 'non-explosives', and generated the non-word 'tectic' as a garbled form of 'tectonic' while paraphrasing 'convergent tectonic activity'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-generation dictionary/real-word validator on escalation output that rejects/regenerates outputs containing non-dictionary tokens like 'tectic', plus a basic adjective-vs-noun agreement check for '-ive'/'-ives' forms."
+  },
+  "R10-032-core-dense_mixed_generic": {
+    "root_cause": "The word 'resulting' appears twice in the sentence and each occurrence was substituted independently and inconsistently ('causing', 'happening'), and both replacements were dropped into the fixed 'resulting from' slot without adjusting for the fact that 'cause from' and 'happen from' are not valid English prepositional collocations.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a verb+preposition collocation check that rejects substitution candidates whose combination with the following preposition is not a valid collocation, and enforce a consistency rule that the same source word gets the same replacement everywhere in a sentence."
+  },
+  "R10-034-core-word": {
+    "root_cause": "The escalation model replaced 'dissolved' (already in solution, a completed state) with 'soluble' (merely capable of dissolving) while paraphrasing the sentence; both words are individually grammatical and locally natural, but the substitution breaks the causal chain in the following clause 'comes out of solution', which presupposes the gas was already dissolved.",
+    "fixability": "potentially_requires_custom_model",
+    "fix_sketch": "Would require the generator to understand the chemistry-domain distinction between a completed state (dissolved) and a capability (soluble) well enough to preserve the causal logic of 'comes out of solution' -- no local grammar/collocation/fixed-term rule flags this pairing as wrong since both words are independently valid and fluent."
+  },
+  "R10-034-core-dense_mixed_generic": {
+    "root_cause": "'solution' is genuinely polysemous (chemistry 'solution' vs. generic 'answer'); the substitution ranker picked the 'answer' sense purely by global embedding similarity with no awareness that the surrounding geology/chemistry-domain sentence requires the chemistry sense, producing 'comes out of answer'. The co-occurring 'surface'->'open' swap is the same recurring bad static pair seen elsewhere in this batch.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Add a lightweight local word-sense-disambiguation step before candidate ranking (e.g. using the sentence's domain tag or surrounding technical vocabulary to select among a word's known senses) so a chemistry-context 'solution' is not ranked against generic-sense candidates like 'answer'; separately blocklist the static bad pair 'surface'->'open'."
+  },
+  "R10-036-core-word": {
+    "root_cause": "While paraphrasing the whole sentence, the escalation model swapped the subject noun 'volcanoes' for the related-but-distinct concept 'volcanic eruptions', conflating a geological structure (object) with an eruptive event, changing what the sentence claims is created as a plate advances over a plume.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a core-subject-noun preservation rule: constrain escalation rewrites to keep the head noun of a sentence's declared subject within a curated synonym set (e.g. 'volcano' -> {volcano, volcanic landform, volcanic mountain}), excluding unrelated derived forms like 'eruption'."
+  },
+  "R10-037-calib-multi_word": {
+    "root_cause": "The escalation rewrite dropped the plural marking on 'phenomena', producing 'natural phenomenon' after 'continually occurring', a number-agreement slip introduced during paraphrase.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a post-generation number-agreement check (plural head noun after 'occurring'/quantifier context) that flags and corrects 'phenomena'->'phenomenon' style singular/plural mismatches."
+  },
+  "R10-038-core-word": {
+    "root_cause": "Both 'hydroelectricity' and 'geothermal' were declared-difficult words; the substitution ranker independently stripped the defining prefix from each compound term ('hydro-', 'geo-'), turning two specific renewable-energy types into a generic energy carrier ('electricity') and a generic heat concept ('thermal energy') with no awareness that these are fixed compound scientific terms.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'hydroelectricity' and 'geothermal energy' to a protected compound-term list so that when a component is flagged as a declared difficulty, the pipeline escalates to a full-sentence rewrite (or offers a whole-term simplification like 'water power'/'earth-heat energy') instead of stripping the defining prefix via naive word substitution."
+  },
+  "R10-038-core-sparse_common_sound": {
+    "root_cause": "'Solar' was flagged for a sound difficulty and replaced with 'Renewable', which duplicates the umbrella category term 'renewable energy' that already appears later in the same sentence, making the list circular and silently dropping solar power as a named example.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a duplicate/redundancy check that rejects a substitution candidate if it (or its stem) already appears elsewhere in the sentence, which would have blocked 'Solar'->'Renewable' given 'renewable energy' later in the same sentence."
+  },
+  "R10-040-core-word": {
+    "root_cause": "'conditions' was a declared difficult word with a substitution candidate 'terms'; 'conditions' is genuinely polysemous (weather-state sense vs. agreement/terms sense), and in many other sentences 'terms' would be a valid substitute, but here it was picked without regard to the weather-collocation context 'cloudless conditions', producing the nonsensical 'cloudless terms'.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Add a local word-sense-disambiguation step before ranking so that candidates for a polysemous declared word are filtered/re-ranked by which sense the immediate local context (here the adjective 'cloudless') actually invokes, rather than ranking all senses of 'conditions' together by a single global embedding."
+  },
+  "R10-041-core-word": {
+    "root_cause": "The escalation rewrite replaced the specific technical category 'renewable energy sources' with the broader/different category 'alternative energy sources' (which can include non-renewable sources like nuclear), a taxonomic scope change introduced while paraphrasing.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'renewable energy' to the same protected fixed-term list used elsewhere in this domain (needed for R10-038/R10-042 too), blocking substitution/restructuring from swapping it for a near-synonym category term like 'alternative energy'."
+  },
+  "R10-042-core-word": {
+    "root_cause": "The escalation model replaced the precise engineering metric term 'conversion efficiency' with the vaguer, different concept 'convertibility' while paraphrasing the sentence, obscuring what the stated 90% figure actually measures.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'conversion efficiency' to a protected engineering-term list checked on escalation output, rejecting/regenerating outputs that replace it with a non-equivalent term."
+  },
+  "R10-042-core-dense_mixed_generic": {
+    "root_cause": "'renewable' was flagged for a sound difficulty and replaced with 'extended', corrupting the named category 'renewable energy' into the nonsensical 'extended energy' at the end of the sentence.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same protected-term fix as R10-041/R10-042-core-word: block substitution of the head modifier in the fixed compound 'renewable energy'."
+  },
+  "R10-043-core-word": {
+    "root_cause": "The escalation rewrite replaced the formal collocation 'mathematically rigorous' with 'numerically rigorous', shifting from formal/logical rigor to numerical-computation rigor (a different CS/math concept), and separately dropped the plural on 'instructions'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist the specific bad substitution 'mathematically'->'numerically' when followed by 'rigorous' (a recognizable formal collocation), and add a number-agreement post-check for 'instructions'/'instruction'."
+  },
+  "R10-043-calib-multi_word": {
+    "root_cause": "Identical escalation rewrite of the same source sentence produces the same 'mathematically rigorous'->'numerically rigorous' and singular 'instruction' defects.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix as R10-043-core-word: collocation blocklist for 'mathematically'->'numerically' plus a number-agreement check."
+  },
+  "R10-043-calib-word_plus_sound": {
+    "root_cause": "'problems' was flagged for a sound difficulty and replaced with 'jobs'; 'problems' has a specific CS technical sense (a computational problem) distinct from its everyday 'task' sense, and the ranker picked the generic sense purely by embedding similarity without regard to the computer-science-definition context of the sentence.",
+    "fixability": "needs_new_generation_mechanism",
+    "fix_sketch": "Add a domain-aware local word-sense-disambiguation step before candidate ranking so that in a computer_science/technical-domain sentence, candidates for a polysemous word like 'problems' are filtered to preserve its technical sense rather than defaulting to its everyday sense."
+  },
+  "R10-044-core-word": {
+    "root_cause": "Both 'specifications' and 'calculations' were declared-difficult words; the ranker replaced 'specifications' with the looser 'descriptions' (losing the CS-specific sense of a formal spec) and 'calculations' with the informal 'maths', neither substitution considering the formal register of a technical definition sentence.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a register/formality filter to candidate ranking that excludes informal candidates (like 'maths') for detected formal/technical-definition text, and blocklist 'specifications'->'descriptions' as a precision-losing pair in CS contexts."
+  },
+  "R10-044-core-dense_mixed_generic": {
+    "root_cause": "'specifications' flagged for a sound difficulty and replaced with 'descriptions', the same precision-losing substitution as in the core-word variant.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix as R10-044-core-word: blocklist 'specifications'->'descriptions' in technical/CS-domain text."
+  },
+  "R10-047-core-word": {
+    "root_cause": "'computation' (declared difficulty) was replaced with 'computing', which does not take the indefinite article the same way ('a computing' is ungrammatical), and 'terminating' was replaced with 'end', breaking the parallel gerund structure 'producing output and terminating'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a part-of-speech/morphology-preservation check on substitution candidates (mass noun vs. count noun for 'computing'; gerund-form preservation in coordinated structures like 'producing ... and ___ing') that would reject 'a computing' and 'producing output and end'."
+  },
+  "R10-051-core-dense_mixed_generic": {
+    "root_cause": "'written' was flagged for a sound difficulty and replaced with 'printed'; 'written as 0.5' is the standard idiom for expressing mathematical notation, and 'printed' is an odd substitute that doesn't fit this specific notational collocation.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'written as' (notation sense) to a protected collocation list, or blocklist 'written'->'printed' specifically in mathematical-notation contexts."
+  },
+  "R10-055-core-dense_mixed_generic": {
+    "root_cause": "'services' was flagged for a sound difficulty and replaced with 'helps', a verb-form word substituted for a plural noun, breaking the fixed economic term 'goods and services' into the nonsensical 'goods and helps'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'goods and services' to a protected fixed-term list, and/or add a part-of-speech-preservation filter that rejects a verb-form candidate like 'helps' as a replacement for a plural noun like 'services'."
+  },
+  "R10-055-calib-single_word": {
+    "root_cause": "'economics' (declared difficulty, an uncountable field-of-study noun) was replaced with 'economies' (the countable plural of 'economy'), a mismatch in noun class that changes what the sentence is introducing.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a countability/POS-class preservation check for declared-word substitutions so an uncountable discipline noun like 'economics' cannot be replaced by a countable plural like 'economies'."
+  },
+  "R10-055-calib-word_plus_sound": {
+    "root_cause": "Same 'economics'->'economies' noun-class mismatch as the single_word variant; the co-occurring 'price'->'cost' substitution is a fine near-synonym and not itself defective.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix as R10-055-calib-single_word: countability/POS-class preservation check blocking 'economics'->'economies'."
+  },
+  "R10-055-calib-multi_sound": {
+    "root_cause": "Same 'services'->'helps' substitution as R10-055-core-dense_mixed_generic, breaking 'goods and services'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix: protect 'goods and services' as a fixed term / block the verb-form candidate 'helps' from replacing the plural noun 'services'."
+  },
+  "R10-055-calib-sparse_common_sound": {
+    "root_cause": "Same recurring 'services'->'helps' substitution breaking the fixed term 'goods and services'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix: protected-term/POS-preservation check for 'goods and services'."
+  },
+  "R10-056-core-word": {
+    "root_cause": "During the escalation rewrite, 'services' lost its plural marking ('goods and service', an agreement error) and 'currency' -- a general economic concept -- was narrowed to the specific named instance 'the dollar', changing the scope of the claim.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a number-agreement post-check for 'goods and service(s)', and a genericity-preservation rule that blocks replacing a general category noun ('currency') with a specific named instance ('the dollar') during restructuring."
+  },
+  "R10-056-core-sparse_common_sound": {
+    "root_cause": "'services' flagged for a sound difficulty and replaced with 'helps', the same recurring bad pair breaking 'goods and services'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix: protected-term/POS-preservation check for 'goods and services' blocking the 'helps' candidate."
+  },
+  "R10-057-core-sparse_common_sound": {
+    "root_cause": "'supply' was flagged for a sound difficulty and replaced with 'issue', breaking the fixed macroeconomic term 'money supply' into the non-standard 'money issue'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'money supply' to a protected fixed-term list so substitution cannot alter its head noun."
+  },
+  "R10-058-core-word": {
+    "root_cause": "The escalation rewrite flipped 'negative effects' to 'positive effects', reversing the polarity of the claim, and separately broke the fixed economic term 'opportunity cost' into 'chance cost'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add an antonym/negation post-check comparing original and reformulated text for polarity-flipping word pairs (negative/positive, increase/decrease, etc.) that would have caught this reversal, plus protect 'opportunity cost' as a fixed term."
+  },
+  "R10-059-core-word": {
+    "root_cause": "The escalation rewrite turned 'reducing unemployment' into 'a reduction of employment', dropping the negation prefix 'un-' from the noun and thereby reversing the described outcome (more people working vs. fewer).",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a negation-prefix-preservation check that flags when a restructuring output drops a negation morpheme (un-/in-/non-/dis-) from a noun/adjective present in the original, since this reliably signals a polarity reversal."
+  },
+  "R10-059-core-dense_mixed_generic": {
+    "root_cause": "'reducing' and 'rigidity' were both flagged for sound difficulties; 'rigidity'->'toughness' breaks the fixed economic term 'nominal wage rigidity' into a different concept (strength vs. resistance-to-adjustment), and 'reducing'->'breaking' muddies the causal verb.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add 'wage rigidity' to a protected economic-term list, and blocklist the low-fit candidate 'reducing'->'breaking' for this causal-verb context."
+  },
+  "R10-060-core-dense_mixed_generic": {
+    "root_cause": "'recessions' was flagged for a sound difficulty and replaced with 'economies', a word that shares a root with 'economic' already present immediately before it in the sentence, producing the redundant nonsense phrase 'economic economies' and losing the original claim about recessions.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a duplicate/shared-stem check that rejects a substitution candidate whose root already appears adjacent to or elsewhere in the sentence, which would have blocked 'recessions'->'economies' next to 'economic'."
+  },
+  "R10-061-core-word": {
+    "root_cause": "The escalation rewrite changed 'Civil engineering is' to 'Civil engineers is' (a subject-verb agreement break caused by switching the subject's grammatical number/referent) and replaced 'construction' with a duplicated 'design, design and maintenance', silently dropping the concept of construction.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a subject-verb agreement post-check, and a duplicate-word check that rejects an output where a list item is repeated verbatim (here 'design' appearing twice) instead of covering the original 'construction' concept."
+  },
+  "R10-061-calib-single_word": {
+    "root_cause": "'construction' (declared difficulty) was replaced with 'business', a low-fit candidate unrelated to what civil engineering does, materially changing the definition's content.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Raise the minimum semantic-fit threshold required to accept a declared-word substitution candidate, or blocklist 'construction'->'business' once identified as a bad pair."
+  },
+  "R10-061-calib-multi_word": {
+    "root_cause": "Same escalation rewrite of the identical source sentence produces the same subject-verb agreement break ('Civil engineers is') and duplicated 'design, design and maintenance'.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Same fix as R10-061-core-word: subject-verb agreement check plus duplicate-word check."
+  },
+  "R10-061-calib-word_plus_sound": {
+    "root_cause": "'professional'->'expert' left the original article 'a' unchanged even though 'expert' starts with a vowel sound, producing the ungrammatical 'a expert'; the co-occurring 'construction'->'business' is the same low-fit bad pair as in the single_word variant.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add an a/an article-agreement post-check that adjusts the indefinite article based on the phonetic first sound of the replacement word, plus the same construction->business fit-threshold/blocklist fix."
+  },
+  "R10-061-calib-single_sound": {
+    "root_cause": "'structural' was flagged for a sound difficulty and replaced with 'functional', a different engineering concept (load-bearing structure vs. purpose) within the list of what civil engineering covers.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist the low-fit candidate pair 'structural'->'functional' in engineering-technical contexts, since the two are not genuine synonyms."
+  },
+  "R10-062-core-word": {
+    "root_cause": "The escalation rewrite dropped the plural on 'sub-disciplines', producing 'a number of sub-discipline', a number-agreement slip.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Add a number-agreement post-check for quantifier phrases like 'a number of ___' requiring a plural head noun."
+  },
+  "R10-064-core-word": {
+    "root_cause": "'self-proclaimed' (declared difficulty) was replaced with 'so-called', a near-synonym that shifts agency/connotation (the subject calling itself something vs. others skeptically labeling it), a subtle nuance the ranker's embedding similarity did not capture.",
+    "fixability": "fixable_within_current_architecture",
+    "fix_sketch": "Blocklist the specific pair 'self-proclaimed'->'so-called' and prefer agency-preserving alternatives (e.g. 'self-described') in the candidate set for this declared word."
+  }
+}

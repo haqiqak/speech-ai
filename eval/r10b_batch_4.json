@@ -1,0 +1,1148 @@
+[
+  {
+    "run_id": "R10-100-core-multi_sound",
+    "domain": "general",
+    "subcategory": "social_situations",
+    "profile_type": "multi_sound",
+    "expected_opportunity": "hard",
+    "original_text": "They've been friends since childhood, even though they don't see each other often now.",
+    "reformulated_text": "They've been friends since childhood, even though they don't find each other often now.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "see",
+        "replacement": "find",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"see each other\"->\"find each other\" is an odd substitution that could suggest difficulty locating one another rather than simply meeting infrequently, though the overall gist about reduced contact still comes through."
+  },
+  {
+    "run_id": "R10-101-core-word",
+    "domain": "general",
+    "subcategory": "social_situations",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Everyone was surprised when she declined the invitation.",
+    "reformulated_text": "Everyone was surprising when she declined the invite.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "surprised",
+        "replacement": "surprising",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "invitation",
+        "replacement": "invite",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"surprised\" (everyone felt surprise) was changed to \"surprising\" (everyone caused surprise), reversing the subject's role in the event."
+  },
+  {
+    "run_id": "R10-102-core-dense_mixed_generic",
+    "domain": "general",
+    "subcategory": "social_situations",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "easy",
+    "original_text": "It's normal to feels nervous before meeting someone for the first time.",
+    "reformulated_text": "It's normal to feels nervous before meeting person for the first time.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "someone",
+        "replacement": "person",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"someone\"->\"person\" drops the required article (\"meeting person\" should be \"meeting a person\"), a mild grammatical defect; meaning is otherwise preserved."
+  },
+  {
+    "run_id": "R10-103-core-word",
+    "domain": "general",
+    "subcategory": "descriptions",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "The old house had a narrow staircase that creaked with every step.",
+    "reformulated_text": "The old house had a narrow stairs that noised with every step.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "staircase",
+        "replacement": "stairs",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "creaked",
+        "replacement": "noised",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"creaked\"->\"noised\" uses \"noise\" as an intransitive verb in a way that is not standard modern English, leaving \"stairs that noised\" unclear/unnatural to a listener."
+  },
+  {
+    "run_id": "R10-105-core-word",
+    "domain": "general",
+    "subcategory": "descriptions",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "The mountain trail was steeper and rockier than the map suggested.",
+    "reformulated_text": "The trail was steeper and rockyer than the map suggests.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "The mountain trail was steeper and rockier than the map suggested.",
+        "replacement": "The trail was steeper and rockyer than the map suggests.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"rockier\" was rendered as the misspelled/nonstandard comparative \"rockyer\", and \"suggested\"->\"suggests\" breaks tense agreement with the past-tense \"was\", together making the sentence read as broken English."
+  },
+  {
+    "run_id": "R10-105-core-sparse_common_sound",
+    "domain": "general",
+    "subcategory": "descriptions",
+    "profile_type": "sparse_common_sound",
+    "expected_opportunity": "hard",
+    "original_text": "The mountain trail was steeper and rockier than the map suggested.",
+    "reformulated_text": "The mountain trail was higher and rockier than the map advised.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "steeper",
+        "replacement": "higher",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "suggested",
+        "replacement": "advised",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"steeper\"->\"higher\" swaps one physical property (incline/steepness) for a different one (elevation), asserting a different physical characteristic of the trail than the original stated."
+  },
+  {
+    "run_id": "R10-106-core-word",
+    "domain": "general",
+    "subcategory": "descriptions",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "A thin layer of fog settled over the valley just after sunrise.",
+    "reformulated_text": "A thin layer of fog decided over the valley just after dawn.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "settled",
+        "replacement": "decided",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "sunrise",
+        "replacement": "dawn",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"settled\"->\"decided\" anthropomorphizes the fog with a verb of intention that fog cannot perform, producing a nonsensical claim (\"fog decided over the valley\")."
+  },
+  {
+    "run_id": "R10-108-core-word",
+    "domain": "general",
+    "subcategory": "descriptions",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "The room was dimly lit, with only a single lamp in the corner.",
+    "reformulated_text": "The room was dimly lit, with only a one lamp in the edge.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "single",
+        "replacement": "one",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "corner",
+        "replacement": "edge",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "\"a one lamp\" is an ungrammatical determiner doubling (should be \"a single lamp\" or \"one lamp\"), and \"corner\" was replaced with \"edge\", a different spatial concept that changes where the lamp is described as being."
+  },
+  {
+    "run_id": "R10-109-core-word",
+    "domain": "general",
+    "subcategory": "instructions",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Turn off the power before you attempt to replace the light fixture.",
+    "reformulated_text": "Turn off the power before replacing the light bulb.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "Turn off the power before you attempt to replace the light fixture.",
+        "replacement": "Turn off the power before replacing the light bulb.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"light fixture\" (the whole apparatus) was replaced with \"light bulb\" (just the bulb), which changes the referenced object and the actual task/safety scope of the instruction."
+  },
+  {
+    "run_id": "R10-109-calib-single_word",
+    "domain": "general",
+    "subcategory": "instructions",
+    "profile_type": "single_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Turn off the power before you attempt to replace the light fixture.",
+    "reformulated_text": "Turn off the power before you attempt to substitute the light fixture.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "replace",
+        "replacement": "substitute",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "NATURALNESS_OR_REGISTER"
+    ],
+    "rationale": "\"replace\" -> \"substitute\" used transitively on the old fixture reverses the conventional direction of \"substitute\" (normally the new item is the object), producing an awkward but still roughly recoverable meaning."
+  },
+  {
+    "run_id": "R10-109-calib-multi_word",
+    "domain": "general",
+    "subcategory": "instructions",
+    "profile_type": "multi_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Turn off the power before you attempt to replace the light fixture.",
+    "reformulated_text": "Turn off the power before replacing the light bulb.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "Turn off the power before you attempt to replace the light fixture.",
+        "replacement": "Turn off the power before replacing the light bulb.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "Same as the other \"fixture\" -> \"bulb\" variant: the object being worked on is changed to a different, smaller component, altering the instruction's actual scope."
+  },
+  {
+    "run_id": "R10-109-calib-word_plus_sound",
+    "domain": "general",
+    "subcategory": "instructions",
+    "profile_type": "word_plus_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "Turn off the power before you attempt to replace the light fixture.",
+    "reformulated_text": "Turn off the power before you attempt to substitute the light fixture.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "replace",
+        "replacement": "substitute",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "NATURALNESS_OR_REGISTER"
+    ],
+    "rationale": "Same \"substitute the light fixture\" construction as the single_word variant: non-standard use of \"substitute\" with the old item as object, meaning still largely recoverable."
+  },
+  {
+    "run_id": "R10-111-core-word",
+    "domain": "general",
+    "subcategory": "instructions",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Press and hold the button for five seconds until the light turns green.",
+    "reformulated_text": "Press and hold the click for five times until the light turns green.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "button",
+        "replacement": "click",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "seconds",
+        "replacement": "times",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "GRAMMAR",
+      "OTHER"
+    ],
+    "rationale": "\"button\" (a physical object you press and hold) was replaced with \"click\" (an action, not a holdable object), and \"seconds\" was replaced with \"times\", turning a duration into a repetition count that makes no sense with \"hold... until the light turns green\"."
+  },
+  {
+    "run_id": "R10-113-core-dense_mixed_generic",
+    "domain": "general",
+    "subcategory": "instructions",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "easy",
+    "original_text": "Assemble the shelf according to the numbered steps in the manual.",
+    "reformulated_text": "Assemble the shelf according to the numbered paces in the manual.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "steps",
+        "replacement": "paces",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"steps\" (instructional steps in a manual) was replaced with \"paces\" (physical walking strides), picking the wrong sense of the polysemous word \"steps\" and making the instruction nonsensical."
+  },
+  {
+    "run_id": "R10-114-core-word",
+    "domain": "general",
+    "subcategory": "instructions",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Store the medication somewhere cool and out of reach of children.",
+    "reformulated_text": "Store the medicine there cool and out of reach of children.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "medication",
+        "replacement": "medicine",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "somewhere",
+        "replacement": "there",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "\"somewhere cool\" (an indefinite cool location) was replaced with \"there cool\"; \"there\" is a definite locative with no antecedent, so \"store the medicine there cool\" does not parse as valid, sensible English."
+  },
+  {
+    "run_id": "R10-114-core-sparse_common_sound",
+    "domain": "general",
+    "subcategory": "instructions",
+    "profile_type": "sparse_common_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "Store the medication somewhere cool and out of reach of children.",
+    "reformulated_text": "Store the medication there cool and out of reach of children.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "somewhere",
+        "replacement": "there",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "Same defect as the other variant: \"somewhere\" -> \"there\" leaves \"there cool\" with no antecedent and no valid parse."
+  },
+  {
+    "run_id": "R10-115-core-word",
+    "domain": "general",
+    "subcategory": "opinions",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "I think the new update make the ape harder to use, not easier.",
+    "reformulated_text": "I think that the new updates make the ape more difficult to use, not more easy to use.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "I think the new update make the ape harder to use, not easier.",
+        "replacement": "I think that the new updates make the ape more difficult to use, not more easy to use.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "NATURALNESS_OR_REGISTER"
+    ],
+    "rationale": "\"harder\"->\"more difficult\" is fine, but \"easier\"->\"more easy to use\" is a non-standard double periphrastic comparative for a short adjective that should take \"-er\"; meaning is still clear."
+  },
+  {
+    "run_id": "R10-115-calib-single_word",
+    "domain": "general",
+    "subcategory": "opinions",
+    "profile_type": "single_word",
+    "expected_opportunity": "hard",
+    "original_text": "I think the new update make the ape harder to use, not easier.",
+    "reformulated_text": "I think the new update make the ape more to use, not easier.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "harder",
+        "replacement": "more",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "OTHER"
+    ],
+    "rationale": "\"harder to use\" -> \"more to use\" drops the comparative adjective entirely, leaving a sentence that does not parse as valid English and loses the specific claim being made."
+  },
+  {
+    "run_id": "R10-115-calib-multi_word",
+    "domain": "general",
+    "subcategory": "opinions",
+    "profile_type": "multi_word",
+    "expected_opportunity": "hard",
+    "original_text": "I think the new update make the ape harder to use, not easier.",
+    "reformulated_text": "I think that the new updates make the ape more difficult to use, not more easy to use.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "I think the new update make the ape harder to use, not easier.",
+        "replacement": "I think that the new updates make the ape more difficult to use, not more easy to use.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "NATURALNESS_OR_REGISTER"
+    ],
+    "rationale": "Same as the core-word variant: \"more easy to use\" is a non-standard periphrastic comparative in place of \"easier\", though meaning is preserved."
+  },
+  {
+    "run_id": "R10-115-calib-word_plus_sound",
+    "domain": "general",
+    "subcategory": "opinions",
+    "profile_type": "word_plus_sound",
+    "expected_opportunity": "hard",
+    "original_text": "I think the new update make the ape harder to use, not easier.",
+    "reformulated_text": "I think the new update make the ape more to use, not easier.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "harder",
+        "replacement": "more",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "OTHER"
+    ],
+    "rationale": "Same defect as the other \"more to use\" variant: the comparative adjective is dropped, producing an ungrammatical, underspecified clause."
+  },
+  {
+    "run_id": "R10-118-core-word",
+    "domain": "general",
+    "subcategory": "opinions",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "The book was overrated, in my opinion, though the ending was genuinely moving.",
+    "reformulated_text": "The book was overestimated, in my opinion, though the ending was really moving.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "overrated",
+        "replacement": "overestimated",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "genuinely",
+        "replacement": "really",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"overrated\" (praised more than deserved) was replaced with \"overestimated\" (a quantity/capability judged too high), a related but distinct sense; \"genuinely\"->\"really\" is fine. Meaning is still largely recoverable."
+  },
+  {
+    "run_id": "R10-121-core-word",
+    "domain": "general",
+    "subcategory": "ordinary_factual",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "The library closes at nine on weekdays and six on weekends.",
+    "reformulated_text": "The library closes at nine on tuesdays and six on sundays.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "weekdays",
+        "replacement": "tuesdays",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "weekends",
+        "replacement": "sundays",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"weekdays\" (Mon-Fri) was narrowed to \"tuesdays\" and \"weekends\" (Sat-Sun) was narrowed to \"sundays\", changing the actual scope of the library's stated hours to a factually different and much narrower schedule."
+  },
+  {
+    "run_id": "R10-121-calib-single_word",
+    "domain": "general",
+    "subcategory": "ordinary_factual",
+    "profile_type": "single_word",
+    "expected_opportunity": "moderate",
+    "original_text": "The library closes at nine on weekdays and six on weekends.",
+    "reformulated_text": "The library closes at nine on tuesdays and six on weekends.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "weekdays",
+        "replacement": "tuesdays",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"weekdays\" was narrowed to \"tuesdays\", incorrectly restricting a five-day category to a single day and changing the factual claim about the library's hours."
+  },
+  {
+    "run_id": "R10-121-calib-word_plus_sound",
+    "domain": "general",
+    "subcategory": "ordinary_factual",
+    "profile_type": "word_plus_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "The library closes at nine on weekdays and six on weekends.",
+    "reformulated_text": "The library closes at nine on tuesdays and six on weekends.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "weekdays",
+        "replacement": "tuesdays",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "Same defect as the single_word variant: \"weekdays\" -> \"tuesdays\" narrows a five-day category to one day, changing the stated schedule."
+  },
+  {
+    "run_id": "R10-122-core-word",
+    "domain": "general",
+    "subcategory": "ordinary_factual",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "easy",
+    "original_text": "Most of the town's residents work in the two factories nearby.",
+    "reformulated_text": "Most of the town's residents work in the two manufacturings nearby.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "factories",
+        "replacement": "manufacturings",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "\"factories\" (countable places) was replaced with \"manufacturings\", using the uncountable process noun \"manufacturing\" as a countable place noun, which is both wrong-sense and ungrammatical."
+  },
+  {
+    "run_id": "R10-123-core-sparse_common_sound",
+    "domain": "general",
+    "subcategory": "ordinary_factual",
+    "profile_type": "sparse_common_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "The bridge was built in the early twentieth century and renovated twice since then.",
+    "reformulated_text": "The bridge was built in the early twentieth period and renovated twice since then.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "century",
+        "replacement": "period",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"century\" (a defined 100-year unit) was replaced with \"period\", a vague term with no fixed length, making \"the early twentieth period\" ambiguous and losing the specific chronological claim."
+  },
+  {
+    "run_id": "R10-124-core-multi_sound",
+    "domain": "general",
+    "subcategory": "ordinary_factual",
+    "profile_type": "multi_sound",
+    "expected_opportunity": "hard",
+    "original_text": "There are more public parks on the east side of the city than on the west.",
+    "reformulated_text": "There are more public parks on the east part of the town than on the west.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "side",
+        "replacement": "part",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "city",
+        "replacement": "town",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"city\" was replaced with \"town\", a distinct settlement type/size, which is a real if minor referent change; \"side\"->\"part\" is a fine synonym."
+  },
+  {
+    "run_id": "R10-125-core-word",
+    "domain": "general",
+    "subcategory": "ordinary_factual",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "The store doesn't open until ten, but the café next door opens earlier.",
+    "reformulated_text": "The shop doesn't open until ten, but the café next door opens newer.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "store",
+        "replacement": "shop",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "earlier",
+        "replacement": "newer",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "OTHER"
+    ],
+    "rationale": "\"earlier\" (opens before ten) was replaced with \"newer\", which does not describe timing at all, making \"opens newer\" nonsensical and destroying the comparative claim between store and café opening times."
+  },
+  {
+    "run_id": "R10-126-core-word",
+    "domain": "general",
+    "subcategory": "ordinary_factual",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "Fewer people ride the bus now than they did a decade ago.",
+    "reformulated_text": "There are now less passengers on the bus than they did ten years ago.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "Fewer people ride the bus now than they did a decade ago.",
+        "replacement": "There are now less passengers on the bus than they did ten years ago.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"Fewer\" (correct for the countable noun \"passengers/people\") was replaced with \"less\", a classic countable/uncountable agreement error, though the intended meaning remains clear."
+  },
+  {
+    "run_id": "R10-127-calib-multi_sound",
+    "domain": "general",
+    "subcategory": "narrative",
+    "profile_type": "multi_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the third of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
+    "reformulated_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the fourth of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "third",
+        "replacement": "fourth",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"the third of four children\" was changed to \"the fourth of four children\", altering the stated birth-order fact."
+  },
+  {
+    "run_id": "R10-127-calib-dense_mixed_generic",
+    "domain": "general",
+    "subcategory": "narrative",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "moderate",
+    "original_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the third of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
+    "reformulated_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the fourth of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "third",
+        "replacement": "fourth",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "Identical change to the multi_sound variant: \"third\" -> \"fourth\" changes the birth-order claim."
+  },
+  {
+    "run_id": "R10-128-core-word",
+    "domain": "general",
+    "subcategory": "narrative",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Hugh Fleming had four surviving children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven.",
+    "reformulated_text": "Hugh Fleming had four lasting children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "surviving",
+        "replacement": "lasting",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"surviving children\" (children who lived past infancy, a specific genealogical fact) was replaced with \"lasting children\", a non-standard phrase that loses the specific survival claim and reads oddly."
+  },
+  {
+    "run_id": "R10-128-core-sparse_common_sound",
+    "domain": "general",
+    "subcategory": "narrative",
+    "profile_type": "sparse_common_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "Hugh Fleming had four surviving children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven.",
+    "reformulated_text": "Hugh Fleming had four lasting children from his first marriage. He was 59 at the time of his 2nd marriage to Grace, and died when Alexander was seven.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "surviving",
+        "replacement": "lasting",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "second",
+        "replacement": "2nd",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "Same \"surviving\"->\"lasting\" defect as the core-word variant; \"second\"->\"2nd\" is a harmless abbreviation."
+  },
+  {
+    "run_id": "R10-129-core-word",
+    "domain": "general",
+    "subcategory": "narrative",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year scholarship to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.",
+    "reformulated_text": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year studies to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "scholarship",
+        "replacement": "studies",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "\"scholarship\" (a merit-based financial award) was replaced with \"studies\", losing the specific and biographically important fact that Fleming won a scholarship; \"a two-year studies\" is also ungrammatical."
+  },
+  {
+    "run_id": "R10-129-core-dense_mixed_generic",
+    "domain": "general",
+    "subcategory": "narrative",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "hard",
+    "original_text": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year scholarship to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.",
+    "reformulated_text": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year learning to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "scholarship",
+        "replacement": "learning",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "\"scholarship\" was replaced with \"learning\", again losing the specific financial-award fact; \"a two-year learning\" is an awkward, non-standard noun phrase."
+  },
+  {
+    "run_id": "R10-130-core-word",
+    "domain": "general",
+    "subcategory": "narrative",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "After working in a shipping office for four years, the twenty-year-old Alexander Fleming inherited some money from an uncle, John Fleming.",
+    "reformulated_text": "After working in a shipping office for four years, twenty-one-year-old Alexander Fleming acquired some money from an uncle, John Flaming.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "After working in a shipping office for four years, the twenty-year-old Alexander Fleming inherited some money from an uncle, John Fleming.",
+        "replacement": "After working in a shipping office for four years, twenty-one-year-old Alexander Fleming acquired some money from an uncle, John Flaming.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE",
+      "OTHER"
+    ],
+    "rationale": "\"twenty-year-old\" was changed to \"twenty-one-year-old\" (a factual age error), \"inherited\" was replaced with \"acquired\" (losing the specific claim that the money came via inheritance), and the uncle's surname \"Fleming\" was corrupted to \"Flaming\"."
+  },
+  {
+    "run_id": "R10-131-core-word",
+    "domain": "general",
+    "subcategory": "narrative",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "easy",
+    "original_text": "His elder brother, Tom, was already a physician and suggested that he should follow the same career.",
+    "reformulated_text": "His elder brother, Tom, was already a physician and indicated that he should follow the same career.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "suggested",
+        "replacement": "indicated",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"suggested\" (proposed/recommended) was replaced with \"indicated\" (pointed out/implied), a related but weaker communicative sense; the overall meaning is still largely recoverable."
+  },
+  {
+    "run_id": "R10-133-core-word",
+    "domain": "general",
+    "subcategory": "narrative",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "easy",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he qualified with a MBBS degree from the school with note.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "distinction",
+        "replacement": "note",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "\"with distinction\" is a fixed academic-honors term; replacing \"distinction\" with \"note\" breaks the idiom and produces \"with note\", which has no equivalent meaning in English."
+  },
+  {
+    "run_id": "R10-133-calib-single_word",
+    "domain": "general",
+    "subcategory": "narrative",
+    "profile_type": "single_word",
+    "expected_opportunity": "easy",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he qualified with a MBBS degree from the school with note.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "distinction",
+        "replacement": "note",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "Same defect: \"with distinction\" -> \"with note\" breaks the fixed academic-honors phrase and loses its meaning."
+  },
+  {
+    "run_id": "R10-133-calib-multi_word",
+    "domain": "general",
+    "subcategory": "narrative",
+    "profile_type": "multi_word",
+    "expected_opportunity": "easy",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he graduated with a MBBS degree from the institution.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+        "replacement": "In 1906, he graduated with a MBBS degree from the institution.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "OTHER",
+    "secondary_defects": [],
+    "rationale": "\"qualified\"->\"graduated\" and \"school\"->\"institution\" are fine, but \"with distinction\" is dropped entirely, silently deleting the fact that he graduated with honors."
+  },
+  {
+    "run_id": "R10-133-calib-word_plus_sound",
+    "domain": "general",
+    "subcategory": "narrative",
+    "profile_type": "word_plus_sound",
+    "expected_opportunity": "easy",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he qualified with a MBBS degree from the school with note.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "distinction",
+        "replacement": "note",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "Same as the other \"with note\" variants: the fixed academic honors phrase \"with distinction\" is broken by substituting \"note\" for \"distinction\"."
+  },
+  {
+    "run_id": "R10-133-calib-multi_sound",
+    "domain": "general",
+    "subcategory": "narrative",
+    "profile_type": "multi_sound",
+    "expected_opportunity": "easy",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he qualified with a MBBS degree from the education with distinction.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "school",
+        "replacement": "education",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "NATURALNESS_OR_REGISTER"
+    ],
+    "rationale": "\"school\" (the institution) was replaced with \"education\" (the abstract process), so \"from the education\" is an odd, non-standard way to name the institution, though \"with distinction\" is preserved and meaning is largely recoverable."
+  },
+  {
+    "run_id": "R10-133-calib-sparse_common_sound",
+    "domain": "general",
+    "subcategory": "narrative",
+    "profile_type": "sparse_common_sound",
+    "expected_opportunity": "easy",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he qualified with a MBBS degree from the education with distinction.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "school",
+        "replacement": "education",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "NATURALNESS_OR_REGISTER"
+    ],
+    "rationale": "Same \"school\"->\"education\" defect as the multi_sound variant: an abstract-process noun stands in for the institution, producing an awkward but still recoverable phrase."
+  },
+  {
+    "run_id": "R10-133-calib-dense_mixed_generic",
+    "domain": "general",
+    "subcategory": "narrative",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "easy",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he qualified with a MBBS degree from the education with distinction.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "school",
+        "replacement": "education",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "NATURALNESS_OR_REGISTER"
+    ],
+    "rationale": "Same \"school\"->\"education\" defect as the other variants: \"from the education\" is non-standard phrasing for the institution he graduated from, but the honors claim (\"with distinction\") remains intact."
+  }
+]

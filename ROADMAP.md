@@ -1687,6 +1687,33 @@ collapsed 62%→34% on new material despite higher recall.
 answers Phase 9B/9C's own generalization question — partially yes for
 9B, no for 9C. Evaluation only, no production changes, no training.
 
+### Phase 10B. Detailed failure analysis — architecture-vs-custom-model evidence — **DONE, 2026-08-26**
+**Linked finding:** direct instruction — diagnose exactly what
+generation capability is missing across Phase 10's 176 DEFECTIVE
+outputs, separated into fixable-now / needs-new-mechanism / needs-
+custom-model, to ground the architecture-vs-custom-model decision in
+evidence rather than jumping straight to training something huge. Full
+record: `VALIDATION.md` §47, `eval/r10b_failure_analysis.md`.
+**What was done:** all 176 defects re-examined with full mechanism
+context (not blind — a different task from acceptability judging) by 4
+independent subagents against the same three-bucket definitions.
+**Result: 162/176 (92%) fixable within current architecture, 12/176
+(7%) needs a new but still non-learned mechanism, 2/176 (1%) potentially
+needs a custom trained model.** GRAMMAR and FIXED_TERM_OR_IDIOM are
+100% rule-fixable; FACTUAL_OR_LOGICAL_REVERSAL (the class treated as
+most dangerous throughout this project) is 85% rule-fixable. The
+needs-new-mechanism bucket is exactly three recurring, still-engineerable
+patterns (cross-substitution coherence checking, a pre-ranking WSD
+gate, a restructuring content-coverage check). Both custom-model cases
+are escalation-tier chemistry-domain causal/state reasoning failures
+specifically, not general fluency problems.
+**Labeled as:** decisive evidence against building a custom trained
+model now. Staged path: rule/blocklist fixes for the 92%, three new
+engineered mechanisms for the 7%, and only then reconsider a
+custom-trained component for the narrow surviving 1% (escalation-tier
+technical-domain causal claims). No fixes implemented — decision left
+to the user.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

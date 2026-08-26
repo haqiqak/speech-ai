@@ -1,0 +1,1197 @@
+[
+  {
+    "run_id": "R10-064-core-multi_sound",
+    "domain": "technical",
+    "subcategory": "engineering",
+    "profile_type": "multi_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "The first self-proclaimed civil engineer was John Smeaton, who constructed the Eddystone Lighthouse.",
+    "reformulated_text": "The first declared official engineer was John Smeaton, who constructed the Eddystone Lighthouse.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "self-proclaimed",
+        "replacement": "declared",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "civil",
+        "replacement": "official",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "'self-proclaimed' (an unofficial, self-applied label) becomes 'declared official', which asserts close to the opposite -- formal/official recognition rather than self-declaration; 'civil' is also dropped from 'civil engineer'."
+  },
+  {
+    "run_id": "R10-065-core-word",
+    "domain": "technical",
+    "subcategory": "engineering",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "General civil engineers work closely with surveyors and specialized civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communications supply.",
+    "reformulated_text": "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communication supply.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "General civil engineers work closely with surveyors and specialized civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communications supply.",
+        "replacement": "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communication supply.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'surveyors' (people) becomes 'surveys' (documents/activity), so the sentence now describes working with documents rather than professionals alongside civil engineers."
+  },
+  {
+    "run_id": "R10-067-calib-multi_word",
+    "domain": "general",
+    "subcategory": "everyday_conversation",
+    "profile_type": "multi_word",
+    "expected_opportunity": "easy",
+    "original_text": "I was going to call you earlier, but I completely forgot.",
+    "reformulated_text": "I was going to call you before, but I totally forgotten.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "I was going to call you earlier, but I completely forgot.",
+        "replacement": "I was going to call you before, but I totally forgotten.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'I totally forgotten' is not a valid past-tense form (needs 'forgot' or 'had forgotten'); meaning is still understandable."
+  },
+  {
+    "run_id": "R10-068-core-multi_sound",
+    "domain": "general",
+    "subcategory": "everyday_conversation",
+    "profile_type": "multi_sound",
+    "expected_opportunity": "easy",
+    "original_text": "Do you want to grab a coffee before the meeting starts?",
+    "reformulated_text": "Do you want to grab a coffee before the meeting goes?",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "starts",
+        "replacement": "goes",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'starts' -> 'goes' is an odd substitution; 'before the meeting goes' does not idiomatically mean 'before it starts' and could be misread."
+  },
+  {
+    "run_id": "R10-069-core-word",
+    "domain": "general",
+    "subcategory": "everyday_conversation",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "She said she might be a little late because of traffic.",
+    "reformulated_text": "She said she might be a least late because of driving.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "little",
+        "replacement": "least",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "traffic",
+        "replacement": "driving",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "'a little late' becomes the ungrammatical 'a least late'; separately 'traffic' (the stated cause) is changed to 'driving', altering the reason given for lateness."
+  },
+  {
+    "run_id": "R10-069-core-dense_mixed_generic",
+    "domain": "general",
+    "subcategory": "everyday_conversation",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "moderate",
+    "original_text": "She said she might be a little late because of traffic.",
+    "reformulated_text": "She told she might be a little late because of traffic.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "said",
+        "replacement": "told",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'She told she might...' is missing a required object/complementizer ('told [someone]' or 'said'); meaning is still clear."
+  },
+  {
+    "run_id": "R10-070-core-word",
+    "domain": "general",
+    "subcategory": "everyday_conversation",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Honestly, I don't think that restaurant is as good as everyone says.",
+    "reformulated_text": "Honestly, I don't think that restaurants are as good as everybody says.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "Honestly, I don't think that restaurant is as good as everyone says.",
+        "replacement": "Honestly, I don't think that restaurants are as good as everybody says.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'that restaurant' (a specific place) becomes plural 'restaurants', turning a claim about one restaurant into a generalization about restaurants as a category -- a real change in what is being claimed."
+  },
+  {
+    "run_id": "R10-071-core-word",
+    "domain": "general",
+    "subcategory": "everyday_conversation",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "We haven't decided yet whether we're driving or taking the train.",
+    "reformulated_text": "We haven't chosen yet whether we're riding or taking the train.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "decided",
+        "replacement": "chosen",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "driving",
+        "replacement": "riding",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'driving' (operating the vehicle) becomes 'riding', which no longer contrasts cleanly with 'taking the train' (riding could itself describe train travel), leaving it unclear what the two options actually are."
+  },
+  {
+    "run_id": "R10-072-core-word",
+    "domain": "general",
+    "subcategory": "everyday_conversation",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "He mentioned that he'd probably need more time to finish the report.",
+    "reformulated_text": "He said that he'd maybe need more time to finish the report.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "mentioned",
+        "replacement": "said",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "probably",
+        "replacement": "maybe",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'probably' (higher likelihood) is replaced with 'maybe' (more neutral/uncertain), a subtle shift in the reported degree of certainty."
+  },
+  {
+    "run_id": "R10-073-calib-word_plus_sound",
+    "domain": "general",
+    "subcategory": "education",
+    "profile_type": "word_plus_sound",
+    "expected_opportunity": "easy",
+    "original_text": "The professor explained the concept twice before moving on to the next topic.",
+    "reformulated_text": "The faculty explained the concept twice before moving on to the next topic.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "professor",
+        "replacement": "faculty",
+        "triggered_by": [
+          "declared_word",
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'professor' (an individual) becomes 'faculty' (the collective teaching staff), changing who is described as doing the explaining."
+  },
+  {
+    "run_id": "R10-074-core-word",
+    "domain": "general",
+    "subcategory": "education",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Students who struggle with the material is encouraged to attend office hours.",
+    "reformulated_text": "Students who struggle with the stuff is furthered to attend office hours.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "material",
+        "replacement": "stuff",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "encouraged",
+        "replacement": "furthered",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'encouraged' becomes 'furthered', which does not mean 'encouraged' and produces the nonsensical 'is furthered to attend office hours'."
+  },
+  {
+    "run_id": "R10-074-core-single_sound",
+    "domain": "general",
+    "subcategory": "education",
+    "profile_type": "single_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "Students who struggle with the material is encouraged to attend office hours.",
+    "reformulated_text": "Students who conflict with the material is encouraged to attend office hours.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "struggle",
+        "replacement": "conflict",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'struggle with' (difficulty understanding) becomes 'conflict with' (disagreement/friction), changing the reason a student would need office hours."
+  },
+  {
+    "run_id": "R10-075-core-word",
+    "domain": "general",
+    "subcategory": "education",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "easy",
+    "original_text": "The exam covers everything we studied in the first six chapters.",
+    "reformulated_text": "The exam covers altogether we studied in the first six chapters.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "everything",
+        "replacement": "altogether",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'everything' is replaced with the adverb 'altogether', producing 'covers altogether we studied', which does not parse as valid English."
+  },
+  {
+    "run_id": "R10-075-core-dense_mixed_generic",
+    "domain": "general",
+    "subcategory": "education",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "easy",
+    "original_text": "The exam covers everything we studied in the first six chapters.",
+    "reformulated_text": "The exam covers everything we considered in the first six chapters.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "studied",
+        "replacement": "considered",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'studied' becomes 'considered', a slightly weaker/different sense of academic engagement than exam preparation implies."
+  },
+  {
+    "run_id": "R10-076-core-sparse_common_sound",
+    "domain": "general",
+    "subcategory": "education",
+    "profile_type": "sparse_common_sound",
+    "expected_opportunity": "hard",
+    "original_text": "Not every student learns the same way, so the teacher varies her methods.",
+    "reformulated_text": "Not every university learns the very way, so the teacher varies her methods.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "student",
+        "replacement": "university",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "same",
+        "replacement": "very",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "'student' becomes 'university', a category change (institutions do not 'learn' the way the sentence describes), and 'the same way' becomes the ungrammatical 'the very way'."
+  },
+  {
+    "run_id": "R10-079-core-word",
+    "domain": "general",
+    "subcategory": "workplace",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "easy",
+    "original_text": "The manager asked everyone to submit their reports by the end of the day.",
+    "reformulated_text": "The manager asked entire to submit their reports by the end of the day.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "everyone",
+        "replacement": "entire",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'everyone' is replaced with the adjective 'entire', producing the ungrammatical 'asked entire to submit', which breaks who is being addressed."
+  },
+  {
+    "run_id": "R10-079-core-sparse_common_sound",
+    "domain": "general",
+    "subcategory": "workplace",
+    "profile_type": "sparse_common_sound",
+    "expected_opportunity": "easy",
+    "original_text": "The manager asked everyone to submit their reports by the end of the day.",
+    "reformulated_text": "The manager asked everyone to take their reports by the end of the day.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "submit",
+        "replacement": "take",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'submit' (hand in) becomes 'take', which suggests removing/carrying away reports rather than turning them in -- a potentially misleading change to the instruction."
+  },
+  {
+    "run_id": "R10-079-calib-single_word",
+    "domain": "general",
+    "subcategory": "workplace",
+    "profile_type": "single_word",
+    "expected_opportunity": "easy",
+    "original_text": "The manager asked everyone to submit their reports by the end of the day.",
+    "reformulated_text": "The manager asked entire to submit their reports by the end of the day.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "everyone",
+        "replacement": "entire",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'everyone' is replaced with the adjective 'entire', producing the ungrammatical 'asked entire to submit', which breaks who is being addressed."
+  },
+  {
+    "run_id": "R10-079-calib-multi_word",
+    "domain": "general",
+    "subcategory": "workplace",
+    "profile_type": "multi_word",
+    "expected_opportunity": "easy",
+    "original_text": "The manager asked everyone to submit their reports by the end of the day.",
+    "reformulated_text": "The management asked all to submit their report by the end of the day.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "The manager asked everyone to submit their reports by the end of the day.",
+        "replacement": "The management asked all to submit their report by the end of the day.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'manager' (an individual) becomes 'management' (a collective), a subtle shift in who is depicted as making the request; 'reports'->'report' (singular) is a minor number change but still idiomatically usable."
+  },
+  {
+    "run_id": "R10-079-calib-word_plus_sound",
+    "domain": "general",
+    "subcategory": "workplace",
+    "profile_type": "word_plus_sound",
+    "expected_opportunity": "easy",
+    "original_text": "The manager asked everyone to submit their reports by the end of the day.",
+    "reformulated_text": "The manager asked entire to submit their reports by the end of the day.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "everyone",
+        "replacement": "entire",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "'everyone' is replaced with the adjective 'entire', producing the ungrammatical 'asked entire to submit', which breaks who is being addressed."
+  },
+  {
+    "run_id": "R10-080-core-word",
+    "domain": "general",
+    "subcategory": "workplace",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "We're understaffed this week, so deadlines might slip a little.",
+    "reformulated_text": "We're under-staffed this week, so the deadline could slip a little.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "We're understaffed this week, so deadlines might slip a little.",
+        "replacement": "We're under-staffed this week, so the deadline could slip a little.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "'deadlines' (plural, general) becomes 'the deadline' (singular, definite), narrowing a general statement about deadlines to one specific deadline."
+  },
+  {
+    "run_id": "R10-080-core-multi_sound",
+    "domain": "general",
+    "subcategory": "workplace",
+    "profile_type": "multi_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "We're understaffed this week, so deadlines might slip a little.",
+    "reformulated_text": "We're understaffed this week, so deadlines might trip a little.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "slip",
+        "replacement": "trip",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"slip\" (deadlines slipping = becoming delayed) was replaced with \"trip\", which is not used to describe deadlines and produces a nonsensical claim; the sentence no longer states that deadlines may be delayed."
+  },
+  {
+    "run_id": "R10-081-core-word",
+    "domain": "general",
+    "subcategory": "workplace",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "She was promoted because her performance consistently exceeded expectations.",
+    "reformulated_text": "She was promoted because of her consistent performances that exceeded expectation.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "She was promoted because her performance consistently exceeded expectations.",
+        "replacement": "She was promoted because of her consistent performances that exceeded expectation.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"expectation\" was left singular/bare (\"exceeded expectation\") where the plural \"expectations\" is expected, producing a mildly ungrammatical result; meaning is otherwise preserved."
+  },
+  {
+    "run_id": "R10-083-core-word",
+    "domain": "general",
+    "subcategory": "workplace",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "very_hard",
+    "original_text": "He didn't get the job, even though he had more experience than the other candidates.",
+    "reformulated_text": "He didn't get the job, even though he had more example than the other elections.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "experience",
+        "replacement": "example",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "candidates",
+        "replacement": "elections",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "\"experience\"->\"example\" and \"candidates\"->\"elections\" are both wrong-sense substitutions that turn the sentence into nonsense (\"more example than the other elections\"), losing the original meaning entirely."
+  },
+  {
+    "run_id": "R10-084-core-multi_sound",
+    "domain": "general",
+    "subcategory": "workplace",
+    "profile_type": "multi_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "The team meets every Monday to review what went wrong the previous week.",
+    "reformulated_text": "The team meets every Monday to critique what went faulty the previous week.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "review",
+        "replacement": "critique",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "wrong",
+        "replacement": "faulty",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"went wrong\"->\"went faulty\" narrows a general statement about problems to one implying mechanical/equipment failure, an unnatural collocation (\"faulty\" is not normally paired with \"go\") that shifts the meaning."
+  },
+  {
+    "run_id": "R10-085-core-word",
+    "domain": "general",
+    "subcategory": "travel",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Our flight was delayed by almost three hours because of bad weather.",
+    "reformulated_text": "Our flight was waited by almost three hours because of bad conditions.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "delayed",
+        "replacement": "waited",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "weather",
+        "replacement": "conditions",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"delayed\"->\"waited\" produces an ungrammatical passive construction (\"was waited\") that does not convey the original claim that the flight was late."
+  },
+  {
+    "run_id": "R10-086-core-word",
+    "domain": "general",
+    "subcategory": "travel",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Make sure you arrive at the airport at least two hours before departure.",
+    "reformulated_text": "Make sure you arrive at the airline at least two hours before leaving.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "airport",
+        "replacement": "airline",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "departure",
+        "replacement": "leaving",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"airport\"->\"airline\" replaces the physical location one arrives at with a company name, producing a factually wrong claim (\"arrive at the airline\")."
+  },
+  {
+    "run_id": "R10-087-core-multi_sound",
+    "domain": "general",
+    "subcategory": "travel",
+    "profile_type": "multi_sound",
+    "expected_opportunity": "hard",
+    "original_text": "The hotel is closer to the train station than the one we stayed at last time.",
+    "reformulated_text": "The hotel is closer to the train place than the one we continued at last time.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "station",
+        "replacement": "place",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "stayed",
+        "replacement": "continued",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "NATURALNESS_OR_REGISTER"
+    ],
+    "rationale": "\"stayed at\"->\"continued at\" no longer conveys lodging at a hotel, and \"train station\"->\"train place\" is vague; together they obscure what is being compared to the current hotel."
+  },
+  {
+    "run_id": "R10-088-core-word",
+    "domain": "general",
+    "subcategory": "travel",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "We didn't have enough time to see everything, so we skipped the museum.",
+    "reformulated_text": "We didn't have enough time to see all the things, so we went to the museums instead.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "We didn't have enough time to see everything, so we skipped the museum.",
+        "replacement": "We didn't have enough time to see all the things, so we went to the museums instead.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"skipped the museum\" (did not go) was changed to \"went to the museums instead\" (did go), directly reversing the stated outcome."
+  },
+  {
+    "run_id": "R10-089-core-word",
+    "domain": "general",
+    "subcategory": "travel",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "Locals recommended a smaller, less crowded beach a few miles further north.",
+    "reformulated_text": "Locals advised a smaller, less bunched beach a few miles further north.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "recommended",
+        "replacement": "advised",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "crowded",
+        "replacement": "bunched",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"crowded\"->\"bunched\" is an odd word choice for describing a beach's crowd level; the intended meaning is still inferable but the usage is nonstandard."
+  },
+  {
+    "run_id": "R10-089-core-multi_sound",
+    "domain": "general",
+    "subcategory": "travel",
+    "profile_type": "multi_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "Locals recommended a smaller, less crowded beach a few miles further north.",
+    "reformulated_text": "Locals advised a least, less crowded beach a few miles further north.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "recommended",
+        "replacement": "advised",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "smaller",
+        "replacement": "least",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"smaller\"->\"least\" leaves an incomplete, ungrammatical fragment (\"a least, less crowded beach\") that does not parse as valid English."
+  },
+  {
+    "run_id": "R10-091-core-word",
+    "domain": "general",
+    "subcategory": "food",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "This recipe calls for slightly less sugar than the original version.",
+    "reformulated_text": "This recipe calls for little less sugar than the new version.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "slightly",
+        "replacement": "little",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "original",
+        "replacement": "new",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "\"original version\"->\"new version\" swaps in a near-opposite term, reversing which version is being compared to; \"little less\" also drops the article \"a\"."
+  },
+  {
+    "run_id": "R10-091-core-multi_sound",
+    "domain": "general",
+    "subcategory": "food",
+    "profile_type": "multi_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "This recipe calls for slightly less sugar than the original version.",
+    "reformulated_text": "This cooking calls for little less sugar than the original version.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "recipe",
+        "replacement": "cooking",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "slightly",
+        "replacement": "little",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "\"recipe\"->\"cooking\" is a category mismatch (\"this cooking calls for\" is odd since a process, not a recipe, doesn't \"call for\" ingredients); \"little less\" also omits the article \"a\"."
+  },
+  {
+    "run_id": "R10-091-calib-single_word",
+    "domain": "general",
+    "subcategory": "food",
+    "profile_type": "single_word",
+    "expected_opportunity": "moderate",
+    "original_text": "This recipe calls for slightly less sugar than the original version.",
+    "reformulated_text": "This recipe calls for slightly less sugar than the new version.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "original",
+        "replacement": "new",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"original version\"->\"new version\" reverses which version is the point of comparison, the same reversal as in the core-word variant."
+  },
+  {
+    "run_id": "R10-091-calib-multi_word",
+    "domain": "general",
+    "subcategory": "food",
+    "profile_type": "multi_word",
+    "expected_opportunity": "moderate",
+    "original_text": "This recipe calls for slightly less sugar than the original version.",
+    "reformulated_text": "This recipe calls for a little less sugar than the originally adapted recipe.",
+    "changes": [
+      {
+        "source": "restructuring",
+        "original": "This recipe calls for slightly less sugar than the original version.",
+        "replacement": "This recipe calls for a little less sugar than the originally adapted recipe.",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "OTHER",
+    "secondary_defects": [],
+    "rationale": "\"the original version\"->\"the originally adapted recipe\" introduces an unwarranted implication (that the recipe was adapted from something else) not present in the source, a confusing restructuring even though \"slightly less\"->\"a little less\" is fine."
+  },
+  {
+    "run_id": "R10-091-calib-word_plus_sound",
+    "domain": "general",
+    "subcategory": "food",
+    "profile_type": "word_plus_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "This recipe calls for slightly less sugar than the original version.",
+    "reformulated_text": "This recipe calls for slightly less sugar than the new version.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "original",
+        "replacement": "new",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "Same \"original\"->\"new\" reversal as the other calib variants of this sentence."
+  },
+  {
+    "run_id": "R10-091-calib-sparse_common_sound",
+    "domain": "general",
+    "subcategory": "food",
+    "profile_type": "sparse_common_sound",
+    "expected_opportunity": "moderate",
+    "original_text": "This recipe calls for slightly less sugar than the original version.",
+    "reformulated_text": "This recipe calls for little less sugar than the original version.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "slightly",
+        "replacement": "little",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"slightly less\"->\"little less\" drops the article \"a\", a mild ungrammaticality; \"original version\" is preserved correctly."
+  },
+  {
+    "run_id": "R10-091-calib-dense_mixed_generic",
+    "domain": "general",
+    "subcategory": "food",
+    "profile_type": "dense_mixed_generic",
+    "expected_opportunity": "moderate",
+    "original_text": "This recipe calls for slightly less sugar than the original version.",
+    "reformulated_text": "This cooking calls for little less sugar than the original version.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "recipe",
+        "replacement": "cooking",
+        "triggered_by": [
+          "global_sound"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "slightly",
+        "replacement": "little",
+        "triggered_by": [
+          "global_sound"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "\"recipe\"->\"cooking\" is a category mismatch as in the core-multi_sound variant, and \"little less\" again drops the article \"a\"; \"original version\" is correctly preserved."
+  },
+  {
+    "run_id": "R10-092-core-word",
+    "domain": "general",
+    "subcategory": "food",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "easy",
+    "original_text": "Add the onions first, then let them cook until they turn golden brown.",
+    "reformulated_text": "Add the onions first, then let them cook until they turn gold brown.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "golden",
+        "replacement": "gold",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "\"golden brown\" is a fixed culinary color term; substituting \"gold\" breaks the idiom into the nonstandard \"gold brown\", though the intended color is still roughly understood."
+  },
+  {
+    "run_id": "R10-093-core-word",
+    "domain": "general",
+    "subcategory": "food",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "The soup tastes better the next day once the flavors have had time to develop.",
+    "reformulated_text": "The soup tastes better the next day once the flavours have had time to produce.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "flavors",
+        "replacement": "flavours",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "develop",
+        "replacement": "produce",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "\"develop\" (flavors intensify/mature over time) was replaced with \"produce\", which normally requires an object and leaves \"time to produce\" incomplete and unclear about what is being produced."
+  },
+  {
+    "run_id": "R10-094-core-word",
+    "domain": "general",
+    "subcategory": "food",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "He's allergic to shellfish, so he always checks the menu carefully.",
+    "reformulated_text": "He's allergic to shell, so he always checks the menu severely.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "shellfish",
+        "replacement": "shell",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "carefully",
+        "replacement": "severely",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"shellfish\"->\"shell\" drops the food referent entirely (an allergy to \"shell\" is a different, ambiguous claim), and \"carefully\"->\"severely\" is the wrong sense (severely does not mean carefully)."
+  },
+  {
+    "run_id": "R10-098-core-word",
+    "domain": "general",
+    "subcategory": "social_situations",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "moderate",
+    "original_text": "It's considered impolite to interrupts someone while they're speaking.",
+    "reformulated_text": "It's taken impolite to interrupts someone while they're speaking.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "considered",
+        "replacement": "taken",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"considered impolite\"->\"taken impolite\" omits the required \"as\" (\"taken as impolite\"), a grammatical defect, though the meaning is still inferable; the pre-existing \"interrupts\" typo in the original is unchanged and not attributable to this rewrite."
+  },
+  {
+    "run_id": "R10-099-core-word",
+    "domain": "general",
+    "subcategory": "social_situations",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "He didn't mean to offend anyone, but his comment came across the wrong way.",
+    "reformulated_text": "He didn't mean to offend guy, but his remark came across the wrong way.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "anyone",
+        "replacement": "guy",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "comment",
+        "replacement": "remark",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "\"anyone\"->\"guy\" narrows a general, gender-neutral statement to a specific male referent not supported by the original, and drops the article (\"offend guy\"), changing both meaning and grammaticality."
+  },
+  {
+    "run_id": "R10-100-core-word",
+    "domain": "general",
+    "subcategory": "social_situations",
+    "profile_type": "sentence_specific_word",
+    "expected_opportunity": "hard",
+    "original_text": "They've been friends since childhood, even though they don't see each other often now.",
+    "reformulated_text": "They've been friendships since child, even though they don't see each other often now.",
+    "changes": [
+      {
+        "source": "substitution",
+        "original": "friends",
+        "replacement": "friendships",
+        "triggered_by": [
+          "declared_word"
+        ]
+      },
+      {
+        "source": "substitution",
+        "original": "childhood",
+        "replacement": "child",
+        "triggered_by": [
+          "declared_word"
+        ]
+      }
+    ],
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "\"friends\"->\"friendships\" creates a subject-complement mismatch (\"they've been friendships\"), and \"childhood\"->\"child\" drops the \"-hood\" suffix, together producing a badly malformed sentence."
+  }
+]
