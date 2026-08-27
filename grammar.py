@@ -840,6 +840,106 @@ _SPELL_WHITELIST: set[str] = {
 _SPELL_SKIP_TAGS = {"NNP", "NNPS", "CD", "FW", "LS", "SYM", "$", "``", "''",
                     ":", ",", ".", "-LRB-", "-RRB-"}
 
+_WORDNET_WORDS: set[str] | None = None  # lazy -- populated on first call
+
+
+def _wordnet_word_set() -> set[str]:
+    global _WORDNET_WORDS
+    if _WORDNET_WORDS is None:
+        _WORDNET_WORDS = frozenset(w.lower() for w in wn.words())
+    return _WORDNET_WORDS
+
+
+# Common English prefixes whose base word WordNet often lists on its own
+# even when the prefixed compound isn't separately indexed ("overnutrition"
+# -- not in WordNet -- vs "nutrition" -- is). Verified against this
+# specific case during this phase's own re-verification, not speculative:
+# without this, "overnutrition" (a real word in this project's own
+# technical corpus) is indistinguishable from a garbled token by the
+# wordlist checks above.
+_COMMON_PREFIXES = ("over", "under", "non", "un", "re", "pre", "post",
+                     "mis", "dis", "anti", "inter", "sub", "super", "semi", "multi",
+                     "micro", "macro", "bio", "geo", "hydro", "thermo", "mono", "poly", "auto")
+
+
+def _is_recognized_word(word: str, wn_words: set[str]) -> bool:
+    """Checked in order: exact WordNet membership; the noun-lemmatized form
+    (WordNet only lists singular "nutrient", not "nutrients" -- needed for
+    "micronutrients", found alongside "overnutrition" in the very sentence
+    that motivated the prefix check below); a common-prefix strip; the
+    prefix strip THEN lemmatized (covers "micronutrients" -> "nutrients" is
+    still plural after stripping "micro" -- needs both steps together)."""
+    w = word.lower()
+    if w in wn_words or _lemmatizer.lemmatize(w, pos="n") in wn_words:
+        return True
+    for prefix in _COMMON_PREFIXES:
+        if w.startswith(prefix) and len(w) > len(prefix) + 2:
+            stem = w[len(prefix):]
+            if stem in wn_words or _lemmatizer.lemmatize(stem, pos="n") in wn_words:
+                return True
+    return False
+
+
+def has_unknown_tokens(text: str) -> bool:
+    """Phase 11B (VALIDATION.md SS50) -- detection-only counterpart to
+    _correct_spelling(), for checking GENERATED text (T5 escalation/
+    phrase-tier output) rather than correcting raw user input.
+    _correct_spelling() only ever ran on the input side (sanitize_input(),
+    before reformulate() is even called); nothing in the pipeline
+    previously checked whether the pipeline's OWN output was real words.
+    Phase 10B (eval/r10b_failure_analysis.md) and Phase 11's own
+    re-verification pass both surfaced the same garbled-token defect
+    class ("thermonuklear", "rockyer", "tectic", "goodss", "dayss",
+    "otherrer") that this catches.
+
+    Requires BOTH pyspellchecker AND WordNet to fail to recognize a
+    token before flagging it, not either alone -- verified necessary,
+    not a speculative refinement: pyspellchecker's default wordlist
+    doesn't cover legitimate technical/medical vocabulary this project's
+    own technical-domain corpus actually uses ("nucleosynthesis",
+    "overnutrition" both come back "unknown"), which on its own
+    regressed two previously-CLEAN Phase 10 escalation outputs to a
+    refusal during this phase's own re-verification. WordNet's own
+    wn.synsets() is separately too PERMISSIVE for this purpose -- its
+    morphy-based inflection stripping treats "rockyer" as a comparative
+    of "rocky" and "dayss" as a plural of "day", exactly the garbled
+    forms this check needs to catch -- so this checks exact (case-
+    insensitive) membership in WordNet's raw word list instead, bypassing
+    morphy entirely. The AND of these two checks catches every garbled
+    token found in Phase 10B/Phase 11's evidence while passing every
+    legitimate technical term checked against that same evidence.
+
+    Reuses the exact same skip-tag/whitelist filter _correct_spelling()
+    uses, so this never flags a proper noun, number, or the project's own
+    domain jargon as "unknown" -- deliberately the same discipline, not a
+    stricter one, since a false positive here means an honest refusal
+    (this codebase's established "never ship a bad guess" pattern), not
+    a silent failure.
+
+    Falls back to False (never blocks) when pyspellchecker isn't
+    installed, matching _correct_spelling's own fallback."""
+    if not _SPELL_OK or _spell is None:
+        return False
+    try:
+        tokens = word_tokenize(text)
+        tags = pos_tag(tokens)
+    except Exception:
+        return False
+    candidates = [
+        word for word, tag in tags
+        if tag not in _SPELL_SKIP_TAGS
+        and re.match(r"^[a-zA-Z]+$", word)
+        and word.lower() not in _SPELL_WHITELIST
+    ]
+    if not candidates:
+        return False
+    unknown_to_spellchecker = _spell.unknown(candidates)
+    if not unknown_to_spellchecker:
+        return False
+    wn_words = _wordnet_word_set()
+    return any(not _is_recognized_word(w, wn_words) for w in unknown_to_spellchecker)
+
+
 def _correct_spelling(tokens: list[str], tags: list[tuple]) -> tuple[list[str], list[dict]]:
     """
     Spell-check every non-proper, non-punctuation token.
@@ -1301,7 +1401,15 @@ def inflect(lemma: str, target_tag: str) -> str:
     if result:
         return result[0]
     if target_tag == "NNS":
-        return lemma + "s"
+        # Phase 11B (VALIDATION.md SS50) -- root cause of "weekdays" ->
+        # "dayss": pyinflect.getInflection() only knows how to pluralize a
+        # SINGULAR base form, and returns None for a lemma that's already
+        # plural (candidates aren't guaranteed to be singular -- Datamuse's
+        # ml= results in particular can return "days" as a "synonym" for
+        # "weekdays"). The old unconditional lemma + "s" fallback then
+        # double-pluralized it. A lemma already ending in "s" is returned
+        # unchanged instead of blindly appended to.
+        return lemma if lemma.endswith("s") else lemma + "s"
     return lemma
 
 def _preserve_case(original: str, replacement: str) -> str:

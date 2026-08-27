@@ -375,6 +375,83 @@ class BlockedSubstitutionPairTest(unittest.TestCase):
         self.assertIn("initial", result["reformulated_text"].lower())
 
 
+class NumberWordMismatchTest(unittest.TestCase):
+    """Phase 11B (VALIDATION.md SS50) -- a generalizable rule rather than a
+    one-off blocklist pair, since R10-127's "third"->"fourth" swap was
+    global_sound-triggered (phonetic similarity), which will keep drawing
+    near-miss number-word candidates for any number word a profile flags,
+    not just this one pair."""
+
+    def test_different_number_words_flagged(self):
+        self.assertTrue(sem.is_number_word_mismatch("third", "fourth"))
+        self.assertTrue(sem.is_number_word_mismatch("six", "sixteen"))
+
+    def test_same_number_word_not_flagged(self):
+        self.assertFalse(sem.is_number_word_mismatch("third", "third"))
+
+    def test_non_number_words_not_flagged(self):
+        self.assertFalse(sem.is_number_word_mismatch("dog", "cat"))
+        self.assertFalse(sem.is_number_word_mismatch("third", "cat"))
+
+    def test_number_word_mismatch_skipped_in_favor_of_next_candidate(self):
+        profile = _profile("number_word_wiring")
+        profile.add_word("third", source="user_typed")
+        fake_scored = [
+            {"lemma": "fourth", "inflected": "fourth", "semantic_sim": 0.95,
+             "freq_score": 0.9, "combined": 0.95, "accepted": True},
+            {"lemma": "third", "inflected": "3rd", "semantic_sim": 0.9,
+             "freq_score": 0.8, "combined": 0.9, "accepted": True},
+        ]
+        with mock.patch.object(rf, "_raw_candidates", return_value=["fourth", "third"]), \
+             mock.patch.object(rf.sem, "rank_candidates_contextually", return_value=fake_scored):
+            result = rf.reformulate("He was the third of four children.", profile)
+        self.assertEqual(result["status"], "reformulated")
+        self.assertNotIn("fourth", result["reformulated_text"].lower())
+        self.assertIn("3rd", result["reformulated_text"].lower())
+
+
+class UnknownTokenRejectionTest(unittest.TestCase):
+    """Phase 11B (VALIDATION.md SS50) -- nothing previously checked whether
+    T5-generated escalation/phrase-tier output was made of real words.
+    Reuses grammar.py's existing pyspellchecker-based infrastructure
+    (previously input-side only, via sanitize_input()) -- these tests use
+    the exact garbled tokens Phase 10B and Phase 11's own re-verification
+    both found ("thermonuklear", "rockyer", "goodss")."""
+
+    def test_garbled_token_detected(self):
+        self.assertTrue(rf.has_unknown_tokens("The thermonuklear fusion process was described."))
+
+    def test_clean_text_not_flagged(self):
+        self.assertFalse(rf.has_unknown_tokens("The thermonuclear fusion process was described."))
+
+    def test_proper_nouns_and_numbers_not_flagged(self):
+        # _SPELL_SKIP_TAGS excludes NNP/NNPS/CD -- an unusual proper name or
+        # a number must never trigger a false-positive refusal.
+        self.assertFalse(rf.has_unknown_tokens("Zzyzxville has 4827 residents."))
+
+    def test_escalation_candidate_with_garbled_token_is_rejected(self):
+        profile = _profile("escalation_garbled_token")
+        profile.add_word("requires", source="user_typed")
+        profile.add_word("specific", source="user_typed")
+        settings = rf.ReformulateSettings(escalation_word_count=1)
+        original = "The reaction requires a specific amount of thermal energy to proceed."
+        garbled = "The reaction needs a certain amount of thermonuklear energy to happen."
+        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[garbled]):
+            result = rf.reformulate(original, profile, settings)
+        self.assertEqual(result["status"], "could_not_safely_reformulate")
+
+    def test_escalation_candidate_without_garbled_token_is_accepted(self):
+        profile = _profile("escalation_clean_token")
+        profile.add_word("requires", source="user_typed")
+        profile.add_word("specific", source="user_typed")
+        settings = rf.ReformulateSettings(escalation_word_count=1)
+        original = "The reaction requires a specific amount of thermal energy to proceed."
+        clean = "The reaction needs a certain amount of thermal energy to happen."
+        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[clean]):
+            result = rf.reformulate(original, profile, settings)
+        self.assertEqual(result["status"], "reformulated")
+
+
 class WordSenseDisambiguationTest(unittest.TestCase):
     """Regression tests for REFORMULATION_PROBLEM_MAP.md SS5 item 2. Unlike
     IdiomGuardTest, these deliberately use sentences the idiom guard does

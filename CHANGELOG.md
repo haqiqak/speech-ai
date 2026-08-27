@@ -6,6 +6,26 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-27, third** feat: Phase 11B — categories 4/6/7 of Phase
+  10B's fixable batch. Added dictionary/real-word validation on
+  generated output (reused as a substitution-tier gate too, not just
+  escalation/phrase-tier, after a mid-phase finding), a generalizable
+  number-word preservation check, and five more verified blocklist
+  pairs. Explicitly deferred general T5-output grammar/agreement
+  checking and polarity-without-negation detection (need a new
+  mechanism). This phase's own re-harvesting caught and fixed 3 real
+  bugs before reporting any number: an overly aggressive spellcheck
+  gate that regressed 2 previously-CLEAN outputs, a number-word set
+  missing digit/hyphenated forms, and a genuine root-cause bug in
+  grammar.inflect()'s pluralization fallback ("weekdays" -> "dayss").
+  Also confirmed a real limit (not chased further): two words whose
+  candidate pools keep surfacing a new bad match every time the
+  previous one is blocked. Result: 17 genuine fixes, 8 apparent
+  regressions all traced to pre-existing candidate-pool/T5
+  nondeterminism unrelated to this phase's code. CLEAN rate: 31.6%,
+  up from Phase 10's 26.1%, flat against Phase 11's 32.6% within a
+  newly-confirmed ~1-point re-harvest noise band. →
+  `DECISION_LOG.md` 2026-08-27-C, `VALIDATION.md` §50.
 - **2026-08-27, second** fix: Phase 11 re-verification — blind
   re-judged all Phase 11 changes (full 398-run re-harvest, not just
   the 83 targeted cases) and found a real regression: `IDIOM_PHRASES`

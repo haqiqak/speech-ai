@@ -1768,6 +1768,41 @@ helped, not an inference from "the old defect text is gone." Phase 11B
 (Categories 4-7, ~87 cases, still WRONG_WORD_OR_SENSE-dominated per this
 pass's own breakdown) remains the next concrete step.
 
+### Phase 11B. Categories 4/6/7 — plus three real bugs caught during verification — **DONE, 2026-08-27**
+**Linked finding:** the highest-confidence slice of Phase 10B's
+remaining categories, per plan-mode approval. Full record:
+`VALIDATION.md` §50, `eval/r11b_reverify_report.md`.
+**What was done:** implemented dictionary/real-word validation on
+generated output (Category 7), a generalizable number-word
+preservation check (Category 6, narrow slice), and five more verified
+blocklist pairs (Category 4/5 simple cases). Explicitly deferred:
+general POS/subject-verb-agreement checking on T5 output and
+antonym/polarity-without-negation-marker detection (both need a new
+mechanism, not a rule fix). This phase's own re-harvesting caught and
+fixed 3 real bugs before reporting any number: an overly aggressive
+dictionary check that regressed 2 previously-CLEAN outputs (fixed by
+requiring both pyspellchecker AND exact WordNet membership to fail); a
+number-word set that missed digit/hyphenated forms; and a genuine
+root-cause bug in `grammar.inflect()`'s pluralization fallback
+double-"s"-ing an already-plural candidate ("weekdays" -> "dayss").
+Also found, and left as a disclosed limitation rather than chased: two
+words ("third", "single") whose candidate pools keep producing a new
+bad match every time the previous one is blocked — a concrete ceiling
+on the blocklist approach.
+**Result:** 111/398 runs changed; of 97 still `reformulated`, 17 CLEAN
+/ 80 DEFECTIVE. 17 genuine fixes, 8 apparent regressions all traced to
+this project's pre-existing candidate-pool/T5 nondeterminism (none
+touch this phase's own code). **Overall CLEAN rate: 71/225 (31.6%)**,
+up from Phase 10's 26.1%, flat against Phase 11's 32.6% — within a
+newly-confirmed ~1-point noise band from re-running an unchanged
+harvest.
+**Labeled as:** the still-DEFECTIVE population's shape (WRONG_WORD_OR_
+SENSE 42, GRAMMAR 11 dominant) confirms rather than surfaces new scope
+— the explicitly-deferred categories (T5-output grammar checking,
+polarity-without-negation detection) are the correct next lever, a
+candidate "Phase 11C," each needing its own design pass before
+implementation (same caution this phase itself applied to Category 4).
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

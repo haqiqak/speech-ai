@@ -5165,3 +5165,82 @@ re-verification passes. This re-verifies Phase 11's own ~92-run change
 population, not a fresh disjoint corpus — it answers "did this pass's
 changes help," not "what is the system's current CLEAN rate on unseen
 material" (still Phase 10's 26% baseline until a new stress test runs).
+
+## 50. Phase 11B — categories 4/6/7, and three real bugs caught during verification (executed 2026-08-27)
+
+Per approved plan mode (`eval/r11b_reverify_report.md` full record):
+the highest-confidence slice of Phase 10B's remaining categories 4-7,
+following the same verification discipline Phase 11's re-verification
+established. **General POS/subject-verb-agreement checking on T5
+output and antonym/polarity-without-negation-marker detection were
+explicitly deferred** (need a new mechanism, not a rule fix) — only
+Category 7 (dictionary/real-word validation on generated output),
+a narrow generalizable Category 6 slice (number-word preservation), and
+five more individually-verified blocklist pairs were implemented.
+
+**[FACT] Three real bugs were found and fixed during this phase's own
+verification, not shipped and disclosed after the fact:**
+
+1. `has_unknown_tokens()`'s first version rejected legitimate technical
+   vocabulary this project's own corpus uses ("nucleosynthesis",
+   "overnutrition" — not in pyspellchecker's default wordlist),
+   regressing two previously-CLEAN Phase 10 outputs to a refusal on the
+   first re-harvest. Fixed by requiring BOTH pyspellchecker AND exact
+   WordNet-word-list membership to fail before flagging a token — plain
+   `wn.synsets()` was separately found too *permissive* (its morphy-
+   based inflection stripping treats "rockyer" as a comparative of
+   "rocky", exactly the garbled form this check needs to catch), so
+   this checks exact raw-word-list membership instead, plus a common-
+   prefix/lemma fallback for compounds.
+2. `is_number_word_mismatch()`'s spelled-out-word closed set alone
+   missed digit forms (`"third"` → `"2nd"`) and hyphenated compounds
+   (`"twenty-third"`) — both surfaced by this same word's actual
+   candidate pool during re-harvesting. Extended to recognize both.
+3. A previously-unknown root-cause bug in `grammar.inflect()`:
+   `"weekdays"` → `"dayss"` traced to the NNS fallback
+   (`lemma + "s"`) unconditionally appending "s" even when the
+   candidate lemma (from Datamuse) was already plural. Fixed at the
+   source — the fallback now returns an already-`"s"`-ending lemma
+   unchanged. Not escalation-exclusive as the original plan assumed, so
+   `has_unknown_tokens()` was also wired into `_try_substitution()`'s
+   loop as a direct result of this finding.
+
+**[FINDING, a genuine limit, not chased further]** Two words
+(`"third"`, `"single"`) each produced a NEW distinct bad candidate
+every time the previous one was blocked (`third`: fourth → 2nd →
+twenty-third → tertiary; `single`: one → 1 → one-on-one → several) —
+the blocklist mechanism's known convergence limit made concrete.
+Recorded as an evidenced limitation needing real word-sense
+disambiguation, not continued one-off patching.
+
+**[FACT] Result:** full 398-run harvest re-run three times (once per
+bug fix) before trusting any number; final diff: 111 runs changed (96
+reformulated→reformulated, 14 reformulated→refused [13 of 14 previously
+DEFECTIVE], 1 refused→reformulated). 97 still-reformulated runs blind-
+judged: **17 CLEAN, 80 DEFECTIVE (61 SEVERE, 19 MINOR)**. Against Phase
+10's original judgment: 17 genuine DEFECTIVE→CLEAN fixes (including the
+`everyone`→`entire` and `weekdays` duplicate-word fixes), 72 still-
+defective, **8 apparent regressions — every one traced to this
+project's already-documented candidate-pool/T5 nondeterminism**
+(confirmed by checking none touch any word or mechanism Phase 11B's
+code changed). **Overall CLEAN rate: 71/225 (31.6%)**, up from Phase
+10's 26.1%, essentially flat against Phase 11's 32.6% (a ~1-point dip
+within the noise band the next finding establishes).
+
+**[FINDING, new this phase] Re-running the identical 398-run harvest
+with NO code change between runs can itself change a small number of
+individual outcomes** — confirmed directly for `R10-030` (candidate
+pool differed run-to-run; the new gate behaved correctly given each
+run's actual candidates) and others. Comparing raw CLEAN-rate
+percentages between two separate harvest runs carries genuine noise on
+the order of at least 1 point; single-run deltas below that need the
+underlying cases checked directly, not treated as a verdict on their
+own.
+
+**[LIMITATION]** All judges are Claude instances. The still-DEFECTIVE
+population's defect-type shape (WRONG_WORD_OR_SENSE 42, GRAMMAR 11,
+FIXED_TERM_OR_IDIOM 6, NATURALNESS_OR_REGISTER 8,
+FACTUAL_OR_LOGICAL_REVERSAL 5) matches the deferred categories exactly
+— confirms rather than surfaces new scope. `"third"`/`"single"`'s
+unconverged pools illustrate a real ceiling on the blocklist approach
+for high-collision words.

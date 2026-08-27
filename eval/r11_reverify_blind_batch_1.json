@@ -15,14 +15,14 @@
     "reformulated_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and integrated into the body."
   },
   {
-    "run_id": "R10-003-core-word",
-    "original_text": "Peristalsis is the rhythmic contraction of muscles that begins in the esophagus and continues along the wall of the stomach and the rest of the gastrointestinal tract.",
-    "reformulated_text": "Peristalsia is the rhythmic contracting of muscles that begins in the esophagum and continues along the wall of the stomach and the rest of the gastrointestinal tract."
-  },
-  {
     "run_id": "R10-005-core-word",
     "original_text": "Water and some minerals are reabsorbed back into the blood in the large intestine.",
     "reformulated_text": "Water and some minerals are eliminated back into the blood in the large intestine."
+  },
+  {
+    "run_id": "R10-007-calib-multi_word",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "The nutritional process is the biological and physiologic process by which an organism uses food and water to support its life."
   },
   {
     "run_id": "R10-008-core-dense_mixed_generic",
@@ -37,7 +37,7 @@
   {
     "run_id": "R10-013-calib-word_plus_sound",
     "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
-    "reformulated_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new goodss are generated."
+    "reformulated_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new goods are generated."
   },
   {
     "run_id": "R10-014-core-dense_mixed_generic",
@@ -75,6 +75,11 @@
     "reformulated_text": "When the net force on a body is equal to zero, then by Newton's second law, the body do not change, and it is said to be in mechanical equilibrium."
   },
   {
+    "run_id": "R10-024-core-dense_mixed_generic",
+    "original_text": "In other words, if one body exerts a force on a second body, the second body is also exerting a force on the first body, of equal magnitude in the opposite direction.",
+    "reformulated_text": "In other words, if one body exerts a force on a forward body, the intermediate body is also exerting a force on the first body, of equal magnitude in the opposite direction."
+  },
+  {
     "run_id": "R10-029-core-word",
     "original_text": "At the end of a star's lifetime, fusion ceases and its core becomes a stellar remnant: a white dwarf, a neutron star, or if it is sufficiently massive a black hole.",
     "reformulated_text": "At the end of a star's life, fusion ceases and its core becomes a stellar remnant: a white dwarf, a neutron star or if it is a sufficient black hole."
@@ -105,6 +110,11 @@
     "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the grade."
   },
   {
+    "run_id": "R10-032-core-word",
+    "original_text": "Volcanoes resulting from divergent tectonic activity is usually non-explosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
+    "reformulated_text": "Volcanoes arising from divergence of tectonic activity are usually nonexplosive, whereas those that result from converged tectonic activity cause violent eruptions."
+  },
+  {
     "run_id": "R10-032-core-dense_mixed_generic",
     "original_text": "Volcanoes resulting from divergent tectonic activity is usually non-explosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
     "reformulated_text": "Volcanoes leading from divergent tectonic activity is usually non-explosive whereas those happening from convergent tectonic activity cause violent eruptions."
@@ -113,15 +123,5 @@
     "run_id": "R10-034-core-dense_mixed_generic",
     "original_text": "Magma commonly explodes as the gas dissolved in it comes out of solution as the pressure decreases when it flows to the surface.",
     "reformulated_text": "Magma commonly explodes as the gas dissolved in it comes out of answer as the pressure decreases when it flows to the shallow."
-  },
-  {
-    "run_id": "R10-038-core-word",
-    "original_text": "Solar power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy.",
-    "reformulated_text": "Solar power, wind power, electricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy."
-  },
-  {
-    "run_id": "R10-038-core-sparse_common_sound",
-    "original_text": "Solar power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy.",
-    "reformulated_text": "Incoming power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy."
   }
 ]

@@ -1,11 +1,11 @@
 {
   "n_total": 398,
-  "n_unchanged": 306,
-  "n_changed": 92,
+  "n_unchanged": 287,
+  "n_changed": 111,
   "status_transitions": {
-    "reformulated -> reformulated": 82,
-    "could_not_safely_reformulate -> reformulated": 1,
-    "reformulated -> could_not_safely_reformulate": 9
+    "reformulated -> reformulated": 96,
+    "reformulated -> could_not_safely_reformulate": 14,
+    "could_not_safely_reformulate -> reformulated": 1
   },
   "changed": [
     {
@@ -32,9 +32,9 @@
     {
       "run_id": "R10-003-core-word",
       "old_status": "reformulated",
-      "new_status": "reformulated",
+      "new_status": "could_not_safely_reformulate",
       "old_text": "Peristalaxis is the rhythmic contracting of muscles that begins in the esophagum and continues along the wall of the stomach and the rest of the intestines.",
-      "new_text": "Peristalsia is the rhythmic contracting of muscles that begins in the esophagum and continues along the wall of the stomach and the rest of the gastrointestinal tract."
+      "new_text": "Peristalsis is the rhythmic contraction of muscles that begins in the esophagus and continues along the wall of the stomach and the rest of the gastrointestinal tract."
     },
     {
       "run_id": "R10-005-core-word",
@@ -42,6 +42,20 @@
       "new_status": "reformulated",
       "old_text": "Water and some minerals are assumed back into the blood in the large intestine.",
       "new_text": "Water and some minerals are eliminated back into the blood in the large intestine."
+    },
+    {
+      "run_id": "R10-006-core-word",
+      "old_status": "reformulated",
+      "new_status": "could_not_safely_reformulate",
+      "old_text": "Bile acts partly as a lubricant which lowers the surface pressure between either two solids or a solid and a liquid and helps to emollidate the fats in the chyme.",
+      "new_text": "Bile acts partly as a surfactant which lowers the surface tension between either two liquids or a solid and a liquid and helps to emulsify the fats in the chyme."
+    },
+    {
+      "run_id": "R10-007-calib-multi_word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The nutritional process is the biological and physiochemical process by which an organism uses food and water to support its life.",
+      "new_text": "The nutritional process is the biological and physiologic process by which an organism uses food and water to support its life."
     },
     {
       "run_id": "R10-008-core-dense_mixed_generic",
@@ -62,7 +76,14 @@
       "old_status": "reformulated",
       "new_status": "reformulated",
       "old_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new chemicals are generated.",
-      "new_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new goodss are generated."
+      "new_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new goods are generated."
+    },
+    {
+      "run_id": "R10-014-core-word",
+      "old_status": "reformulated",
+      "new_status": "could_not_safely_reformulate",
+      "old_text": "Chemical reactions are usually characterised by a chemical change and they yield one or more products, which usually have different characteristics from the reactionants.",
+      "new_text": "Chemical reactions are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the reactants."
     },
     {
       "run_id": "R10-014-core-dense_mixed_generic",
@@ -114,11 +135,32 @@
       "new_text": "When the net force on a body is equal to zero, then by Newton's second law, the body do not change, and it is said to be in mechanical equilibrium."
     },
     {
+      "run_id": "R10-024-core-dense_mixed_generic",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "In other words, if one body exerts a force on a 2nd body, the 2nd body is also exerting a force on the first body, of equal magnitude in the opposite direction.",
+      "new_text": "In other words, if one body exerts a force on a forward body, the intermediate body is also exerting a force on the first body, of equal magnitude in the opposite direction."
+    },
+    {
+      "run_id": "R10-027-core-word",
+      "old_status": "reformulated",
+      "new_status": "could_not_safely_reformulate",
+      "old_text": "A star glows in its core for most of its activity life due to the thermonuklear fusion of helium in it.",
+      "new_text": "A star shines for most of its active life due to the thermonuclear fusion of hydrogen into helium in its core."
+    },
+    {
       "run_id": "R10-029-core-word",
       "old_status": "reformulated",
       "new_status": "reformulated",
       "old_text": "At the end of a star's life, fusion ceases and its core becomes a stellar remnant: a white dwarf, a neutral star or a black hole if it is sufficient mass.",
       "new_text": "At the end of a star's life, fusion ceases and its core becomes a stellar remnant: a white dwarf, a neutron star or if it is a sufficient black hole."
+    },
+    {
+      "run_id": "R10-030-core-word",
+      "old_status": "reformulated",
+      "new_status": "could_not_safely_reformulate",
+      "old_text": "Stellar nucleosyntheses in stars or their remains create almost all natural chemical elements heavier than lithium.",
+      "new_text": "Stellar nucleosynthesis in stars or their remnants create almost all naturally occurring chemical elements heavier than lithium."
     },
     {
       "run_id": "R10-031-core-word",
@@ -154,6 +196,13 @@
       "new_status": "reformulated",
       "old_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the open.",
       "new_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the grade."
+    },
+    {
+      "run_id": "R10-032-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Volcanoes arising from divergence of tectonic activity are usually non-explosives, whereas those that result from converged tectic activity cause violent eruptions.",
+      "new_text": "Volcanoes arising from divergence of tectonic activity are usually nonexplosive, whereas those that result from converged tectonic activity cause violent eruptions."
     },
     {
       "run_id": "R10-032-core-dense_mixed_generic",
@@ -352,6 +401,13 @@
       "new_text": "Do you want to grab a coffee before the meeting begins?"
     },
     {
+      "run_id": "R10-069-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "She said she might be a least late because of driving.",
+      "new_text": "She said she might be a small late because of driving."
+    },
+    {
       "run_id": "R10-069-core-dense_mixed_generic",
       "old_status": "reformulated",
       "new_status": "reformulated",
@@ -387,11 +443,39 @@
       "new_text": "The exam covers everything we took in the first six chapters."
     },
     {
+      "run_id": "R10-076-core-sparse_common_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Not every university learns the very way, so the teacher varies her methods.",
+      "new_text": "Not every pupil learns the like way, so the teacher varies her methods."
+    },
+    {
+      "run_id": "R10-079-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The manager asked entire to submit their reports by the end of the day.",
+      "new_text": "The manager asked everybody to submit their reports by the end of the day."
+    },
+    {
       "run_id": "R10-079-core-sparse_common_sound",
       "old_status": "reformulated",
       "new_status": "reformulated",
       "old_text": "The manager asked everyone to take their reports by the end of the day.",
       "new_text": "The manager asked everyone to present their reports by the end of the day."
+    },
+    {
+      "run_id": "R10-079-calib-single_word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The manager asked entire to submit their reports by the end of the day.",
+      "new_text": "The manager asked everybody to submit their reports by the end of the day."
+    },
+    {
+      "run_id": "R10-079-calib-word_plus_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The manager asked entire to submit their reports by the end of the day.",
+      "new_text": "The manager asked everybody to submit their reports by the end of the day."
     },
     {
       "run_id": "R10-080-core-multi_sound",
@@ -464,11 +548,39 @@
       "new_text": "He's allergic to shell, so he always checks the menu strictly."
     },
     {
+      "run_id": "R10-097-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "She apologised for showing up late to the party.",
+      "new_text": "She excused for showing up late to the party."
+    },
+    {
+      "run_id": "R10-097-calib-single_word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "She apologised for showing up late to the party.",
+      "new_text": "She excused for showing up late to the party."
+    },
+    {
+      "run_id": "R10-097-calib-word_plus_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "She apologised for showing up late to the party.",
+      "new_text": "She excused for showing up late to the party."
+    },
+    {
       "run_id": "R10-099-core-word",
       "old_status": "reformulated",
       "new_status": "reformulated",
       "old_text": "He didn't mean to offend guy, but his remark came across the wrong way.",
       "new_text": "He didn't mean to offend anybody, but his comments came across the wrong way."
+    },
+    {
+      "run_id": "R10-105-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The trail was steeper and rockyer than the map suggests.",
+      "new_text": "The trail was steeper and rocky than the map suggests."
     },
     {
       "run_id": "R10-105-core-sparse_common_sound",
@@ -489,7 +601,7 @@
       "old_status": "reformulated",
       "new_status": "reformulated",
       "old_text": "The room was dimly lit, with only a one lamp in the edge.",
-      "new_text": "The room was dimly lit, with only a one lamp in the place."
+      "new_text": "The room was dimly lit, with only a several lamp in the place."
     },
     {
       "run_id": "R10-109-calib-single_word",
@@ -538,21 +650,28 @@
       "old_status": "reformulated",
       "new_status": "reformulated",
       "old_text": "The library closes at nine on tuesdays and six on sundays.",
-      "new_text": "The library closes at nine on dayss and six on saturdays."
+      "new_text": "The library closes at nine on wednesdays and six on saturdays."
     },
     {
       "run_id": "R10-121-calib-single_word",
       "old_status": "reformulated",
       "new_status": "reformulated",
       "old_text": "The library closes at nine on tuesdays and six on weekends.",
-      "new_text": "The library closes at nine on dayss and six on weekends."
+      "new_text": "The library closes at nine on wednesdays and six on weekends."
     },
     {
       "run_id": "R10-121-calib-word_plus_sound",
       "old_status": "reformulated",
       "new_status": "reformulated",
       "old_text": "The library closes at nine on tuesdays and six on weekends.",
-      "new_text": "The library closes at nine on dayss and six on weekends."
+      "new_text": "The library closes at nine on wednesdays and six on weekends."
+    },
+    {
+      "run_id": "R10-123-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The bridge was built in the early 20th century and restored twice since then.",
+      "new_text": "The bridge was built in the early 20th century and rebuilt twice since then."
     },
     {
       "run_id": "R10-123-core-sparse_common_sound",
@@ -573,7 +692,21 @@
       "old_status": "reformulated",
       "new_status": "reformulated",
       "old_text": "The shop doesn't open until ten, but the café next door opens newer.",
-      "new_text": "The shop doesn't open until ten, but the café next door opens otherrer."
+      "new_text": "The shop doesn't open until ten, but the café next door opens older."
+    },
+    {
+      "run_id": "R10-127-calib-multi_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the fourth of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
+      "new_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the tertiary of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer."
+    },
+    {
+      "run_id": "R10-127-calib-dense_mixed_generic",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the fourth of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
+      "new_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the tertiary of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer."
     },
     {
       "run_id": "R10-128-core-word",
@@ -587,7 +720,7 @@
       "old_status": "reformulated",
       "new_status": "reformulated",
       "old_text": "Hugh Fleming had four lasting children from his first marriage. He was 59 at the time of his 2nd marriage to Grace, and died when Alexander was seven.",
-      "new_text": "Hugh Fleming had four living children from his first marriage. He was 59 at the time of his 2nd marriage to Grace, and died when Alexander was seven."
+      "new_text": "Hugh Fleming had four living children from his first marriage. He was 59 at the time of his back marriage to Grace, and died when Alexander was seven."
     },
     {
       "run_id": "R10-129-core-word",
@@ -665,12 +798,10 @@
     "R10-004-core-word",
     "R10-004-core-sparse_common_sound",
     "R10-005-core-single_sound",
-    "R10-006-core-word",
     "R10-006-core-single_sound",
     "R10-007-core-word",
     "R10-007-core-dense_mixed_generic",
     "R10-007-calib-single_word",
-    "R10-007-calib-multi_word",
     "R10-007-calib-word_plus_sound",
     "R10-007-calib-single_sound",
     "R10-007-calib-multi_sound",
@@ -690,7 +821,6 @@
     "R10-013-calib-single_sound",
     "R10-013-calib-sparse_common_sound",
     "R10-013-calib-dense_mixed_generic",
-    "R10-014-core-word",
     "R10-015-core-single_sound",
     "R10-016-core-word",
     "R10-016-core-single_sound",
@@ -704,7 +834,6 @@
     "R10-022-core-word",
     "R10-023-core-single_sound",
     "R10-024-core-word",
-    "R10-024-core-dense_mixed_generic",
     "R10-025-core-word",
     "R10-025-core-multi_sound",
     "R10-025-calib-single_word",
@@ -715,17 +844,14 @@
     "R10-025-calib-dense_mixed_generic",
     "R10-026-core-word",
     "R10-026-core-multi_sound",
-    "R10-027-core-word",
     "R10-027-core-dense_mixed_generic",
     "R10-028-core-word",
     "R10-028-core-single_sound",
     "R10-029-core-single_sound",
-    "R10-030-core-word",
     "R10-030-core-single_sound",
     "R10-031-core-single_sound",
     "R10-031-calib-single_word",
     "R10-031-calib-word_plus_sound",
-    "R10-032-core-word",
     "R10-033-core-word",
     "R10-033-core-single_sound",
     "R10-034-core-word",
@@ -807,7 +933,6 @@
     "R10-067-calib-sparse_common_sound",
     "R10-067-calib-dense_mixed_generic",
     "R10-068-core-word",
-    "R10-069-core-word",
     "R10-070-core-word",
     "R10-070-core-dense_mixed_generic",
     "R10-071-core-word",
@@ -823,15 +948,11 @@
     "R10-074-core-single_sound",
     "R10-075-core-word",
     "R10-076-core-word",
-    "R10-076-core-sparse_common_sound",
     "R10-077-core-word",
     "R10-077-core-single_sound",
     "R10-078-core-word",
     "R10-078-core-multi_sound",
-    "R10-079-core-word",
-    "R10-079-calib-single_word",
     "R10-079-calib-multi_word",
-    "R10-079-calib-word_plus_sound",
     "R10-079-calib-single_sound",
     "R10-079-calib-multi_sound",
     "R10-079-calib-dense_mixed_generic",
@@ -871,11 +992,8 @@
     "R10-095-core-dense_mixed_generic",
     "R10-096-core-word",
     "R10-096-core-single_sound",
-    "R10-097-core-word",
     "R10-097-core-single_sound",
-    "R10-097-calib-single_word",
     "R10-097-calib-multi_word",
-    "R10-097-calib-word_plus_sound",
     "R10-097-calib-multi_sound",
     "R10-097-calib-sparse_common_sound",
     "R10-097-calib-dense_mixed_generic",
@@ -898,7 +1016,6 @@
     "R10-103-calib-dense_mixed_generic",
     "R10-104-core-word",
     "R10-104-core-dense_mixed_generic",
-    "R10-105-core-word",
     "R10-106-core-dense_mixed_generic",
     "R10-107-core-word",
     "R10-107-core-dense_mixed_generic",
@@ -940,7 +1057,6 @@
     "R10-121-calib-sparse_common_sound",
     "R10-122-core-word",
     "R10-122-core-single_sound",
-    "R10-123-core-word",
     "R10-124-core-word",
     "R10-125-core-multi_sound",
     "R10-126-core-word",
@@ -951,8 +1067,6 @@
     "R10-127-calib-multi_word",
     "R10-127-calib-word_plus_sound",
     "R10-127-calib-single_sound",
-    "R10-127-calib-multi_sound",
-    "R10-127-calib-dense_mixed_generic",
     "R10-129-core-dense_mixed_generic",
     "R10-130-core-word",
     "R10-130-core-dense_mixed_generic",

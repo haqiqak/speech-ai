@@ -1,5 +1,15 @@
 [
   {
+    "run_id": "R10-038-core-word",
+    "original_text": "Solar power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy.",
+    "reformulated_text": "Solar power, wind power, electricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy."
+  },
+  {
+    "run_id": "R10-038-core-sparse_common_sound",
+    "original_text": "Solar power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy.",
+    "reformulated_text": "Incoming power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy."
+  },
+  {
     "run_id": "R10-041-core-word",
     "original_text": "In general, renewable energy sources pollute much less than fossil fuels.",
     "reformulated_text": "In general, renewable energy sources litter much less than fossil fuels."
@@ -95,6 +105,11 @@
     "reformulated_text": "Do you want to grab a coffee before the meeting begins?"
   },
   {
+    "run_id": "R10-069-core-word",
+    "original_text": "She said she might be a little late because of traffic.",
+    "reformulated_text": "She said she might be a small late because of driving."
+  },
+  {
     "run_id": "R10-069-core-dense_mixed_generic",
     "original_text": "She said she might be a little late because of traffic.",
     "reformulated_text": "She expressed she might be a little late because of traffic."
@@ -108,20 +123,5 @@
     "run_id": "R10-073-calib-word_plus_sound",
     "original_text": "The professor explained the concept twice before moving on to the next topic.",
     "reformulated_text": "The teacher explained the concept twice before moving on to the next topic."
-  },
-  {
-    "run_id": "R10-074-core-word",
-    "original_text": "Students who struggle with the material is encouraged to attend office hours.",
-    "reformulated_text": "Students who struggle with the stuff is supported to attend office hours."
-  },
-  {
-    "run_id": "R10-075-core-dense_mixed_generic",
-    "original_text": "The exam covers everything we studied in the first six chapters.",
-    "reformulated_text": "The exam covers everything we took in the first six chapters."
-  },
-  {
-    "run_id": "R10-079-core-sparse_common_sound",
-    "original_text": "The manager asked everyone to submit their reports by the end of the day.",
-    "reformulated_text": "The manager asked everyone to present their reports by the end of the day."
   }
 ]

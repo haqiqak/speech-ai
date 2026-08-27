@@ -85,7 +85,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 8.8719
+      "latency_seconds": 8.4056
     },
     {
       "run_id": "R10-001-core-sparse_common_sound",
@@ -169,7 +169,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.1529
+      "latency_seconds": 2.7663
     },
     {
       "run_id": "R10-001-calib-single_word",
@@ -233,7 +233,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.2499
+      "latency_seconds": 1.0046
     },
     {
       "run_id": "R10-001-calib-multi_word",
@@ -284,7 +284,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 9.5306
+      "latency_seconds": 7.5285
     },
     {
       "run_id": "R10-001-calib-word_plus_sound",
@@ -350,7 +350,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.5409
+      "latency_seconds": 1.0076
     },
     {
       "run_id": "R10-001-calib-single_sound",
@@ -393,7 +393,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.3295
+      "latency_seconds": 0.2239
     },
     {
       "run_id": "R10-001-calib-multi_sound",
@@ -479,7 +479,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.5036
+      "latency_seconds": 1.8038
     },
     {
       "run_id": "R10-001-calib-dense_mixed_generic",
@@ -568,7 +568,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.3844
+      "latency_seconds": 1.795
     },
     {
       "run_id": "R10-002-core-word",
@@ -634,7 +634,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 6.257
+      "latency_seconds": 4.5592
     },
     {
       "run_id": "R10-002-core-multi_sound",
@@ -686,7 +686,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 7.3157
+      "latency_seconds": 5.0268
     },
     {
       "run_id": "R10-003-core-word",
@@ -711,55 +711,40 @@
         "long"
       ],
       "original_text": "Peristalsis is the rhythmic contraction of muscles that begins in the esophagus and continues along the wall of the stomach and the rest of the gastrointestinal tract.",
-      "reformulated_text": "Peristalsia is the rhythmic contracting of muscles that begins in the esophagum and continues along the wall of the stomach and the rest of the gastrointestinal tract.",
-      "status": "reformulated",
-      "changes": [
-        {
-          "sentence_index": 0,
-          "position": null,
-          "span_text": "Peristalsis is the rhythmic contraction of muscles that begins in the esophagus and continues along the wall of the stomach and the rest of the gastrointestinal tract.",
-          "original": "Peristalsis is the rhythmic contraction of muscles that begins in the esophagus and continues along the wall of the stomach and the rest of the gastrointestinal tract.",
-          "replacement": "Peristalsia is the rhythmic contracting of muscles that begins in the esophagum and continues along the wall of the stomach and the rest of the gastrointestinal tract.",
-          "source": "restructuring",
-          "triggered_by": [
-            "multiple_difficulties_or_no_valid_substitution"
-          ],
-          "verification": {
-            "antonym_check": "n/a_sentence_level",
-            "sbert_sim": 0.9451,
-            "nli": "not_run",
-            "phoneme_ok": true,
-            "difficulty_before": 0.3186,
-            "difficulty_after": 0.3259
-          }
-        }
-      ],
+      "reformulated_text": "Peristalsis is the rhythmic contraction of muscles that begins in the esophagus and continues along the wall of the stomach and the rest of the gastrointestinal tract.",
+      "status": "could_not_safely_reformulate",
+      "changes": [],
       "skipped": [
         {
           "word": "gastrointestinal",
           "position": 25,
           "reason": "part of a fixed expression — left unchanged to avoid breaking it"
+        },
+        {
+          "word": "Peristalsis is the rhythmic contraction of muscles that begins in the esophagus and continues along the wall of the stomach and the rest of the gastrointestinal tract.",
+          "position": null,
+          "reason": "could not safely reformulate this sentence"
         }
       ],
       "metrics": {
-        "meaning_preservation": 0.9451,
-        "meaning_preservation_meaningbert": 94.52,
+        "meaning_preservation": 1.0,
+        "meaning_preservation_meaningbert": 94.53,
         "flagged_words_before": 4,
-        "flagged_words_after": 1,
-        "difficulty_reduction_pct": 75.0,
-        "naturalness_edit_ratio": 0.1111,
-        "substitution_rate": 0.1111
+        "flagged_words_after": 4,
+        "difficulty_reduction_pct": 0.0,
+        "naturalness_edit_ratio": 0.0,
+        "substitution_rate": 0.0
       },
       "final_verification": {
-        "passed": true,
+        "passed": false,
         "details": {
           "flagged_before": 4,
-          "flagged_after": 1,
-          "sbert_sim": 0.9451
+          "flagged_after": 4,
+          "sbert_sim": 1.0
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 7.1854
+      "latency_seconds": 6.1287
     },
     {
       "run_id": "R10-003-core-multi_sound",
@@ -811,7 +796,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 7.3918
+      "latency_seconds": 5.8728
     },
     {
       "run_id": "R10-004-core-word",
@@ -875,7 +860,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.7145
+      "latency_seconds": 1.8646
     },
     {
       "run_id": "R10-004-core-sparse_common_sound",
@@ -939,7 +924,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.0596
+      "latency_seconds": 0.8937
     },
     {
       "run_id": "R10-005-core-word",
@@ -1003,7 +988,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.1714
+      "latency_seconds": 1.8143
     },
     {
       "run_id": "R10-005-core-single_sound",
@@ -1046,7 +1031,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2291
+      "latency_seconds": 0.1767
     },
     {
       "run_id": "R10-006-core-word",
@@ -1071,49 +1056,35 @@
         "long"
       ],
       "original_text": "Bile acts partly as a surfactant which lowers the surface tension between either two liquids or a solid and a liquid and helps to emulsify the fats in the chyme.",
-      "reformulated_text": "Bile acts partly as a lubricant which lowers the surface pressure between either two solids or a solid and a liquid and helps to emollidate the fats in the chyme.",
-      "status": "reformulated",
-      "changes": [
+      "reformulated_text": "Bile acts partly as a surfactant which lowers the surface tension between either two liquids or a solid and a liquid and helps to emulsify the fats in the chyme.",
+      "status": "could_not_safely_reformulate",
+      "changes": [],
+      "skipped": [
         {
-          "sentence_index": 0,
+          "word": "Bile acts partly as a surfactant which lowers the surface tension between either two liquids or a solid and a liquid and helps to emulsify the fats in the chyme.",
           "position": null,
-          "span_text": "Bile acts partly as a surfactant which lowers the surface tension between either two liquids or a solid and a liquid and helps to emulsify the fats in the chyme.",
-          "original": "Bile acts partly as a surfactant which lowers the surface tension between either two liquids or a solid and a liquid and helps to emulsify the fats in the chyme.",
-          "replacement": "Bile acts partly as a lubricant which lowers the surface pressure between either two solids or a solid and a liquid and helps to emollidate the fats in the chyme.",
-          "source": "restructuring",
-          "triggered_by": [
-            "multiple_difficulties_or_no_valid_substitution"
-          ],
-          "verification": {
-            "antonym_check": "n/a_sentence_level",
-            "sbert_sim": 0.9618,
-            "nli": "not_run",
-            "phoneme_ok": true,
-            "difficulty_before": 0.3063,
-            "difficulty_after": 0.3116
-          }
+          "reason": "could not safely reformulate this sentence"
         }
       ],
-      "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9618,
+        "meaning_preservation": 1.0,
         "meaning_preservation_meaningbert": 94.53,
         "flagged_words_before": 4,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.1333,
-        "substitution_rate": 0.1333
+        "flagged_words_after": 4,
+        "difficulty_reduction_pct": 0.0,
+        "naturalness_edit_ratio": 0.0,
+        "substitution_rate": 0.0
       },
       "final_verification": {
-        "passed": true,
+        "passed": false,
         "details": {
           "flagged_before": 4,
-          "flagged_after": 0,
-          "sbert_sim": 0.9618
+          "flagged_after": 4,
+          "sbert_sim": 1.0
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 9.0539
+      "latency_seconds": 7.2144
     },
     {
       "run_id": "R10-006-core-single_sound",
@@ -1157,7 +1128,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.3107
+      "latency_seconds": 0.3067
     },
     {
       "run_id": "R10-007-core-word",
@@ -1242,7 +1213,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.6941
+      "latency_seconds": 6.0932
     },
     {
       "run_id": "R10-007-core-dense_mixed_generic",
@@ -1311,7 +1282,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.9238
+      "latency_seconds": 1.9529
     },
     {
       "run_id": "R10-007-calib-single_word",
@@ -1375,7 +1346,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.9367
+      "latency_seconds": 0.8981
     },
     {
       "run_id": "R10-007-calib-multi_word",
@@ -1398,7 +1369,7 @@
         "definitional"
       ],
       "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
-      "reformulated_text": "The nutritional process is the biological and physiochemical process by which an organism uses food and water to support its life.",
+      "reformulated_text": "The nutritional process is the biological and physiologic process by which an organism uses food and water to support its life.",
       "status": "reformulated",
       "changes": [
         {
@@ -1406,25 +1377,25 @@
           "position": null,
           "span_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
           "original": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
-          "replacement": "The nutritional process is the biological and physiochemical process by which an organism uses food and water to support its life.",
+          "replacement": "The nutritional process is the biological and physiologic process by which an organism uses food and water to support its life.",
           "source": "restructuring",
           "triggered_by": [
             "multiple_difficulties_or_no_valid_substitution"
           ],
           "verification": {
             "antonym_check": "n/a_sentence_level",
-            "sbert_sim": 0.9154,
+            "sbert_sim": 0.915,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.3214,
-            "difficulty_after": 0.3382
+            "difficulty_after": 0.3358
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9154,
-        "meaning_preservation_meaningbert": 85.17,
+        "meaning_preservation": 0.915,
+        "meaning_preservation_meaningbert": 72.57,
         "flagged_words_before": 3,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -1436,11 +1407,11 @@
         "details": {
           "flagged_before": 3,
           "flagged_after": 0,
-          "sbert_sim": 0.9154
+          "sbert_sim": 0.915
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.7349
+      "latency_seconds": 3.5804
     },
     {
       "run_id": "R10-007-calib-word_plus_sound",
@@ -1526,7 +1497,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.811
+      "latency_seconds": 2.6854
     },
     {
       "run_id": "R10-007-calib-single_sound",
@@ -1569,7 +1540,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2066
+      "latency_seconds": 0.1794
     },
     {
       "run_id": "R10-007-calib-multi_sound",
@@ -1635,7 +1606,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.9257
+      "latency_seconds": 0.989
     },
     {
       "run_id": "R10-007-calib-sparse_common_sound",
@@ -1699,7 +1670,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.9452
+      "latency_seconds": 0.9308
     },
     {
       "run_id": "R10-008-core-word",
@@ -1775,7 +1746,7 @@
           "index": 2
         }
       ],
-      "latency_seconds": 11.4389
+      "latency_seconds": 10.7624
     },
     {
       "run_id": "R10-008-core-dense_mixed_generic",
@@ -1874,7 +1845,7 @@
           "index": 2
         }
       ],
-      "latency_seconds": 4.4118
+      "latency_seconds": 4.4199
     },
     {
       "run_id": "R10-009-core-word",
@@ -1938,7 +1909,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.9611
+      "latency_seconds": 1.8791
     },
     {
       "run_id": "R10-009-core-sparse_common_sound",
@@ -1981,7 +1952,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1692
+      "latency_seconds": 0.1701
     },
     {
       "run_id": "R10-010-core-word",
@@ -2066,7 +2037,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.905
+      "latency_seconds": 3.726
     },
     {
       "run_id": "R10-010-core-single_sound",
@@ -2109,7 +2080,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2091
+      "latency_seconds": 0.2124
     },
     {
       "run_id": "R10-011-core-word",
@@ -2194,7 +2165,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.7024
+      "latency_seconds": 2.4529
     },
     {
       "run_id": "R10-011-core-sparse_common_sound",
@@ -2258,7 +2229,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.9122
+      "latency_seconds": 1.9557
     },
     {
       "run_id": "R10-012-core-word",
@@ -2323,7 +2294,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.5576
+      "latency_seconds": 4.3078
     },
     {
       "run_id": "R10-012-core-dense_mixed_generic",
@@ -2392,7 +2363,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.9445
+      "latency_seconds": 1.8949
     },
     {
       "run_id": "R10-013-core-word",
@@ -2477,7 +2448,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.7704
+      "latency_seconds": 3.6847
     },
     {
       "run_id": "R10-013-core-multi_sound",
@@ -2528,7 +2499,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.3351
+      "latency_seconds": 4.0666
     },
     {
       "run_id": "R10-013-calib-single_word",
@@ -2592,7 +2563,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.0027
+      "latency_seconds": 1.2398
     },
     {
       "run_id": "R10-013-calib-multi_word",
@@ -2657,7 +2628,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.3544
+      "latency_seconds": 4.1855
     },
     {
       "run_id": "R10-013-calib-word_plus_sound",
@@ -2680,7 +2651,7 @@
         "technical_terminology"
       ],
       "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
-      "reformulated_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new goodss are generated.",
+      "reformulated_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new goods are generated.",
       "status": "reformulated",
       "changes": [
         {
@@ -2700,7 +2671,7 @@
             "phoneme_ok": true,
             "difficulty_before": 0.4179,
             "difficulty_after": 0.3669,
-            "contextual_fit": 0.040331412106752396
+            "contextual_fit": 0.04045203700661659
           }
         },
         {
@@ -2708,26 +2679,26 @@
           "position": 20,
           "span_text": "products",
           "original": "products",
-          "replacement": "goodss",
+          "replacement": "goods",
           "source": "substitution",
           "triggered_by": [
             "global_sound"
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.9673,
+            "sbert_sim": 0.9626,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.6507,
-            "difficulty_after": 0.6583,
-            "contextual_fit": 0.0005271393321955031
+            "difficulty_after": 0.4612,
+            "contextual_fit": 6.205240788403898e-05
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9673,
-        "meaning_preservation_meaningbert": 94.53,
+        "meaning_preservation": 0.9626,
+        "meaning_preservation_meaningbert": 94.52,
         "flagged_words_before": 2,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -2739,11 +2710,11 @@
         "details": {
           "flagged_before": 2,
           "flagged_after": 0,
-          "sbert_sim": 0.9673
+          "sbert_sim": 0.9626
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.238
+      "latency_seconds": 2.7154
     },
     {
       "run_id": "R10-013-calib-single_sound",
@@ -2786,7 +2757,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.5235
+      "latency_seconds": 0.2251
     },
     {
       "run_id": "R10-013-calib-sparse_common_sound",
@@ -2829,7 +2800,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.5721
+      "latency_seconds": 0.2317
     },
     {
       "run_id": "R10-013-calib-dense_mixed_generic",
@@ -2883,7 +2854,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 7.0192
+      "latency_seconds": 4.0674
     },
     {
       "run_id": "R10-014-core-word",
@@ -2907,49 +2878,35 @@
         "long"
       ],
       "original_text": "Chemical reactions are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the reactants.",
-      "reformulated_text": "Chemical reactions are usually characterised by a chemical change and they yield one or more products, which usually have different characteristics from the reactionants.",
-      "status": "reformulated",
-      "changes": [
+      "reformulated_text": "Chemical reactions are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the reactants.",
+      "status": "could_not_safely_reformulate",
+      "changes": [],
+      "skipped": [
         {
-          "sentence_index": 0,
+          "word": "Chemical reactions are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the reactants.",
           "position": null,
-          "span_text": "Chemical reactions are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the reactants.",
-          "original": "Chemical reactions are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the reactants.",
-          "replacement": "Chemical reactions are usually characterised by a chemical change and they yield one or more products, which usually have different characteristics from the reactionants.",
-          "source": "restructuring",
-          "triggered_by": [
-            "multiple_difficulties_or_no_valid_substitution"
-          ],
-          "verification": {
-            "antonym_check": "n/a_sentence_level",
-            "sbert_sim": 0.9645,
-            "nli": "not_run",
-            "phoneme_ok": true,
-            "difficulty_before": 0.3775,
-            "difficulty_after": 0.3841
-          }
+          "reason": "could not safely reformulate this sentence"
         }
       ],
-      "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9645,
-        "meaning_preservation_meaningbert": 88.95,
+        "meaning_preservation": 1.0,
+        "meaning_preservation_meaningbert": 94.52,
         "flagged_words_before": 3,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.125,
-        "substitution_rate": 0.1667
+        "flagged_words_after": 3,
+        "difficulty_reduction_pct": 0.0,
+        "naturalness_edit_ratio": 0.0,
+        "substitution_rate": 0.0
       },
       "final_verification": {
-        "passed": true,
+        "passed": false,
         "details": {
           "flagged_before": 3,
-          "flagged_after": 0,
-          "sbert_sim": 0.9645
+          "flagged_after": 3,
+          "sbert_sim": 1.0
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 6.3283
+      "latency_seconds": 4.4027
     },
     {
       "run_id": "R10-014-core-dense_mixed_generic",
@@ -3039,7 +2996,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 5.3436
+      "latency_seconds": 4.0972
     },
     {
       "run_id": "R10-015-core-word",
@@ -3113,7 +3070,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 7.3709
+      "latency_seconds": 4.6381
     },
     {
       "run_id": "R10-015-core-single_sound",
@@ -3158,7 +3115,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.3156
+      "latency_seconds": 0.2402
     },
     {
       "run_id": "R10-016-core-word",
@@ -3221,7 +3178,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 7.7756
+      "latency_seconds": 4.8944
     },
     {
       "run_id": "R10-016-core-single_sound",
@@ -3264,7 +3221,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.327
+      "latency_seconds": 0.1641
     },
     {
       "run_id": "R10-017-core-word",
@@ -3349,7 +3306,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.799
+      "latency_seconds": 2.6494
     },
     {
       "run_id": "R10-017-core-single_sound",
@@ -3392,7 +3349,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2253
+      "latency_seconds": 0.1583
     },
     {
       "run_id": "R10-018-core-word",
@@ -3443,7 +3400,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 7.4724
+      "latency_seconds": 5.0502
     },
     {
       "run_id": "R10-018-core-single_sound",
@@ -3487,7 +3444,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2384
+      "latency_seconds": 0.1691
     },
     {
       "run_id": "R10-019-core-word",
@@ -3553,7 +3510,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 6.415
+      "latency_seconds": 4.5492
     },
     {
       "run_id": "R10-019-core-sparse_common_sound",
@@ -3638,7 +3595,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 5.1323
+      "latency_seconds": 3.9842
     },
     {
       "run_id": "R10-020-core-word",
@@ -3705,7 +3662,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 8.4878
+      "latency_seconds": 5.9649
     },
     {
       "run_id": "R10-020-core-dense_mixed_generic",
@@ -3775,7 +3732,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.7518
+      "latency_seconds": 2.1544
     },
     {
       "run_id": "R10-021-core-word",
@@ -3840,7 +3797,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.346
+      "latency_seconds": 3.1905
     },
     {
       "run_id": "R10-021-core-sparse_common_sound",
@@ -3904,7 +3861,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.1923
+      "latency_seconds": 2.0095
     },
     {
       "run_id": "R10-022-core-word",
@@ -3989,7 +3946,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.0041
+      "latency_seconds": 3.8871
     },
     {
       "run_id": "R10-022-core-multi_sound",
@@ -4075,7 +4032,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.9359
+      "latency_seconds": 1.9458
     },
     {
       "run_id": "R10-023-core-word",
@@ -4161,7 +4118,7 @@
           "description": "Negation: \"does not\" → \"do not\" (subject: \"body\")"
         }
       ],
-      "latency_seconds": 2.1989
+      "latency_seconds": 2.1224
     },
     {
       "run_id": "R10-023-core-single_sound",
@@ -4212,7 +4169,7 @@
           "description": "Negation: \"does not\" → \"do not\" (subject: \"body\")"
         }
       ],
-      "latency_seconds": 0.2942
+      "latency_seconds": 0.2948
     },
     {
       "run_id": "R10-024-core-word",
@@ -4279,7 +4236,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 6.6197
+      "latency_seconds": 6.3167
     },
     {
       "run_id": "R10-024-core-dense_mixed_generic",
@@ -4306,7 +4263,7 @@
         "comparison"
       ],
       "original_text": "In other words, if one body exerts a force on a second body, the second body is also exerting a force on the first body, of equal magnitude in the opposite direction.",
-      "reformulated_text": "In other words, if one body exerts a force on a 2nd body, the 2nd body is also exerting a force on the first body, of equal magnitude in the opposite direction.",
+      "reformulated_text": "In other words, if one body exerts a force on a forward body, the intermediate body is also exerting a force on the first body, of equal magnitude in the opposite direction.",
       "status": "reformulated",
       "changes": [
         {
@@ -4314,19 +4271,19 @@
           "position": 12,
           "span_text": "second",
           "original": "second",
-          "replacement": "2nd",
+          "replacement": "forward",
           "source": "substitution",
           "triggered_by": [
             "global_sound"
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.9984,
+            "sbert_sim": 0.9635,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.342,
-            "difficulty_after": 0.4385,
-            "contextual_fit": 0.09196405857801437
+            "difficulty_after": 0.3639,
+            "contextual_fit": 7.484687375836074e-05
           }
         },
         {
@@ -4334,26 +4291,26 @@
           "position": 16,
           "span_text": "second",
           "original": "second",
-          "replacement": "2nd",
+          "replacement": "intermediate",
           "source": "substitution",
           "triggered_by": [
             "global_sound"
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.9968,
+            "sbert_sim": 0.8909,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.342,
-            "difficulty_after": 0.4385,
-            "contextual_fit": 0.09196405857801437
+            "difficulty_after": 0.4269,
+            "contextual_fit": 0.0006118614692240953
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9968,
-        "meaning_preservation_meaningbert": 82.98,
+        "meaning_preservation": 0.8909,
+        "meaning_preservation_meaningbert": 94.48,
         "flagged_words_before": 2,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -4365,11 +4322,11 @@
         "details": {
           "flagged_before": 2,
           "flagged_after": 0,
-          "sbert_sim": 0.9968
+          "sbert_sim": 0.8909
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.0446
+      "latency_seconds": 3.027
     },
     {
       "run_id": "R10-025-core-word",
@@ -4434,7 +4391,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 7.1977
+      "latency_seconds": 6.9226
     },
     {
       "run_id": "R10-025-core-multi_sound",
@@ -4486,7 +4443,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 6.3448
+      "latency_seconds": 3.8984
     },
     {
       "run_id": "R10-025-calib-single_word",
@@ -4550,7 +4507,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 6.2999
+      "latency_seconds": 4.289
     },
     {
       "run_id": "R10-025-calib-multi_word",
@@ -4616,7 +4573,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 5.5744
+      "latency_seconds": 3.7906
     },
     {
       "run_id": "R10-025-calib-word_plus_sound",
@@ -4682,7 +4639,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 6.1472
+      "latency_seconds": 4.303
     },
     {
       "run_id": "R10-025-calib-single_sound",
@@ -4726,7 +4683,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2327
+      "latency_seconds": 0.1646
     },
     {
       "run_id": "R10-025-calib-sparse_common_sound",
@@ -4776,7 +4733,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 5.5875
+      "latency_seconds": 3.8126
     },
     {
       "run_id": "R10-025-calib-dense_mixed_generic",
@@ -4831,7 +4788,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 5.4688
+      "latency_seconds": 3.7682
     },
     {
       "run_id": "R10-026-core-word",
@@ -4895,7 +4852,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.7226
+      "latency_seconds": 1.7934
     },
     {
       "run_id": "R10-026-core-multi_sound",
@@ -4946,7 +4903,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 5.1151
+      "latency_seconds": 3.3179
     },
     {
       "run_id": "R10-027-core-word",
@@ -4971,49 +4928,35 @@
         "scientific_causal_claim"
       ],
       "original_text": "A star shines for most of its active life due to the thermonuclear fusion of hydrogen into helium in its core.",
-      "reformulated_text": "A star glows in its core for most of its activity life due to the thermonuklear fusion of helium in it.",
-      "status": "reformulated",
-      "changes": [
+      "reformulated_text": "A star shines for most of its active life due to the thermonuclear fusion of hydrogen into helium in its core.",
+      "status": "could_not_safely_reformulate",
+      "changes": [],
+      "skipped": [
         {
-          "sentence_index": 0,
+          "word": "A star shines for most of its active life due to the thermonuclear fusion of hydrogen into helium in its core.",
           "position": null,
-          "span_text": "A star shines for most of its active life due to the thermonuclear fusion of hydrogen into helium in its core.",
-          "original": "A star shines for most of its active life due to the thermonuclear fusion of hydrogen into helium in its core.",
-          "replacement": "A star glows in its core for most of its activity life due to the thermonuklear fusion of helium in it.",
-          "source": "restructuring",
-          "triggered_by": [
-            "multiple_difficulties_or_no_valid_substitution"
-          ],
-          "verification": {
-            "antonym_check": "n/a_sentence_level",
-            "sbert_sim": 0.9094,
-            "nli": "not_run",
-            "phoneme_ok": true,
-            "difficulty_before": 0.2883,
-            "difficulty_after": 0.2909
-          }
+          "reason": "could not safely reformulate this sentence"
         }
       ],
-      "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9094,
-        "meaning_preservation_meaningbert": 88.52,
+        "meaning_preservation": 1.0,
+        "meaning_preservation_meaningbert": 94.53,
         "flagged_words_before": 4,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.3333,
-        "substitution_rate": 0.4762
+        "flagged_words_after": 4,
+        "difficulty_reduction_pct": 0.0,
+        "naturalness_edit_ratio": 0.0,
+        "substitution_rate": 0.0
       },
       "final_verification": {
-        "passed": true,
+        "passed": false,
         "details": {
           "flagged_before": 4,
-          "flagged_after": 0,
-          "sbert_sim": 0.9094
+          "flagged_after": 4,
+          "sbert_sim": 1.0
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 6.7399
+      "latency_seconds": 4.6917
     },
     {
       "run_id": "R10-027-core-dense_mixed_generic",
@@ -5068,7 +5011,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 11.9003
+      "latency_seconds": 7.6812
     },
     {
       "run_id": "R10-028-core-word",
@@ -5133,7 +5076,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.474
+      "latency_seconds": 3.075
     },
     {
       "run_id": "R10-028-core-single_sound",
@@ -5176,7 +5119,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2353
+      "latency_seconds": 0.1744
     },
     {
       "run_id": "R10-029-core-word",
@@ -5250,7 +5193,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 10.0767
+      "latency_seconds": 6.9006
     },
     {
       "run_id": "R10-029-core-single_sound",
@@ -5295,7 +5238,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.3962
+      "latency_seconds": 0.3178
     },
     {
       "run_id": "R10-030-core-word",
@@ -5320,45 +5263,31 @@
         "causal"
       ],
       "original_text": "Stellar nucleosynthesis in stars or their remnants create almost all naturally occurring chemical elements heavier than lithium.",
-      "reformulated_text": "Stellar nucleosyntheses in stars or their remains create almost all natural chemical elements heavier than lithium.",
-      "status": "reformulated",
-      "changes": [
+      "reformulated_text": "Stellar nucleosynthesis in stars or their remnants create almost all naturally occurring chemical elements heavier than lithium.",
+      "status": "could_not_safely_reformulate",
+      "changes": [],
+      "skipped": [
         {
-          "sentence_index": 0,
+          "word": "Stellar nucleosynthesis in stars or their remnants create almost all naturally occurring chemical elements heavier than lithium.",
           "position": null,
-          "span_text": "Stellar nucleosynthesis in stars or their remnants create almost all naturally occurring chemical elements heavier than lithium.",
-          "original": "Stellar nucleosynthesis in stars or their remnants create almost all naturally occurring chemical elements heavier than lithium.",
-          "replacement": "Stellar nucleosyntheses in stars or their remains create almost all natural chemical elements heavier than lithium.",
-          "source": "restructuring",
-          "triggered_by": [
-            "multiple_difficulties_or_no_valid_substitution"
-          ],
-          "verification": {
-            "antonym_check": "n/a_sentence_level",
-            "sbert_sim": 0.967,
-            "nli": "not_run",
-            "phoneme_ok": true,
-            "difficulty_before": 0.3839,
-            "difficulty_after": 0.3808
-          }
+          "reason": "could not safely reformulate this sentence"
         }
       ],
-      "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.967,
-        "meaning_preservation_meaningbert": 87.16,
+        "meaning_preservation": 1.0,
+        "meaning_preservation_meaningbert": 94.53,
         "flagged_words_before": 4,
-        "flagged_words_after": 0,
-        "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.2121,
-        "substitution_rate": 0.2353
+        "flagged_words_after": 4,
+        "difficulty_reduction_pct": 0.0,
+        "naturalness_edit_ratio": 0.0,
+        "substitution_rate": 0.0
       },
       "final_verification": {
-        "passed": true,
+        "passed": false,
         "details": {
           "flagged_before": 4,
-          "flagged_after": 0,
-          "sbert_sim": 0.967
+          "flagged_after": 4,
+          "sbert_sim": 1.0
         }
       },
       "grammar_fixes_applied": [
@@ -5369,7 +5298,7 @@
           "description": "Plural noun subject: \"creates\" → \"create\" (subject: \"remnants\")"
         }
       ],
-      "latency_seconds": 5.7433
+      "latency_seconds": 3.8067
     },
     {
       "run_id": "R10-030-core-single_sound",
@@ -5420,7 +5349,7 @@
           "description": "Plural noun subject: \"creates\" → \"create\" (subject: \"remnants\")"
         }
       ],
-      "latency_seconds": 0.2605
+      "latency_seconds": 0.186
     },
     {
       "run_id": "R10-031-core-word",
@@ -5493,7 +5422,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 11.9872
+      "latency_seconds": 8.1005
     },
     {
       "run_id": "R10-031-core-single_sound",
@@ -5538,7 +5467,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.4684
+      "latency_seconds": 0.2972
     },
     {
       "run_id": "R10-031-calib-single_word",
@@ -5603,7 +5532,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 11.4747
+      "latency_seconds": 7.3106
     },
     {
       "run_id": "R10-031-calib-multi_word",
@@ -5676,7 +5605,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 10.5424
+      "latency_seconds": 7.1277
     },
     {
       "run_id": "R10-031-calib-word_plus_sound",
@@ -5743,7 +5672,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 10.4747
+      "latency_seconds": 7.3059
     },
     {
       "run_id": "R10-031-calib-multi_sound",
@@ -5811,7 +5740,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.8117
+      "latency_seconds": 2.1888
     },
     {
       "run_id": "R10-031-calib-sparse_common_sound",
@@ -5877,7 +5806,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.5372
+      "latency_seconds": 1.1011
     },
     {
       "run_id": "R10-031-calib-dense_mixed_generic",
@@ -5948,7 +5877,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.5367
+      "latency_seconds": 1.1087
     },
     {
       "run_id": "R10-032-core-word",
@@ -5973,7 +5902,7 @@
         "technical_terminology"
       ],
       "original_text": "Volcanoes resulting from divergent tectonic activity is usually non-explosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
-      "reformulated_text": "Volcanoes arising from divergence of tectonic activity are usually non-explosives, whereas those that result from converged tectic activity cause violent eruptions.",
+      "reformulated_text": "Volcanoes arising from divergence of tectonic activity are usually nonexplosive, whereas those that result from converged tectonic activity cause violent eruptions.",
       "status": "reformulated",
       "changes": [
         {
@@ -5981,37 +5910,37 @@
           "position": null,
           "span_text": "Volcanoes resulting from divergent tectonic activity is usually non-explosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
           "original": "Volcanoes resulting from divergent tectonic activity is usually non-explosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
-          "replacement": "Volcanoes arising from divergence of tectonic activity are usually non-explosives, whereas those that result from converged tectic activity cause violent eruptions.",
+          "replacement": "Volcanoes arising from divergence of tectonic activity are usually nonexplosive, whereas those that result from converged tectonic activity cause violent eruptions.",
           "source": "restructuring",
           "triggered_by": [
             "multiple_difficulties_or_no_valid_substitution"
           ],
           "verification": {
             "antonym_check": "n/a_sentence_level",
-            "sbert_sim": 0.9632,
+            "sbert_sim": 0.9264,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.4403,
-            "difficulty_after": 0.4041
+            "difficulty_after": 0.4248
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9632,
-        "meaning_preservation_meaningbert": 94.52,
+        "meaning_preservation": 0.9264,
+        "meaning_preservation_meaningbert": 91.37,
         "flagged_words_before": 5,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
-        "naturalness_edit_ratio": 0.4,
-        "substitution_rate": 0.4737
+        "naturalness_edit_ratio": 0.35,
+        "substitution_rate": 0.4211
       },
       "final_verification": {
         "passed": true,
         "details": {
           "flagged_before": 5,
           "flagged_after": 0,
-          "sbert_sim": 0.9632
+          "sbert_sim": 0.9264
         }
       },
       "grammar_fixes_applied": [
@@ -6022,7 +5951,7 @@
           "description": "BE agreement: \"are\" → \"is\" (subject: \"activity\")"
         }
       ],
-      "latency_seconds": 9.6215
+      "latency_seconds": 6.9073
     },
     {
       "run_id": "R10-032-core-dense_mixed_generic",
@@ -6119,7 +6048,7 @@
           "description": "BE agreement: \"are\" → \"is\" (subject: \"activity\")"
         }
       ],
-      "latency_seconds": 4.8899
+      "latency_seconds": 2.7812
     },
     {
       "run_id": "R10-033-core-word",
@@ -6173,7 +6102,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 8.5831
+      "latency_seconds": 6.0904
     },
     {
       "run_id": "R10-033-core-single_sound",
@@ -6218,7 +6147,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.3732
+      "latency_seconds": 0.2646
     },
     {
       "run_id": "R10-034-core-word",
@@ -6283,7 +6212,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 6.2982
+      "latency_seconds": 4.6916
     },
     {
       "run_id": "R10-034-core-dense_mixed_generic",
@@ -6372,7 +6301,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.7123
+      "latency_seconds": 2.726
     },
     {
       "run_id": "R10-035-core-word",
@@ -6451,7 +6380,7 @@
           "description": "BE agreement: \"are\" → \"is\" (subject: \"diameter\")"
         }
       ],
-      "latency_seconds": 9.3558
+      "latency_seconds": 7.864
     },
     {
       "run_id": "R10-035-core-dense_mixed_generic",
@@ -6520,7 +6449,7 @@
           "description": "BE agreement: \"are\" → \"is\" (subject: \"diameter\")"
         }
       ],
-      "latency_seconds": 5.4678
+      "latency_seconds": 3.7081
     },
     {
       "run_id": "R10-036-core-word",
@@ -6586,7 +6515,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 10.523
+      "latency_seconds": 6.741
     },
     {
       "run_id": "R10-036-core-dense_mixed_generic",
@@ -6635,7 +6564,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.655
+      "latency_seconds": 0.2931
     },
     {
       "run_id": "R10-037-core-word",
@@ -6699,7 +6628,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.3934
+      "latency_seconds": 1.9628
     },
     {
       "run_id": "R10-037-core-single_sound",
@@ -6742,7 +6671,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1796
+      "latency_seconds": 0.1492
     },
     {
       "run_id": "R10-037-calib-single_word",
@@ -6806,7 +6735,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.1413
+      "latency_seconds": 0.9633
     },
     {
       "run_id": "R10-037-calib-multi_word",
@@ -6871,7 +6800,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.5067
+      "latency_seconds": 3.0135
     },
     {
       "run_id": "R10-037-calib-word_plus_sound",
@@ -6937,7 +6866,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.3871
+      "latency_seconds": 0.9656
     },
     {
       "run_id": "R10-037-calib-multi_sound",
@@ -6988,7 +6917,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.5225
+      "latency_seconds": 1.6086
     },
     {
       "run_id": "R10-037-calib-sparse_common_sound",
@@ -7031,7 +6960,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1592
+      "latency_seconds": 0.1454
     },
     {
       "run_id": "R10-037-calib-dense_mixed_generic",
@@ -7085,7 +7014,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.1784
+      "latency_seconds": 1.6056
     },
     {
       "run_id": "R10-038-core-word",
@@ -7163,7 +7092,7 @@
           "description": "BE agreement: \"are\" → \"is\" (subject: \"biomass\")"
         }
       ],
-      "latency_seconds": 2.13
+      "latency_seconds": 2.0011
     },
     {
       "run_id": "R10-038-core-sparse_common_sound",
@@ -7234,7 +7163,7 @@
           "description": "BE agreement: \"are\" → \"is\" (subject: \"biomass\")"
         }
       ],
-      "latency_seconds": 2.489
+      "latency_seconds": 1.9306
     },
     {
       "run_id": "R10-039-core-word",
@@ -7300,7 +7229,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 7.1851
+      "latency_seconds": 5.4639
     },
     {
       "run_id": "R10-039-core-sparse_common_sound",
@@ -7344,7 +7273,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.271
+      "latency_seconds": 0.2744
     },
     {
       "run_id": "R10-040-core-word",
@@ -7408,7 +7337,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.1939
+      "latency_seconds": 2.0271
     },
     {
       "run_id": "R10-040-core-single_sound",
@@ -7451,7 +7380,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2632
+      "latency_seconds": 0.1605
     },
     {
       "run_id": "R10-041-core-word",
@@ -7522,7 +7451,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.1815
+      "latency_seconds": 1.7875
     },
     {
       "run_id": "R10-041-core-dense_mixed_generic",
@@ -7597,7 +7526,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.114
+      "latency_seconds": 1.9495
     },
     {
       "run_id": "R10-042-core-word",
@@ -7675,7 +7604,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.1519
+      "latency_seconds": 1.9022
     },
     {
       "run_id": "R10-042-core-dense_mixed_generic",
@@ -7751,7 +7680,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.9728
+      "latency_seconds": 0.9511
     },
     {
       "run_id": "R10-043-core-word",
@@ -7817,7 +7746,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 7.0602
+      "latency_seconds": 5.8211
     },
     {
       "run_id": "R10-043-core-sparse_common_sound",
@@ -7867,7 +7796,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 6.0558
+      "latency_seconds": 5.9654
     },
     {
       "run_id": "R10-043-calib-single_word",
@@ -7932,7 +7861,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.0589
+      "latency_seconds": 2.0653
     },
     {
       "run_id": "R10-043-calib-multi_word",
@@ -7998,7 +7927,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 7.5666
+      "latency_seconds": 5.8318
     },
     {
       "run_id": "R10-043-calib-word_plus_sound",
@@ -8085,7 +8014,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.1475
+      "latency_seconds": 2.7928
     },
     {
       "run_id": "R10-043-calib-single_sound",
@@ -8129,7 +8058,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.4766
+      "latency_seconds": 0.2825
     },
     {
       "run_id": "R10-043-calib-multi_sound",
@@ -8181,7 +8110,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 10.6202
+      "latency_seconds": 6.3507
     },
     {
       "run_id": "R10-043-calib-dense_mixed_generic",
@@ -8236,7 +8165,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 9.4616
+      "latency_seconds": 7.3284
     },
     {
       "run_id": "R10-044-core-word",
@@ -8329,7 +8258,7 @@
           "description": "BE agreement: \"are\" → \"is\" (subject: \"algorithms\")"
         }
       ],
-      "latency_seconds": 4.6262
+      "latency_seconds": 4.7451
     },
     {
       "run_id": "R10-044-core-dense_mixed_generic",
@@ -8406,7 +8335,7 @@
           "description": "BE agreement: \"are\" → \"is\" (subject: \"algorithms\")"
         }
       ],
-      "latency_seconds": 1.2168
+      "latency_seconds": 0.8389
     },
     {
       "run_id": "R10-045-core-word",
@@ -8471,7 +8400,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 5.4181
+      "latency_seconds": 4.1403
     },
     {
       "run_id": "R10-045-core-sparse_common_sound",
@@ -8514,7 +8443,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.3176
+      "latency_seconds": 0.2006
     },
     {
       "run_id": "R10-046-core-word",
@@ -8566,7 +8495,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 5.0719
+      "latency_seconds": 3.6314
     },
     {
       "run_id": "R10-046-core-single_sound",
@@ -8610,7 +8539,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1996
+      "latency_seconds": 0.1879
     },
     {
       "run_id": "R10-047-core-word",
@@ -8695,7 +8624,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.8803
+      "latency_seconds": 3.5467
     },
     {
       "run_id": "R10-047-core-dense_mixed_generic",
@@ -8749,7 +8678,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.1715
+      "latency_seconds": 3.5562
     },
     {
       "run_id": "R10-048-core-word",
@@ -8800,7 +8729,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 5.6653
+      "latency_seconds": 4.3057
     },
     {
       "run_id": "R10-048-core-multi_sound",
@@ -8867,7 +8796,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.3184
+      "latency_seconds": 2.0363
     },
     {
       "run_id": "R10-049-core-word",
@@ -8919,7 +8848,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 5.6784
+      "latency_seconds": 4.6549
     },
     {
       "run_id": "R10-049-core-dense_mixed_generic",
@@ -8968,7 +8897,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2291
+      "latency_seconds": 0.2332
     },
     {
       "run_id": "R10-049-calib-single_word",
@@ -9053,7 +8982,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.0543
+      "latency_seconds": 2.8258
     },
     {
       "run_id": "R10-049-calib-multi_word",
@@ -9105,7 +9034,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 6.1949
+      "latency_seconds": 4.6881
     },
     {
       "run_id": "R10-049-calib-word_plus_sound",
@@ -9194,7 +9123,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.9882
+      "latency_seconds": 1.8729
     },
     {
       "run_id": "R10-049-calib-single_sound",
@@ -9238,7 +9167,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2519
+      "latency_seconds": 0.2268
     },
     {
       "run_id": "R10-049-calib-multi_sound",
@@ -9284,7 +9213,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2698
+      "latency_seconds": 0.2201
     },
     {
       "run_id": "R10-049-calib-sparse_common_sound",
@@ -9328,7 +9257,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.3118
+      "latency_seconds": 0.2191
     },
     {
       "run_id": "R10-050-core-word",
@@ -9392,7 +9321,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.0989
+      "latency_seconds": 1.9336
     },
     {
       "run_id": "R10-050-core-single_sound",
@@ -9435,7 +9364,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2249
+      "latency_seconds": 0.1835
     },
     {
       "run_id": "R10-051-core-word",
@@ -9496,7 +9425,7 @@
           "description": "BE agreement: \"is\" → \"are\" (subject: \"tails\")"
         }
       ],
-      "latency_seconds": 13.2822
+      "latency_seconds": 11.2223
     },
     {
       "run_id": "R10-051-core-dense_mixed_generic",
@@ -9574,7 +9503,7 @@
           "description": "BE agreement: \"is\" → \"are\" (subject: \"tails\")"
         }
       ],
-      "latency_seconds": 2.9076
+      "latency_seconds": 2.625
     },
     {
       "run_id": "R10-052-core-word",
@@ -9658,7 +9587,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.2756
+      "latency_seconds": 2.9371
     },
     {
       "run_id": "R10-052-core-multi_sound",
@@ -9702,7 +9631,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2953
+      "latency_seconds": 0.2824
     },
     {
       "run_id": "R10-053-core-word",
@@ -9767,7 +9696,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.9878
+      "latency_seconds": 4.358
     },
     {
       "run_id": "R10-053-core-dense_mixed_generic",
@@ -9815,7 +9744,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.3004
+      "latency_seconds": 0.2498
     },
     {
       "run_id": "R10-054-core-word",
@@ -9876,7 +9805,7 @@
           "index": 8
         }
       ],
-      "latency_seconds": 10.1707
+      "latency_seconds": 7.8822
     },
     {
       "run_id": "R10-054-core-dense_mixed_generic",
@@ -9939,7 +9868,7 @@
           "index": 8
         }
       ],
-      "latency_seconds": 9.1369
+      "latency_seconds": 7.9275
     },
     {
       "run_id": "R10-055-core-word",
@@ -9989,7 +9918,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 8.0491
+      "latency_seconds": 6.8702
     },
     {
       "run_id": "R10-055-core-dense_mixed_generic",
@@ -10043,7 +9972,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.7166
+      "latency_seconds": 2.2668
     },
     {
       "run_id": "R10-055-calib-single_word",
@@ -10107,7 +10036,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.9634
+      "latency_seconds": 1.8723
     },
     {
       "run_id": "R10-055-calib-multi_word",
@@ -10158,7 +10087,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.5858
+      "latency_seconds": 3.506
     },
     {
       "run_id": "R10-055-calib-word_plus_sound",
@@ -10244,7 +10173,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.2596
+      "latency_seconds": 2.6094
     },
     {
       "run_id": "R10-055-calib-single_sound",
@@ -10287,7 +10216,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2086
+      "latency_seconds": 0.1845
     },
     {
       "run_id": "R10-055-calib-multi_sound",
@@ -10338,7 +10267,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.6121
+      "latency_seconds": 2.2555
     },
     {
       "run_id": "R10-055-calib-sparse_common_sound",
@@ -10387,7 +10316,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.925
+      "latency_seconds": 2.267
     },
     {
       "run_id": "R10-056-core-word",
@@ -10480,7 +10409,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.2675
+      "latency_seconds": 3.6001
     },
     {
       "run_id": "R10-056-core-sparse_common_sound",
@@ -10530,7 +10459,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.3133
+      "latency_seconds": 1.9953
     },
     {
       "run_id": "R10-057-core-word",
@@ -10589,7 +10518,7 @@
           "description": "BE agreement: \"are\" → \"is\" (subject: \"inflation\")"
         }
       ],
-      "latency_seconds": 3.3723
+      "latency_seconds": 2.584
     },
     {
       "run_id": "R10-057-core-sparse_common_sound",
@@ -10646,7 +10575,7 @@
           "description": "BE agreement: \"are\" → \"is\" (subject: \"inflation\")"
         }
       ],
-      "latency_seconds": 2.056
+      "latency_seconds": 1.5857
     },
     {
       "run_id": "R10-058-core-word",
@@ -10738,7 +10667,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.1713
+      "latency_seconds": 3.6861
     },
     {
       "run_id": "R10-058-core-sparse_common_sound",
@@ -10781,7 +10710,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1567
+      "latency_seconds": 0.1534
     },
     {
       "run_id": "R10-059-core-word",
@@ -10873,7 +10802,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.4261
+      "latency_seconds": 3.7384
     },
     {
       "run_id": "R10-059-core-dense_mixed_generic",
@@ -10948,7 +10877,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.1758
+      "latency_seconds": 1.0011
     },
     {
       "run_id": "R10-060-core-word",
@@ -11015,7 +10944,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 5.4929
+      "latency_seconds": 3.9535
     },
     {
       "run_id": "R10-060-core-dense_mixed_generic",
@@ -11105,7 +11034,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.3592
+      "latency_seconds": 2.7988
     },
     {
       "run_id": "R10-061-core-word",
@@ -11171,7 +11100,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 11.8107
+      "latency_seconds": 8.9153
     },
     {
       "run_id": "R10-061-core-dense_mixed_generic",
@@ -11226,7 +11155,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 10.3802
+      "latency_seconds": 9.237
     },
     {
       "run_id": "R10-061-calib-single_word",
@@ -11291,7 +11220,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.6645
+      "latency_seconds": 2.3925
     },
     {
       "run_id": "R10-061-calib-multi_word",
@@ -11357,7 +11286,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 10.9204
+      "latency_seconds": 8.9117
     },
     {
       "run_id": "R10-061-calib-word_plus_sound",
@@ -11444,7 +11373,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.26
+      "latency_seconds": 3.2355
     },
     {
       "run_id": "R10-061-calib-single_sound",
@@ -11509,7 +11438,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.2152
+      "latency_seconds": 2.2652
     },
     {
       "run_id": "R10-061-calib-multi_sound",
@@ -11561,7 +11490,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 10.6608
+      "latency_seconds": 8.8713
     },
     {
       "run_id": "R10-061-calib-sparse_common_sound",
@@ -11611,7 +11540,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 9.9748
+      "latency_seconds": 8.7611
     },
     {
       "run_id": "R10-062-core-word",
@@ -11674,7 +11603,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.4721
+      "latency_seconds": 4.401
     },
     {
       "run_id": "R10-062-core-single_sound",
@@ -11717,7 +11646,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1365
+      "latency_seconds": 0.1368
     },
     {
       "run_id": "R10-063-core-word",
@@ -11769,7 +11698,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 5.5603
+      "latency_seconds": 5.2666
     },
     {
       "run_id": "R10-063-core-dense_mixed_generic",
@@ -11824,7 +11753,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 6.4953
+      "latency_seconds": 5.5108
     },
     {
       "run_id": "R10-064-core-word",
@@ -11909,7 +11838,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.2552
+      "latency_seconds": 3.7588
     },
     {
       "run_id": "R10-064-core-multi_sound",
@@ -11995,7 +11924,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.1053
+      "latency_seconds": 2.5684
     },
     {
       "run_id": "R10-065-core-word",
@@ -12061,7 +11990,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 8.6782
+      "latency_seconds": 5.4344
     },
     {
       "run_id": "R10-065-core-single_sound",
@@ -12105,7 +12034,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.3505
+      "latency_seconds": 0.269
     },
     {
       "run_id": "R10-066-core-word",
@@ -12157,7 +12086,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 10.6784
+      "latency_seconds": 7.5823
     },
     {
       "run_id": "R10-066-core-dense_mixed_generic",
@@ -12212,7 +12141,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 9.3021
+      "latency_seconds": 6.9628
     },
     {
       "run_id": "R10-067-core-word",
@@ -12276,7 +12205,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.8965
+      "latency_seconds": 1.7632
     },
     {
       "run_id": "R10-067-core-single_sound",
@@ -12319,7 +12248,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1821
+      "latency_seconds": 0.1365
     },
     {
       "run_id": "R10-067-calib-single_word",
@@ -12383,7 +12312,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.9284
+      "latency_seconds": 0.8685
     },
     {
       "run_id": "R10-067-calib-multi_word",
@@ -12448,7 +12377,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.361
+      "latency_seconds": 2.7003
     },
     {
       "run_id": "R10-067-calib-word_plus_sound",
@@ -12514,7 +12443,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.3235
+      "latency_seconds": 0.8342
     },
     {
       "run_id": "R10-067-calib-multi_sound",
@@ -12559,7 +12488,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2141
+      "latency_seconds": 0.1384
     },
     {
       "run_id": "R10-067-calib-sparse_common_sound",
@@ -12602,7 +12531,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2021
+      "latency_seconds": 0.1375
     },
     {
       "run_id": "R10-067-calib-dense_mixed_generic",
@@ -12650,7 +12579,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1472
+      "latency_seconds": 0.1377
     },
     {
       "run_id": "R10-068-core-word",
@@ -12714,7 +12643,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.0425
+      "latency_seconds": 1.8534
     },
     {
       "run_id": "R10-068-core-multi_sound",
@@ -12780,7 +12709,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.3108
+      "latency_seconds": 1.9188
     },
     {
       "run_id": "R10-069-core-word",
@@ -12802,7 +12731,7 @@
         "hedged"
       ],
       "original_text": "She said she might be a little late because of traffic.",
-      "reformulated_text": "She said she might be a least late because of driving.",
+      "reformulated_text": "She said she might be a small late because of driving.",
       "status": "reformulated",
       "changes": [
         {
@@ -12810,19 +12739,19 @@
           "position": 6,
           "span_text": "little",
           "original": "little",
-          "replacement": "least",
+          "replacement": "small",
           "source": "substitution",
           "triggered_by": [
             "declared_word"
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.9707,
+            "sbert_sim": 0.9661,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.3369,
-            "difficulty_after": 0.2752,
-            "contextual_fit": 5.698968266187876e-07
+            "difficulty_after": 0.4055,
+            "contextual_fit": 1.6481345710417372e-06
           }
         },
         {
@@ -12837,19 +12766,19 @@
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.8966,
+            "sbert_sim": 0.8843,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.6588,
             "difficulty_after": 0.6567,
-            "contextual_fit": 0.00017397882766090333
+            "contextual_fit": 0.00014058913802728057
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.8966,
-        "meaning_preservation_meaningbert": 79.79,
+        "meaning_preservation": 0.8843,
+        "meaning_preservation_meaningbert": 78.02,
         "flagged_words_before": 2,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -12861,11 +12790,11 @@
         "details": {
           "flagged_before": 2,
           "flagged_after": 0,
-          "sbert_sim": 0.8966
+          "sbert_sim": 0.8843
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.2967
+      "latency_seconds": 3.705
     },
     {
       "run_id": "R10-069-core-dense_mixed_generic",
@@ -12934,7 +12863,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.1685
+      "latency_seconds": 1.8859
     },
     {
       "run_id": "R10-070-core-word",
@@ -12999,7 +12928,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 5.2236
+      "latency_seconds": 4.238
     },
     {
       "run_id": "R10-070-core-dense_mixed_generic",
@@ -13054,7 +12983,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.449
+      "latency_seconds": 3.0069
     },
     {
       "run_id": "R10-071-core-word",
@@ -13139,7 +13068,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.4532
+      "latency_seconds": 3.6632
     },
     {
       "run_id": "R10-071-core-sparse_common_sound",
@@ -13182,7 +13111,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1625
+      "latency_seconds": 0.1551
     },
     {
       "run_id": "R10-072-core-word",
@@ -13267,7 +13196,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.9938
+      "latency_seconds": 3.5574
     },
     {
       "run_id": "R10-072-core-single_sound",
@@ -13310,7 +13239,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1738
+      "latency_seconds": 0.1513
     },
     {
       "run_id": "R10-073-core-word",
@@ -13374,7 +13303,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.436
+      "latency_seconds": 1.7509
     },
     {
       "run_id": "R10-073-core-sparse_common_sound",
@@ -13417,7 +13346,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1985
+      "latency_seconds": 0.1406
     },
     {
       "run_id": "R10-073-calib-single_word",
@@ -13481,7 +13410,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.9929
+      "latency_seconds": 0.7592
     },
     {
       "run_id": "R10-073-calib-multi_word",
@@ -13532,7 +13461,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.2081
+      "latency_seconds": 2.7547
     },
     {
       "run_id": "R10-073-calib-word_plus_sound",
@@ -13599,7 +13528,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.8954
+      "latency_seconds": 0.8166
     },
     {
       "run_id": "R10-073-calib-single_sound",
@@ -13642,7 +13571,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1834
+      "latency_seconds": 0.1444
     },
     {
       "run_id": "R10-073-calib-multi_sound",
@@ -13687,7 +13616,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1457
+      "latency_seconds": 0.1477
     },
     {
       "run_id": "R10-073-calib-dense_mixed_generic",
@@ -13735,7 +13664,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2172
+      "latency_seconds": 0.1488
     },
     {
       "run_id": "R10-074-core-word",
@@ -13827,7 +13756,7 @@
           "description": "BE agreement: \"are\" → \"is\" (subject: \"material\")"
         }
       ],
-      "latency_seconds": 5.1068
+      "latency_seconds": 4.5033
     },
     {
       "run_id": "R10-074-core-single_sound",
@@ -13898,7 +13827,7 @@
           "description": "BE agreement: \"are\" → \"is\" (subject: \"material\")"
         }
       ],
-      "latency_seconds": 2.0087
+      "latency_seconds": 1.8485
     },
     {
       "run_id": "R10-075-core-word",
@@ -13962,7 +13891,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.0001
+      "latency_seconds": 1.7557
     },
     {
       "run_id": "R10-075-core-dense_mixed_generic",
@@ -14031,7 +13960,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.0856
+      "latency_seconds": 1.8051
     },
     {
       "run_id": "R10-076-core-word",
@@ -14097,7 +14026,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.4759
+      "latency_seconds": 2.752
     },
     {
       "run_id": "R10-076-core-sparse_common_sound",
@@ -14119,7 +14048,7 @@
         "causal"
       ],
       "original_text": "Not every student learns the same way, so the teacher varies her methods.",
-      "reformulated_text": "Not every university learns the very way, so the teacher varies her methods.",
+      "reformulated_text": "Not every pupil learns the like way, so the teacher varies her methods.",
       "status": "reformulated",
       "changes": [
         {
@@ -14127,19 +14056,19 @@
           "position": 2,
           "span_text": "student",
           "original": "student",
-          "replacement": "university",
+          "replacement": "pupil",
           "source": "substitution",
           "triggered_by": [
             "global_sound"
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.9333,
+            "sbert_sim": 0.9476,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.5015,
-            "difficulty_after": 0.5023,
-            "contextual_fit": 9.162490641756449e-06
+            "difficulty_after": 0.7034,
+            "contextual_fit": 0.10911418497562408
           }
         },
         {
@@ -14147,26 +14076,26 @@
           "position": 5,
           "span_text": "same",
           "original": "same",
-          "replacement": "very",
+          "replacement": "like",
           "source": "substitution",
           "triggered_by": [
             "global_sound"
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.9188,
+            "sbert_sim": 0.9278,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.2598,
-            "difficulty_after": 0.3262,
-            "contextual_fit": 7.772837852826342e-05
+            "difficulty_after": 0.2336,
+            "contextual_fit": 6.860891880933195e-05
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9188,
-        "meaning_preservation_meaningbert": 77.0,
+        "meaning_preservation": 0.9278,
+        "meaning_preservation_meaningbert": 83.95,
         "flagged_words_before": 2,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -14178,11 +14107,11 @@
         "details": {
           "flagged_before": 2,
           "flagged_after": 0,
-          "sbert_sim": 0.9188
+          "sbert_sim": 0.9278
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.2165
+      "latency_seconds": 2.4998
     },
     {
       "run_id": "R10-077-core-word",
@@ -14248,7 +14177,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.2492
+      "latency_seconds": 2.9387
     },
     {
       "run_id": "R10-077-core-single_sound",
@@ -14292,7 +14221,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2501
+      "latency_seconds": 0.1548
     },
     {
       "run_id": "R10-078-core-word",
@@ -14343,7 +14272,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.1852
+      "latency_seconds": 1.8233
     },
     {
       "run_id": "R10-078-core-multi_sound",
@@ -14389,7 +14318,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2329
+      "latency_seconds": 0.1296
     },
     {
       "run_id": "R10-079-core-word",
@@ -14410,33 +14339,32 @@
         "quantities"
       ],
       "original_text": "The manager asked everyone to submit their reports by the end of the day.",
-      "reformulated_text": "The manager asked entire to submit their reports by the end of the day.",
+      "reformulated_text": "The manager asked everybody to submit their reports by the end of the day.",
       "status": "reformulated",
       "changes": [
         {
           "sentence_index": 0,
-          "position": 3,
-          "span_text": "everyone",
-          "original": "everyone",
-          "replacement": "entire",
-          "source": "substitution",
+          "position": null,
+          "span_text": "The manager asked everyone to submit their reports by the end of the day.",
+          "original": "The manager asked everyone to submit their reports by the end of the day.",
+          "replacement": "The manager asked everybody to submit their reports by the end of the day.",
+          "source": "restructuring",
           "triggered_by": [
-            "declared_word"
+            "multiple_difficulties_or_no_valid_substitution"
           ],
           "verification": {
-            "antonym_check": "pass",
-            "sbert_sim": 0.9173,
+            "antonym_check": "n/a_sentence_level",
+            "sbert_sim": 0.9897,
             "nli": "not_run",
             "phoneme_ok": true,
-            "difficulty_before": 0.2906,
-            "difficulty_after": 0.3069,
-            "contextual_fit": 1.333139834969188e-06
+            "difficulty_before": 0.2757,
+            "difficulty_after": 0.283
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9173,
+        "meaning_preservation": 0.9897,
         "meaning_preservation_meaningbert": 94.53,
         "flagged_words_before": 1,
         "flagged_words_after": 0,
@@ -14449,11 +14377,11 @@
         "details": {
           "flagged_before": 1,
           "flagged_after": 0,
-          "sbert_sim": 0.9173
+          "sbert_sim": 0.9897
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.1991
+      "latency_seconds": 3.9641
     },
     {
       "run_id": "R10-079-core-sparse_common_sound",
@@ -14517,7 +14445,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.0763
+      "latency_seconds": 1.8778
     },
     {
       "run_id": "R10-079-calib-single_word",
@@ -14538,33 +14466,32 @@
         "quantities"
       ],
       "original_text": "The manager asked everyone to submit their reports by the end of the day.",
-      "reformulated_text": "The manager asked entire to submit their reports by the end of the day.",
+      "reformulated_text": "The manager asked everybody to submit their reports by the end of the day.",
       "status": "reformulated",
       "changes": [
         {
           "sentence_index": 0,
-          "position": 3,
-          "span_text": "everyone",
-          "original": "everyone",
-          "replacement": "entire",
-          "source": "substitution",
+          "position": null,
+          "span_text": "The manager asked everyone to submit their reports by the end of the day.",
+          "original": "The manager asked everyone to submit their reports by the end of the day.",
+          "replacement": "The manager asked everybody to submit their reports by the end of the day.",
+          "source": "restructuring",
           "triggered_by": [
-            "declared_word"
+            "multiple_difficulties_or_no_valid_substitution"
           ],
           "verification": {
-            "antonym_check": "pass",
-            "sbert_sim": 0.9173,
+            "antonym_check": "n/a_sentence_level",
+            "sbert_sim": 0.9897,
             "nli": "not_run",
             "phoneme_ok": true,
-            "difficulty_before": 0.2906,
-            "difficulty_after": 0.3069,
-            "contextual_fit": 1.333139834969188e-06
+            "difficulty_before": 0.2757,
+            "difficulty_after": 0.283
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9173,
+        "meaning_preservation": 0.9897,
         "meaning_preservation_meaningbert": 94.53,
         "flagged_words_before": 1,
         "flagged_words_after": 0,
@@ -14577,11 +14504,11 @@
         "details": {
           "flagged_before": 1,
           "flagged_after": 0,
-          "sbert_sim": 0.9173
+          "sbert_sim": 0.9897
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.7858
+      "latency_seconds": 3.0729
     },
     {
       "run_id": "R10-079-calib-multi_word",
@@ -14646,7 +14573,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.4506
+      "latency_seconds": 2.4859
     },
     {
       "run_id": "R10-079-calib-word_plus_sound",
@@ -14669,33 +14596,32 @@
         "quantities"
       ],
       "original_text": "The manager asked everyone to submit their reports by the end of the day.",
-      "reformulated_text": "The manager asked entire to submit their reports by the end of the day.",
+      "reformulated_text": "The manager asked everybody to submit their reports by the end of the day.",
       "status": "reformulated",
       "changes": [
         {
           "sentence_index": 0,
-          "position": 3,
-          "span_text": "everyone",
-          "original": "everyone",
-          "replacement": "entire",
-          "source": "substitution",
+          "position": null,
+          "span_text": "The manager asked everyone to submit their reports by the end of the day.",
+          "original": "The manager asked everyone to submit their reports by the end of the day.",
+          "replacement": "The manager asked everybody to submit their reports by the end of the day.",
+          "source": "restructuring",
           "triggered_by": [
-            "declared_word"
+            "multiple_difficulties_or_no_valid_substitution"
           ],
           "verification": {
-            "antonym_check": "pass",
-            "sbert_sim": 0.9173,
+            "antonym_check": "n/a_sentence_level",
+            "sbert_sim": 0.9897,
             "nli": "not_run",
             "phoneme_ok": true,
-            "difficulty_before": 0.2906,
-            "difficulty_after": 0.3069,
-            "contextual_fit": 1.333139834969188e-06
+            "difficulty_before": 0.2757,
+            "difficulty_after": 0.283
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9173,
+        "meaning_preservation": 0.9897,
         "meaning_preservation_meaningbert": 94.53,
         "flagged_words_before": 1,
         "flagged_words_after": 0,
@@ -14708,11 +14634,11 @@
         "details": {
           "flagged_before": 1,
           "flagged_after": 0,
-          "sbert_sim": 0.9173
+          "sbert_sim": 0.9897
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.8742
+      "latency_seconds": 3.2901
     },
     {
       "run_id": "R10-079-calib-single_sound",
@@ -14755,7 +14681,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1664
+      "latency_seconds": 0.1497
     },
     {
       "run_id": "R10-079-calib-multi_sound",
@@ -14806,7 +14732,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 5.8739
+      "latency_seconds": 4.7266
     },
     {
       "run_id": "R10-079-calib-dense_mixed_generic",
@@ -14860,7 +14786,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.266
+      "latency_seconds": 3.6554
     },
     {
       "run_id": "R10-080-core-word",
@@ -14924,7 +14850,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 6.802
+      "latency_seconds": 5.8925
     },
     {
       "run_id": "R10-080-core-multi_sound",
@@ -14990,7 +14916,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.9256
+      "latency_seconds": 1.8766
     },
     {
       "run_id": "R10-081-core-word",
@@ -15055,7 +14981,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.1414
+      "latency_seconds": 2.0582
     },
     {
       "run_id": "R10-081-core-single_sound",
@@ -15098,7 +15024,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1223
+      "latency_seconds": 0.1176
     },
     {
       "run_id": "R10-082-core-word",
@@ -15164,7 +15090,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 6.0157
+      "latency_seconds": 5.529
     },
     {
       "run_id": "R10-082-core-sparse_common_sound",
@@ -15208,7 +15134,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1926
+      "latency_seconds": 0.1553
     },
     {
       "run_id": "R10-083-core-word",
@@ -15275,7 +15201,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 7.2904
+      "latency_seconds": 6.2904
     },
     {
       "run_id": "R10-083-core-single_sound",
@@ -15319,7 +15245,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1957
+      "latency_seconds": 0.1753
     },
     {
       "run_id": "R10-084-core-word",
@@ -15384,7 +15310,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.0957
+      "latency_seconds": 1.8935
     },
     {
       "run_id": "R10-084-core-multi_sound",
@@ -15456,7 +15382,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.0811
+      "latency_seconds": 1.832
     },
     {
       "run_id": "R10-085-core-word",
@@ -15541,7 +15467,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.766
+      "latency_seconds": 3.5008
     },
     {
       "run_id": "R10-085-core-single_sound",
@@ -15584,7 +15510,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1439
+      "latency_seconds": 0.1347
     },
     {
       "run_id": "R10-085-calib-single_word",
@@ -15648,7 +15574,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.766
+      "latency_seconds": 0.7585
     },
     {
       "run_id": "R10-085-calib-multi_word",
@@ -15699,7 +15625,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.6382
+      "latency_seconds": 2.5393
     },
     {
       "run_id": "R10-085-calib-word_plus_sound",
@@ -15765,7 +15691,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.9129
+      "latency_seconds": 0.7846
     },
     {
       "run_id": "R10-085-calib-multi_sound",
@@ -15810,7 +15736,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1482
+      "latency_seconds": 0.1351
     },
     {
       "run_id": "R10-085-calib-sparse_common_sound",
@@ -15853,7 +15779,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1317
+      "latency_seconds": 0.1456
     },
     {
       "run_id": "R10-085-calib-dense_mixed_generic",
@@ -15901,7 +15827,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1349
+      "latency_seconds": 0.1398
     },
     {
       "run_id": "R10-086-core-word",
@@ -15987,7 +15913,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.5165
+      "latency_seconds": 3.5227
     },
     {
       "run_id": "R10-086-core-multi_sound",
@@ -16033,7 +15959,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.146
+      "latency_seconds": 0.1429
     },
     {
       "run_id": "R10-087-core-word",
@@ -16084,7 +16010,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.7853
+      "latency_seconds": 2.6525
     },
     {
       "run_id": "R10-087-core-multi_sound",
@@ -16170,7 +16096,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.7437
+      "latency_seconds": 3.7401
     },
     {
       "run_id": "R10-088-core-word",
@@ -16236,7 +16162,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.1578
+      "latency_seconds": 3.1521
     },
     {
       "run_id": "R10-088-core-sparse_common_sound",
@@ -16321,7 +16247,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.6844
+      "latency_seconds": 3.6989
     },
     {
       "run_id": "R10-089-core-word",
@@ -16406,7 +16332,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.5966
+      "latency_seconds": 3.5138
     },
     {
       "run_id": "R10-089-core-multi_sound",
@@ -16492,7 +16418,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.5245
+      "latency_seconds": 1.5383
     },
     {
       "run_id": "R10-090-core-word",
@@ -16543,7 +16469,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.5665
+      "latency_seconds": 4.3507
     },
     {
       "run_id": "R10-090-core-multi_sound",
@@ -16589,7 +16515,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1382
+      "latency_seconds": 0.146
     },
     {
       "run_id": "R10-091-core-word",
@@ -16674,7 +16600,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.5603
+      "latency_seconds": 3.5327
     },
     {
       "run_id": "R10-091-core-multi_sound",
@@ -16760,7 +16686,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.4378
+      "latency_seconds": 2.4366
     },
     {
       "run_id": "R10-091-calib-single_word",
@@ -16824,7 +16750,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.7817
+      "latency_seconds": 0.8259
     },
     {
       "run_id": "R10-091-calib-multi_word",
@@ -16889,7 +16815,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.532
+      "latency_seconds": 2.5513
     },
     {
       "run_id": "R10-091-calib-word_plus_sound",
@@ -16955,7 +16881,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.8346
+      "latency_seconds": 0.8052
     },
     {
       "run_id": "R10-091-calib-single_sound",
@@ -16998,7 +16924,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1329
+      "latency_seconds": 0.1341
     },
     {
       "run_id": "R10-091-calib-sparse_common_sound",
@@ -17062,7 +16988,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.8009
+      "latency_seconds": 0.8096
     },
     {
       "run_id": "R10-091-calib-dense_mixed_generic",
@@ -17151,7 +17077,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.4317
+      "latency_seconds": 1.4725
     },
     {
       "run_id": "R10-092-core-word",
@@ -17200,7 +17126,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.486
+      "latency_seconds": 1.4958
     },
     {
       "run_id": "R10-092-core-multi_sound",
@@ -17245,7 +17171,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1484
+      "latency_seconds": 0.1588
     },
     {
       "run_id": "R10-093-core-word",
@@ -17330,7 +17256,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.795
+      "latency_seconds": 3.8142
     },
     {
       "run_id": "R10-093-core-dense_mixed_generic",
@@ -17384,7 +17310,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.2847
+      "latency_seconds": 4.2303
     },
     {
       "run_id": "R10-094-core-word",
@@ -17468,7 +17394,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.4516
+      "latency_seconds": 3.502
     },
     {
       "run_id": "R10-094-core-single_sound",
@@ -17510,7 +17436,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1528
+      "latency_seconds": 0.1482
     },
     {
       "run_id": "R10-095-core-word",
@@ -17562,7 +17488,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 5.9017
+      "latency_seconds": 5.9609
     },
     {
       "run_id": "R10-095-core-dense_mixed_generic",
@@ -17611,7 +17537,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.167
+      "latency_seconds": 0.1617
     },
     {
       "run_id": "R10-096-core-word",
@@ -17683,7 +17609,7 @@
           "description": "Singular noun subject: \"bread\" → \"breads\" (subject: \"street\")"
         }
       ],
-      "latency_seconds": 1.8678
+      "latency_seconds": 1.9079
     },
     {
       "run_id": "R10-096-core-single_sound",
@@ -17754,7 +17680,7 @@
           "description": "Singular noun subject: \"bread\" → \"breads\" (subject: \"street\")"
         }
       ],
-      "latency_seconds": 2.1557
+      "latency_seconds": 1.8731
     },
     {
       "run_id": "R10-097-core-word",
@@ -17775,7 +17701,7 @@
         "short"
       ],
       "original_text": "She apologized for showing up late to the party.",
-      "reformulated_text": "She apologised for showing up late to the party.",
+      "reformulated_text": "She excused for showing up late to the party.",
       "status": "reformulated",
       "changes": [
         {
@@ -17783,26 +17709,26 @@
           "position": 1,
           "span_text": "apologized",
           "original": "apologized",
-          "replacement": "apologised",
+          "replacement": "excused",
           "source": "substitution",
           "triggered_by": [
             "declared_word"
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.9209,
+            "sbert_sim": 0.874,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.4444,
-            "difficulty_after": 0.4689,
-            "contextual_fit": 0.9862981736660004
+            "difficulty_after": 0.3094,
+            "contextual_fit": 0.00012474523100536317
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9209,
-        "meaning_preservation_meaningbert": 73.95,
+        "meaning_preservation": 0.874,
+        "meaning_preservation_meaningbert": 85.19,
         "flagged_words_before": 1,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -17814,11 +17740,11 @@
         "details": {
           "flagged_before": 1,
           "flagged_after": 0,
-          "sbert_sim": 0.9209
+          "sbert_sim": 0.874
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.987
+      "latency_seconds": 1.9994
     },
     {
       "run_id": "R10-097-core-single_sound",
@@ -17861,7 +17787,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.123
+      "latency_seconds": 0.1232
     },
     {
       "run_id": "R10-097-calib-single_word",
@@ -17882,7 +17808,7 @@
         "short"
       ],
       "original_text": "She apologized for showing up late to the party.",
-      "reformulated_text": "She apologised for showing up late to the party.",
+      "reformulated_text": "She excused for showing up late to the party.",
       "status": "reformulated",
       "changes": [
         {
@@ -17890,26 +17816,26 @@
           "position": 1,
           "span_text": "apologized",
           "original": "apologized",
-          "replacement": "apologised",
+          "replacement": "excused",
           "source": "substitution",
           "triggered_by": [
             "declared_word"
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.9209,
+            "sbert_sim": 0.874,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.4444,
-            "difficulty_after": 0.4689,
-            "contextual_fit": 0.9862981736660004
+            "difficulty_after": 0.3094,
+            "contextual_fit": 0.00012474523100536317
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9209,
-        "meaning_preservation_meaningbert": 73.95,
+        "meaning_preservation": 0.874,
+        "meaning_preservation_meaningbert": 85.19,
         "flagged_words_before": 1,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -17921,11 +17847,11 @@
         "details": {
           "flagged_before": 1,
           "flagged_after": 0,
-          "sbert_sim": 0.9209
+          "sbert_sim": 0.874
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.9957
+      "latency_seconds": 0.759
     },
     {
       "run_id": "R10-097-calib-multi_word",
@@ -17976,7 +17902,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.1744
+      "latency_seconds": 2.2201
     },
     {
       "run_id": "R10-097-calib-word_plus_sound",
@@ -17999,7 +17925,7 @@
         "short"
       ],
       "original_text": "She apologized for showing up late to the party.",
-      "reformulated_text": "She apologised for showing up late to the party.",
+      "reformulated_text": "She excused for showing up late to the party.",
       "status": "reformulated",
       "changes": [
         {
@@ -18007,26 +17933,26 @@
           "position": 1,
           "span_text": "apologized",
           "original": "apologized",
-          "replacement": "apologised",
+          "replacement": "excused",
           "source": "substitution",
           "triggered_by": [
             "declared_word"
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.9209,
+            "sbert_sim": 0.874,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.4444,
-            "difficulty_after": 0.4689,
-            "contextual_fit": 0.9862981736660004
+            "difficulty_after": 0.3094,
+            "contextual_fit": 0.00012474523100536317
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9209,
-        "meaning_preservation_meaningbert": 73.95,
+        "meaning_preservation": 0.874,
+        "meaning_preservation_meaningbert": 85.19,
         "flagged_words_before": 1,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -18038,11 +17964,11 @@
         "details": {
           "flagged_before": 1,
           "flagged_after": 0,
-          "sbert_sim": 0.9209
+          "sbert_sim": 0.874
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.0263
+      "latency_seconds": 0.7787
     },
     {
       "run_id": "R10-097-calib-multi_sound",
@@ -18087,7 +18013,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1292
+      "latency_seconds": 0.1227
     },
     {
       "run_id": "R10-097-calib-sparse_common_sound",
@@ -18130,7 +18056,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1202
+      "latency_seconds": 0.12
     },
     {
       "run_id": "R10-097-calib-dense_mixed_generic",
@@ -18178,7 +18104,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1177
+      "latency_seconds": 0.1237
     },
     {
       "run_id": "R10-098-core-word",
@@ -18250,7 +18176,7 @@
           "description": "3rd person singular: \"interrupt\" → \"interrupts\" (subject: \"it\")"
         }
       ],
-      "latency_seconds": 1.9438
+      "latency_seconds": 1.9843
     },
     {
       "run_id": "R10-098-core-dense_mixed_generic",
@@ -18346,7 +18272,7 @@
           "description": "3rd person singular: \"interrupt\" → \"interrupts\" (subject: \"it\")"
         }
       ],
-      "latency_seconds": 3.5011
+      "latency_seconds": 3.6436
     },
     {
       "run_id": "R10-099-core-word",
@@ -18411,7 +18337,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.5269
+      "latency_seconds": 4.4995
     },
     {
       "run_id": "R10-099-core-sparse_common_sound",
@@ -18454,7 +18380,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1744
+      "latency_seconds": 0.1738
     },
     {
       "run_id": "R10-100-core-word",
@@ -18541,7 +18467,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.5931
+      "latency_seconds": 4.5521
     },
     {
       "run_id": "R10-100-core-multi_sound",
@@ -18608,7 +18534,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.0506
+      "latency_seconds": 1.0514
     },
     {
       "run_id": "R10-101-core-word",
@@ -18693,7 +18619,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.433
+      "latency_seconds": 3.4494
     },
     {
       "run_id": "R10-101-core-sparse_common_sound",
@@ -18757,7 +18683,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.7382
+      "latency_seconds": 0.7787
     },
     {
       "run_id": "R10-102-core-word",
@@ -18828,7 +18754,7 @@
           "description": "3rd person singular: \"feel\" → \"feels\" (subject: \"it\")"
         }
       ],
-      "latency_seconds": 1.9691
+      "latency_seconds": 1.9497
     },
     {
       "run_id": "R10-102-core-dense_mixed_generic",
@@ -18904,7 +18830,7 @@
           "description": "3rd person singular: \"feel\" → \"feels\" (subject: \"it\")"
         }
       ],
-      "latency_seconds": 0.7623
+      "latency_seconds": 0.8264
     },
     {
       "run_id": "R10-103-core-word",
@@ -18989,7 +18915,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.5009
+      "latency_seconds": 4.4765
     },
     {
       "run_id": "R10-103-core-single_sound",
@@ -19032,7 +18958,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1369
+      "latency_seconds": 0.1387
     },
     {
       "run_id": "R10-103-calib-single_word",
@@ -19096,7 +19022,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.7745
+      "latency_seconds": 0.7507
     },
     {
       "run_id": "R10-103-calib-multi_word",
@@ -19147,7 +19073,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.571
+      "latency_seconds": 2.5668
     },
     {
       "run_id": "R10-103-calib-word_plus_sound",
@@ -19213,7 +19139,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.7582
+      "latency_seconds": 0.7721
     },
     {
       "run_id": "R10-103-calib-multi_sound",
@@ -19264,7 +19190,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.8528
+      "latency_seconds": 4.8094
     },
     {
       "run_id": "R10-103-calib-sparse_common_sound",
@@ -19313,7 +19239,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.756
+      "latency_seconds": 3.9374
     },
     {
       "run_id": "R10-103-calib-dense_mixed_generic",
@@ -19367,7 +19293,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.0784
+      "latency_seconds": 3.7328
     },
     {
       "run_id": "R10-104-core-word",
@@ -19431,7 +19357,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.8323
+      "latency_seconds": 1.8058
     },
     {
       "run_id": "R10-104-core-dense_mixed_generic",
@@ -19520,7 +19446,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.3828
+      "latency_seconds": 1.4417
     },
     {
       "run_id": "R10-105-core-word",
@@ -19543,7 +19469,7 @@
         "descriptive"
       ],
       "original_text": "The mountain trail was steeper and rockier than the map suggested.",
-      "reformulated_text": "The trail was steeper and rockyer than the map suggests.",
+      "reformulated_text": "The trail was steeper and rocky than the map suggests.",
       "status": "reformulated",
       "changes": [
         {
@@ -19551,25 +19477,25 @@
           "position": null,
           "span_text": "The mountain trail was steeper and rockier than the map suggested.",
           "original": "The mountain trail was steeper and rockier than the map suggested.",
-          "replacement": "The trail was steeper and rockyer than the map suggests.",
+          "replacement": "The trail was steeper and rocky than the map suggests.",
           "source": "restructuring",
           "triggered_by": [
             "multiple_difficulties_or_no_valid_substitution"
           ],
           "verification": {
             "antonym_check": "n/a_sentence_level",
-            "sbert_sim": 0.9187,
+            "sbert_sim": 0.9127,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.345,
-            "difficulty_after": 0.3425
+            "difficulty_after": 0.3246
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9187,
-        "meaning_preservation_meaningbert": 79.16,
+        "meaning_preservation": 0.9127,
+        "meaning_preservation_meaningbert": 80.84,
         "flagged_words_before": 3,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -19581,11 +19507,11 @@
         "details": {
           "flagged_before": 3,
           "flagged_after": 0,
-          "sbert_sim": 0.9187
+          "sbert_sim": 0.9127
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.2425
+      "latency_seconds": 2.2438
     },
     {
       "run_id": "R10-105-core-sparse_common_sound",
@@ -19669,7 +19595,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.5734
+      "latency_seconds": 3.6059
     },
     {
       "run_id": "R10-106-core-word",
@@ -19754,7 +19680,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.5541
+      "latency_seconds": 3.5356
     },
     {
       "run_id": "R10-106-core-dense_mixed_generic",
@@ -19808,7 +19734,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.4668
+      "latency_seconds": 2.4143
     },
     {
       "run_id": "R10-107-core-word",
@@ -19873,7 +19799,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.9176
+      "latency_seconds": 1.8547
     },
     {
       "run_id": "R10-107-core-dense_mixed_generic",
@@ -19942,7 +19868,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.8455
+      "latency_seconds": 0.8479
     },
     {
       "run_id": "R10-108-core-word",
@@ -19964,7 +19890,7 @@
         "negation"
       ],
       "original_text": "The room was dimly lit, with only a single lamp in the corner.",
-      "reformulated_text": "The room was dimly lit, with only a one lamp in the place.",
+      "reformulated_text": "The room was dimly lit, with only a several lamp in the place.",
       "status": "reformulated",
       "changes": [
         {
@@ -19972,19 +19898,19 @@
           "position": 9,
           "span_text": "single",
           "original": "single",
-          "replacement": "one",
+          "replacement": "several",
           "source": "substitution",
           "triggered_by": [
             "declared_word"
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.994,
+            "sbert_sim": 0.9818,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.3515,
-            "difficulty_after": 0.231,
-            "contextual_fit": 0.00040322126005776227
+            "difficulty_after": 0.3523,
+            "contextual_fit": 3.5435821246210253e-06
           }
         },
         {
@@ -19999,19 +19925,19 @@
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.9298,
+            "sbert_sim": 0.9162,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.5298,
             "difficulty_after": 0.547,
-            "contextual_fit": 0.00104176951572299
+            "contextual_fit": 0.0014679222367703915
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9298,
-        "meaning_preservation_meaningbert": 50.85,
+        "meaning_preservation": 0.9162,
+        "meaning_preservation_meaningbert": 51.88,
         "flagged_words_before": 2,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -20023,11 +19949,11 @@
         "details": {
           "flagged_before": 2,
           "flagged_after": 0,
-          "sbert_sim": 0.9298
+          "sbert_sim": 0.9162
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.5414
+      "latency_seconds": 3.6645
     },
     {
       "run_id": "R10-108-core-single_sound",
@@ -20070,7 +19996,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1468
+      "latency_seconds": 0.1494
     },
     {
       "run_id": "R10-109-core-word",
@@ -20135,7 +20061,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 5.3364
+      "latency_seconds": 5.4148
     },
     {
       "run_id": "R10-109-core-single_sound",
@@ -20179,7 +20105,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.142
+      "latency_seconds": 0.1423
     },
     {
       "run_id": "R10-109-calib-single_word",
@@ -20244,7 +20170,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.8536
+      "latency_seconds": 0.8944
     },
     {
       "run_id": "R10-109-calib-multi_word",
@@ -20310,7 +20236,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.0862
+      "latency_seconds": 2.106
     },
     {
       "run_id": "R10-109-calib-word_plus_sound",
@@ -20377,7 +20303,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.8511
+      "latency_seconds": 0.8681
     },
     {
       "run_id": "R10-109-calib-multi_sound",
@@ -20429,7 +20355,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.6378
+      "latency_seconds": 2.6209
     },
     {
       "run_id": "R10-109-calib-sparse_common_sound",
@@ -20473,7 +20399,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1373
+      "latency_seconds": 0.1372
     },
     {
       "run_id": "R10-109-calib-dense_mixed_generic",
@@ -20528,7 +20454,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.6356
+      "latency_seconds": 2.6391
     },
     {
       "run_id": "R10-110-core-word",
@@ -20578,7 +20504,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.0693
+      "latency_seconds": 3.0666
     },
     {
       "run_id": "R10-110-core-multi_sound",
@@ -20624,7 +20550,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.119
+      "latency_seconds": 0.1199
     },
     {
       "run_id": "R10-111-core-word",
@@ -20710,7 +20636,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.6835
+      "latency_seconds": 2.6149
     },
     {
       "run_id": "R10-111-core-single_sound",
@@ -20754,7 +20680,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1439
+      "latency_seconds": 0.1521
     },
     {
       "run_id": "R10-112-core-word",
@@ -20820,7 +20746,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.8145
+      "latency_seconds": 2.8244
     },
     {
       "run_id": "R10-112-core-dense_mixed_generic",
@@ -20890,7 +20816,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.9296
+      "latency_seconds": 1.8412
     },
     {
       "run_id": "R10-113-core-word",
@@ -20933,7 +20859,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1393
+      "latency_seconds": 0.131
     },
     {
       "run_id": "R10-113-core-dense_mixed_generic",
@@ -21002,7 +20928,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.9538
+      "latency_seconds": 0.8851
     },
     {
       "run_id": "R10-114-core-word",
@@ -21087,7 +21013,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.3894
+      "latency_seconds": 3.4653
     },
     {
       "run_id": "R10-114-core-sparse_common_sound",
@@ -21151,7 +21077,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.7563
+      "latency_seconds": 0.7581
     },
     {
       "run_id": "R10-115-core-word",
@@ -21231,7 +21157,7 @@
           "description": "Plural/1st/2nd person: \"makes\" → \"make\" (subject: \"i\")"
         }
       ],
-      "latency_seconds": 3.335
+      "latency_seconds": 3.1344
     },
     {
       "run_id": "R10-115-core-single_sound",
@@ -21289,7 +21215,7 @@
           "description": "Plural/1st/2nd person: \"makes\" → \"make\" (subject: \"i\")"
         }
       ],
-      "latency_seconds": 0.1557
+      "latency_seconds": 0.1545
     },
     {
       "run_id": "R10-115-calib-single_word",
@@ -21368,7 +21294,7 @@
           "description": "Plural/1st/2nd person: \"makes\" → \"make\" (subject: \"i\")"
         }
       ],
-      "latency_seconds": 1.7707
+      "latency_seconds": 1.8098
     },
     {
       "run_id": "R10-115-calib-multi_word",
@@ -21448,7 +21374,7 @@
           "description": "Plural/1st/2nd person: \"makes\" → \"make\" (subject: \"i\")"
         }
       ],
-      "latency_seconds": 3.2847
+      "latency_seconds": 3.117
     },
     {
       "run_id": "R10-115-calib-word_plus_sound",
@@ -21529,7 +21455,7 @@
           "description": "Plural/1st/2nd person: \"makes\" → \"make\" (subject: \"i\")"
         }
       ],
-      "latency_seconds": 1.1438
+      "latency_seconds": 1.0498
     },
     {
       "run_id": "R10-115-calib-multi_sound",
@@ -21610,7 +21536,7 @@
           "description": "Plural/1st/2nd person: \"makes\" → \"make\" (subject: \"i\")"
         }
       ],
-      "latency_seconds": 1.9024
+      "latency_seconds": 1.9379
     },
     {
       "run_id": "R10-115-calib-sparse_common_sound",
@@ -21668,7 +21594,7 @@
           "description": "Plural/1st/2nd person: \"makes\" → \"make\" (subject: \"i\")"
         }
       ],
-      "latency_seconds": 0.1483
+      "latency_seconds": 0.1464
     },
     {
       "run_id": "R10-115-calib-dense_mixed_generic",
@@ -21752,7 +21678,7 @@
           "description": "Plural/1st/2nd person: \"makes\" → \"make\" (subject: \"i\")"
         }
       ],
-      "latency_seconds": 0.9267
+      "latency_seconds": 0.9419
     },
     {
       "run_id": "R10-116-core-word",
@@ -21803,7 +21729,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.2352
+      "latency_seconds": 4.1464
     },
     {
       "run_id": "R10-116-core-sparse_common_sound",
@@ -21853,7 +21779,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.2023
+      "latency_seconds": 3.181
     },
     {
       "run_id": "R10-117-core-word",
@@ -21905,7 +21831,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.0615
+      "latency_seconds": 2.7829
     },
     {
       "run_id": "R10-117-core-single_sound",
@@ -21949,7 +21875,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1821
+      "latency_seconds": 0.1647
     },
     {
       "run_id": "R10-118-core-word",
@@ -22034,7 +21960,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.5816
+      "latency_seconds": 3.6173
     },
     {
       "run_id": "R10-118-core-sparse_common_sound",
@@ -22077,7 +22003,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1709
+      "latency_seconds": 0.1647
     },
     {
       "run_id": "R10-119-core-word",
@@ -22127,7 +22053,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 5.928
+      "latency_seconds": 5.7673
     },
     {
       "run_id": "R10-119-core-dense_mixed_generic",
@@ -22181,7 +22107,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.8838
+      "latency_seconds": 2.8885
     },
     {
       "run_id": "R10-120-core-word",
@@ -22246,7 +22172,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.8699
+      "latency_seconds": 1.7814
     },
     {
       "run_id": "R10-120-core-dense_mixed_generic",
@@ -22295,7 +22221,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1413
+      "latency_seconds": 0.1426
     },
     {
       "run_id": "R10-121-core-word",
@@ -22317,7 +22243,7 @@
         "comparison"
       ],
       "original_text": "The library closes at nine on weekdays and six on weekends.",
-      "reformulated_text": "The library closes at nine on dayss and six on saturdays.",
+      "reformulated_text": "The library closes at nine on wednesdays and six on saturdays.",
       "status": "reformulated",
       "changes": [
         {
@@ -22325,19 +22251,19 @@
           "position": 6,
           "span_text": "weekdays",
           "original": "weekdays",
-          "replacement": "dayss",
+          "replacement": "wednesdays",
           "source": "substitution",
           "triggered_by": [
             "declared_word"
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.9697,
+            "sbert_sim": 0.9779,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.444,
-            "difficulty_after": 0.6583,
-            "contextual_fit": 0.00028849531188512856
+            "difficulty_after": 0.4445,
+            "contextual_fit": 0.4314242750406265
           }
         },
         {
@@ -22352,19 +22278,19 @@
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.951,
+            "sbert_sim": 0.9396,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.4098,
             "difficulty_after": 0.5058,
-            "contextual_fit": 0.3270115554332733
+            "contextual_fit": 0.4494137465953827
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.951,
-        "meaning_preservation_meaningbert": 91.2,
+        "meaning_preservation": 0.9396,
+        "meaning_preservation_meaningbert": 94.52,
         "flagged_words_before": 2,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -22376,11 +22302,11 @@
         "details": {
           "flagged_before": 2,
           "flagged_after": 0,
-          "sbert_sim": 0.951
+          "sbert_sim": 0.9396
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.7408
+      "latency_seconds": 3.454
     },
     {
       "run_id": "R10-121-core-dense_mixed_generic",
@@ -22428,7 +22354,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1341
+      "latency_seconds": 0.1279
     },
     {
       "run_id": "R10-121-calib-single_word",
@@ -22449,7 +22375,7 @@
         "comparison"
       ],
       "original_text": "The library closes at nine on weekdays and six on weekends.",
-      "reformulated_text": "The library closes at nine on dayss and six on weekends.",
+      "reformulated_text": "The library closes at nine on wednesdays and six on weekends.",
       "status": "reformulated",
       "changes": [
         {
@@ -22457,26 +22383,26 @@
           "position": 6,
           "span_text": "weekdays",
           "original": "weekdays",
-          "replacement": "dayss",
+          "replacement": "wednesdays",
           "source": "substitution",
           "triggered_by": [
             "declared_word"
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.9697,
+            "sbert_sim": 0.9779,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.444,
-            "difficulty_after": 0.6583,
-            "contextual_fit": 0.0002208232263498644
+            "difficulty_after": 0.4445,
+            "contextual_fit": 0.29986362159252167
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9697,
-        "meaning_preservation_meaningbert": 94.52,
+        "meaning_preservation": 0.9779,
+        "meaning_preservation_meaningbert": 94.53,
         "flagged_words_before": 1,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -22488,11 +22414,11 @@
         "details": {
           "flagged_before": 1,
           "flagged_after": 0,
-          "sbert_sim": 0.9697
+          "sbert_sim": 0.9779
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.804
+      "latency_seconds": 0.8074
     },
     {
       "run_id": "R10-121-calib-multi_word",
@@ -22543,7 +22469,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.5123
+      "latency_seconds": 2.3729
     },
     {
       "run_id": "R10-121-calib-word_plus_sound",
@@ -22566,7 +22492,7 @@
         "comparison"
       ],
       "original_text": "The library closes at nine on weekdays and six on weekends.",
-      "reformulated_text": "The library closes at nine on dayss and six on weekends.",
+      "reformulated_text": "The library closes at nine on wednesdays and six on weekends.",
       "status": "reformulated",
       "changes": [
         {
@@ -22574,26 +22500,26 @@
           "position": 6,
           "span_text": "weekdays",
           "original": "weekdays",
-          "replacement": "dayss",
+          "replacement": "wednesdays",
           "source": "substitution",
           "triggered_by": [
             "declared_word"
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.9697,
+            "sbert_sim": 0.9779,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.444,
-            "difficulty_after": 0.6583,
-            "contextual_fit": 0.0002208232263498644
+            "difficulty_after": 0.4445,
+            "contextual_fit": 0.29986362159252167
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9697,
-        "meaning_preservation_meaningbert": 94.52,
+        "meaning_preservation": 0.9779,
+        "meaning_preservation_meaningbert": 94.53,
         "flagged_words_before": 1,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -22605,11 +22531,11 @@
         "details": {
           "flagged_before": 1,
           "flagged_after": 0,
-          "sbert_sim": 0.9697
+          "sbert_sim": 0.9779
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.836
+      "latency_seconds": 0.8228
     },
     {
       "run_id": "R10-121-calib-single_sound",
@@ -22652,7 +22578,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1299
+      "latency_seconds": 0.1309
     },
     {
       "run_id": "R10-121-calib-multi_sound",
@@ -22697,7 +22623,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1276
+      "latency_seconds": 0.1364
     },
     {
       "run_id": "R10-121-calib-sparse_common_sound",
@@ -22740,7 +22666,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1353
+      "latency_seconds": 0.1389
     },
     {
       "run_id": "R10-122-core-word",
@@ -22804,7 +22730,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.0053
+      "latency_seconds": 2.8782
     },
     {
       "run_id": "R10-122-core-single_sound",
@@ -22847,7 +22773,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.1563
+      "latency_seconds": 0.1437
     },
     {
       "run_id": "R10-123-core-word",
@@ -22869,53 +22795,32 @@
         "sequence"
       ],
       "original_text": "The bridge was built in the early twentieth century and renovated twice since then.",
-      "reformulated_text": "The bridge was built in the early 20th century and restored twice since then.",
+      "reformulated_text": "The bridge was built in the early 20th century and rebuilt twice since then.",
       "status": "reformulated",
       "changes": [
         {
           "sentence_index": 0,
-          "position": 7,
-          "span_text": "twentieth",
-          "original": "twentieth",
-          "replacement": "20th",
-          "source": "substitution",
+          "position": null,
+          "span_text": "The bridge was built in the early twentieth century and renovated twice since then.",
+          "original": "The bridge was built in the early twentieth century and renovated twice since then.",
+          "replacement": "The bridge was built in the early 20th century and rebuilt twice since then.",
+          "source": "restructuring",
           "triggered_by": [
-            "declared_word"
+            "multiple_difficulties_or_no_valid_substitution"
           ],
           "verification": {
-            "antonym_check": "pass",
-            "sbert_sim": 0.9776,
+            "antonym_check": "n/a_sentence_level",
+            "sbert_sim": 0.9408,
             "nli": "not_run",
             "phoneme_ok": true,
-            "difficulty_before": 0.7788,
-            "difficulty_after": 0.3519,
-            "contextual_fit": 0.19250907003879547
-          }
-        },
-        {
-          "sentence_index": 0,
-          "position": 10,
-          "span_text": "renovated",
-          "original": "renovated",
-          "replacement": "restored",
-          "source": "substitution",
-          "triggered_by": [
-            "declared_word"
-          ],
-          "verification": {
-            "antonym_check": "pass",
-            "sbert_sim": 0.925,
-            "nli": "not_run",
-            "phoneme_ok": true,
-            "difficulty_before": 0.5808,
-            "difficulty_after": 0.4068,
-            "contextual_fit": 0.01621231622993946
+            "difficulty_before": 0.3518,
+            "difficulty_after": 0.3248
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.925,
+        "meaning_preservation": 0.9408,
         "meaning_preservation_meaningbert": 94.52,
         "flagged_words_before": 2,
         "flagged_words_after": 0,
@@ -22928,11 +22833,11 @@
         "details": {
           "flagged_before": 2,
           "flagged_after": 0,
-          "sbert_sim": 0.925
+          "sbert_sim": 0.9408
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 4.9964
+      "latency_seconds": 4.3227
     },
     {
       "run_id": "R10-123-core-sparse_common_sound",
@@ -22996,7 +22901,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.1017
+      "latency_seconds": 2.0534
     },
     {
       "run_id": "R10-124-core-word",
@@ -23060,7 +22965,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 7.3682
+      "latency_seconds": 6.0839
     },
     {
       "run_id": "R10-124-core-multi_sound",
@@ -23146,7 +23051,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.9354
+      "latency_seconds": 4.0464
     },
     {
       "run_id": "R10-125-core-word",
@@ -23170,7 +23075,7 @@
         "causal"
       ],
       "original_text": "The store doesn't open until ten, but the café next door opens earlier.",
-      "reformulated_text": "The shop doesn't open until ten, but the café next door opens otherrer.",
+      "reformulated_text": "The shop doesn't open until ten, but the café next door opens older.",
       "status": "reformulated",
       "changes": [
         {
@@ -23190,7 +23095,7 @@
             "phoneme_ok": true,
             "difficulty_before": 0.4265,
             "difficulty_after": 0.2992,
-            "contextual_fit": 0.06787081062793732
+            "contextual_fit": 0.07535535097122192
           }
         },
         {
@@ -23198,26 +23103,26 @@
           "position": 14,
           "span_text": "earlier",
           "original": "earlier",
-          "replacement": "otherrer",
+          "replacement": "older",
           "source": "substitution",
           "triggered_by": [
             "declared_word"
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.9398,
+            "sbert_sim": 0.9273,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.3116,
-            "difficulty_after": 0.525,
-            "contextual_fit": 1.1012997778503397e-05
+            "difficulty_after": 0.2391,
+            "contextual_fit": 2.05464857572224e-05
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9398,
-        "meaning_preservation_meaningbert": 56.78,
+        "meaning_preservation": 0.9273,
+        "meaning_preservation_meaningbert": 94.52,
         "flagged_words_before": 2,
         "flagged_words_after": 0,
         "difficulty_reduction_pct": 100.0,
@@ -23229,7 +23134,7 @@
         "details": {
           "flagged_before": 2,
           "flagged_after": 0,
-          "sbert_sim": 0.9398
+          "sbert_sim": 0.9273
         }
       },
       "grammar_fixes_applied": [
@@ -23241,7 +23146,7 @@
           "index": 10
         }
       ],
-      "latency_seconds": 4.2799
+      "latency_seconds": 3.6233
     },
     {
       "run_id": "R10-125-core-multi_sound",
@@ -23316,7 +23221,7 @@
           "index": 10
         }
       ],
-      "latency_seconds": 1.2011
+      "latency_seconds": 0.8569
     },
     {
       "run_id": "R10-126-core-word",
@@ -23381,7 +23286,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 3.0853
+      "latency_seconds": 2.6948
     },
     {
       "run_id": "R10-126-core-sparse_common_sound",
@@ -23424,7 +23329,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2066
+      "latency_seconds": 0.1368
     },
     {
       "run_id": "R10-127-core-word",
@@ -23478,7 +23383,7 @@
           "index": 37
         }
       ],
-      "latency_seconds": 0.3586
+      "latency_seconds": 0.354
     },
     {
       "run_id": "R10-127-core-sparse_common_sound",
@@ -23531,7 +23436,7 @@
           "index": 37
         }
       ],
-      "latency_seconds": 0.3428
+      "latency_seconds": 0.4316
     },
     {
       "run_id": "R10-127-calib-single_word",
@@ -23584,7 +23489,7 @@
           "index": 37
         }
       ],
-      "latency_seconds": 0.3535
+      "latency_seconds": 0.3372
     },
     {
       "run_id": "R10-127-calib-multi_word",
@@ -23639,7 +23544,7 @@
           "index": 37
         }
       ],
-      "latency_seconds": 0.3549
+      "latency_seconds": 0.3479
     },
     {
       "run_id": "R10-127-calib-word_plus_sound",
@@ -23694,7 +23599,7 @@
           "index": 37
         }
       ],
-      "latency_seconds": 0.3384
+      "latency_seconds": 0.3448
     },
     {
       "run_id": "R10-127-calib-single_sound",
@@ -23747,7 +23652,7 @@
           "index": 37
         }
       ],
-      "latency_seconds": 0.3476
+      "latency_seconds": 0.3508
     },
     {
       "run_id": "R10-127-calib-multi_sound",
@@ -23772,7 +23677,7 @@
         "quantities"
       ],
       "original_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the third of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
-      "reformulated_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the fourth of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
+      "reformulated_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the tertiary of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
       "status": "reformulated",
       "changes": [
         {
@@ -23780,25 +23685,25 @@
           "position": 20,
           "span_text": "third",
           "original": "third",
-          "replacement": "fourth",
+          "replacement": "tertiary",
           "source": "substitution",
           "triggered_by": [
             "global_sound"
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.9981,
+            "sbert_sim": 0.9966,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.2803,
-            "difficulty_after": 0.3013,
-            "contextual_fit": 0.03169332072138786
+            "difficulty_after": 0.657,
+            "contextual_fit": 2.923083854966535e-07
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9981,
+        "meaning_preservation": 0.9966,
         "meaning_preservation_meaningbert": 94.53,
         "flagged_words_before": 1,
         "flagged_words_after": 0,
@@ -23811,7 +23716,7 @@
         "details": {
           "flagged_before": 1,
           "flagged_after": 0,
-          "sbert_sim": 0.9981
+          "sbert_sim": 0.9966
         }
       },
       "grammar_fixes_applied": [
@@ -23823,7 +23728,7 @@
           "index": 37
         }
       ],
-      "latency_seconds": 2.8595
+      "latency_seconds": 2.1587
     },
     {
       "run_id": "R10-127-calib-dense_mixed_generic",
@@ -23851,7 +23756,7 @@
         "quantities"
       ],
       "original_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the third of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
-      "reformulated_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the fourth of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
+      "reformulated_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the tertiary of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
       "status": "reformulated",
       "changes": [
         {
@@ -23859,25 +23764,25 @@
           "position": 20,
           "span_text": "third",
           "original": "third",
-          "replacement": "fourth",
+          "replacement": "tertiary",
           "source": "substitution",
           "triggered_by": [
             "global_sound"
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.9981,
+            "sbert_sim": 0.9966,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.2803,
-            "difficulty_after": 0.3013,
-            "contextual_fit": 0.03169332072138786
+            "difficulty_after": 0.657,
+            "contextual_fit": 2.923083854966535e-07
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9981,
+        "meaning_preservation": 0.9966,
         "meaning_preservation_meaningbert": 94.53,
         "flagged_words_before": 1,
         "flagged_words_after": 0,
@@ -23890,7 +23795,7 @@
         "details": {
           "flagged_before": 1,
           "flagged_after": 0,
-          "sbert_sim": 0.9981
+          "sbert_sim": 0.9966
         }
       },
       "grammar_fixes_applied": [
@@ -23902,7 +23807,7 @@
           "index": 37
         }
       ],
-      "latency_seconds": 1.4709
+      "latency_seconds": 1.1896
     },
     {
       "run_id": "R10-128-core-word",
@@ -23968,7 +23873,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.1318
+      "latency_seconds": 2.9528
     },
     {
       "run_id": "R10-128-core-sparse_common_sound",
@@ -23990,7 +23895,7 @@
         "sequence"
       ],
       "original_text": "Hugh Fleming had four surviving children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven.",
-      "reformulated_text": "Hugh Fleming had four living children from his first marriage. He was 59 at the time of his 2nd marriage to Grace, and died when Alexander was seven.",
+      "reformulated_text": "Hugh Fleming had four living children from his first marriage. He was 59 at the time of his back marriage to Grace, and died when Alexander was seven.",
       "status": "reformulated",
       "changes": [
         {
@@ -24018,25 +23923,25 @@
           "position": 8,
           "span_text": "second",
           "original": "second",
-          "replacement": "2nd",
+          "replacement": "back",
           "source": "substitution",
           "triggered_by": [
             "global_sound"
           ],
           "verification": {
             "antonym_check": "pass",
-            "sbert_sim": 0.9992,
+            "sbert_sim": 0.9788,
             "nli": "not_run",
             "phoneme_ok": true,
             "difficulty_before": 0.342,
-            "difficulty_after": 0.4385,
-            "contextual_fit": 0.002086303662508726
+            "difficulty_after": 0.3995,
+            "contextual_fit": 2.428273830901162e-07
           }
         }
       ],
       "skipped": [],
       "metrics": {
-        "meaning_preservation": 0.9873,
+        "meaning_preservation": 0.9842,
         "meaning_preservation_meaningbert": 94.53,
         "flagged_words_before": 2,
         "flagged_words_after": 0,
@@ -24049,11 +23954,11 @@
         "details": {
           "flagged_before": 2,
           "flagged_after": 0,
-          "sbert_sim": 0.9873
+          "sbert_sim": 0.9842
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.5493
+      "latency_seconds": 1.6496
     },
     {
       "run_id": "R10-129-core-word",
@@ -24121,7 +24026,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 2.9826
+      "latency_seconds": 2.0955
     },
     {
       "run_id": "R10-129-core-dense_mixed_generic",
@@ -24192,7 +24097,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 1.274
+      "latency_seconds": 1.1181
     },
     {
       "run_id": "R10-130-core-word",
@@ -24257,7 +24162,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 8.5689
+      "latency_seconds": 6.7954
     },
     {
       "run_id": "R10-130-core-dense_mixed_generic",
@@ -24306,7 +24211,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2447
+      "latency_seconds": 0.2271
     },
     {
       "run_id": "R10-131-core-word",
@@ -24370,7 +24275,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.9687
+      "latency_seconds": 0.9241
     },
     {
       "run_id": "R10-131-core-single_sound",
@@ -24413,7 +24318,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2805
+      "latency_seconds": 0.181
     },
     {
       "run_id": "R10-132-core-word",
@@ -24457,7 +24362,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2024
+      "latency_seconds": 0.2008
     },
     {
       "run_id": "R10-132-core-dense_mixed_generic",
@@ -24506,7 +24411,7 @@
         }
       },
       "grammar_fixes_applied": [],
-      "latency_seconds": 0.2544
+      "latency_seconds": 0.2169
     },
     {
       "run_id": "R10-133-core-word",
@@ -24563,7 +24468,7 @@
           "index": 6
         }
       ],
-      "latency_seconds": 1.9374
+      "latency_seconds": 1.8475
     },
     {
       "run_id": "R10-133-core-single_sound",
@@ -24614,7 +24519,7 @@
           "index": 6
         }
       ],
-      "latency_seconds": 0.1521
+      "latency_seconds": 0.1609
     },
     {
       "run_id": "R10-133-calib-single_word",
@@ -24671,7 +24576,7 @@
           "index": 6
         }
       ],
-      "latency_seconds": 1.906
+      "latency_seconds": 1.8595
     },
     {
       "run_id": "R10-133-calib-multi_word",
@@ -24750,7 +24655,7 @@
           "index": 6
         }
       ],
-      "latency_seconds": 2.9884
+      "latency_seconds": 2.9764
     },
     {
       "run_id": "R10-133-calib-word_plus_sound",
@@ -24809,7 +24714,7 @@
           "index": 6
         }
       ],
-      "latency_seconds": 1.8753
+      "latency_seconds": 1.8999
     },
     {
       "run_id": "R10-133-calib-multi_sound",
@@ -24883,7 +24788,7 @@
           "index": 6
         }
       ],
-      "latency_seconds": 1.9563
+      "latency_seconds": 1.8672
     },
     {
       "run_id": "R10-133-calib-sparse_common_sound",
@@ -24955,7 +24860,7 @@
           "index": 6
         }
       ],
-      "latency_seconds": 0.9092
+      "latency_seconds": 0.8809
     },
     {
       "run_id": "R10-133-calib-dense_mixed_generic",
@@ -25032,7 +24937,7 @@
           "index": 6
         }
       ],
-      "latency_seconds": 0.8433
+      "latency_seconds": 0.8677
     }
   ]
 }

@@ -3553,3 +3553,62 @@ following Phase 11. Production code touched: `semantic.py`,
 `reformulate.py` (both already-modified-in-Phase-11 files, corrected
 further). Full record: `VALIDATION.md` §49,
 `eval/r11_reverify_report.md`.
+
+### 2026-08-27-C — Phase 11B: categories 4/6/7, three real bugs caught during verification
+
+**What was done:** planned via plan mode (approved), then implemented
+the highest-confidence slice of Phase 10B's remaining categories 4-7:
+(A) `grammar.has_unknown_tokens()` -- dictionary/real-word validation on
+escalation-tier, phrase-tier, AND (after a mid-phase finding)
+substitution-tier output; (B) `semantic.is_number_word_mismatch()` -- a
+generalizable number-word preservation check; (C) five more
+individually-verified `BLOCKED_SUBSTITUTION_PAIRS` entries. General
+POS/subject-verb-agreement checking on T5 output and antonym/polarity-
+without-negation-marker detection were explicitly deferred (need a new
+mechanism, not a rule fix), per the approved plan.
+
+**Three real bugs found and fixed during this phase's own
+verification, not shipped and disclosed after the fact:** (1)
+`has_unknown_tokens()`'s first version rejected legitimate technical
+vocabulary this project's own corpus uses ("nucleosynthesis",
+"overnutrition"), regressing two previously-CLEAN Phase 10 outputs to a
+refusal -- fixed by requiring BOTH pyspellchecker AND exact WordNet-
+word-list membership to fail (plain `wn.synsets()` was separately found
+too permissive, via morphy inflection-stripping false positives); (2)
+the number-word check's spelled-out-word-only set missed digit forms
+("2nd") and hyphenated compounds ("twenty-third"), both found via this
+same word's actual candidate pool; (3) a previously-unknown root-cause
+bug in `grammar.inflect()`'s NNS fallback double-pluralizing an
+already-plural candidate lemma ("weekdays" -> "dayss"), fixed at the
+source, which also meant `has_unknown_tokens()` needed wiring into
+`_try_substitution()` too, not just escalation/phrase-tier as originally
+scoped.
+
+**A genuine limit found, not chased further:** two words ("third",
+"single") each produced a new distinct bad candidate every time the
+previous one was blocked -- the blocklist mechanism's known convergence
+limit made concrete. Recorded as an evidenced limitation needing real
+WSD, not continued one-off patching.
+
+**Result:** full 398-run harvest re-run three times (once per bug fix)
+before trusting any number. Final diff: 111 runs changed. 97 still-
+reformulated runs blind-judged: 17 CLEAN, 80 DEFECTIVE. Against Phase
+10's original judgment: 17 genuine fixes, 72 still-defective, 8
+apparent regressions -- every one traced to this project's already-
+documented candidate-pool/T5 nondeterminism, confirmed by checking none
+touch any word or mechanism this phase's code changed. Overall CLEAN
+rate: 71/225 (31.6%), up from Phase 10's 26.1%, flat against Phase 11's
+32.6% (within the noise band the next finding establishes).
+
+**New methodological finding:** re-running the identical 398-run
+harvest with NO code change between runs can itself change a small
+number of individual outcomes (confirmed directly, e.g. `R10-030`) --
+comparing raw CLEAN-rate percentages between two separate harvest runs
+carries genuine noise of at least ~1 point; single-run deltas below
+that need the underlying cases checked directly, not treated as a
+verdict alone.
+
+**Category:** Implementation + self-caught verification bugs, on direct
+plan-mode approval. Production code touched: `grammar.py`,
+`semantic.py`, `reformulate.py`. Full record: `VALIDATION.md` §50,
+`eval/r11b_reverify_report.md`.

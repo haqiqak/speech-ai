@@ -60,7 +60,7 @@ import naturalness as nat
 import rephrase
 from freq import zipf_frequency as _zipf_frequency
 from difficulty_profile import DifficultyProfile
-from grammar import _SUBSTITUTABLE, _STOP, _wn_pos, lemmatize, inflect, _preserve_case, _detokenize
+from grammar import _SUBSTITUTABLE, _STOP, _wn_pos, lemmatize, inflect, _preserve_case, _detokenize, has_unknown_tokens
 
 nltk.download("averaged_perceptron_tagger_eng", quiet=True)
 nltk.download("punkt_tab", quiet=True)
@@ -381,6 +381,20 @@ def _try_substitution(
             if sem.blocked_pair(base, s["lemma"]):
                 s["blocked_pair_rejected"] = True
                 continue
+            if sem.is_number_word_mismatch(base, s["lemma"]):
+                s["number_word_rejected"] = True
+                continue
+            if has_unknown_tokens(s["inflected"]):
+                # Phase 11B (VALIDATION.md SS50) -- found during this
+                # phase's own re-verification: "weekdays"->"dayss" is a
+                # SUBSTITUTION-tier garbled token, not an escalation one --
+                # inflect()'s own documented NNS fallback (lemma + "s")
+                # double-pluralizes when pyinflect fails on an
+                # already-plural lemma. Not caught by the escalation/
+                # phrase-tier gates below since this candidate never goes
+                # through either path.
+                s["unknown_token_rejected"] = True
+                continue
             if profile.find_word(s["inflected"].lower()) is not None:
                 # A candidate must never itself be one of the profile's
                 # OTHER declared-difficult words. Not a hypothetical case:
@@ -473,6 +487,17 @@ def _try_escalation(
         # style choice, so it's rejected the same as a failed SBERT/negation
         # check rather than merely down-ranked.
         if sem.dropped_protected_phrases(sentence, cand):
+            continue
+        # Phase 11B (VALIDATION.md SS50) -- nothing previously checked
+        # whether T5's freely generated text was made of real words.
+        # has_unknown_tokens() reuses grammar.py's existing spellcheck
+        # infrastructure (previously input-side only, via sanitize_input())
+        # to catch exactly the garbled-token defects Phase 10B and Phase
+        # 11's own re-verification both found ("thermonuklear", "rockyer",
+        # "goodss", "dayss", "otherrer") -- a non-word is never an
+        # acceptable simplification, rejected here rather than merely
+        # down-ranked.
+        if has_unknown_tokens(cand):
             continue
         rank_score = sim if sim is not None else -1.0
         if best is None or (rank_score > best["rank_score"]):
@@ -746,6 +771,12 @@ def _try_phrase_replacement(
         # distinguished", "money supply" -> "money market", all observed
         # SEVERE defects this closes).
         if sem.dropped_protected_phrases(sentence, candidate_sentence):
+            continue
+        # Phase 11B (VALIDATION.md SS50) -- same reasoning as
+        # _try_escalation()'s has_unknown_tokens() gate: this window is
+        # also T5-generated free text, so it needs the same real-word
+        # check, not just the sentence-level ones above.
+        if has_unknown_tokens(candidate_sentence):
             continue
         rank_score = sim if sim is not None else -1.0
         if best is None or rank_score > best["rank_score"]:

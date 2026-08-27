@@ -1027,6 +1027,12 @@ BLOCKED_SUBSTITUTION_PAIRS: frozenset[tuple[str, str]] = frozenset({
     ("somewhere", "there"),        # R10-114
     ("overrate", "overestimate"),  # R10-118
     ("weekday", "tuesday"),        # R10-121
+    # "day" surfaced as the next-ranked candidate once "tuesday" was
+    # blocked and inflect()'s double-pluralization bug (also fixed this
+    # phase, see grammar.inflect) stopped producing "dayss" -- "day"
+    # alone drops the weekday-specific (Mon-Fri) scope just as much,
+    # caught in this same re-verification pass.
+    ("weekday", "day"),            # R10-121
     ("weekend", "sunday"),         # R10-121
     ("century", "period"),         # R10-123
     ("city", "town"),              # R10-124
@@ -1035,6 +1041,25 @@ BLOCKED_SUBSTITUTION_PAIRS: frozenset[tuple[str, str]] = frozenset({
     ("scholarship", "study"),      # R10-129
     ("suggest", "indicate"),       # R10-131
     ("school", "education"),       # R10-133
+    # Phase 11B (VALIDATION.md SS50) -- extending this same, already-
+    # tested mechanism for a handful of substitution-tier Category-4/5
+    # pairs found in eval/r10b_fixable_sketches_dump.txt's grammar/POS
+    # entries, rather than building new machinery for what are simple
+    # one-off bad pairs. Each re-verified against its actual tag/lemma
+    # in eval/r10b_defective_enriched.json's real sentence, same
+    # discipline as the pairs above.
+    ("everyone", "entire"),         # R10-079
+    ("student", "university"),      # R10-076
+    ("same", "very"),               # R10-076
+    ("single", "one"),              # R10-108
+    # "1" (digit form) re-verified as the next-ranked candidate for
+    # "single" once "one" was blocked above -- same underlying defect
+    # ("a 1 lamp"), caught during this phase's own re-harvest rather
+    # than assumed fixed by the "one" entry alone.
+    ("single", "1"),                # R10-108
+    ("single", "one-on-one"),       # R10-108 -- same re-verification pass,
+                                     # same underlying defect ("a one-on-one lamp")
+    ("little", "least"),            # R10-069
 })
 
 
@@ -1077,6 +1102,63 @@ def blocked_pair(original_lemma: str, candidate_lemma: str) -> bool:
     if not a_forms or not b_forms:
         return False
     return any((a, b) in BLOCKED_SUBSTITUTION_PAIRS for a in a_forms for b in b_forms)
+
+
+# ── Phase 11B number-word preservation (VALIDATION.md SS50) ───────────────────
+# R10-127: "third" -> "fourth" (a global_sound-triggered swap) silently changed
+# a stated fact (birth order). A one-off BLOCKED_SUBSTITUTION_PAIRS entry would
+# only cover that exact pair; a closed-set membership check generalizes to any
+# number word, which matters here specifically because the trigger was
+# PHONETIC similarity, not meaning -- ordinals/cardinals are phonetically
+# clustered (third/fourth, six/sixteen, etc.), so any number word a profile
+# flags is liable to keep drawing near-miss number-word candidates.
+_NUMBER_WORDS: frozenset[str] = frozenset({
+    "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+    "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
+    "seventeen", "eighteen", "nineteen", "twenty",
+    "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety",
+    "hundred", "thousand", "million", "billion",
+    "first", "second", "third", "fourth", "fifth", "sixth", "seventh",
+    "eighth", "ninth", "tenth", "eleventh", "twelfth", "thirteenth",
+    "fourteenth", "fifteenth", "sixteenth", "seventeenth", "eighteenth",
+    "nineteenth", "twentieth",
+})
+
+# R10-127's actual replacement was "2nd", not "second" -- a spelled-out-word
+# closed set alone missed it (verified during this phase's own verification
+# pass, not assumed complete). Digit and digit-ordinal forms need the same
+# membership check.
+_DIGIT_NUMBER_RE = re.compile(r"^\d+(st|nd|rd|th)?$")
+
+
+def _is_number_token(word: str) -> bool:
+    w = (word or "").strip().lower()
+    if not w:
+        return False
+    if w in _NUMBER_WORDS or bool(_DIGIT_NUMBER_RE.match(w)):
+        return True
+    # Compound ordinals/cardinals ("twenty-third", "forty-two") -- also
+    # missed by the plain-word/digit checks above, also caught during this
+    # phase's own re-harvest (R10-127's candidate pool produced this after
+    # "2nd" was blocked). Every hyphen-separated part must itself be a
+    # number word -- deliberately strict, so this doesn't accidentally
+    # swallow unrelated hyphenated compounds.
+    if "-" in w:
+        parts = [p for p in w.split("-") if p]
+        return bool(parts) and all(p in _NUMBER_WORDS for p in parts)
+    return False
+
+
+def is_number_word_mismatch(original_lemma: str, candidate_lemma: str) -> bool:
+    """True if both words are number tokens (spelled-out cardinal/ordinal,
+    one-twenty plus common round numbers, OR a digit/digit-ordinal form like
+    "2nd") and they differ -- a candidate is never a valid "easier"
+    substitute for a different number than the one actually stated."""
+    a = (original_lemma or "").strip().lower()
+    b = (candidate_lemma or "").strip().lower()
+    if not a or not b or a == b:
+        return False
+    return _is_number_token(a) and _is_number_token(b)
 
 
 # ── Sentence-level negation-consistency check (for the T5 escalation path) ────

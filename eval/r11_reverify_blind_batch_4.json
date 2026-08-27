@@ -1,5 +1,75 @@
 [
   {
+    "run_id": "R10-109-calib-word_plus_sound",
+    "original_text": "Turn off the power before you attempt to replace the light fixture.",
+    "reformulated_text": "Turn off the power before you attempt to repair the light fixture."
+  },
+  {
+    "run_id": "R10-113-core-dense_mixed_generic",
+    "original_text": "Assemble the shelf according to the numbered steps in the manual.",
+    "reformulated_text": "Assemble the shelf according to the numbered walks in the manual."
+  },
+  {
+    "run_id": "R10-114-core-word",
+    "original_text": "Store the medication somewhere cool and out of reach of children.",
+    "reformulated_text": "Store the medicine anywhere cool and out of reach of children."
+  },
+  {
+    "run_id": "R10-114-core-sparse_common_sound",
+    "original_text": "Store the medication somewhere cool and out of reach of children.",
+    "reformulated_text": "Store the medication anywhere cool and out of reach of children."
+  },
+  {
+    "run_id": "R10-118-core-word",
+    "original_text": "The book was overrated, in my opinion, though the ending was genuinely moving.",
+    "reformulated_text": "The book was overstated, in my opinion, though the ending was seriously moving."
+  },
+  {
+    "run_id": "R10-121-core-word",
+    "original_text": "The library closes at nine on weekdays and six on weekends.",
+    "reformulated_text": "The library closes at nine on wednesdays and six on saturdays."
+  },
+  {
+    "run_id": "R10-121-calib-single_word",
+    "original_text": "The library closes at nine on weekdays and six on weekends.",
+    "reformulated_text": "The library closes at nine on wednesdays and six on weekends."
+  },
+  {
+    "run_id": "R10-121-calib-word_plus_sound",
+    "original_text": "The library closes at nine on weekdays and six on weekends.",
+    "reformulated_text": "The library closes at nine on wednesdays and six on weekends."
+  },
+  {
+    "run_id": "R10-123-core-word",
+    "original_text": "The bridge was built in the early twentieth century and renovated twice since then.",
+    "reformulated_text": "The bridge was built in the early 20th century and rebuilt twice since then."
+  },
+  {
+    "run_id": "R10-123-core-sparse_common_sound",
+    "original_text": "The bridge was built in the early twentieth century and renovated twice since then.",
+    "reformulated_text": "The bridge was built in the early twentieth half-century and renovated twice since then."
+  },
+  {
+    "run_id": "R10-124-core-multi_sound",
+    "original_text": "There are more public parks on the east side of the city than on the west.",
+    "reformulated_text": "There are more public parks on the east part of the downtown than on the west."
+  },
+  {
+    "run_id": "R10-125-core-word",
+    "original_text": "The store doesn't open until ten, but the café next door opens earlier.",
+    "reformulated_text": "The shop doesn't open until ten, but the café next door opens older."
+  },
+  {
+    "run_id": "R10-127-calib-multi_sound",
+    "original_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the third of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
+    "reformulated_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the tertiary of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer."
+  },
+  {
+    "run_id": "R10-127-calib-dense_mixed_generic",
+    "original_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the third of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer.",
+    "reformulated_text": "Born on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the tertiary of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighboring farmer."
+  },
+  {
     "run_id": "R10-128-core-word",
     "original_text": "Hugh Fleming had four surviving children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven.",
     "reformulated_text": "Hugh Fleming had four living children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven."
@@ -7,7 +77,7 @@
   {
     "run_id": "R10-128-core-sparse_common_sound",
     "original_text": "Hugh Fleming had four surviving children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven.",
-    "reformulated_text": "Hugh Fleming had four living children from his first marriage. He was 59 at the time of his 2nd marriage to Grace, and died when Alexander was seven."
+    "reformulated_text": "Hugh Fleming had four living children from his first marriage. He was 59 at the time of his back marriage to Grace, and died when Alexander was seven."
   },
   {
     "run_id": "R10-129-core-word",

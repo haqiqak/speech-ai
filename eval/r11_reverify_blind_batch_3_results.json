@@ -1,177 +1,177 @@
 {
-  "R10-080-core-multi_sound": {
+  "R10-074-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "NATURALNESS_OR_REGISTER",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"Is supported to attend\" is an awkward, non-idiomatic collocation compared to \"encouraged to attend,\" and \"stuff\" downgrades the register from \"material,\" though the core meaning still comes through."
+  },
+  "R10-075-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Everything we took in the first six chapters\" misuses \"took\" (you take a course, not chapters), producing a confusing sense change from \"studied.\""
+  },
+  "R10-076-core-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": ["GRAMMAR"],
-    "rationale": "\"case\" is not a sensible substitute for \"slip\" here and produces a nonsensical, ungrammatical clause."
+    "rationale": "\"The like way\" is not standard English and garbles the meaning of \"the same way.\""
+  },
+  "R10-079-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Everybody\" is a fully natural, meaning-preserving synonym for \"everyone.\""
+  },
+  "R10-079-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Present their reports\" shifts the action from handing in a document to displaying/delivering it, a noticeable but not drastic sense change from \"submit.\""
+  },
+  "R10-079-calib-single_word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Everybody\" is a natural, meaning-preserving synonym for \"everyone\"; nothing else changed."
+  },
+  "R10-079-calib-word_plus_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Everybody\" is a natural, meaning-preserving synonym for \"everyone\"; nothing else changed."
+  },
+  "R10-080-core-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Deadlines might case a little\" is nonsensical; \"case\" is not a valid substitute for \"slip.\""
   },
   "R10-083-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
     "secondary_defects": [],
-    "rationale": "\"had more experienced than\" is ungrammatical; it should be \"had more experience than\" or \"was more experienced than\"."
+    "rationale": "\"Had more experienced than\" is ungrammatical; it should be \"had more experience\" or \"was more experienced.\""
   },
   "R10-084-core-multi_sound": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"critique\" is a natural, meaning-preserving substitute for \"review\" in this context."
+    "rationale": "\"Critique what went wrong\" is a natural, meaning-preserving substitute for \"review what went wrong\" in this context."
   },
   "R10-086-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"arrive at the plane\" changes the meaning from arriving at the airport to arriving at the aircraft itself, which does not fit the two-hours-before-departure advice."
+    "rationale": "\"Arrive at the plane\" doesn't make sense two hours before departure (you arrive at the airport, not the plane itself), a real meaning change from the original."
   },
   "R10-089-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": ["GRAMMAR"],
-    "rationale": "\"less approached\" does not convey \"less crowded\" and reads as an ungrammatical, nonsensical substitution."
+    "secondary_defects": [],
+    "rationale": "\"Less approached beach\" is nonsensical; \"approached\" is not a valid substitute for \"crowded.\""
   },
   "R10-091-core-word": {
     "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
+    "severity": "MINOR",
     "primary_defect": "GRAMMAR",
     "secondary_defects": [],
-    "rationale": "\"calls for little less sugar\" drops the article and reads as ungrammatical compared to the standard \"a little less sugar\"."
+    "rationale": "\"Little less sugar\" is missing the article and should read \"a little less sugar\"; \"first version\" for \"original version\" is an acceptable near-synonym."
   },
   "R10-091-calib-single_word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"first version\" is a natural, meaning-preserving synonym for \"original version\"."
+    "rationale": "\"First version\" is an acceptable, meaning-preserving synonym for \"original version\" and the sentence remains fully natural."
   },
   "R10-091-calib-word_plus_sound": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"first version\" is a natural, meaning-preserving synonym for \"original version\"."
+    "rationale": "\"First version\" is an acceptable, meaning-preserving synonym for \"original version\" and the sentence remains fully natural."
   },
   "R10-094-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
-    "primary_defect": "FIXED_TERM_OR_IDIOM",
-    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
-    "rationale": "\"allergic to shell\" breaks the fixed term \"shellfish\" into an unrelated and much broader category, changing the medical meaning."
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Allergic to shell\" is a nonsensical truncation of \"allergic to shellfish\" that loses the intended meaning."
+  },
+  "R10-097-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"She excused for showing up late\" is ungrammatical and \"excused\" does not carry the same meaning as \"apologized.\""
+  },
+  "R10-097-calib-single_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"She excused for showing up late\" is ungrammatical and \"excused\" does not carry the same meaning as \"apologized.\""
+  },
+  "R10-097-calib-word_plus_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"She excused for showing up late\" is ungrammatical and \"excused\" does not carry the same meaning as \"apologized.\""
   },
   "R10-099-core-word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"anybody\" and \"comments\" are natural near-synonyms that preserve the original meaning."
+    "rationale": "\"Anybody\" for \"anyone\" and \"comments\" for \"comment\" are trivial, meaning-preserving variations that keep the sentence natural."
+  },
+  "R10-105-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["OTHER"],
+    "rationale": "\"Steeper and rocky\" breaks the parallel comparative structure (should be \"rockier\"), and the tense shifts inconsistently from \"was\" to \"suggests\" while also dropping \"mountain.\""
   },
   "R10-105-core-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
-    "rationale": "\"heavier\" does not describe a trail's slope the way \"steeper\" does, changing the physical description; \"proposed\" for \"suggested\" is also a slightly odd collocation for a map."
+    "secondary_defects": [],
+    "rationale": "\"Heavier\" is not a sensible substitute for \"steeper\" when describing a trail, producing a confusing sense change."
   },
   "R10-106-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
-    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
-    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
-    "rationale": "\"resolved\" more naturally implies the fog cleared/dissipated, which is close to the opposite of \"settled\" (fog forming/gathering)."
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "Fog does not \"resolve\" over a valley; \"resolved\" is a nonsensical substitute for \"settled.\""
   },
   "R10-108-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
-    "primary_defect": "GRAMMAR",
-    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
-    "rationale": "\"a one lamp\" is ungrammatical, and \"in the place\" loses the specific location detail of \"in the corner\"."
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"A several lamp\" is ungrammatical and reverses the stated fact of exactly one lamp into an unspecified plural quantity, while \"place\" also loses the precision of \"corner.\""
   },
   "R10-109-calib-single_word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"repair\" describes a different action than \"replace\" and changes the instructed task for the light fixture."
-  },
-  "R10-109-calib-word_plus_sound": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "\"repair\" describes a different action than \"replace\" and changes the instructed task for the light fixture."
-  },
-  "R10-113-core-dense_mixed_generic": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "\"numbered walks in the manual\" is nonsensical where the original clearly means \"numbered steps\"."
-  },
-  "R10-114-core-word": {
-    "acceptability": "CLEAN",
-    "severity": "CLEAN",
-    "primary_defect": "CLEAN",
-    "secondary_defects": [],
-    "rationale": "\"medicine\" and \"anywhere cool\" preserve the original storage instruction naturally."
-  },
-  "R10-114-core-sparse_common_sound": {
-    "acceptability": "CLEAN",
-    "severity": "CLEAN",
-    "primary_defect": "CLEAN",
-    "secondary_defects": [],
-    "rationale": "\"anywhere cool\" is a natural, meaning-preserving substitute for \"somewhere cool\"."
-  },
-  "R10-118-core-word": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
-    "rationale": "\"overstated\" does not carry the same meaning as \"overrated\" applied to a book's reputation, and \"seriously moving\" is a register shift from \"genuinely moving\"."
-  },
-  "R10-121-core-word": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
-    "secondary_defects": ["OTHER"],
-    "rationale": "\"saturdays\" narrows \"weekends\" to only one day (dropping Sunday), changing the stated hours, and \"dayss\" is a garbled token."
-  },
-  "R10-121-calib-single_word": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "OTHER",
-    "secondary_defects": [],
-    "rationale": "\"dayss\" is a garbled, non-word token replacing \"weekdays\"."
-  },
-  "R10-121-calib-word_plus_sound": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "OTHER",
-    "secondary_defects": [],
-    "rationale": "\"dayss\" is a garbled, non-word token replacing \"weekdays\"."
-  },
-  "R10-123-core-sparse_common_sound": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": ["FACTUAL_OR_LOGICAL_REVERSAL"],
-    "rationale": "\"twentieth half-century\" is a nonsensical, factually confused substitute for \"twentieth century\"."
-  },
-  "R10-124-core-multi_sound": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "\"east part of the downtown\" narrows the claim from the whole east side of the city to just downtown, changing the geographic scope of the statement."
-  },
-  "R10-125-core-word": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "OTHER",
-    "secondary_defects": [],
-    "rationale": "\"otherrer\" is a garbled, non-word token replacing \"earlier\"."
+    "rationale": "\"Attempt to repair\" describes a different action than \"attempt to replace\" for a light fixture, a real change in what the instruction asks the reader to do."
   }
 }
