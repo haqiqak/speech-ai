@@ -1,0 +1,177 @@
+{
+  "R10-001-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"components\"->\"parts\" and \"assimilated\"->\"integrated\" are natural synonyms that fully preserve the original meaning."
+  },
+  "R10-001-calib-single_word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"assimilated\"->\"integrated\" preserves the meaning of the sentence and reads naturally."
+  },
+  "R10-001-calib-word_plus_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "Identical to the single-word case: \"assimilated\"->\"integrated\" preserves meaning and reads naturally."
+  },
+  "R10-003-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": ["OTHER"],
+    "rationale": "\"Peristalsis\"->\"Peristalsia\" and \"esophagus\"->\"esophagum\" turn key anatomical terms into misspelled non-words."
+  },
+  "R10-005-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"reabsorbed\"->\"eliminated\" reverses the biological process, asserting removal instead of reuptake into the blood."
+  },
+  "R10-008-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"stroke\"->\"travel\" replaces a disease name in a list of diseases with an unrelated, nonsensical word."
+  },
+  "R10-011-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"cells\"->\"compartments\" changes the actual biological subject that absorbs nutrients, producing an incorrect claim."
+  },
+  "R10-013-calib-word_plus_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "OTHER",
+    "secondary_defects": [],
+    "rationale": "\"products\"->\"goodss\" is a garbled, misspelled non-word that breaks the sentence."
+  },
+  "R10-014-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "\"Chemical reactions\"->\"Chemical actions\" breaks the standard scientific term, though context keeps the meaning recoverable."
+  },
+  "R10-015-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Typically\"->\"Generally\" and \"increasing temperature\"->\"rising temperatures\" are natural, meaning-preserving substitutions."
+  },
+  "R10-019-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "NATURALNESS_OR_REGISTER",
+    "secondary_defects": ["FIXED_TERM_OR_IDIOM"],
+    "rationale": "\"speed\"->\"pace\" and \"straight line\"->\"direct line\" read as an informal, slightly off register for a physics statement without truly changing the claim."
+  },
+  "R10-020-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"rate\"->\"grade\" produces \"the grade at which the body's momentum is changing,\" which is nonsensical in this context."
+  },
+  "R10-021-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"same magnitude\"->\"like magnitude\" weakens the precise equality that is central to Newton's third law into vaguer similarity language."
+  },
+  "R10-022-core-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"speed\"->\"hurry\" (\"constant hurry\") is nonsensical for a physics description, and \"a even line\" is also an article error."
+  },
+  "R10-023-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"accelerate\"->\"change\" loses the precise physics claim and misleadingly suggests the body stays the same, though it can still be moving at constant velocity in equilibrium."
+  },
+  "R10-029-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"if it is sufficiently massive a black hole\" is garbled into \"if it is a sufficient black hole,\" breaking the conditional clause and producing a confusing, near-nonsensical statement about black hole formation."
+  },
+  "R10-031-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "\"volcanic ash\"->\"volcano ash\" alters the standard fixed term but remains readily understandable."
+  },
+  "R10-031-calib-multi_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "\"volcanic ash\"->\"volcano ash\" alters the standard fixed term but remains readily understandable."
+  },
+  "R10-031-calib-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"surface\"->\"grade\" produces \"below the grade,\" a nonsensical substitution that does not convey the intended meaning of ground level."
+  },
+  "R10-031-calib-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"surface\"->\"rise\" produces \"below the rise,\" a nonsensical phrase unrelated to the intended meaning."
+  },
+  "R10-031-calib-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"surface\"->\"grade\" produces the same nonsensical \"below the grade\" substitution as in the multi_sound variant."
+  },
+  "R10-032-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "NATURALNESS_OR_REGISTER",
+    "secondary_defects": [],
+    "rationale": "\"resulting from\"->\"leading from\"/\"happening from\" use non-standard prepositional phrasing that reads awkwardly, though the causal meaning is still recoverable."
+  },
+  "R10-034-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"comes out of solution\"->\"comes out of answer\" breaks a fixed chemistry term into a nonsensical phrase, and \"surface\"->\"shallow\" is also an odd, ungrammatical substitution."
+  },
+  "R10-038-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"hydroelectricity\"->\"electricity\" is a category error, since electricity itself is an energy carrier, not a type of renewable energy source."
+  },
+  "R10-038-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"Solar power\"->\"Incoming power\" breaks the fixed energy-source term into a phrase that does not correspond to any recognized renewable energy type."
+  }
+}

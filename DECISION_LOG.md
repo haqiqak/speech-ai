@@ -3504,3 +3504,52 @@ deferred. Recorded as future work, not silently dropped.
 Phase 10B's analysis. Production code touched: `semantic.py`,
 `reformulate.py`. Full record: `VALIDATION.md` §48,
 `eval/r11_targeted_rerun.py`.
+
+### 2026-08-27-B — Phase 11 re-verification: blind re-judging, a regression found and fixed
+
+**What was done:** per direct instruction to close §48's own disclosed
+limitation (no blind re-judging had been performed on Phase 11's
+fixes), re-ran the FULL frozen Phase 10 corpus (398 runs, not just the
+83 originally targeted) through production `reformulate()`, diffed
+against the frozen Phase 10 results, and blind-judged every changed run
+via 4 independent parallel subagents, same no-metadata discipline as
+Phase 10.
+
+**Self-caught regression, fixed before this entry was written:** the
+first re-harvest found 3 CLEAN->DEFECTIVE regressions. Root cause:
+`IDIOM_PHRASES` is consumed by three free-text-generating paths, not
+the two Phase 11 covered - `_try_phrase_replacement()` (the phrase
+tier) had no post-generation preservation check, and for phrases whose
+internal word IS the user's declared difficulty ("golden brown", "with
+distinction", "money supply"), that function's own `blocked_words` set
+makes it structurally incapable of ever preserving the phrase - every
+one of these was silently shipping a broken phrase. Separately,
+"small intestine"/"large intestine" were found to have never actually
+been verified against a real failure (misattributed to unrelated
+defects) - exactly the failure mode the original plan-rejection
+feedback warned against, which slipped through on 2 of 15 entries
+despite the discipline being applied. Fixed: removed the two
+unevidenced entries, added the same preservation gate to
+`_try_phrase_replacement()` (correctly converts these cases into an
+honest refusal rather than a shipped defect). Full test suite +
+smoke.py re-verified clean; the 398-run harvest and diff were re-run
+completely from the corrected code before any numbers below were
+finalized.
+
+**Result:** 92/398 runs changed. Of 83 still `reformulated`: 15 CLEAN,
+68 DEFECTIVE (52 SEVERE, 16 MINOR). Against Phase 10's original
+judgment: 15 DEFECTIVE->CLEAN (genuine fixes), 65 DEFECTIVE->DEFECTIVE,
+2 CLEAN->DEFECTIVE (a pre-existing, Phase-11-unrelated Category-4
+POS-agreement gap surfaced by known Datamuse nondeterminism), 1
+N/A->DEFECTIVE (same nondeterminism). 9 changed runs now safely refuse
+instead of reformulating (8 of 9 were previously DEFECTIVE, 7 SEVERE) -
+a real improvement even without a CLEAN verdict. **Overall CLEAN rate
+among all currently-`reformulated` runs: 75/230 (32.6%), up from Phase
+10's 62/238 (26.1%)** - the actual, blind-judged answer to "did Phase
+11 help."
+
+**Category:** Verification/regression-fix, on direct instruction
+following Phase 11. Production code touched: `semantic.py`,
+`reformulate.py` (both already-modified-in-Phase-11 files, corrected
+further). Full record: `VALIDATION.md` §49,
+`eval/r11_reverify_report.md`.

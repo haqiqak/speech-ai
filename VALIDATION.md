@@ -5084,3 +5084,84 @@ remain unimplemented, as scoped in the approved plan ("Phase 11B").
 Extending the duplicate-word check to escalation-tier output (the 6
 known-unfixed cases above) is a concrete, evidenced addition to that
 follow-up, not a new discovery requiring separate justification.
+
+## 49. Phase 11 re-verification — blind re-judging, a regression found and fixed (executed 2026-08-27)
+
+Per direct instruction to close §48's own disclosed limitation ("no
+longer reproduces the old defect" is narrower than "now judged CLEAN" —
+no blind re-judging had been performed). Full record:
+`eval/r11_reverify_report.md`.
+
+**[FACT] Method:** re-ran the FULL frozen Phase 10 corpus (398 runs, not
+just the 83 Phase 11 originally targeted) through today's production
+`reformulate()`, diffed against `eval/r10_raw_results.json` by
+`(status, reformulated_text)`, and blind-judged every run whose output
+changed (4 independent parallel subagents, no domain/category/
+difficulty shown — identical discipline to §46). Running the full
+corpus rather than only the targeted subset was deliberate: it is the
+actual regression check, not just a confirmation of the intended fixes.
+
+**[FACT, self-caught regression] The first re-harvest surfaced 3
+CLEAN→DEFECTIVE regressions, traced to a real gap and fixed before this
+section was finalized — not disclosed after the fact.** `IDIOM_PHRASES`
+is consumed by three free-text-generating paths, not the two Phase 11
+covered: `_try_phrase_replacement()` (the phrase tier, used when a
+flagged word's only difficulty is sitting inside a protected phrase)
+had no post-generation preservation check. For `"golden brown"`,
+`"with distinction"`, and `"money supply"`, the flagged word itself is
+in that function's own `blocked_words` set passed to T5 — meaning it
+can *structurally never* produce a candidate preserving the exact
+phrase — so every one of these was silently shipping a broken phrase.
+Separately, `"small intestine"`/`"large intestine"` were found to have
+never been verified against a real failure at all (R10-004's actual
+defect was `"small"→"little"`, unrelated; R10-005's was
+`"reabsorbed"→"assumed"`, already handled by the blocklist) — exactly
+the failure mode the original plan-rejection feedback warned against,
+which slipped through despite that discipline being applied to the
+other 13 entries.
+
+**[FACT] Fix applied and re-verified from scratch:** removed the two
+unevidenced intestine entries; added `dropped_protected_phrases()` to
+`_try_phrase_replacement()` (correctly turns those three cases — and
+any future one with the same shape — into an honest refusal rather than
+a shipped defect, per this codebase's established "never ship a bad
+guess" discipline). Full test suite + `smoke.py` re-verified clean; the
+398-run harvest and diff were re-run completely from the corrected
+code, not patched on top of the regressed numbers.
+
+**[FACT] Final result, post-fix: 92/398 runs changed. Of the 83 still
+`reformulated`, blind judgment: 15 CLEAN, 68 DEFECTIVE (52 SEVERE, 16
+MINOR).** Transition against Phase 10's original judgment: 15
+DEFECTIVE→CLEAN (genuine fixes), 65 DEFECTIVE→DEFECTIVE (changed but
+still defective, often a different defect), 2 CLEAN→DEFECTIVE
+(`R10-049` × 2 — a pre-existing, Phase-11-unrelated Category-4
+POS-agreement gap surfaced by this project's already-documented
+Datamuse-nondeterminism, see limitations), 1 N/A→DEFECTIVE (same
+nondeterminism, one case). 9 of the 92 changed runs now safely refuse
+instead of reformulating — 8 of those 9 were previously judged
+DEFECTIVE (7 SEVERE), so the refusal is itself a real improvement even
+though it isn't a CLEAN.
+
+**[FACT, the actual answer to "did Phase 11 help"] Overall CLEAN rate
+among all currently-`reformulated` runs: 75/230 (32.6%), up from Phase
+10's 62/238 (26.1%) — a genuine ~6.5-point improvement, blind-judged,
+not inferred from "the old defect text is gone."** Refusal rate rose
+too (70/398, 17.6%, up from 62/398, 15.6%) — the safety gate doing more
+work correctly, not a coverage loss, since the newly-refused cases were
+previously shipping defects.
+
+**[FINDING] The 65 still-DEFECTIVE cases' primary-defect breakdown
+(WRONG_WORD_OR_SENSE 35, FIXED_TERM_OR_IDIOM 8, GRAMMAR 8,
+FACTUAL_OR_LOGICAL_REVERSAL 5, NATURALNESS_OR_REGISTER 5, OTHER 4)
+matches Phase 10B's Categories 4-7 scope exactly** — confirms the
+existing "Phase 11B" plan's target rather than surfacing a new pattern.
+
+**[LIMITATION]** All judges (this pass's 4 plus Phase 10's 5) are
+Claude instances. The `R10-049` case is a concrete demonstration that
+this project's known Datamuse-dependent candidate-ranking
+nondeterminism can flip a judgment between process runs independent of
+any code change — a reproducibility caveat for this and future
+re-verification passes. This re-verifies Phase 11's own ~92-run change
+population, not a fresh disjoint corpus — it answers "did this pass's
+changes help," not "what is the system's current CLEAN rate on unseen
+material" (still Phase 10's 26% baseline until a new stress test runs).

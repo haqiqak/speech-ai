@@ -1743,6 +1743,31 @@ dictionary validation) remain for a follow-up "Phase 11B", now with the
 escalation-tier duplicate-word extension added to that scope as a
 concrete, evidenced item rather than a new discovery.
 
+### Phase 11 re-verification. Blind re-judging + a regression found and fixed — **DONE, 2026-08-27**
+**Linked finding:** closes Phase 11's own disclosed limitation (no
+blind re-judging had been done). Full record: `VALIDATION.md` §49,
+`eval/r11_reverify_report.md`.
+**What was done:** re-ran the full 398-run Phase 10 corpus through
+production `reformulate()`, diffed against the frozen Phase 10 results,
+blind-judged every changed run (4 parallel subagents, same discipline
+as Phase 10). The first pass found 3 regressions, traced to
+`IDIOM_PHRASES` being consumed by a third free-text path
+(`_try_phrase_replacement()`) that Phase 11 hadn't gated, plus two
+entries ("small intestine"/"large intestine") that were never actually
+verified against a real failure. Both fixed and the full 398-run
+harvest re-run from the corrected code before any number was finalized.
+**Result:** 92/398 runs changed; of 83 still `reformulated`, 15 CLEAN /
+68 DEFECTIVE. Against Phase 10's original judgment: 15 genuine fixes, 2
+regressions (both a pre-existing, unrelated Category-4 gap surfaced by
+known candidate-ranking nondeterminism, not caused by Phase 11). 9
+changed runs now safely refuse instead of shipping a defect. **Overall
+CLEAN rate among all reformulated runs: 75/230 (32.6%), up from Phase
+10's 26.1%.**
+**Labeled as:** the actual, blind-judged confirmation that Phase 11
+helped, not an inference from "the old defect text is gone." Phase 11B
+(Categories 4-7, ~87 cases, still WRONG_WORD_OR_SENSE-dominated per this
+pass's own breakdown) remains the next concrete step.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

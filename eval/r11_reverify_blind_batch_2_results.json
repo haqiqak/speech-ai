@@ -1,0 +1,177 @@
+{
+  "R10-041-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Litter\" (scatter trash) is a materially different action from \"pollute\" (contaminate broadly), changing what the sentence asserts."
+  },
+  "R10-041-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Activities\" for \"sources\" shifts emphasis from the energy-generating systems themselves to the acts of generating, a modest precision loss that doesn't change the core comparative claim."
+  },
+  "R10-042-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"Generate electric\" drops the required noun form (\"electricity\"), leaving an ungrammatical phrase."
+  },
+  "R10-042-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Highest place\" replaces \"highest rate,\" turning a statement about a 90% efficiency figure into a confusing claim about ranking or location."
+  },
+  "R10-044-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Standards\" (a normative benchmark) is not equivalent to \"specifications\" (a formal set of instructions), a real but modest sense shift."
+  },
+  "R10-044-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Designations\" (names/labels) cannot sensibly be \"used for performing calculations,\" making the sentence nonsensical."
+  },
+  "R10-049-calib-single_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"The larger the possible\" is ungrammatical, and \"possible\" does not carry the meaning of \"probability\" that the sentence needs."
+  },
+  "R10-049-calib-word_plus_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "Identical to the sibling case: \"the larger the possible\" is ungrammatical and loses the noun \"probability\" the clause depends on."
+  },
+  "R10-051-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "NATURALNESS_OR_REGISTER",
+    "secondary_defects": [],
+    "rationale": "\"Composed as 0.5\" is an unnatural collocation for expressing a number in a different notation, though the meaning is still recoverable."
+  },
+  "R10-056-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Overall\" for \"general\" and \"money\" for \"currency\" are natural, meaning-preserving synonyms."
+  },
+  "R10-058-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"An change\" is a clear article-agreement error, and \"change\" in place of \"increase\" loses the specific direction of the described effect."
+  },
+  "R10-059-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"Cutting unemployed\" is ungrammatical and reads as referring to unemployed people rather than the unemployment rate."
+  },
+  "R10-059-core-dense_mixed_generic": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Cutting unemployment\" is a fully natural, meaning-preserving synonym for \"reducing unemployment.\""
+  },
+  "R10-060-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [],
+    "rationale": "\"Crises\" broadens the specific macroeconomic term \"recessions\" into a vaguer, more severe-sounding category, a real but non-catastrophic terminology shift."
+  },
+  "R10-061-calib-single_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Expression\" has no sensible relation to \"construction\" in a sentence about designing, building, and maintaining physical infrastructure."
+  },
+  "R10-061-calib-word_plus_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Paid\" misrepresents \"professional\" and \"expression\" misrepresents \"construction,\" compounding two unrelated-meaning substitutions."
+  },
+  "R10-061-calib-single_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Underlying components\" loses the specific engineering sense of \"structural components\" (load-bearing elements), a real but recoverable precision loss."
+  },
+  "R10-064-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["FIXED_TERM_OR_IDIOM"],
+    "rationale": "\"Self-made\" (rose through his own effort) asserts something different from \"self-proclaimed\" (called himself that title), changing the historical claim about Smeaton."
+  },
+  "R10-068-core-multi_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Begins\" is a fully natural, meaning-preserving synonym for \"starts.\""
+  },
+  "R10-069-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "NATURALNESS_OR_REGISTER",
+    "secondary_defects": [],
+    "rationale": "\"Expressed she might be late\" is an awkward, less natural collocation than \"said,\" though the reported content is unchanged."
+  },
+  "R10-072-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Said\"/\"likely\" are natural, meaning-preserving synonyms for \"mentioned\"/\"probably.\""
+  },
+  "R10-073-calib-word_plus_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Teacher\" generalizes away the specific higher-education sense of \"professor,\" a noticeable but non-distorting precision loss."
+  },
+  "R10-074-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "\"Supported to attend\" is not a natural collocation and shifts the meaning from urging attendance (\"encouraged\") to assisting it, compounded by the register drop of \"stuff\" for \"material.\""
+  },
+  "R10-075-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Took\" does not fit \"in the first six chapters,\" producing a confusing substitute for \"studied.\""
+  },
+  "R10-079-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Present\" (to display/show) describes a different action from \"submit\" (to turn in), altering what employees are being asked to do."
+  }
+}

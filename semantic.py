@@ -144,12 +144,24 @@ IDIOM_PHRASES: list[str] = [
     # station) were REJECTED on verification as not being genuine
     # multi-word terms or not being fixable by phrase-protection at all;
     # see the plan's Category-1 writeup for why.
-    "small intestine", "large intestine", "gastrointestinal tract",
+    "gastrointestinal tract",
     "activation energy", "mechanical equilibrium", "neutron star",
     "magma chamber", "geothermal energy", "renewable energy",
     "conversion efficiency", "money supply", "wage rigidity",
     "opportunity cost", "goods and services", "golden brown",
     "with distinction",
+    # "small intestine"/"large intestine" were REMOVED here (Phase 11
+    # re-verification, VALIDATION.md SS49) -- neither was actually
+    # evidenced: R10-004's real defect was "small"->"little" (an unrelated
+    # global-sound substitution) and R10-005's was "reabsorbed"->"assumed"
+    # (now correctly handled by BLOCKED_SUBSTITUTION_PAIRS); "large
+    # intestine" survived unbroken in R10-005's own defective output. Both
+    # entries were added on a misreading during the original Category-1
+    # pass, and protecting them actively broke a previously-CLEAN case
+    # (R10-004-core-word: rerouted "intestine" -- the user's own declared
+    # difficulty -- from a working substitution ("small bowel") into the
+    # phrase tier, which can't preserve the exact phrase text since the
+    # word inside it is deliberately blocked from the replacement).
     # "go wrong" observed as "went wrong" (R10-084); no verb-inflection
     # template exists (only the {pron}-slot mechanism below), so each
     # tense is listed literally rather than assumed to generalize.

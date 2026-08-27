@@ -1,0 +1,58 @@
+{
+  "R10-128-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Surviving children\" specifically denotes children who survived (as opposed to siblings who died), while \"living children\" shifts this to currently-alive, a subtle but real meaning change."
+  },
+  "R10-128-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "Same \"surviving\"->\"living\" meaning shift as the word-level rewrite, plus the numeral \"2nd\" in place of \"second\" reads as an informal register mismatch in this biographical prose."
+  },
+  "R10-129-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"Earned a two-year learning to Kilmarnock Academy\" is ungrammatical and drops the meaning that Fleming won a funded scholarship."
+  },
+  "R10-131-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Advised\" is a natural, meaning-preserving substitute for \"suggested\" given a physician brother recommending a career path."
+  },
+  "R10-133-calib-multi_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "NATURALNESS_OR_REGISTER",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "The reordered \"graduated with distinction with a MBBS degree\" creates an awkward repeated \"with\", and \"school\"->\"university\" loses some specificity about the institution."
+  },
+  "R10-133-calib-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"A degree from the courses\" is a broken collocation since degrees come from institutions rather than \"courses\", leaving the referent unclear."
+  },
+  "R10-133-calib-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"A degree from the courses\" is a broken collocation since degrees come from institutions rather than \"courses\", leaving the referent unclear."
+  },
+  "R10-133-calib-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"A degree from the courses\" is a broken collocation since degrees come from institutions rather than \"courses\", leaving the referent unclear."
+  }
+}

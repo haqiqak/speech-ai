@@ -731,6 +731,22 @@ def _try_phrase_replacement(
             continue
         if any(profile.find_word(w.lower()) is not None for w in content_words):
             continue  # never reintroduce another declared word (§2.7/R20)
+        # Phase 11 re-verification (VALIDATION.md SS49) -- the same gap
+        # _try_escalation() had: this splices a locally-generated window
+        # into the sentence, so any OTHER protected phrase living outside
+        # the window survives automatically (the splice copies it
+        # verbatim), but a protected phrase that overlaps the window
+        # itself needs the same post-generation check _try_escalation()
+        # uses. When the flagged word IS part of the protected phrase
+        # being replaced (blocked_words above already forces T5 to avoid
+        # it), this will correctly never find a preserving candidate --
+        # the sentence is left unchanged and reported as skipped, an
+        # honest refusal rather than shipping a broken phrase
+        # ("golden brown" -> "gold brown", "with distinction" -> "with
+        # distinguished", "money supply" -> "money market", all observed
+        # SEVERE defects this closes).
+        if sem.dropped_protected_phrases(sentence, candidate_sentence):
+            continue
         rank_score = sim if sim is not None else -1.0
         if best is None or rank_score > best["rank_score"]:
             best = {"tokens": candidate_tokens, "text": candidate_sentence, "sim": sim, "rank_score": rank_score}

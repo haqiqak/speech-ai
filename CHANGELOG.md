@@ -6,7 +6,20 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
-- **2026-08-27** feat: Phase 11 — implemented categories 1-3 of Phase
+- **2026-08-27, second** fix: Phase 11 re-verification — blind
+  re-judged all Phase 11 changes (full 398-run re-harvest, not just
+  the 83 targeted cases) and found a real regression: `IDIOM_PHRASES`
+  is consumed by a third free-text path (`_try_phrase_replacement()`)
+  Phase 11 hadn't gated, and two entries ("small intestine"/"large
+  intestine") were never actually verified against a real failure.
+  Fixed both (removed the unverified entries, added the same
+  preservation gate to the phrase-tier function), re-ran the full
+  harvest from the corrected code. Final result: 15 genuine
+  DEFECTIVE→CLEAN fixes, 9 SEVERE-defect-to-safe-refusal conversions,
+  only 2 regressions (both a pre-existing, unrelated nondeterminism
+  gap). Overall CLEAN rate among reformulated runs: 26.1% → 32.6%,
+  blind-judged. → `DECISION_LOG.md` 2026-08-27-B, `VALIDATION.md` §49.
+- **2026-08-27, first** feat: Phase 11 — implemented categories 1-3 of Phase
   10B's "92% fixable" batch. Expanded `semantic.py`'s fixed-term
   protection list and extended its enforcement to escalation-tier T5
   output (a gap found during implementation); added a duplicate-word-

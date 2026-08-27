@@ -1,0 +1,42 @@
+[
+  {
+    "run_id": "R10-128-core-word",
+    "original_text": "Hugh Fleming had four surviving children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven.",
+    "reformulated_text": "Hugh Fleming had four living children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven."
+  },
+  {
+    "run_id": "R10-128-core-sparse_common_sound",
+    "original_text": "Hugh Fleming had four surviving children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven.",
+    "reformulated_text": "Hugh Fleming had four living children from his first marriage. He was 59 at the time of his 2nd marriage to Grace, and died when Alexander was seven."
+  },
+  {
+    "run_id": "R10-129-core-word",
+    "original_text": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year scholarship to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.",
+    "reformulated_text": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year learning to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution."
+  },
+  {
+    "run_id": "R10-131-core-word",
+    "original_text": "His elder brother, Tom, was already a physician and suggested that he should follow the same career.",
+    "reformulated_text": "His elder brother, Tom, was already a physician and advised that he should follow the same career."
+  },
+  {
+    "run_id": "R10-133-calib-multi_word",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906 he graduated with distinction with a MBBS degree from the university."
+  },
+  {
+    "run_id": "R10-133-calib-multi_sound",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he qualified with a MBBS degree from the courses with distinction."
+  },
+  {
+    "run_id": "R10-133-calib-sparse_common_sound",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he qualified with a MBBS degree from the courses with distinction."
+  },
+  {
+    "run_id": "R10-133-calib-dense_mixed_generic",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he qualified with a MBBS degree from the courses with distinction."
+  }
+]

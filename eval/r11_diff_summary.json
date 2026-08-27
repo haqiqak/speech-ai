@@ -1,0 +1,964 @@
+{
+  "n_total": 398,
+  "n_unchanged": 306,
+  "n_changed": 92,
+  "status_transitions": {
+    "reformulated -> reformulated": 82,
+    "could_not_safely_reformulate -> reformulated": 1,
+    "reformulated -> could_not_safely_reformulate": 9
+  },
+  "changed": [
+    {
+      "run_id": "R10-001-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Digestion involves the breakdown of food into smaller and smaller parts, until they can be absorbed and absorbed into the body.",
+      "new_text": "Digestion involves the breakdown of food into smaller and smaller parts, until they can be absorbed and integrated into the body."
+    },
+    {
+      "run_id": "R10-001-calib-single_word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and absorbed into the body.",
+      "new_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and integrated into the body."
+    },
+    {
+      "run_id": "R10-001-calib-word_plus_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and absorbed into the body.",
+      "new_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and integrated into the body."
+    },
+    {
+      "run_id": "R10-003-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Peristalaxis is the rhythmic contracting of muscles that begins in the esophagum and continues along the wall of the stomach and the rest of the intestines.",
+      "new_text": "Peristalsia is the rhythmic contracting of muscles that begins in the esophagum and continues along the wall of the stomach and the rest of the gastrointestinal tract."
+    },
+    {
+      "run_id": "R10-005-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Water and some minerals are assumed back into the blood in the large intestine.",
+      "new_text": "Water and some minerals are eliminated back into the blood in the large intestine."
+    },
+    {
+      "run_id": "R10-008-core-dense_mixed_generic",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Over-nutrition of micronutrient is a major cause of obesity and increases the chance of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, shot, hypertension, coronary heart disease, osteoporosis, and some forms of cancer.",
+      "new_text": "Over-nutrition of micronutrient is a major cause of obesity and increases the chance of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, travel, hypertension, coronary heart disease, osteoporosis, and some forms of cancer."
+    },
+    {
+      "run_id": "R10-011-core-sparse_common_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Nutrients are absorbed by the cases and used in metabolic biochemical reactions.",
+      "new_text": "Nutrients are absorbed by the compartments and used in metabolic biochemical reactions."
+    },
+    {
+      "run_id": "R10-013-calib-word_plus_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new chemicals are generated.",
+      "new_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new goodss are generated."
+    },
+    {
+      "run_id": "R10-014-core-dense_mixed_generic",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Chemical answers are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the chemicals.",
+      "new_text": "Chemical actions are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the precursors."
+    },
+    {
+      "run_id": "R10-015-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Usually, reaction rates increase with rising temperatures because there is more thermal energy available to reach the activated energy necessary for breaking bonds between atoms.",
+      "new_text": "Generally, reaction rates increase with rising temperatures because there is more thermal energy available to reach the activation energy necessary for breaking bonds between atoms."
+    },
+    {
+      "run_id": "R10-019-core-sparse_common_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "A body remains at rest, or in motion at a constant rate in a right line, unless it is acted upon by a force.",
+      "new_text": "A body remains at rest, or in motion at a constant pace in a direct line, unless it is acted upon by a force."
+    },
+    {
+      "run_id": "R10-020-core-dense_mixed_generic",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the value at which the body's momentum is changing with time.",
+      "new_text": "At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the grade at which the body's momentum is changing with time."
+    },
+    {
+      "run_id": "R10-021-core-sparse_common_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "If two bodies exert forces on each other, these forces have the one magnitude but opposite directions.",
+      "new_text": "If two bodies exert forces on each other, these forces have the like magnitude but opposite directions."
+    },
+    {
+      "run_id": "R10-022-core-multi_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Newton's first law expresses the principle of inertia: the natural behavior of a body is to move in a true line at constant velocity.",
+      "new_text": "Newton's first law expresses the principle of inertia: the natural behavior of a body is to move in a even line at constant hurry."
+    },
+    {
+      "run_id": "R10-023-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "When the net force on a body is equal to zero, then by Newton's second law the body does not accelerated, and it is said to be in a physical balance.",
+      "new_text": "When the net force on a body is equal to zero, then by Newton's second law, the body do not change, and it is said to be in mechanical equilibrium."
+    },
+    {
+      "run_id": "R10-029-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "At the end of a star's life, fusion ceases and its core becomes a stellar remnant: a white dwarf, a neutral star or a black hole if it is sufficient mass.",
+      "new_text": "At the end of a star's life, fusion ceases and its core becomes a stellar remnant: a white dwarf, a neutron star or if it is a sufficient black hole."
+    },
+    {
+      "run_id": "R10-031-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "A volcano is a vent or fissure in the crust of a planetary mass object that allows hot lava, volcano ash and gases to escape from a magma cave below the surface.",
+      "new_text": "A volcano is a vent or fissure in the crust of a planetary mass object that allows hot lava, volcano ash and gases to escape from a magma chamber below the surface."
+    },
+    {
+      "run_id": "R10-031-calib-multi_word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "A volcano is a vent or fissure in the crust of a planetary mass object that allows hot lava, volcano ash and gases to escape from a magma cave below the surface.",
+      "new_text": "A volcano is a vent or fissure in the crust of a planetary mass object that allows hot lava, volcano ash and gases to escape from a magma chamber below the surface."
+    },
+    {
+      "run_id": "R10-031-calib-multi_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the open.",
+      "new_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the grade."
+    },
+    {
+      "run_id": "R10-031-calib-sparse_common_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the open.",
+      "new_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the rise."
+    },
+    {
+      "run_id": "R10-031-calib-dense_mixed_generic",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the open.",
+      "new_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the grade."
+    },
+    {
+      "run_id": "R10-032-core-dense_mixed_generic",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Volcanoes causing from divergent tectonic activity is usually non-explosive whereas those happening from convergent tectonic activity cause violent eruptions.",
+      "new_text": "Volcanoes leading from divergent tectonic activity is usually non-explosive whereas those happening from convergent tectonic activity cause violent eruptions."
+    },
+    {
+      "run_id": "R10-034-core-dense_mixed_generic",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Magma commonly explodes as the gas dissolved in it comes out of answer as the pressure decreases when it flows to the open.",
+      "new_text": "Magma commonly explodes as the gas dissolved in it comes out of answer as the pressure decreases when it flows to the shallow."
+    },
+    {
+      "run_id": "R10-038-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Solar power, wind power, electricity, thermal energy, and biomass is widely agreed to be the main types of renewable energy.",
+      "new_text": "Solar power, wind power, electricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy."
+    },
+    {
+      "run_id": "R10-038-core-sparse_common_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Renewable power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy.",
+      "new_text": "Incoming power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy."
+    },
+    {
+      "run_id": "R10-041-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "In general, alternative energy sources are much less polluting than fossil fuels.",
+      "new_text": "In general, renewable energy sources litter much less than fossil fuels."
+    },
+    {
+      "run_id": "R10-041-core-dense_mixed_generic",
+      "old_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
+      "old_text": "In general, renewable energy sources pollute much less than fossil fuels.",
+      "new_text": "In general, renewable energy activities pollute much less than fossil fuels."
+    },
+    {
+      "run_id": "R10-042-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Water can generate power with a convertibility of about 90%, which is the highest rate in renewable energy.",
+      "new_text": "Water can generate electric with a conversion efficiency of about 90 %, which is the highest rate in renewable energy."
+    },
+    {
+      "run_id": "R10-042-core-dense_mixed_generic",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Water can generate electricity with a conversion efficiency of about 90 %, which is the highest value in extended energy.",
+      "new_text": "Water can generate electricity with a conversion efficiency of about 90 %, which is the highest place in renewable energy."
+    },
+    {
+      "run_id": "R10-044-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Algorithms is used as descriptions for performing maths and data processing.",
+      "new_text": "Algorithms is used as standards for performing computations and data processing."
+    },
+    {
+      "run_id": "R10-044-core-dense_mixed_generic",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Algorithms is used as descriptions for performing calculations and data processing.",
+      "new_text": "Algorithms is used as designations for performing calculations and data processing."
+    },
+    {
+      "run_id": "R10-049-calib-single_word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The chance of an event is a number between 0 and 1; the larger the chance, the more likely an event is to occur.",
+      "new_text": "The chance of an event is a number between 0 and 1; the larger the possible, the more likely an event is to occur."
+    },
+    {
+      "run_id": "R10-049-calib-word_plus_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The chance of an event is a number between 0 and 1; the larger the chance, the more likely an event is to occur.",
+      "new_text": "The chance of an event is a number between 0 and 1; the larger the possible, the more likely an event is to occur."
+    },
+    {
+      "run_id": "R10-051-core-dense_mixed_generic",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Since the coin is fair, the two outcomes ( heads and tails ) are both equally probable; the probability of heads equals the probability of tails; and since no other outcomes are possible, the probability of either heads or tails are 1/2 ( which could also be printed as 0.5 or 50 % ).",
+      "new_text": "Since the coin is fair, the two outcomes ( heads and tails ) are both equally probable; the probability of heads equals the probability of tails; and since no other outcomes are possible, the probability of either heads or tails are 1/2 ( which could also be composed as 0.5 or 50 % )."
+    },
+    {
+      "run_id": "R10-055-core-dense_mixed_generic",
+      "old_status": "reformulated",
+      "new_status": "could_not_safely_reformulate",
+      "old_text": "In economics, inflation is an increase in the average price of goods and helps in terms of money.",
+      "new_text": "In economics, inflation is an increase in the average price of goods and services in terms of money."
+    },
+    {
+      "run_id": "R10-055-calib-multi_sound",
+      "old_status": "reformulated",
+      "new_status": "could_not_safely_reformulate",
+      "old_text": "In economics, inflation is an increase in the average price of goods and helps in terms of money.",
+      "new_text": "In economics, inflation is an increase in the average price of goods and services in terms of money."
+    },
+    {
+      "run_id": "R10-055-calib-sparse_common_sound",
+      "old_status": "reformulated",
+      "new_status": "could_not_safely_reformulate",
+      "old_text": "In economics, inflation is an increase in the average price of goods and helps in terms of money.",
+      "new_text": "In economics, inflation is an increase in the average price of goods and services in terms of money."
+    },
+    {
+      "run_id": "R10-056-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "When the overall price level rises, each unit of the dollar buys fewer goods and service.",
+      "new_text": "When the overall price level rises, each unit of money buys fewer goods and services."
+    },
+    {
+      "run_id": "R10-056-core-sparse_common_sound",
+      "old_status": "reformulated",
+      "new_status": "could_not_safely_reformulate",
+      "old_text": "When the general price level rises, each unit of currency buys fewer goods and helps.",
+      "new_text": "When the general price level rises, each unit of currency buys fewer goods and services."
+    },
+    {
+      "run_id": "R10-057-core-sparse_common_sound",
+      "old_status": "reformulated",
+      "new_status": "could_not_safely_reformulate",
+      "old_text": "Changes in inflation is widely attributed to increases in the money issue.",
+      "new_text": "Changes in inflation is widely attributed to increases in the money supply."
+    },
+    {
+      "run_id": "R10-058-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The positive effects would include a rise in the chance cost of holding money.",
+      "new_text": "The bad effects would include an change in the opportunity cost of holding money."
+    },
+    {
+      "run_id": "R10-059-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Positive effects include a reduction of employment due to nominal wage rigidities.",
+      "new_text": "Positive effects include cutting unemployed due to nominal wage rigidity."
+    },
+    {
+      "run_id": "R10-059-core-dense_mixed_generic",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Positive effects include breaking unemployment due to nominal wage toughness.",
+      "new_text": "Positive effects include cutting unemployment due to nominal wage rigidity."
+    },
+    {
+      "run_id": "R10-060-core-dense_mixed_generic",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Low inflation decreases the likelihood of economic economies by enabling the labor market to adjust more quickly.",
+      "new_text": "Low inflation decreases the likelihood of economic crises by enabling the labor market to adjust more quickly."
+    },
+    {
+      "run_id": "R10-061-calib-single_word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Civil engineering is a professional engineering discipline that deals with the design, business, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+      "new_text": "Civil engineering is a professional engineering discipline that deals with the design, expression, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways."
+    },
+    {
+      "run_id": "R10-061-calib-word_plus_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Civil engineering is a expert engineering discipline that deals with the design, business, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+      "new_text": "Civil engineering is a paid engineering discipline that deals with the design, expression, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways."
+    },
+    {
+      "run_id": "R10-061-calib-single_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, functional components of buildings, and railways.",
+      "new_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, underlying components of buildings, and railways."
+    },
+    {
+      "run_id": "R10-064-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The first so-called civil engineer was John Smeaton, who built the Eddystone Lighthouse.",
+      "new_text": "The first self-made civil engineer was John Smeaton, who built the Eddystone Lighthouse."
+    },
+    {
+      "run_id": "R10-068-core-multi_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Do you want to grab a coffee before the meeting goes?",
+      "new_text": "Do you want to grab a coffee before the meeting begins?"
+    },
+    {
+      "run_id": "R10-069-core-dense_mixed_generic",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "She told she might be a little late because of traffic.",
+      "new_text": "She expressed she might be a little late because of traffic."
+    },
+    {
+      "run_id": "R10-072-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "He said that he'd maybe need more time to finish the report.",
+      "new_text": "He said that he'd likely need more time to finish the report."
+    },
+    {
+      "run_id": "R10-073-calib-word_plus_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The faculty explained the concept twice before moving on to the next topic.",
+      "new_text": "The teacher explained the concept twice before moving on to the next topic."
+    },
+    {
+      "run_id": "R10-074-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Students who struggle with the stuff is furthered to attend office hours.",
+      "new_text": "Students who struggle with the stuff is supported to attend office hours."
+    },
+    {
+      "run_id": "R10-075-core-dense_mixed_generic",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The exam covers everything we considered in the first six chapters.",
+      "new_text": "The exam covers everything we took in the first six chapters."
+    },
+    {
+      "run_id": "R10-079-core-sparse_common_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The manager asked everyone to take their reports by the end of the day.",
+      "new_text": "The manager asked everyone to present their reports by the end of the day."
+    },
+    {
+      "run_id": "R10-080-core-multi_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "We're understaffed this week, so deadlines might trip a little.",
+      "new_text": "We're understaffed this week, so deadlines might case a little."
+    },
+    {
+      "run_id": "R10-083-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "He didn't get the job, even though he had more example than the other elections.",
+      "new_text": "He didn't get the job, even though he had more experienced than the other applicants."
+    },
+    {
+      "run_id": "R10-084-core-multi_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The team meets every Monday to critique what went faulty the previous week.",
+      "new_text": "The team meets every Monday to critique what went wrong the previous week."
+    },
+    {
+      "run_id": "R10-086-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Make sure you arrive at the airline at least two hours before leaving.",
+      "new_text": "Make sure you arrive at the plane at least two hours before leaving."
+    },
+    {
+      "run_id": "R10-089-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Locals advised a smaller, less bunched beach a few miles further north.",
+      "new_text": "Locals advised a smaller, less approached beach a few miles further north."
+    },
+    {
+      "run_id": "R10-091-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "This recipe calls for little less sugar than the new version.",
+      "new_text": "This recipe calls for little less sugar than the first version."
+    },
+    {
+      "run_id": "R10-091-calib-single_word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "This recipe calls for slightly less sugar than the new version.",
+      "new_text": "This recipe calls for slightly less sugar than the first version."
+    },
+    {
+      "run_id": "R10-091-calib-word_plus_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "This recipe calls for slightly less sugar than the new version.",
+      "new_text": "This recipe calls for slightly less sugar than the first version."
+    },
+    {
+      "run_id": "R10-092-core-word",
+      "old_status": "reformulated",
+      "new_status": "could_not_safely_reformulate",
+      "old_text": "Add the onions first, then let them cook until they turn gold brown.",
+      "new_text": "Add the onions first, then let them cook until they turn golden brown."
+    },
+    {
+      "run_id": "R10-094-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "He's allergic to shell, so he always checks the menu severely.",
+      "new_text": "He's allergic to shell, so he always checks the menu strictly."
+    },
+    {
+      "run_id": "R10-099-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "He didn't mean to offend guy, but his remark came across the wrong way.",
+      "new_text": "He didn't mean to offend anybody, but his comments came across the wrong way."
+    },
+    {
+      "run_id": "R10-105-core-sparse_common_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The mountain trail was higher and rockier than the map advised.",
+      "new_text": "The mountain trail was heavier and rockier than the map proposed."
+    },
+    {
+      "run_id": "R10-106-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "A thin layer of fog decided over the valley just after dawn.",
+      "new_text": "A thin layer of fog resolved over the valley just after dawn."
+    },
+    {
+      "run_id": "R10-108-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The room was dimly lit, with only a one lamp in the edge.",
+      "new_text": "The room was dimly lit, with only a one lamp in the place."
+    },
+    {
+      "run_id": "R10-109-calib-single_word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Turn off the power before you attempt to substitute the light fixture.",
+      "new_text": "Turn off the power before you attempt to repair the light fixture."
+    },
+    {
+      "run_id": "R10-109-calib-word_plus_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Turn off the power before you attempt to substitute the light fixture.",
+      "new_text": "Turn off the power before you attempt to repair the light fixture."
+    },
+    {
+      "run_id": "R10-113-core-dense_mixed_generic",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Assemble the shelf according to the numbered paces in the manual.",
+      "new_text": "Assemble the shelf according to the numbered walks in the manual."
+    },
+    {
+      "run_id": "R10-114-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Store the medicine there cool and out of reach of children.",
+      "new_text": "Store the medicine anywhere cool and out of reach of children."
+    },
+    {
+      "run_id": "R10-114-core-sparse_common_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Store the medication there cool and out of reach of children.",
+      "new_text": "Store the medication anywhere cool and out of reach of children."
+    },
+    {
+      "run_id": "R10-118-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The book was overestimated, in my opinion, though the ending was really moving.",
+      "new_text": "The book was overstated, in my opinion, though the ending was seriously moving."
+    },
+    {
+      "run_id": "R10-121-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The library closes at nine on tuesdays and six on sundays.",
+      "new_text": "The library closes at nine on dayss and six on saturdays."
+    },
+    {
+      "run_id": "R10-121-calib-single_word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The library closes at nine on tuesdays and six on weekends.",
+      "new_text": "The library closes at nine on dayss and six on weekends."
+    },
+    {
+      "run_id": "R10-121-calib-word_plus_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The library closes at nine on tuesdays and six on weekends.",
+      "new_text": "The library closes at nine on dayss and six on weekends."
+    },
+    {
+      "run_id": "R10-123-core-sparse_common_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The bridge was built in the early twentieth period and renovated twice since then.",
+      "new_text": "The bridge was built in the early twentieth half-century and renovated twice since then."
+    },
+    {
+      "run_id": "R10-124-core-multi_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "There are more public parks on the east part of the town than on the west.",
+      "new_text": "There are more public parks on the east part of the downtown than on the west."
+    },
+    {
+      "run_id": "R10-125-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "The shop doesn't open until ten, but the café next door opens newer.",
+      "new_text": "The shop doesn't open until ten, but the café next door opens otherrer."
+    },
+    {
+      "run_id": "R10-128-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Hugh Fleming had four lasting children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven.",
+      "new_text": "Hugh Fleming had four living children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven."
+    },
+    {
+      "run_id": "R10-128-core-sparse_common_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Hugh Fleming had four lasting children from his first marriage. He was 59 at the time of his 2nd marriage to Grace, and died when Alexander was seven.",
+      "new_text": "Hugh Fleming had four living children from his first marriage. He was 59 at the time of his 2nd marriage to Grace, and died when Alexander was seven."
+    },
+    {
+      "run_id": "R10-129-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year studies to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.",
+      "new_text": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year learning to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution."
+    },
+    {
+      "run_id": "R10-131-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "His elder brother, Tom, was already a physician and indicated that he should follow the same career.",
+      "new_text": "His elder brother, Tom, was already a physician and advised that he should follow the same career."
+    },
+    {
+      "run_id": "R10-133-core-word",
+      "old_status": "reformulated",
+      "new_status": "could_not_safely_reformulate",
+      "old_text": "In 1906, he qualified with a MBBS degree from the school with note.",
+      "new_text": "In 1906, he qualified with a MBBS degree from the school with distinction."
+    },
+    {
+      "run_id": "R10-133-calib-single_word",
+      "old_status": "reformulated",
+      "new_status": "could_not_safely_reformulate",
+      "old_text": "In 1906, he qualified with a MBBS degree from the school with note.",
+      "new_text": "In 1906, he qualified with a MBBS degree from the school with distinction."
+    },
+    {
+      "run_id": "R10-133-calib-multi_word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "In 1906, he graduated with a MBBS degree from the institution.",
+      "new_text": "In 1906 he graduated with distinction with a MBBS degree from the university."
+    },
+    {
+      "run_id": "R10-133-calib-word_plus_sound",
+      "old_status": "reformulated",
+      "new_status": "could_not_safely_reformulate",
+      "old_text": "In 1906, he qualified with a MBBS degree from the school with note.",
+      "new_text": "In 1906, he qualified with a MBBS degree from the school with distinction."
+    },
+    {
+      "run_id": "R10-133-calib-multi_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "In 1906, he qualified with a MBBS degree from the education with distinction.",
+      "new_text": "In 1906, he qualified with a MBBS degree from the courses with distinction."
+    },
+    {
+      "run_id": "R10-133-calib-sparse_common_sound",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "In 1906, he qualified with a MBBS degree from the education with distinction.",
+      "new_text": "In 1906, he qualified with a MBBS degree from the courses with distinction."
+    },
+    {
+      "run_id": "R10-133-calib-dense_mixed_generic",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "In 1906, he qualified with a MBBS degree from the education with distinction.",
+      "new_text": "In 1906, he qualified with a MBBS degree from the courses with distinction."
+    }
+  ],
+  "unchanged_run_ids": [
+    "R10-001-core-sparse_common_sound",
+    "R10-001-calib-multi_word",
+    "R10-001-calib-single_sound",
+    "R10-001-calib-multi_sound",
+    "R10-001-calib-dense_mixed_generic",
+    "R10-002-core-word",
+    "R10-002-core-multi_sound",
+    "R10-003-core-multi_sound",
+    "R10-004-core-word",
+    "R10-004-core-sparse_common_sound",
+    "R10-005-core-single_sound",
+    "R10-006-core-word",
+    "R10-006-core-single_sound",
+    "R10-007-core-word",
+    "R10-007-core-dense_mixed_generic",
+    "R10-007-calib-single_word",
+    "R10-007-calib-multi_word",
+    "R10-007-calib-word_plus_sound",
+    "R10-007-calib-single_sound",
+    "R10-007-calib-multi_sound",
+    "R10-007-calib-sparse_common_sound",
+    "R10-008-core-word",
+    "R10-009-core-word",
+    "R10-009-core-sparse_common_sound",
+    "R10-010-core-word",
+    "R10-010-core-single_sound",
+    "R10-011-core-word",
+    "R10-012-core-word",
+    "R10-012-core-dense_mixed_generic",
+    "R10-013-core-word",
+    "R10-013-core-multi_sound",
+    "R10-013-calib-single_word",
+    "R10-013-calib-multi_word",
+    "R10-013-calib-single_sound",
+    "R10-013-calib-sparse_common_sound",
+    "R10-013-calib-dense_mixed_generic",
+    "R10-014-core-word",
+    "R10-015-core-single_sound",
+    "R10-016-core-word",
+    "R10-016-core-single_sound",
+    "R10-017-core-word",
+    "R10-017-core-single_sound",
+    "R10-018-core-word",
+    "R10-018-core-single_sound",
+    "R10-019-core-word",
+    "R10-020-core-word",
+    "R10-021-core-word",
+    "R10-022-core-word",
+    "R10-023-core-single_sound",
+    "R10-024-core-word",
+    "R10-024-core-dense_mixed_generic",
+    "R10-025-core-word",
+    "R10-025-core-multi_sound",
+    "R10-025-calib-single_word",
+    "R10-025-calib-multi_word",
+    "R10-025-calib-word_plus_sound",
+    "R10-025-calib-single_sound",
+    "R10-025-calib-sparse_common_sound",
+    "R10-025-calib-dense_mixed_generic",
+    "R10-026-core-word",
+    "R10-026-core-multi_sound",
+    "R10-027-core-word",
+    "R10-027-core-dense_mixed_generic",
+    "R10-028-core-word",
+    "R10-028-core-single_sound",
+    "R10-029-core-single_sound",
+    "R10-030-core-word",
+    "R10-030-core-single_sound",
+    "R10-031-core-single_sound",
+    "R10-031-calib-single_word",
+    "R10-031-calib-word_plus_sound",
+    "R10-032-core-word",
+    "R10-033-core-word",
+    "R10-033-core-single_sound",
+    "R10-034-core-word",
+    "R10-035-core-word",
+    "R10-035-core-dense_mixed_generic",
+    "R10-036-core-word",
+    "R10-036-core-dense_mixed_generic",
+    "R10-037-core-word",
+    "R10-037-core-single_sound",
+    "R10-037-calib-single_word",
+    "R10-037-calib-multi_word",
+    "R10-037-calib-word_plus_sound",
+    "R10-037-calib-multi_sound",
+    "R10-037-calib-sparse_common_sound",
+    "R10-037-calib-dense_mixed_generic",
+    "R10-039-core-word",
+    "R10-039-core-sparse_common_sound",
+    "R10-040-core-word",
+    "R10-040-core-single_sound",
+    "R10-043-core-word",
+    "R10-043-core-sparse_common_sound",
+    "R10-043-calib-single_word",
+    "R10-043-calib-multi_word",
+    "R10-043-calib-word_plus_sound",
+    "R10-043-calib-single_sound",
+    "R10-043-calib-multi_sound",
+    "R10-043-calib-dense_mixed_generic",
+    "R10-045-core-word",
+    "R10-045-core-sparse_common_sound",
+    "R10-046-core-word",
+    "R10-046-core-single_sound",
+    "R10-047-core-word",
+    "R10-047-core-dense_mixed_generic",
+    "R10-048-core-word",
+    "R10-048-core-multi_sound",
+    "R10-049-core-word",
+    "R10-049-core-dense_mixed_generic",
+    "R10-049-calib-multi_word",
+    "R10-049-calib-single_sound",
+    "R10-049-calib-multi_sound",
+    "R10-049-calib-sparse_common_sound",
+    "R10-050-core-word",
+    "R10-050-core-single_sound",
+    "R10-051-core-word",
+    "R10-052-core-word",
+    "R10-052-core-multi_sound",
+    "R10-053-core-word",
+    "R10-053-core-dense_mixed_generic",
+    "R10-054-core-word",
+    "R10-054-core-dense_mixed_generic",
+    "R10-055-core-word",
+    "R10-055-calib-single_word",
+    "R10-055-calib-multi_word",
+    "R10-055-calib-word_plus_sound",
+    "R10-055-calib-single_sound",
+    "R10-057-core-word",
+    "R10-058-core-sparse_common_sound",
+    "R10-060-core-word",
+    "R10-061-core-word",
+    "R10-061-core-dense_mixed_generic",
+    "R10-061-calib-multi_word",
+    "R10-061-calib-multi_sound",
+    "R10-061-calib-sparse_common_sound",
+    "R10-062-core-word",
+    "R10-062-core-single_sound",
+    "R10-063-core-word",
+    "R10-063-core-dense_mixed_generic",
+    "R10-064-core-multi_sound",
+    "R10-065-core-word",
+    "R10-065-core-single_sound",
+    "R10-066-core-word",
+    "R10-066-core-dense_mixed_generic",
+    "R10-067-core-word",
+    "R10-067-core-single_sound",
+    "R10-067-calib-single_word",
+    "R10-067-calib-multi_word",
+    "R10-067-calib-word_plus_sound",
+    "R10-067-calib-multi_sound",
+    "R10-067-calib-sparse_common_sound",
+    "R10-067-calib-dense_mixed_generic",
+    "R10-068-core-word",
+    "R10-069-core-word",
+    "R10-070-core-word",
+    "R10-070-core-dense_mixed_generic",
+    "R10-071-core-word",
+    "R10-071-core-sparse_common_sound",
+    "R10-072-core-single_sound",
+    "R10-073-core-word",
+    "R10-073-core-sparse_common_sound",
+    "R10-073-calib-single_word",
+    "R10-073-calib-multi_word",
+    "R10-073-calib-single_sound",
+    "R10-073-calib-multi_sound",
+    "R10-073-calib-dense_mixed_generic",
+    "R10-074-core-single_sound",
+    "R10-075-core-word",
+    "R10-076-core-word",
+    "R10-076-core-sparse_common_sound",
+    "R10-077-core-word",
+    "R10-077-core-single_sound",
+    "R10-078-core-word",
+    "R10-078-core-multi_sound",
+    "R10-079-core-word",
+    "R10-079-calib-single_word",
+    "R10-079-calib-multi_word",
+    "R10-079-calib-word_plus_sound",
+    "R10-079-calib-single_sound",
+    "R10-079-calib-multi_sound",
+    "R10-079-calib-dense_mixed_generic",
+    "R10-080-core-word",
+    "R10-081-core-word",
+    "R10-081-core-single_sound",
+    "R10-082-core-word",
+    "R10-082-core-sparse_common_sound",
+    "R10-083-core-single_sound",
+    "R10-084-core-word",
+    "R10-085-core-word",
+    "R10-085-core-single_sound",
+    "R10-085-calib-single_word",
+    "R10-085-calib-multi_word",
+    "R10-085-calib-word_plus_sound",
+    "R10-085-calib-multi_sound",
+    "R10-085-calib-sparse_common_sound",
+    "R10-085-calib-dense_mixed_generic",
+    "R10-086-core-multi_sound",
+    "R10-087-core-word",
+    "R10-087-core-multi_sound",
+    "R10-088-core-word",
+    "R10-088-core-sparse_common_sound",
+    "R10-089-core-multi_sound",
+    "R10-090-core-word",
+    "R10-090-core-multi_sound",
+    "R10-091-core-multi_sound",
+    "R10-091-calib-multi_word",
+    "R10-091-calib-single_sound",
+    "R10-091-calib-sparse_common_sound",
+    "R10-091-calib-dense_mixed_generic",
+    "R10-092-core-multi_sound",
+    "R10-093-core-word",
+    "R10-093-core-dense_mixed_generic",
+    "R10-094-core-single_sound",
+    "R10-095-core-word",
+    "R10-095-core-dense_mixed_generic",
+    "R10-096-core-word",
+    "R10-096-core-single_sound",
+    "R10-097-core-word",
+    "R10-097-core-single_sound",
+    "R10-097-calib-single_word",
+    "R10-097-calib-multi_word",
+    "R10-097-calib-word_plus_sound",
+    "R10-097-calib-multi_sound",
+    "R10-097-calib-sparse_common_sound",
+    "R10-097-calib-dense_mixed_generic",
+    "R10-098-core-word",
+    "R10-098-core-dense_mixed_generic",
+    "R10-099-core-sparse_common_sound",
+    "R10-100-core-word",
+    "R10-100-core-multi_sound",
+    "R10-101-core-word",
+    "R10-101-core-sparse_common_sound",
+    "R10-102-core-word",
+    "R10-102-core-dense_mixed_generic",
+    "R10-103-core-word",
+    "R10-103-core-single_sound",
+    "R10-103-calib-single_word",
+    "R10-103-calib-multi_word",
+    "R10-103-calib-word_plus_sound",
+    "R10-103-calib-multi_sound",
+    "R10-103-calib-sparse_common_sound",
+    "R10-103-calib-dense_mixed_generic",
+    "R10-104-core-word",
+    "R10-104-core-dense_mixed_generic",
+    "R10-105-core-word",
+    "R10-106-core-dense_mixed_generic",
+    "R10-107-core-word",
+    "R10-107-core-dense_mixed_generic",
+    "R10-108-core-single_sound",
+    "R10-109-core-word",
+    "R10-109-core-single_sound",
+    "R10-109-calib-multi_word",
+    "R10-109-calib-multi_sound",
+    "R10-109-calib-sparse_common_sound",
+    "R10-109-calib-dense_mixed_generic",
+    "R10-110-core-word",
+    "R10-110-core-multi_sound",
+    "R10-111-core-word",
+    "R10-111-core-single_sound",
+    "R10-112-core-word",
+    "R10-112-core-dense_mixed_generic",
+    "R10-113-core-word",
+    "R10-115-core-word",
+    "R10-115-core-single_sound",
+    "R10-115-calib-single_word",
+    "R10-115-calib-multi_word",
+    "R10-115-calib-word_plus_sound",
+    "R10-115-calib-multi_sound",
+    "R10-115-calib-sparse_common_sound",
+    "R10-115-calib-dense_mixed_generic",
+    "R10-116-core-word",
+    "R10-116-core-sparse_common_sound",
+    "R10-117-core-word",
+    "R10-117-core-single_sound",
+    "R10-118-core-sparse_common_sound",
+    "R10-119-core-word",
+    "R10-119-core-dense_mixed_generic",
+    "R10-120-core-word",
+    "R10-120-core-dense_mixed_generic",
+    "R10-121-core-dense_mixed_generic",
+    "R10-121-calib-multi_word",
+    "R10-121-calib-single_sound",
+    "R10-121-calib-multi_sound",
+    "R10-121-calib-sparse_common_sound",
+    "R10-122-core-word",
+    "R10-122-core-single_sound",
+    "R10-123-core-word",
+    "R10-124-core-word",
+    "R10-125-core-multi_sound",
+    "R10-126-core-word",
+    "R10-126-core-sparse_common_sound",
+    "R10-127-core-word",
+    "R10-127-core-sparse_common_sound",
+    "R10-127-calib-single_word",
+    "R10-127-calib-multi_word",
+    "R10-127-calib-word_plus_sound",
+    "R10-127-calib-single_sound",
+    "R10-127-calib-multi_sound",
+    "R10-127-calib-dense_mixed_generic",
+    "R10-129-core-dense_mixed_generic",
+    "R10-130-core-word",
+    "R10-130-core-dense_mixed_generic",
+    "R10-131-core-single_sound",
+    "R10-132-core-word",
+    "R10-132-core-dense_mixed_generic",
+    "R10-133-core-single_sound"
+  ]
+}
