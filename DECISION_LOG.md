@@ -3452,3 +3452,55 @@ this phase - analysis only, decision left to the user.
 **Category:** Evaluation/analysis, on direct instruction. No production
 code touched, no fixes implemented, no training. Full record:
 `VALIDATION.md` §47, `eval/r10b_failure_analysis.md`.
+
+### 2026-08-27-A — Phase 11: implemented categories 1-3 of the "92% fixable" batch
+
+**What was done:** planned via plan mode, then implemented, the
+highest-value/lowest-risk slice of Phase 10B's fixable batch: (1)
+expanded `semantic.py`'s `IDIOM_PHRASES` fixed-term list and extended
+enforcement to escalation-tier (T5 restructuring) output via a new
+`dropped_protected_phrases()` gate in `_try_escalation()` - the actual
+`reformulate()` v1 function, not the experimental v2/v3 path the first
+plan draft mistakenly named; (2) a duplicate-word-in-sentence rejection
+check (`_duplicates_sentence_word()`) wired into `_try_substitution()`;
+(3) a specific bad-pair blocklist (`BLOCKED_SUBSTITUTION_PAIRS`/
+`blocked_pair()`) of 52 verified `(original, replacement)` pairs.
+
+**User feedback that shaped this (verbatim, load-bearing):** the first
+plan draft was rejected with: *"verify every proposed protected entry
+against its actual failure instances and make protection
+context-sensitive where necessary, rather than blindly dumping all ~30
+into PROTECTED_PHRASES."* Every phrase and every blocklist pair was
+re-verified against its named Phase 10 `run_id`'s actual
+original/reformulated text before being added; several originally-
+proposed entries were rejected or moved to a different category on this
+pass (momentum, straight line, held together by, of hydrogen into
+helium, and others - see `VALIDATION.md` §48 for the full list).
+
+**Result:** all existing tests pass (`reformulate_test.py` 40/40 with
+10 new tests, plus `semantic_test.py`/`rephrase_test.py`/
+`contextual_fit_test.py`/`app_test.py`), `tests/smoke.py` byte-identical
+to both committed baselines. `eval/r11_targeted_rerun.py` re-ran the 83
+specific R10 `run_id`s these categories target through live production
+`reformulate()`: 77/83 (93%) no longer reproduce their original
+defective output. The same verification process caught two real bugs
+before they shipped: 4 blocklist pairs stored in the wrong grammatical
+form (the actual POS tag in context differed from the intuitive guess),
+and `blocked_pair()` needed to normalize the candidate side because
+Datamuse-sourced candidates aren't guaranteed to already be a WordNet
+lemma (R10-129's "studies" vs the stored "study"). Both were found by
+re-running the targeted evidence, not assumed fixed after writing the
+code - direct vindication of the plan-rejection feedback's verification
+discipline.
+
+**Known, named gap (not scope creep):** 6 of the 83 targeted cases
+remain unfixed - `R10-024`/`R10-025`/`R10-061` (x2) are duplicate-word
+defects introduced by escalation-tier restructuring, which the approved
+plan scoped the duplicate check to substitution-tier only; `R10-043`
+(x2) is a number-agreement grammar defect, Category 4, correctly
+deferred. Recorded as future work, not silently dropped.
+
+**Category:** Implementation, on direct plan-mode approval following
+Phase 10B's analysis. Production code touched: `semantic.py`,
+`reformulate.py`. Full record: `VALIDATION.md` §48,
+`eval/r11_targeted_rerun.py`.

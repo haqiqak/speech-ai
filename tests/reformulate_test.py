@@ -272,6 +272,109 @@ class PhraseTierTest(unittest.TestCase):
             self.assertIn("driving me crazy", result["reformulated_text"].lower())
 
 
+class ProtectedPhraseEscalationTest(unittest.TestCase):
+    """Phase 11 category 1 (VALIDATION.md SS48, eval/r10b_failure_analysis.md)
+    -- protected_positions() only ever gated substitution-tier candidate
+    generation; escalation's freely restructured T5 output was never checked
+    against the same fixed-term list, which is how most of Phase 10's
+    verified fixed-term breaks happened ("magma chamber" -> "magma cave",
+    etc, R10-031 and siblings). These tests use "activation energy"
+    (semantic.py IDIOM_PHRASES, added for R10-015) the same way EscalationTest
+    mocks rf.rephrase.generate_candidates for determinism."""
+
+    def test_escalation_candidate_dropping_protected_phrase_is_rejected(self):
+        # Two flagged words (neither is "activation" itself) push this past
+        # the escalation threshold directly -- matching R10-015's real
+        # trigger, where some OTHER declared difficulty forced a whole-
+        # sentence restructure and "activation energy" was collateral
+        # damage, not the flagged word being fixed.
+        profile = _profile("escalation_phrase_drop")
+        profile.add_word("requires", source="user_typed")
+        profile.add_word("specific", source="user_typed")
+        settings = rf.ReformulateSettings(escalation_word_count=1)
+        original = "The reaction requires a specific activation energy to proceed."
+        leaky = "The reaction needs a certain amount of energy to proceed."
+        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[leaky]):
+            result = rf.reformulate(original, profile, settings)
+        self.assertEqual(result["status"], "could_not_safely_reformulate")
+        self.assertIn("activation energy", result["reformulated_text"].lower())
+
+    def test_escalation_candidate_preserving_protected_phrase_is_accepted(self):
+        profile = _profile("escalation_phrase_keep")
+        profile.add_word("requires", source="user_typed")
+        profile.add_word("specific", source="user_typed")
+        settings = rf.ReformulateSettings(escalation_word_count=1)
+        original = "The reaction requires a specific activation energy to proceed."
+        good = "The reaction needs the right activation energy to move forward."
+        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[good]):
+            result = rf.reformulate(original, profile, settings)
+        self.assertEqual(result["status"], "reformulated")
+        self.assertEqual(result["changes"][0]["source"], "restructuring")
+        self.assertIn("activation energy", result["reformulated_text"].lower())
+
+
+class DuplicateWordRejectionTest(unittest.TestCase):
+    """Phase 11 category 2 -- reject a substitution candidate that
+    duplicates a word/stem already present elsewhere in the sentence
+    (R10-038's "Solar"->"Renewable" next to "renewable energy",
+    R10-060's "recessions"->"economies" next to "economic")."""
+
+    def test_exact_duplicate_detected(self):
+        tokens = ["Switch", "to", "renewable", "energy", "sources", "now", "."]
+        self.assertTrue(rf._duplicates_sentence_word("renewable", tokens, exclude_index=0))
+
+    def test_shared_stem_detected(self):
+        # "economies" and "economic" share a Porter stem ("econom") despite
+        # not being surface-identical -- the R10-060 case plain string
+        # equality would miss.
+        tokens = ["Economic", "downturns", "cause", "recessions", "."]
+        self.assertTrue(rf._duplicates_sentence_word("economies", tokens, exclude_index=3))
+
+    def test_unrelated_word_not_flagged(self):
+        tokens = ["The", "cat", "sat", "on", "the", "mat", "."]
+        self.assertFalse(rf._duplicates_sentence_word("dog", tokens, exclude_index=1))
+
+    def test_stopword_recurrence_not_flagged(self):
+        # "the" legitimately repeats in almost every sentence -- must not
+        # be treated as a duplication.
+        tokens = ["the", "cat", "sat", "on", "the", "mat", "."]
+        self.assertFalse(rf._duplicates_sentence_word("the", tokens, exclude_index=4))
+
+
+class BlockedSubstitutionPairTest(unittest.TestCase):
+    """Phase 11 category 3 -- specific (original, replacement) pairs
+    verified against their actual Phase 10 failure instances
+    (eval/r10b_defective_enriched.json), not general antonyms or low-
+    similarity matches (those are already caught elsewhere) but wrong-sense
+    pairs that only observation could catch."""
+
+    def test_known_bad_pair_blocked(self):
+        # R10-091: "original" -> "new" reads as a near-opposite in context
+        # but is not a WordNet-listed antonym, so is_known_antonym() misses
+        # it -- exactly the gap this blocklist exists to close.
+        self.assertTrue(sem.blocked_pair("original", "new"))
+        self.assertFalse(sem.is_known_antonym("original", "new"))
+
+    def test_unrelated_pair_not_blocked(self):
+        self.assertFalse(sem.blocked_pair("original", "initial"))
+
+    def test_blocked_pair_skipped_in_favor_of_next_candidate(self):
+        profile = _profile("blocked_pair_wiring")
+        profile.add_word("original", source="user_typed")
+        fake_scored = [
+            {"lemma": "new", "inflected": "new", "semantic_sim": 0.95,
+             "freq_score": 0.9, "combined": 0.95, "accepted": True},
+            {"lemma": "initial", "inflected": "initial", "semantic_sim": 0.9,
+             "freq_score": 0.8, "combined": 0.9, "accepted": True},
+        ]
+        with mock.patch.object(rf, "_raw_candidates", return_value=["new", "initial"]), \
+             mock.patch.object(rf.sem, "rank_candidates_contextually", return_value=fake_scored):
+            result = rf.reformulate("This is the original document.", profile)
+        self.assertEqual(result["status"], "reformulated")
+        self.assertNotIn("new", result["reformulated_text"].lower())
+        self.assertIn("initial", result["reformulated_text"].lower())
+
+
 class WordSenseDisambiguationTest(unittest.TestCase):
     """Regression tests for REFORMULATION_PROBLEM_MAP.md SS5 item 2. Unlike
     IdiomGuardTest, these deliberately use sentences the idiom guard does

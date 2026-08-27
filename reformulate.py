@@ -51,6 +51,7 @@ import re
 
 import nltk
 from nltk import pos_tag, word_tokenize
+from nltk.stem import PorterStemmer
 
 import engine as engine_module
 import phonetic as ph
@@ -63,6 +64,41 @@ from grammar import _SUBSTITUTABLE, _STOP, _wn_pos, lemmatize, inflect, _preserv
 
 nltk.download("averaged_perceptron_tagger_eng", quiet=True)
 nltk.download("punkt_tab", quiet=True)
+
+_stemmer = PorterStemmer()
+
+
+def _duplicates_sentence_word(candidate_word: str, tokens: list[str], exclude_index: int) -> bool:
+    """Phase 11 (VALIDATION.md SS48, eval/r10b_failure_analysis.md) -- reject
+    a substitution candidate that duplicates a word already present
+    elsewhere in the sentence (e.g. "Solar" -> "Renewable" when the same
+    sentence already says "renewable energy" later on, R10-038). Porter
+    stemming, not plain lower-case equality, because several verified cases
+    share a derivational root without being the same surface word
+    ("recessions" next to "economic", R10-060) -- exact-string matching
+    would miss those. Stopwords are skipped: they legitimately recur in
+    almost every sentence and aren't the kind of duplication being caught
+    here. Verified against R10-060's actual pair: Porter alone does NOT
+    unify "economies"/"economic" (stems to "economi" vs "econom" --
+    different derivational families under suffix-stripping), so a
+    shared-long-prefix check is added alongside the stem check to catch
+    that specific evidenced case; each is a cheap proxy, not a
+    morphological analyzer, so both are kept deliberately narrow (6+
+    shared characters, both words 7+ long) to limit false positives on
+    unrelated words that merely start alike."""
+    cand = candidate_word.lower()
+    cand_stem = _stemmer.stem(cand)
+    for j, tok in enumerate(tokens):
+        if j == exclude_index:
+            continue
+        tok_lower = tok.lower()
+        if tok_lower in _STOP or not tok_lower.isalpha():
+            continue
+        if tok_lower == cand or _stemmer.stem(tok_lower) == cand_stem:
+            return True
+        if len(cand) >= 7 and len(tok_lower) >= 7 and cand[:6] == tok_lower[:6]:
+            return True
+    return False
 
 
 @dataclass
@@ -340,6 +376,11 @@ def _try_substitution(
                 continue
             if ph.matches_any(s["inflected"], profile.sound_values()):
                 continue
+            if _duplicates_sentence_word(s["inflected"], new_tokens, i):
+                continue
+            if sem.blocked_pair(base, s["lemma"]):
+                s["blocked_pair_rejected"] = True
+                continue
             if profile.find_word(s["inflected"].lower()) is not None:
                 # A candidate must never itself be one of the profile's
                 # OTHER declared-difficult words. Not a hypothetical case:
@@ -422,6 +463,16 @@ def _try_escalation(
             continue
         content_words = re.findall(r"[A-Za-z][A-Za-z'-]*", cand)
         if any(ph.matches_any(w, profile.sound_values()) or w.lower() in blocked for w in content_words):
+            continue
+        # Phase 11 (VALIDATION.md SS48, eval/r10b_failure_analysis.md) --
+        # protected_positions() only ever gated substitution-tier candidate
+        # generation; free restructuring here was never checked against the
+        # same fixed-term list, and Phase 10B found this is how most of the
+        # verified fixed-term breaks happened ("magma chamber" -> "magma
+        # cave", etc.). A dropped fixed term is a meaning change, not a
+        # style choice, so it's rejected the same as a failed SBERT/negation
+        # check rather than merely down-ranked.
+        if sem.dropped_protected_phrases(sentence, cand):
             continue
         rank_score = sim if sim is not None else -1.0
         if best is None or (rank_score > best["rank_score"]):

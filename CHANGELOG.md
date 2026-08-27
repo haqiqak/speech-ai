@@ -6,6 +6,21 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-27** feat: Phase 11 — implemented categories 1-3 of Phase
+  10B's "92% fixable" batch. Expanded `semantic.py`'s fixed-term
+  protection list and extended its enforcement to escalation-tier T5
+  output (a gap found during implementation); added a duplicate-word-
+  in-sentence rejection check to `_try_substitution()`; added a
+  52-pair bad-pair blocklist, each pair individually re-verified
+  against its named Phase 10 run_id (per explicit plan-mode-rejection
+  feedback demanding this, not bulk-copied), catching two real bugs
+  (wrong grammatical form on 4 pairs; blocklist needed to normalize
+  unlemmatized Datamuse candidates). All tests pass, smoke.py
+  byte-identical to baseline. Targeted re-run of the 83 R10 cases these
+  categories target: 77/83 (93%) no longer reproduce their original
+  defect; the remaining 6 are a named, deferred gap (escalation-tier
+  duplicate-word extension, and one Category-4 grammar case). →
+  `DECISION_LOG.md` 2026-08-27-A, `VALIDATION.md` §48.
 - **2026-08-26, third** docs: Phase 10B — detailed failure analysis,
   architecture-vs-custom-model evidence. All 176 Phase 10 DEFECTIVE
   outputs re-examined with full mechanism context by 4 independent

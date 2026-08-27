@@ -85,6 +85,7 @@ import re
 from typing import Optional
 import numpy as np
 from nltk.corpus import wordnet as wn
+from nltk.stem import WordNetLemmatizer
 from freq import zipf_frequency   # memory-safe wrapper (falls back to 'small' wordlist)
 
 # ── Constants ────────────────────────────────────────────────────────────────
@@ -133,6 +134,26 @@ IDIOM_PHRASES: list[str] = [
     # phrases, not a general phrasal-verb detector -- REFORMULATION_
     # PROBLEM_MAP.md SS3.1's disclosed [GAP] still stands).
     "push the meeting",
+    # Phase 11 (VALIDATION.md SS48, eval/r10b_failure_analysis.md) --
+    # technical/domain fixed terms, not conversational idioms, but the
+    # same exact-span-match mechanism applies unchanged. Each entry below
+    # is individually verified against its actual Phase 10 failure
+    # instance (eval/r10b_batch_*_results.json), not bulk-copied from a
+    # fix suggestion -- several originally-proposed entries (momentum,
+    # straight line, held together by, of hydrogen into helium, train
+    # station) were REJECTED on verification as not being genuine
+    # multi-word terms or not being fixable by phrase-protection at all;
+    # see the plan's Category-1 writeup for why.
+    "small intestine", "large intestine", "gastrointestinal tract",
+    "activation energy", "mechanical equilibrium", "neutron star",
+    "magma chamber", "geothermal energy", "renewable energy",
+    "conversion efficiency", "money supply", "wage rigidity",
+    "opportunity cost", "goods and services", "golden brown",
+    "with distinction",
+    # "go wrong" observed as "went wrong" (R10-084); no verb-inflection
+    # template exists (only the {pron}-slot mechanism below), so each
+    # tense is listed literally rather than assumed to generalize.
+    "go wrong", "goes wrong", "went wrong", "going wrong",
 ]
 
 # A handful of idioms take an object pronoun in one slot ("drives me
@@ -645,6 +666,37 @@ def protected_positions(tokens: list[str]) -> set[int]:
     return protected
 
 
+def dropped_protected_phrases(original_text: str, candidate_text: str) -> list[str]:
+    """Phase 11 (VALIDATION.md SS48, eval/r10b_failure_analysis.md) —
+    IDIOM_PHRASES protection only ever gated SUBSTITUTION-tier candidate
+    generation (protected_positions() over tokens). Escalation's freely
+    generated T5 output was never checked against the same list, and
+    Phase 10B found this is exactly how most of the verified fixed-term
+    breaks happened ("magma chamber" -> "magma cave", "activation
+    energy" -> "activated energy", etc.) -- not word substitution, whole-
+    sentence restructuring.
+
+    A simple case-insensitive substring check, not a tokenized span
+    check like idiom_spans(): T5's generated text isn't guaranteed to
+    detokenize identically to nltk's tokenizer, and for a "did this
+    survive at all" question a substring check is the right level of
+    strictness -- it doesn't care about surrounding punctuation/casing
+    the way an exact token-sequence match would.
+
+    Returns the list of protected phrases present in `original_text`
+    but missing from `candidate_text` (empty list = nothing was lost).
+    Checks both IDIOM_PHRASES and PROTECTED_PHRASES, since either could
+    in principle be silently dropped by restructuring, though in
+    practice this was only observed for IDIOM_PHRASES entries so far."""
+    orig_lower = original_text.lower()
+    cand_lower = candidate_text.lower()
+    dropped = []
+    for phrase in IDIOM_PHRASES + PROTECTED_PHRASES:
+        if phrase in orig_lower and phrase not in cand_lower:
+            dropped.append(phrase)
+    return dropped
+
+
 # ── Word-sense disambiguation (candidate-generation gloss matching) ──────────
 #
 # engine.py's _wordnet_synonyms() crawls every same-POS synset for a word and
@@ -892,6 +944,127 @@ def is_known_antonym(original_lemma: str, candidate_lemma: str, wn_pos=None) -> 
                 if ant.name().replace("_", " ").lower() == a:
                     return True
     return False
+
+
+# ── Phase 11 bad-pair blocklist (VALIDATION.md §48, eval/r10b_failure_analysis.md) ──
+# is_known_antonym() and the SBERT/frequency ranker together miss a class of
+# candidates that are neither antonyms nor low-similarity: a WordNet synonym
+# that is technically related but wrong for THIS word's actual sense in
+# context (e.g. "reabsorbed" -> "assumed", both list a shared, rare WordNet
+# sense, but "assumed back into the blood" is nonsensical). No general check
+# catches this — it can only be caught by having actually observed the
+# specific pair fail. Each pair below is copied from the verified
+# original/replacement text of its named Phase 10 run_id in
+# eval/r10b_defective_enriched.json (not the fix_sketch's paraphrase, which
+# is sometimes a different inflection than what the pipeline actually
+# produced), then normalized to the base lemma form the pipeline compares
+# against (noun/verb lemma matching the word's actual part of speech in that
+# sentence). A plain Python module-level structure, not a JSON data file: no
+# existing `data/` directory or JSON-loading convention exists elsewhere in
+# this codebase (checked before creating one), and IDIOM_PHRASES/
+# PROTECTED_PHRASES above already establish "curated list lives in this
+# module" as this project's actual pattern for this kind of data.
+BLOCKED_SUBSTITUTION_PAIRS: frozenset[tuple[str, str]] = frozenset({
+    ("reabsorb", "assume"),        # R10-005
+    ("stroke", "shot"),            # R10-008
+    ("cell", "case"),              # R10-011
+    ("reaction", "answer"),        # R10-014
+    ("reactant", "chemical"),      # R10-014
+    ("speed", "rate"),             # R10-019
+    ("straight", "right"),         # R10-019
+    ("rate", "value"),             # R10-020
+    ("same", "one"),               # R10-021
+    ("straight", "true"),          # R10-022
+    ("speed", "velocity"),         # R10-022
+    ("surface", "open"),           # R10-031
+    ("specification", "description"),  # R10-044
+    ("calculation", "math"),       # R10-044
+    ("calculation", "maths"),      # R10-044
+    ("write", "print"),            # R10-051 -- "written" is tagged VBN in
+                                    # context ("could also be written as"),
+                                    # so the runtime lemma is the verb form,
+                                    # not the adjective-like surface form
+    ("reduce", "break"),           # R10-059
+    ("rigidity", "toughness"),     # R10-059
+    ("construction", "business"),  # R10-061
+    ("professional", "expert"),    # R10-061
+    ("structural", "functional"),  # R10-061
+    ("self-proclaimed", "so-called"),  # R10-064
+    ("start", "go"),               # R10-068
+    ("say", "tell"),               # R10-069
+    ("probably", "maybe"),         # R10-072
+    ("professor", "faculty"),      # R10-073
+    ("encourage", "further"),      # R10-074
+    ("study", "consider"),         # R10-075
+    ("submit", "take"),            # R10-079
+    ("slip", "trip"),              # R10-080
+    ("experience", "example"),     # R10-083
+    ("candidate", "election"),     # R10-083
+    ("airport", "airline"),        # R10-086
+    ("crowd", "bunch"),            # R10-089 -- "crowded" tags VBN here, not JJ
+    ("original", "new"),           # R10-091
+    ("carefully", "severely"),     # R10-094
+    ("anyone", "guy"),             # R10-099
+    ("steep", "high"),             # R10-105 -- WordNetLemmatizer(pos='a')
+                                    # strips the JJR comparative, so the
+                                    # runtime lemma is the positive form
+    ("settle", "decide"),          # R10-106
+    ("corner", "edge"),            # R10-108
+    ("replace", "substitute"),     # R10-109
+    ("step", "pace"),              # R10-113
+    ("somewhere", "there"),        # R10-114
+    ("overrate", "overestimate"),  # R10-118
+    ("weekday", "tuesday"),        # R10-121
+    ("weekend", "sunday"),         # R10-121
+    ("century", "period"),         # R10-123
+    ("city", "town"),              # R10-124
+    ("early", "new"),              # R10-125 -- same JJR-stripping as R10-105
+    ("survive", "last"),           # R10-128
+    ("scholarship", "study"),      # R10-129
+    ("suggest", "indicate"),       # R10-131
+    ("school", "education"),       # R10-133
+})
+
+
+_blocklist_lemmatizer = WordNetLemmatizer()
+
+
+def _blocklist_normal_forms(word: str) -> set[str]:
+    """engine.py's candidate pool isn't uniformly WordNet-lemmatized --
+    Datamuse's ml= results (RESEARCH.md's "meaning-like", not just rel_syn=
+    synonyms) come back as whatever surface form Datamuse returns (e.g.
+    "studies" for "scholarship", R10-129), not necessarily the lemma
+    BLOCKED_SUBSTITUTION_PAIRS is keyed on. Normalizing both sides through
+    every plausible POS here (rather than trusting the caller already
+    lemmatized) is what makes the R10-129 case actually match; verified
+    against it directly (blocked_pair was silently a no-op for that case
+    before this normalization was added, caught by the Phase 11 targeted
+    re-run, not assumed)."""
+    w = (word or "").strip().lower()
+    if not w:
+        return set()
+    variants = {w}
+    for pos in ("n", "v", "a"):
+        try:
+            variants.add(_blocklist_lemmatizer.lemmatize(w, pos=pos))
+        except Exception:
+            pass
+    return variants
+
+
+def blocked_pair(original_lemma: str, candidate_lemma: str) -> bool:
+    """True if (original_lemma, candidate_lemma) is a specific, previously
+    observed bad substitution in BLOCKED_SUBSTITUTION_PAIRS. Directional
+    (not checked in reverse): each entry documents a failure actually seen
+    in that specific direction, not a general claim that the pair is bad
+    either way. Compares every normalized-form combination of both sides
+    (see _blocklist_normal_forms) since candidates aren't guaranteed to
+    arrive pre-lemmatized."""
+    a_forms = _blocklist_normal_forms(original_lemma)
+    b_forms = _blocklist_normal_forms(candidate_lemma)
+    if not a_forms or not b_forms:
+        return False
+    return any((a, b) in BLOCKED_SUBSTITUTION_PAIRS for a in a_forms for b in b_forms)
 
 
 # ── Sentence-level negation-consistency check (for the T5 escalation path) ────

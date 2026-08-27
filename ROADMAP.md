@@ -1714,6 +1714,35 @@ custom-trained component for the narrow surviving 1% (escalation-tier
 technical-domain causal claims). No fixes implemented — decision left
 to the user.
 
+### Phase 11. Implement categories 1-3 of the "92% fixable" batch — **DONE, 2026-08-27**
+**Linked finding:** Phase 10B's fixable batch, planned via plan mode
+(first draft rejected with load-bearing feedback demanding per-instance
+verification, not bulk-copying) then implemented. Full record:
+`VALIDATION.md` §48, `eval/r11_targeted_rerun.py`.
+**What was done:** (1) expanded `semantic.py`'s fixed-term protection
+list and — a gap found during implementation, not in the original plan
+— extended its enforcement to escalation-tier T5 output, not just
+substitution-tier candidate generation; (2) a duplicate-word-in-sentence
+rejection check in `_try_substitution()`; (3) a 52-pair bad-pair
+blocklist, each pair individually re-verified against its named Phase
+10 `run_id`, catching two real bugs in the process (4 pairs stored in
+the wrong grammatical form; the blocklist needed to normalize
+Datamuse-sourced candidates that arrive unlemmatized).
+**Result:** all tests pass, `smoke.py` byte-identical to both
+baselines. Targeted re-run of the 83 specific R10 cases these
+categories target: 77/83 (93%) no longer reproduce their original
+defect. The remaining 6 are a known, named gap — 4 are duplicate-word
+defects introduced by escalation-tier restructuring (out of this pass's
+approved scope, which covered substitution-tier only) and 2 are a
+number-agreement grammar defect (Category 4).
+**Labeled as:** first implementation pass since Phase 10B's diagnosis;
+"no longer reproduces the old defect" is a narrower claim than "now
+CLEAN" (no re-judging was performed). Categories 4-7 (~87 cases: POS
+agreement, antonym/polarity gaps, number/scope preservation, escalation
+dictionary validation) remain for a follow-up "Phase 11B", now with the
+escalation-tier duplicate-word extension added to that scope as a
+concrete, evidenced item rather than a new discovery.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

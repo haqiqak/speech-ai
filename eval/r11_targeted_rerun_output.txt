@@ -1,0 +1,427 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 103/103 [00:00<00:00, 7664.84it/s]
+Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 105/105 [00:00<00:00, 6877.63it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 201/201 [00:00<00:00, 6755.09it/s]
+
+=== R10-001-calib-single_word ===
+  status:  reformulated
+  OLD(bad): Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and absorbed into the body.
+  NEW:      Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and integrated into the body.
+
+=== R10-001-calib-word_plus_sound ===
+  status:  reformulated
+  OLD(bad): Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and absorbed into the body.
+  NEW:      Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and integrated into the body.
+
+=== R10-001-core-word ===
+  status:  reformulated
+  OLD(bad): Digestion involves the breakdown of food into smaller and smaller parts, until they can be absorbed and absorbed into the body.
+  NEW:      Digestion involves the breakdown of food into smaller and smaller parts, until they can be absorbed and integrated into the body.
+Loading weights:   0%|          | 0/257 [00:00<?, ?it/s]Loading weights: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 257/257 [00:00<00:00, 5148.92it/s]
+
+=== R10-003-core-word ===
+  status:  reformulated
+  OLD(bad): Peristalaxis is the rhythmic contracting of muscles that begins in the esophagum and continues along the wall of the stomach and the rest of the intestines.
+  NEW:      Peristalsia is the rhythmic contracting of muscles that begins in the esophagum and continues along the wall of the stomach and the rest of the gastrointestinal tract.
+
+=== R10-004-core-sparse_common_sound ===
+  status:  reformulated
+  OLD(bad): Most of the digestion of food takes place in the little intestine.
+  NEW:      Most of the digestion of Food takes place in the tiny intestine.
+
+=== R10-005-core-word ===
+  status:  reformulated
+  OLD(bad): Water and some minerals are assumed back into the blood in the large intestine.
+  NEW:      Water and some minerals are eliminated back into the blood in the large intestine.
+
+=== R10-008-core-dense_mixed_generic ===
+  status:  reformulated
+  OLD(bad): Over-nutrition of micronutrient is a major cause of obesity and increases the chance of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, shot, hypertension, coronary heart disease, osteoporosis, and some forms of cancer.
+  NEW:      Over-nutrition of micronutrient is a major cause of obesity and increases the chance of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, travel, hypertension, coronary heart disease, osteoporosis, and some forms of cancer.
+
+=== R10-011-core-sparse_common_sound ===
+  status:  reformulated
+  OLD(bad): Nutrients are absorbed by the cases and used in metabolic biochemical reactions.
+  NEW:      Nutrients are absorbed by the compartments and used in metabolic biochemical reactions.
+
+=== R10-014-core-dense_mixed_generic ===
+  status:  reformulated
+  OLD(bad): Chemical answers are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the chemicals.
+  NEW:      Chemical actions are usually characterized by a chemical change, and they yield one or more products, which usually have properties different from the precursors.
+
+=== R10-015-core-word ===
+  status:  reformulated
+  OLD(bad): Usually, reaction rates increase with rising temperatures because there is more thermal energy available to reach the activated energy necessary for breaking bonds between atoms.
+  NEW:      Generally, reaction rates increase with rising temperatures because there is more thermal energy available to reach the activation energy necessary for breaking bonds between atoms.
+
+=== R10-019-core-sparse_common_sound ===
+  status:  reformulated
+  OLD(bad): A body remains at rest, or in motion at a constant rate in a right line, unless it is acted upon by a force.
+  NEW:      A body remains at rest, or in motion at a constant pace in a direct line, unless it is acted upon by a force.
+
+=== R10-020-core-dense_mixed_generic ===
+  status:  reformulated
+  OLD(bad): At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the value at which the body's momentum is changing with time.
+  NEW:      At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the grade at which the body's momentum is changing with time.
+
+=== R10-021-core-sparse_common_sound ===
+  status:  reformulated
+  OLD(bad): If two bodies exert forces on each other, these forces have the one magnitude but opposite directions.
+  NEW:      If two bodies exert forces on each other, these forces have the like magnitude but opposite directions.
+
+=== R10-022-core-multi_sound ===
+  status:  reformulated
+  OLD(bad): Newton's first law expresses the principle of inertia: the natural behavior of a body is to move in a true line at constant velocity.
+  NEW:      Newton's first law expresses the principle of inertia: the natural behavior of a body is to move in a even line at constant hurry.
+
+=== R10-023-core-word ===
+  status:  reformulated
+  OLD(bad): When the net force on a body is equal to zero, then by Newton's second law the body does not accelerated, and it is said to be in a physical balance.
+  NEW:      When the net force on a body is equal to zero, then by Newton's second law, the body do not change, and it is said to be in mechanical equilibrium.
+
+=== R10-024-core-word ===
+  status:  reformulated
+  OLD(bad): In other words, if a body exerts a force on a second body, the second body also exerts force on the first body of equal force in the opposing directions.
+  NEW:      In other words, if a body exerts a force on a second body, the second body also exerts force on the first body of equal force in the opposing directions.
+
+=== R10-025-calib-multi_word ===
+  status:  reformulated
+  OLD(bad): A star is a luminous sphéroid of plasma, surrounded by self-gravitational gravity.
+  NEW:      A star is a luminous sphéroid of plasma, surrounded by self-gravitational gravity.
+
+=== R10-029-core-word ===
+  status:  reformulated
+  OLD(bad): At the end of a star's life, fusion ceases and its core becomes a stellar remnant: a white dwarf, a neutral star or a black hole if it is sufficient mass.
+  NEW:      At the end of a star's life, fusion ceases and its core becomes a stellar remnant: a white dwarf, a neutron star or if it is a sufficient black hole.
+
+=== R10-031-calib-dense_mixed_generic ===
+  status:  reformulated
+  OLD(bad): A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the open.
+  NEW:      A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the grade.
+
+=== R10-031-calib-multi_sound ===
+  status:  reformulated
+  OLD(bad): A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the open.
+  NEW:      A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the grade.
+
+=== R10-031-calib-sparse_common_sound ===
+  status:  reformulated
+  OLD(bad): A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the open.
+  NEW:      A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the rise.
+
+=== R10-031-core-word ===
+  status:  reformulated
+  OLD(bad): A volcano is a vent or fissure in the crust of a planetary mass object that allows hot lava, volcano ash and gases to escape from a magma cave below the surface.
+  NEW:      A volcano is a vent or fissure in the crust of a planetary mass object that allows hot lava, volcano ash and gases to escape from a magma chamber below the surface.
+
+=== R10-038-core-sparse_common_sound ===
+  status:  reformulated
+  OLD(bad): Renewable power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy.
+  NEW:      Incoming power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy.
+
+=== R10-038-core-word ===
+  status:  reformulated
+  OLD(bad): Solar power, wind power, electricity, thermal energy, and biomass is widely agreed to be the main types of renewable energy.
+  NEW:      Solar power, wind power, electricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy.
+
+=== R10-041-core-word ===
+  status:  reformulated
+  OLD(bad): In general, alternative energy sources are much less polluting than fossil fuels.
+  NEW:      In general, renewable energy sources litter much less than fossil fuels.
+
+=== R10-042-core-word ===
+  status:  reformulated
+  OLD(bad): Water can generate power with a convertibility of about 90%, which is the highest rate in renewable energy.
+  NEW:      Water can generate electric with a conversion efficiency of about 90 %, which is the highest rate in renewable energy.
+
+=== R10-043-calib-multi_word ===
+  status:  reformulated
+  OLD(bad): In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction, typically used to solve a class of specific problems or to perform a computation.
+  NEW:      In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction, typically used to solve a class of specific problems or to perform a computation.
+
+=== R10-043-core-word ===
+  status:  reformulated
+  OLD(bad): In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction, typically used to solve a class of specific problems or to perform a computation.
+  NEW:      In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction, typically used to solve a class of specific problems or to perform a computation.
+
+=== R10-044-core-dense_mixed_generic ===
+  status:  reformulated
+  OLD(bad): Algorithms is used as descriptions for performing calculations and data processing.
+  NEW:      Algorithms is used as designations for performing calculations and data processing.
+
+=== R10-044-core-word ===
+  status:  reformulated
+  OLD(bad): Algorithms is used as descriptions for performing maths and data processing.
+  NEW:      Algorithms is used as standards for performing computations and data processing.
+
+=== R10-051-core-dense_mixed_generic ===
+  status:  reformulated
+  OLD(bad): Since the coin is fair, the two outcomes ( heads and tails ) are both equally probable; the probability of heads equals the probability of tails; and since no other outcomes are possible, the probability of either heads or tails are 1/2 ( which could also be printed as 0.5 or 50 % ).
+  NEW:      Since the coin is fair, the two outcomes ( heads and tails ) are both equally probable; the probability of heads equals the probability of tails; and since no other outcomes are possible, the probability of either heads or tails are 1/2 ( which could also be composed as 0.5 or 50 % ).
+
+=== R10-055-core-dense_mixed_generic ===
+  status:  could_not_safely_reformulate
+  OLD(bad): In economics, inflation is an increase in the average price of goods and helps in terms of money.
+  NEW:      In economics, inflation is an increase in the average price of goods and services in terms of money.
+
+=== R10-057-core-sparse_common_sound ===
+  status:  reformulated
+  OLD(bad): Changes in inflation is widely attributed to increases in the money issue.
+  NEW:      Changes in inflation is widely attributed to increases in the money market.
+
+=== R10-058-core-word ===
+  status:  reformulated
+  OLD(bad): The positive effects would include a rise in the chance cost of holding money.
+  NEW:      The bad effects would include an change in the opportunity cost of holding money.
+
+=== R10-059-core-dense_mixed_generic ===
+  status:  reformulated
+  OLD(bad): Positive effects include breaking unemployment due to nominal wage toughness.
+  NEW:      Positive effects include cutting unemployment due to nominal wage rigidity.
+
+=== R10-060-core-dense_mixed_generic ===
+  status:  reformulated
+  OLD(bad): Low inflation decreases the likelihood of economic economies by enabling the labor market to adjust more quickly.
+  NEW:      Low inflation decreases the likelihood of economic crises by enabling the labor market to adjust more quickly.
+
+=== R10-061-calib-multi_word ===
+  status:  reformulated
+  OLD(bad): Civil engineers is a technical discipline that deals with the design, design and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings and railways.
+  NEW:      Civil engineers is a technical discipline that deals with the design, design and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings and railways.
+
+=== R10-061-calib-single_sound ===
+  status:  reformulated
+  OLD(bad): Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, functional components of buildings, and railways.
+  NEW:      Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, underlying components of buildings, and railways.
+
+=== R10-061-calib-single_word ===
+  status:  reformulated
+  OLD(bad): Civil engineering is a professional engineering discipline that deals with the design, business, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.
+  NEW:      Civil engineering is a professional engineering discipline that deals with the design, expression, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.
+
+=== R10-061-calib-word_plus_sound ===
+  status:  reformulated
+  OLD(bad): Civil engineering is a expert engineering discipline that deals with the design, business, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.
+  NEW:      Civil engineering is a paid engineering discipline that deals with the design, expression, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.
+
+=== R10-061-core-word ===
+  status:  reformulated
+  OLD(bad): Civil engineers is a technical discipline that deals with the design, design and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings and railways.
+  NEW:      Civil engineers is a technical discipline that deals with the design, design and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings and railways.
+
+=== R10-064-core-word ===
+  status:  reformulated
+  OLD(bad): The first so-called civil engineer was John Smeaton, who built the Eddystone Lighthouse.
+  NEW:      The first self-made civil engineer was John Smeaton, who built the Eddystone Lighthouse.
+
+=== R10-068-core-multi_sound ===
+  status:  reformulated
+  OLD(bad): Do you want to grab a coffee before the meeting goes?
+  NEW:      Do you want to grab a coffee before the meeting begins?
+
+=== R10-069-core-dense_mixed_generic ===
+  status:  reformulated
+  OLD(bad): She told she might be a little late because of traffic.
+  NEW:      She expressed she might be a little late because of traffic.
+
+=== R10-072-core-word ===
+  status:  reformulated
+  OLD(bad): He said that he'd maybe need more time to finish the report.
+  NEW:      He said that he'd likely need more time to finish the report.
+
+=== R10-073-calib-word_plus_sound ===
+  status:  reformulated
+  OLD(bad): The faculty explained the concept twice before moving on to the next topic.
+  NEW:      The teacher explained the concept twice before moving on to the next topic.
+
+=== R10-074-core-word ===
+  status:  reformulated
+  OLD(bad): Students who struggle with the stuff is furthered to attend office hours.
+  NEW:      Students who struggle with the stuff is supported to attend office hours.
+
+=== R10-075-core-dense_mixed_generic ===
+  status:  reformulated
+  OLD(bad): The exam covers everything we considered in the first six chapters.
+  NEW:      The exam covers everything we took in the first six chapters.
+
+=== R10-079-core-sparse_common_sound ===
+  status:  reformulated
+  OLD(bad): The manager asked everyone to take their reports by the end of the day.
+  NEW:      The manager asked everyone to present their reports by the end of the day.
+
+=== R10-080-core-multi_sound ===
+  status:  reformulated
+  OLD(bad): We're understaffed this week, so deadlines might trip a little.
+  NEW:      We're understaffed this week, so deadlines might case a little.
+
+=== R10-083-core-word ===
+  status:  reformulated
+  OLD(bad): He didn't get the job, even though he had more example than the other elections.
+  NEW:      He didn't get the job, even though he had more experienced than the other applicants.
+
+=== R10-084-core-multi_sound ===
+  status:  reformulated
+  OLD(bad): The team meets every Monday to critique what went faulty the previous week.
+  NEW:      The team meets every Monday to critique what went wrong the previous week.
+
+=== R10-086-core-word ===
+  status:  reformulated
+  OLD(bad): Make sure you arrive at the airline at least two hours before leaving.
+  NEW:      Make sure you arrive at the plane at least two hours before leaving.
+
+=== R10-089-core-word ===
+  status:  reformulated
+  OLD(bad): Locals advised a smaller, less bunched beach a few miles further north.
+  NEW:      Locals advised a smaller, less approached beach a few miles further north.
+
+=== R10-091-calib-single_word ===
+  status:  reformulated
+  OLD(bad): This recipe calls for slightly less sugar than the new version.
+  NEW:      This recipe calls for slightly less sugar than the first version.
+
+=== R10-091-calib-word_plus_sound ===
+  status:  reformulated
+  OLD(bad): This recipe calls for slightly less sugar than the new version.
+  NEW:      This recipe calls for slightly less sugar than the first version.
+
+=== R10-091-core-word ===
+  status:  reformulated
+  OLD(bad): This recipe calls for little less sugar than the new version.
+  NEW:      This recipe calls for little less sugar than the first version.
+
+=== R10-092-core-word ===
+  status:  reformulated
+  OLD(bad): Add the onions first, then let them cook until they turn gold brown.
+  NEW:      Add the onions first, then let they cook until they turn gold brown.
+
+=== R10-094-core-word ===
+  status:  reformulated
+  OLD(bad): He's allergic to shell, so he always checks the menu severely.
+  NEW:      He's allergic to shell, so he always checks the menu strictly.
+
+=== R10-099-core-word ===
+  status:  reformulated
+  OLD(bad): He didn't mean to offend guy, but his remark came across the wrong way.
+  NEW:      He didn't mean to offend anybody, but his comments came across the wrong way.
+
+=== R10-105-core-sparse_common_sound ===
+  status:  reformulated
+  OLD(bad): The mountain trail was higher and rockier than the map advised.
+  NEW:      The mountain trail was heavier and rockier than the map proposed.
+
+=== R10-106-core-word ===
+  status:  reformulated
+  OLD(bad): A thin layer of fog decided over the valley just after dawn.
+  NEW:      A thin layer of fog resolved over the valley just after dawn.
+
+=== R10-108-core-word ===
+  status:  reformulated
+  OLD(bad): The room was dimly lit, with only a one lamp in the edge.
+  NEW:      The room was dimly lit, with only a one lamp in the place.
+
+=== R10-109-calib-single_word ===
+  status:  reformulated
+  OLD(bad): Turn off the power before you attempt to substitute the light fixture.
+  NEW:      Turn off the power before you attempt to repair the light fixture.
+
+=== R10-109-calib-word_plus_sound ===
+  status:  reformulated
+  OLD(bad): Turn off the power before you attempt to substitute the light fixture.
+  NEW:      Turn off the power before you attempt to repair the light fixture.
+
+=== R10-113-core-dense_mixed_generic ===
+  status:  reformulated
+  OLD(bad): Assemble the shelf according to the numbered paces in the manual.
+  NEW:      Assemble the shelf according to the numbered walks in the manual.
+
+=== R10-114-core-sparse_common_sound ===
+  status:  reformulated
+  OLD(bad): Store the medication there cool and out of reach of children.
+  NEW:      Store the medication anywhere cool and out of reach of children.
+
+=== R10-114-core-word ===
+  status:  reformulated
+  OLD(bad): Store the medicine there cool and out of reach of children.
+  NEW:      Store the medicine anywhere cool and out of reach of children.
+
+=== R10-118-core-word ===
+  status:  reformulated
+  OLD(bad): The book was overestimated, in my opinion, though the ending was really moving.
+  NEW:      The book was overstated, in my opinion, though the ending was seriously moving.
+
+=== R10-121-calib-single_word ===
+  status:  reformulated
+  OLD(bad): The library closes at nine on tuesdays and six on weekends.
+  NEW:      The library closes at nine on dayss and six on weekends.
+
+=== R10-121-calib-word_plus_sound ===
+  status:  reformulated
+  OLD(bad): The library closes at nine on tuesdays and six on weekends.
+  NEW:      The library closes at nine on dayss and six on weekends.
+
+=== R10-121-core-word ===
+  status:  reformulated
+  OLD(bad): The library closes at nine on tuesdays and six on sundays.
+  NEW:      The library closes at nine on dayss and six on saturdays.
+
+=== R10-123-core-sparse_common_sound ===
+  status:  reformulated
+  OLD(bad): The bridge was built in the early twentieth period and renovated twice since then.
+  NEW:      The bridge was built in the early twentieth half-century and renovated twice since then.
+
+=== R10-124-core-multi_sound ===
+  status:  reformulated
+  OLD(bad): There are more public parks on the east part of the town than on the west.
+  NEW:      There are more public parks on the east part of the downtown than on the west.
+
+=== R10-125-core-word ===
+  status:  reformulated
+  OLD(bad): The shop doesn't open until ten, but the café next door opens newer.
+  NEW:      The shop doesn't open until ten, but the café next door opens otherrer.
+
+=== R10-128-core-sparse_common_sound ===
+  status:  reformulated
+  OLD(bad): Hugh Fleming had four lasting children from his first marriage. He was 59 at the time of his 2nd marriage to Grace, and died when Alexander was seven.
+  NEW:      Hugh Fleming had four living children from his first marriage. He was 59 at the time of his 2nd marriage to Grace, and died when Alexander was seven.
+
+=== R10-128-core-word ===
+  status:  reformulated
+  OLD(bad): Hugh Fleming had four lasting children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven.
+  NEW:      Hugh Fleming had four living children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven.
+
+=== R10-129-core-word ===
+  status:  reformulated
+  OLD(bad): Fleming went to Loudoun Moor School and Darvel School, and earned a two-year studies to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.
+  NEW:      Fleming went to Loudoun Moor School and Darvel School, and earned a two-year learning to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.
+
+=== R10-131-core-word ===
+  status:  reformulated
+  OLD(bad): His elder brother, Tom, was already a physician and indicated that he should follow the same career.
+  NEW:      His elder brother, Tom, was already a physician and advised that he should follow the same career.
+
+=== R10-133-calib-dense_mixed_generic ===
+  status:  reformulated
+  OLD(bad): In 1906, he qualified with a MBBS degree from the education with distinction.
+  NEW:      In 1906, he qualified with a MBBS degree from the courses with distinction.
+
+=== R10-133-calib-multi_sound ===
+  status:  reformulated
+  OLD(bad): In 1906, he qualified with a MBBS degree from the education with distinction.
+  NEW:      In 1906, he qualified with a MBBS degree from the courses with distinction.
+
+=== R10-133-calib-sparse_common_sound ===
+  status:  reformulated
+  OLD(bad): In 1906, he qualified with a MBBS degree from the education with distinction.
+  NEW:      In 1906, he qualified with a MBBS degree from the courses with distinction.
+
+=== R10-133-core-word ===
+  status:  reformulated
+  OLD(bad): In 1906, he qualified with a MBBS degree from the school with note.
+  NEW:      In 1906, he qualified with a MBBS degree from the school with distinguished.
+
+
+===== SUMMARY =====
+targeted: 83  found_in_old_defective_set: 83
+fixed (output changed from the old defect): 77
+still identical to the old defect: 6
+STILL BAD: ['R10-024-core-word', 'R10-025-calib-multi_word', 'R10-043-calib-multi_word', 'R10-043-core-word', 'R10-061-calib-multi_word', 'R10-061-core-word']

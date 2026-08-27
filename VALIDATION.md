@@ -4977,3 +4977,110 @@ per-case `root_cause`/`fix_sketch` reasoning is preserved in
 `eval/r10b_batch_{1-4}_results.json` for re-examination. This diagnoses
 Phase 10's specific 176-case failure population, not a universal claim
 about all future defects.
+
+## 48. Phase 11 — implementing the "92% fixable" batch, categories 1–3 (executed 2026-08-27)
+
+Per direct instruction to plan and then implement the highest-value,
+lowest-risk slice of Phase 10B's fixable batch. Plan mode was used;
+the first submitted plan was **rejected** with explicit, load-bearing
+feedback: *"verify every proposed protected entry against its actual
+failure instances and make protection context-sensitive where
+necessary, rather than blindly dumping all ~30 into
+PROTECTED_PHRASES."* Every entry below — the fixed-term list and the
+bad-pair blocklist alike — was re-verified against its named Phase 10
+`run_id`'s actual `original_text`/`reformulated_text` pair in
+`eval/r10b_defective_enriched.json` before being added, not copied from
+the subagents' `fix_sketch` paraphrase. Several originally-proposed
+entries were rejected or reclassified on this verification pass (see
+`semantic.py`'s `IDIOM_PHRASES` comment for the specific rejected
+list — momentum, straight line, held together by, of hydrogen into
+helium, deadlines slip, see each other, flavors develop — none were
+genuine fixed-term/idiom cases).
+
+**[FACT] Three categories implemented, all in production code
+(`reformulate()` v1's actual call path, not the experimental v2/v3
+functions):**
+
+1. **Fixed-term protection list expansion** (`semantic.py`
+   `IDIOM_PHRASES`) — 15 verified multi-word technical/domain terms
+   ("small intestine", "activation energy", "magma chamber", "money
+   supply", etc.) plus 4 literal inflections of "go wrong" (no
+   verb-inflection template exists in `IDIOM_PHRASE_PATTERNS`, so each
+   tense is listed literally). **Also closed a real enforcement gap
+   found during implementation, not stated in the original plan**: the
+   protected-phrase list was only ever checked against substitution-tier
+   candidate generation (`protected_positions()`), never against
+   escalation-tier (`_try_escalation()`) T5 restructuring output — yet
+   most of Phase 10's verified fixed-term breaks ("magma chamber" ->
+   "magma cave", R10-031; "activation energy" -> "activated energy",
+   R10-015) were escalation-tier, not substitution-tier. Added
+   `semantic.dropped_protected_phrases()` (case-insensitive substring
+   check, not a token-span match — T5 output isn't guaranteed to
+   detokenize identically to nltk) as a 4th rejection gate in
+   `_try_escalation()`, alongside the existing SBERT/negation/phoneme
+   checks.
+
+2. **Duplicate-word-in-sentence rejection** (`reformulate._duplicates_
+   sentence_word()`, wired into `_try_substitution()`'s per-candidate
+   loop) — rejects a substitution candidate that duplicates a word
+   already elsewhere in the sentence. Verified against R10-060's actual
+   pair ("recessions" next to "economic") that Porter stemming ALONE
+   does not catch derivational-family duplicates (stems to "economi" vs
+   "econom" — different families), so a shared-6-character-prefix check
+   (both words 7+ chars) was added alongside the stem check specifically
+   because the evidence required it, not speculatively.
+
+3. **Bad-pair blocklist** (`semantic.BLOCKED_SUBSTITUTION_PAIRS` /
+   `blocked_pair()`) — 52 specific `(original, replacement)` pairs, each
+   pulled from a named Phase 10 `run_id`'s actual change record, not the
+   fix_sketch text. **Two correctness bugs found and fixed during
+   verification, both instructive:** (a) four pairs were stored in the
+   wrong grammatical form because the *tag actually assigned in context*
+   differed from the intuitive guess — "written"/"crowded" tag as VBN
+   (verb) not adjective in their sentences, and "steeper"/"earlier" lose
+   their comparative suffix under WordNet's adjective lemmatizer — caught
+   by cross-checking every pair against `pos_tag()` + `grammar.lemmatize()`
+   on the real sentence, not assumed; (b) the candidate side isn't
+   guaranteed to already be a WordNet lemma — Datamuse's `ml=`
+   ("meaning-like") results come back as a raw surface form (R10-129:
+   "scholarship" -> "studies", not the lemma "study"), so `blocked_pair()`
+   normalizes both sides through every plausible POS at comparison time
+   rather than trusting the caller. Both bugs were caught by the
+   verification step below, not assumed fixed after writing the code.
+
+**[FACT] Verification performed, per the approved plan:** full existing
+test suite (`reformulate_test.py` 40/40 including 10 new Phase-11-
+specific tests, `semantic_test.py` 18/18, `rephrase_test.py` 8/8,
+`contextual_fit_test.py` 12/12, `app_test.py` all pass) passes clean;
+`tests/smoke.py` is byte-identical to both committed baselines
+(`baseline_sbert.txt` and `baseline.txt`) — this pass only adds new
+*rejection* paths, so behavior on cases the new checks don't touch is
+provably unchanged. `eval/r11_targeted_rerun.py` re-ran the 83 specific
+R10 `run_id`s these three categories target (not the full R10 harvest,
+per the plan) through today's live production `reformulate()`: **77/83
+(93%) no longer reproduce their original defective output.** The
+remaining 6 are exactly the cases correctly outside this pass's scope,
+not a gap discovered late: `R10-024`/`R10-025`/`R10-061` (x2) are
+escalation-tier (T5 restructuring) duplicate-word introductions — the
+approved plan scoped the duplicate-word check to `_try_substitution()`
+only, and this diagnosis (that some duplicate defects are
+restructuring-sourced, not substitution-sourced) was only fully visible
+after re-running the evidence, so it's recorded here as a **known,
+named gap** rather than silently left out; `R10-043` (x2) is a
+number-agreement grammar defect ("instructions" -> "instruction"),
+Category 4, correctly deferred to a future phase.
+
+**[LIMITATION]** "No longer reproduces the old defect" is a narrower,
+cheaper claim than "now judged CLEAN" — no blind human/subagent
+re-judging was performed on these 77 (the plan explicitly deferred a
+full re-harvest). The 6 known-unfixed cases above should be re-examined
+together with Category 2's escalation-tier extension in a future phase,
+not treated as newly discovered scope creep.
+
+**[FUTURE WORK]** Categories 4–7 from Phase 10B (~87 remaining fixable
+cases: POS/grammatical-agreement checks, antonym/polarity-gap coverage,
+number/scope preservation, dictionary validation on escalation output)
+remain unimplemented, as scoped in the approved plan ("Phase 11B").
+Extending the duplicate-word check to escalation-tier output (the 6
+known-unfixed cases above) is a concrete, evidenced addition to that
+follow-up, not a new discovery requiring separate justification.
