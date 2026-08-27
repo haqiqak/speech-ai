@@ -1161,6 +1161,39 @@ def is_number_word_mismatch(original_lemma: str, candidate_lemma: str) -> bool:
     return _is_number_token(a) and _is_number_token(b)
 
 
+# ── Phase 11C countability/mass-noun preservation (VALIDATION.md SS51) ────────
+# No countable/uncountable noun classifier exists anywhere in this codebase,
+# and WordNet itself carries no countability feature to derive one from --
+# confirmed by research, not assumed. Building a general classifier is
+# disproportionate to the small number of remaining evidenced cases
+# (R10-091 "recipe"->"cooking", R10-122 "factories"->"manufacturings",
+# R10-011 "Nutrients"->"Nutritions"; "professor"->"faculty" (R10-073) is
+# already in BLOCKED_SUBSTITUTION_PAIRS from Phase 11B). Same shape as
+# _NUMBER_WORDS above: a small curated closed set, seeded only from
+# individually-verified evidenced cases, not a bulk word list -- lowest-
+# confidence of Phase 11C's mechanisms, since (unlike a number, which is
+# never correctly replaced by a different number) a mass/collective noun
+# occasionally IS a correct simplification, so this set should stay small
+# and evidence-driven rather than grown speculatively.
+_MASS_NOUNS: frozenset[str] = frozenset({
+    "cooking", "manufacturing", "nutrition", "faculty",
+})
+
+
+def is_mass_noun_substitution(original_lemma: str, candidate_lemma: str) -> bool:
+    """True if the candidate is a known-risky mass/collective noun (see
+    _MASS_NOUNS) being offered as a replacement for a word that isn't
+    already one -- guards specifically against the countable-noun-to-
+    mass-noun transition the evidenced cases share, not against a
+    mass-noun-to-mass-noun replacement (which could be a perfectly fine
+    simplification between two already-uncountable words)."""
+    a = (original_lemma or "").strip().lower()
+    b = (candidate_lemma or "").strip().lower()
+    if not a or not b or a == b:
+        return False
+    return b in _MASS_NOUNS and a not in _MASS_NOUNS
+
+
 # ── Sentence-level negation-consistency check (for the T5 escalation path) ────
 # bad_words_ids/antonym-lookup both operate at the single-word level and don't
 # apply to a freely-generated paraphrase candidate. This is the cheap,

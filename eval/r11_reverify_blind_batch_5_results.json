@@ -1,0 +1,16 @@
+{
+  "R10-133-calib-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "\"School\" (the institution he graduated from) was replaced with \"courses\", which changes the factual claim and reads unnaturally since one qualifies from an institution, not from \"the courses\"."
+  },
+  "R10-133-calib-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "\"School\" (the institution he graduated from) was replaced with \"courses\", which changes the factual claim and reads unnaturally since one qualifies from an institution, not from \"the courses\"."
+  }
+}

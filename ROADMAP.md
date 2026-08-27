@@ -1803,6 +1803,44 @@ polarity-without-negation detection) are the correct next lever, a
 candidate "Phase 11C," each needing its own design pass before
 implementation (same caution this phase itself applied to Category 4).
 
+### Phase 11C. Research pass, then porting R45/R46's NLI+grammar validator + two new mechanisms — **DONE, 2026-08-27**
+**Linked finding:** a research/design-only plan-mode pass (no code, no
+evaluation) first, per explicit instruction, re-examining the remaining
+Categories 4/5/6/7 evidence and the actual codebase. Full record:
+`VALIDATION.md` §51, `eval/r11c_reverify_report.md`.
+**Central finding:** two of the four needed mechanisms already existed
+— R45/R46 built and validated an NLI entailment gate and a LanguageTool
+grammar gate, both already downloaded/cached, gating only in the
+experimental `_try_escalation_v3()`/`reformulate_v2()` path (opt-in
+toggle, never production). This phase ported both into production, and
+built two new mechanisms: an escalation-tier duplicate-word check
+(closing a gap named after Phase 11 but dropped before Phase 11B) and a
+small curated countability/mass-noun set.
+**Self-caught, before any number reported:** the duplicate-word check's
+first version would have rejected nearly every legitimate paraphrase
+(caught by the existing test suite); a WSD test failure once the new
+NLI gate was added turned out to be the gate correctly catching a real
+defect the test never actually verified, not a false positive — the
+test was rewritten to check the right thing. Also measured (not
+assumed) a real tradeoff the plan anticipated: the substitution-tier
+NLI check has a genuine precision cost (7/102 previously-CLEAN cases
+now refuse) alongside a confirmed true positive (R10-005's reversal
+correctly caught).
+**Result:** 147/398 runs changed; of 102 still `reformulated`, 21 CLEAN
+/ 81 DEFECTIVE. 21 genuine fixes, 10 regressions all individually
+traced to pre-existing candidate-pool nondeterminism (none caused by
+this phase's gates). **Overall CLEAN rate: 66/194 (34.0%)**, up from
+Phase 10's 26.1% and Phase 11B's 31.6% — clears the ~1-point re-harvest
+noise band Phase 11B established, a real improvement.
+**Labeled as:** still-DEFECTIVE population stays WRONG_WORD_OR_SENSE-
+dominated (46/70) — confirms this class needs candidate-pool-level
+word-sense disambiguation, a fundamentally different kind of mechanism
+than any post-generation gate built across Phases 11/11B/11C. The
+substitution-tier NLI check's precision cost is a legitimate open
+question for a future refinement pass, not resolved here. `R10-024`'s
+same-word-different-replacement pattern is newly named as a distinct
+defect shape for a future phase.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

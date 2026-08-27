@@ -1,174 +1,177 @@
 {
+  "R10-105-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "Dropping the comparative on \"rocky\" (should be \"rockier\" to parallel \"steeper\") plus a past-to-present tense shift on \"suggests\" and the loss of \"mountain\" make this noticeably rougher though still readable."
+  },
+  "R10-105-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Heavier\" does not describe a trail's steepness and produces a nonsensical substitution for \"steeper\"."
+  },
+  "R10-106-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "NATURALNESS_OR_REGISTER",
+    "secondary_defects": [],
+    "rationale": "\"Sat over the valley\" is a slightly awkward collocation for fog compared to \"settled,\" though meaning is preserved."
+  },
+  "R10-108-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"Only one lamp in the corners\" is a number-agreement error that makes a single lamp occupy multiple corners, a logically incoherent image."
+  },
+  "R10-109-calib-single_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Repair\" is a different action from \"replace\" and changes the actual instruction being given."
+  },
   "R10-109-calib-word_plus_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"replace\" was changed to \"repair\", which describes a different action on the light fixture and changes the instruction's meaning."
+    "rationale": "\"Repair\" is a different action from \"replace\" and changes the actual instruction being given."
   },
   "R10-113-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"numbered steps\" became \"numbered walks\", which is nonsensical in the context of assembly instructions."
+    "rationale": "\"Numbered walks in the manual\" is nonsensical; \"steps\" (instructions) was replaced with an unrelated word sense."
   },
   "R10-114-core-word": {
-    "acceptability": "DEFECTIVE",
-    "severity": "MINOR",
-    "primary_defect": "NATURALNESS_OR_REGISTER",
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"somewhere cool\" was changed to \"anywhere cool\", which is slightly less natural phrasing though the practical instruction is essentially unchanged."
+    "rationale": "\"Anywhere cool\" and \"medicine\" preserve the original instruction's meaning and read naturally."
   },
   "R10-114-core-sparse_common_sound": {
-    "acceptability": "DEFECTIVE",
-    "severity": "MINOR",
-    "primary_defect": "NATURALNESS_OR_REGISTER",
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"somewhere cool\" was changed to \"anywhere cool\", a slightly awkward but still understandable word choice that preserves the instruction's intent."
+    "rationale": "\"Anywhere cool\" preserves the original instruction's meaning and reads naturally."
   },
-  "R10-118-core-word": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [
-      "NATURALNESS_OR_REGISTER"
-    ],
-    "rationale": "\"overrated\" (undeserved high esteem) was replaced with \"overstated\" (exaggerated description), a distinct concept that changes the claim about the book, and \"seriously moving\" is an awkward register shift from \"genuinely moving\"."
+  "R10-115-calib-single_word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Makes\" corrects the original's subject-verb agreement and \"more difficult\" is a faithful synonym for \"harder.\""
+  },
+  "R10-115-calib-word_plus_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Makes\" corrects the original's subject-verb agreement and \"more difficult\" is a faithful synonym for \"harder.\""
   },
   "R10-121-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
     "secondary_defects": [],
-    "rationale": "\"weekdays\" and \"weekends\" were narrowed to \"wednesdays\" and \"saturdays\", asserting false and much narrower operating-hours facts."
+    "rationale": "Narrowing \"weekdays\" to \"Mondays\" and \"weekends\" to \"Saturdays\" changes the factual claim from a five-day and two-day schedule to single specific days."
   },
   "R10-121-calib-single_word": {
     "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
     "secondary_defects": [],
-    "rationale": "\"weekdays\" was narrowed to \"wednesdays\", falsely restricting a five-day schedule claim to a single day."
+    "rationale": "\"Weekday\" should be plural \"weekdays\"; the error is noticeable but the meaning is still clear."
   },
   "R10-121-calib-word_plus_sound": {
     "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
     "secondary_defects": [],
-    "rationale": "\"weekdays\" was narrowed to \"wednesdays\", falsely restricting a five-day schedule claim to a single day."
+    "rationale": "\"Weekday\" should be plural \"weekdays\"; the error is noticeable but the meaning is still clear."
+  },
+  "R10-122-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "\"Work in the two manufacturers\" confuses the company sense of \"manufacturer\" with the physical-place sense of \"factory,\" reading oddly though the general meaning of industrial employment survives."
   },
   "R10-123-core-word": {
     "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
+    "severity": "MINOR",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"renovated\" was changed to \"rebuilt\", a materially different and more drastic claim about the bridge's history."
+    "rationale": "\"Rebuilt\" implies full reconstruction rather than \"renovated\" (repaired/updated), a real but modest precision loss in a factual statement."
   },
   "R10-123-core-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
-    "primary_defect": "FIXED_TERM_OR_IDIOM",
-    "secondary_defects": [],
-    "rationale": "\"early twentieth century\" was garbled into \"early twentieth half-century\", breaking the fixed time-period term into a nonsensical phrase."
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"Twentieth half-century\" is not a coherent time expression and garbles the original date reference."
   },
   "R10-124-core-multi_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"east side of the city\" was changed to \"east part of the downtown\", narrowing the claim's geographic scope from the whole city to a specific district."
+    "rationale": "\"Downtown\" is a specific district, not the whole \"city,\" so the comparison's geographic scope is substantially changed."
   },
   "R10-125-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [
-      "GRAMMAR"
-    ],
-    "rationale": "\"opens earlier\" was changed to \"opens older\", which is nonsensical and loses the intended comparison of opening times."
-  },
-  "R10-127-calib-multi_sound": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "GRAMMAR",
-    "secondary_defects": [
-      "NATURALNESS_OR_REGISTER"
-    ],
-    "rationale": "\"the third of four children\" was changed to \"the tertiary of four children\", which is not valid English usage of \"tertiary\" as a birth-order noun."
-  },
-  "R10-127-calib-dense_mixed_generic": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "GRAMMAR",
-    "secondary_defects": [
-      "NATURALNESS_OR_REGISTER"
-    ],
-    "rationale": "\"the third of four children\" was changed to \"the tertiary of four children\", which is not valid English usage of \"tertiary\" as a birth-order noun."
+    "secondary_defects": [],
+    "rationale": "\"Opens older\" is nonsensical in place of \"opens earlier\" and no longer conveys the intended time comparison."
   },
   "R10-128-core-word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"surviving\" was replaced with \"living\", a natural near-synonym that preserves the sentence's meaning."
+    "rationale": "\"Living\" is a faithful synonym for \"surviving\" in this context and the rest of the sentence is unchanged."
   },
   "R10-128-core-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "\"second marriage\" was changed to \"back marriage\", a nonsensical phrase that loses the factual detail about which marriage is meant."
+    "secondary_defects": ["FACTUAL_OR_LOGICAL_REVERSAL"],
+    "rationale": "\"Back marriage\" is nonsensical and loses the factual detail that this was specifically his second marriage."
   },
   "R10-129-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [
-      "GRAMMAR"
-    ],
-    "rationale": "\"a two-year scholarship\" was changed to \"a two-year learning\", dropping the key fact that it was a scholarship and producing an ungrammatical phrase (\"learning to Kilmarnock Academy\")."
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"Earned a two-year learning to Kilmarnock Academy\" is ungrammatical and drops the specific fact that it was a scholarship."
   },
   "R10-131-core-word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"suggested\" was replaced with \"advised\", a natural synonym that preserves the sentence's meaning."
+    "rationale": "\"Advised\" is a faithful, natural synonym for \"suggested\" and the sentence's meaning is unchanged."
   },
   "R10-133-calib-multi_word": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "NATURALNESS_OR_REGISTER",
-    "secondary_defects": [
-      "WRONG_WORD_OR_SENSE"
-    ],
-    "rationale": "The restructured sentence stacks \"with distinction with a MBBS degree\" awkwardly, and \"the school\" was generalized to \"the university\", a slight loss of precision."
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "The reordered \"graduated with distinction with a MBBS degree\" creates an awkward double \"with,\" and \"the university\" adds an unwarranted specific claim in place of the vaguer \"the school.\""
   },
   "R10-133-calib-multi_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [
-      "GRAMMAR"
-    ],
-    "rationale": "\"the school\" was changed to \"the courses\", producing the nonsensical claim of qualifying with a degree \"from the courses\"."
-  },
-  "R10-133-calib-sparse_common_sound": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [
-      "GRAMMAR"
-    ],
-    "rationale": "\"the school\" was changed to \"the courses\", producing the nonsensical claim of qualifying with a degree \"from the courses\"."
-  },
-  "R10-133-calib-dense_mixed_generic": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [
-      "GRAMMAR"
-    ],
-    "rationale": "\"the school\" was changed to \"the courses\", producing the nonsensical claim of qualifying with a degree \"from the courses\"."
+    "secondary_defects": [],
+    "rationale": "\"From the courses\" replaces the institutional reference \"the school\" with coursework, losing the fact that a degree was awarded by an institution."
   }
 }

@@ -1,5 +1,10 @@
 [
   {
+    "run_id": "R10-073-calib-word_plus_sound",
+    "original_text": "The professor explained the concept twice before moving on to the next topic.",
+    "reformulated_text": "The teacher explained the concept twice before moving on to the next topic."
+  },
+  {
     "run_id": "R10-074-core-word",
     "original_text": "Students who struggle with the material is encouraged to attend office hours.",
     "reformulated_text": "Students who struggle with the stuff is supported to attend office hours."
@@ -35,6 +40,11 @@
     "reformulated_text": "The manager asked everybody to submit their reports by the end of the day."
   },
   {
+    "run_id": "R10-080-core-word",
+    "original_text": "We're understaffed this week, so deadlines might slip a little.",
+    "reformulated_text": "This week we're under-staffed, so the deadline might slip a little."
+  },
+  {
     "run_id": "R10-080-core-multi_sound",
     "original_text": "We're understaffed this week, so deadlines might slip a little.",
     "reformulated_text": "We're understaffed this week, so deadlines might case a little."
@@ -65,14 +75,29 @@
     "reformulated_text": "This recipe calls for little less sugar than the first version."
   },
   {
+    "run_id": "R10-091-core-multi_sound",
+    "original_text": "This recipe calls for slightly less sugar than the original version.",
+    "reformulated_text": "This way calls for little less sugar than the original version."
+  },
+  {
     "run_id": "R10-091-calib-single_word",
     "original_text": "This recipe calls for slightly less sugar than the original version.",
     "reformulated_text": "This recipe calls for slightly less sugar than the first version."
   },
   {
+    "run_id": "R10-091-calib-multi_word",
+    "original_text": "This recipe calls for slightly less sugar than the original version.",
+    "reformulated_text": "This recipe calls for a little less sugar than the first one."
+  },
+  {
     "run_id": "R10-091-calib-word_plus_sound",
     "original_text": "This recipe calls for slightly less sugar than the original version.",
     "reformulated_text": "This recipe calls for slightly less sugar than the first version."
+  },
+  {
+    "run_id": "R10-091-calib-dense_mixed_generic",
+    "original_text": "This recipe calls for slightly less sugar than the original version.",
+    "reformulated_text": "This way calls for little less sugar than the original version."
   },
   {
     "run_id": "R10-094-core-word",
@@ -98,30 +123,5 @@
     "run_id": "R10-099-core-word",
     "original_text": "He didn't mean to offend anyone, but his comment came across the wrong way.",
     "reformulated_text": "He didn't mean to offend anybody, but his comments came across the wrong way."
-  },
-  {
-    "run_id": "R10-105-core-word",
-    "original_text": "The mountain trail was steeper and rockier than the map suggested.",
-    "reformulated_text": "The trail was steeper and rocky than the map suggests."
-  },
-  {
-    "run_id": "R10-105-core-sparse_common_sound",
-    "original_text": "The mountain trail was steeper and rockier than the map suggested.",
-    "reformulated_text": "The mountain trail was heavier and rockier than the map proposed."
-  },
-  {
-    "run_id": "R10-106-core-word",
-    "original_text": "A thin layer of fog settled over the valley just after sunrise.",
-    "reformulated_text": "A thin layer of fog resolved over the valley just after dawn."
-  },
-  {
-    "run_id": "R10-108-core-word",
-    "original_text": "The room was dimly lit, with only a single lamp in the corner.",
-    "reformulated_text": "The room was dimly lit, with only a several lamp in the place."
-  },
-  {
-    "run_id": "R10-109-calib-single_word",
-    "original_text": "Turn off the power before you attempt to replace the light fixture.",
-    "reformulated_text": "Turn off the power before you attempt to repair the light fixture."
   }
 ]

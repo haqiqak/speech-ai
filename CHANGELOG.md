@@ -6,6 +6,19 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-27, fourth** feat: Phase 11C — research pass then ported
+  R45/R46's already-built NLI entailment gate and LanguageTool grammar
+  gate from the experimental reformulate_v2()/opt-in-toggle path into
+  production, plus two new mechanisms: an escalation-tier duplicate-
+  word check and a countability/mass-noun set. Self-caught 2 real bugs
+  (duplicate-check over-flagging any new word; a WSD test that never
+  actually verified candidate quality) before reporting any number, and
+  measured a real, plan-anticipated tradeoff (substitution-tier NLI's
+  7/102 false-positive rate) rather than assuming it away. Full
+  398-run harvest: 21 genuine fixes, 10 regressions all traced to
+  pre-existing nondeterminism. CLEAN rate: 26.1% → 31.6% → 34.0%,
+  clearing the established re-harvest noise band. →
+  `DECISION_LOG.md` 2026-08-27-D, `VALIDATION.md` §51.
 - **2026-08-27, third** feat: Phase 11B — categories 4/6/7 of Phase
   10B's fixable batch. Added dictionary/real-word validation on
   generated output (reused as a substitution-tier gate too, not just

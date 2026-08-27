@@ -46,6 +46,7 @@ NLTK WordNet (already a dependency), edit-amount scoring is difflib
 
 from __future__ import annotations
 
+from collections import Counter
 from dataclasses import dataclass
 import re
 
@@ -99,6 +100,79 @@ def _duplicates_sentence_word(candidate_word: str, tokens: list[str], exclude_in
         if len(cand) >= 7 and len(tok_lower) >= 7 and cand[:6] == tok_lower[:6]:
             return True
     return False
+
+
+def _content_word_key(word: str) -> str:
+    """Same duplicate-detection logic as _duplicates_sentence_word() above
+    (Porter stem for short words, 6-char prefix for long ones, to catch
+    derivational families like "economies"/"economic"), reshaped into a
+    single canonical key per word instead of a pairwise comparison, so
+    whole-sentence content can be counted into a Counter."""
+    w = word.lower()
+    if len(w) >= 7:
+        return w[:6]
+    return _stemmer.stem(w)
+
+
+def _content_word_key_counts(text: str) -> Counter:
+    """Splits on internal hyphens before keying, unlike the plain content-
+    word regex used elsewhere in this file for leak-scanning/dictionary
+    checks -- verified necessary, not assumed: "self-gravity" and
+    "self-gravitational" both key to "self-g" (the hyphen-dominated
+    6-char prefix) if kept as single hyphenated tokens, which hides the
+    shared "gravit-" root that a bare "gravity" token elsewhere in the
+    same text needs to be compared against (R10-025's actual case).
+    Splitting each hyphenated word into its parts for THIS function only
+    reproduces the same "gravit" key on both sides and lets the
+    duplicate show up."""
+    words = re.findall(r"[A-Za-z][A-Za-z'-]*", text.lower())
+    counts = Counter()
+    for w in words:
+        for part in (w.split("-") if "-" in w else (w,)):
+            if part and part not in _STOP:
+                counts[_content_word_key(part)] += 1
+    return counts
+
+
+def introduces_new_duplicate(original_text: str, candidate_text: str) -> bool:
+    """Phase 11C (VALIDATION.md SS51) -- the escalation-tier counterpart to
+    _duplicates_sentence_word(), which only ever gated substitution-tier
+    candidates. Named as a "concrete, evidenced" gap after Phase 11
+    (VALIDATION.md SS48 FUTURE WORK) but dropped between write-ups before
+    Phase 11B -- recorded here so it isn't dropped a second time.
+
+    NOT a blanket "no repeated words" rule: R10-024's own ORIGINAL
+    sentence already legitimately says "force" twice, so simple self-
+    consistency would over-reject. Instead this counts each content
+    word's key (see _content_word_key) in the ORIGINAL as a baseline and
+    only flags a key that ALREADY occurred at least once in the original
+    AND occurs MORE often in the candidate -- a net NEW duplication
+    introduced by restructuring, not a pre-existing one, and critically
+    not just "any word the candidate introduces that wasn't in the
+    original" (that describes almost every legitimate paraphrase word --
+    an earlier version of this function used exactly that looser rule
+    and, caught by this phase's own test suite before being trusted,
+    rejected ordinary one-for-one synonym restructurings wholesale:
+    "requires"->"needs", "proceed"->"happen", neither a duplicate of
+    anything, both flagged as one under the broken rule since the
+    ORIGINAL simply had never said "needs" or "happen" at all).
+
+    Verified against R10-061 ("the design, construction, and
+    maintenance" -> "the design, design and maintenance") and R10-024
+    ("...of equal magnitude..." -> introducing a third "force" where two
+    were legitimate). R10-025's hyphenated case ("held together by
+    self-gravity" -> "surrounded by self-gravitational gravity") needs
+    _content_word_key_counts()'s hyphen-splitting (see its own docstring)
+    to actually see the shared root -- without it, "self-gravity" and
+    "self-gravitational" key identically to each other via their shared
+    "self-g" prefix while the new bare "gravity" gets its own unrelated
+    "gravit" key, and the defect is missed entirely."""
+    orig_counts = _content_word_key_counts(original_text)
+    cand_counts = _content_word_key_counts(candidate_text)
+    return any(
+        orig_counts.get(key, 0) > 0 and count > orig_counts[key]
+        for key, count in cand_counts.items()
+    )
 
 
 @dataclass
@@ -384,6 +458,15 @@ def _try_substitution(
             if sem.is_number_word_mismatch(base, s["lemma"]):
                 s["number_word_rejected"] = True
                 continue
+            if sem.is_mass_noun_substitution(base, s["lemma"]):
+                # Phase 11C (VALIDATION.md SS51) -- no countability signal
+                # existed anywhere in this codebase; a specific blocklist
+                # pair (professor->faculty, Phase 11B) just gets bypassed
+                # by the next bad candidate (R10-073: moved to "teacher").
+                # This closed set catches the countable-noun-to-mass-noun
+                # shape directly instead of chasing one pair at a time.
+                s["mass_noun_rejected"] = True
+                continue
             if has_unknown_tokens(s["inflected"]):
                 # Phase 11B (VALIDATION.md SS50) -- found during this
                 # phase's own re-verification: "weekdays"->"dayss" is a
@@ -431,6 +514,28 @@ def _try_substitution(
                 "difficulty_after": round(ph.word_difficulty(usable["inflected"]), 4),
             },
         })
+
+    if changes:
+        # Phase 11C (VALIDATION.md SS51) -- per R45's own recommendation
+        # (VALIDATION.md SS36.3: "apply the combined NLI... validator to
+        # the final assembled output of both tiers, not just escalation's"),
+        # one check on the fully assembled sentence, not per-candidate --
+        # bounds cost to one model call per successful substitution attempt
+        # rather than one per candidate per position. R10-005/R10-101 (two
+        # of this gap's directly evidenced cases) are both substitution-
+        # tier, so this tier needs the same entailment check escalation/
+        # phrase-tier just got, applied once the whole sentence is known
+        # rather than word-by-word (no single word-level antonym check can
+        # see a reversal that only emerges from the combination, or a
+        # role-flip like "surprised"->"surprising" that isn't a lexical
+        # antonym at all). All-or-nothing, matching this function's own
+        # existing philosophy: a contradiction here fails the whole
+        # attempt, not just the last change.
+        assembled = _detokenize(new_tokens)
+        nli = sem.logical_consistency_check(sentence, assembled)
+        if nli is not None and nli["contradiction"]:
+            skipped.append({"word": None, "position": None, "reason": "final sentence failed NLI contradiction check"})
+            return None, changes, skipped
 
     return new_tokens, changes, skipped
 
@@ -499,9 +604,51 @@ def _try_escalation(
         # down-ranked.
         if has_unknown_tokens(cand):
             continue
+        # Phase 11C (VALIDATION.md SS51) -- _duplicates_sentence_word()
+        # only ever gated substitution-tier candidates; free restructuring
+        # here was never checked for a NEW word repetition it introduces
+        # ("design, construction" -> "design, design", R10-061; a third
+        # "force" where two were legitimate, R10-024). Named as a gap
+        # after Phase 11 but dropped before Phase 11B's plan -- closed now.
+        if introduces_new_duplicate(sentence, cand):
+            continue
+        # Phase 11C (VALIDATION.md SS51) -- is_known_antonym() is word-level
+        # and lexical, so it structurally cannot catch a candidate that
+        # reverses the ORIGINAL's claim without using a WordNet antonym pair
+        # (R10-005: "reabsorbed" -> "eliminated" cleared antonym_check="pass"
+        # since the two aren't listed antonyms, despite being a genuine
+        # process-reversal); negation_consistent() only counts negation
+        # MARKERS, so a reversal with none present (R10-088: "skipped the
+        # museum" -> "went to the museums instead") is equally invisible to
+        # it. This is the exact gate R45/R46 already designed, built, and
+        # validated for this -- it was gating in the experimental
+        # _try_escalation_v3() (reformulate_v2(), never wired to app.py's
+        # default path) the whole time; porting it here is what actually
+        # ships it.
+        nli = sem.logical_consistency_check(sentence, cand)
+        if nli is not None and nli["contradiction"]:
+            continue
+        # Phase 11C (VALIDATION.md SS51) -- none of the checks above verify
+        # whether the generated sentence actually PARSES as grammatical
+        # English (R10-002 "esophageal" filling a noun slot; R10-013
+        # singular subject/plural verb; R10-061 "Civil engineers is").
+        # grammar_issue_count() (LanguageTool, already a dependency) was
+        # built and validated for exactly this (R45, VALIDATION.md SS36.1)
+        # but only ever reported, never gated, and only in reformulate_v2()'s
+        # non-production output. Measured directly against this phase's own
+        # evidence before wiring this in (not assumed): 2/7 evidenced cases
+        # actually caught (R10-013-shaped and R10-108-shaped patterns) --
+        # real but partial recall, consistent with R45's own ~25% figure;
+        # it will not catch the majority of remaining defects, only the
+        # smaller GRAMMAR-labeled slice. Fails closed (None) if the tool
+        # isn't loaded, same as every other reported-only signal in this
+        # module -- never blocks output just because the checker itself is
+        # unavailable.
+        if (sem.grammar_issue_count(cand) or 0) > 0:
+            continue
         rank_score = sim if sim is not None else -1.0
         if best is None or (rank_score > best["rank_score"]):
-            best = {"text": cand, "sim": sim, "rank_score": rank_score}
+            best = {"text": cand, "sim": sim, "rank_score": rank_score, "nli": nli}
 
     if best is None:
         return None, None
@@ -517,7 +664,7 @@ def _try_escalation(
         "verification": {
             "antonym_check": "n/a_sentence_level",
             "sbert_sim": round(best["sim"], 4) if best["sim"] is not None else None,
-            "nli": "not_run",
+            "nli": best["nli"] if best["nli"] is not None else "not_run",
             "phoneme_ok": True,
             "difficulty_before": round(ph.sentence_difficulty(re.findall(r"[A-Za-z]+", sentence)), 4),
             "difficulty_after": round(ph.sentence_difficulty(re.findall(r"[A-Za-z]+", best["text"])), 4),
@@ -778,9 +925,27 @@ def _try_phrase_replacement(
         # check, not just the sentence-level ones above.
         if has_unknown_tokens(candidate_sentence):
             continue
+        # Phase 11C (VALIDATION.md SS51) -- same reasoning as
+        # _try_escalation()'s introduces_new_duplicate() gate: this
+        # splices T5-generated free text back into the sentence too, so
+        # it can just as easily introduce a new word repetition.
+        if introduces_new_duplicate(sentence, candidate_sentence):
+            continue
+        # Phase 11C (VALIDATION.md SS51) -- same reasoning as
+        # _try_escalation()'s NLI gate: this is also free-text generation
+        # spliced back into the sentence, so it needs the same
+        # entailment/contradiction check, not just the negation-marker
+        # count above.
+        nli = sem.logical_consistency_check(sentence, candidate_sentence)
+        if nli is not None and nli["contradiction"]:
+            continue
+        # Phase 11C (VALIDATION.md SS51) -- same reasoning as
+        # _try_escalation()'s grammar_issue_count() gate.
+        if (sem.grammar_issue_count(candidate_sentence) or 0) > 0:
+            continue
         rank_score = sim if sim is not None else -1.0
         if best is None or rank_score > best["rank_score"]:
-            best = {"tokens": candidate_tokens, "text": candidate_sentence, "sim": sim, "rank_score": rank_score}
+            best = {"tokens": candidate_tokens, "text": candidate_sentence, "sim": sim, "rank_score": rank_score, "nli": nli}
 
     if best is None:
         return None
@@ -805,7 +970,7 @@ def _try_phrase_replacement(
             "verification": {
                 "antonym_check": "n/a_phrase_level",
                 "sbert_sim": round(best["sim"], 4) if best["sim"] is not None else None,
-                "nli": "not_run",
+                "nli": best["nli"] if best["nli"] is not None else "not_run",
                 "phoneme_ok": True,
                 "difficulty_before": round(ph.sentence_difficulty(re.findall(r"[A-Za-z]+", sentence)), 4),
                 "difficulty_after": round(ph.sentence_difficulty(re.findall(r"[A-Za-z]+", best["text"])), 4),

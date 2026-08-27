@@ -1,177 +1,177 @@
 {
-  "R10-074-core-word": {
+  "R10-073-calib-word_plus_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
-    "primary_defect": "NATURALNESS_OR_REGISTER",
-    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
-    "rationale": "\"Is supported to attend\" is an awkward, non-idiomatic collocation compared to \"encouraged to attend,\" and \"stuff\" downgrades the register from \"material,\" though the core meaning still comes through."
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Professor\" is downgraded to the more generic \"teacher\", losing the specific academic-rank precision of the original without changing the overall sense of the sentence."
+  },
+  "R10-074-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "\"Encouraged\" (invited/urged) is replaced with \"supported\", which does not mean the same thing and forms the unnatural collocation \"supported to attend\", while \"material\" becomes the informal \"stuff\"."
   },
   "R10-075-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"Everything we took in the first six chapters\" misuses \"took\" (you take a course, not chapters), producing a confusing sense change from \"studied.\""
+    "rationale": "\"Studied\" is replaced with \"took\", which does not fit \"chapters\" and makes the sentence semantically confused (\"everything we took in the first six chapters\")."
   },
   "R10-076-core-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": ["GRAMMAR"],
-    "rationale": "\"The like way\" is not standard English and garbles the meaning of \"the same way.\""
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"The same way\" becomes \"the like way\", which is not a grammatical English phrase and fails to convey the intended meaning."
   },
   "R10-079-core-word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"Everybody\" is a fully natural, meaning-preserving synonym for \"everyone.\""
+    "rationale": "\"Everyone\" to \"everybody\" is a fully synonymous, natural substitution that preserves meaning exactly."
   },
   "R10-079-core-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
-    "severity": "MINOR",
+    "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"Present their reports\" shifts the action from handing in a document to displaying/delivering it, a noticeable but not drastic sense change from \"submit.\""
+    "rationale": "\"Submit\" (turn in) is replaced with \"present\" (display/show), which describes a materially different action than handing in a written report."
   },
   "R10-079-calib-single_word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"Everybody\" is a natural, meaning-preserving synonym for \"everyone\"; nothing else changed."
+    "rationale": "\"Everyone\" to \"everybody\" is a fully synonymous, natural substitution that preserves meaning exactly."
   },
   "R10-079-calib-word_plus_sound": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"Everybody\" is a natural, meaning-preserving synonym for \"everyone\"; nothing else changed."
+    "rationale": "\"Everyone\" to \"everybody\" is a fully synonymous, natural substitution that preserves meaning exactly."
+  },
+  "R10-080-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "Plural \"deadlines\" becomes the singular, definite \"the deadline\", narrowing the scope from multiple deadlines in general to one specific deadline."
   },
   "R10-080-core-multi_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "\"Deadlines might case a little\" is nonsensical; \"case\" is not a valid substitute for \"slip.\""
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"Slip\" is replaced with \"case\", producing the nonsensical \"deadlines might case a little\"."
   },
   "R10-083-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
     "secondary_defects": [],
-    "rationale": "\"Had more experienced than\" is ungrammatical; it should be \"had more experience\" or \"was more experienced.\""
+    "rationale": "\"Had more experience\" becomes the ungrammatical \"had more experienced\", misusing the adjective form where a noun is required."
   },
   "R10-084-core-multi_sound": {
-    "acceptability": "CLEAN",
-    "severity": "CLEAN",
-    "primary_defect": "CLEAN",
-    "secondary_defects": [],
-    "rationale": "\"Critique what went wrong\" is a natural, meaning-preserving substitute for \"review what went wrong\" in this context."
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "\"Review\" (examine) is swapped for \"critique\" (judge/evaluate), adding a judgmental connotation and an awkward collocation with \"what went wrong\" while keeping the overall gist intact."
   },
   "R10-086-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "\"Arrive at the plane\" doesn't make sense two hours before departure (you arrive at the airport, not the plane itself), a real meaning change from the original."
+    "secondary_defects": ["FACTUAL_OR_LOGICAL_REVERSAL"],
+    "rationale": "\"Airport\" is replaced with \"plane\", creating a logically odd instruction to arrive at the plane itself two hours before departure rather than at the airport."
   },
   "R10-089-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"Less approached beach\" is nonsensical; \"approached\" is not a valid substitute for \"crowded.\""
+    "rationale": "\"Crowded\" is replaced with \"approached\", which does not convey the intended sense and makes \"less approached beach\" confusing."
   },
   "R10-091-core-word": {
     "acceptability": "DEFECTIVE",
-    "severity": "MINOR",
+    "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
     "secondary_defects": [],
-    "rationale": "\"Little less sugar\" is missing the article and should read \"a little less sugar\"; \"first version\" for \"original version\" is an acceptable near-synonym."
+    "rationale": "\"Slightly less\" becomes \"little less\", dropping the required article \"a\" and producing an ungrammatical phrase."
+  },
+  "R10-091-core-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"Recipe\" is replaced with \"way\", producing the nonsensical \"This way calls for...\", compounded by the missing article in \"little less sugar\"."
   },
   "R10-091-calib-single_word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"First version\" is an acceptable, meaning-preserving synonym for \"original version\" and the sentence remains fully natural."
+    "rationale": "\"Original version\" to \"first version\" is a natural, meaning-preserving substitution in this context."
+  },
+  "R10-091-calib-multi_word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Slightly less\" to \"a little less\" and \"original version\" to \"first one\" are both natural, grammatical, meaning-preserving substitutions."
   },
   "R10-091-calib-word_plus_sound": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"First version\" is an acceptable, meaning-preserving synonym for \"original version\" and the sentence remains fully natural."
+    "rationale": "\"Original version\" to \"first version\" is a natural, meaning-preserving substitution in this context."
+  },
+  "R10-091-calib-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"Recipe\" is replaced with \"way\", producing the nonsensical \"This way calls for...\", compounded by the missing article in \"little less sugar\"."
   },
   "R10-094-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "\"Allergic to shell\" is a nonsensical truncation of \"allergic to shellfish\" that loses the intended meaning."
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "\"Shellfish\" is replaced with \"shell\", a materially different and non-standard allergen term, and \"carefully\" becomes the oddly matched \"strictly\"."
   },
   "R10-097-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
     "secondary_defects": ["WRONG_WORD_OR_SENSE"],
-    "rationale": "\"She excused for showing up late\" is ungrammatical and \"excused\" does not carry the same meaning as \"apologized.\""
+    "rationale": "\"Apologized for\" becomes the ungrammatical and semantically different \"excused for\", which is not standard usage of \"excuse\" and does not mean the same as apologizing."
   },
   "R10-097-calib-single_word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
     "secondary_defects": ["WRONG_WORD_OR_SENSE"],
-    "rationale": "\"She excused for showing up late\" is ungrammatical and \"excused\" does not carry the same meaning as \"apologized.\""
+    "rationale": "\"Apologized for\" becomes the ungrammatical and semantically different \"excused for\", which is not standard usage of \"excuse\" and does not mean the same as apologizing."
   },
   "R10-097-calib-word_plus_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
     "secondary_defects": ["WRONG_WORD_OR_SENSE"],
-    "rationale": "\"She excused for showing up late\" is ungrammatical and \"excused\" does not carry the same meaning as \"apologized.\""
+    "rationale": "\"Apologized for\" becomes the ungrammatical and semantically different \"excused for\", which is not standard usage of \"excuse\" and does not mean the same as apologizing."
   },
   "R10-099-core-word": {
-    "acceptability": "CLEAN",
-    "severity": "CLEAN",
-    "primary_defect": "CLEAN",
-    "secondary_defects": [],
-    "rationale": "\"Anybody\" for \"anyone\" and \"comments\" for \"comment\" are trivial, meaning-preserving variations that keep the sentence natural."
-  },
-  "R10-105-core-word": {
     "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "GRAMMAR",
-    "secondary_defects": ["OTHER"],
-    "rationale": "\"Steeper and rocky\" breaks the parallel comparative structure (should be \"rockier\"), and the tense shifts inconsistently from \"was\" to \"suggests\" while also dropping \"mountain.\""
-  },
-  "R10-105-core-sparse_common_sound": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
+    "severity": "MINOR",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"Heavier\" is not a sensible substitute for \"steeper\" when describing a trail, producing a confusing sense change."
-  },
-  "R10-106-core-word": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "Fog does not \"resolve\" over a valley; \"resolved\" is a nonsensical substitute for \"settled.\""
-  },
-  "R10-108-core-word": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
-    "secondary_defects": ["GRAMMAR"],
-    "rationale": "\"A several lamp\" is ungrammatical and reverses the stated fact of exactly one lamp into an unspecified plural quantity, while \"place\" also loses the precision of \"corner.\""
-  },
-  "R10-109-calib-single_word": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "\"Attempt to repair\" describes a different action than \"attempt to replace\" for a light fixture, a real change in what the instruction asks the reader to do."
+    "rationale": "Singular \"his comment\" becomes plural \"his comments\", a small but real change in scope from one remark to multiple remarks."
   }
 }

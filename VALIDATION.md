@@ -5244,3 +5244,107 @@ FACTUAL_OR_LOGICAL_REVERSAL 5) matches the deferred categories exactly
 — confirms rather than surfaces new scope. `"third"`/`"single"`'s
 unconverged pools illustrate a real ceiling on the blocklist approach
 for high-collision words.
+
+## 51. Phase 11C — porting the R45/R46 NLI+grammar validator, escalation-tier duplicates, countability (executed 2026-08-27)
+
+Per approved plan mode (research-first, `gleaming-swinging-nova.md`):
+the four evidence-backed mechanisms this research pass identified for
+Categories 4/5/6/7's remaining defects. Full record: `eval/
+r11c_reverify_report.md`.
+
+**[FACT] The research pass's central finding: two of the four
+mechanisms were not new work.** R45/R46 (`VALIDATION.md` §36-37)
+already designed, built, and validated an NLI entailment gate
+(`semantic.logical_consistency_check()`, `cross-encoder/nli-deberta-
+v3-xsmall`) and a grammar gate (`semantic.grammar_issue_count()`,
+LanguageTool) — both already downloaded/cached, both gating in the
+experimental `_try_escalation_v3()`/`reformulate_v2()` path (reachable
+only via an opt-in `app.py` toggle, never production's default). This
+phase ported both into production's `_try_escalation()`/`_try_phrase_
+replacement()`, added the NLI check once more to `_try_substitution()`'s
+final assembled output per R45's own recommendation (§36.3: "apply...
+to the final assembled output of both tiers, not just escalation's"),
+and built two genuinely new mechanisms: an escalation-tier duplicate-
+word check (`reformulate.introduces_new_duplicate()`, closing a gap
+named after Phase 11 but dropped before Phase 11B's plan) and a small
+curated countability/mass-noun set (`semantic.is_mass_noun_
+substitution()`) since no countability signal existed anywhere in this
+codebase.
+
+**[FACT] Two real bugs caught during this phase's own verification,
+fixed before any number was reported:** (1) `introduces_new_duplicate()`'s
+first version flagged ANY word new to the candidate as "exceeding" the
+original's zero count for that word — which would have rejected almost
+every legitimate paraphrase; caught immediately by the existing test
+suite (`EscalationTest`) before being trusted, fixed to only flag a key
+that already occurred ≥1 time in the original and occurs more often in
+the candidate. (2) A pre-existing WSD regression test failed once the
+new substitution-tier NLI gate was added — not a false positive, but a
+real defect the gate correctly caught (WordNet's only "runs"-jogging
+candidate under this test module's `DISABLE_DATAMUSE=1` setting was
+"pass," producing "he passes three miles"); the test asserted only that
+two occurrences got *different* candidates, not that they were
+individually good, so it was rewritten to test the local-context-window
+mechanism directly rather than end-to-end output.
+
+**[FINDING, a measured tradeoff the plan explicitly anticipated, not a
+bug]** The substitution-tier whole-sentence NLI check has a real
+precision cost: 7 of 102 previously-CLEAN cases now refuse (e.g.
+`R10-112`'s "remove the paper"→"take the paper," a fine synonym,
+flagged `contradiction: True`). Directly verified this is the SAME
+mechanism delivering a confirmed true positive on `R10-005`
+("reabsorbed"→"eliminated" correctly rejected; "reabsorbed"→"absorbed"
+correctly passes) — a real, disclosed tradeoff, not a defect, with its
+net effect measured below rather than assumed.
+
+**[FACT] Targeted verification (20 evidenced run_ids, before the full
+harvest):** 16/20 changed from their Phase 10 defect, several via a
+safe refusal replacing a shipped SEVERE defect (`R10-005`, `R10-011`,
+`R10-024`, `R10-025`, `R10-061` ×2, `R10-088`). The 4 unchanged
+(`R10-002`/`R10-013`/`R10-037` — LanguageTool's already-disclosed ~25%
+partial recall; `R10-101` — NLI's already-disclosed ~18% recall) are
+expected partial-recall misses, individually re-confirmed, not new
+bugs.
+
+**[FACT] Full-harvest result:** 147/398 runs changed (101 reformulated→
+reformulated, 45 reformulated→refused [38 of 45 previously DEFECTIVE],
+1 refused→reformulated). Of 102 still-reformulated runs blind-judged:
+**21 CLEAN, 81 DEFECTIVE (56 SEVERE, 25 MINOR)**. Against Phase 10's
+original judgment: 21 genuine DEFECTIVE→CLEAN fixes, 70 still-defective,
+10 CLEAN→DEFECTIVE regressions — **every one individually checked
+against which mechanism could have caused it; none do** (all are plain
+`source: substitution` cases where a different WordNet/Datamuse
+candidate won the ranking this run — the same already-disclosed
+Category-4 POS/argument-structure nondeterminism seen in every prior
+phase's re-verification, plus one newly-surfaced pattern: `R10-024`'s
+same declared word ["second"] flagged twice independently, getting two
+*different* replacements this run — a distinct defect shape from
+anything this phase's duplicate-word check addresses).
+
+**[FACT, the actual answer to "did Phase 11C help"] Overall CLEAN rate
+among all currently-reformulated runs: 66/194 (34.0%)** — up from Phase
+10's 26.1%, and up from Phase 11B's 31.6%, clearing the ~1-point
+re-harvest noise band Phase 11B's own verification established (so
+this is a real improvement, not noise). Refusal rate 106/398 (26.6%),
+up from 75/398 (18.8%) — a substantial, expected rise from adding four
+independently-gating mechanisms in one pass; every case directly
+checked confirms this is the safety gate correctly converting shipped
+defects into honest refusals, not a coverage regression beyond the
+disclosed NLI precision cost above.
+
+**[FINDING]** The still-DEFECTIVE population (70 cases) remains
+dominated by WRONG_WORD_OR_SENSE (46/70) — confirms, again, that this
+class needs candidate-pool-level word-sense disambiguation, a
+fundamentally different kind of mechanism than any rule/model-gate
+addition across Phases 11/11B/11C, none of which touch which
+candidates are generated in the first place, only which survive after.
+
+**[LIMITATION]** All judges are Claude instances. The substitution-tier
+NLI check's precision cost (7/102) is real and disclosed, not
+minimized — whether to narrow its scope (e.g. restrict to multi-
+position substitutions, or use a different NLI checkpoint) is a
+legitimate open follow-up question, not resolved here. `grammar_
+issue_count()`'s recall stays partial (~25%) and will not materially
+move the dominant WRONG_WORD_OR_SENSE population. `R10-024`'s same-
+word-different-replacement pattern is newly named here as a distinct,
+not-yet-addressed defect shape for a future phase to consider.

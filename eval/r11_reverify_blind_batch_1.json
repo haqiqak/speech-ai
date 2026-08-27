@@ -17,22 +17,12 @@
   {
     "run_id": "R10-005-core-word",
     "original_text": "Water and some minerals are reabsorbed back into the blood in the large intestine.",
-    "reformulated_text": "Water and some minerals are eliminated back into the blood in the large intestine."
-  },
-  {
-    "run_id": "R10-007-calib-multi_word",
-    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
-    "reformulated_text": "The nutritional process is the biological and physiologic process by which an organism uses food and water to support its life."
+    "reformulated_text": "Water and some minerals are absorbed back into the blood in the large intestine."
   },
   {
     "run_id": "R10-008-core-dense_mixed_generic",
     "original_text": "Over-nutrition of micronutrient is a major cause of obesity and increases the risk of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, stroke, hypertension, coronary heart disease, osteoporosis, and some forms of cancer.",
     "reformulated_text": "Over-nutrition of micronutrient is a major cause of obesity and increases the chance of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, travel, hypertension, coronary heart disease, osteoporosis, and some forms of cancer."
-  },
-  {
-    "run_id": "R10-011-core-sparse_common_sound",
-    "original_text": "Nutrients are absorbed by the cells and used in metabolic biochemical reactions.",
-    "reformulated_text": "Nutrients are absorbed by the compartments and used in metabolic biochemical reactions."
   },
   {
     "run_id": "R10-013-calib-word_plus_sound",
@@ -50,14 +40,14 @@
     "reformulated_text": "Generally, reaction rates increase with rising temperatures because there is more thermal energy available to reach the activation energy necessary for breaking bonds between atoms."
   },
   {
+    "run_id": "R10-016-core-word",
+    "original_text": "In a bimolecular reaction, two molecules collide and react with each other.",
+    "reformulated_text": "Two molecules collide and react with each other in a bifocal reaction."
+  },
+  {
     "run_id": "R10-019-core-sparse_common_sound",
     "original_text": "A body remains at rest, or in motion at a constant speed in a straight line, unless it is acted upon by a force.",
     "reformulated_text": "A body remains at rest, or in motion at a constant pace in a direct line, unless it is acted upon by a force."
-  },
-  {
-    "run_id": "R10-020-core-dense_mixed_generic",
-    "original_text": "At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the rate at which the body's momentum is changing with time.",
-    "reformulated_text": "At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the grade at which the body's momentum is changing with time."
   },
   {
     "run_id": "R10-021-core-sparse_common_sound",
@@ -120,8 +110,18 @@
     "reformulated_text": "Volcanoes leading from divergent tectonic activity is usually non-explosive whereas those happening from convergent tectonic activity cause violent eruptions."
   },
   {
-    "run_id": "R10-034-core-dense_mixed_generic",
-    "original_text": "Magma commonly explodes as the gas dissolved in it comes out of solution as the pressure decreases when it flows to the surface.",
-    "reformulated_text": "Magma commonly explodes as the gas dissolved in it comes out of answer as the pressure decreases when it flows to the shallow."
+    "run_id": "R10-037-core-word",
+    "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+    "reformulated_text": "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena."
+  },
+  {
+    "run_id": "R10-037-calib-single_word",
+    "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+    "reformulated_text": "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena."
+  },
+  {
+    "run_id": "R10-037-calib-word_plus_sound",
+    "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+    "reformulated_text": "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena."
   }
 ]

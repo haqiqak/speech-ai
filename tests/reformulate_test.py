@@ -22,6 +22,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import reformulate as rf
 import semantic as sem
+import engine as engine_module
+from nltk import pos_tag, word_tokenize
 from difficulty_profile import DifficultyProfile
 
 sem.load_sbert()  # best-effort; tests must pass whether or not this succeeds
@@ -452,6 +454,231 @@ class UnknownTokenRejectionTest(unittest.TestCase):
         self.assertEqual(result["status"], "reformulated")
 
 
+class EscalationDuplicateWordTest(unittest.TestCase):
+    """Phase 11C (VALIDATION.md SS51) -- introduces_new_duplicate() is the
+    escalation-tier counterpart to Phase 11's substitution-tier
+    _duplicates_sentence_word(): a gap named "concrete, evidenced" after
+    Phase 11 (VALIDATION.md SS48 FUTURE WORK) but dropped before Phase
+    11B's plan, closed here. Integration tests mock the NLI/grammar
+    gates to "pass" so only the duplicate check under test can reject."""
+
+    def test_new_duplicate_introduced_is_detected(self):
+        orig = "the design, construction, and maintenance of roads"
+        cand = "the design, design and maintenance of roads"
+        self.assertTrue(rf.introduces_new_duplicate(orig, cand))
+
+    def test_preexisting_repetition_not_flagged(self):
+        # R10-024's own original legitimately says "force" twice -- a
+        # candidate that keeps the SAME count must not be rejected.
+        orig = "a body exerts a force on a second body, which exerts a force back"
+        cand = "a body applies a force to a second body, which applies a force back"
+        self.assertFalse(rf.introduces_new_duplicate(orig, cand))
+
+    def test_ordinary_paraphrase_not_flagged(self):
+        # An earlier version of this function flagged ANY word new to the
+        # candidate (not just an increased repeat of an existing one),
+        # which would have rejected almost every legitimate paraphrase --
+        # caught by this exact test before being trusted.
+        orig = "The reaction requires a specific amount of thermal energy to proceed."
+        cand = "The reaction needs a certain amount of thermal energy to happen."
+        self.assertFalse(rf.introduces_new_duplicate(orig, cand))
+
+    def test_hyphenated_root_duplication_detected(self):
+        orig = "A star is a luminous spheroid of plasma held together by self-gravity."
+        cand = "A star is a luminous spheroid of plasma surrounded by self-gravitational gravity."
+        self.assertTrue(rf.introduces_new_duplicate(orig, cand))
+
+    def test_escalation_candidate_with_new_duplicate_is_rejected(self):
+        profile = _profile("escalation_new_duplicate")
+        profile.add_word("professional", source="user_typed")
+        profile.add_word("naturally", source="user_typed")
+        settings = rf.ReformulateSettings(escalation_word_count=1)
+        original = ("Civil engineering is a professional discipline that deals with the "
+                    "design, construction, and maintenance of the naturally built environment.")
+        duped = ("Civil engineering is a technical discipline that deals with the "
+                 "design, design and maintenance of the built environment.")
+        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[duped]), \
+             mock.patch.object(rf.sem, "logical_consistency_check", return_value=None), \
+             mock.patch.object(rf.sem, "grammar_issue_count", return_value=0):
+            result = rf.reformulate(original, profile, settings)
+        self.assertEqual(result["status"], "could_not_safely_reformulate")
+
+    def test_escalation_candidate_without_new_duplicate_is_accepted(self):
+        profile = _profile("escalation_no_new_duplicate")
+        profile.add_word("professional", source="user_typed")
+        profile.add_word("naturally", source="user_typed")
+        settings = rf.ReformulateSettings(escalation_word_count=1)
+        original = ("Civil engineering is a professional discipline that deals with the "
+                    "design, construction, and maintenance of the naturally built environment.")
+        clean = ("Civil engineering is a technical discipline that deals with the "
+                 "design, construction, and upkeep of the built environment.")
+        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[clean]), \
+             mock.patch.object(rf.sem, "logical_consistency_check", return_value=None), \
+             mock.patch.object(rf.sem, "grammar_issue_count", return_value=0):
+            result = rf.reformulate(original, profile, settings)
+        self.assertEqual(result["status"], "reformulated")
+
+
+class EscalationNLITest(unittest.TestCase):
+    """Phase 11C (VALIDATION.md SS51) -- ports the NLI entailment gate
+    already designed, built, and validated in R45/R46
+    (semantic.logical_consistency_check(), cross-encoder/nli-deberta-v3-
+    xsmall) from the experimental _try_escalation_v3()/reformulate_v2()
+    path into production's _try_escalation()/_try_phrase_replacement(),
+    and adds one whole-sentence check on _try_substitution()'s final
+    assembled output per R45's own recommendation (VALIDATION.md SS36.3).
+    R10-005 ("reabsorbed"->"eliminated") is the direct evidence this
+    closes a gap is_known_antonym() structurally cannot: not a WordNet
+    antonym pair, so the existing antonym check passes it cleanly."""
+
+    def test_real_contradiction_detected(self):
+        # Grounding check with the real model (already proven loaded in
+        # this environment), not just the mocked wiring tests below.
+        result = sem.logical_consistency_check(
+            "The train arrives at the station at nine.",
+            "The train departs from the station at nine.",
+        )
+        self.assertIsNotNone(result)
+        self.assertTrue(result["contradiction"])
+
+    def test_real_entailment_not_flagged(self):
+        result = sem.logical_consistency_check(
+            "The train arrives at the station at nine.",
+            "The train comes to the station at nine.",
+        )
+        self.assertIsNotNone(result)
+        self.assertFalse(result["contradiction"])
+
+    def test_escalation_candidate_with_contradiction_is_rejected(self):
+        profile = _profile("escalation_nli_contradiction")
+        profile.add_word("requires", source="user_typed")
+        profile.add_word("specific", source="user_typed")
+        settings = rf.ReformulateSettings(escalation_word_count=1)
+        original = "The reaction requires a specific amount of thermal energy to proceed."
+        reversed_ = "The reaction releases a certain amount of thermal energy as it ends."
+        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[reversed_]), \
+             mock.patch.object(rf.sem, "logical_consistency_check",
+                                return_value={"fwd_label": "contradiction", "rev_label": "contradiction", "contradiction": True}), \
+             mock.patch.object(rf.sem, "grammar_issue_count", return_value=0):
+            result = rf.reformulate(original, profile, settings)
+        self.assertEqual(result["status"], "could_not_safely_reformulate")
+
+    def test_escalation_candidate_without_contradiction_is_accepted(self):
+        profile = _profile("escalation_nli_clean")
+        profile.add_word("requires", source="user_typed")
+        profile.add_word("specific", source="user_typed")
+        settings = rf.ReformulateSettings(escalation_word_count=1)
+        original = "The reaction requires a specific amount of thermal energy to proceed."
+        clean = "The reaction needs a certain amount of thermal energy to happen."
+        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[clean]), \
+             mock.patch.object(rf.sem, "logical_consistency_check",
+                                return_value={"fwd_label": "entailment", "rev_label": "entailment", "contradiction": False}), \
+             mock.patch.object(rf.sem, "grammar_issue_count", return_value=0):
+            result = rf.reformulate(original, profile, settings)
+        self.assertEqual(result["status"], "reformulated")
+
+    def test_substitution_final_sentence_contradiction_forces_escalation(self):
+        # R10-005/R10-101 are both substitution-tier -- this checks the
+        # ONE whole-sentence gate on _try_substitution()'s final assembled
+        # output (not per-candidate), so a contradiction only visible once
+        # every position is resolved still gets caught, and the sentence
+        # correctly falls through to escalation rather than shipping it.
+        profile = _profile("substitution_final_nli")
+        profile.add_word("original", source="user_typed")
+        fake_scored = [{"lemma": "new", "inflected": "new", "semantic_sim": 0.95,
+                         "freq_score": 0.9, "combined": 0.95, "accepted": True}]
+        with mock.patch.object(rf, "_raw_candidates", return_value=["new"]), \
+             mock.patch.object(rf.sem, "rank_candidates_contextually", return_value=fake_scored), \
+             mock.patch.object(rf.sem, "logical_consistency_check",
+                                return_value={"fwd_label": "contradiction", "rev_label": "contradiction", "contradiction": True}), \
+             mock.patch.object(rf.rephrase, "generate_candidates", return_value=[]):
+            result = rf.reformulate("This is the original document.", profile)
+        self.assertEqual(result["status"], "could_not_safely_reformulate")
+
+
+class EscalationGrammarTest(unittest.TestCase):
+    """Phase 11C (VALIDATION.md SS51) -- ports grammar_issue_count()
+    (LanguageTool, already a dependency, already validated in R45 at
+    ~25% recall on the GRAMMAR-labeled defect class -- real but partial,
+    confirmed directly against this phase's own evidence before wiring,
+    not assumed) from reformulate_v2()'s reported-only validation pass
+    into an actual reject gate in production's _try_escalation()/
+    _try_phrase_replacement()."""
+
+    def test_real_grammar_error_detected(self):
+        # Grounding check with the real LanguageTool instance (confirmed
+        # loadable in this environment as this phase's own Step 0).
+        self.assertGreater(sem.grammar_issue_count("She go to the store yesterday and buys many apple."), 0)
+
+    def test_real_clean_sentence_not_flagged(self):
+        self.assertEqual(sem.grammar_issue_count("She went to the store yesterday and bought many apples."), 0)
+
+    def test_escalation_candidate_with_grammar_error_is_rejected(self):
+        profile = _profile("escalation_grammar_error")
+        profile.add_word("requires", source="user_typed")
+        profile.add_word("specific", source="user_typed")
+        settings = rf.ReformulateSettings(escalation_word_count=1)
+        original = "The reaction requires a specific amount of thermal energy to proceed."
+        broken = "The reaction need a certain amounts of thermal energy for to happen."
+        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[broken]), \
+             mock.patch.object(rf.sem, "logical_consistency_check", return_value=None), \
+             mock.patch.object(rf.sem, "grammar_issue_count", return_value=2):
+            result = rf.reformulate(original, profile, settings)
+        self.assertEqual(result["status"], "could_not_safely_reformulate")
+
+    def test_escalation_candidate_without_grammar_error_is_accepted(self):
+        profile = _profile("escalation_grammar_clean")
+        profile.add_word("requires", source="user_typed")
+        profile.add_word("specific", source="user_typed")
+        settings = rf.ReformulateSettings(escalation_word_count=1)
+        original = "The reaction requires a specific amount of thermal energy to proceed."
+        clean = "The reaction needs a certain amount of thermal energy to happen."
+        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[clean]), \
+             mock.patch.object(rf.sem, "logical_consistency_check", return_value=None), \
+             mock.patch.object(rf.sem, "grammar_issue_count", return_value=0):
+            result = rf.reformulate(original, profile, settings)
+        self.assertEqual(result["status"], "reformulated")
+
+
+class MassNounSubstitutionTest(unittest.TestCase):
+    """Phase 11C (VALIDATION.md SS51) -- no countability/mass-noun signal
+    existed anywhere in this codebase; a single blocklisted pair
+    (professor->faculty, Phase 11B) was confirmed to just get bypassed by
+    the next bad candidate (R10-073: moved to "teacher"). A small curated
+    closed set (_MASS_NOUNS), same shape as _NUMBER_WORDS, catches the
+    countable-to-mass-noun shape directly."""
+
+    def test_known_mass_noun_substitution_flagged(self):
+        self.assertTrue(sem.is_mass_noun_substitution("recipe", "cooking"))
+        self.assertTrue(sem.is_mass_noun_substitution("factory", "manufacturing"))
+        self.assertTrue(sem.is_mass_noun_substitution("nutrient", "nutrition"))
+
+    def test_unrelated_pair_not_flagged(self):
+        self.assertFalse(sem.is_mass_noun_substitution("recipe", "dish"))
+
+    def test_mass_to_mass_not_flagged(self):
+        # Guards specifically against countable->mass, not mass->mass --
+        # a legitimate simplification between two already-uncountable
+        # words must not be blocked by this check.
+        self.assertFalse(sem.is_mass_noun_substitution("faculty", "cooking"))
+
+    def test_mass_noun_substitution_skipped_in_favor_of_next_candidate(self):
+        profile = _profile("mass_noun_wiring")
+        profile.add_word("recipe", source="user_typed")
+        fake_scored = [
+            {"lemma": "cooking", "inflected": "cooking", "semantic_sim": 0.9,
+             "freq_score": 0.85, "combined": 0.9, "accepted": True},
+            {"lemma": "dish", "inflected": "dish", "semantic_sim": 0.85,
+             "freq_score": 0.8, "combined": 0.85, "accepted": True},
+        ]
+        with mock.patch.object(rf, "_raw_candidates", return_value=["cooking", "dish"]), \
+             mock.patch.object(rf.sem, "rank_candidates_contextually", return_value=fake_scored):
+            result = rf.reformulate("This recipe calls for less sugar.", profile)
+        self.assertEqual(result["status"], "reformulated")
+        self.assertNotIn("cooking", result["reformulated_text"].lower())
+        self.assertIn("dish", result["reformulated_text"].lower())
+
+
 class WordSenseDisambiguationTest(unittest.TestCase):
     """Regression tests for REFORMULATION_PROBLEM_MAP.md SS5 item 2. Unlike
     IdiomGuardTest, these deliberately use sentences the idiom guard does
@@ -495,14 +722,29 @@ class WordSenseDisambiguationTest(unittest.TestCase):
         # replacement -- confirmed directly via the Stage 6 corpus re-run
         # (VALIDATION.md SS11). Fixed with a local context window per
         # occurrence instead of the whole sentence.
-        profile = _profile("wsd_local_window")
-        profile.add_word("runs", source="user_typed")
-        result = rf.reformulate(
-            "He runs the company every morning before he runs three miles.", profile
-        )
-        subs = [c for c in result["changes"] if c["source"] == "substitution"]
-        self.assertEqual(len(subs), 2)
-        self.assertNotEqual(subs[0]["replacement"].lower(), subs[1]["replacement"].lower())
+        #
+        # Tests the candidate-generation step directly (local context window
+        # -> different candidate set per occurrence) rather than end-to-end
+        # pipeline output: under DISABLE_DATAMUSE=1 (this module's own
+        # determinism setting), WordNet's only candidates for "runs" in the
+        # "jogs three miles" sense are poor (e.g. "pass"), which Phase 11C's
+        # sentence-level NLI check on the final assembled substitution
+        # (VALIDATION.md SS51) correctly rejects -- a real quality gate,
+        # not a false positive, but downstream of what this test is
+        # actually regression-testing (that the two occurrences get
+        # DIFFERENT candidate pools at all, not whether the pipeline's
+        # other gates later accept them).
+        engine = engine_module.SynonymEngine()
+        sentence = "He runs the company every morning before he runs in the park."
+        tokens = word_tokenize(sentence)
+        tags = pos_tag(tokens)
+        positions = [i for i, (w, _) in enumerate(tags) if w.lower() == "runs"]
+        self.assertEqual(len(positions), 2)
+        candidate_sets = []
+        for i in positions:
+            ctx = rf._local_context_window(tokens, i)
+            candidate_sets.append(set(rf._raw_candidates(engine, "run", tags[i][1], "runs", 10, context=ctx)))
+        self.assertNotEqual(candidate_sets[0], candidate_sets[1])
 
 
 class PredicateAdjectiveTaggingTest(unittest.TestCase):

@@ -3612,3 +3612,64 @@ verdict alone.
 plan-mode approval. Production code touched: `grammar.py`,
 `semantic.py`, `reformulate.py`. Full record: `VALIDATION.md` §50,
 `eval/r11b_reverify_report.md`.
+
+### 2026-08-27-D — Phase 11C: research pass, then porting the R45/R46 validator + two new mechanisms
+
+**What was done:** per explicit instruction, a research/design-only
+plan-mode pass first (no code changes, no evaluation run) re-examining
+the remaining Phase 10B/11B evidence and the actual codebase for
+Categories 4/5/6/7's deferred defects. Its central finding: two of the
+four needed mechanisms already existed, built and validated by R45/R46
+but never promoted from the experimental `_try_escalation_v3()`/
+`reformulate_v2()` path (opt-in `app.py` toggle only) into production.
+The approved plan was to port those two (NLI entailment gate, grammar
+gate) and build two new ones (escalation-tier duplicate-word check,
+countability/mass-noun set), each individually verified against its own
+cited evidence before wiring in, MIN_SEMANTIC left untouched (no
+entanglement found).
+
+**Implementation, in the plan's stated order:** NLI gate ported into
+`_try_escalation()`/`_try_phrase_replacement()`, plus added once to
+`_try_substitution()`'s final assembled output per R45's own
+recommendation. New `reformulate.introduces_new_duplicate()` (stem/
+prefix-key counting against an original-sentence baseline, not a
+blanket no-repeats rule) wired into escalation/phrase-tier. Grammar gate
+(`semantic.grammar_issue_count()`, LanguageTool) ported into the same
+two functions, after confirming (Step 0 of the plan) it actually loads
+in this environment. New `semantic.is_mass_noun_substitution()` (a
+small curated set) wired into substitution.
+
+**Two real bugs caught during this phase's own verification, fixed
+before any number was reported:** the duplicate-word check's first
+version flagged any brand-new candidate word as a "duplicate" (would
+have rejected nearly every legitimate paraphrase) - caught immediately
+by the existing test suite; a pre-existing WSD test failed once the new
+substitution-tier NLI gate was added, which turned out to be the gate
+correctly catching a real defect the test had never actually verified
+the quality of - the test was rewritten to check the disambiguation
+mechanism directly rather than end-to-end output.
+
+**A measured, not assumed, tradeoff:** the substitution-tier NLI check
+has a real precision cost (7/102 previously-CLEAN cases now refuse,
+e.g. a fine "remove"->"take" swap flagged as a contradiction) - the
+exact risk the approved plan named before implementation. Directly
+confirmed the same mechanism also delivers a true positive (R10-005's
+"reabsorbed"->"eliminated" reversal correctly rejected while
+->"absorbed" passes) rather than assuming the tradeoff nets positive.
+
+**Result:** full 398-run harvest, 147 changed, 102 blind-judged: 21
+CLEAN, 81 DEFECTIVE. Against Phase 10's original judgment: 21 genuine
+fixes, 70 still-defective, 10 regressions - every one individually
+checked and traced to pre-existing candidate-pool nondeterminism, none
+caused by this phase's new gates. **Overall CLEAN rate: 66/194 (34.0%),
+up from Phase 10's 26.1% and Phase 11B's 31.6%** - clearing the
+~1-point re-harvest noise band Phase 11B itself established, so a real
+improvement. Still-DEFECTIVE population remains WRONG_WORD_OR_SENSE-
+dominated (46/70), confirming that class needs candidate-pool-level
+word-sense disambiguation, not another post-generation gate.
+
+**Category:** Research/design (plan-mode, approved) then implementation
++ self-caught verification bugs, on explicit follow-up approval.
+Production code touched: `semantic.py`, `reformulate.py`,
+`tests/reformulate_test.py`. Full record: `VALIDATION.md` §51,
+`eval/r11c_reverify_report.md`.

@@ -4,174 +4,174 @@
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": ["FACTUAL_OR_LOGICAL_REVERSAL"],
-    "rationale": "Replacing 'hydroelectricity' with generic 'electricity' breaks the list of renewable energy types, since electricity itself is not a type of renewable energy source."
+    "rationale": "Replacing 'hydroelectricity' with generic 'electricity' turns a specific renewable energy source into something that is not itself a type of renewable energy, producing a category error in the list."
   },
   "R10-038-core-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "primary_defect": "OTHER",
     "secondary_defects": [],
-    "rationale": "'Solar power' becomes the vague, meaningless 'Incoming power', losing the specific reference to sunlight as an energy source."
+    "rationale": "The rewrite silently drops 'solar power' from the list of main renewable energy types, an outright loss of content from the original."
   },
   "R10-041-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "'Pollute' (contaminate the environment) is replaced with 'litter' (scatter trash), a narrower and inaccurate sense that misrepresents how energy sources cause environmental harm."
+    "rationale": "'litter' (scattering trash) is not a substitute for 'pollute' and meaningfully narrows/distorts what the sentence claims about renewable energy sources."
   },
   "R10-041-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "'Renewable energy sources' becomes 'renewable energy activities', a subtly different concept that reads a bit oddly compared against 'fossil fuels' but doesn't derail overall comprehension."
+    "rationale": "'renewable energy activities' shifts scope away from 'renewable energy sources' and reads slightly oddly compared against 'fossil fuels', though the overall claim still comes through."
   },
   "R10-042-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
     "secondary_defects": [],
-    "rationale": "'Generate electric' misuses the adjective 'electric' as a noun where 'electricity' is required, an ungrammatical construction."
+    "rationale": "'generate electric' uses the adjective 'electric' where the noun 'electricity' is required, an ungrammatical construction."
   },
   "R10-042-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "'The highest rate' (referring to conversion efficiency) becomes 'the highest place', which is nonsensical in context and no longer describes an efficiency figure."
+    "rationale": "'highest place in renewable energy' loses the numeric/rate meaning of 'highest rate' and reads as confusing or ambiguous in context."
+  },
+  "R10-043-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "'numerically rigorous' changes the meaning from formal/logical rigor to numerical precision, and 'logical instruction' (singular) is a plural-agreement slip against 'sequence of'."
+  },
+  "R10-043-calib-multi_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "Identical to the other R10-043 rewrite: 'numerically rigorous' misrepresents 'mathematically rigorous' and 'logical instruction' drops the needed plural."
   },
   "R10-044-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "'Specifications' (precise instructions) becomes 'standards' (established norms), a mild sense shift that leaves the sentence a bit imprecise but still understandable."
-  },
-  "R10-044-core-dense_mixed_generic": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "'Specifications' becomes 'designations' (labels/names), a word that does not fit the sense of algorithms being used to perform calculations, producing a near-nonsensical claim."
+    "rationale": "'standards' is a noticeably different concept than 'specifications' (a formal precise description vs. an agreed norm), a real but non-catastrophic precision loss."
   },
   "R10-049-calib-single_word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
     "secondary_defects": ["WRONG_WORD_OR_SENSE"],
-    "rationale": "'The larger the possible' misuses the adjective 'possible' as a noun in place of 'probability', producing an ungrammatical, broken clause."
+    "rationale": "'the larger the possible' uses the adjective 'possible' where a noun like 'probability'/'possibility' is required, making the clause ungrammatical and unclear."
   },
   "R10-049-calib-word_plus_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
     "secondary_defects": ["WRONG_WORD_OR_SENSE"],
-    "rationale": "'The larger the possible' misuses the adjective 'possible' as a noun in place of 'probability', producing an ungrammatical, broken clause."
+    "rationale": "Same text as the other R10-049 rewrite: 'the larger the possible' is ungrammatical, using an adjective in place of the needed noun."
   },
   "R10-051-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "FIXED_TERM_OR_IDIOM",
     "secondary_defects": [],
-    "rationale": "'Written as 0.5' becomes 'composed as 0.5', an unnatural collocation for describing a numeric notation even though the meaning is still recoverable."
+    "rationale": "'composed as 0.5' breaks the fixed collocation 'written as', reading as odd word choice though the intended meaning is still recoverable."
   },
   "R10-056-core-word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "'General' to 'overall' and 'currency' to 'money' are natural, meaning-preserving synonym swaps."
+    "rationale": "'overall price level' and 'money' are natural, meaning-preserving synonyms for 'general price level' and 'currency'."
   },
   "R10-058-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
-    "primary_defect": "GRAMMAR",
-    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
-    "rationale": "'An change' is an article-agreement error, and 'increase' becoming the directionless 'change' also drops the specific negative-direction claim the original sentence relies on."
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "'an change' is an article-agreement error, and 'change' replacing 'increase' loses the specific directionality the original sentence asserted."
   },
   "R10-059-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
     "secondary_defects": ["WRONG_WORD_OR_SENSE"],
-    "rationale": "'Cutting unemployed' uses the wrong word form/sense (the people-referring 'unemployed' instead of the rate-referring 'unemployment'), making the phrase ungrammatical and inaccurate."
+    "rationale": "'cutting unemployed' swaps the abstract noun 'unemployment' for the adjective/noun 'unemployed', producing an ungrammatical and semantically muddled phrase."
   },
   "R10-059-core-dense_mixed_generic": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "'Reducing' to 'cutting unemployment' is a natural, fully meaning-preserving synonym swap."
+    "rationale": "'cutting unemployment' is a natural, meaning-preserving synonym for 'reducing unemployment'."
   },
   "R10-060-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "'Economic recessions' (a specific, technical downturn concept) becomes the broader, less precise 'economic crises', a noticeable but not sentence-breaking imprecision."
+    "rationale": "'economic crises' is broader and less precise than the technical term 'economic recessions', a real but modest meaning shift."
   },
   "R10-061-calib-single_word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "'Construction' becomes 'expression', a word with no sensible fit in a list of civil-engineering activities (design, construction, maintenance)."
+    "rationale": "'expression' makes no sense in place of 'construction' when describing what civil engineering deals with — the core activity of building is lost."
   },
   "R10-061-calib-word_plus_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
-    "rationale": "'Construction' becomes the nonsensical 'expression', and 'professional' becomes 'paid', which narrows the meaning from a qualification-based discipline to a merely remunerated one."
+    "secondary_defects": [],
+    "rationale": "'expression' again wrongly replaces 'construction', and 'paid engineering discipline' loses the sense of 'professional' as a recognized field with formal standards."
   },
   "R10-061-calib-single_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "'Structural components' (load-bearing engineering elements) becomes the vaguer 'underlying components', losing precision without making the sentence incoherent."
+    "rationale": "'underlying components' loses the specific engineering sense of 'structural components' (load-bearing parts), though the general idea still comes through."
   },
   "R10-064-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "'Self-proclaimed' (he called himself an engineer without formal credentialing) becomes 'self-made' (rose to success through his own effort), a distinct historical claim about the person."
+    "secondary_defects": ["FACTUAL_OR_LOGICAL_REVERSAL"],
+    "rationale": "'self-made' (built success without help) is a different claim than 'self-proclaimed' (took on the title himself), misrepresenting the historical fact being stated."
   },
   "R10-068-core-multi_sound": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "'Starts' to 'begins' is a fully natural, meaning-preserving synonym swap."
+    "rationale": "'begins' is a natural, meaning-preserving synonym for 'starts'."
   },
   "R10-069-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
-    "primary_defect": "GRAMMAR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
     "secondary_defects": ["WRONG_WORD_OR_SENSE"],
-    "rationale": "'A small late' breaks the fixed idiom 'a little late' ungrammatically, and 'traffic' becoming 'driving' changes the stated reason for lateness to a different, broader activity."
+    "rationale": "'a small late' breaks the fixed idiom 'a little late', and 'driving' replacing 'traffic' changes the stated cause of lateness."
   },
   "R10-069-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
-    "primary_defect": "NATURALNESS_OR_REGISTER",
-    "secondary_defects": [],
-    "rationale": "'She said she might be...' becoming 'She expressed she might be...' is grammatically odd/awkward phrasing for reporting a simple remark, though the meaning still comes through."
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "'expressed she might be late' misuses 'expressed', which does not naturally take this kind of reported-possibility clause the way 'said' does."
   },
   "R10-072-core-word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "'Mentioned'/'probably' to 'said'/'likely' are natural, meaning-preserving synonym swaps."
-  },
-  "R10-073-calib-word_plus_sound": {
-    "acceptability": "DEFECTIVE",
-    "severity": "MINOR",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "'Professor' (a university-level academic title) becomes the generic 'teacher', a mild loss of precision that doesn't disrupt the sentence's overall meaning."
+    "rationale": "'said that ... likely' is a natural, meaning-preserving rewording of 'mentioned that ... probably'."
   }
 }
