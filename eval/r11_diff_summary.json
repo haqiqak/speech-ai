@@ -1,11 +1,11 @@
 {
   "n_total": 398,
-  "n_unchanged": 251,
-  "n_changed": 147,
+  "n_unchanged": 236,
+  "n_changed": 162,
   "status_transitions": {
-    "reformulated -> reformulated": 101,
-    "reformulated -> could_not_safely_reformulate": 45,
-    "could_not_safely_reformulate -> reformulated": 1
+    "reformulated -> reformulated": 114,
+    "could_not_safely_reformulate -> reformulated": 14,
+    "reformulated -> could_not_safely_reformulate": 34
   },
   "changed": [
     {
@@ -18,9 +18,9 @@
     {
       "run_id": "R10-001-core-sparse_common_sound",
       "old_status": "reformulated",
-      "new_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
       "old_text": "Digestion involves the breakdown of food into least and finer components, until they can be absorbed and assimilated into the body.",
-      "new_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body."
+      "new_text": "Digestion involves the breakdown of food into tiny and lesser components until they can be absorbed and assimilated into the body."
     },
     {
       "run_id": "R10-001-calib-single_word",
@@ -39,16 +39,23 @@
     {
       "run_id": "R10-001-calib-multi_sound",
       "old_status": "reformulated",
-      "new_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
       "old_text": "Digestion involves the breakdown of food into least and finer components, until they can be absorbed and assimilated into the body.",
-      "new_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body."
+      "new_text": "Digestion involves the breakdown of food into tiny and lesser components until they can be absorbed and assimilated into the body."
     },
     {
       "run_id": "R10-001-calib-dense_mixed_generic",
       "old_status": "reformulated",
-      "new_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
       "old_text": "Digestion involves the breakdown of food into least and finer components, until they can be absorbed and assimilated into the body.",
-      "new_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body."
+      "new_text": "Digestion involves the breakdown of food into tiny and lesser components until they can be absorbed and assimilated into the body."
+    },
+    {
+      "run_id": "R10-002-core-multi_sound",
+      "old_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
+      "old_text": "Chewing mixes the food with saliva to produce a food bolus to be swallowed down the esophagus to enter the stomach.",
+      "new_text": "Chewing mixes the food to produce a food bolus that can be ingested down the esophagus to enter the digestive tract."
     },
     {
       "run_id": "R10-003-core-word",
@@ -102,9 +109,16 @@
     {
       "run_id": "R10-011-core-sparse_common_sound",
       "old_status": "reformulated",
-      "new_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
       "old_text": "Nutrients are absorbed by the cases and used in metabolic biochemical reactions.",
-      "new_text": "Nutrients are absorbed by the cells and used in metabolic biochemical reactions."
+      "new_text": "Nutrients are absorbed and used in metabolic biochemical reactions."
+    },
+    {
+      "run_id": "R10-013-core-multi_sound",
+      "old_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
+      "old_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+      "new_text": "When chemicals occur, the atoms are arranged and accompanied by an energy change as new products are generated."
     },
     {
       "run_id": "R10-013-calib-word_plus_sound",
@@ -112,6 +126,13 @@
       "new_status": "reformulated",
       "old_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new chemicals are generated.",
       "new_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new goods are generated."
+    },
+    {
+      "run_id": "R10-013-calib-dense_mixed_generic",
+      "old_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
+      "old_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+      "new_text": "When chemicals occur, the atoms are arranged and accompanied by an energy change as new products are generated."
     },
     {
       "run_id": "R10-014-core-word",
@@ -317,6 +338,13 @@
       "new_text": "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena."
     },
     {
+      "run_id": "R10-037-calib-multi_word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Renewable energy is usually thought of as energy that is harnessed from continually occurring natural phenomenon.",
+      "new_text": "Renewable energy is usually thought of as energy that is harnessed from continuous natural phenomenon."
+    },
+    {
       "run_id": "R10-037-calib-word_plus_sound",
       "old_status": "reformulated",
       "new_status": "reformulated",
@@ -335,7 +363,7 @@
       "old_status": "reformulated",
       "new_status": "reformulated",
       "old_text": "Renewable power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy.",
-      "new_text": "It is widely agreed that the main types of renewable energy are wind power, hydroelectricity, geothermal energy and biomass."
+      "new_text": "It is widely agreed to be the main types of renewable energy - wind power, hydroelectricity, geothermal energy and biomass."
     },
     {
       "run_id": "R10-039-core-word",
@@ -377,7 +405,7 @@
       "old_status": "reformulated",
       "new_status": "reformulated",
       "old_text": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction, typically used to solve a class of specific problems or to perform a computation.",
-      "new_text": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or to perform a computation."
+      "new_text": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or perform a computation."
     },
     {
       "run_id": "R10-043-calib-single_word",
@@ -391,7 +419,7 @@
       "old_status": "reformulated",
       "new_status": "reformulated",
       "old_text": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction, typically used to solve a class of specific problems or to perform a computation.",
-      "new_text": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or to perform a computation."
+      "new_text": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or perform a computation."
     },
     {
       "run_id": "R10-043-calib-word_plus_sound",
@@ -399,6 +427,20 @@
       "new_status": "could_not_safely_reformulate",
       "old_text": "In mathematics and computer science, an algorithm is a finite sequence of formally rigorous logical instructions, typically used to solve a class of specific jobs or to perform a computation.",
       "new_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation."
+    },
+    {
+      "run_id": "R10-043-calib-multi_sound",
+      "old_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
+      "old_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+      "new_text": "An algorithm is a finite number of mathematically-rigid logical instructions used in mathematics and computing, typically a class of particular problems or to perform a computation."
+    },
+    {
+      "run_id": "R10-043-calib-dense_mixed_generic",
+      "old_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
+      "old_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+      "new_text": "An algorithm is a finite number of mathematically-rigid logical instructions used in mathematics and computing, typically a class of particular problems or to perform a computation."
     },
     {
       "run_id": "R10-044-core-word",
@@ -410,9 +452,16 @@
     {
       "run_id": "R10-044-core-dense_mixed_generic",
       "old_status": "reformulated",
-      "new_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
       "old_text": "Algorithms is used as descriptions for performing calculations and data processing.",
-      "new_text": "Algorithms is used as specifications for performing calculations and data processing."
+      "new_text": "Algorithms are used as parameters for performing calculations and data processing."
+    },
+    {
+      "run_id": "R10-047-core-dense_mixed_generic",
+      "old_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
+      "old_text": "Starting from an initial state and input, a computation occurs at each step, eventually producing output and terminating.",
+      "new_text": "A computation begins from an initial condition and input and occurs at each point, eventually producing output and terminating."
     },
     {
       "run_id": "R10-049-calib-single_word",
@@ -434,6 +483,13 @@
       "new_status": "reformulated",
       "old_text": "Since the coin is fair, the two outcomes ( heads and tails ) are both equally probable; the probability of heads equals the probability of tails; and since no other outcomes are possible, the probability of either heads or tails are 1/2 ( which could also be printed as 0.5 or 50 % ).",
       "new_text": "Since the coin is fair, the two outcomes ( heads and tails ) are both equally probable; the probability of heads equals the probability of tails; and since no other outcomes are possible, the probability of either heads or tails are 1/2 ( which could also be composed as 0.5 or 50 % )."
+    },
+    {
+      "run_id": "R10-054-core-dense_mixed_generic",
+      "old_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
+      "old_text": "The most popular version of objective probability is frequentest probability, which claims that the probability of a random event denotes the relative frequency of occurrence of an experiment's outcome when the experiment is repeated indefinitely.",
+      "new_text": "The most popular version of objective probability is the frequentest probability, which claims that the probability of an event denotes the frequency of the occurrence of an experiment's outcome when the experiment indefinitely occurs."
     },
     {
       "run_id": "R10-055-core-dense_mixed_generic",
@@ -508,9 +564,9 @@
     {
       "run_id": "R10-061-core-word",
       "old_status": "reformulated",
-      "new_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
       "old_text": "Civil engineers is a technical discipline that deals with the design, design and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings and railways.",
-      "new_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways."
+      "new_text": "Civil engineers is a technical discipline that deals with the design, development and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings and railways."
     },
     {
       "run_id": "R10-061-calib-single_word",
@@ -522,9 +578,9 @@
     {
       "run_id": "R10-061-calib-multi_word",
       "old_status": "reformulated",
-      "new_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
       "old_text": "Civil engineers is a technical discipline that deals with the design, design and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings and railways.",
-      "new_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways."
+      "new_text": "Civil engineers is a technical discipline that deals with the design, development and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings and railways."
     },
     {
       "run_id": "R10-061-calib-word_plus_sound",
@@ -720,7 +776,7 @@
       "old_status": "reformulated",
       "new_status": "reformulated",
       "old_text": "This recipe calls for a little less sugar than the originally adapted recipe.",
-      "new_text": "This recipe calls for a little less sugar than the first one."
+      "new_text": "This recipe calls for a little less sugar than the originally formulated one."
     },
     {
       "run_id": "R10-091-calib-word_plus_sound",
@@ -779,6 +835,27 @@
       "new_text": "He didn't mean to offend anybody, but his comments came across the wrong way."
     },
     {
+      "run_id": "R10-103-calib-multi_sound",
+      "old_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
+      "old_text": "The old house had a narrow staircase that creaked with every step.",
+      "new_text": "The old house had a narrow passageway that creaked with every climb."
+    },
+    {
+      "run_id": "R10-103-calib-sparse_common_sound",
+      "old_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
+      "old_text": "The old house had a narrow staircase that creaked with every step.",
+      "new_text": "The old house had a narrow passageway that creaked with every climb."
+    },
+    {
+      "run_id": "R10-103-calib-dense_mixed_generic",
+      "old_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
+      "old_text": "The old house had a narrow staircase that creaked with every step.",
+      "new_text": "The old house had a narrow passageway that creaked with every climb."
+    },
+    {
       "run_id": "R10-105-core-word",
       "old_status": "reformulated",
       "new_status": "reformulated",
@@ -800,11 +877,25 @@
       "new_text": "A thin layer of fog sat over the valley just after dawn."
     },
     {
+      "run_id": "R10-106-core-dense_mixed_generic",
+      "old_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
+      "old_text": "A thin layer of fog settled over the valley just after sunrise.",
+      "new_text": "Just after dawn, a light fog covered the valley."
+    },
+    {
       "run_id": "R10-108-core-word",
       "old_status": "reformulated",
       "new_status": "reformulated",
       "old_text": "The room was dimly lit, with only a one lamp in the edge.",
       "new_text": "The room was dimly lit, with only one lamp in the corners."
+    },
+    {
+      "run_id": "R10-109-core-word",
+      "old_status": "reformulated",
+      "new_status": "reformulated",
+      "old_text": "Turn off the power before replacing the light bulb.",
+      "new_text": "Turn off the power before you attempt replacing the light bulb."
     },
     {
       "run_id": "R10-109-calib-single_word",
@@ -821,11 +912,25 @@
       "new_text": "Turn off the power before you attempt to repair the light fixture."
     },
     {
+      "run_id": "R10-109-calib-multi_sound",
+      "old_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
+      "old_text": "Turn off the power before you attempt to replace the light fixture.",
+      "new_text": "Turn off the power before you attempt to change the light fixture."
+    },
+    {
+      "run_id": "R10-109-calib-dense_mixed_generic",
+      "old_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
+      "old_text": "Turn off the power before you attempt to replace the light fixture.",
+      "new_text": "Turn off the power before you attempt to change the light fixture."
+    },
+    {
       "run_id": "R10-112-core-dense_mixed_generic",
       "old_status": "reformulated",
-      "new_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
       "old_text": "If the printer jams, take the paper carefully to avoid tearing it.",
-      "new_text": "If the printer jams, remove the paper carefully to avoid tearing it."
+      "new_text": "If the printer jams, take off the paper carefully to avoid tearing it."
     },
     {
       "run_id": "R10-113-core-dense_mixed_generic",
@@ -851,9 +956,9 @@
     {
       "run_id": "R10-115-core-word",
       "old_status": "reformulated",
-      "new_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
       "old_text": "I think that the new updates make the ape more difficult to use, not more easy to use.",
-      "new_text": "I think the new update make the ape harder to use, not easier."
+      "new_text": "I think the new version makes the ape more difficult to use, not more difficult."
     },
     {
       "run_id": "R10-115-calib-single_word",
@@ -865,9 +970,9 @@
     {
       "run_id": "R10-115-calib-multi_word",
       "old_status": "reformulated",
-      "new_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
       "old_text": "I think that the new updates make the ape more difficult to use, not more easy to use.",
-      "new_text": "I think the new update make the ape harder to use, not easier."
+      "new_text": "I think the new version makes the ape more difficult to use, not more difficult."
     },
     {
       "run_id": "R10-115-calib-word_plus_sound",
@@ -888,7 +993,7 @@
       "old_status": "reformulated",
       "new_status": "reformulated",
       "old_text": "The library closes at nine on tuesdays and six on sundays.",
-      "new_text": "The library closes on Mondays at nine and on Saturdays at six."
+      "new_text": "The library closes at nine on Mondays and six on Fridays."
     },
     {
       "run_id": "R10-121-calib-single_word",
@@ -928,9 +1033,9 @@
     {
       "run_id": "R10-124-core-word",
       "old_status": "reformulated",
-      "new_status": "could_not_safely_reformulate",
+      "new_status": "reformulated",
       "old_text": "On the east side of the city there are more park areas than on the west side.",
-      "new_text": "There are more public parks on the east side of the city than on the west."
+      "new_text": "On the east side of the city there are more park areas than on the west."
     },
     {
       "run_id": "R10-124-core-multi_sound",
@@ -1007,7 +1112,7 @@
       "old_status": "reformulated",
       "new_status": "reformulated",
       "old_text": "In 1906, he graduated with a MBBS degree from the institution.",
-      "new_text": "In 1906, he graduated with distinction with a MBBS degree from the university."
+      "new_text": "In 1906, he graduated with distinction with a MBBS degree from the institution."
     },
     {
       "run_id": "R10-133-calib-word_plus_sound",
@@ -1042,7 +1147,6 @@
     "R10-001-calib-multi_word",
     "R10-001-calib-single_sound",
     "R10-002-core-word",
-    "R10-002-core-multi_sound",
     "R10-003-core-multi_sound",
     "R10-004-core-word",
     "R10-004-core-sparse_common_sound",
@@ -1062,12 +1166,10 @@
     "R10-012-core-word",
     "R10-012-core-dense_mixed_generic",
     "R10-013-core-word",
-    "R10-013-core-multi_sound",
     "R10-013-calib-single_word",
     "R10-013-calib-multi_word",
     "R10-013-calib-single_sound",
     "R10-013-calib-sparse_common_sound",
-    "R10-013-calib-dense_mixed_generic",
     "R10-015-core-single_sound",
     "R10-016-core-single_sound",
     "R10-017-core-word",
@@ -1100,7 +1202,6 @@
     "R10-035-core-dense_mixed_generic",
     "R10-036-core-dense_mixed_generic",
     "R10-037-core-single_sound",
-    "R10-037-calib-multi_word",
     "R10-037-calib-multi_sound",
     "R10-037-calib-sparse_common_sound",
     "R10-037-calib-dense_mixed_generic",
@@ -1109,14 +1210,11 @@
     "R10-040-core-single_sound",
     "R10-043-core-sparse_common_sound",
     "R10-043-calib-single_sound",
-    "R10-043-calib-multi_sound",
-    "R10-043-calib-dense_mixed_generic",
     "R10-045-core-word",
     "R10-045-core-sparse_common_sound",
     "R10-046-core-word",
     "R10-046-core-single_sound",
     "R10-047-core-word",
-    "R10-047-core-dense_mixed_generic",
     "R10-048-core-word",
     "R10-048-core-multi_sound",
     "R10-049-core-word",
@@ -1133,7 +1231,6 @@
     "R10-053-core-word",
     "R10-053-core-dense_mixed_generic",
     "R10-054-core-word",
-    "R10-054-core-dense_mixed_generic",
     "R10-055-core-word",
     "R10-055-calib-single_word",
     "R10-055-calib-multi_word",
@@ -1234,21 +1331,14 @@
     "R10-103-calib-single_word",
     "R10-103-calib-multi_word",
     "R10-103-calib-word_plus_sound",
-    "R10-103-calib-multi_sound",
-    "R10-103-calib-sparse_common_sound",
-    "R10-103-calib-dense_mixed_generic",
     "R10-104-core-word",
     "R10-104-core-dense_mixed_generic",
-    "R10-106-core-dense_mixed_generic",
     "R10-107-core-word",
     "R10-107-core-dense_mixed_generic",
     "R10-108-core-single_sound",
-    "R10-109-core-word",
     "R10-109-core-single_sound",
     "R10-109-calib-multi_word",
-    "R10-109-calib-multi_sound",
     "R10-109-calib-sparse_common_sound",
-    "R10-109-calib-dense_mixed_generic",
     "R10-110-core-word",
     "R10-110-core-multi_sound",
     "R10-111-core-word",

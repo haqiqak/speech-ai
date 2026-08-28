@@ -1,0 +1,17 @@
+[
+  {
+    "run_id": "R10-133-calib-multi_sound",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he qualified with a MBBS degree from the courses with distinction."
+  },
+  {
+    "run_id": "R10-133-calib-sparse_common_sound",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he qualified with a MBBS degree from the courses with distinction."
+  },
+  {
+    "run_id": "R10-133-calib-dense_mixed_generic",
+    "original_text": "In 1906, he qualified with a MBBS degree from the school with distinction.",
+    "reformulated_text": "In 1906, he qualified with a MBBS degree from the courses with distinction."
+  }
+]

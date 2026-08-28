@@ -1,16 +1,177 @@
 {
-  "R10-133-calib-sparse_common_sound": {
+  "R10-109-calib-word_plus_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
-    "rationale": "\"School\" (the institution he graduated from) was replaced with \"courses\", which changes the factual claim and reads unnaturally since one qualifies from an institution, not from \"the courses\"."
+    "secondary_defects": [],
+    "rationale": "\"Repair\" substitutes a different action (fixing) for \"replace\" (swapping out), materially changing the instructed task."
   },
-  "R10-133-calib-dense_mixed_generic": {
+  "R10-109-calib-multi_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Change\" is a natural, meaning-preserving colloquial synonym for \"replace\" a fixture."
+  },
+  "R10-109-calib-dense_mixed_generic": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Change\" is a natural, meaning-preserving colloquial synonym for \"replace\" a fixture."
+  },
+  "R10-112-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "NATURALNESS_OR_REGISTER",
+    "secondary_defects": [],
+    "rationale": "\"Take off the paper\" is an awkward collocation for clearing a jam; \"take out\" or \"remove\" would be the natural phrasing, though meaning is still clear."
+  },
+  "R10-113-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Numbered walks\" is a nonsensical substitution for \"numbered steps\" in an assembly manual, garbling the instruction."
+  },
+  "R10-114-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Medicine\" and \"anywhere cool\" are natural paraphrases of \"medication\" and \"somewhere cool\" that preserve the storage instruction."
+  },
+  "R10-114-core-sparse_common_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Anywhere cool\" is a natural paraphrase of \"somewhere cool\" that preserves the storage instruction."
+  },
+  "R10-115-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "Ending with \"not more difficult\" directly contradicts the preceding \"more difficult,\" turning a sensible harder-not-easier contrast into a self-cancelling statement."
+  },
+  "R10-115-calib-single_word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "The harder/not-easier contrast is preserved correctly as more-difficult/not-easier, with subject-verb agreement fixed."
+  },
+  "R10-115-calib-multi_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "Ending with \"not more difficult\" directly contradicts the preceding \"more difficult,\" producing a self-contradictory statement instead of the intended contrast."
+  },
+  "R10-115-calib-word_plus_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "The harder/not-easier contrast is preserved correctly as more-difficult/not-easier."
+  },
+  "R10-121-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [],
+    "rationale": "\"Weekdays\"/\"weekends\" were replaced with specific days, and Friday is itself a weekday, so the new sentence asserts a factually wrong schedule."
+  },
+  "R10-121-calib-single_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"On weekday\" is ungrammatical, missing the plural or an article that \"weekdays\" required."
+  },
+  "R10-121-calib-word_plus_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"On weekday\" is ungrammatical, missing the plural or an article that \"weekdays\" required."
+  },
+  "R10-122-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": ["NATURALNESS_OR_REGISTER"],
-    "rationale": "\"School\" (the institution he graduated from) was replaced with \"courses\", which changes the factual claim and reads unnaturally since one qualifies from an institution, not from \"the courses\"."
+    "rationale": "\"Manufacturers\" denotes companies rather than physical workplaces, making \"work in the two manufacturers\" an odd category shift from \"factories\" even though the referents are recoverable."
+  },
+  "R10-123-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Rebuilt\" implies full reconstruction, a materially stronger and different claim than \"renovated.\""
+  },
+  "R10-123-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Twentieth half-century\" is a nonsensical insertion that garbles the original date reference."
+  },
+  "R10-124-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Park areas\" drops the \"public\" qualifier and is vaguer than \"public parks,\" a minor precision loss in an otherwise natural restructuring."
+  },
+  "R10-124-core-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Downtown\" narrows the geographic scope from the whole city to its center, a real meaning change from the original \"city.\""
+  },
+  "R10-125-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Opens older\" is nonsensical; \"older\" does not apply to opening times and garbles the intended \"earlier.\""
+  },
+  "R10-128-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Living children\" is an acceptable synonym for \"surviving children\" in this genealogical context."
+  },
+  "R10-128-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Back marriage\" is a nonsensical, garbled substitution for \"second marriage.\""
+  },
+  "R10-129-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"A two-year learning\" is nonsensical and loses the fact that it was a scholarship (a funding award), not merely \"learning.\""
+  },
+  "R10-131-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Advised\" is a close, natural synonym for \"suggested\" that preserves the meaning."
+  },
+  "R10-133-calib-multi_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "NATURALNESS_OR_REGISTER",
+    "secondary_defects": [],
+    "rationale": "The repeated \"with distinction with a MBBS degree\" construction is clunky, though meaning is preserved and \"graduated\"/\"institution\" are fine synonyms."
   }
 }

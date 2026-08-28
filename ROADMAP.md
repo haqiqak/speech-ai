@@ -1841,6 +1841,35 @@ question for a future refinement pass, not resolved here. `R10-024`'s
 same-word-different-replacement pattern is newly named as a distinct
 defect shape for a future phase.
 
+### Architecture Go/No-Go, Step 1. Ported R45's phoneme-aware decoding-time constraint — **DONE, 2026-08-27**
+**Linked finding:** per an explicit user proposal to stop the open-ended
+rule-addition pattern and give the architecture one final opportunity
+before a formal Go/No-Go decision (agreed 4-step plan: port the
+generation-side fix → diagnose remaining failures → formal architecture
+assessment → a genuine 3-way decision, including retiring the
+approach). This is Step 1 only — **not itself a verdict**, per explicit
+agreement not to judge the architecture question on one number. Full
+record: `VALIDATION.md` §52, `eval/arch_gate1_report.md`.
+**What was done:** ported the largest measured improvement in this
+project's history — R45/R46's phoneme-aware decoding-time constraint,
+previously stuck behind an experimental opt-in toggle — into production
+`_try_escalation()`, exactly as built, no redesign. Self-caught a real
+pre-existing test bug from Phase 11C's own verification gap (never ran
+`reformulate_v2_test.py` last phase) before reporting any number.
+**Result, deliberately mixed, not spun either way:** 16/42 hardest
+previously-stuck cases now produce a candidate (38%, smaller than R45's
+original ~52% because of the much stricter validator stack added
+since). Full harvest: 14 refused→reformulated (vs. 1 in every prior
+phase). CLEAN rate 68/218 (31.2%), DOWN from Phase 11C's 34.0% despite
+absolute CLEAN count rising — coverage rose substantially but most
+newly-covered cases landed DEFECTIVE, confirming R45's own prediction
+that the validation side (now actually installed) still can't catch
+WRONG_WORD_OR_SENSE, the dominant remaining defect. Cost measured for
+the first time ever in this project: +3% total harvest latency.
+**Labeled as:** evidence for Step 2 (is the right word absent from the
+candidate pool, or just ranked wrong?) and Step 3 (the formal
+architecture assessment) — the natural next step, not decided here.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

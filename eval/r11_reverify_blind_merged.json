@@ -4,35 +4,89 @@
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"components\"->\"parts\" and \"assimilated\"->\"integrated\" are both meaning-preserving synonyms and the sentence reads naturally."
+    "rationale": "\"parts\" and \"integrated\" are faithful synonyms for \"components\" and \"assimilated\"; the sentence remains fully natural and equivalent in meaning."
+  },
+  "R10-001-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "NATURALNESS_OR_REGISTER"
+    ],
+    "rationale": "\"lesser\" normally modifies abstract degree/importance rather than physical size, so \"tiny and lesser components\" is an awkward, slightly off collocation and loses the progressive-diminishment sense of \"smaller and smaller\", though the overall meaning is still recoverable."
   },
   "R10-001-calib-single_word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"assimilated\"->\"integrated\" preserves the meaning of being incorporated into the body and reads naturally."
+    "rationale": "Only \"assimilated\" is swapped for \"integrated\", a faithful synonym in this context, with meaning and fluency fully preserved."
   },
   "R10-001-calib-word_plus_sound": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "Identical substitution to the single-word case; \"assimilated\"->\"integrated\" preserves meaning and reads naturally."
+    "rationale": "Identical to the single-word swap case: \"integrated\" faithfully replaces \"assimilated\" with no loss of meaning or fluency."
+  },
+  "R10-001-calib-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "NATURALNESS_OR_REGISTER"
+    ],
+    "rationale": "Same as the sparse_common_sound variant: \"tiny and lesser components\" is an awkward, size-inappropriate use of \"lesser\" that reads unnaturally though the core meaning survives."
+  },
+  "R10-001-calib-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "NATURALNESS_OR_REGISTER"
+    ],
+    "rationale": "Same \"tiny and lesser components\" issue: an awkward, imprecise word choice for size that reads unnaturally but does not fundamentally change the meaning."
+  },
+  "R10-002-core-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "OTHER"
+    ],
+    "rationale": "Dropping \"with saliva\" removes what the food is mixed with, \"ingested down the esophagus\" misuses \"ingested\" (a whole-process term, not a mid-transit action) in place of \"swallowed\", and \"stomach\" is vaguely replaced by \"digestive tract\", together constituting a real, compounded loss of content and precision."
   },
   "R10-005-core-word": {
-    "acceptability": "CLEAN",
-    "severity": "CLEAN",
-    "primary_defect": "CLEAN",
-    "secondary_defects": [],
-    "rationale": "\"reabsorbed\"->\"absorbed\" still fully conveys re-absorption because \"back into the blood\" carries the return-to-blood meaning."
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "\"reabsorbed\" is a specific physiological term distinct from plain \"absorbed\", and although \"back into the blood\" partially preserves the return-direction sense, the precise technical claim is weakened."
   },
   "R10-008-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"stroke\" was replaced with \"travel\", a nonsensical word that is not a disease and breaks the list of NCDs entirely."
+    "rationale": "\"stroke\" was replaced with \"travel\", inserting a nonsensical item into a list of diseases and clearly altering the factual content of the sentence."
+  },
+  "R10-011-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "OTHER",
+    "secondary_defects": [],
+    "rationale": "Dropping \"by the cells\" removes the specified agent of absorption, a real but non-catastrophic loss of precision since the sentence still conveys that nutrients are absorbed and used."
+  },
+  "R10-013-core-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "\"chemicals occur\" is a category error (reactions occur, not chemicals), \"rearranged\" is weakened to \"arranged\", and dropping \"the reaction is\" leaves \"atoms\" as the nonsensical subject of \"accompanied by an energy change\"."
   },
   "R10-013-calib-word_plus_sound": {
     "acceptability": "DEFECTIVE",
@@ -41,7 +95,16 @@
     "secondary_defects": [
       "NATURALNESS_OR_REGISTER"
     ],
-    "rationale": "\"products\" (chemistry term) was replaced with \"goods\" (commercial term), which is nonsensical in this context, and \"accompanied by\" was loosened to \"followed by\", subtly shifting a simultaneous relationship into a sequential one."
+    "rationale": "\"products\" is replaced with \"goods\", a commercial-sense word that is wrong in this chemistry context, and \"accompanied by\" softened to \"followed by\" introduces a subtle sequencing change."
+  },
+  "R10-013-calib-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "Same defect as the multi_sound variant: \"chemicals occur\" is a category error and the missing \"the reaction is\" makes \"atoms\" the nonsensical subject of being \"accompanied by an energy change\"."
   },
   "R10-014-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
@@ -50,53 +113,55 @@
     "secondary_defects": [
       "WRONG_WORD_OR_SENSE"
     ],
-    "rationale": "\"chemical reactions\"->\"chemical actions\" breaks the standard scientific term, and \"reactants\"->\"precursors\" is an imprecise near-synonym, but the sentence remains interpretable."
+    "rationale": "\"chemical reactions\" is replaced by the less standard \"chemical actions\" and \"reactants\" by the not-quite-equivalent \"precursors\", both understandable but imprecise terminology substitutions."
   },
   "R10-015-core-word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"Typically\"->\"Generally\" and \"increasing temperature\"->\"rising temperatures\" are natural, meaning-preserving substitutions."
+    "rationale": "\"Generally\"/\"rising temperatures\" are faithful, natural synonyms for \"Typically\"/\"increasing temperature\" with no change in meaning."
   },
   "R10-016-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"bimolecular\" (a chemistry term about two molecules) was replaced with \"bifocal\" (relating to eyeglasses), producing a nonsensical, wrong-sense substitution."
+    "rationale": "\"bimolecular\" was replaced with \"bifocal\", an unrelated word referring to eyeglass lenses, producing a nonsensical chemistry claim."
   },
   "R10-019-core-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
-    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "primary_defect": "NATURALNESS_OR_REGISTER",
     "secondary_defects": [],
-    "rationale": "\"speed\"->\"pace\" is fine, but \"straight line\"->\"direct line\" breaks the standard physics phrasing for rectilinear motion, reading slightly unnaturally though the meaning is preserved."
+    "rationale": "\"pace\" for \"speed\" and \"direct line\" for \"straight line\" are slightly informal/imprecise substitutions in a physics statement but preserve the overall meaning."
   },
   "R10-021-core-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
+    "severity": "MINOR",
     "primary_defect": "GRAMMAR",
     "secondary_defects": [
       "NATURALNESS_OR_REGISTER"
     ],
-    "rationale": "\"the same magnitude\"->\"the like magnitude\" is an ungrammatical use of \"like\" as an adjective with \"the\", making the phrase read as an error."
+    "rationale": "\"the like magnitude\" is an awkward, non-idiomatic construction in place of \"the same magnitude\", though the intended meaning is still clear."
   },
   "R10-022-core-multi_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [
-      "NATURALNESS_OR_REGISTER"
+      "GRAMMAR"
     ],
-    "rationale": "\"constant speed\"->\"constant hurry\" substitutes a word meaning rushing for the physics quantity of speed, producing a nonsensical reading, and \"straight line\"->\"even line\" is also an unnatural substitution."
+    "rationale": "\"straight\" becomes \"even\" (not synonymous with geometric straightness) and \"speed\" becomes \"hurry\" (denoting haste, not a rate), together with an article error (\"a even\"), producing a garbled, near-nonsensical statement."
   },
   "R10-023-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "\"the body do not accelerate\"->\"the body do not change\" drops the precise Newtonian concept of acceleration for a vague term that could wrongly imply the body cannot move at all."
+    "secondary_defects": [
+      "FACTUAL_OR_LOGICAL_REVERSAL"
+    ],
+    "rationale": "\"accelerate\" is replaced by the much vaguer \"change\", which is not physically accurate for a body in mechanical equilibrium (it could still be moving at constant velocity, i.e. changing position) and loses the precise physics claim."
   },
   "R10-024-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
@@ -105,7 +170,7 @@
     "secondary_defects": [
       "FACTUAL_OR_LOGICAL_REVERSAL"
     ],
-    "rationale": "\"second body\" was replaced first with \"forward body\" and then with \"intermediate body\", introducing extra, undefined entities into Newton's third-law statement about two bodies and garbling the logic."
+    "rationale": "\"second body\" is replaced inconsistently by \"forward body\" and then \"intermediate body\", making it read as if three distinct bodies are involved and breaking the Newton's third law statement's logical structure."
   },
   "R10-029-core-word": {
     "acceptability": "DEFECTIVE",
@@ -114,79 +179,90 @@
     "secondary_defects": [
       "WRONG_WORD_OR_SENSE"
     ],
-    "rationale": "\"sufficiently massive a black hole\" was reduced to \"a sufficient black hole\", dropping \"massive\" and producing an ungrammatical, near-circular clause that no longer expresses the mass-threshold condition."
+    "rationale": "\"sufficiently massive\" is reduced to \"a sufficient\", dropping the key content word \"massive\" and producing the ungrammatical, incomplete phrase \"if it is a sufficient black hole\"."
   },
   "R10-031-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "FIXED_TERM_OR_IDIOM",
     "secondary_defects": [],
-    "rationale": "\"volcanic ash\"->\"volcano ash\" breaks the standard adjective form of the fixed term but remains understandable and meaning-preserving."
+    "rationale": "\"volcanic ash\" is altered to the non-standard noun compound \"volcano ash\", breaking the fixed term though the meaning is still clear."
   },
   "R10-031-calib-multi_word": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "FIXED_TERM_OR_IDIOM",
     "secondary_defects": [],
-    "rationale": "Same substitution as the core-word case: \"volcanic ash\"->\"volcano ash\" breaks the fixed adjective form but stays understandable."
+    "rationale": "Same as the core-word case: \"volcanic ash\" becomes the non-standard \"volcano ash\", a minor break of the fixed term with meaning still recoverable."
   },
   "R10-031-calib-multi_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"below the surface\"->\"below the grade\" replaces \"surface\" with a word most readers will read as slope/rating rather than ground level, changing what the magma chamber is described as being beneath."
+    "rationale": "\"surface\" is replaced with \"grade\", a word that does not mean surface in this geological context, leaving \"below the grade\" unclear and factually off."
   },
   "R10-031-calib-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"below the surface\"->\"below the rise\" substitutes a word implying a specific hill/elevation for the general concept of ground surface, changing the meaning."
+    "rationale": "\"below the surface\" was changed to \"below the rise\", which is not a coherent term for where a magma chamber sits and changes the meaning to something nonsensical."
   },
   "R10-031-calib-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"below the surface\"->\"below the grade\" replaces \"surface\" with a word most readers will read as slope/rating rather than ground level, changing what the magma chamber is described as being beneath."
+    "rationale": "\"below the surface\" was changed to \"below the grade\", which does not fit the geological context and renders the phrase nonsensical."
   },
   "R10-032-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
-    "primary_defect": "FIXED_TERM_OR_IDIOM",
-    "secondary_defects": [],
-    "rationale": "\"convergent tectonic activity\"->\"converged tectonic activity\" swaps the standard geological adjective for an awkward past-participle form, though the meaning is still recoverable; the subject-verb agreement was actually improved."
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "\"converged tectonic activity\" uses the wrong word form for \"convergent tectonic activity\", a minor but noticeable slip even though the sentence's subject-verb agreement was correctly fixed elsewhere."
   },
   "R10-032-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
+    "severity": "MINOR",
     "primary_defect": "GRAMMAR",
     "secondary_defects": [
       "NATURALNESS_OR_REGISTER"
     ],
-    "rationale": "\"resulting from\" was replaced with the non-idiomatic \"leading from\" and \"happening from\", both of which are ungrammatical collocations that obscure the causal relationship being described."
+    "rationale": "\"leading from\" and \"happening from\" are non-idiomatic preposition choices for \"resulting from\", making the sentence read awkwardly though the meaning still comes through."
   },
   "R10-037-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"continuously\"->\"continually\" loses the precise distinction between uninterrupted occurrence and merely frequent/repeated occurrence."
+    "rationale": "\"continuously\" (uninterrupted) was swapped for \"continually\" (repeatedly), a subtle precision loss for phenomena like sunlight and wind that are meant to be uninterrupted, not just recurring."
   },
   "R10-037-calib-single_word": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"continuously\"->\"continually\" loses the precise distinction between uninterrupted occurrence and merely frequent/repeated occurrence."
+    "rationale": "\"continuously\" was replaced with \"continually\", a subtly different sense (repeated vs. uninterrupted) that slightly loses precision without changing the overall claim."
+  },
+  "R10-037-calib-multi_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "\"natural phenomena\" (plural) was changed to \"natural phenomenon\" (singular), a number-agreement slip that also implies a single phenomenon rather than the many meant."
   },
   "R10-037-calib-word_plus_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"continuously\"->\"continually\" loses the precise distinction between uninterrupted occurrence and merely frequent/repeated occurrence."
+    "rationale": "\"continuously\" was replaced with \"continually\", a subtly different sense that loses some precision without changing the overall claim."
   },
   "R10-038-core-word": {
     "acceptability": "DEFECTIVE",
@@ -195,42 +271,44 @@
     "secondary_defects": [
       "FACTUAL_OR_LOGICAL_REVERSAL"
     ],
-    "rationale": "Replacing 'hydroelectricity' with generic 'electricity' turns a specific renewable energy source into something that is not itself a type of renewable energy, producing a category error in the list."
+    "rationale": "\"hydroelectricity\" was replaced with generic \"electricity\", which is not itself a type of renewable energy source, turning the list into a factually confused claim."
   },
   "R10-038-core-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
-    "primary_defect": "OTHER",
-    "secondary_defects": [],
-    "rationale": "The rewrite silently drops 'solar power' from the list of main renewable energy types, an outright loss of content from the original."
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "OTHER"
+    ],
+    "rationale": "The rewrite opens with the incoherent \"It is widely agreed to be the main types of renewable energy\" and also silently drops \"solar power\" from the list, losing content and confusing the sentence structure."
   },
   "R10-041-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "'litter' (scattering trash) is not a substitute for 'pollute' and meaningfully narrows/distorts what the sentence claims about renewable energy sources."
+    "rationale": "\"pollute\" was replaced with \"litter\", which specifically means discarding trash and does not capture the general environmental-pollution meaning of the original."
   },
   "R10-041-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "'renewable energy activities' shifts scope away from 'renewable energy sources' and reads slightly oddly compared against 'fossil fuels', though the overall claim still comes through."
+    "rationale": "\"renewable energy sources\" became \"renewable energy activities\", a slightly mismatched comparison against \"fossil fuels\" that still conveys the same basic point."
   },
   "R10-042-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
     "secondary_defects": [],
-    "rationale": "'generate electric' uses the adjective 'electric' where the noun 'electricity' is required, an ungrammatical construction."
+    "rationale": "\"generate electric\" uses the adjective \"electric\" where the noun \"electricity\" is required, a clear grammatical error."
   },
   "R10-042-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "'highest place in renewable energy' loses the numeric/rate meaning of 'highest rate' and reads as confusing or ambiguous in context."
+    "rationale": "\"the highest rate\" was changed to \"the highest place\", which does not make sense when describing a conversion-efficiency statistic."
   },
   "R10-043-core-word": {
     "acceptability": "DEFECTIVE",
@@ -239,7 +317,7 @@
     "secondary_defects": [
       "GRAMMAR"
     ],
-    "rationale": "'numerically rigorous' changes the meaning from formal/logical rigor to numerical precision, and 'logical instruction' (singular) is a plural-agreement slip against 'sequence of'."
+    "rationale": "\"mathematically rigorous\" was narrowed to \"numerically rigorous\", a different and more limited notion of rigor, and \"instructions\" was incorrectly singularized to \"instruction\"."
   },
   "R10-043-calib-multi_word": {
     "acceptability": "DEFECTIVE",
@@ -248,14 +326,48 @@
     "secondary_defects": [
       "GRAMMAR"
     ],
-    "rationale": "Identical to the other R10-043 rewrite: 'numerically rigorous' misrepresents 'mathematically rigorous' and 'logical instruction' drops the needed plural."
+    "rationale": "\"mathematically rigorous\" was narrowed to \"numerically rigorous\", a different and more limited notion of rigor, and \"instructions\" was incorrectly singularized to \"instruction\"."
+  },
+  "R10-043-calib-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "Dropping \"used to solve\" leaves \"typically a class of particular problems\" as a dangling, verb-less fragment, and \"mathematically-rigid\" changes \"rigorous\" (thorough/strict) into \"rigid\" (inflexible)."
+  },
+  "R10-043-calib-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "Dropping \"used to solve\" leaves \"typically a class of particular problems\" as a dangling, verb-less fragment, and \"mathematically-rigid\" changes \"rigorous\" into \"rigid\"."
   },
   "R10-044-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "\"specifications\" was replaced with \"standards\", changing algorithms from precise procedural descriptions into vague quality benchmarks, and the \"Algorithms is\" agreement error is left uncorrected."
+  },
+  "R10-044-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"specifications\" was replaced with \"parameters\", which means variable inputs rather than procedural descriptions, meaningfully changing what algorithms are said to be."
+  },
+  "R10-047-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "'standards' is a noticeably different concept than 'specifications' (a formal precise description vs. an agreed norm), a real but non-catastrophic precision loss."
+    "rationale": "\"each step\" was replaced with \"each point\", a vaguer term that loses the discrete-step framing of computation without changing the overall claim."
   },
   "R10-049-calib-single_word": {
     "acceptability": "DEFECTIVE",
@@ -264,7 +376,7 @@
     "secondary_defects": [
       "WRONG_WORD_OR_SENSE"
     ],
-    "rationale": "'the larger the possible' uses the adjective 'possible' where a noun like 'probability'/'possibility' is required, making the clause ungrammatical and unclear."
+    "rationale": "\"the larger the probability\" was turned into \"the larger the possible\", using \"possible\" as a noun in a way that is ungrammatical and nearly nonsensical."
   },
   "R10-049-calib-word_plus_sound": {
     "acceptability": "DEFECTIVE",
@@ -273,21 +385,30 @@
     "secondary_defects": [
       "WRONG_WORD_OR_SENSE"
     ],
-    "rationale": "Same text as the other R10-049 rewrite: 'the larger the possible' is ungrammatical, using an adjective in place of the needed noun."
+    "rationale": "\"the larger the probability\" was turned into \"the larger the possible\", using \"possible\" as a noun in a way that is ungrammatical and nearly nonsensical."
   },
   "R10-051-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
-    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "'composed as 0.5' breaks the fixed collocation 'written as', reading as odd word choice though the intended meaning is still recoverable."
+    "rationale": "\"written as 0.5\" was changed to \"composed as 0.5\", an unusual word choice for expressing a number in a different notation, though the meaning still comes through."
+  },
+  "R10-054-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "Dropping \"relative\" from \"relative frequency\" breaks a specific technical term in probability theory, turning a precise proportional definition into a vaguer and less accurate one."
   },
   "R10-056-core-word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "'overall price level' and 'money' are natural, meaning-preserving synonyms for 'general price level' and 'currency'."
+    "rationale": "\"overall\" for \"general\" and \"money\" for \"currency\" are natural, meaning-preserving synonyms."
   },
   "R10-058-core-word": {
     "acceptability": "DEFECTIVE",
@@ -296,207 +417,213 @@
     "secondary_defects": [
       "GRAMMAR"
     ],
-    "rationale": "'an change' is an article-agreement error, and 'change' replacing 'increase' loses the specific directionality the original sentence asserted."
+    "rationale": "\"an increase\" became \"an change,\" both losing the specific directionality of the original claim (increase vs. any change) and leaving an article/noun agreement error."
   },
   "R10-059-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
-    "secondary_defects": [
-      "WRONG_WORD_OR_SENSE"
-    ],
-    "rationale": "'cutting unemployed' swaps the abstract noun 'unemployment' for the adjective/noun 'unemployed', producing an ungrammatical and semantically muddled phrase."
+    "secondary_defects": [],
+    "rationale": "\"cutting unemployed\" is ungrammatical, swapping the required noun \"unemployment\" for the adjective \"unemployed.\""
   },
   "R10-059-core-dense_mixed_generic": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "'cutting unemployment' is a natural, meaning-preserving synonym for 'reducing unemployment'."
+    "rationale": "\"reducing\" to \"cutting\" is a natural synonym swap with no meaning or grammar loss."
   },
   "R10-060-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "'economic crises' is broader and less precise than the technical term 'economic recessions', a real but modest meaning shift."
+    "rationale": "\"recessions\" is a specific, defined economic term that \"crises\" broadens/loosens, losing precision without fully changing the gist."
+  },
+  "R10-061-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "\"Civil engineers is\" is a subject-verb agreement error, and \"construction\" was changed to the vaguer, less precise \"development.\""
   },
   "R10-061-calib-single_word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "'expression' makes no sense in place of 'construction' when describing what civil engineering deals with — the core activity of building is lost."
+    "rationale": "\"design, expression, and maintenance\" replaces \"construction\" with a nonsensical word in this technical listing."
+  },
+  "R10-061-calib-multi_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "Same defects as the core-word variant: \"Civil engineers is\" is a subject-verb agreement error and \"construction\" was vaguely replaced with \"development.\""
   },
   "R10-061-calib-word_plus_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "'expression' again wrongly replaces 'construction', and 'paid engineering discipline' loses the sense of 'professional' as a recognized field with formal standards."
+    "secondary_defects": [
+      "WRONG_WORD_OR_SENSE"
+    ],
+    "rationale": "\"expression\" nonsensically replaces \"construction,\" and \"paid engineering discipline\" changes \"professional\" (qualification/expertise) into a compensation-based sense."
   },
   "R10-061-calib-single_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
     "secondary_defects": [],
-    "rationale": "'underlying components' loses the specific engineering sense of 'structural components' (load-bearing parts), though the general idea still comes through."
+    "rationale": "\"underlying components\" loses the specific engineering sense of \"structural components,\" a mild but real precision loss."
   },
   "R10-064-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [
-      "FACTUAL_OR_LOGICAL_REVERSAL"
-    ],
-    "rationale": "'self-made' (built success without help) is a different claim than 'self-proclaimed' (took on the title himself), misrepresenting the historical fact being stated."
+    "secondary_defects": [],
+    "rationale": "\"self-proclaimed\" (a specific, well-known historical descriptor for Smeaton) was replaced with \"self-made,\" which asserts a different fact about him (rose by own effort vs. self-titled)."
   },
   "R10-068-core-multi_sound": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "'begins' is a natural, meaning-preserving synonym for 'starts'."
+    "rationale": "\"begins\" for \"starts\" is a fully natural, meaning-preserving synonym."
   },
   "R10-069-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
-    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "primary_defect": "GRAMMAR",
     "secondary_defects": [
       "WRONG_WORD_OR_SENSE"
     ],
-    "rationale": "'a small late' breaks the fixed idiom 'a little late', and 'driving' replacing 'traffic' changes the stated cause of lateness."
+    "rationale": "\"a small late\" is an ungrammatical collocation, and \"driving\" does not carry the same meaning as \"traffic\" as a cause of lateness."
   },
   "R10-069-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
-    "primary_defect": "GRAMMAR",
-    "secondary_defects": [
-      "NATURALNESS_OR_REGISTER"
-    ],
-    "rationale": "'expressed she might be late' misuses 'expressed', which does not naturally take this kind of reported-possibility clause the way 'said' does."
+    "primary_defect": "NATURALNESS_OR_REGISTER",
+    "secondary_defects": [],
+    "rationale": "\"She expressed she might be...\" is a slightly awkward use of \"expressed\" without its usual direct object, though the meaning is preserved."
   },
   "R10-072-core-word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "'said that ... likely' is a natural, meaning-preserving rewording of 'mentioned that ... probably'."
+    "rationale": "\"said\" for \"mentioned\" and \"likely\" for \"probably\" are natural, meaning-preserving substitutions."
   },
   "R10-073-calib-word_plus_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"Professor\" is downgraded to the more generic \"teacher\", losing the specific academic-rank precision of the original without changing the overall sense of the sentence."
+    "rationale": "\"teacher\" for \"professor\" loses the specific college-level connotation of the original, a minor precision loss."
   },
   "R10-074-core-word": {
     "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
+    "severity": "MINOR",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [
       "NATURALNESS_OR_REGISTER"
     ],
-    "rationale": "\"Encouraged\" (invited/urged) is replaced with \"supported\", which does not mean the same thing and forms the unnatural collocation \"supported to attend\", while \"material\" becomes the informal \"stuff\"."
+    "rationale": "\"supported to attend\" shifts the sense from urging (encouraged) to providing assistance (supported), and \"stuff\" for \"material\" is an informal register downgrade."
   },
   "R10-075-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"Studied\" is replaced with \"took\", which does not fit \"chapters\" and makes the sentence semantically confused (\"everything we took in the first six chapters\")."
+    "rationale": "\"everything we took in the first six chapters\" is confusing/nonsensical since \"took\" does not fit as a substitute for \"studied\" in this context."
   },
   "R10-076-core-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
-    "secondary_defects": [
-      "WRONG_WORD_OR_SENSE"
-    ],
-    "rationale": "\"The same way\" becomes \"the like way\", which is not a grammatical English phrase and fails to convey the intended meaning."
+    "secondary_defects": [],
+    "rationale": "\"the like way\" is not standard, grammatical English in place of \"the same way.\""
   },
   "R10-079-core-word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"Everyone\" to \"everybody\" is a fully synonymous, natural substitution that preserves meaning exactly."
+    "rationale": "\"everybody\" for \"everyone\" is a fully natural, meaning-preserving synonym."
   },
   "R10-079-core-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"Submit\" (turn in) is replaced with \"present\" (display/show), which describes a materially different action than handing in a written report."
+    "rationale": "\"present their reports\" (verbally presenting) changes the meaning from \"submit their reports\" (turning them in)."
   },
   "R10-079-calib-single_word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"Everyone\" to \"everybody\" is a fully synonymous, natural substitution that preserves meaning exactly."
+    "rationale": "\"everybody\" for \"everyone\" is a fully natural, meaning-preserving synonym."
   },
   "R10-079-calib-word_plus_sound": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"Everyone\" to \"everybody\" is a fully synonymous, natural substitution that preserves meaning exactly."
+    "rationale": "\"everybody\" for \"everyone\" is a fully natural, meaning-preserving synonym."
   },
   "R10-080-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "Plural \"deadlines\" becomes the singular, definite \"the deadline\", narrowing the scope from multiple deadlines in general to one specific deadline."
+    "rationale": "\"the deadline\" (definite singular) replaces \"deadlines\" (generic plural), subtly narrowing the claim to one specific deadline rather than deadlines in general."
   },
   "R10-080-core-multi_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [
-      "GRAMMAR"
-    ],
-    "rationale": "\"Slip\" is replaced with \"case\", producing the nonsensical \"deadlines might case a little\"."
+    "secondary_defects": [],
+    "rationale": "\"deadlines might case a little\" is nonsensical; \"case\" does not fit as a substitute for \"slip.\""
   },
   "R10-083-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
     "secondary_defects": [],
-    "rationale": "\"Had more experience\" becomes the ungrammatical \"had more experienced\", misusing the adjective form where a noun is required."
+    "rationale": "\"had more experienced than the other applicants\" is ungrammatical; the noun \"experience\" was wrongly swapped for the participle/adjective \"experienced\"."
   },
   "R10-084-core-multi_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [
-      "NATURALNESS_OR_REGISTER"
-    ],
-    "rationale": "\"Review\" (examine) is swapped for \"critique\" (judge/evaluate), adding a judgmental connotation and an awkward collocation with \"what went wrong\" while keeping the overall gist intact."
+    "secondary_defects": [],
+    "rationale": "\"critique\" shifts the neutral sense of \"review\" toward a more judgmental connotation, a small but real sense change."
   },
   "R10-086-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [
-      "FACTUAL_OR_LOGICAL_REVERSAL"
-    ],
-    "rationale": "\"Airport\" is replaced with \"plane\", creating a logically odd instruction to arrive at the plane itself two hours before departure rather than at the airport."
+    "secondary_defects": [],
+    "rationale": "\"arrive at the plane\" makes no sense in place of \"arrive at the airport\" since you don't arrive at the plane itself two hours before departure."
   },
   "R10-089-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"Crowded\" is replaced with \"approached\", which does not convey the intended sense and makes \"less approached beach\" confusing."
+    "rationale": "\"less approached\" is a nonsensical substitution for \"less crowded\", losing the intended meaning."
   },
   "R10-091-core-word": {
     "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
+    "severity": "MINOR",
     "primary_defect": "GRAMMAR",
     "secondary_defects": [],
-    "rationale": "\"Slightly less\" becomes \"little less\", dropping the required article \"a\" and producing an ungrammatical phrase."
+    "rationale": "\"little less sugar\" drops the required article and should read \"a little less sugar\"."
   },
   "R10-091-core-multi_sound": {
     "acceptability": "DEFECTIVE",
@@ -505,28 +632,28 @@
     "secondary_defects": [
       "GRAMMAR"
     ],
-    "rationale": "\"Recipe\" is replaced with \"way\", producing the nonsensical \"This way calls for...\", compounded by the missing article in \"little less sugar\"."
+    "rationale": "\"This way\" replaces \"This recipe\" with a nonsensical subject, compounded by the missing article in \"little less sugar\"."
   },
   "R10-091-calib-single_word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"Original version\" to \"first version\" is a natural, meaning-preserving substitution in this context."
+    "rationale": "\"first version\" is a natural, meaning-preserving synonym for \"original version\"."
   },
   "R10-091-calib-multi_word": {
-    "acceptability": "CLEAN",
-    "severity": "CLEAN",
-    "primary_defect": "CLEAN",
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "NATURALNESS_OR_REGISTER",
     "secondary_defects": [],
-    "rationale": "\"Slightly less\" to \"a little less\" and \"original version\" to \"first one\" are both natural, grammatical, meaning-preserving substitutions."
+    "rationale": "\"the originally formulated one\" is an awkward, overwrought paraphrase of \"the original version\" despite preserving meaning."
   },
   "R10-091-calib-word_plus_sound": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"Original version\" to \"first version\" is a natural, meaning-preserving substitution in this context."
+    "rationale": "\"first version\" is a natural, meaning-preserving synonym for \"original version\"."
   },
   "R10-091-calib-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
@@ -535,16 +662,14 @@
     "secondary_defects": [
       "GRAMMAR"
     ],
-    "rationale": "\"Recipe\" is replaced with \"way\", producing the nonsensical \"This way calls for...\", compounded by the missing article in \"little less sugar\"."
+    "rationale": "\"This way\" replaces \"This recipe\" with a nonsensical subject, compounded by the missing article in \"little less sugar\"."
   },
   "R10-094-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [
-      "NATURALNESS_OR_REGISTER"
-    ],
-    "rationale": "\"Shellfish\" is replaced with \"shell\", a materially different and non-standard allergen term, and \"carefully\" becomes the oddly matched \"strictly\"."
+    "secondary_defects": [],
+    "rationale": "\"allergic to shell\" instead of \"shellfish\" changes the allergen into something that doesn't sensibly describe a food allergy."
   },
   "R10-097-core-word": {
     "acceptability": "DEFECTIVE",
@@ -553,7 +678,7 @@
     "secondary_defects": [
       "WRONG_WORD_OR_SENSE"
     ],
-    "rationale": "\"Apologized for\" becomes the ungrammatical and semantically different \"excused for\", which is not standard usage of \"excuse\" and does not mean the same as apologizing."
+    "rationale": "\"She excused for showing up late\" is ungrammatical (missing object/reflexive), and \"excused\" doesn't carry the same sense as \"apologized\"."
   },
   "R10-097-calib-single_word": {
     "acceptability": "DEFECTIVE",
@@ -562,7 +687,7 @@
     "secondary_defects": [
       "WRONG_WORD_OR_SENSE"
     ],
-    "rationale": "\"Apologized for\" becomes the ungrammatical and semantically different \"excused for\", which is not standard usage of \"excuse\" and does not mean the same as apologizing."
+    "rationale": "\"She excused for showing up late\" is ungrammatical (missing object/reflexive), and \"excused\" doesn't carry the same sense as \"apologized\"."
   },
   "R10-097-calib-word_plus_sound": {
     "acceptability": "DEFECTIVE",
@@ -571,114 +696,188 @@
     "secondary_defects": [
       "WRONG_WORD_OR_SENSE"
     ],
-    "rationale": "\"Apologized for\" becomes the ungrammatical and semantically different \"excused for\", which is not standard usage of \"excuse\" and does not mean the same as apologizing."
+    "rationale": "\"She excused for showing up late\" is ungrammatical (missing object/reflexive), and \"excused\" doesn't carry the same sense as \"apologized\"."
   },
   "R10-099-core-word": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"anybody\" and the pluralized \"comments\" are trivial, meaning-preserving variations that read naturally."
+  },
+  "R10-103-calib-multi_sound": {
     "acceptability": "DEFECTIVE",
-    "severity": "MINOR",
+    "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "Singular \"his comment\" becomes plural \"his comments\", a small but real change in scope from one remark to multiple remarks."
+    "rationale": "\"passageway\" replaces \"staircase\", losing the specific image of stairs, and pairing it with \"climb\" is an odd fit for a generic passage."
+  },
+  "R10-103-calib-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"passageway\" replaces \"staircase\", losing the specific image of stairs, and pairing it with \"climb\" is an odd fit for a generic passage."
+  },
+  "R10-103-calib-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"passageway\" replaces \"staircase\", losing the specific image of stairs, and pairing it with \"climb\" is an odd fit for a generic passage."
   },
   "R10-105-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "GRAMMAR",
-    "secondary_defects": [
-      "NATURALNESS_OR_REGISTER"
-    ],
-    "rationale": "Dropping the comparative on \"rocky\" (should be \"rockier\" to parallel \"steeper\") plus a past-to-present tense shift on \"suggests\" and the loss of \"mountain\" make this noticeably rougher though still readable."
+    "secondary_defects": [],
+    "rationale": "\"steeper and rocky\" breaks comparative parallelism (should be \"rockier\") and shifts tense from \"suggested\" to \"suggests\"."
   },
   "R10-105-core-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"Heavier\" does not describe a trail's steepness and produces a nonsensical substitution for \"steeper\"."
+    "rationale": "\"heavier\" does not sensibly describe a trail's difficulty the way \"steeper\" does; the substitution is close to nonsensical here."
   },
   "R10-106-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "NATURALNESS_OR_REGISTER",
     "secondary_defects": [],
-    "rationale": "\"Sat over the valley\" is a slightly awkward collocation for fog compared to \"settled,\" though meaning is preserved."
+    "rationale": "\"fog sat over\" is a slightly awkward collocation compared to \"fog settled over\", though the meaning is preserved."
+  },
+  "R10-106-core-dense_mixed_generic": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "The restructured sentence \"a light fog covered the valley\" preserves the original meaning and reads naturally."
   },
   "R10-108-core-word": {
     "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
+    "severity": "MINOR",
     "primary_defect": "GRAMMAR",
     "secondary_defects": [],
-    "rationale": "\"Only one lamp in the corners\" is a number-agreement error that makes a single lamp occupy multiple corners, a logically incoherent image."
+    "rationale": "\"in the corners\" (plural) is inconsistent with \"only one lamp\" (singular), a minor number-agreement slip."
+  },
+  "R10-109-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [
+      "NATURALNESS_OR_REGISTER"
+    ],
+    "rationale": "\"light bulb\" is a different object than \"light fixture\", changing what's being replaced, and \"attempt replacing\" is slightly less natural than \"attempt to replace\"."
   },
   "R10-109-calib-single_word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"Repair\" is a different action from \"replace\" and changes the actual instruction being given."
+    "rationale": "\"repair\" describes a different action than \"replace\", changing the specific task being described."
   },
   "R10-109-calib-word_plus_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"Repair\" is a different action from \"replace\" and changes the actual instruction being given."
+    "rationale": "\"Repair\" substitutes a different action (fixing) for \"replace\" (swapping out), materially changing the instructed task."
+  },
+  "R10-109-calib-multi_sound": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Change\" is a natural, meaning-preserving colloquial synonym for \"replace\" a fixture."
+  },
+  "R10-109-calib-dense_mixed_generic": {
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"Change\" is a natural, meaning-preserving colloquial synonym for \"replace\" a fixture."
+  },
+  "R10-112-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "NATURALNESS_OR_REGISTER",
+    "secondary_defects": [],
+    "rationale": "\"Take off the paper\" is an awkward collocation for clearing a jam; \"take out\" or \"remove\" would be the natural phrasing, though meaning is still clear."
   },
   "R10-113-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"Numbered walks in the manual\" is nonsensical; \"steps\" (instructions) was replaced with an unrelated word sense."
+    "rationale": "\"Numbered walks\" is a nonsensical substitution for \"numbered steps\" in an assembly manual, garbling the instruction."
   },
   "R10-114-core-word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"Anywhere cool\" and \"medicine\" preserve the original instruction's meaning and read naturally."
+    "rationale": "\"Medicine\" and \"anywhere cool\" are natural paraphrases of \"medication\" and \"somewhere cool\" that preserve the storage instruction."
   },
   "R10-114-core-sparse_common_sound": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"Anywhere cool\" preserves the original instruction's meaning and reads naturally."
+    "rationale": "\"Anywhere cool\" is a natural paraphrase of \"somewhere cool\" that preserves the storage instruction."
+  },
+  "R10-115-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "Ending with \"not more difficult\" directly contradicts the preceding \"more difficult,\" turning a sensible harder-not-easier contrast into a self-cancelling statement."
   },
   "R10-115-calib-single_word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"Makes\" corrects the original's subject-verb agreement and \"more difficult\" is a faithful synonym for \"harder.\""
+    "rationale": "The harder/not-easier contrast is preserved correctly as more-difficult/not-easier, with subject-verb agreement fixed."
+  },
+  "R10-115-calib-multi_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": [
+      "GRAMMAR"
+    ],
+    "rationale": "Ending with \"not more difficult\" directly contradicts the preceding \"more difficult,\" producing a self-contradictory statement instead of the intended contrast."
   },
   "R10-115-calib-word_plus_sound": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"Makes\" corrects the original's subject-verb agreement and \"more difficult\" is a faithful synonym for \"harder.\""
+    "rationale": "The harder/not-easier contrast is preserved correctly as more-difficult/not-easier."
   },
   "R10-121-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
     "secondary_defects": [],
-    "rationale": "Narrowing \"weekdays\" to \"Mondays\" and \"weekends\" to \"Saturdays\" changes the factual claim from a five-day and two-day schedule to single specific days."
+    "rationale": "\"Weekdays\"/\"weekends\" were replaced with specific days, and Friday is itself a weekday, so the new sentence asserts a factually wrong schedule."
   },
   "R10-121-calib-single_word": {
     "acceptability": "DEFECTIVE",
-    "severity": "MINOR",
+    "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
     "secondary_defects": [],
-    "rationale": "\"Weekday\" should be plural \"weekdays\"; the error is noticeable but the meaning is still clear."
+    "rationale": "\"On weekday\" is ungrammatical, missing the plural or an article that \"weekdays\" required."
   },
   "R10-121-calib-word_plus_sound": {
     "acceptability": "DEFECTIVE",
-    "severity": "MINOR",
+    "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
     "secondary_defects": [],
-    "rationale": "\"Weekday\" should be plural \"weekdays\"; the error is noticeable but the meaning is still clear."
+    "rationale": "\"On weekday\" is ungrammatical, missing the plural or an article that \"weekdays\" required."
   },
   "R10-122-core-word": {
     "acceptability": "DEFECTIVE",
@@ -687,85 +886,86 @@
     "secondary_defects": [
       "NATURALNESS_OR_REGISTER"
     ],
-    "rationale": "\"Work in the two manufacturers\" confuses the company sense of \"manufacturer\" with the physical-place sense of \"factory,\" reading oddly though the general meaning of industrial employment survives."
+    "rationale": "\"Manufacturers\" denotes companies rather than physical workplaces, making \"work in the two manufacturers\" an odd category shift from \"factories\" even though the referents are recoverable."
   },
   "R10-123-core-word": {
     "acceptability": "DEFECTIVE",
-    "severity": "MINOR",
+    "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"Rebuilt\" implies full reconstruction rather than \"renovated\" (repaired/updated), a real but modest precision loss in a factual statement."
+    "rationale": "\"Rebuilt\" implies full reconstruction, a materially stronger and different claim than \"renovated.\""
   },
   "R10-123-core-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [
-      "GRAMMAR"
-    ],
-    "rationale": "\"Twentieth half-century\" is not a coherent time expression and garbles the original date reference."
+    "secondary_defects": [],
+    "rationale": "\"Twentieth half-century\" is a nonsensical insertion that garbles the original date reference."
+  },
+  "R10-124-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"Park areas\" drops the \"public\" qualifier and is vaguer than \"public parks,\" a minor precision loss in an otherwise natural restructuring."
   },
   "R10-124-core-multi_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"Downtown\" is a specific district, not the whole \"city,\" so the comparison's geographic scope is substantially changed."
+    "rationale": "\"Downtown\" narrows the geographic scope from the whole city to its center, a real meaning change from the original \"city.\""
   },
   "R10-125-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"Opens older\" is nonsensical in place of \"opens earlier\" and no longer conveys the intended time comparison."
+    "rationale": "\"Opens older\" is nonsensical; \"older\" does not apply to opening times and garbles the intended \"earlier.\""
   },
   "R10-128-core-word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"Living\" is a faithful synonym for \"surviving\" in this context and the rest of the sentence is unchanged."
+    "rationale": "\"Living children\" is an acceptable synonym for \"surviving children\" in this genealogical context."
   },
   "R10-128-core-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [
-      "FACTUAL_OR_LOGICAL_REVERSAL"
-    ],
-    "rationale": "\"Back marriage\" is nonsensical and loses the factual detail that this was specifically his second marriage."
+    "secondary_defects": [],
+    "rationale": "\"Back marriage\" is a nonsensical, garbled substitution for \"second marriage.\""
   },
   "R10-129-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [
-      "GRAMMAR"
-    ],
-    "rationale": "\"Earned a two-year learning to Kilmarnock Academy\" is ungrammatical and drops the specific fact that it was a scholarship."
+    "secondary_defects": [],
+    "rationale": "\"A two-year learning\" is nonsensical and loses the fact that it was a scholarship (a funding award), not merely \"learning.\""
   },
   "R10-131-core-word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"Advised\" is a faithful, natural synonym for \"suggested\" and the sentence's meaning is unchanged."
+    "rationale": "\"Advised\" is a close, natural synonym for \"suggested\" that preserves the meaning."
   },
   "R10-133-calib-multi_word": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "NATURALNESS_OR_REGISTER",
-    "secondary_defects": [
-      "WRONG_WORD_OR_SENSE"
-    ],
-    "rationale": "The reordered \"graduated with distinction with a MBBS degree\" creates an awkward double \"with,\" and \"the university\" adds an unwarranted specific claim in place of the vaguer \"the school.\""
+    "secondary_defects": [],
+    "rationale": "The repeated \"with distinction with a MBBS degree\" construction is clunky, though meaning is preserved and \"graduated\"/\"institution\" are fine synonyms."
   },
   "R10-133-calib-multi_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "\"From the courses\" replaces the institutional reference \"the school\" with coursework, losing the fact that a degree was awarded by an institution."
+    "secondary_defects": [
+      "NATURALNESS_OR_REGISTER"
+    ],
+    "rationale": "\"The school\" (the specific institution that granted the degree, presumably referenced earlier) was replaced with \"the courses,\" which changes what a degree is said to come from and reads awkwardly with the definite article."
   },
   "R10-133-calib-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
@@ -774,7 +974,7 @@
     "secondary_defects": [
       "NATURALNESS_OR_REGISTER"
     ],
-    "rationale": "\"School\" (the institution he graduated from) was replaced with \"courses\", which changes the factual claim and reads unnaturally since one qualifies from an institution, not from \"the courses\"."
+    "rationale": "\"The school\" (the specific institution that granted the degree, presumably referenced earlier) was replaced with \"the courses,\" which changes what a degree is said to come from and reads awkwardly with the definite article."
   },
   "R10-133-calib-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
@@ -783,6 +983,6 @@
     "secondary_defects": [
       "NATURALNESS_OR_REGISTER"
     ],
-    "rationale": "\"School\" (the institution he graduated from) was replaced with \"courses\", which changes the factual claim and reads unnaturally since one qualifies from an institution, not from \"the courses\"."
+    "rationale": "\"The school\" (the specific institution that granted the degree, presumably referenced earlier) was replaced with \"the courses,\" which changes what a degree is said to come from and reads awkwardly with the definite article."
   }
 }

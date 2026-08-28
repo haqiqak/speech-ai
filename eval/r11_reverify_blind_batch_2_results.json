@@ -1,177 +1,177 @@
 {
+  "R10-031-calib-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"below the surface\" was changed to \"below the rise\", which is not a coherent term for where a magma chamber sits and changes the meaning to something nonsensical."
+  },
+  "R10-031-calib-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"below the surface\" was changed to \"below the grade\", which does not fit the geological context and renders the phrase nonsensical."
+  },
+  "R10-032-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"converged tectonic activity\" uses the wrong word form for \"convergent tectonic activity\", a minor but noticeable slip even though the sentence's subject-verb agreement was correctly fixed elsewhere."
+  },
+  "R10-032-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "\"leading from\" and \"happening from\" are non-idiomatic preposition choices for \"resulting from\", making the sentence read awkwardly though the meaning still comes through."
+  },
+  "R10-037-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"continuously\" (uninterrupted) was swapped for \"continually\" (repeatedly), a subtle precision loss for phenomena like sunlight and wind that are meant to be uninterrupted, not just recurring."
+  },
+  "R10-037-calib-single_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"continuously\" was replaced with \"continually\", a subtly different sense (repeated vs. uninterrupted) that slightly loses precision without changing the overall claim."
+  },
+  "R10-037-calib-multi_word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"natural phenomena\" (plural) was changed to \"natural phenomenon\" (singular), a number-agreement slip that also implies a single phenomenon rather than the many meant."
+  },
+  "R10-037-calib-word_plus_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"continuously\" was replaced with \"continually\", a subtly different sense that loses some precision without changing the overall claim."
+  },
   "R10-038-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": ["FACTUAL_OR_LOGICAL_REVERSAL"],
-    "rationale": "Replacing 'hydroelectricity' with generic 'electricity' turns a specific renewable energy source into something that is not itself a type of renewable energy, producing a category error in the list."
+    "rationale": "\"hydroelectricity\" was replaced with generic \"electricity\", which is not itself a type of renewable energy source, turning the list into a factually confused claim."
   },
   "R10-038-core-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
-    "primary_defect": "OTHER",
-    "secondary_defects": [],
-    "rationale": "The rewrite silently drops 'solar power' from the list of main renewable energy types, an outright loss of content from the original."
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["OTHER"],
+    "rationale": "The rewrite opens with the incoherent \"It is widely agreed to be the main types of renewable energy\" and also silently drops \"solar power\" from the list, losing content and confusing the sentence structure."
   },
   "R10-041-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "'litter' (scattering trash) is not a substitute for 'pollute' and meaningfully narrows/distorts what the sentence claims about renewable energy sources."
+    "rationale": "\"pollute\" was replaced with \"litter\", which specifically means discarding trash and does not capture the general environmental-pollution meaning of the original."
   },
   "R10-041-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "'renewable energy activities' shifts scope away from 'renewable energy sources' and reads slightly oddly compared against 'fossil fuels', though the overall claim still comes through."
+    "rationale": "\"renewable energy sources\" became \"renewable energy activities\", a slightly mismatched comparison against \"fossil fuels\" that still conveys the same basic point."
   },
   "R10-042-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
     "secondary_defects": [],
-    "rationale": "'generate electric' uses the adjective 'electric' where the noun 'electricity' is required, an ungrammatical construction."
+    "rationale": "\"generate electric\" uses the adjective \"electric\" where the noun \"electricity\" is required, a clear grammatical error."
   },
   "R10-042-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "'highest place in renewable energy' loses the numeric/rate meaning of 'highest rate' and reads as confusing or ambiguous in context."
+    "rationale": "\"the highest rate\" was changed to \"the highest place\", which does not make sense when describing a conversion-efficiency statistic."
   },
   "R10-043-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": ["GRAMMAR"],
-    "rationale": "'numerically rigorous' changes the meaning from formal/logical rigor to numerical precision, and 'logical instruction' (singular) is a plural-agreement slip against 'sequence of'."
+    "rationale": "\"mathematically rigorous\" was narrowed to \"numerically rigorous\", a different and more limited notion of rigor, and \"instructions\" was incorrectly singularized to \"instruction\"."
   },
   "R10-043-calib-multi_word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": ["GRAMMAR"],
-    "rationale": "Identical to the other R10-043 rewrite: 'numerically rigorous' misrepresents 'mathematically rigorous' and 'logical instruction' drops the needed plural."
+    "rationale": "\"mathematically rigorous\" was narrowed to \"numerically rigorous\", a different and more limited notion of rigor, and \"instructions\" was incorrectly singularized to \"instruction\"."
+  },
+  "R10-043-calib-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "Dropping \"used to solve\" leaves \"typically a class of particular problems\" as a dangling, verb-less fragment, and \"mathematically-rigid\" changes \"rigorous\" (thorough/strict) into \"rigid\" (inflexible)."
+  },
+  "R10-043-calib-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "Dropping \"used to solve\" leaves \"typically a class of particular problems\" as a dangling, verb-less fragment, and \"mathematically-rigid\" changes \"rigorous\" into \"rigid\"."
   },
   "R10-044-core-word": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"specifications\" was replaced with \"standards\", changing algorithms from precise procedural descriptions into vague quality benchmarks, and the \"Algorithms is\" agreement error is left uncorrected."
+  },
+  "R10-044-core-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"specifications\" was replaced with \"parameters\", which means variable inputs rather than procedural descriptions, meaningfully changing what algorithms are said to be."
+  },
+  "R10-047-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "'standards' is a noticeably different concept than 'specifications' (a formal precise description vs. an agreed norm), a real but non-catastrophic precision loss."
+    "rationale": "\"each step\" was replaced with \"each point\", a vaguer term that loses the discrete-step framing of computation without changing the overall claim."
   },
   "R10-049-calib-single_word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
     "secondary_defects": ["WRONG_WORD_OR_SENSE"],
-    "rationale": "'the larger the possible' uses the adjective 'possible' where a noun like 'probability'/'possibility' is required, making the clause ungrammatical and unclear."
+    "rationale": "\"the larger the probability\" was turned into \"the larger the possible\", using \"possible\" as a noun in a way that is ungrammatical and nearly nonsensical."
   },
   "R10-049-calib-word_plus_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
     "secondary_defects": ["WRONG_WORD_OR_SENSE"],
-    "rationale": "Same text as the other R10-049 rewrite: 'the larger the possible' is ungrammatical, using an adjective in place of the needed noun."
+    "rationale": "\"the larger the probability\" was turned into \"the larger the possible\", using \"possible\" as a noun in a way that is ungrammatical and nearly nonsensical."
   },
   "R10-051-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
-    "primary_defect": "FIXED_TERM_OR_IDIOM",
-    "secondary_defects": [],
-    "rationale": "'composed as 0.5' breaks the fixed collocation 'written as', reading as odd word choice though the intended meaning is still recoverable."
-  },
-  "R10-056-core-word": {
-    "acceptability": "CLEAN",
-    "severity": "CLEAN",
-    "primary_defect": "CLEAN",
-    "secondary_defects": [],
-    "rationale": "'overall price level' and 'money' are natural, meaning-preserving synonyms for 'general price level' and 'currency'."
-  },
-  "R10-058-core-word": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": ["GRAMMAR"],
-    "rationale": "'an change' is an article-agreement error, and 'change' replacing 'increase' loses the specific directionality the original sentence asserted."
-  },
-  "R10-059-core-word": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "GRAMMAR",
-    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
-    "rationale": "'cutting unemployed' swaps the abstract noun 'unemployment' for the adjective/noun 'unemployed', producing an ungrammatical and semantically muddled phrase."
-  },
-  "R10-059-core-dense_mixed_generic": {
-    "acceptability": "CLEAN",
-    "severity": "CLEAN",
-    "primary_defect": "CLEAN",
-    "secondary_defects": [],
-    "rationale": "'cutting unemployment' is a natural, meaning-preserving synonym for 'reducing unemployment'."
-  },
-  "R10-060-core-dense_mixed_generic": {
-    "acceptability": "DEFECTIVE",
-    "severity": "MINOR",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "'economic crises' is broader and less precise than the technical term 'economic recessions', a real but modest meaning shift."
+    "rationale": "\"written as 0.5\" was changed to \"composed as 0.5\", an unusual word choice for expressing a number in a different notation, though the meaning still comes through."
   },
-  "R10-061-calib-single_word": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "'expression' makes no sense in place of 'construction' when describing what civil engineering deals with — the core activity of building is lost."
-  },
-  "R10-061-calib-word_plus_sound": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "'expression' again wrongly replaces 'construction', and 'paid engineering discipline' loses the sense of 'professional' as a recognized field with formal standards."
-  },
-  "R10-061-calib-single_sound": {
-    "acceptability": "DEFECTIVE",
-    "severity": "MINOR",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "'underlying components' loses the specific engineering sense of 'structural components' (load-bearing parts), though the general idea still comes through."
-  },
-  "R10-064-core-word": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": ["FACTUAL_OR_LOGICAL_REVERSAL"],
-    "rationale": "'self-made' (built success without help) is a different claim than 'self-proclaimed' (took on the title himself), misrepresenting the historical fact being stated."
-  },
-  "R10-068-core-multi_sound": {
-    "acceptability": "CLEAN",
-    "severity": "CLEAN",
-    "primary_defect": "CLEAN",
-    "secondary_defects": [],
-    "rationale": "'begins' is a natural, meaning-preserving synonym for 'starts'."
-  },
-  "R10-069-core-word": {
+  "R10-054-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "FIXED_TERM_OR_IDIOM",
     "secondary_defects": ["WRONG_WORD_OR_SENSE"],
-    "rationale": "'a small late' breaks the fixed idiom 'a little late', and 'driving' replacing 'traffic' changes the stated cause of lateness."
-  },
-  "R10-069-core-dense_mixed_generic": {
-    "acceptability": "DEFECTIVE",
-    "severity": "MINOR",
-    "primary_defect": "GRAMMAR",
-    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
-    "rationale": "'expressed she might be late' misuses 'expressed', which does not naturally take this kind of reported-possibility clause the way 'said' does."
-  },
-  "R10-072-core-word": {
-    "acceptability": "CLEAN",
-    "severity": "CLEAN",
-    "primary_defect": "CLEAN",
-    "secondary_defects": [],
-    "rationale": "'said that ... likely' is a natural, meaning-preserving rewording of 'mentioned that ... probably'."
+    "rationale": "Dropping \"relative\" from \"relative frequency\" breaks a specific technical term in probability theory, turning a precise proportional definition into a vaguer and less accurate one."
   }
 }

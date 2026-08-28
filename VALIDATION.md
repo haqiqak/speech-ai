@@ -5348,3 +5348,93 @@ issue_count()`'s recall stays partial (~25%) and will not materially
 move the dominant WRONG_WORD_OR_SENSE population. `R10-024`'s same-
 word-different-replacement pattern is newly named here as a distinct,
 not-yet-addressed defect shape for a future phase to consider.
+
+## 52. Architecture Go/No-Go, Step 1 — porting R45's phoneme-aware decoding-time constraint (executed 2026-08-27)
+
+Per approved plan mode: Step 1 of a 4-step plan agreed after Phase 11C
+— give the current architecture one more serious, evidence-grounded
+opportunity before a formal Go/No-Go decision, rather than an
+open-ended sequence of "Phase 11D/E/F" rule additions. **This section
+is evidence for Steps 2-3, not a verdict on its own** — decided in
+advance not to judge the architecture question on one number. Full
+record: `eval/arch_gate1_report.md`.
+
+**[FACT] What was ported:** production `_try_escalation()` now
+generates via `rephrase.generate_candidates_phoneme_constrained()`
+("Prototype 2," §36.2/§37) — a decoding-time `LogitsProcessor` that
+kills a beam the instant it matches a blocked sound, instead of
+generating a full candidate and rejecting it after the fact — replacing
+the plain post-hoc-rejection generator. Ported exactly as built (the
+same call `_try_escalation_v2()` already made); all 9 of v1's existing
+gates (4 shared with v2, 5 added across Phase 11/11B/11C) left
+unchanged. `_try_phrase_replacement()` deliberately not touched —
+untested there even experimentally, out of scope for a straight port.
+
+**[FACT] A real, pre-existing bug found during this phase's own
+verification, not caused by today's change:** running `tests/
+reformulate_v2_test.py` (not run during Phase 11C's own verification —
+a gap in that phase's discipline, acknowledged plainly) surfaced a test
+failure caused by Phase 11C's own NLI gate on the SHARED `_try_
+substitution()` colliding with an older test's global mock. Fixed by
+mocking `grammar_issue_count` instead (confirmed neither `_try_
+substitution()` nor `_try_escalation_v3()` gate on that signal), which
+correctly isolates what the test actually means to check.
+
+**[FACT] Targeted verification:** of the 42 R10 corpus cases with
+dense/multi-sound profiles that were refused as of the post-Phase-11C
+harvest — exactly Prototype 2's target population — **16/42 (38%) now
+produce a candidate at all**. Smaller than R45's own original ~52%
+figure, explained by design not assumption: that number predates Phase
+11/11B/11C's five additional post-generation gates, which this port
+now has to clear on top of the generation-side fix — new, previously
+unmeasured interaction, now measured for the first time.
+
+**[FACT] Full-harvest result:** 162/398 runs changed. 114 reformulated→
+reformulated, 34 reformulated→refused, and **14 refused→reformulated**
+(vs. 1 in every prior phase's re-verification, itself nondeterminism-
+attributable) — a real, substantially larger coverage effect. 128
+still-reformulated runs blind-judged: **23 CLEAN, 105 DEFECTIVE (69
+SEVERE, 36 MINOR)**. Against Phase 10's judgment: 20 genuine fixes, 82
+still-defective, 12 regressions (every one traced to this project's
+already-documented nondeterminism, several the exact same run_ids seen
+in Phase 11C's own report), **3 genuinely new CLEAN wins** from
+previously-totally-refused cases (`R10-106`, `R10-109` ×2) — a real
+quality win, not just coverage.
+
+**[FINDING, genuinely mixed, not decided here] Overall CLEAN rate:
+68/218 (31.2%)**, down from Phase 11C's 34.0% despite absolute CLEAN
+count rising (66→68) — because reformulated-status count rose
+substantially (194→218) as refused-status count fell (106→82; real,
+measured coverage gain) while most of the newly-covered cases landed
+DEFECTIVE, not CLEAN. This is exactly what R45's own hand-review
+anticipated ("roughly half [of newly accepted candidates] still carry
+a real defect... exactly the defects the validation side targets") —
+except the validation side (NLI + grammar, Phase 11C) is now actually
+installed in production and still isn't enough, because the dominant
+remaining defect (WRONG_WORD_OR_SENSE) is invisible to both: a wrong-
+but-grammatical, wrong-but-non-contradictory word choice.
+
+**[FACT] Computational cost, measured directly (never disclosed
+anywhere in this project before this phase):** targeted hardest-case
+set, mean latency +28% (6.35s→8.14s); full escalation-invoked
+population, +8% (8.08s→8.70s, since more sentences now reach/complete
+escalation); total 398-run harvest wall time, **+3% overall**
+(1930s→1991s). Cost concentrates on the hardest, densest-profile cases
+the mechanism targets — an intuitive, disclosed pattern, not a surprise.
+
+**[LABELED AS, explicitly not a decision]** Both the generation-side
+lever (this step) and the validation-side lever (Phase 11C) have now
+been pulled, each with real but bounded effect, and the dominant
+remaining problem (WRONG_WORD_OR_SENSE, still the largest defect class)
+doesn't yield to either. This is the evidence Step 2 (diagnose whether
+the correct word is absent from the candidate pool or merely
+mis-ranked) and Step 3 (the formal architecture assessment) need — not
+a reason to conclude anything about the architecture question here.
+
+**[LIMITATION]** All judges are Claude instances. The targeted-set-vs-
+full-population coverage-gain gap (38% vs. R45's ~52%) is explained by
+design but not independently re-verified against R45's original
+23-case corpus directly. This re-observes Phase 11C's same recurring
+nondeterminism population a third time, not a fresh finding each time —
+relevant context for reading the CLEAN-rate delta against the already-
+established ~1-2 point noise band.

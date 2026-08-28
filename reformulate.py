@@ -554,20 +554,40 @@ def _trigger_reasons(flagged_item: dict) -> list[str]:
 def _try_escalation(
     sentence: str, flagged: list[dict], profile: DifficultyProfile, settings: ReformulateSettings,
 ) -> tuple[str | None, dict | None]:
-    """Generate-then-verify restructuring (§24.E) — T5 is never told about
-    phonemes; every candidate is re-checked with the same phoneme veto and
-    SBERT threshold used for substitution, plus a sentence-level negation
-    check standing in for the single-word antonym check (which doesn't
-    apply to a freely generated paraphrase).
+    """Generate-then-verify restructuring (§24.E) — every candidate is
+    re-checked with the same SBERT threshold used for substitution, plus a
+    sentence-level negation check standing in for the single-word antonym
+    check (which doesn't apply to a freely generated paraphrase).
 
     The word-block set is the *substitutable* words this sentence actually
     flagged (`flagged`), not the full declared-word list: a declared-difficult
     word that isn't substitutable in this position (a numeral, a proper noun
     — anything _SUBSTITUTABLE excludes) is equally unfixable by restructuring,
-    so blocking on it would only ever reject every candidate T5 produces."""
+    so blocking on it would only ever reject every candidate T5 produces.
+
+    Architecture Go/No-Go Step 1 (VALIDATION.md SS52) -- generation now uses
+    rephrase.generate_candidates_phoneme_constrained() (R45 Prototype 2,
+    VALIDATION.md SS36.2/SS37), not the plain post-hoc-rejection generator:
+    T5 IS now told about phonemes, via a LogitsProcessor that kills a beam
+    the instant its in-progress text matches a blocked sound, instead of
+    generating a full candidate and rejecting it afterward. Measured (on
+    its own validation corpus, not yet re-measured on this one) to take the
+    leak-free rate from 4% to 100% and the fraction of dense-profile
+    sentences producing ANY usable candidate from ~9-13% to 52% -- this
+    project's single largest measured generation-side improvement, sitting
+    unused in the experimental _try_escalation_v2()/v3() path (reachable
+    only via an opt-in app.py toggle) since R46. Ported here exactly as
+    built, per explicit instruction not to redesign it: same call v2 already
+    makes, every gate below (including the ones added after v2 was written)
+    left unchanged -- this is a generation-source swap, not a gate change.
+    The phoneme/blocked-word leak re-scan a few lines down is kept as a
+    safety net even though this constraint should already guarantee no
+    leaks, matching v2's own established precedent for the same reasoning."""
     min_semantic = settings.sbert_threshold if settings.sbert_threshold is not None else sem.MIN_SEMANTIC
     blocked = {item["word"].lower() for item in flagged}
-    candidates = rephrase.generate_candidates(sentence, k=settings.t5_candidates, blocked_words=blocked)
+    candidates, gen_stats = rephrase.generate_candidates_phoneme_constrained(
+        sentence, k=settings.t5_candidates, blocked_words=blocked, blocked_patterns=profile.sound_values(),
+    )
 
     best = None
     for cand in candidates:
@@ -668,6 +688,7 @@ def _try_escalation(
             "phoneme_ok": True,
             "difficulty_before": round(ph.sentence_difficulty(re.findall(r"[A-Za-z]+", sentence)), 4),
             "difficulty_after": round(ph.sentence_difficulty(re.findall(r"[A-Za-z]+", best["text"])), 4),
+            "beam_kills": gen_stats.get("beam_kills", 0),
         },
     }
 

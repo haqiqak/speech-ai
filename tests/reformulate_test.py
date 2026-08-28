@@ -13,6 +13,7 @@ pass-through, and metrics sanity.
 from __future__ import annotations
 
 import os
+import re
 import sys
 import unittest
 from unittest import mock
@@ -22,6 +23,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import reformulate as rf
 import semantic as sem
+import phonetic as ph
 import engine as engine_module
 from nltk import pos_tag, word_tokenize
 from difficulty_profile import DifficultyProfile
@@ -117,12 +119,43 @@ class EscalationTest(unittest.TestCase):
         profile.add_word("strong", source="user_typed")
         settings = rf.ReformulateSettings(escalation_word_count=0)
         original = "The strong wind blew."
-        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[original]):
+        with mock.patch.object(rf.rephrase, "generate_candidates_phoneme_constrained",
+                                return_value=([original], {"beam_kills": 0})):
             result = rf.reformulate(original, profile, settings)
         self.assertEqual(result["status"], "could_not_safely_reformulate")
         self.assertEqual(result["reformulated_text"], original)
         self.assertEqual(result["changes"], [])
         self.assertEqual(len(result["skipped"]), 1)
+
+
+class PhonemeConstrainedEscalationTest(unittest.TestCase):
+    """Architecture Go/No-Go Step 1 (VALIDATION.md SS52) -- production
+    _try_escalation() now generates via rephrase.generate_candidates_
+    phoneme_constrained() (R45 Prototype 2) instead of the plain post-hoc-
+    rejection generator. rephrase_v2_test.py's PhonemeConstrainedGeneration
+    Test already regression-guards the underlying function in isolation;
+    this confirms the ported mechanism actually reaches production
+    reformulate() end-to-end with a real, dense sound profile -- not
+    mocked, the real model -- and that beam_kills surfaces for
+    observability."""
+
+    def test_escalation_output_never_leaks_a_dense_blocked_sound(self):
+        profile = _profile("phoneme_constrained_dense")
+        for sound in ("pr", "gr", "s"):
+            profile.add_sound(sound, source="user_typed")
+        original = ("Progress on solving these problems requires great "
+                     "processing power and a strong grasp of the subject.")
+        result = rf.reformulate(original, profile)
+        if result["status"] != "reformulated":
+            return  # a safe refusal is an acceptable outcome, not a failure of this test
+        for w in re.findall(r"[A-Za-z][A-Za-z'-]*", result["reformulated_text"]):
+            self.assertFalse(
+                ph.matches_any(w, ["pr", "gr", "s"]),
+                f"{w!r} in {result['reformulated_text']!r} matches a blocked sound the constraint should have prevented",
+            )
+        escalation_changes = [c for c in result["changes"] if c["source"] == "restructuring"]
+        if escalation_changes:
+            self.assertIn("beam_kills", escalation_changes[0]["verification"])
 
 
 class MultiSentenceTest(unittest.TestCase):
@@ -296,7 +329,8 @@ class ProtectedPhraseEscalationTest(unittest.TestCase):
         settings = rf.ReformulateSettings(escalation_word_count=1)
         original = "The reaction requires a specific activation energy to proceed."
         leaky = "The reaction needs a certain amount of energy to proceed."
-        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[leaky]):
+        with mock.patch.object(rf.rephrase, "generate_candidates_phoneme_constrained",
+                                return_value=([leaky], {"beam_kills": 0})):
             result = rf.reformulate(original, profile, settings)
         self.assertEqual(result["status"], "could_not_safely_reformulate")
         self.assertIn("activation energy", result["reformulated_text"].lower())
@@ -308,7 +342,8 @@ class ProtectedPhraseEscalationTest(unittest.TestCase):
         settings = rf.ReformulateSettings(escalation_word_count=1)
         original = "The reaction requires a specific activation energy to proceed."
         good = "The reaction needs the right activation energy to move forward."
-        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[good]):
+        with mock.patch.object(rf.rephrase, "generate_candidates_phoneme_constrained",
+                                return_value=([good], {"beam_kills": 0})):
             result = rf.reformulate(original, profile, settings)
         self.assertEqual(result["status"], "reformulated")
         self.assertEqual(result["changes"][0]["source"], "restructuring")
@@ -438,7 +473,8 @@ class UnknownTokenRejectionTest(unittest.TestCase):
         settings = rf.ReformulateSettings(escalation_word_count=1)
         original = "The reaction requires a specific amount of thermal energy to proceed."
         garbled = "The reaction needs a certain amount of thermonuklear energy to happen."
-        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[garbled]):
+        with mock.patch.object(rf.rephrase, "generate_candidates_phoneme_constrained",
+                                return_value=([garbled], {"beam_kills": 0})):
             result = rf.reformulate(original, profile, settings)
         self.assertEqual(result["status"], "could_not_safely_reformulate")
 
@@ -449,7 +485,8 @@ class UnknownTokenRejectionTest(unittest.TestCase):
         settings = rf.ReformulateSettings(escalation_word_count=1)
         original = "The reaction requires a specific amount of thermal energy to proceed."
         clean = "The reaction needs a certain amount of thermal energy to happen."
-        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[clean]):
+        with mock.patch.object(rf.rephrase, "generate_candidates_phoneme_constrained",
+                                return_value=([clean], {"beam_kills": 0})):
             result = rf.reformulate(original, profile, settings)
         self.assertEqual(result["status"], "reformulated")
 
@@ -497,7 +534,8 @@ class EscalationDuplicateWordTest(unittest.TestCase):
                     "design, construction, and maintenance of the naturally built environment.")
         duped = ("Civil engineering is a technical discipline that deals with the "
                  "design, design and maintenance of the built environment.")
-        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[duped]), \
+        with mock.patch.object(rf.rephrase, "generate_candidates_phoneme_constrained",
+                                return_value=([duped], {"beam_kills": 0})), \
              mock.patch.object(rf.sem, "logical_consistency_check", return_value=None), \
              mock.patch.object(rf.sem, "grammar_issue_count", return_value=0):
             result = rf.reformulate(original, profile, settings)
@@ -512,7 +550,8 @@ class EscalationDuplicateWordTest(unittest.TestCase):
                     "design, construction, and maintenance of the naturally built environment.")
         clean = ("Civil engineering is a technical discipline that deals with the "
                  "design, construction, and upkeep of the built environment.")
-        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[clean]), \
+        with mock.patch.object(rf.rephrase, "generate_candidates_phoneme_constrained",
+                                return_value=([clean], {"beam_kills": 0})), \
              mock.patch.object(rf.sem, "logical_consistency_check", return_value=None), \
              mock.patch.object(rf.sem, "grammar_issue_count", return_value=0):
             result = rf.reformulate(original, profile, settings)
@@ -556,7 +595,8 @@ class EscalationNLITest(unittest.TestCase):
         settings = rf.ReformulateSettings(escalation_word_count=1)
         original = "The reaction requires a specific amount of thermal energy to proceed."
         reversed_ = "The reaction releases a certain amount of thermal energy as it ends."
-        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[reversed_]), \
+        with mock.patch.object(rf.rephrase, "generate_candidates_phoneme_constrained",
+                                return_value=([reversed_], {"beam_kills": 0})), \
              mock.patch.object(rf.sem, "logical_consistency_check",
                                 return_value={"fwd_label": "contradiction", "rev_label": "contradiction", "contradiction": True}), \
              mock.patch.object(rf.sem, "grammar_issue_count", return_value=0):
@@ -570,7 +610,8 @@ class EscalationNLITest(unittest.TestCase):
         settings = rf.ReformulateSettings(escalation_word_count=1)
         original = "The reaction requires a specific amount of thermal energy to proceed."
         clean = "The reaction needs a certain amount of thermal energy to happen."
-        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[clean]), \
+        with mock.patch.object(rf.rephrase, "generate_candidates_phoneme_constrained",
+                                return_value=([clean], {"beam_kills": 0})), \
              mock.patch.object(rf.sem, "logical_consistency_check",
                                 return_value={"fwd_label": "entailment", "rev_label": "entailment", "contradiction": False}), \
              mock.patch.object(rf.sem, "grammar_issue_count", return_value=0):
@@ -591,7 +632,8 @@ class EscalationNLITest(unittest.TestCase):
              mock.patch.object(rf.sem, "rank_candidates_contextually", return_value=fake_scored), \
              mock.patch.object(rf.sem, "logical_consistency_check",
                                 return_value={"fwd_label": "contradiction", "rev_label": "contradiction", "contradiction": True}), \
-             mock.patch.object(rf.rephrase, "generate_candidates", return_value=[]):
+             mock.patch.object(rf.rephrase, "generate_candidates_phoneme_constrained",
+                                return_value=([], {"beam_kills": 0})):
             result = rf.reformulate("This is the original document.", profile)
         self.assertEqual(result["status"], "could_not_safely_reformulate")
 
@@ -620,7 +662,8 @@ class EscalationGrammarTest(unittest.TestCase):
         settings = rf.ReformulateSettings(escalation_word_count=1)
         original = "The reaction requires a specific amount of thermal energy to proceed."
         broken = "The reaction need a certain amounts of thermal energy for to happen."
-        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[broken]), \
+        with mock.patch.object(rf.rephrase, "generate_candidates_phoneme_constrained",
+                                return_value=([broken], {"beam_kills": 0})), \
              mock.patch.object(rf.sem, "logical_consistency_check", return_value=None), \
              mock.patch.object(rf.sem, "grammar_issue_count", return_value=2):
             result = rf.reformulate(original, profile, settings)
@@ -633,7 +676,8 @@ class EscalationGrammarTest(unittest.TestCase):
         settings = rf.ReformulateSettings(escalation_word_count=1)
         original = "The reaction requires a specific amount of thermal energy to proceed."
         clean = "The reaction needs a certain amount of thermal energy to happen."
-        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[clean]), \
+        with mock.patch.object(rf.rephrase, "generate_candidates_phoneme_constrained",
+                                return_value=([clean], {"beam_kills": 0})), \
              mock.patch.object(rf.sem, "logical_consistency_check", return_value=None), \
              mock.patch.object(rf.sem, "grammar_issue_count", return_value=0):
             result = rf.reformulate(original, profile, settings)
@@ -813,7 +857,8 @@ class MetricsTest(unittest.TestCase):
         profile.add_word("strong", source="user_typed")
         settings = rf.ReformulateSettings(escalation_word_count=0)
         original = "The strong wind blew."
-        with mock.patch.object(rf.rephrase, "generate_candidates", return_value=[original]):
+        with mock.patch.object(rf.rephrase, "generate_candidates_phoneme_constrained",
+                                return_value=([original], {"beam_kills": 0})):
             result = rf.reformulate(original, profile, settings)
         self.assertFalse(result["final_verification"]["passed"])
 

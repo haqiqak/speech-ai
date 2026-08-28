@@ -1,0 +1,23 @@
+{
+  "R10-133-calib-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "\"The school\" (the specific institution that granted the degree, presumably referenced earlier) was replaced with \"the courses,\" which changes what a degree is said to come from and reads awkwardly with the definite article."
+  },
+  "R10-133-calib-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "\"The school\" (the specific institution that granted the degree, presumably referenced earlier) was replaced with \"the courses,\" which changes what a degree is said to come from and reads awkwardly with the definite article."
+  },
+  "R10-133-calib-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "\"The school\" (the specific institution that granted the degree, presumably referenced earlier) was replaced with \"the courses,\" which changes what a degree is said to come from and reads awkwardly with the definite article."
+  }
+}

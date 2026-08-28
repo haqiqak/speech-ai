@@ -176,12 +176,23 @@ class ReformulateV2IntegrationTest(unittest.TestCase):
     def test_validation_never_gates_status_or_final_verification(self):
         # Reported-only discipline (Practice.md §10), same contract as
         # contextual_fit -- force a flagged validation result and confirm
-        # a clean substitution still ships.
+        # a clean substitution still ships. Uses grammar_issue_count, not
+        # logical_consistency_check, as the forced signal: Architecture
+        # Go/No-Go Step 1's predecessor (Phase 11C, VALIDATION.md SS51)
+        # added an internal NLI gate to the SHARED _try_substitution()
+        # (used by both reformulate() and reformulate_v2()) as a deliberate,
+        # evidence-based exception to the reported-only discipline for that
+        # one signal -- forcing a global contradiction here would trip that
+        # internal gate too and escalate/refuse instead of shipping the
+        # substitution, which is the new correct behavior for THAT gate,
+        # not a bug in this test's actual target. grammar_issue_count is
+        # not gated inside _try_substitution() or _try_escalation_v3()
+        # (confirmed by reading both), so forcing it here isolates exactly
+        # what this test means to check: reformulate_v2()'s OWN final
+        # reported-only validation pass never gates.
         profile = _profile("v2_validation_no_gate")
         profile.add_sound("s", source="user_typed")
-        with mock.patch.object(sem, "logical_consistency_check",
-                                return_value={"fwd_label": "contradiction", "rev_label": "contradiction",
-                                              "contradiction": True}):
+        with mock.patch.object(sem, "grammar_issue_count", return_value=3):
             result = rf.reformulate_v2("Good morning, did you sleep well?", profile)
         self.assertEqual(result["status"], "reformulated")
         self.assertTrue(result["validation"]["flagged"])

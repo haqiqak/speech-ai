@@ -3673,3 +3673,58 @@ word-sense disambiguation, not another post-generation gate.
 Production code touched: `semantic.py`, `reformulate.py`,
 `tests/reformulate_test.py`. Full record: `VALIDATION.md` §51,
 `eval/r11c_reverify_report.md`.
+
+### 2026-08-27-E — Architecture Go/No-Go Step 1: ported R45's phoneme-aware decoding-time constraint
+
+**What was done:** per an explicit user proposal to stop the open-ended
+"Phase 11D/E/F" pattern and instead give the architecture one final,
+serious opportunity before a formal Go/No-Go decision (agreed 4-step
+plan: port the generation-side fix, diagnose remaining failures,
+formal architecture assessment against pre-registered criteria, then a
+genuine three-way decision including "retire this approach"), plan-mode
+approved Step 1: port R45/R46's phoneme-aware decoding-time constraint
+("Prototype 2") -- the largest measured improvement in this project's
+history, never before promoted from the experimental `reformulate_v2()`
+path -- into production `_try_escalation()`. Ported exactly as built,
+no redesign: same call `_try_escalation_v2()` already made, all 9 of
+v1's existing gates (accumulated across Phase 11/11B/11C) left
+unchanged. `_try_phrase_replacement()` deliberately not touched
+(untested there even experimentally).
+
+**Self-caught, before any number reported:** running `tests/
+reformulate_v2_test.py` (a gap in Phase 11C's own verification --
+acknowledged, not hidden) surfaced a real pre-existing test failure
+caused by Phase 11C's own NLI gate on the shared `_try_substitution()`
+colliding with an older test's global mock. Fixed by mocking a
+different, non-colliding signal (`grammar_issue_count`) that correctly
+isolates the test's actual target.
+
+**Result, deliberately reported as mixed evidence, not a verdict:**
+targeted verification on the 42 hardest previously-stuck dense-profile
+cases: 16/42 (38%) now produce a candidate at all (smaller than R45's
+original ~52%, explained by the much stricter validator stack Phase
+11/11B/11C added since that measurement). Full harvest: 162/398 changed,
+14 refused->reformulated (vs. 1 in every prior phase, itself
+nondeterminism). 128 blind-judged: 23 CLEAN, 105 DEFECTIVE. Overall
+CLEAN rate 68/218 (31.2%), DOWN from Phase 11C's 34.0% despite absolute
+CLEAN count rising (66->68) -- because coverage rose substantially
+(refused count 106->82) while most newly-covered cases landed
+DEFECTIVE, not CLEAN, exactly matching R45's own anticipated finding
+that roughly half of newly-accepted candidates still carry the defects
+the *validation* side targets -- except that validation side is now
+actually installed and still isn't enough, since the dominant remaining
+defect (WRONG_WORD_OR_SENSE) is invisible to both NLI and grammar
+checking. Cost measured directly for the first time in this project:
++3% total harvest latency, concentrated on the hardest cases (+28% on
+the targeted set).
+
+**Labeled as:** evidence for Steps 2 (diagnose whether the missing
+piece for WRONG_WORD_OR_SENSE is candidate generation or ranking) and 3
+(the formal architecture assessment) -- explicitly not a decision on
+its own, per the agreement not to judge the architecture question on
+one number.
+
+**Category:** Implementation + self-caught verification bug, on
+plan-mode approval. Production code touched: `reformulate.py`,
+`tests/reformulate_test.py`, `tests/reformulate_v2_test.py`. Full
+record: `VALIDATION.md` §52, `eval/arch_gate1_report.md`.

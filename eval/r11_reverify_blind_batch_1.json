@@ -5,6 +5,11 @@
     "reformulated_text": "Digestion involves the breakdown of food into smaller and smaller parts, until they can be absorbed and integrated into the body."
   },
   {
+    "run_id": "R10-001-core-sparse_common_sound",
+    "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "reformulated_text": "Digestion involves the breakdown of food into tiny and lesser components until they can be absorbed and assimilated into the body."
+  },
+  {
     "run_id": "R10-001-calib-single_word",
     "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
     "reformulated_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and integrated into the body."
@@ -13,6 +18,21 @@
     "run_id": "R10-001-calib-word_plus_sound",
     "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
     "reformulated_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and integrated into the body."
+  },
+  {
+    "run_id": "R10-001-calib-multi_sound",
+    "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "reformulated_text": "Digestion involves the breakdown of food into tiny and lesser components until they can be absorbed and assimilated into the body."
+  },
+  {
+    "run_id": "R10-001-calib-dense_mixed_generic",
+    "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "reformulated_text": "Digestion involves the breakdown of food into tiny and lesser components until they can be absorbed and assimilated into the body."
+  },
+  {
+    "run_id": "R10-002-core-multi_sound",
+    "original_text": "Chewing mixes the food with saliva to produce a food bolus to be swallowed down the esophagus to enter the stomach.",
+    "reformulated_text": "Chewing mixes the food to produce a food bolus that can be ingested down the esophagus to enter the digestive tract."
   },
   {
     "run_id": "R10-005-core-word",
@@ -25,9 +45,24 @@
     "reformulated_text": "Over-nutrition of micronutrient is a major cause of obesity and increases the chance of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, travel, hypertension, coronary heart disease, osteoporosis, and some forms of cancer."
   },
   {
+    "run_id": "R10-011-core-sparse_common_sound",
+    "original_text": "Nutrients are absorbed by the cells and used in metabolic biochemical reactions.",
+    "reformulated_text": "Nutrients are absorbed and used in metabolic biochemical reactions."
+  },
+  {
+    "run_id": "R10-013-core-multi_sound",
+    "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+    "reformulated_text": "When chemicals occur, the atoms are arranged and accompanied by an energy change as new products are generated."
+  },
+  {
     "run_id": "R10-013-calib-word_plus_sound",
     "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
     "reformulated_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new goods are generated."
+  },
+  {
+    "run_id": "R10-013-calib-dense_mixed_generic",
+    "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+    "reformulated_text": "When chemicals occur, the atoms are arranged and accompanied by an energy change as new products are generated."
   },
   {
     "run_id": "R10-014-core-dense_mixed_generic",
@@ -88,40 +123,5 @@
     "run_id": "R10-031-calib-multi_sound",
     "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
     "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the grade."
-  },
-  {
-    "run_id": "R10-031-calib-sparse_common_sound",
-    "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
-    "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the rise."
-  },
-  {
-    "run_id": "R10-031-calib-dense_mixed_generic",
-    "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
-    "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the grade."
-  },
-  {
-    "run_id": "R10-032-core-word",
-    "original_text": "Volcanoes resulting from divergent tectonic activity is usually non-explosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
-    "reformulated_text": "Volcanoes arising from divergence of tectonic activity are usually nonexplosive, whereas those that result from converged tectonic activity cause violent eruptions."
-  },
-  {
-    "run_id": "R10-032-core-dense_mixed_generic",
-    "original_text": "Volcanoes resulting from divergent tectonic activity is usually non-explosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
-    "reformulated_text": "Volcanoes leading from divergent tectonic activity is usually non-explosive whereas those happening from convergent tectonic activity cause violent eruptions."
-  },
-  {
-    "run_id": "R10-037-core-word",
-    "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
-    "reformulated_text": "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena."
-  },
-  {
-    "run_id": "R10-037-calib-single_word",
-    "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
-    "reformulated_text": "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena."
-  },
-  {
-    "run_id": "R10-037-calib-word_plus_sound",
-    "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
-    "reformulated_text": "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena."
   }
 ]

@@ -4,188 +4,174 @@
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"components\"->\"parts\" and \"assimilated\"->\"integrated\" are both meaning-preserving synonyms and the sentence reads naturally."
+    "rationale": "\"parts\" and \"integrated\" are faithful synonyms for \"components\" and \"assimilated\"; the sentence remains fully natural and equivalent in meaning."
+  },
+  "R10-001-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "\"lesser\" normally modifies abstract degree/importance rather than physical size, so \"tiny and lesser components\" is an awkward, slightly off collocation and loses the progressive-diminishment sense of \"smaller and smaller\", though the overall meaning is still recoverable."
   },
   "R10-001-calib-single_word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"assimilated\"->\"integrated\" preserves the meaning of being incorporated into the body and reads naturally."
+    "rationale": "Only \"assimilated\" is swapped for \"integrated\", a faithful synonym in this context, with meaning and fluency fully preserved."
   },
   "R10-001-calib-word_plus_sound": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "Identical substitution to the single-word case; \"assimilated\"->\"integrated\" preserves meaning and reads naturally."
+    "rationale": "Identical to the single-word swap case: \"integrated\" faithfully replaces \"assimilated\" with no loss of meaning or fluency."
+  },
+  "R10-001-calib-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "Same as the sparse_common_sound variant: \"tiny and lesser components\" is an awkward, size-inappropriate use of \"lesser\" that reads unnaturally though the core meaning survives."
+  },
+  "R10-001-calib-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "Same \"tiny and lesser components\" issue: an awkward, imprecise word choice for size that reads unnaturally but does not fundamentally change the meaning."
+  },
+  "R10-002-core-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["OTHER"],
+    "rationale": "Dropping \"with saliva\" removes what the food is mixed with, \"ingested down the esophagus\" misuses \"ingested\" (a whole-process term, not a mid-transit action) in place of \"swallowed\", and \"stomach\" is vaguely replaced by \"digestive tract\", together constituting a real, compounded loss of content and precision."
   },
   "R10-005-core-word": {
-    "acceptability": "CLEAN",
-    "severity": "CLEAN",
-    "primary_defect": "CLEAN",
-    "secondary_defects": [],
-    "rationale": "\"reabsorbed\"->\"absorbed\" still fully conveys re-absorption because \"back into the blood\" carries the return-to-blood meaning."
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"reabsorbed\" is a specific physiological term distinct from plain \"absorbed\", and although \"back into the blood\" partially preserves the return-direction sense, the precise technical claim is weakened."
   },
   "R10-008-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"stroke\" was replaced with \"travel\", a nonsensical word that is not a disease and breaks the list of NCDs entirely."
+    "rationale": "\"stroke\" was replaced with \"travel\", inserting a nonsensical item into a list of diseases and clearly altering the factual content of the sentence."
+  },
+  "R10-011-core-sparse_common_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "OTHER",
+    "secondary_defects": [],
+    "rationale": "Dropping \"by the cells\" removes the specified agent of absorption, a real but non-catastrophic loss of precision since the sentence still conveys that nutrients are absorbed and used."
+  },
+  "R10-013-core-multi_sound": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"chemicals occur\" is a category error (reactions occur, not chemicals), \"rearranged\" is weakened to \"arranged\", and dropping \"the reaction is\" leaves \"atoms\" as the nonsensical subject of \"accompanied by an energy change\"."
   },
   "R10-013-calib-word_plus_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [
-      "NATURALNESS_OR_REGISTER"
-    ],
-    "rationale": "\"products\" (chemistry term) was replaced with \"goods\" (commercial term), which is nonsensical in this context, and \"accompanied by\" was loosened to \"followed by\", subtly shifting a simultaneous relationship into a sequential one."
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "\"products\" is replaced with \"goods\", a commercial-sense word that is wrong in this chemistry context, and \"accompanied by\" softened to \"followed by\" introduces a subtle sequencing change."
+  },
+  "R10-013-calib-dense_mixed_generic": {
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "Same defect as the multi_sound variant: \"chemicals occur\" is a category error and the missing \"the reaction is\" makes \"atoms\" the nonsensical subject of being \"accompanied by an energy change\"."
   },
   "R10-014-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "FIXED_TERM_OR_IDIOM",
-    "secondary_defects": [
-      "WRONG_WORD_OR_SENSE"
-    ],
-    "rationale": "\"chemical reactions\"->\"chemical actions\" breaks the standard scientific term, and \"reactants\"->\"precursors\" is an imprecise near-synonym, but the sentence remains interpretable."
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"chemical reactions\" is replaced by the less standard \"chemical actions\" and \"reactants\" by the not-quite-equivalent \"precursors\", both understandable but imprecise terminology substitutions."
   },
   "R10-015-core-word": {
     "acceptability": "CLEAN",
     "severity": "CLEAN",
     "primary_defect": "CLEAN",
     "secondary_defects": [],
-    "rationale": "\"Typically\"->\"Generally\" and \"increasing temperature\"->\"rising temperatures\" are natural, meaning-preserving substitutions."
+    "rationale": "\"Generally\"/\"rising temperatures\" are faithful, natural synonyms for \"Typically\"/\"increasing temperature\" with no change in meaning."
   },
   "R10-016-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"bimolecular\" (a chemistry term about two molecules) was replaced with \"bifocal\" (relating to eyeglasses), producing a nonsensical, wrong-sense substitution."
+    "rationale": "\"bimolecular\" was replaced with \"bifocal\", an unrelated word referring to eyeglass lenses, producing a nonsensical chemistry claim."
   },
   "R10-019-core-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
-    "primary_defect": "FIXED_TERM_OR_IDIOM",
+    "primary_defect": "NATURALNESS_OR_REGISTER",
     "secondary_defects": [],
-    "rationale": "\"speed\"->\"pace\" is fine, but \"straight line\"->\"direct line\" breaks the standard physics phrasing for rectilinear motion, reading slightly unnaturally though the meaning is preserved."
+    "rationale": "\"pace\" for \"speed\" and \"direct line\" for \"straight line\" are slightly informal/imprecise substitutions in a physics statement but preserve the overall meaning."
   },
   "R10-021-core-sparse_common_sound": {
     "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
+    "severity": "MINOR",
     "primary_defect": "GRAMMAR",
-    "secondary_defects": [
-      "NATURALNESS_OR_REGISTER"
-    ],
-    "rationale": "\"the same magnitude\"->\"the like magnitude\" is an ungrammatical use of \"like\" as an adjective with \"the\", making the phrase read as an error."
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "\"the like magnitude\" is an awkward, non-idiomatic construction in place of \"the same magnitude\", though the intended meaning is still clear."
   },
   "R10-022-core-multi_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [
-      "NATURALNESS_OR_REGISTER"
-    ],
-    "rationale": "\"constant speed\"->\"constant hurry\" substitutes a word meaning rushing for the physics quantity of speed, producing a nonsensical reading, and \"straight line\"->\"even line\" is also an unnatural substitution."
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"straight\" becomes \"even\" (not synonymous with geometric straightness) and \"speed\" becomes \"hurry\" (denoting haste, not a rate), together with an article error (\"a even\"), producing a garbled, near-nonsensical statement."
   },
   "R10-023-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "\"the body do not accelerate\"->\"the body do not change\" drops the precise Newtonian concept of acceleration for a vague term that could wrongly imply the body cannot move at all."
+    "secondary_defects": ["FACTUAL_OR_LOGICAL_REVERSAL"],
+    "rationale": "\"accelerate\" is replaced by the much vaguer \"change\", which is not physically accurate for a body in mechanical equilibrium (it could still be moving at constant velocity, i.e. changing position) and loses the precise physics claim."
   },
   "R10-024-core-dense_mixed_generic": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [
-      "FACTUAL_OR_LOGICAL_REVERSAL"
-    ],
-    "rationale": "\"second body\" was replaced first with \"forward body\" and then with \"intermediate body\", introducing extra, undefined entities into Newton's third-law statement about two bodies and garbling the logic."
+    "secondary_defects": ["FACTUAL_OR_LOGICAL_REVERSAL"],
+    "rationale": "\"second body\" is replaced inconsistently by \"forward body\" and then \"intermediate body\", making it read as if three distinct bodies are involved and breaking the Newton's third law statement's logical structure."
   },
   "R10-029-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "GRAMMAR",
-    "secondary_defects": [
-      "WRONG_WORD_OR_SENSE"
-    ],
-    "rationale": "\"sufficiently massive a black hole\" was reduced to \"a sufficient black hole\", dropping \"massive\" and producing an ungrammatical, near-circular clause that no longer expresses the mass-threshold condition."
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"sufficiently massive\" is reduced to \"a sufficient\", dropping the key content word \"massive\" and producing the ungrammatical, incomplete phrase \"if it is a sufficient black hole\"."
   },
   "R10-031-core-word": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "FIXED_TERM_OR_IDIOM",
     "secondary_defects": [],
-    "rationale": "\"volcanic ash\"->\"volcano ash\" breaks the standard adjective form of the fixed term but remains understandable and meaning-preserving."
+    "rationale": "\"volcanic ash\" is altered to the non-standard noun compound \"volcano ash\", breaking the fixed term though the meaning is still clear."
   },
   "R10-031-calib-multi_word": {
     "acceptability": "DEFECTIVE",
     "severity": "MINOR",
     "primary_defect": "FIXED_TERM_OR_IDIOM",
     "secondary_defects": [],
-    "rationale": "Same substitution as the core-word case: \"volcanic ash\"->\"volcano ash\" breaks the fixed adjective form but stays understandable."
+    "rationale": "Same as the core-word case: \"volcanic ash\" becomes the non-standard \"volcano ash\", a minor break of the fixed term with meaning still recoverable."
   },
   "R10-031-calib-multi_sound": {
     "acceptability": "DEFECTIVE",
     "severity": "SEVERE",
     "primary_defect": "WRONG_WORD_OR_SENSE",
     "secondary_defects": [],
-    "rationale": "\"below the surface\"->\"below the grade\" replaces \"surface\" with a word most readers will read as slope/rating rather than ground level, changing what the magma chamber is described as being beneath."
-  },
-  "R10-031-calib-sparse_common_sound": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "\"below the surface\"->\"below the rise\" substitutes a word implying a specific hill/elevation for the general concept of ground surface, changing the meaning."
-  },
-  "R10-031-calib-dense_mixed_generic": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "\"below the surface\"->\"below the grade\" replaces \"surface\" with a word most readers will read as slope/rating rather than ground level, changing what the magma chamber is described as being beneath."
-  },
-  "R10-032-core-word": {
-    "acceptability": "DEFECTIVE",
-    "severity": "MINOR",
-    "primary_defect": "FIXED_TERM_OR_IDIOM",
-    "secondary_defects": [],
-    "rationale": "\"convergent tectonic activity\"->\"converged tectonic activity\" swaps the standard geological adjective for an awkward past-participle form, though the meaning is still recoverable; the subject-verb agreement was actually improved."
-  },
-  "R10-032-core-dense_mixed_generic": {
-    "acceptability": "DEFECTIVE",
-    "severity": "SEVERE",
-    "primary_defect": "GRAMMAR",
-    "secondary_defects": [
-      "NATURALNESS_OR_REGISTER"
-    ],
-    "rationale": "\"resulting from\" was replaced with the non-idiomatic \"leading from\" and \"happening from\", both of which are ungrammatical collocations that obscure the causal relationship being described."
-  },
-  "R10-037-core-word": {
-    "acceptability": "DEFECTIVE",
-    "severity": "MINOR",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "\"continuously\"->\"continually\" loses the precise distinction between uninterrupted occurrence and merely frequent/repeated occurrence."
-  },
-  "R10-037-calib-single_word": {
-    "acceptability": "DEFECTIVE",
-    "severity": "MINOR",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "\"continuously\"->\"continually\" loses the precise distinction between uninterrupted occurrence and merely frequent/repeated occurrence."
-  },
-  "R10-037-calib-word_plus_sound": {
-    "acceptability": "DEFECTIVE",
-    "severity": "MINOR",
-    "primary_defect": "WRONG_WORD_OR_SENSE",
-    "secondary_defects": [],
-    "rationale": "\"continuously\"->\"continually\" loses the precise distinction between uninterrupted occurrence and merely frequent/repeated occurrence."
+    "rationale": "\"surface\" is replaced with \"grade\", a word that does not mean surface in this geological context, leaving \"below the grade\" unclear and factually off."
   }
 }

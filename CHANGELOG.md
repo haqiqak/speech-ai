@@ -6,6 +6,22 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-27, fifth** feat: Architecture Go/No-Go Step 1 — ported
+  R45/R46's phoneme-aware decoding-time constraint (the largest
+  measured improvement in this project's history, previously stuck
+  behind an experimental opt-in toggle) into production
+  _try_escalation(), exactly as built. Self-caught a real pre-existing
+  test bug from Phase 11C's own verification gap before reporting any
+  number. Result deliberately reported as mixed, not spun: 16/42
+  hardest previously-stuck cases now produce a candidate (real coverage
+  gain), but overall CLEAN rate dipped slightly (34.0% → 31.2%) because
+  most newly-covered cases land DEFECTIVE — confirming R45's own
+  prediction that the validation side (now installed) still can't
+  catch the dominant remaining defect, WRONG_WORD_OR_SENSE. First-ever
+  measured computational cost in this project: +3% total harvest
+  latency. This is Step 1 of 4 (generation fix → failure diagnosis →
+  formal architecture assessment → decision) — not a verdict on its
+  own. → `DECISION_LOG.md` 2026-08-27-E, `VALIDATION.md` §52.
 - **2026-08-27, fourth** feat: Phase 11C — research pass then ported
   R45/R46's already-built NLI entailment gate and LanguageTool grammar
   gate from the experimental reformulate_v2()/opt-in-toggle path into
