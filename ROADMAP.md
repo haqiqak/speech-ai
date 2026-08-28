@@ -10,6 +10,40 @@ work) is a separate, deliberate decision outside the scope of this pass.
 
 ---
 
+## ARCHITECTURE FREEZE IN EFFECT (ratified 2026-08-28)
+
+**The reformulation architecture (the rule/gate/candidate-generation
+pipeline in `reformulate.py`, `rephrase.py`, `semantic.py`,
+`combined_score()`'s ranking formula, and every gate accumulated across
+Phases 11/11B/11C and Architecture Gate Step 1) is frozen as the
+maintained/shipped baseline, per the user's explicit ratification of
+the Step 4 recommendation.** Full record: `VALIDATION.md` §56,
+`DECISION_LOG.md` 2026-08-28-I, `eval/step3_architecture_assessment.md`,
+`eval/step4_recommendation.md`, git tag `architecture-freeze-v1`.
+
+**This is not project abandonment.** It means: no further rule, gate,
+threshold, ranking-weight, or blocklist changes in response to
+individually-observed failures (the "Phase 11D/E/F" pattern this
+project's Architecture Go/No-Go arc was explicitly started to stop);
+no learned-component work (reranker, WSD model, or otherwise) on the
+current evidence base; routine maintenance (dependency updates,
+non-behavioral bug fixes) continues normally. The frozen architecture
+is now the **reference baseline** any future, fundamentally different
+approach would need to beat — not a dead end.
+
+**Reopening optimization requires new evidence, specifically either:**
+(1) a substantially larger, independently collected labeled dataset —
+not built the same way (same small Claude-judged corpus, same limited
+per-defect-class sample sizes) as the evidence this freeze rests on; or
+(2) a genuinely different modeling approach, evaluated against this
+project's own generalization bar (per the Phase 9B/9C precedent that
+informed this freeze) before being trusted over the frozen baseline.
+Everything below this banner reflects roadmap items identified *before*
+the freeze and is retained as historical record / candidate material
+for a future re-opening, not active work.
+
+---
+
 ## Highest priority — not a research question, an exposure
 
 ### R0. Remediate committed credential/user data
@@ -1950,12 +1984,19 @@ project would build one would fare any better. Not a permanent ban.
 
 ---
 
-## Next: user ratification of the Step 4 recommendation
-
-**Awaiting the user.** Once ratified (as Option C, or a different call),
-document the final decision and, if C, close out this arc's active
-engineering track per the "freeze" terms in `eval/
-step4_recommendation.md`.
+## Architecture Go/No-Go, Step 4 — RATIFIED: Option C, freeze — **DONE, 2026-08-28**
+**Linked finding:** `VALIDATION.md` §56, `DECISION_LOG.md`
+2026-08-28-I. The user explicitly ratified the Step 4 recommendation
+(`eval/step4_recommendation.md`): freeze the current architecture as
+the maintained/shipped baseline, no further optimization. See the
+freeze banner at the top of this document for the full terms and
+reopening conditions. This closes the Architecture Go/No-Go arc begun
+2026-08-27. The Architecture Go/No-Go arc's own remaining "candidate
+next steps" (e.g. a learned reranker, narrowing the substitution-tier
+NLI check's precision cost, the `"third"`/`"single"` unconverged-pool
+gap, `combined_score()`'s weighting) are retained below as historical/
+candidate material for a future re-opening under the conditions stated
+in the freeze banner — not active roadmap items.
 
 ---
 

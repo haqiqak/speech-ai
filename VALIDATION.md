@@ -5700,3 +5700,78 @@ no independent human evaluation exists anywhere in this project's
 history. The recommendation weighs this project's OWN precedent
 (Phase 9B/9C) as the generalization bar, per explicit user instruction,
 rather than external literature on reranker generalization generally.
+
+**[UPDATE, 2026-08-28] The user explicitly ratified this recommendation
+as Option C.** See §56 immediately below for the ratification record.
+The RECOMMENDATION language above is left as originally written (an
+accurate record of what was proposed and why, at the time it was
+proposed) rather than rewritten after ratification — §56 is the
+decision record.
+
+## 56. Architecture Go/No-Go, Step 4 — RATIFIED: the architecture is frozen (2026-08-28)
+
+**[FACT] The user explicitly ratified §55's Step 4 recommendation
+(Option C) in full, verbatim:** "Freeze the current architecture now.
+We have completed the planned optimization arc and formally reached the
+practical ceiling of the current rule/gate-based architecture based on
+the evidence gathered. Do not implement any further optimization,
+rules, gates, ranking tweaks, threshold changes, or learned components
+... The freeze is not abandonment of the project. It means this
+architecture is now the reference baseline for any future,
+fundamentally different approach." This closes the Architecture
+Go/No-Go arc opened 2026-08-27 (`DECISION_LOG.md` 2026-08-27-E). The git
+tag `architecture-freeze-v1` marks the commit where this freeze is
+formally documented (this commit); the frozen *code* itself has been
+unchanged since `7451ec4`, three commits and two analysis-only phases
+(Step 2, Step 3/4) earlier.
+
+**[FACT] What is frozen:** the reformulation pipeline as it stands at
+commit `7451ec4` (Architecture Gate Step 1 — the last commit to touch
+`reformulate.py`/`rephrase.py`/`semantic.py`; every commit since is
+documentation/evaluation only, confirmed directly against `git log`)
+— `reformulate.py`'s
+full gate stack (accumulated across Phases 11/11B/11C and Architecture
+Gate Step 1), `rephrase.py`'s phoneme-constrained candidate generation,
+`semantic.py`'s NLI/grammar/countability checks and `combined_score()`'s
+90%-semantic/10%-frequency ranking blend, and every blocklist/bad-pair
+entry accumulated across this project's history. No further rule, gate,
+threshold, ranking-weight, or blocklist change is authorized in
+response to individually-observed failures — the exact pattern this
+Architecture Go/No-Go arc was opened to stop. No learned component
+(reranker, WSD model, or otherwise) is authorized on the current
+evidence base, per §55's reasoning (Phase 9B/9C's prior learned-
+component generalization failure, plus this arc's own fresh-corpus
+result showing the current, simpler, more inspectable system already
+fails an equivalent generalization test).
+
+**[FACT] What is NOT frozen:** routine maintenance — dependency
+updates, and bug fixes that do not change matching, ranking, or gating
+behavior — continues normally. This is an engineering-scope freeze, not
+a moratorium on keeping the codebase running.
+
+**[FACT] This is explicitly not project abandonment, per the user's own
+words above.** The frozen architecture becomes the **reference
+baseline**: any future, fundamentally different approach is evaluated
+against these numbers (21.4% fresh-corpus CLEAN rate, 0% dense-profile
+CLEAN, ~5-11% dangerous-reversal rate, the refusal/cost figures in §55)
+as the bar to beat, not a discarded attempt.
+
+**[FACT] Explicit reopening conditions, recorded per the user's
+instruction, not left implicit:** optimization work on this pipeline
+may resume only given new evidence of one of these two kinds: (1) a
+substantially larger, independently collected labeled dataset — built
+differently from the evidence this freeze rests on, which is a single
+small, Claude-judged corpus with documented thin per-defect-class
+sample sizes (Phase 8/8B/50); or (2) a genuinely different modeling
+approach, which must itself clear this project's own held-out
+generalization bar (the Phase 9B/9C precedent that directly informed
+this freeze) before being trusted over the frozen baseline — training-
+set or tuned-corpus numbers alone do not meet this bar, exactly as
+Phase 9B/9C already demonstrated they can mislead.
+
+**[LIMITATION]** The freeze decision rests on evidence gathered
+entirely by this project's own Claude-based harvesting and judging
+process (§55's own disclosed limitation) — reopening under condition
+(2) above should weigh that any new approach faces the same
+measurement-infrastructure constraint unless the independent-dataset
+condition (1) is also met.

@@ -3880,3 +3880,41 @@ if independently-collected, larger labeled data becomes available.
 **Category:** Evaluation/synthesis + recommendation, on direct
 instruction following the agreed 4-step plan. No production code
 touched. Awaiting user ratification before Step 4 is treated as closed.
+
+### 2026-08-28-I — Architecture Go/No-Go Step 4 RATIFIED: architecture frozen
+
+**What was done:** the user explicitly ratified the Step 4
+recommendation (2026-08-28-H, Option C) in full, instructing: "Freeze
+the current architecture now. We have completed the planned
+optimization arc and formally reached the practical ceiling of the
+current rule/gate-based architecture based on the evidence gathered.
+Do not implement any further optimization, rules, gates, ranking
+tweaks, threshold changes, or learned components ... The freeze is not
+abandonment of the project. It means this architecture is now the
+reference baseline for any future, fundamentally different approach."
+This closes the Architecture Go/No-Go arc opened 2026-08-27.
+
+**Effect:** the reformulation pipeline as it stands at commit `7451ec4`
+(Architecture Gate Step 1 -- the last commit touching `reformulate.py`/
+`rephrase.py`/`semantic.py`; confirmed via `git log` that every commit
+since is documentation/evaluation only) is frozen as the maintained/
+shipped baseline. No further rule, gate, threshold, ranking-weight,
+blocklist, or learned-component work is authorized on the current
+evidence base. Routine maintenance (dependency updates, non-behavioral
+bug fixes) continues normally -- this is a scope freeze on optimization
+work, not a moratorium on keeping the codebase running.
+
+**Explicit reopening conditions (per the user's own instruction, not
+left implicit):** optimization may resume only given (1) a
+substantially larger, independently collected labeled dataset -- not
+built the same way as the small, Claude-judged, thin-per-class-sample
+corpus this freeze's evidence rests on -- or (2) a genuinely different
+modeling approach, which must itself clear this project's own held-out
+generalization bar (the Phase 9B/9C precedent) before being trusted
+over the frozen baseline.
+
+**Category:** Direct user instruction, ratifying a recommendation this
+project's own evidence produced. No production code touched --
+documentation/versioning only (`VALIDATION.md` §56, `ROADMAP.md`,
+`CHANGELOG.md`, and git tag `architecture-freeze-v1`). Full record:
+`VALIDATION.md` §56.

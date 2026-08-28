@@ -6,6 +6,19 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-28, ninth** docs: Architecture Go/No-Go Step 4 RATIFIED —
+  the user explicitly froze the current reformulation architecture as
+  the maintained/shipped baseline, ending the Architecture Go/No-Go arc.
+  No further rules, gates, ranking tweaks, thresholds, or learned
+  components authorized on current evidence; routine maintenance
+  continues. Frozen code confirmed unchanged since `7451ec4`. Explicit
+  reopening conditions recorded: a substantially larger independently-
+  collected labeled dataset, or a genuinely different modeling approach
+  clearing this project's own Phase 9B/9C-precedent generalization bar.
+  Not project abandonment — the frozen architecture is now the reference
+  baseline for any future approach. Tagged `architecture-freeze-v1`.
+  Documentation/versioning only, no production code touched. →
+  `DECISION_LOG.md` 2026-08-28-I, `VALIDATION.md` §56.
 - **2026-08-28, eighth** docs: Architecture Go/No-Go Step 3 (formal
   assessment) + Step 4 (recommendation, pending ratification) — the
   arc's culmination. Synthesized all evidence since Phase 10 against
