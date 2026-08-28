@@ -1,0 +1,5497 @@
+[
+  {
+    "run_id": "R10-001-core-sparse_common_sound",
+    "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "reformulated_text": "Digestion involves the breakdown of food into tiny and lesser components until they can be absorbed and assimilated into the body.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+        "original": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+        "replacement": "Digestion involves the breakdown of food into tiny and lesser components until they can be absorbed and assimilated into the body.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.9925,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3332,
+          "difficulty_after": 0.3293,
+          "beam_kills": 15
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "Digestion involves the breakdown of the food into absorbed and assimilated components until they can be absorbed into the body.",
+          "Digestion involves the breakdown of the food into fewer and fewer components until they can be absorbed and assimilated into the body.",
+          "Digestion involves the breakdown of the food into absorbed and assimilated parts until they can be absorbed into the body.",
+          "Digestion involves the breakdown of the food into absorbed and assimilated components until it can be absorbed into the body.",
+          "Digestion involves the breakdown of the food into absorbed and assimilated parts until it can be absorbed into the body."
+        ],
+        "production_beam_kills": 38,
+        "extended_k": 15,
+        "extended_candidates": [
+          "Digestion involves the breakdown of the food into fewer and fewer components until they can be absorbed and assimilated into the body.",
+          "Digestion refers to the breakdown of food into tiny and tiny components until they can be absorbed and assimilated into the body.",
+          "Digestion refers to the breakdown of food into tiny and lesser components until they can be absorbed and assimilated into the body.",
+          "Digestion refers to the breakdown of food into tiny and fewer components until they can be absorbed and assimilated into the body.",
+          "Digestion involves the breakdown of the food into fewer and fewer parts until they can be absorbed and assimilated into the body.",
+          "Digestion refers to the breakdown of food into tiny and tiny parts until they can be absorbed and assimilated into the body.",
+          "Digestion involves the breakdown of the food into fewer and fewer components until it can be absorbed and assimilated into the body.",
+          "Digestion refers to the breakdown of food into tiny and tiny components until it can be absorbed and assimilated into the body.",
+          "Digestion refers to the breakdown of food into tiny and lesser parts until they can be absorbed and assimilated into the body.",
+          "Digestion refers to the breakdown of food into fewer and fewer components until they can be absorbed and assimilated into the body."
+        ],
+        "extended_beam_kills": 38
+      }
+    ]
+  },
+  {
+    "run_id": "R10-001-calib-multi_sound",
+    "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "reformulated_text": "Digestion involves the breakdown of food into tiny and lesser components until they can be absorbed and assimilated into the body.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+        "original": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+        "replacement": "Digestion involves the breakdown of food into tiny and lesser components until they can be absorbed and assimilated into the body.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.9925,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3332,
+          "difficulty_after": 0.3293,
+          "beam_kills": 16
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "Digestion involves the breakdown of the food into absorbed and assimilated components until they can be absorbed into the body.",
+          "Digestion involves the breakdown of the food into fewer and fewer components until they can be absorbed and assimilated into the body.",
+          "Digestion involves the breakdown of the food into absorbed and assimilated parts until they can be absorbed into the body.",
+          "Digestion involves the breakdown of the food into absorbed and assimilated components until it can be absorbed into the body.",
+          "Digestion involves the breakdown of the food into absorbed and assimilated parts until it can be absorbed into the body."
+        ],
+        "production_beam_kills": 39,
+        "extended_k": 15,
+        "extended_candidates": [
+          "Digestion involves the breakdown of the food into tiny and tiny components until they can be absorbed and assimilated into the body.",
+          "Digestion involves the breakdown of the food into tiny and tiny parts until they can be absorbed and assimilated into the body.",
+          "Digestion involves the breakdown of the food into tiny and tiny components until it can be absorbed and assimilated into the body.",
+          "Digestion involves the breakdown of the food into tiny and tiny components until they can be absorbed into the body and assimilated.",
+          "Digestion involves the breakdown of the food into absorbed and assimilated components until they can be absorbed into the body.",
+          "Digestion involves the breakdown of the food into tiny and tiny components until they can be absorbed and assimilated in the body.",
+          "Digestion involves the breakdown of the food into tiny and tiny components until they are absorbed and assimilated into the body.",
+          "Digestion involves the breakdown of the food into absorbed and assimilated parts until they can be absorbed into the body.",
+          "Digestion involves the breakdown of the food into absorbed and assimilated components until it can be absorbed into the body.",
+          "Digestion involves the breakdown of the food into absorbed and assimilated parts until it can be absorbed into the body.",
+          "Digestion involves the breakdown of the food into tiny and tiny components until they can be absorbed and absorbed into the body."
+        ],
+        "extended_beam_kills": 41
+      }
+    ]
+  },
+  {
+    "run_id": "R10-001-calib-dense_mixed_generic",
+    "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "reformulated_text": "Digestion involves the breakdown of food into tiny and lesser components until they can be absorbed and assimilated into the body.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+        "original": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+        "replacement": "Digestion involves the breakdown of food into tiny and lesser components until they can be absorbed and assimilated into the body.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.9925,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3332,
+          "difficulty_after": 0.3293,
+          "beam_kills": 16
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "error": "'DifficultyEntry' object has no attribute 'lower'",
+        "source": "restructuring"
+      }
+    ]
+  },
+  {
+    "run_id": "R10-002-core-multi_sound",
+    "original_text": "Chewing mixes the food with saliva to produce a food bolus to be swallowed down the esophagus to enter the stomach.",
+    "reformulated_text": "Chewing mixes the food to produce a food bolus that can be ingested down the esophagus to enter the digestive tract.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Chewing mixes the food with saliva to produce a food bolus to be swallowed down the esophagus to enter the stomach.",
+        "original": "Chewing mixes the food with saliva to produce a food bolus to be swallowed down the esophagus to enter the stomach.",
+        "replacement": "Chewing mixes the food to produce a food bolus that can be ingested down the esophagus to enter the digestive tract.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.9645,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "neutral",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3778,
+          "difficulty_after": 0.3824,
+          "beam_kills": 27
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "Chewing blends the food with mollusks to produce a food bolus that can be absorbed down the esophagus to enter the digestive tract.",
+          "Chewing blends the food with mollusks to produce a food bolus that can be absorbed down the esophagus to enter the abdomen.",
+          "Chewing blends the food with mollusks to produce a food bolus that can be absorbed down the esophagus to enter the belly.",
+          "Chewing blends the food with mollusks to produce a food bolus that can be absorbed down the esophagus to enter the gastrointestinal tract.",
+          "Chewing blends the food with mollusks to produce a food bolus that can be absorbed down the esophagus to enter the intestines"
+        ],
+        "production_beam_kills": 72,
+        "extended_k": 15,
+        "extended_candidates": [
+          "Chewing blends the food with hyaluronic acid to produce a food bolus that can be ingested down the esophagus to enter the gastrointestinal tract.",
+          "Chewing blends the food with hyaluronic acid to produce a food bolus that can be ingested down the esophagus to enter the digestive tract.",
+          "Chewing blends the food with hyaluronic acid to produce a food bolus that can be ingested down the esophagus to enter the intestines.",
+          "Chewing blends the food with hyaluronic acid to produce a food bolus that can be ingested down the esophagus to enter the belly.",
+          "Chewing blends the food with hyaluronic acid to produce a food bolus that can be ingested down the esophagus to enter the abdomen.",
+          "Chewing blends the food with hyaluronic acid to produce a food bolus that can be ingested down the esophagus to enter the intestine.",
+          "Chewing blends the food with hyaluronic acid to produce a food bolus that can be ingested down the esophagus to enter the intestines",
+          "Chewing blends the food with hyaluronic acid to produce a food bolus that can be ingested down the esophagus to enter the belly lining."
+        ],
+        "extended_beam_kills": 102
+      }
+    ]
+  },
+  {
+    "run_id": "R10-007-core-word",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "Nutrition is the chemical and physical process by which an organism uses food and water to support its life.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 3,
+        "span_text": "biochemical",
+        "original": "biochemical",
+        "replacement": "chemical",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9897,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.7458,
+          "difficulty_after": 0.6125,
+          "contextual_fit": 0.48236316442489624
+        }
+      },
+      {
+        "sentence_index": 0,
+        "position": 5,
+        "span_text": "physiological",
+        "original": "physiological",
+        "replacement": "physical",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9822,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.5816,
+          "difficulty_after": 0.4466,
+          "contextual_fit": 0.27756690979003906
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "biochemical",
+        "base_lemma": "biochemical",
+        "chosen_replacement": "chemical",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "chemical",
+            "inflected": "chemical",
+            "semantic_sim": 0.9897,
+            "accepted": true
+          },
+          {
+            "lemma": "biological",
+            "inflected": "biological",
+            "semantic_sim": 0.9911,
+            "accepted": true
+          },
+          {
+            "lemma": "physiological",
+            "inflected": "physiological",
+            "semantic_sim": 0.9894,
+            "accepted": true
+          },
+          {
+            "lemma": "molecular",
+            "inflected": "molecular",
+            "semantic_sim": 0.9827,
+            "accepted": true
+          },
+          {
+            "lemma": "metabolic",
+            "inflected": "metabolic",
+            "semantic_sim": 0.986,
+            "accepted": true
+          },
+          {
+            "lemma": "cellular",
+            "inflected": "cellular",
+            "semantic_sim": 0.9802,
+            "accepted": true
+          },
+          {
+            "lemma": "organic",
+            "inflected": "organic",
+            "semantic_sim": 0.9727,
+            "accepted": true
+          },
+          {
+            "lemma": "enzymatic",
+            "inflected": "enzymatic",
+            "semantic_sim": 0.9742,
+            "accepted": true
+          },
+          {
+            "lemma": "biogenic",
+            "inflected": "biogenic",
+            "semantic_sim": 0.9682,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "chemical",
+            "inflected": "chemical",
+            "semantic_sim": 0.9897,
+            "accepted": true
+          },
+          {
+            "lemma": "biological",
+            "inflected": "biological",
+            "semantic_sim": 0.9911,
+            "accepted": true
+          },
+          {
+            "lemma": "physiological",
+            "inflected": "physiological",
+            "semantic_sim": 0.9894,
+            "accepted": true
+          },
+          {
+            "lemma": "molecular",
+            "inflected": "molecular",
+            "semantic_sim": 0.9827,
+            "accepted": true
+          },
+          {
+            "lemma": "metabolic",
+            "inflected": "metabolic",
+            "semantic_sim": 0.986,
+            "accepted": true
+          },
+          {
+            "lemma": "cellular",
+            "inflected": "cellular",
+            "semantic_sim": 0.9802,
+            "accepted": true
+          },
+          {
+            "lemma": "organic",
+            "inflected": "organic",
+            "semantic_sim": 0.9727,
+            "accepted": true
+          },
+          {
+            "lemma": "enzymatic",
+            "inflected": "enzymatic",
+            "semantic_sim": 0.9742,
+            "accepted": true
+          },
+          {
+            "lemma": "biogenic",
+            "inflected": "biogenic",
+            "semantic_sim": 0.9682,
+            "accepted": true
+          }
+        ]
+      },
+      {
+        "tier": "substitution",
+        "original_word": "physiological",
+        "base_lemma": "physiological",
+        "chosen_replacement": "physical",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "physical",
+            "inflected": "physical",
+            "semantic_sim": 0.9954,
+            "accepted": true
+          },
+          {
+            "lemma": "biological",
+            "inflected": "biological",
+            "semantic_sim": 0.9973,
+            "accepted": true
+          },
+          {
+            "lemma": "functional",
+            "inflected": "functional",
+            "semantic_sim": 0.9938,
+            "accepted": true
+          },
+          {
+            "lemma": "bodily",
+            "inflected": "bodily",
+            "semantic_sim": 0.9921,
+            "accepted": true
+          },
+          {
+            "lemma": "nutrient",
+            "inflected": "nutrient",
+            "semantic_sim": 0.9928,
+            "accepted": true
+          },
+          {
+            "lemma": "organic",
+            "inflected": "organic",
+            "semantic_sim": 0.9825,
+            "accepted": true
+          },
+          {
+            "lemma": "normal",
+            "inflected": "normal",
+            "semantic_sim": 0.9737,
+            "accepted": true
+          },
+          {
+            "lemma": "psychological",
+            "inflected": "psychological",
+            "semantic_sim": 0.9696,
+            "accepted": true
+          },
+          {
+            "lemma": "visceral",
+            "inflected": "visceral",
+            "semantic_sim": 0.9757,
+            "accepted": true
+          },
+          {
+            "lemma": "saline",
+            "inflected": "saline",
+            "semantic_sim": 0.9671,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "physical",
+            "inflected": "physical",
+            "semantic_sim": 0.9954,
+            "accepted": true
+          },
+          {
+            "lemma": "biological",
+            "inflected": "biological",
+            "semantic_sim": 0.9973,
+            "accepted": true
+          },
+          {
+            "lemma": "functional",
+            "inflected": "functional",
+            "semantic_sim": 0.9938,
+            "accepted": true
+          },
+          {
+            "lemma": "bodily",
+            "inflected": "bodily",
+            "semantic_sim": 0.9921,
+            "accepted": true
+          },
+          {
+            "lemma": "nutrient",
+            "inflected": "nutrient",
+            "semantic_sim": 0.9928,
+            "accepted": true
+          },
+          {
+            "lemma": "organic",
+            "inflected": "organic",
+            "semantic_sim": 0.9825,
+            "accepted": true
+          },
+          {
+            "lemma": "normal",
+            "inflected": "normal",
+            "semantic_sim": 0.9737,
+            "accepted": true
+          },
+          {
+            "lemma": "psychological",
+            "inflected": "psychological",
+            "semantic_sim": 0.9696,
+            "accepted": true
+          },
+          {
+            "lemma": "corporeal",
+            "inflected": "corporeal",
+            "semantic_sim": 0.9876,
+            "accepted": true
+          },
+          {
+            "lemma": "physiologic",
+            "inflected": "physiologic",
+            "semantic_sim": 0.9893,
+            "accepted": true
+          },
+          {
+            "lemma": "visceral",
+            "inflected": "visceral",
+            "semantic_sim": 0.9757,
+            "accepted": true
+          },
+          {
+            "lemma": "saline",
+            "inflected": "saline",
+            "semantic_sim": 0.9671,
+            "accepted": true
+          },
+          {
+            "lemma": "somatic",
+            "inflected": "somatic",
+            "semantic_sim": 0.9599,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-007-core-dense_mixed_generic",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to give its life.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 16,
+        "span_text": "support",
+        "original": "support",
+        "replacement": "give",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9905,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.3463,
+          "difficulty_after": 0.4136,
+          "contextual_fit": 0.0001203644642373547
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "support",
+        "base_lemma": "support",
+        "chosen_replacement": "give",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "give",
+            "inflected": "give",
+            "semantic_sim": 0.9905,
+            "accepted": true
+          },
+          {
+            "lemma": "supporting",
+            "inflected": "supporting",
+            "semantic_sim": 0.9985,
+            "accepted": true
+          },
+          {
+            "lemma": "back",
+            "inflected": "back",
+            "semantic_sim": 0.9855,
+            "accepted": true
+          },
+          {
+            "lemma": "living",
+            "inflected": "living",
+            "semantic_sim": 0.9911,
+            "accepted": true
+          },
+          {
+            "lemma": "keep",
+            "inflected": "keep",
+            "semantic_sim": 0.9878,
+            "accepted": true
+          },
+          {
+            "lemma": "hold",
+            "inflected": "hold",
+            "semantic_sim": 0.9897,
+            "accepted": true
+          },
+          {
+            "lemma": "stand",
+            "inflected": "stand",
+            "semantic_sim": 0.9892,
+            "accepted": true
+          },
+          {
+            "lemma": "funding",
+            "inflected": "funding",
+            "semantic_sim": 0.9888,
+            "accepted": true
+          },
+          {
+            "lemma": "confirm",
+            "inflected": "confirm",
+            "semantic_sim": 0.9783,
+            "accepted": true
+          },
+          {
+            "lemma": "defend",
+            "inflected": "defend",
+            "semantic_sim": 0.9776,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "give",
+            "inflected": "give",
+            "semantic_sim": 0.9905,
+            "accepted": true
+          },
+          {
+            "lemma": "supporting",
+            "inflected": "supporting",
+            "semantic_sim": 0.9985,
+            "accepted": true
+          },
+          {
+            "lemma": "back",
+            "inflected": "back",
+            "semantic_sim": 0.9855,
+            "accepted": true
+          },
+          {
+            "lemma": "living",
+            "inflected": "living",
+            "semantic_sim": 0.9911,
+            "accepted": true
+          },
+          {
+            "lemma": "keep",
+            "inflected": "keep",
+            "semantic_sim": 0.9878,
+            "accepted": true
+          },
+          {
+            "lemma": "hold",
+            "inflected": "hold",
+            "semantic_sim": 0.9897,
+            "accepted": true
+          },
+          {
+            "lemma": "stand",
+            "inflected": "stand",
+            "semantic_sim": 0.9892,
+            "accepted": true
+          },
+          {
+            "lemma": "funding",
+            "inflected": "funding",
+            "semantic_sim": 0.9888,
+            "accepted": true
+          },
+          {
+            "lemma": "sustain",
+            "inflected": "sustain",
+            "semantic_sim": 0.9932,
+            "accepted": true
+          },
+          {
+            "lemma": "backing",
+            "inflected": "backing",
+            "semantic_sim": 0.9839,
+            "accepted": true
+          },
+          {
+            "lemma": "subscribe",
+            "inflected": "subscribe",
+            "semantic_sim": 0.9852,
+            "accepted": true
+          },
+          {
+            "lemma": "bolster",
+            "inflected": "bolster",
+            "semantic_sim": 0.9921,
+            "accepted": true
+          },
+          {
+            "lemma": "endorse",
+            "inflected": "endorse",
+            "semantic_sim": 0.9876,
+            "accepted": true
+          },
+          {
+            "lemma": "confirm",
+            "inflected": "confirm",
+            "semantic_sim": 0.9783,
+            "accepted": true
+          },
+          {
+            "lemma": "defend",
+            "inflected": "defend",
+            "semantic_sim": 0.9776,
+            "accepted": true
+          },
+          {
+            "lemma": "patronage",
+            "inflected": "patronage",
+            "semantic_sim": 0.9876,
+            "accepted": true
+          },
+          {
+            "lemma": "affirm",
+            "inflected": "affirm",
+            "semantic_sim": 0.9878,
+            "accepted": true
+          },
+          {
+            "lemma": "substantiate",
+            "inflected": "substantiate",
+            "semantic_sim": 0.989,
+            "accepted": true
+          },
+          {
+            "lemma": "underpin",
+            "inflected": "underpin",
+            "semantic_sim": 0.9895,
+            "accepted": true
+          },
+          {
+            "lemma": "patronize",
+            "inflected": "patronize",
+            "semantic_sim": 0.9885,
+            "accepted": true
+          },
+          {
+            "lemma": "corroborate",
+            "inflected": "corroborate",
+            "semantic_sim": 0.9832,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-007-calib-single_word",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "Nutrition is the biochemical and physical process by which an organism uses food and water to support its life.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 5,
+        "span_text": "physiological",
+        "original": "physiological",
+        "replacement": "physical",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9954,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.5816,
+          "difficulty_after": 0.4466,
+          "contextual_fit": 0.07358679175376892
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "physiological",
+        "base_lemma": "physiological",
+        "chosen_replacement": "physical",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "physical",
+            "inflected": "physical",
+            "semantic_sim": 0.9954,
+            "accepted": true
+          },
+          {
+            "lemma": "biological",
+            "inflected": "biological",
+            "semantic_sim": 0.9973,
+            "accepted": true
+          },
+          {
+            "lemma": "functional",
+            "inflected": "functional",
+            "semantic_sim": 0.9938,
+            "accepted": true
+          },
+          {
+            "lemma": "bodily",
+            "inflected": "bodily",
+            "semantic_sim": 0.9921,
+            "accepted": true
+          },
+          {
+            "lemma": "nutrient",
+            "inflected": "nutrient",
+            "semantic_sim": 0.9928,
+            "accepted": true
+          },
+          {
+            "lemma": "organic",
+            "inflected": "organic",
+            "semantic_sim": 0.9825,
+            "accepted": true
+          },
+          {
+            "lemma": "normal",
+            "inflected": "normal",
+            "semantic_sim": 0.9737,
+            "accepted": true
+          },
+          {
+            "lemma": "psychological",
+            "inflected": "psychological",
+            "semantic_sim": 0.9696,
+            "accepted": true
+          },
+          {
+            "lemma": "visceral",
+            "inflected": "visceral",
+            "semantic_sim": 0.9757,
+            "accepted": true
+          },
+          {
+            "lemma": "saline",
+            "inflected": "saline",
+            "semantic_sim": 0.9671,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "physical",
+            "inflected": "physical",
+            "semantic_sim": 0.9954,
+            "accepted": true
+          },
+          {
+            "lemma": "biological",
+            "inflected": "biological",
+            "semantic_sim": 0.9973,
+            "accepted": true
+          },
+          {
+            "lemma": "functional",
+            "inflected": "functional",
+            "semantic_sim": 0.9938,
+            "accepted": true
+          },
+          {
+            "lemma": "bodily",
+            "inflected": "bodily",
+            "semantic_sim": 0.9921,
+            "accepted": true
+          },
+          {
+            "lemma": "nutrient",
+            "inflected": "nutrient",
+            "semantic_sim": 0.9928,
+            "accepted": true
+          },
+          {
+            "lemma": "organic",
+            "inflected": "organic",
+            "semantic_sim": 0.9825,
+            "accepted": true
+          },
+          {
+            "lemma": "normal",
+            "inflected": "normal",
+            "semantic_sim": 0.9737,
+            "accepted": true
+          },
+          {
+            "lemma": "psychological",
+            "inflected": "psychological",
+            "semantic_sim": 0.9696,
+            "accepted": true
+          },
+          {
+            "lemma": "corporeal",
+            "inflected": "corporeal",
+            "semantic_sim": 0.9876,
+            "accepted": true
+          },
+          {
+            "lemma": "physiologic",
+            "inflected": "physiologic",
+            "semantic_sim": 0.9893,
+            "accepted": true
+          },
+          {
+            "lemma": "visceral",
+            "inflected": "visceral",
+            "semantic_sim": 0.9757,
+            "accepted": true
+          },
+          {
+            "lemma": "saline",
+            "inflected": "saline",
+            "semantic_sim": 0.9671,
+            "accepted": true
+          },
+          {
+            "lemma": "somatic",
+            "inflected": "somatic",
+            "semantic_sim": 0.9599,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-007-calib-word_plus_sound",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "Nutrition is the biochemical and physical act by which an organism uses food and water to support its life.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 5,
+        "span_text": "physiological",
+        "original": "physiological",
+        "replacement": "physical",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9954,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.5816,
+          "difficulty_after": 0.4466,
+          "contextual_fit": 0.12827172875404358
+        }
+      },
+      {
+        "sentence_index": 0,
+        "position": 6,
+        "span_text": "process",
+        "original": "process",
+        "replacement": "act",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9757,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.6412,
+          "difficulty_after": 0.1479,
+          "contextual_fit": 0.004423083737492561
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "physiological",
+        "base_lemma": "physiological",
+        "chosen_replacement": "physical",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "physical",
+            "inflected": "physical",
+            "semantic_sim": 0.9954,
+            "accepted": true
+          },
+          {
+            "lemma": "biological",
+            "inflected": "biological",
+            "semantic_sim": 0.9973,
+            "accepted": true
+          },
+          {
+            "lemma": "functional",
+            "inflected": "functional",
+            "semantic_sim": 0.9938,
+            "accepted": true
+          },
+          {
+            "lemma": "bodily",
+            "inflected": "bodily",
+            "semantic_sim": 0.9921,
+            "accepted": true
+          },
+          {
+            "lemma": "nutrient",
+            "inflected": "nutrient",
+            "semantic_sim": 0.9928,
+            "accepted": true
+          },
+          {
+            "lemma": "organic",
+            "inflected": "organic",
+            "semantic_sim": 0.9825,
+            "accepted": true
+          },
+          {
+            "lemma": "normal",
+            "inflected": "normal",
+            "semantic_sim": 0.9737,
+            "accepted": true
+          },
+          {
+            "lemma": "psychological",
+            "inflected": "psychological",
+            "semantic_sim": 0.9696,
+            "accepted": true
+          },
+          {
+            "lemma": "visceral",
+            "inflected": "visceral",
+            "semantic_sim": 0.9757,
+            "accepted": true
+          },
+          {
+            "lemma": "saline",
+            "inflected": "saline",
+            "semantic_sim": 0.9671,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "physical",
+            "inflected": "physical",
+            "semantic_sim": 0.9954,
+            "accepted": true
+          },
+          {
+            "lemma": "biological",
+            "inflected": "biological",
+            "semantic_sim": 0.9973,
+            "accepted": true
+          },
+          {
+            "lemma": "functional",
+            "inflected": "functional",
+            "semantic_sim": 0.9938,
+            "accepted": true
+          },
+          {
+            "lemma": "bodily",
+            "inflected": "bodily",
+            "semantic_sim": 0.9921,
+            "accepted": true
+          },
+          {
+            "lemma": "nutrient",
+            "inflected": "nutrient",
+            "semantic_sim": 0.9928,
+            "accepted": true
+          },
+          {
+            "lemma": "organic",
+            "inflected": "organic",
+            "semantic_sim": 0.9825,
+            "accepted": true
+          },
+          {
+            "lemma": "normal",
+            "inflected": "normal",
+            "semantic_sim": 0.9737,
+            "accepted": true
+          },
+          {
+            "lemma": "psychological",
+            "inflected": "psychological",
+            "semantic_sim": 0.9696,
+            "accepted": true
+          },
+          {
+            "lemma": "corporeal",
+            "inflected": "corporeal",
+            "semantic_sim": 0.9876,
+            "accepted": true
+          },
+          {
+            "lemma": "physiologic",
+            "inflected": "physiologic",
+            "semantic_sim": 0.9893,
+            "accepted": true
+          },
+          {
+            "lemma": "visceral",
+            "inflected": "visceral",
+            "semantic_sim": 0.9757,
+            "accepted": true
+          },
+          {
+            "lemma": "saline",
+            "inflected": "saline",
+            "semantic_sim": 0.9671,
+            "accepted": true
+          },
+          {
+            "lemma": "somatic",
+            "inflected": "somatic",
+            "semantic_sim": 0.9599,
+            "accepted": true
+          }
+        ]
+      },
+      {
+        "tier": "substitution",
+        "original_word": "process",
+        "base_lemma": "process",
+        "chosen_replacement": "act",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "act",
+            "inflected": "act",
+            "semantic_sim": 0.9845,
+            "accepted": true
+          },
+          {
+            "lemma": "work",
+            "inflected": "work",
+            "semantic_sim": 0.9783,
+            "accepted": true
+          },
+          {
+            "lemma": "operation",
+            "inflected": "operation",
+            "semantic_sim": 0.9825,
+            "accepted": true
+          },
+          {
+            "lemma": "serve",
+            "inflected": "serve",
+            "semantic_sim": 0.9827,
+            "accepted": true
+          },
+          {
+            "lemma": "procedure",
+            "inflected": "procedure",
+            "semantic_sim": 0.9794,
+            "accepted": true
+          },
+          {
+            "lemma": "treat",
+            "inflected": "treat",
+            "semantic_sim": 0.9738,
+            "accepted": true
+          },
+          {
+            "lemma": "summons",
+            "inflected": "summons",
+            "semantic_sim": 0.9652,
+            "accepted": true
+          },
+          {
+            "lemma": "sue",
+            "inflected": "sue",
+            "semantic_sim": 0.9502,
+            "accepted": true
+          },
+          {
+            "lemma": "march",
+            "inflected": "march",
+            "semantic_sim": 0.9334,
+            "accepted": true
+          },
+          {
+            "lemma": "appendage",
+            "inflected": "appendage",
+            "semantic_sim": 0.9547,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "act",
+            "inflected": "act",
+            "semantic_sim": 0.9845,
+            "accepted": true
+          },
+          {
+            "lemma": "work",
+            "inflected": "work",
+            "semantic_sim": 0.9783,
+            "accepted": true
+          },
+          {
+            "lemma": "operation",
+            "inflected": "operation",
+            "semantic_sim": 0.9825,
+            "accepted": true
+          },
+          {
+            "lemma": "serve",
+            "inflected": "serve",
+            "semantic_sim": 0.9827,
+            "accepted": true
+          },
+          {
+            "lemma": "procedure",
+            "inflected": "procedure",
+            "semantic_sim": 0.9794,
+            "accepted": true
+          },
+          {
+            "lemma": "treat",
+            "inflected": "treat",
+            "semantic_sim": 0.9738,
+            "accepted": true
+          },
+          {
+            "lemma": "summons",
+            "inflected": "summons",
+            "semantic_sim": 0.9652,
+            "accepted": true
+          },
+          {
+            "lemma": "sue",
+            "inflected": "sue",
+            "semantic_sim": 0.9502,
+            "accepted": true
+          },
+          {
+            "lemma": "march",
+            "inflected": "march",
+            "semantic_sim": 0.9334,
+            "accepted": true
+          },
+          {
+            "lemma": "outgrowth",
+            "inflected": "outgrowth",
+            "semantic_sim": 0.9568,
+            "accepted": true
+          },
+          {
+            "lemma": "appendage",
+            "inflected": "appendage",
+            "semantic_sim": 0.9547,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-007-calib-multi_sound",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to give its life.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 16,
+        "span_text": "support",
+        "original": "support",
+        "replacement": "give",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9905,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.3463,
+          "difficulty_after": 0.4136,
+          "contextual_fit": 0.0001203644642373547
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "support",
+        "base_lemma": "support",
+        "chosen_replacement": "give",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "give",
+            "inflected": "give",
+            "semantic_sim": 0.9905,
+            "accepted": true
+          },
+          {
+            "lemma": "supporting",
+            "inflected": "supporting",
+            "semantic_sim": 0.9985,
+            "accepted": true
+          },
+          {
+            "lemma": "back",
+            "inflected": "back",
+            "semantic_sim": 0.9855,
+            "accepted": true
+          },
+          {
+            "lemma": "living",
+            "inflected": "living",
+            "semantic_sim": 0.9911,
+            "accepted": true
+          },
+          {
+            "lemma": "keep",
+            "inflected": "keep",
+            "semantic_sim": 0.9878,
+            "accepted": true
+          },
+          {
+            "lemma": "hold",
+            "inflected": "hold",
+            "semantic_sim": 0.9897,
+            "accepted": true
+          },
+          {
+            "lemma": "stand",
+            "inflected": "stand",
+            "semantic_sim": 0.9892,
+            "accepted": true
+          },
+          {
+            "lemma": "funding",
+            "inflected": "funding",
+            "semantic_sim": 0.9888,
+            "accepted": true
+          },
+          {
+            "lemma": "confirm",
+            "inflected": "confirm",
+            "semantic_sim": 0.9783,
+            "accepted": true
+          },
+          {
+            "lemma": "defend",
+            "inflected": "defend",
+            "semantic_sim": 0.9776,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "give",
+            "inflected": "give",
+            "semantic_sim": 0.9905,
+            "accepted": true
+          },
+          {
+            "lemma": "supporting",
+            "inflected": "supporting",
+            "semantic_sim": 0.9985,
+            "accepted": true
+          },
+          {
+            "lemma": "back",
+            "inflected": "back",
+            "semantic_sim": 0.9855,
+            "accepted": true
+          },
+          {
+            "lemma": "living",
+            "inflected": "living",
+            "semantic_sim": 0.9911,
+            "accepted": true
+          },
+          {
+            "lemma": "keep",
+            "inflected": "keep",
+            "semantic_sim": 0.9878,
+            "accepted": true
+          },
+          {
+            "lemma": "hold",
+            "inflected": "hold",
+            "semantic_sim": 0.9897,
+            "accepted": true
+          },
+          {
+            "lemma": "stand",
+            "inflected": "stand",
+            "semantic_sim": 0.9892,
+            "accepted": true
+          },
+          {
+            "lemma": "funding",
+            "inflected": "funding",
+            "semantic_sim": 0.9888,
+            "accepted": true
+          },
+          {
+            "lemma": "sustain",
+            "inflected": "sustain",
+            "semantic_sim": 0.9932,
+            "accepted": true
+          },
+          {
+            "lemma": "backing",
+            "inflected": "backing",
+            "semantic_sim": 0.9839,
+            "accepted": true
+          },
+          {
+            "lemma": "subscribe",
+            "inflected": "subscribe",
+            "semantic_sim": 0.9852,
+            "accepted": true
+          },
+          {
+            "lemma": "bolster",
+            "inflected": "bolster",
+            "semantic_sim": 0.9921,
+            "accepted": true
+          },
+          {
+            "lemma": "endorse",
+            "inflected": "endorse",
+            "semantic_sim": 0.9876,
+            "accepted": true
+          },
+          {
+            "lemma": "confirm",
+            "inflected": "confirm",
+            "semantic_sim": 0.9783,
+            "accepted": true
+          },
+          {
+            "lemma": "defend",
+            "inflected": "defend",
+            "semantic_sim": 0.9776,
+            "accepted": true
+          },
+          {
+            "lemma": "patronage",
+            "inflected": "patronage",
+            "semantic_sim": 0.9876,
+            "accepted": true
+          },
+          {
+            "lemma": "affirm",
+            "inflected": "affirm",
+            "semantic_sim": 0.9878,
+            "accepted": true
+          },
+          {
+            "lemma": "substantiate",
+            "inflected": "substantiate",
+            "semantic_sim": 0.989,
+            "accepted": true
+          },
+          {
+            "lemma": "underpin",
+            "inflected": "underpin",
+            "semantic_sim": 0.9895,
+            "accepted": true
+          },
+          {
+            "lemma": "patronize",
+            "inflected": "patronize",
+            "semantic_sim": 0.9885,
+            "accepted": true
+          },
+          {
+            "lemma": "corroborate",
+            "inflected": "corroborate",
+            "semantic_sim": 0.9832,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-007-calib-sparse_common_sound",
+    "original_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+    "reformulated_text": "Nutrition is the biochemical and physiological process by which an organism uses food and water to give its life.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 16,
+        "span_text": "support",
+        "original": "support",
+        "replacement": "give",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9905,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.3463,
+          "difficulty_after": 0.4136,
+          "contextual_fit": 0.0001203644642373547
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "support",
+        "base_lemma": "support",
+        "chosen_replacement": "give",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "give",
+            "inflected": "give",
+            "semantic_sim": 0.9905,
+            "accepted": true
+          },
+          {
+            "lemma": "supporting",
+            "inflected": "supporting",
+            "semantic_sim": 0.9985,
+            "accepted": true
+          },
+          {
+            "lemma": "back",
+            "inflected": "back",
+            "semantic_sim": 0.9855,
+            "accepted": true
+          },
+          {
+            "lemma": "living",
+            "inflected": "living",
+            "semantic_sim": 0.9911,
+            "accepted": true
+          },
+          {
+            "lemma": "keep",
+            "inflected": "keep",
+            "semantic_sim": 0.9878,
+            "accepted": true
+          },
+          {
+            "lemma": "hold",
+            "inflected": "hold",
+            "semantic_sim": 0.9897,
+            "accepted": true
+          },
+          {
+            "lemma": "stand",
+            "inflected": "stand",
+            "semantic_sim": 0.9892,
+            "accepted": true
+          },
+          {
+            "lemma": "funding",
+            "inflected": "funding",
+            "semantic_sim": 0.9888,
+            "accepted": true
+          },
+          {
+            "lemma": "confirm",
+            "inflected": "confirm",
+            "semantic_sim": 0.9783,
+            "accepted": true
+          },
+          {
+            "lemma": "defend",
+            "inflected": "defend",
+            "semantic_sim": 0.9776,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "give",
+            "inflected": "give",
+            "semantic_sim": 0.9905,
+            "accepted": true
+          },
+          {
+            "lemma": "supporting",
+            "inflected": "supporting",
+            "semantic_sim": 0.9985,
+            "accepted": true
+          },
+          {
+            "lemma": "back",
+            "inflected": "back",
+            "semantic_sim": 0.9855,
+            "accepted": true
+          },
+          {
+            "lemma": "living",
+            "inflected": "living",
+            "semantic_sim": 0.9911,
+            "accepted": true
+          },
+          {
+            "lemma": "keep",
+            "inflected": "keep",
+            "semantic_sim": 0.9878,
+            "accepted": true
+          },
+          {
+            "lemma": "hold",
+            "inflected": "hold",
+            "semantic_sim": 0.9897,
+            "accepted": true
+          },
+          {
+            "lemma": "stand",
+            "inflected": "stand",
+            "semantic_sim": 0.9892,
+            "accepted": true
+          },
+          {
+            "lemma": "funding",
+            "inflected": "funding",
+            "semantic_sim": 0.9888,
+            "accepted": true
+          },
+          {
+            "lemma": "sustain",
+            "inflected": "sustain",
+            "semantic_sim": 0.9932,
+            "accepted": true
+          },
+          {
+            "lemma": "backing",
+            "inflected": "backing",
+            "semantic_sim": 0.9839,
+            "accepted": true
+          },
+          {
+            "lemma": "subscribe",
+            "inflected": "subscribe",
+            "semantic_sim": 0.9852,
+            "accepted": true
+          },
+          {
+            "lemma": "bolster",
+            "inflected": "bolster",
+            "semantic_sim": 0.9921,
+            "accepted": true
+          },
+          {
+            "lemma": "endorse",
+            "inflected": "endorse",
+            "semantic_sim": 0.9876,
+            "accepted": true
+          },
+          {
+            "lemma": "confirm",
+            "inflected": "confirm",
+            "semantic_sim": 0.9783,
+            "accepted": true
+          },
+          {
+            "lemma": "defend",
+            "inflected": "defend",
+            "semantic_sim": 0.9776,
+            "accepted": true
+          },
+          {
+            "lemma": "patronage",
+            "inflected": "patronage",
+            "semantic_sim": 0.9876,
+            "accepted": true
+          },
+          {
+            "lemma": "affirm",
+            "inflected": "affirm",
+            "semantic_sim": 0.9878,
+            "accepted": true
+          },
+          {
+            "lemma": "substantiate",
+            "inflected": "substantiate",
+            "semantic_sim": 0.989,
+            "accepted": true
+          },
+          {
+            "lemma": "underpin",
+            "inflected": "underpin",
+            "semantic_sim": 0.9895,
+            "accepted": true
+          },
+          {
+            "lemma": "patronize",
+            "inflected": "patronize",
+            "semantic_sim": 0.9885,
+            "accepted": true
+          },
+          {
+            "lemma": "corroborate",
+            "inflected": "corroborate",
+            "semantic_sim": 0.9832,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-008-core-dense_mixed_generic",
+    "original_text": "Over-nutrition of micronutrient is a major cause of obesity and increases the risk of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, stroke, hypertension, coronary heart disease, osteoporosis, and some forms of cancer.",
+    "reformulated_text": "Over-nutrition of micronutrient is a major cause of obesity and increases the chance of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, travel, hypertension, coronary heart disease, osteoporosis, and some forms of cancer.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 12,
+        "span_text": "risk",
+        "original": "risk",
+        "replacement": "chance",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.997,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.2919,
+          "difficulty_after": 0.4329,
+          "contextual_fit": 0.00873090885579586
+        }
+      },
+      {
+        "sentence_index": 0,
+        "position": 27,
+        "span_text": "stroke",
+        "original": "stroke",
+        "replacement": "travel",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9944,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.592,
+          "difficulty_after": 0.6524,
+          "contextual_fit": 9.039689530254691e-08
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "risk",
+        "base_lemma": "risk",
+        "chosen_replacement": "chance",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "chance",
+            "inflected": "chance",
+            "semantic_sim": 0.997,
+            "accepted": true
+          },
+          {
+            "lemma": "danger",
+            "inflected": "danger",
+            "semantic_sim": 0.9984,
+            "accepted": true
+          },
+          {
+            "lemma": "adventure",
+            "inflected": "adventure",
+            "semantic_sim": 0.9947,
+            "accepted": true
+          },
+          {
+            "lemma": "hazard",
+            "inflected": "hazard",
+            "semantic_sim": 0.998,
+            "accepted": true
+          },
+          {
+            "lemma": "gamble",
+            "inflected": "gamble",
+            "semantic_sim": 0.9928,
+            "accepted": true
+          },
+          {
+            "lemma": "peril",
+            "inflected": "peril",
+            "semantic_sim": 0.9965,
+            "accepted": true
+          },
+          {
+            "lemma": "jeopardy",
+            "inflected": "jeopardy",
+            "semantic_sim": 0.9949,
+            "accepted": true
+          },
+          {
+            "lemma": "endangerment",
+            "inflected": "endangerment",
+            "semantic_sim": 0.9968,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "chance",
+            "inflected": "chance",
+            "semantic_sim": 0.997,
+            "accepted": true
+          },
+          {
+            "lemma": "danger",
+            "inflected": "danger",
+            "semantic_sim": 0.9984,
+            "accepted": true
+          },
+          {
+            "lemma": "adventure",
+            "inflected": "adventure",
+            "semantic_sim": 0.9947,
+            "accepted": true
+          },
+          {
+            "lemma": "hazard",
+            "inflected": "hazard",
+            "semantic_sim": 0.998,
+            "accepted": true
+          },
+          {
+            "lemma": "gamble",
+            "inflected": "gamble",
+            "semantic_sim": 0.9928,
+            "accepted": true
+          },
+          {
+            "lemma": "peril",
+            "inflected": "peril",
+            "semantic_sim": 0.9965,
+            "accepted": true
+          },
+          {
+            "lemma": "jeopardy",
+            "inflected": "jeopardy",
+            "semantic_sim": 0.9949,
+            "accepted": true
+          },
+          {
+            "lemma": "endangerment",
+            "inflected": "endangerment",
+            "semantic_sim": 0.9968,
+            "accepted": true
+          }
+        ]
+      },
+      {
+        "tier": "substitution",
+        "original_word": "stroke",
+        "base_lemma": "stroke",
+        "chosen_replacement": "travel",
+        "chosen_rank_in_production_pool": 1,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "shot",
+            "inflected": "shot",
+            "semantic_sim": 0.9958,
+            "accepted": true
+          },
+          {
+            "lemma": "travel",
+            "inflected": "travel",
+            "semantic_sim": 0.9977,
+            "accepted": true
+          },
+          {
+            "lemma": "pull",
+            "inflected": "pull",
+            "semantic_sim": 0.9976,
+            "accepted": true
+          },
+          {
+            "lemma": "throw",
+            "inflected": "throw",
+            "semantic_sim": 0.9963,
+            "accepted": true
+          },
+          {
+            "lemma": "assault",
+            "inflected": "assault",
+            "semantic_sim": 0.9979,
+            "accepted": true
+          },
+          {
+            "lemma": "slash",
+            "inflected": "slash",
+            "semantic_sim": 0.9974,
+            "accepted": true
+          },
+          {
+            "lemma": "diagonal",
+            "inflected": "diagonal",
+            "semantic_sim": 0.9981,
+            "accepted": true
+          },
+          {
+            "lemma": "stroking",
+            "inflected": "stroking",
+            "semantic_sim": 0.9972,
+            "accepted": true
+          },
+          {
+            "lemma": "locomotion",
+            "inflected": "locomotion",
+            "semantic_sim": 0.9963,
+            "accepted": true
+          },
+          {
+            "lemma": "caress",
+            "inflected": "caress",
+            "semantic_sim": 0.9858,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "shot",
+            "inflected": "shot",
+            "semantic_sim": 0.9958,
+            "accepted": true
+          },
+          {
+            "lemma": "travel",
+            "inflected": "travel",
+            "semantic_sim": 0.9977,
+            "accepted": true
+          },
+          {
+            "lemma": "pull",
+            "inflected": "pull",
+            "semantic_sim": 0.9976,
+            "accepted": true
+          },
+          {
+            "lemma": "throw",
+            "inflected": "throw",
+            "semantic_sim": 0.9963,
+            "accepted": true
+          },
+          {
+            "lemma": "assault",
+            "inflected": "assault",
+            "semantic_sim": 0.9979,
+            "accepted": true
+          },
+          {
+            "lemma": "slash",
+            "inflected": "slash",
+            "semantic_sim": 0.9974,
+            "accepted": true
+          },
+          {
+            "lemma": "diagonal",
+            "inflected": "diagonal",
+            "semantic_sim": 0.9981,
+            "accepted": true
+          },
+          {
+            "lemma": "stroking",
+            "inflected": "stroking",
+            "semantic_sim": 0.9972,
+            "accepted": true
+          },
+          {
+            "lemma": "locomotion",
+            "inflected": "locomotion",
+            "semantic_sim": 0.9963,
+            "accepted": true
+          },
+          {
+            "lemma": "cva",
+            "inflected": "cva",
+            "semantic_sim": 0.9947,
+            "accepted": true
+          },
+          {
+            "lemma": "caress",
+            "inflected": "caress",
+            "semantic_sim": 0.9858,
+            "accepted": true
+          },
+          {
+            "lemma": "apoplexy",
+            "inflected": "apoplexy",
+            "semantic_sim": 0.9965,
+            "accepted": true
+          },
+          {
+            "lemma": "solidus",
+            "inflected": "solidus",
+            "semantic_sim": 0.9979,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-009-core-word",
+    "original_text": "All forms of life require carbon, energy, and water as well as various other molecules.",
+    "reformulated_text": "All forms of life require carbon, energy, and water as well as various other compounds.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 16,
+        "span_text": "molecules",
+        "original": "molecules",
+        "replacement": "compounds",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9771,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.4903,
+          "difficulty_after": 0.5623,
+          "contextual_fit": 0.002049429342150688
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "molecules",
+        "base_lemma": "molecule",
+        "chosen_replacement": "compounds",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "compound",
+            "inflected": "compounds",
+            "semantic_sim": 0.9771,
+            "accepted": true
+          },
+          {
+            "lemma": "chemical",
+            "inflected": "chemicals",
+            "semantic_sim": 0.9721,
+            "accepted": true
+          },
+          {
+            "lemma": "particle",
+            "inflected": "particles",
+            "semantic_sim": 0.9733,
+            "accepted": true
+          },
+          {
+            "lemma": "atom",
+            "inflected": "atoms",
+            "semantic_sim": 0.9753,
+            "accepted": true
+          },
+          {
+            "lemma": "formula",
+            "inflected": "formulas",
+            "semantic_sim": 0.9461,
+            "accepted": true
+          },
+          {
+            "lemma": "speck",
+            "inflected": "specks",
+            "semantic_sim": 0.9536,
+            "accepted": true
+          },
+          {
+            "lemma": "unit",
+            "inflected": "units",
+            "semantic_sim": 0.9267,
+            "accepted": true
+          },
+          {
+            "lemma": "drug",
+            "inflected": "drugs",
+            "semantic_sim": 0.9177,
+            "accepted": true
+          },
+          {
+            "lemma": "mole",
+            "inflected": "moles",
+            "semantic_sim": 0.9181,
+            "accepted": true
+          },
+          {
+            "lemma": "polymer",
+            "inflected": "polymers",
+            "semantic_sim": 0.9095,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "compound",
+            "inflected": "compounds",
+            "semantic_sim": 0.9771,
+            "accepted": true
+          },
+          {
+            "lemma": "chemical",
+            "inflected": "chemicals",
+            "semantic_sim": 0.9721,
+            "accepted": true
+          },
+          {
+            "lemma": "particle",
+            "inflected": "particles",
+            "semantic_sim": 0.9733,
+            "accepted": true
+          },
+          {
+            "lemma": "atom",
+            "inflected": "atoms",
+            "semantic_sim": 0.9753,
+            "accepted": true
+          },
+          {
+            "lemma": "formula",
+            "inflected": "formulas",
+            "semantic_sim": 0.9461,
+            "accepted": true
+          },
+          {
+            "lemma": "speck",
+            "inflected": "specks",
+            "semantic_sim": 0.9536,
+            "accepted": true
+          },
+          {
+            "lemma": "unit",
+            "inflected": "units",
+            "semantic_sim": 0.9267,
+            "accepted": true
+          },
+          {
+            "lemma": "drug",
+            "inflected": "drugs",
+            "semantic_sim": 0.9177,
+            "accepted": true
+          },
+          {
+            "lemma": "mole",
+            "inflected": "moles",
+            "semantic_sim": 0.9181,
+            "accepted": true
+          },
+          {
+            "lemma": "polymer",
+            "inflected": "polymers",
+            "semantic_sim": 0.9095,
+            "accepted": true
+          },
+          {
+            "lemma": "mote",
+            "inflected": "motes",
+            "semantic_sim": 0.9205,
+            "accepted": true
+          },
+          {
+            "lemma": "acrylonitrile",
+            "inflected": "acrylonitriles",
+            "semantic_sim": 0.8096,
+            "accepted": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-010-core-word",
+    "original_text": "Animals require complex nutrients such as carbohydrates, lipids, and proteins, obtaining them by consuming other organisms.",
+    "reformulated_text": "Animals require complex nutrients such as sugars, lipids, and proteins, obtaining them by consuming other beings.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 6,
+        "span_text": "carbohydrates",
+        "original": "carbohydrates",
+        "replacement": "sugars",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9653,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.7419,
+          "difficulty_after": 0.4372,
+          "contextual_fit": 0.35484036244452
+        }
+      },
+      {
+        "sentence_index": 0,
+        "position": 18,
+        "span_text": "organisms",
+        "original": "organisms",
+        "replacement": "beings",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9486,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.4371,
+          "difficulty_after": 0.5538,
+          "contextual_fit": 5.706554657081142e-05
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "carbohydrates",
+        "base_lemma": "carbohydrate",
+        "chosen_replacement": "sugars",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "sugar",
+            "inflected": "sugars",
+            "semantic_sim": 0.9653,
+            "accepted": true
+          },
+          {
+            "lemma": "glucose",
+            "inflected": "glucoses",
+            "semantic_sim": 0.9634,
+            "accepted": true
+          },
+          {
+            "lemma": "starch",
+            "inflected": "starches",
+            "semantic_sim": 0.9547,
+            "accepted": true
+          },
+          {
+            "lemma": "hydrate",
+            "inflected": "hydrates",
+            "semantic_sim": 0.9568,
+            "accepted": true
+          },
+          {
+            "lemma": "glycogen",
+            "inflected": "glycogens",
+            "semantic_sim": 0.9564,
+            "accepted": true
+          },
+          {
+            "lemma": "hydrocarbon",
+            "inflected": "hydrocarbons",
+            "semantic_sim": 0.9468,
+            "accepted": true
+          },
+          {
+            "lemma": "polysaccharide",
+            "inflected": "polysaccharides",
+            "semantic_sim": 0.9533,
+            "accepted": true
+          },
+          {
+            "lemma": "fructose",
+            "inflected": "fructoses",
+            "semantic_sim": 0.9414,
+            "accepted": true
+          },
+          {
+            "lemma": "maltose",
+            "inflected": "maltoses",
+            "semantic_sim": 0.9351,
+            "accepted": true
+          },
+          {
+            "lemma": "cellulose",
+            "inflected": "celluloses",
+            "semantic_sim": 0.906,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "sugar",
+            "inflected": "sugars",
+            "semantic_sim": 0.9653,
+            "accepted": true
+          },
+          {
+            "lemma": "glucose",
+            "inflected": "glucoses",
+            "semantic_sim": 0.9634,
+            "accepted": true
+          },
+          {
+            "lemma": "starch",
+            "inflected": "starches",
+            "semantic_sim": 0.9547,
+            "accepted": true
+          },
+          {
+            "lemma": "hydrate",
+            "inflected": "hydrates",
+            "semantic_sim": 0.9568,
+            "accepted": true
+          },
+          {
+            "lemma": "glycogen",
+            "inflected": "glycogens",
+            "semantic_sim": 0.9564,
+            "accepted": true
+          },
+          {
+            "lemma": "hydrocarbon",
+            "inflected": "hydrocarbons",
+            "semantic_sim": 0.9468,
+            "accepted": true
+          },
+          {
+            "lemma": "polysaccharide",
+            "inflected": "polysaccharides",
+            "semantic_sim": 0.9533,
+            "accepted": true
+          },
+          {
+            "lemma": "fructose",
+            "inflected": "fructoses",
+            "semantic_sim": 0.9414,
+            "accepted": true
+          },
+          {
+            "lemma": "maltose",
+            "inflected": "maltoses",
+            "semantic_sim": 0.9351,
+            "accepted": true
+          },
+          {
+            "lemma": "cellulose",
+            "inflected": "celluloses",
+            "semantic_sim": 0.906,
+            "accepted": true
+          }
+        ]
+      },
+      {
+        "tier": "substitution",
+        "original_word": "organisms",
+        "base_lemma": "organism",
+        "chosen_replacement": "beings",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "being",
+            "inflected": "beings",
+            "semantic_sim": 0.9794,
+            "accepted": true
+          },
+          {
+            "lemma": "system",
+            "inflected": "systems",
+            "semantic_sim": 0.9801,
+            "accepted": true
+          },
+          {
+            "lemma": "scheme",
+            "inflected": "schemes",
+            "semantic_sim": 0.9732,
+            "accepted": true
+          },
+          {
+            "lemma": "micro-organism",
+            "inflected": "micro-organisms",
+            "semantic_sim": 0.9801,
+            "accepted": true
+          },
+          {
+            "lemma": "organ",
+            "inflected": "organs",
+            "semantic_sim": 0.9627,
+            "accepted": true
+          },
+          {
+            "lemma": "bacteria",
+            "inflected": "bacterias",
+            "semantic_sim": 0.9206,
+            "accepted": true
+          },
+          {
+            "lemma": "bacterium",
+            "inflected": "bacteria",
+            "semantic_sim": 0.9235,
+            "accepted": true
+          },
+          {
+            "lemma": "pest",
+            "inflected": "pests",
+            "semantic_sim": 0.9077,
+            "accepted": true
+          },
+          {
+            "lemma": "embryo",
+            "inflected": "embryos",
+            "semantic_sim": 0.8855,
+            "accepted": true
+          },
+          {
+            "lemma": "pathogen",
+            "inflected": "pathogens",
+            "semantic_sim": 0.8769,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "being",
+            "inflected": "beings",
+            "semantic_sim": 0.9794,
+            "accepted": true
+          },
+          {
+            "lemma": "system",
+            "inflected": "systems",
+            "semantic_sim": 0.9801,
+            "accepted": true
+          },
+          {
+            "lemma": "scheme",
+            "inflected": "schemes",
+            "semantic_sim": 0.9732,
+            "accepted": true
+          },
+          {
+            "lemma": "micro-organism",
+            "inflected": "micro-organisms",
+            "semantic_sim": 0.9801,
+            "accepted": true
+          },
+          {
+            "lemma": "organ",
+            "inflected": "organs",
+            "semantic_sim": 0.9627,
+            "accepted": true
+          },
+          {
+            "lemma": "microbe",
+            "inflected": "microbes",
+            "semantic_sim": 0.9442,
+            "accepted": true
+          },
+          {
+            "lemma": "microorganism",
+            "inflected": "microorganisms",
+            "semantic_sim": 0.9477,
+            "accepted": true
+          },
+          {
+            "lemma": "bacteria",
+            "inflected": "bacterias",
+            "semantic_sim": 0.9206,
+            "accepted": true
+          },
+          {
+            "lemma": "bacterium",
+            "inflected": "bacteria",
+            "semantic_sim": 0.9235,
+            "accepted": true
+          },
+          {
+            "lemma": "pest",
+            "inflected": "pests",
+            "semantic_sim": 0.9077,
+            "accepted": true
+          },
+          {
+            "lemma": "embryo",
+            "inflected": "embryos",
+            "semantic_sim": 0.8855,
+            "accepted": true
+          },
+          {
+            "lemma": "pathogen",
+            "inflected": "pathogens",
+            "semantic_sim": 0.8769,
+            "accepted": true
+          },
+          {
+            "lemma": "bacillus",
+            "inflected": "bacilli",
+            "semantic_sim": 0.8581,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-013-core-word",
+    "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+    "reformulated_text": "When chemical reactions occur, the atoms are arranged and the reaction is followed by an energy change as new products are generated.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 8,
+        "span_text": "rearranged",
+        "original": "rearranged",
+        "replacement": "arranged",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9594,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.5323,
+          "difficulty_after": 0.2653,
+          "contextual_fit": 0.00023618487466592342
+        }
+      },
+      {
+        "sentence_index": 0,
+        "position": 13,
+        "span_text": "accompanied",
+        "original": "accompanied",
+        "replacement": "followed",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9556,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.4179,
+          "difficulty_after": 0.3669,
+          "contextual_fit": 0.046335965394973755
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "rearranged",
+        "base_lemma": "rearrange",
+        "chosen_replacement": "arranged",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "arrange",
+            "inflected": "arranged",
+            "semantic_sim": 0.9594,
+            "accepted": true
+          },
+          {
+            "lemma": "reposition",
+            "inflected": "repositioned",
+            "semantic_sim": 0.964,
+            "accepted": true
+          },
+          {
+            "lemma": "reorganize",
+            "inflected": "reorganized",
+            "semantic_sim": 0.943,
+            "accepted": true
+          },
+          {
+            "lemma": "rework",
+            "inflected": "reworked",
+            "semantic_sim": 0.9336,
+            "accepted": true
+          },
+          {
+            "lemma": "reshape",
+            "inflected": "reshaped",
+            "semantic_sim": 0.9339,
+            "accepted": true
+          },
+          {
+            "lemma": "revamp",
+            "inflected": "revamped",
+            "semantic_sim": 0.9221,
+            "accepted": true
+          },
+          {
+            "lemma": "redesign",
+            "inflected": "redesigned",
+            "semantic_sim": 0.9177,
+            "accepted": true
+          },
+          {
+            "lemma": "reschedule",
+            "inflected": "rescheduled",
+            "semantic_sim": 0.9226,
+            "accepted": true
+          },
+          {
+            "lemma": "restructure",
+            "inflected": "restructured",
+            "semantic_sim": 0.9192,
+            "accepted": true
+          },
+          {
+            "lemma": "redevelop",
+            "inflected": "redeveloped",
+            "semantic_sim": 0.9088,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "arrange",
+            "inflected": "arranged",
+            "semantic_sim": 0.9594,
+            "accepted": true
+          },
+          {
+            "lemma": "reposition",
+            "inflected": "repositioned",
+            "semantic_sim": 0.964,
+            "accepted": true
+          },
+          {
+            "lemma": "reorder",
+            "inflected": "reordered",
+            "semantic_sim": 0.9686,
+            "accepted": true
+          },
+          {
+            "lemma": "reorganize",
+            "inflected": "reorganized",
+            "semantic_sim": 0.943,
+            "accepted": true
+          },
+          {
+            "lemma": "reorganise",
+            "inflected": "reorganised",
+            "semantic_sim": 0.9516,
+            "accepted": true
+          },
+          {
+            "lemma": "rework",
+            "inflected": "reworked",
+            "semantic_sim": 0.9336,
+            "accepted": true
+          },
+          {
+            "lemma": "reshape",
+            "inflected": "reshaped",
+            "semantic_sim": 0.9339,
+            "accepted": true
+          },
+          {
+            "lemma": "reword",
+            "inflected": "reworded",
+            "semantic_sim": 0.9419,
+            "accepted": true
+          },
+          {
+            "lemma": "revamp",
+            "inflected": "revamped",
+            "semantic_sim": 0.9221,
+            "accepted": true
+          },
+          {
+            "lemma": "redesign",
+            "inflected": "redesigned",
+            "semantic_sim": 0.9177,
+            "accepted": true
+          },
+          {
+            "lemma": "reschedule",
+            "inflected": "rescheduled",
+            "semantic_sim": 0.9226,
+            "accepted": true
+          },
+          {
+            "lemma": "restructure",
+            "inflected": "restructured",
+            "semantic_sim": 0.9192,
+            "accepted": true
+          },
+          {
+            "lemma": "realign",
+            "inflected": "realigned",
+            "semantic_sim": 0.9187,
+            "accepted": true
+          },
+          {
+            "lemma": "redevelop",
+            "inflected": "redeveloped",
+            "semantic_sim": 0.9088,
+            "accepted": true
+          }
+        ]
+      },
+      {
+        "tier": "substitution",
+        "original_word": "accompanied",
+        "base_lemma": "accompany",
+        "chosen_replacement": "followed",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "follow",
+            "inflected": "followed",
+            "semantic_sim": 0.9974,
+            "accepted": true
+          },
+          {
+            "lemma": "company",
+            "inflected": "companied",
+            "semantic_sim": 0.9919,
+            "accepted": true
+          },
+          {
+            "lemma": "include",
+            "inflected": "included",
+            "semantic_sim": 0.9949,
+            "accepted": true
+          },
+          {
+            "lemma": "help",
+            "inflected": "helped",
+            "semantic_sim": 0.9902,
+            "accepted": true
+          },
+          {
+            "lemma": "assist",
+            "inflected": "assisted",
+            "semantic_sim": 0.9893,
+            "accepted": true
+          },
+          {
+            "lemma": "escort",
+            "inflected": "escorted",
+            "semantic_sim": 0.9934,
+            "accepted": true
+          },
+          {
+            "lemma": "companion",
+            "inflected": "companioned",
+            "semantic_sim": 0.9884,
+            "accepted": true
+          },
+          {
+            "lemma": "accommodate",
+            "inflected": "accommodated",
+            "semantic_sim": 0.9882,
+            "accepted": true
+          },
+          {
+            "lemma": "combine",
+            "inflected": "combined",
+            "semantic_sim": 0.9862,
+            "accepted": true
+          },
+          {
+            "lemma": "complement",
+            "inflected": "complemented",
+            "semantic_sim": 0.9808,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "follow",
+            "inflected": "followed",
+            "semantic_sim": 0.9974,
+            "accepted": true
+          },
+          {
+            "lemma": "company",
+            "inflected": "companied",
+            "semantic_sim": 0.9919,
+            "accepted": true
+          },
+          {
+            "lemma": "include",
+            "inflected": "included",
+            "semantic_sim": 0.9949,
+            "accepted": true
+          },
+          {
+            "lemma": "help",
+            "inflected": "helped",
+            "semantic_sim": 0.9902,
+            "accepted": true
+          },
+          {
+            "lemma": "assist",
+            "inflected": "assisted",
+            "semantic_sim": 0.9893,
+            "accepted": true
+          },
+          {
+            "lemma": "escort",
+            "inflected": "escorted",
+            "semantic_sim": 0.9934,
+            "accepted": true
+          },
+          {
+            "lemma": "companion",
+            "inflected": "companioned",
+            "semantic_sim": 0.9884,
+            "accepted": true
+          },
+          {
+            "lemma": "accommodate",
+            "inflected": "accommodated",
+            "semantic_sim": 0.9882,
+            "accepted": true
+          },
+          {
+            "lemma": "combine",
+            "inflected": "combined",
+            "semantic_sim": 0.9862,
+            "accepted": true
+          },
+          {
+            "lemma": "complement",
+            "inflected": "complemented",
+            "semantic_sim": 0.9808,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-013-calib-single_word",
+    "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+    "reformulated_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new products are generated.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 13,
+        "span_text": "accompanied",
+        "original": "accompanied",
+        "replacement": "followed",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9974,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.4179,
+          "difficulty_after": 0.3669,
+          "contextual_fit": 0.047221727669239044
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "accompanied",
+        "base_lemma": "accompany",
+        "chosen_replacement": "followed",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "follow",
+            "inflected": "followed",
+            "semantic_sim": 0.9974,
+            "accepted": true
+          },
+          {
+            "lemma": "company",
+            "inflected": "companied",
+            "semantic_sim": 0.9919,
+            "accepted": true
+          },
+          {
+            "lemma": "include",
+            "inflected": "included",
+            "semantic_sim": 0.9949,
+            "accepted": true
+          },
+          {
+            "lemma": "help",
+            "inflected": "helped",
+            "semantic_sim": 0.9902,
+            "accepted": true
+          },
+          {
+            "lemma": "assist",
+            "inflected": "assisted",
+            "semantic_sim": 0.9893,
+            "accepted": true
+          },
+          {
+            "lemma": "escort",
+            "inflected": "escorted",
+            "semantic_sim": 0.9934,
+            "accepted": true
+          },
+          {
+            "lemma": "companion",
+            "inflected": "companioned",
+            "semantic_sim": 0.9884,
+            "accepted": true
+          },
+          {
+            "lemma": "accommodate",
+            "inflected": "accommodated",
+            "semantic_sim": 0.9882,
+            "accepted": true
+          },
+          {
+            "lemma": "combine",
+            "inflected": "combined",
+            "semantic_sim": 0.9862,
+            "accepted": true
+          },
+          {
+            "lemma": "complement",
+            "inflected": "complemented",
+            "semantic_sim": 0.9808,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "follow",
+            "inflected": "followed",
+            "semantic_sim": 0.9974,
+            "accepted": true
+          },
+          {
+            "lemma": "company",
+            "inflected": "companied",
+            "semantic_sim": 0.9919,
+            "accepted": true
+          },
+          {
+            "lemma": "include",
+            "inflected": "included",
+            "semantic_sim": 0.9949,
+            "accepted": true
+          },
+          {
+            "lemma": "help",
+            "inflected": "helped",
+            "semantic_sim": 0.9902,
+            "accepted": true
+          },
+          {
+            "lemma": "assist",
+            "inflected": "assisted",
+            "semantic_sim": 0.9893,
+            "accepted": true
+          },
+          {
+            "lemma": "escort",
+            "inflected": "escorted",
+            "semantic_sim": 0.9934,
+            "accepted": true
+          },
+          {
+            "lemma": "companion",
+            "inflected": "companioned",
+            "semantic_sim": 0.9884,
+            "accepted": true
+          },
+          {
+            "lemma": "accommodate",
+            "inflected": "accommodated",
+            "semantic_sim": 0.9882,
+            "accepted": true
+          },
+          {
+            "lemma": "combine",
+            "inflected": "combined",
+            "semantic_sim": 0.9862,
+            "accepted": true
+          },
+          {
+            "lemma": "complement",
+            "inflected": "complemented",
+            "semantic_sim": 0.9808,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-013-calib-word_plus_sound",
+    "original_text": "When chemical reactions occur, the atoms are rearranged and the reaction is accompanied by an energy change as new products are generated.",
+    "reformulated_text": "When chemical reactions occur, the atoms are rearranged and the reaction is followed by an energy change as new goods are generated.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 13,
+        "span_text": "accompanied",
+        "original": "accompanied",
+        "replacement": "followed",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9974,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.4179,
+          "difficulty_after": 0.3669,
+          "contextual_fit": 0.04045203700661659
+        }
+      },
+      {
+        "sentence_index": 0,
+        "position": 20,
+        "span_text": "products",
+        "original": "products",
+        "replacement": "goods",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9626,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.6507,
+          "difficulty_after": 0.4612,
+          "contextual_fit": 6.205240788403898e-05
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "accompanied",
+        "base_lemma": "accompany",
+        "chosen_replacement": "followed",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "follow",
+            "inflected": "followed",
+            "semantic_sim": 0.9974,
+            "accepted": true
+          },
+          {
+            "lemma": "company",
+            "inflected": "companied",
+            "semantic_sim": 0.9919,
+            "accepted": true
+          },
+          {
+            "lemma": "include",
+            "inflected": "included",
+            "semantic_sim": 0.9949,
+            "accepted": true
+          },
+          {
+            "lemma": "help",
+            "inflected": "helped",
+            "semantic_sim": 0.9902,
+            "accepted": true
+          },
+          {
+            "lemma": "assist",
+            "inflected": "assisted",
+            "semantic_sim": 0.9893,
+            "accepted": true
+          },
+          {
+            "lemma": "escort",
+            "inflected": "escorted",
+            "semantic_sim": 0.9934,
+            "accepted": true
+          },
+          {
+            "lemma": "companion",
+            "inflected": "companioned",
+            "semantic_sim": 0.9884,
+            "accepted": true
+          },
+          {
+            "lemma": "accommodate",
+            "inflected": "accommodated",
+            "semantic_sim": 0.9882,
+            "accepted": true
+          },
+          {
+            "lemma": "combine",
+            "inflected": "combined",
+            "semantic_sim": 0.9862,
+            "accepted": true
+          },
+          {
+            "lemma": "complement",
+            "inflected": "complemented",
+            "semantic_sim": 0.9808,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "follow",
+            "inflected": "followed",
+            "semantic_sim": 0.9974,
+            "accepted": true
+          },
+          {
+            "lemma": "company",
+            "inflected": "companied",
+            "semantic_sim": 0.9919,
+            "accepted": true
+          },
+          {
+            "lemma": "include",
+            "inflected": "included",
+            "semantic_sim": 0.9949,
+            "accepted": true
+          },
+          {
+            "lemma": "help",
+            "inflected": "helped",
+            "semantic_sim": 0.9902,
+            "accepted": true
+          },
+          {
+            "lemma": "assist",
+            "inflected": "assisted",
+            "semantic_sim": 0.9893,
+            "accepted": true
+          },
+          {
+            "lemma": "escort",
+            "inflected": "escorted",
+            "semantic_sim": 0.9934,
+            "accepted": true
+          },
+          {
+            "lemma": "companion",
+            "inflected": "companioned",
+            "semantic_sim": 0.9884,
+            "accepted": true
+          },
+          {
+            "lemma": "accommodate",
+            "inflected": "accommodated",
+            "semantic_sim": 0.9882,
+            "accepted": true
+          },
+          {
+            "lemma": "combine",
+            "inflected": "combined",
+            "semantic_sim": 0.9862,
+            "accepted": true
+          },
+          {
+            "lemma": "complement",
+            "inflected": "complemented",
+            "semantic_sim": 0.9808,
+            "accepted": true
+          }
+        ]
+      },
+      {
+        "tier": "substitution",
+        "original_word": "products",
+        "base_lemma": "product",
+        "chosen_replacement": "goods",
+        "chosen_rank_in_production_pool": 3,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "chemical",
+            "inflected": "chemicals",
+            "semantic_sim": 0.9765,
+            "accepted": true
+          },
+          {
+            "lemma": "production",
+            "inflected": "productions",
+            "semantic_sim": 0.9692,
+            "accepted": true
+          },
+          {
+            "lemma": "producer",
+            "inflected": "producers",
+            "semantic_sim": 0.9689,
+            "accepted": true
+          },
+          {
+            "lemma": "goods",
+            "inflected": "goods",
+            "semantic_sim": 0.9659,
+            "accepted": true
+          },
+          {
+            "lemma": "supplies",
+            "inflected": "supplies",
+            "semantic_sim": 0.9644,
+            "accepted": true
+          },
+          {
+            "lemma": "output",
+            "inflected": "outputs",
+            "semantic_sim": 0.9578,
+            "accepted": true
+          },
+          {
+            "lemma": "market",
+            "inflected": "markets",
+            "semantic_sim": 0.9262,
+            "accepted": true
+          },
+          {
+            "lemma": "sale",
+            "inflected": "sales",
+            "semantic_sim": 0.9269,
+            "accepted": true
+          },
+          {
+            "lemma": "income",
+            "inflected": "incomes",
+            "semantic_sim": 0.9176,
+            "accepted": true
+          },
+          {
+            "lemma": "marketing",
+            "inflected": "marketings",
+            "semantic_sim": 0.8829,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "chemical",
+            "inflected": "chemicals",
+            "semantic_sim": 0.9765,
+            "accepted": true
+          },
+          {
+            "lemma": "production",
+            "inflected": "productions",
+            "semantic_sim": 0.9692,
+            "accepted": true
+          },
+          {
+            "lemma": "producer",
+            "inflected": "producers",
+            "semantic_sim": 0.9689,
+            "accepted": true
+          },
+          {
+            "lemma": "goods",
+            "inflected": "goods",
+            "semantic_sim": 0.9659,
+            "accepted": true
+          },
+          {
+            "lemma": "supplies",
+            "inflected": "supplies",
+            "semantic_sim": 0.9644,
+            "accepted": true
+          },
+          {
+            "lemma": "proceeds",
+            "inflected": "proceeds",
+            "semantic_sim": 0.9684,
+            "accepted": true
+          },
+          {
+            "lemma": "output",
+            "inflected": "outputs",
+            "semantic_sim": 0.9578,
+            "accepted": true
+          },
+          {
+            "lemma": "wares",
+            "inflected": "wares",
+            "semantic_sim": 0.9695,
+            "accepted": true
+          },
+          {
+            "lemma": "commodity",
+            "inflected": "commodities",
+            "semantic_sim": 0.9606,
+            "accepted": true
+          },
+          {
+            "lemma": "merchandise",
+            "inflected": "merchandises",
+            "semantic_sim": 0.9453,
+            "accepted": true
+          },
+          {
+            "lemma": "market",
+            "inflected": "markets",
+            "semantic_sim": 0.9262,
+            "accepted": true
+          },
+          {
+            "lemma": "sale",
+            "inflected": "sales",
+            "semantic_sim": 0.9269,
+            "accepted": true
+          },
+          {
+            "lemma": "intersection",
+            "inflected": "intersections",
+            "semantic_sim": 0.9339,
+            "accepted": true
+          },
+          {
+            "lemma": "income",
+            "inflected": "incomes",
+            "semantic_sim": 0.9176,
+            "accepted": true
+          },
+          {
+            "lemma": "marketing",
+            "inflected": "marketings",
+            "semantic_sim": 0.8829,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-016-core-word",
+    "original_text": "In a bimolecular reaction, two molecules collide and react with each other.",
+    "reformulated_text": "Two molecules collide and react with each other in a bifocal reaction.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "In a bimolecular reaction, two molecules collide and react with each other.",
+        "original": "In a bimolecular reaction, two molecules collide and react with each other.",
+        "replacement": "Two molecules collide and react with each other in a bifocal reaction.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.8573,
+          "nli": {
+            "fwd_label": "neutral",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3265,
+          "difficulty_after": 0.3193,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "error": "'DifficultyEntry' object has no attribute 'lower'",
+        "source": "restructuring"
+      }
+    ]
+  },
+  {
+    "run_id": "R10-017-core-word",
+    "original_text": "The forward and reverse reactions are competing with each other and differ in reaction rates.",
+    "reformulated_text": "The forward and reverse results are rivaling with each other and differ in reaction rates.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 4,
+        "span_text": "reactions",
+        "original": "reactions",
+        "replacement": "results",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9329,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.4766,
+          "difficulty_after": 0.3592,
+          "contextual_fit": 0.00024073089298326522
+        }
+      },
+      {
+        "sentence_index": 0,
+        "position": 6,
+        "span_text": "competing",
+        "original": "competing",
+        "replacement": "rivaling",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9116,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.6275,
+          "difficulty_after": 0.558,
+          "contextual_fit": 0.011549313960131258
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "reactions",
+        "base_lemma": "reaction",
+        "chosen_replacement": "results",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "result",
+            "inflected": "results",
+            "semantic_sim": 0.9329,
+            "accepted": true
+          },
+          {
+            "lemma": "action",
+            "inflected": "actions",
+            "semantic_sim": 0.9198,
+            "accepted": true
+          },
+          {
+            "lemma": "response",
+            "inflected": "responses",
+            "semantic_sim": 0.9163,
+            "accepted": true
+          },
+          {
+            "lemma": "effect",
+            "inflected": "effects",
+            "semantic_sim": 0.9086,
+            "accepted": true
+          },
+          {
+            "lemma": "answer",
+            "inflected": "answers",
+            "semantic_sim": 0.9016,
+            "accepted": true
+          },
+          {
+            "lemma": "force",
+            "inflected": "forces",
+            "semantic_sim": 0.8954,
+            "accepted": true
+          },
+          {
+            "lemma": "feedback",
+            "inflected": "feedbacks",
+            "semantic_sim": 0.8371,
+            "accepted": false
+          },
+          {
+            "lemma": "reply",
+            "inflected": "replies",
+            "semantic_sim": 0.8312,
+            "accepted": false
+          },
+          {
+            "lemma": "comment",
+            "inflected": "comments",
+            "semantic_sim": 0.7648,
+            "accepted": false
+          },
+          {
+            "lemma": "intervention",
+            "inflected": "interventions",
+            "semantic_sim": 0.729,
+            "accepted": false
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "result",
+            "inflected": "results",
+            "semantic_sim": 0.9329,
+            "accepted": true
+          },
+          {
+            "lemma": "reactivity",
+            "inflected": "reactivities",
+            "semantic_sim": 0.954,
+            "accepted": true
+          },
+          {
+            "lemma": "action",
+            "inflected": "actions",
+            "semantic_sim": 0.9198,
+            "accepted": true
+          },
+          {
+            "lemma": "response",
+            "inflected": "responses",
+            "semantic_sim": 0.9163,
+            "accepted": true
+          },
+          {
+            "lemma": "effect",
+            "inflected": "effects",
+            "semantic_sim": 0.9086,
+            "accepted": true
+          },
+          {
+            "lemma": "answer",
+            "inflected": "answers",
+            "semantic_sim": 0.9016,
+            "accepted": true
+          },
+          {
+            "lemma": "force",
+            "inflected": "forces",
+            "semantic_sim": 0.8954,
+            "accepted": true
+          },
+          {
+            "lemma": "feedback",
+            "inflected": "feedbacks",
+            "semantic_sim": 0.8371,
+            "accepted": false
+          },
+          {
+            "lemma": "reply",
+            "inflected": "replies",
+            "semantic_sim": 0.8312,
+            "accepted": false
+          },
+          {
+            "lemma": "responsiveness",
+            "inflected": "responsivenesses",
+            "semantic_sim": 0.8312,
+            "accepted": false
+          },
+          {
+            "lemma": "comment",
+            "inflected": "comments",
+            "semantic_sim": 0.7648,
+            "accepted": false
+          },
+          {
+            "lemma": "intervention",
+            "inflected": "interventions",
+            "semantic_sim": 0.729,
+            "accepted": false
+          }
+        ]
+      },
+      {
+        "tier": "substitution",
+        "original_word": "competing",
+        "base_lemma": "compete",
+        "chosen_replacement": "rivaling",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "rival",
+            "inflected": "rivaling",
+            "semantic_sim": 0.9738,
+            "accepted": true
+          },
+          {
+            "lemma": "contest",
+            "inflected": "contesting",
+            "semantic_sim": 0.9629,
+            "accepted": true
+          },
+          {
+            "lemma": "strive",
+            "inflected": "striving",
+            "semantic_sim": 0.9681,
+            "accepted": true
+          },
+          {
+            "lemma": "contend",
+            "inflected": "contending",
+            "semantic_sim": 0.9654,
+            "accepted": true
+          },
+          {
+            "lemma": "participate",
+            "inflected": "participating",
+            "semantic_sim": 0.9555,
+            "accepted": true
+          },
+          {
+            "lemma": "stand",
+            "inflected": "standing",
+            "semantic_sim": 0.9426,
+            "accepted": true
+          },
+          {
+            "lemma": "conquer",
+            "inflected": "conquering",
+            "semantic_sim": 0.9441,
+            "accepted": true
+          },
+          {
+            "lemma": "apply",
+            "inflected": "applying",
+            "semantic_sim": 0.9287,
+            "accepted": true
+          },
+          {
+            "lemma": "fight",
+            "inflected": "fighting",
+            "semantic_sim": 0.9108,
+            "accepted": true
+          },
+          {
+            "lemma": "argue",
+            "inflected": "arguing",
+            "semantic_sim": 0.9059,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "rival",
+            "inflected": "rivaling",
+            "semantic_sim": 0.9738,
+            "accepted": true
+          },
+          {
+            "lemma": "contest",
+            "inflected": "contesting",
+            "semantic_sim": 0.9629,
+            "accepted": true
+          },
+          {
+            "lemma": "strive",
+            "inflected": "striving",
+            "semantic_sim": 0.9681,
+            "accepted": true
+          },
+          {
+            "lemma": "contend",
+            "inflected": "contending",
+            "semantic_sim": 0.9654,
+            "accepted": true
+          },
+          {
+            "lemma": "participate",
+            "inflected": "participating",
+            "semantic_sim": 0.9555,
+            "accepted": true
+          },
+          {
+            "lemma": "vie",
+            "inflected": "vying",
+            "semantic_sim": 0.9615,
+            "accepted": true
+          },
+          {
+            "lemma": "stand",
+            "inflected": "standing",
+            "semantic_sim": 0.9426,
+            "accepted": true
+          },
+          {
+            "lemma": "conquer",
+            "inflected": "conquering",
+            "semantic_sim": 0.9441,
+            "accepted": true
+          },
+          {
+            "lemma": "apply",
+            "inflected": "applying",
+            "semantic_sim": 0.9287,
+            "accepted": true
+          },
+          {
+            "lemma": "fight",
+            "inflected": "fighting",
+            "semantic_sim": 0.9108,
+            "accepted": true
+          },
+          {
+            "lemma": "argue",
+            "inflected": "arguing",
+            "semantic_sim": 0.9059,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-022-core-multi_sound",
+    "original_text": "Newton's first law expresses the principle of inertia: the natural behavior of a body is to move in a straight line at constant speed.",
+    "reformulated_text": "Newton's first law expresses the principle of inertia: the natural behavior of a body is to move in a even line at constant hurry.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 21,
+        "span_text": "straight",
+        "original": "straight",
+        "replacement": "even",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9785,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.559,
+          "difficulty_after": 0.1933,
+          "contextual_fit": 9.677229172666557e-06
+        }
+      },
+      {
+        "sentence_index": 0,
+        "position": 25,
+        "span_text": "speed",
+        "original": "speed",
+        "replacement": "hurry",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9646,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.4274,
+          "difficulty_after": 0.4059,
+          "contextual_fit": 1.0309072422387544e-06
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "straight",
+        "base_lemma": "straight",
+        "chosen_replacement": "even",
+        "chosen_rank_in_production_pool": 2,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "true",
+            "inflected": "true",
+            "semantic_sim": 0.9873,
+            "accepted": true
+          },
+          {
+            "lemma": "right",
+            "inflected": "right",
+            "semantic_sim": 0.9802,
+            "accepted": true
+          },
+          {
+            "lemma": "even",
+            "inflected": "even",
+            "semantic_sim": 0.9785,
+            "accepted": true
+          },
+          {
+            "lemma": "correct",
+            "inflected": "correct",
+            "semantic_sim": 0.9881,
+            "accepted": true
+          },
+          {
+            "lemma": "direct",
+            "inflected": "direct",
+            "semantic_sim": 0.9843,
+            "accepted": true
+          },
+          {
+            "lemma": "honest",
+            "inflected": "honest",
+            "semantic_sim": 0.9858,
+            "accepted": true
+          },
+          {
+            "lemma": "accurate",
+            "inflected": "accurate",
+            "semantic_sim": 0.9821,
+            "accepted": true
+          },
+          {
+            "lemma": "full-strength",
+            "inflected": "full-strength",
+            "semantic_sim": 0.9757,
+            "accepted": true
+          },
+          {
+            "lemma": "flat",
+            "inflected": "flat",
+            "semantic_sim": 0.9756,
+            "accepted": true
+          },
+          {
+            "lemma": "square",
+            "inflected": "square",
+            "semantic_sim": 0.9695,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "true",
+            "inflected": "true",
+            "semantic_sim": 0.9873,
+            "accepted": true
+          },
+          {
+            "lemma": "right",
+            "inflected": "right",
+            "semantic_sim": 0.9802,
+            "accepted": true
+          },
+          {
+            "lemma": "even",
+            "inflected": "even",
+            "semantic_sim": 0.9785,
+            "accepted": true
+          },
+          {
+            "lemma": "correct",
+            "inflected": "correct",
+            "semantic_sim": 0.9881,
+            "accepted": true
+          },
+          {
+            "lemma": "direct",
+            "inflected": "direct",
+            "semantic_sim": 0.9843,
+            "accepted": true
+          },
+          {
+            "lemma": "honest",
+            "inflected": "honest",
+            "semantic_sim": 0.9858,
+            "accepted": true
+          },
+          {
+            "lemma": "conventional",
+            "inflected": "conventional",
+            "semantic_sim": 0.9874,
+            "accepted": true
+          },
+          {
+            "lemma": "straightforward",
+            "inflected": "straightforward",
+            "semantic_sim": 0.9913,
+            "accepted": true
+          },
+          {
+            "lemma": "accurate",
+            "inflected": "accurate",
+            "semantic_sim": 0.9821,
+            "accepted": true
+          },
+          {
+            "lemma": "continuous",
+            "inflected": "continuous",
+            "semantic_sim": 0.9837,
+            "accepted": true
+          },
+          {
+            "lemma": "neat",
+            "inflected": "neat",
+            "semantic_sim": 0.985,
+            "accepted": true
+          },
+          {
+            "lemma": "full-strength",
+            "inflected": "full-strength",
+            "semantic_sim": 0.9757,
+            "accepted": true
+          },
+          {
+            "lemma": "flat",
+            "inflected": "flat",
+            "semantic_sim": 0.9756,
+            "accepted": true
+          },
+          {
+            "lemma": "reliable",
+            "inflected": "reliable",
+            "semantic_sim": 0.9788,
+            "accepted": true
+          },
+          {
+            "lemma": "upright",
+            "inflected": "upright",
+            "semantic_sim": 0.9842,
+            "accepted": true
+          },
+          {
+            "lemma": "consecutive",
+            "inflected": "consecutive",
+            "semantic_sim": 0.9792,
+            "accepted": true
+          },
+          {
+            "lemma": "vertical",
+            "inflected": "vertical",
+            "semantic_sim": 0.9789,
+            "accepted": true
+          },
+          {
+            "lemma": "honorable",
+            "inflected": "honorable",
+            "semantic_sim": 0.9806,
+            "accepted": true
+          },
+          {
+            "lemma": "square",
+            "inflected": "square",
+            "semantic_sim": 0.9695,
+            "accepted": true
+          },
+          {
+            "lemma": "aligned",
+            "inflected": "aligned",
+            "semantic_sim": 0.9795,
+            "accepted": true
+          },
+          {
+            "lemma": "dependable",
+            "inflected": "dependable",
+            "semantic_sim": 0.9831,
+            "accepted": true
+          },
+          {
+            "lemma": "straightaway",
+            "inflected": "straightaway",
+            "semantic_sim": 0.9904,
+            "accepted": true
+          },
+          {
+            "lemma": "tidy",
+            "inflected": "tidy",
+            "semantic_sim": 0.9756,
+            "accepted": true
+          },
+          {
+            "lemma": "uninterrupted",
+            "inflected": "uninterrupted",
+            "semantic_sim": 0.9709,
+            "accepted": true
+          },
+          {
+            "lemma": "undiluted",
+            "inflected": "undiluted",
+            "semantic_sim": 0.9815,
+            "accepted": true
+          },
+          {
+            "lemma": "erect",
+            "inflected": "erect",
+            "semantic_sim": 0.9606,
+            "accepted": true
+          },
+          {
+            "lemma": "transparent",
+            "inflected": "transparent",
+            "semantic_sim": 0.949,
+            "accepted": true
+          },
+          {
+            "lemma": "heterosexual",
+            "inflected": "heterosexual",
+            "semantic_sim": 0.9346,
+            "accepted": true
+          }
+        ]
+      },
+      {
+        "tier": "substitution",
+        "original_word": "speed",
+        "base_lemma": "speed",
+        "chosen_replacement": "hurry",
+        "chosen_rank_in_production_pool": 2,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "rate",
+            "inflected": "rate",
+            "semantic_sim": 0.9921,
+            "accepted": true
+          },
+          {
+            "lemma": "velocity",
+            "inflected": "velocity",
+            "semantic_sim": 0.9945,
+            "accepted": true
+          },
+          {
+            "lemma": "hurry",
+            "inflected": "hurry",
+            "semantic_sim": 0.9883,
+            "accepted": true
+          },
+          {
+            "lemma": "race",
+            "inflected": "race",
+            "semantic_sim": 0.9766,
+            "accepted": true
+          },
+          {
+            "lemma": "upper",
+            "inflected": "upper",
+            "semantic_sim": 0.9751,
+            "accepted": true
+          },
+          {
+            "lemma": "rush",
+            "inflected": "rush",
+            "semantic_sim": 0.9761,
+            "accepted": true
+          },
+          {
+            "lemma": "speeding",
+            "inflected": "speeding",
+            "semantic_sim": 0.9667,
+            "accepted": true
+          },
+          {
+            "lemma": "hurrying",
+            "inflected": "hurrying",
+            "semantic_sim": 0.9749,
+            "accepted": true
+          },
+          {
+            "lemma": "zip",
+            "inflected": "zip",
+            "semantic_sim": 0.9281,
+            "accepted": true
+          },
+          {
+            "lemma": "amphetamine",
+            "inflected": "amphetamine",
+            "semantic_sim": 0.889,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "rate",
+            "inflected": "rate",
+            "semantic_sim": 0.9921,
+            "accepted": true
+          },
+          {
+            "lemma": "velocity",
+            "inflected": "velocity",
+            "semantic_sim": 0.9945,
+            "accepted": true
+          },
+          {
+            "lemma": "hurry",
+            "inflected": "hurry",
+            "semantic_sim": 0.9883,
+            "accepted": true
+          },
+          {
+            "lemma": "race",
+            "inflected": "race",
+            "semantic_sim": 0.9766,
+            "accepted": true
+          },
+          {
+            "lemma": "upper",
+            "inflected": "upper",
+            "semantic_sim": 0.9751,
+            "accepted": true
+          },
+          {
+            "lemma": "rush",
+            "inflected": "rush",
+            "semantic_sim": 0.9761,
+            "accepted": true
+          },
+          {
+            "lemma": "fastness",
+            "inflected": "fastness",
+            "semantic_sim": 0.9901,
+            "accepted": true
+          },
+          {
+            "lemma": "speeding",
+            "inflected": "speeding",
+            "semantic_sim": 0.9667,
+            "accepted": true
+          },
+          {
+            "lemma": "hurrying",
+            "inflected": "hurrying",
+            "semantic_sim": 0.9749,
+            "accepted": true
+          },
+          {
+            "lemma": "swiftness",
+            "inflected": "swiftness",
+            "semantic_sim": 0.9686,
+            "accepted": true
+          },
+          {
+            "lemma": "zip",
+            "inflected": "zip",
+            "semantic_sim": 0.9281,
+            "accepted": true
+          },
+          {
+            "lemma": "amphetamine",
+            "inflected": "amphetamine",
+            "semantic_sim": 0.889,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-023-core-word",
+    "original_text": "When the net force on a body is equal to zero, then by Newton's second law, the body do not accelerate, and it is said to be in mechanical equilibrium.",
+    "reformulated_text": "When the net force on a body is equal to zero, then by Newton's second law, the body do not change, and it is said to be in mechanical equilibrium.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 23,
+        "span_text": "accelerate",
+        "original": "accelerate",
+        "replacement": "change",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9634,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.4431,
+          "difficulty_after": 0.4209,
+          "contextual_fit": 0.05684739351272583
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "accelerate",
+        "base_lemma": "accelerate",
+        "chosen_replacement": "change",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "change",
+            "inflected": "change",
+            "semantic_sim": 0.9634,
+            "accepted": true
+          },
+          {
+            "lemma": "alter",
+            "inflected": "alter",
+            "semantic_sim": 0.9654,
+            "accepted": true
+          },
+          {
+            "lemma": "modify",
+            "inflected": "modify",
+            "semantic_sim": 0.9628,
+            "accepted": true
+          },
+          {
+            "lemma": "speed",
+            "inflected": "speed",
+            "semantic_sim": 0.9503,
+            "accepted": true
+          },
+          {
+            "lemma": "expedited",
+            "inflected": "expedited",
+            "semantic_sim": 0.9706,
+            "accepted": true
+          },
+          {
+            "lemma": "expedite",
+            "inflected": "expedite",
+            "semantic_sim": 0.9692,
+            "accepted": true
+          },
+          {
+            "lemma": "prompt",
+            "inflected": "prompt",
+            "semantic_sim": 0.9505,
+            "accepted": true
+          },
+          {
+            "lemma": "hurry",
+            "inflected": "hurry",
+            "semantic_sim": 0.9268,
+            "accepted": true
+          },
+          {
+            "lemma": "hasten",
+            "inflected": "hasten",
+            "semantic_sim": 0.9306,
+            "accepted": true
+          },
+          {
+            "lemma": "speeding",
+            "inflected": "speeding",
+            "semantic_sim": 0.9034,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "change",
+            "inflected": "change",
+            "semantic_sim": 0.9634,
+            "accepted": true
+          },
+          {
+            "lemma": "alter",
+            "inflected": "alter",
+            "semantic_sim": 0.9654,
+            "accepted": true
+          },
+          {
+            "lemma": "modify",
+            "inflected": "modify",
+            "semantic_sim": 0.9628,
+            "accepted": true
+          },
+          {
+            "lemma": "speed",
+            "inflected": "speed",
+            "semantic_sim": 0.9503,
+            "accepted": true
+          },
+          {
+            "lemma": "expedited",
+            "inflected": "expedited",
+            "semantic_sim": 0.9706,
+            "accepted": true
+          },
+          {
+            "lemma": "expedite",
+            "inflected": "expedite",
+            "semantic_sim": 0.9692,
+            "accepted": true
+          },
+          {
+            "lemma": "prompt",
+            "inflected": "prompt",
+            "semantic_sim": 0.9505,
+            "accepted": true
+          },
+          {
+            "lemma": "hurry",
+            "inflected": "hurry",
+            "semantic_sim": 0.9268,
+            "accepted": true
+          },
+          {
+            "lemma": "quicken",
+            "inflected": "quicken",
+            "semantic_sim": 0.9316,
+            "accepted": true
+          },
+          {
+            "lemma": "hasten",
+            "inflected": "hasten",
+            "semantic_sim": 0.9306,
+            "accepted": true
+          },
+          {
+            "lemma": "speeding",
+            "inflected": "speeding",
+            "semantic_sim": 0.9034,
+            "accepted": true
+          },
+          {
+            "lemma": "precipitate",
+            "inflected": "precipitate",
+            "semantic_sim": 0.8913,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-024-core-dense_mixed_generic",
+    "original_text": "In other words, if one body exerts a force on a second body, the second body is also exerting a force on the first body, of equal magnitude in the opposite direction.",
+    "reformulated_text": "In other words, if one body exerts a force on a forward body, the intermediate body is also exerting a force on the first body, of equal magnitude in the opposite direction.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 12,
+        "span_text": "second",
+        "original": "second",
+        "replacement": "forward",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9635,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.342,
+          "difficulty_after": 0.3639,
+          "contextual_fit": 7.484687375836074e-05
+        }
+      },
+      {
+        "sentence_index": 0,
+        "position": 16,
+        "span_text": "second",
+        "original": "second",
+        "replacement": "intermediate",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.8909,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.342,
+          "difficulty_after": 0.4269,
+          "contextual_fit": 0.0006118614692240953
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "second",
+        "base_lemma": "second",
+        "chosen_replacement": "forward",
+        "chosen_rank_in_production_pool": 1,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "2nd",
+            "inflected": "2nd",
+            "semantic_sim": 0.9984,
+            "accepted": true
+          },
+          {
+            "lemma": "forward",
+            "inflected": "forward",
+            "semantic_sim": 0.9635,
+            "accepted": true
+          },
+          {
+            "lemma": "intermediate",
+            "inflected": "intermediate",
+            "semantic_sim": 0.9447,
+            "accepted": true
+          },
+          {
+            "lemma": "instant",
+            "inflected": "instant",
+            "semantic_sim": 0.9283,
+            "accepted": true
+          },
+          {
+            "lemma": "back",
+            "inflected": "back",
+            "semantic_sim": 0.9124,
+            "accepted": true
+          },
+          {
+            "lemma": "sec",
+            "inflected": "sec",
+            "semantic_sim": 0.9211,
+            "accepted": true
+          },
+          {
+            "lemma": "minute",
+            "inflected": "minute",
+            "semantic_sim": 0.8807,
+            "accepted": true
+          },
+          {
+            "lemma": "irregular",
+            "inflected": "irregular",
+            "semantic_sim": 0.8906,
+            "accepted": true
+          },
+          {
+            "lemma": "2d",
+            "inflected": "2d",
+            "semantic_sim": 0.8737,
+            "accepted": true
+          },
+          {
+            "lemma": "ordinal",
+            "inflected": "ordinal",
+            "semantic_sim": 0.8047,
+            "accepted": false
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "2nd",
+            "inflected": "2nd",
+            "semantic_sim": 0.9984,
+            "accepted": true
+          },
+          {
+            "lemma": "forward",
+            "inflected": "forward",
+            "semantic_sim": 0.9635,
+            "accepted": true
+          },
+          {
+            "lemma": "intermediate",
+            "inflected": "intermediate",
+            "semantic_sim": 0.9447,
+            "accepted": true
+          },
+          {
+            "lemma": "instant",
+            "inflected": "instant",
+            "semantic_sim": 0.9283,
+            "accepted": true
+          },
+          {
+            "lemma": "back",
+            "inflected": "back",
+            "semantic_sim": 0.9124,
+            "accepted": true
+          },
+          {
+            "lemma": "sec",
+            "inflected": "sec",
+            "semantic_sim": 0.9211,
+            "accepted": true
+          },
+          {
+            "lemma": "minute",
+            "inflected": "minute",
+            "semantic_sim": 0.8807,
+            "accepted": true
+          },
+          {
+            "lemma": "irregular",
+            "inflected": "irregular",
+            "semantic_sim": 0.8906,
+            "accepted": true
+          },
+          {
+            "lemma": "2d",
+            "inflected": "2d",
+            "semantic_sim": 0.8737,
+            "accepted": true
+          },
+          {
+            "lemma": "ordinal",
+            "inflected": "ordinal",
+            "semantic_sim": 0.8047,
+            "accepted": false
+          }
+        ]
+      },
+      {
+        "tier": "substitution",
+        "original_word": "second",
+        "base_lemma": "second",
+        "chosen_replacement": "intermediate",
+        "chosen_rank_in_production_pool": 2,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "2nd",
+            "inflected": "2nd",
+            "semantic_sim": 0.9988,
+            "accepted": true
+          },
+          {
+            "lemma": "forward",
+            "inflected": "forward",
+            "semantic_sim": 0.9671,
+            "accepted": true
+          },
+          {
+            "lemma": "intermediate",
+            "inflected": "intermediate",
+            "semantic_sim": 0.939,
+            "accepted": true
+          },
+          {
+            "lemma": "back",
+            "inflected": "back",
+            "semantic_sim": 0.9009,
+            "accepted": true
+          },
+          {
+            "lemma": "sec",
+            "inflected": "sec",
+            "semantic_sim": 0.8872,
+            "accepted": true
+          },
+          {
+            "lemma": "instant",
+            "inflected": "instant",
+            "semantic_sim": 0.8682,
+            "accepted": true
+          },
+          {
+            "lemma": "minute",
+            "inflected": "minute",
+            "semantic_sim": 0.8536,
+            "accepted": true
+          },
+          {
+            "lemma": "irregular",
+            "inflected": "irregular",
+            "semantic_sim": 0.8543,
+            "accepted": true
+          },
+          {
+            "lemma": "2d",
+            "inflected": "2d",
+            "semantic_sim": 0.8432,
+            "accepted": false
+          },
+          {
+            "lemma": "ordinal",
+            "inflected": "ordinal",
+            "semantic_sim": 0.7455,
+            "accepted": false
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "2nd",
+            "inflected": "2nd",
+            "semantic_sim": 0.9988,
+            "accepted": true
+          },
+          {
+            "lemma": "forward",
+            "inflected": "forward",
+            "semantic_sim": 0.9671,
+            "accepted": true
+          },
+          {
+            "lemma": "intermediate",
+            "inflected": "intermediate",
+            "semantic_sim": 0.939,
+            "accepted": true
+          },
+          {
+            "lemma": "back",
+            "inflected": "back",
+            "semantic_sim": 0.9009,
+            "accepted": true
+          },
+          {
+            "lemma": "sec",
+            "inflected": "sec",
+            "semantic_sim": 0.8872,
+            "accepted": true
+          },
+          {
+            "lemma": "instant",
+            "inflected": "instant",
+            "semantic_sim": 0.8682,
+            "accepted": true
+          },
+          {
+            "lemma": "minute",
+            "inflected": "minute",
+            "semantic_sim": 0.8536,
+            "accepted": true
+          },
+          {
+            "lemma": "irregular",
+            "inflected": "irregular",
+            "semantic_sim": 0.8543,
+            "accepted": true
+          },
+          {
+            "lemma": "2d",
+            "inflected": "2d",
+            "semantic_sim": 0.8432,
+            "accepted": false
+          },
+          {
+            "lemma": "ordinal",
+            "inflected": "ordinal",
+            "semantic_sim": 0.7455,
+            "accepted": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-031-calib-multi_sound",
+    "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+    "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the grade.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 32,
+        "span_text": "surface",
+        "original": "surface",
+        "replacement": "grade",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.998,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.3763,
+          "difficulty_after": 0.586,
+          "contextual_fit": 1.2222740224387962e-06
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "surface",
+        "base_lemma": "surface",
+        "chosen_replacement": "grade",
+        "chosen_rank_in_production_pool": 2,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "open",
+            "inflected": "open",
+            "semantic_sim": 0.9987,
+            "accepted": true
+          },
+          {
+            "lemma": "rise",
+            "inflected": "rise",
+            "semantic_sim": 0.9992,
+            "accepted": true
+          },
+          {
+            "lemma": "grade",
+            "inflected": "grade",
+            "semantic_sim": 0.998,
+            "accepted": true
+          },
+          {
+            "lemma": "layer",
+            "inflected": "layer",
+            "semantic_sim": 0.9995,
+            "accepted": true
+          },
+          {
+            "lemma": "coat",
+            "inflected": "coat",
+            "semantic_sim": 0.9973,
+            "accepted": true
+          },
+          {
+            "lemma": "shallow",
+            "inflected": "shallow",
+            "semantic_sim": 0.999,
+            "accepted": true
+          },
+          {
+            "lemma": "strip",
+            "inflected": "strip",
+            "semantic_sim": 0.9942,
+            "accepted": true
+          },
+          {
+            "lemma": "airfoil",
+            "inflected": "airfoil",
+            "semantic_sim": 0.9943,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "open",
+            "inflected": "open",
+            "semantic_sim": 0.9987,
+            "accepted": true
+          },
+          {
+            "lemma": "rise",
+            "inflected": "rise",
+            "semantic_sim": 0.9992,
+            "accepted": true
+          },
+          {
+            "lemma": "grade",
+            "inflected": "grade",
+            "semantic_sim": 0.998,
+            "accepted": true
+          },
+          {
+            "lemma": "layer",
+            "inflected": "layer",
+            "semantic_sim": 0.9995,
+            "accepted": true
+          },
+          {
+            "lemma": "coat",
+            "inflected": "coat",
+            "semantic_sim": 0.9973,
+            "accepted": true
+          },
+          {
+            "lemma": "shallow",
+            "inflected": "shallow",
+            "semantic_sim": 0.999,
+            "accepted": true
+          },
+          {
+            "lemma": "strip",
+            "inflected": "strip",
+            "semantic_sim": 0.9942,
+            "accepted": true
+          },
+          {
+            "lemma": "airfoil",
+            "inflected": "airfoil",
+            "semantic_sim": 0.9943,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-031-calib-sparse_common_sound",
+    "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+    "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the rise.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 32,
+        "span_text": "surface",
+        "original": "surface",
+        "replacement": "rise",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9992,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.3763,
+          "difficulty_after": 0.3022,
+          "contextual_fit": 6.622947694268078e-05
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "surface",
+        "base_lemma": "surface",
+        "chosen_replacement": "rise",
+        "chosen_rank_in_production_pool": 1,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "open",
+            "inflected": "open",
+            "semantic_sim": 0.9987,
+            "accepted": true
+          },
+          {
+            "lemma": "rise",
+            "inflected": "rise",
+            "semantic_sim": 0.9992,
+            "accepted": true
+          },
+          {
+            "lemma": "grade",
+            "inflected": "grade",
+            "semantic_sim": 0.998,
+            "accepted": true
+          },
+          {
+            "lemma": "layer",
+            "inflected": "layer",
+            "semantic_sim": 0.9995,
+            "accepted": true
+          },
+          {
+            "lemma": "coat",
+            "inflected": "coat",
+            "semantic_sim": 0.9973,
+            "accepted": true
+          },
+          {
+            "lemma": "shallow",
+            "inflected": "shallow",
+            "semantic_sim": 0.999,
+            "accepted": true
+          },
+          {
+            "lemma": "strip",
+            "inflected": "strip",
+            "semantic_sim": 0.9942,
+            "accepted": true
+          },
+          {
+            "lemma": "airfoil",
+            "inflected": "airfoil",
+            "semantic_sim": 0.9943,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "open",
+            "inflected": "open",
+            "semantic_sim": 0.9987,
+            "accepted": true
+          },
+          {
+            "lemma": "rise",
+            "inflected": "rise",
+            "semantic_sim": 0.9992,
+            "accepted": true
+          },
+          {
+            "lemma": "grade",
+            "inflected": "grade",
+            "semantic_sim": 0.998,
+            "accepted": true
+          },
+          {
+            "lemma": "layer",
+            "inflected": "layer",
+            "semantic_sim": 0.9995,
+            "accepted": true
+          },
+          {
+            "lemma": "coat",
+            "inflected": "coat",
+            "semantic_sim": 0.9973,
+            "accepted": true
+          },
+          {
+            "lemma": "shallow",
+            "inflected": "shallow",
+            "semantic_sim": 0.999,
+            "accepted": true
+          },
+          {
+            "lemma": "strip",
+            "inflected": "strip",
+            "semantic_sim": 0.9942,
+            "accepted": true
+          },
+          {
+            "lemma": "airfoil",
+            "inflected": "airfoil",
+            "semantic_sim": 0.9943,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-031-calib-dense_mixed_generic",
+    "original_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+    "reformulated_text": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the grade.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 32,
+        "span_text": "surface",
+        "original": "surface",
+        "replacement": "grade",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.998,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.3763,
+          "difficulty_after": 0.586,
+          "contextual_fit": 1.2222740224387962e-06
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "surface",
+        "base_lemma": "surface",
+        "chosen_replacement": "grade",
+        "chosen_rank_in_production_pool": 2,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "open",
+            "inflected": "open",
+            "semantic_sim": 0.9987,
+            "accepted": true
+          },
+          {
+            "lemma": "rise",
+            "inflected": "rise",
+            "semantic_sim": 0.9992,
+            "accepted": true
+          },
+          {
+            "lemma": "grade",
+            "inflected": "grade",
+            "semantic_sim": 0.998,
+            "accepted": true
+          },
+          {
+            "lemma": "layer",
+            "inflected": "layer",
+            "semantic_sim": 0.9995,
+            "accepted": true
+          },
+          {
+            "lemma": "coat",
+            "inflected": "coat",
+            "semantic_sim": 0.9973,
+            "accepted": true
+          },
+          {
+            "lemma": "shallow",
+            "inflected": "shallow",
+            "semantic_sim": 0.999,
+            "accepted": true
+          },
+          {
+            "lemma": "strip",
+            "inflected": "strip",
+            "semantic_sim": 0.9942,
+            "accepted": true
+          },
+          {
+            "lemma": "airfoil",
+            "inflected": "airfoil",
+            "semantic_sim": 0.9943,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "open",
+            "inflected": "open",
+            "semantic_sim": 0.9987,
+            "accepted": true
+          },
+          {
+            "lemma": "rise",
+            "inflected": "rise",
+            "semantic_sim": 0.9992,
+            "accepted": true
+          },
+          {
+            "lemma": "grade",
+            "inflected": "grade",
+            "semantic_sim": 0.998,
+            "accepted": true
+          },
+          {
+            "lemma": "layer",
+            "inflected": "layer",
+            "semantic_sim": 0.9995,
+            "accepted": true
+          },
+          {
+            "lemma": "coat",
+            "inflected": "coat",
+            "semantic_sim": 0.9973,
+            "accepted": true
+          },
+          {
+            "lemma": "shallow",
+            "inflected": "shallow",
+            "semantic_sim": 0.999,
+            "accepted": true
+          },
+          {
+            "lemma": "strip",
+            "inflected": "strip",
+            "semantic_sim": 0.9942,
+            "accepted": true
+          },
+          {
+            "lemma": "airfoil",
+            "inflected": "airfoil",
+            "semantic_sim": 0.9943,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-034-core-word",
+    "original_text": "Magma commonly explodes as the gas dissolved in it comes out of solution as the pressure decreases when it flows to the surface.",
+    "reformulated_text": "Magma often explodes as the gas soluble in it comes out of the solution as the pressure drops when it flows to the surface.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Magma commonly explodes as the gas dissolved in it comes out of solution as the pressure decreases when it flows to the surface.",
+        "original": "Magma commonly explodes as the gas dissolved in it comes out of solution as the pressure decreases when it flows to the surface.",
+        "replacement": "Magma often explodes as the gas soluble in it comes out of the solution as the pressure drops when it flows to the surface.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.973,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3131,
+          "difficulty_after": 0.2877,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "error": "'DifficultyEntry' object has no attribute 'lower'",
+        "source": "restructuring"
+      }
+    ]
+  },
+  {
+    "run_id": "R10-037-core-word",
+    "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+    "reformulated_text": "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+        "original": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+        "replacement": "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.987,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3896,
+          "difficulty_after": 0.3898,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "error": "'DifficultyEntry' object has no attribute 'lower'",
+        "source": "restructuring"
+      }
+    ]
+  },
+  {
+    "run_id": "R10-037-calib-single_word",
+    "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+    "reformulated_text": "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+        "original": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+        "replacement": "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.987,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3896,
+          "difficulty_after": 0.3898,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "error": "'DifficultyEntry' object has no attribute 'lower'",
+        "source": "restructuring"
+      }
+    ]
+  },
+  {
+    "run_id": "R10-037-calib-word_plus_sound",
+    "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+    "reformulated_text": "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+        "original": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+        "replacement": "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.987,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3896,
+          "difficulty_after": 0.3898,
+          "beam_kills": 1
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "error": "'DifficultyEntry' object has no attribute 'lower'",
+        "source": "restructuring"
+      }
+    ]
+  },
+  {
+    "run_id": "R10-038-core-word",
+    "original_text": "Solar power, wind power, hydroelectricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy.",
+    "reformulated_text": "Solar power, wind power, electricity, geothermal energy, and biomass is widely agreed to be the main types of renewable energy.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 6,
+        "span_text": "hydroelectricity",
+        "original": "hydroelectricity",
+        "replacement": "electricity",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9944,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.6493,
+          "difficulty_after": 0.4101,
+          "contextual_fit": 0.028099896386265755
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "hydroelectricity",
+        "base_lemma": "hydroelectricity",
+        "chosen_replacement": "electricity",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "electricity",
+            "inflected": "electricity",
+            "semantic_sim": 0.9944,
+            "accepted": true
+          },
+          {
+            "lemma": "utilities",
+            "inflected": "utilities",
+            "semantic_sim": 0.9918,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "electricity",
+            "inflected": "electricity",
+            "semantic_sim": 0.9944,
+            "accepted": true
+          },
+          {
+            "lemma": "utilities",
+            "inflected": "utilities",
+            "semantic_sim": 0.9918,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-040-core-word",
+    "original_text": "Solar energy can only be captured during the day, and ideally in cloudless conditions.",
+    "reformulated_text": "Solar energy can only be captured during the day, and ideally in cloudless terms.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 14,
+        "span_text": "conditions",
+        "original": "conditions",
+        "replacement": "terms",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9927,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.5949,
+          "difficulty_after": 0.4398,
+          "contextual_fit": 3.6322078813100234e-05
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "conditions",
+        "base_lemma": "condition",
+        "chosen_replacement": "terms",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "term",
+            "inflected": "terms",
+            "semantic_sim": 0.9927,
+            "accepted": true
+          },
+          {
+            "lemma": "state",
+            "inflected": "states",
+            "semantic_sim": 0.9853,
+            "accepted": true
+          },
+          {
+            "lemma": "status",
+            "inflected": "statuses",
+            "semantic_sim": 0.9907,
+            "accepted": true
+          },
+          {
+            "lemma": "consideration",
+            "inflected": "considerations",
+            "semantic_sim": 0.9908,
+            "accepted": true
+          },
+          {
+            "lemma": "circumstance",
+            "inflected": "circumstances",
+            "semantic_sim": 0.997,
+            "accepted": true
+          },
+          {
+            "lemma": "discipline",
+            "inflected": "disciplines",
+            "semantic_sim": 0.9843,
+            "accepted": true
+          },
+          {
+            "lemma": "shape",
+            "inflected": "shapes",
+            "semantic_sim": 0.9794,
+            "accepted": true
+          },
+          {
+            "lemma": "check",
+            "inflected": "checks",
+            "semantic_sim": 0.9606,
+            "accepted": true
+          },
+          {
+            "lemma": "stipulation",
+            "inflected": "stipulations",
+            "semantic_sim": 0.9782,
+            "accepted": true
+          },
+          {
+            "lemma": "train",
+            "inflected": "trains",
+            "semantic_sim": 0.9144,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "term",
+            "inflected": "terms",
+            "semantic_sim": 0.9927,
+            "accepted": true
+          },
+          {
+            "lemma": "state",
+            "inflected": "states",
+            "semantic_sim": 0.9853,
+            "accepted": true
+          },
+          {
+            "lemma": "status",
+            "inflected": "statuses",
+            "semantic_sim": 0.9907,
+            "accepted": true
+          },
+          {
+            "lemma": "consideration",
+            "inflected": "considerations",
+            "semantic_sim": 0.9908,
+            "accepted": true
+          },
+          {
+            "lemma": "circumstance",
+            "inflected": "circumstances",
+            "semantic_sim": 0.997,
+            "accepted": true
+          },
+          {
+            "lemma": "discipline",
+            "inflected": "disciplines",
+            "semantic_sim": 0.9843,
+            "accepted": true
+          },
+          {
+            "lemma": "shape",
+            "inflected": "shapes",
+            "semantic_sim": 0.9794,
+            "accepted": true
+          },
+          {
+            "lemma": "check",
+            "inflected": "checks",
+            "semantic_sim": 0.9606,
+            "accepted": true
+          },
+          {
+            "lemma": "modality",
+            "inflected": "modalities",
+            "semantic_sim": 0.9803,
+            "accepted": true
+          },
+          {
+            "lemma": "stipulation",
+            "inflected": "stipulations",
+            "semantic_sim": 0.9782,
+            "accepted": true
+          },
+          {
+            "lemma": "precondition",
+            "inflected": "preconditions",
+            "semantic_sim": 0.9608,
+            "accepted": true
+          },
+          {
+            "lemma": "train",
+            "inflected": "trains",
+            "semantic_sim": 0.9144,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  }
+]

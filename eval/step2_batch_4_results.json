@@ -1,0 +1,135 @@
+[
+  {
+    "run_id": "R10-001-calib-dense_mixed_generic",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "smaller and smaller (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "The comparative-doubling construction 'smaller and smaller' (progressive size decrease during digestion) has no faithful paraphrase anywhere in the pool: production candidates either nonsensically duplicate 'absorbed and assimilated' or shift to 'fewer and fewer' (a count claim, and arguably the wrong direction since breakdown increases the number of components); extended k=15 only adds ungrammatical 'tiny and tiny' repeats. No candidate at either k expresses the progressive-size-reduction meaning correctly."
+  },
+  {
+    "run_id": "R10-016-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "bimolecular (restructuring)",
+    "best_available_alternative": "\"Two molecules collide and react with each other in a bi-molecular reaction.\" — present in the production k=5 pool at rank 1 (the very top of the list).",
+    "rationale": "'bi-molecular' is a meaning-identical hyphenated respelling of the technical term and sits at the top of the production candidate list, yet the pipeline shipped 'bifocal' (nonsensical, glasses-related) from rank 2 instead — a straightforward misranking within production's own k=5, not a pool-absence problem."
+  },
+  {
+    "run_id": "R10-034-core-word",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "dissolved (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "'dissolved' (a state: gas already in solution) is replaced by 'soluble' (a property: gas capable of dissolving) in every one of the 5 production and 15 extended candidates without exception — the model's output distribution never once retains 'dissolved' or an equivalent state-describing synonym, so a correct option is absent from the pool at any k."
+  },
+  {
+    "run_id": "R10-037-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "continuously (restructuring)",
+    "best_available_alternative": "\"Renewable energy is usually understood as energy harnessed from constantly occurring natural phenomena.\" — rank 1 (top) of the production k=5 pool, one slot above the shipped 'continually occurring' candidate.",
+    "rationale": "'constantly' (incessant, uninterrupted) is the closer synonym to 'continuously' than 'continually' (recurring at intervals); the better-matching candidate is literally the top-ranked production output, so the worse candidate shipped despite being outranked within production's own k=5."
+  },
+  {
+    "run_id": "R10-037-calib-single_word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "continuously (restructuring)",
+    "best_available_alternative": "\"Renewable energy is usually understood as energy harnessed from constantly occurring natural phenomena.\" — rank 1 (top) of the production k=5 pool, one slot above the shipped 'continually occurring' candidate.",
+    "rationale": "Same candidate pool as R10-037-core-word: 'constantly' is the closer synonym to 'continuously' and is the top-ranked production candidate, yet the weaker 'continually' variant (rank 2) was shipped — a ranking failure, not a pool-absence issue."
+  },
+  {
+    "run_id": "R10-037-calib-word_plus_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "continuously (restructuring)",
+    "best_available_alternative": "\"Renewable energy is usually understood as energy harnessed from constantly occurring natural phenomena.\" — rank 1 (top) of the production k=5 pool, one slot above the shipped 'continually occurring' candidate.",
+    "rationale": "Identical candidate data to the other two R10-037 variants: the closer synonym 'constantly' ranks above the shipped 'continually', so this is a misranking present already at production k=5, not an absent-from-pool case."
+  },
+  {
+    "run_id": "R10-043-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "mathematically (restructuring)",
+    "best_available_alternative": "\"In math and computer science, an algorithm is a finite sequence of mathematically rigorous logical commands, typically used to solve a class of specific problems or to perform a computation.\" — appears only in the extended k=15 pool, not in production's k=5.",
+    "rationale": "Production's entire k=5 uniformly substitutes 'numerically' for 'mathematically' (a different technical concept — numerical precision vs. logical rigor) and never preserves the original adjective; a candidate that keeps 'mathematically' (paired with the grammatically-correct plural 'commands') only surfaces once k is raised to 15, making this a pure k-too-small issue rather than a ranking-function failure."
+  },
+  {
+    "run_id": "R10-043-calib-multi_word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "mathematically (restructuring)",
+    "best_available_alternative": "\"In math and computer science, an algorithm is a finite sequence of mathematically rigorous logical commands, typically used to solve a class of specific problems or to perform a computation.\" — appears only in the extended k=15 pool, not in production's k=5.",
+    "rationale": "Same candidate data as R10-043-core-word: the meaning-preserving candidate retaining 'mathematically' only appears once k is extended to 15, so this is a k-too-small issue rather than a bad ranking function operating on production's own k=5."
+  },
+  {
+    "run_id": "R10-044-core-dense_mixed_generic",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "specifications (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "The model offers only two flawed families and never both fixes together: production's entire k=5 keeps the closer-meaning word 'description' but leaves the original subject-verb disagreement ('Algorithms is') uncorrected, while the meaning-changing 'parameters' (algorithms are not parameters) only appears paired with the grammar fix 'are' once the pool is extended to k=15; no candidate at either k pairs correct grammar with a meaning-preserving noun for 'specifications'."
+  },
+  {
+    "run_id": "R10-047-core-dense_mixed_generic",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "step (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "Every one of the 5 production and 15 extended candidates converts 'step' to either 'point' or 'phase', both looser fits for a discrete computational step than a term like 'stage' would be; no candidate at either k preserves or better-approximates the original 'step' sense."
+  },
+  {
+    "run_id": "R10-065-core-word",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "surveyors (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "All 5 production and all but one of the 15 extended candidates replace the person-noun 'surveyors' with the document-noun 'surveys', a category error (engineers work with survey professionals, not survey documents); the sole exception, 'surveyers', is a misspelling rather than a legitimate well-formed alternative, so no clean meaning-preserving candidate exists in the pool at either k."
+  },
+  {
+    "run_id": "R10-070-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "restaurant (restructuring)",
+    "best_available_alternative": "\"Honestly, I don't think that it is as good as everybody says.\" — rank 1 (top) of the production k=5 pool.",
+    "rationale": "Pluralizing 'restaurant' to 'restaurants' changes the sentence from a comment about one specific place to a generic plural claim; the top-ranked production candidate keeps the singular referent via 'it', preserving meaning, yet the pipeline shipped the pluralized rank-2 candidate instead."
+  },
+  {
+    "run_id": "R10-079-calib-multi_word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "manager (restructuring)",
+    "best_available_alternative": "\"The supervisor asked all to submit their report by the end of the day.\" — production k=5 pool, rank 2, directly below the shipped 'management' candidate.",
+    "rationale": "'management' shifts the singular specific person ('the manager') into an abstract collective entity, while 'supervisor' preserves the singular-person meaning and sits in the production pool immediately below the shipped candidate — a straightforward misranking within production's own k=5."
+  },
+  {
+    "run_id": "R10-080-core-word",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "deadlines (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "Every production and extended candidate converts the original plural 'deadlines' to a definite singular 'the deadline', narrowing a general statement about multiple deadlines to one specific deadline; no candidate at either k preserves the plural."
+  },
+  {
+    "run_id": "R10-103-calib-dense_mixed_generic",
+    "classification": "OTHER",
+    "implicated_word_or_tier": "staircase / step (restructuring beam collapse)",
+    "best_available_alternative": null,
+    "rationale": "Both the production and extended candidate lists are garbled beam-search artifacts (repeated dash characters degenerating into random trailing tokens/fragments like '------------------ de'), and none of them even match the actually-shipped text ('passageway'/'climb'); there is no usable semantic information in either pool from which to classify a candidate-quality root cause."
+  },
+  {
+    "run_id": "R10-109-core-word",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "fixture (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "'light fixture' (the whole lighting apparatus) is replaced by 'light bulb' or 'light source' in literally every production and extended candidate at both k=5 and k=15; the pipeline never generates an option preserving the larger-apparatus meaning, so the correct alternative is absent from the pool entirely."
+  },
+  {
+    "run_id": "R10-109-calib-multi_word",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "fixture (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "Same pattern as R10-109-core-word: all production and extended candidates convert 'fixture' to 'bulb'/'light source'/'the light', never preserving the whole-apparatus meaning at either k."
+  },
+  {
+    "run_id": "R10-123-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "renovated (restructuring)",
+    "best_available_alternative": "\"The bridge was built in the early 20th century and has since been refurbished twice.\" — production k=5 pool, rank 1 (top), one slot above the shipped 'rebuilt' candidate.",
+    "rationale": "'refurbished' is the closest synonym to 'renovated' (cosmetic/functional upgrade, not full reconstruction), and it is the top-ranked production candidate, yet the pipeline shipped 'rebuilt' (implying full reconstruction, a materially larger claim) from rank 2."
+  },
+  {
+    "run_id": "R10-124-core-word",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "public (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "The qualifier 'public' (as opposed to private parks) is dropped in all 5 production and all 15 extended candidates — every option becomes generic 'park areas/spaces/sites/parklands' with no reintroduction of 'public' or an equivalent qualifier — so a fully meaning-preserving option is absent from the pool at any k; the verifier's own rev_label flipping to 'neutral' corroborates a genuine, if subtle, meaning loss."
+  }
+]

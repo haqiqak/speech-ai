@@ -3728,3 +3728,59 @@ one number.
 plan-mode approval. Production code touched: `reformulate.py`,
 `tests/reformulate_test.py`, `tests/reformulate_v2_test.py`. Full
 record: `VALIDATION.md` §52, `eval/arch_gate1_report.md`.
+
+### 2026-08-27-F — Architecture Go/No-Go Step 2: is WRONG_WORD_OR_SENSE a generation problem or a ranking problem?
+
+**What was done:** per the agreed 4-step plan's exact Step 2 question
+("determine whether the correct reformulation is absent from the
+candidate pool or merely ranked incorrectly"), all 88 currently-
+DEFECTIVE, WRONG_WORD_OR_SENSE runs were re-instrumented to expose the
+FULL candidate pool the pipeline actually considered (production
+top_k/k plus an extended, much larger pool), then classified with full
+context (not blind -- root-cause diagnosis, same distinction Phase 10B
+drew) by 4 independent subagents. Analysis only, no production code
+changed.
+
+**Self-caught, before any number reported:** the instrumentation
+crashed on 19/24 restructuring-tier cases due to a dead line of code
+in the diagnostic script itself (not production code). Fixed and all
+19 re-diagnosed from real data before merging into the final counts --
+the earlier, data-free classifications were discarded, not blended in.
+
+**Result: 98 classifications across 88 cases -- PRESENT_BUT_MISRANKED
+70 (71%), ABSENT_FROM_POOL 20 (20%), NO_GOOD_OPTION_POSSIBLE 5 (5%),
+OTHER 3 (3%).** The dominant, unambiguous answer: for 71% of these
+defects, a correct or better candidate was already in the pipeline's
+own pool -- this is primarily a selection problem, not a generation-
+coverage gap. ~57 of the 70 had the better candidate already in
+production's own top_k/k window (a pure ranking-function problem, not
+fixable by raising a cutoff); ~13 only appeared at an extended, larger
+pool.
+
+**A specific, mechanistically confirmed sub-finding, not just an
+impression:** several ranking failures (e.g. "biochemical and
+physiological" -> "chemical and physical") trace directly to
+semantic.combined_score()'s documented 90%-semantic/10%-frequency
+blend: "biological" has HIGHER raw SBERT similarity than the shipped
+"chemical"/"physical" in these cases, but LOWER combined score, because
+the shipped words are simply more common English words (verified
+directly against the actual combined_score() output, not inferred).
+This is the formula working exactly as designed, not broken code -- but
+demonstrated to be a real, load-bearing contributor to the dominant
+remaining defect class. Per Practice.md's standing rule, the 0.90/0.10
+weighting is flagged as evidence for a future, SEPARATE, explicit
+decision -- NOT changed here, exactly like the MIN_SEMANTIC threshold
+question has been handled throughout this project.
+
+**Labeled as:** if Step 3 concludes a learned component is warranted,
+this evidence points specifically at a learned reranker/scorer
+replacing or augmenting combined_score()'s fixed linear blend, not a
+bigger candidate generator -- generation is demonstrably not the
+bottleneck for 71% of this defect class. Any such component still
+needs to clear the Phase 9B/9C generalization bar before being
+trusted, per the criteria already agreed before this step began.
+
+**Category:** Evaluation/analysis, on direct instruction following the
+agreed 4-step plan. No production code touched, self-caught bug was in
+the diagnostic tooling only. Full record: `VALIDATION.md` §53,
+`eval/step2_wrong_sense_report.md`.

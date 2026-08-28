@@ -1870,6 +1870,37 @@ the first time ever in this project: +3% total harvest latency.
 candidate pool, or just ranked wrong?) and Step 3 (the formal
 architecture assessment) — the natural next step, not decided here.
 
+### Architecture Go/No-Go, Step 2. Is WRONG_WORD_OR_SENSE a generation problem or a ranking problem? — **DONE, 2026-08-27**
+**Linked finding:** the exact question the agreed 4-step plan asked
+for Step 2. Analysis only, no production code changed. Full record:
+`VALIDATION.md` §53, `eval/step2_wrong_sense_report.md`.
+**What was done:** all 88 currently-DEFECTIVE WRONG_WORD_OR_SENSE runs
+re-instrumented to expose the full candidate pool actually considered
+(not just the winner), classified with full context by 4 independent
+subagents into absent-from-pool / present-but-misranked / no-good-
+option-possible / other. Self-caught and fixed a diagnostic-tooling bug
+(19/24 restructuring cases crashed on a dead code line) before any
+number was reported.
+**Result: 71% of these defects (70/98 classifications) are
+PRESENT_BUT_MISRANKED** — a correct or better candidate was already in
+the pipeline's own pool, ~57 of those already within production's own
+top_k/k window. Only 20% are genuine resource/generation gaps
+(ABSENT_FROM_POOL), 5% are genuinely unsolvable (NO_GOOD_OPTION_
+POSSIBLE). A specific, mechanistically confirmed cause was traced for
+several cases: `combined_score()`'s documented 90%-semantic/10%-
+frequency blend measurably favors a more common but less meaning-
+preserving word over a less common but more accurate one when their
+raw SBERT similarity is close — verified directly against real
+combined_score() output, not inferred. Per Practice.md's standing rule,
+the weighting itself is flagged as evidence for a future, separate,
+explicit decision, not changed here.
+**Labeled as:** if Step 3 concludes a learned component is warranted,
+this evidence points specifically at a learned reranker/scorer, not a
+bigger candidate generator — generation is demonstrably not the
+bottleneck for 71% of this defect class. Any such component still
+needs to clear the Phase 9B/9C generalization bar before being
+trusted.
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

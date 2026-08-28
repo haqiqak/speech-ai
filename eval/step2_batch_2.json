@@ -1,0 +1,5903 @@
+[
+  {
+    "run_id": "R10-041-core-word",
+    "original_text": "In general, renewable energy sources pollute much less than fossil fuels.",
+    "reformulated_text": "In general, renewable energy sources litter much less than fossil fuels.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 6,
+        "span_text": "pollute",
+        "original": "pollute",
+        "replacement": "litter",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.8981,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.6108,
+          "difficulty_after": 0.4243,
+          "contextual_fit": 1.3028588909946848e-06
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "pollute",
+        "base_lemma": "pollute",
+        "chosen_replacement": "litter",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "litter",
+            "inflected": "litter",
+            "semantic_sim": 0.8981,
+            "accepted": true
+          },
+          {
+            "lemma": "poison",
+            "inflected": "poison",
+            "semantic_sim": 0.8891,
+            "accepted": true
+          },
+          {
+            "lemma": "foul",
+            "inflected": "foul",
+            "semantic_sim": 0.8675,
+            "accepted": true
+          },
+          {
+            "lemma": "contaminate",
+            "inflected": "contaminate",
+            "semantic_sim": 0.8664,
+            "accepted": true
+          },
+          {
+            "lemma": "sully",
+            "inflected": "sully",
+            "semantic_sim": 0.8543,
+            "accepted": true
+          },
+          {
+            "lemma": "soil",
+            "inflected": "soil",
+            "semantic_sim": 0.845,
+            "accepted": false
+          },
+          {
+            "lemma": "spoil",
+            "inflected": "spoil",
+            "semantic_sim": 0.8388,
+            "accepted": false
+          },
+          {
+            "lemma": "dirty",
+            "inflected": "dirty",
+            "semantic_sim": 0.8302,
+            "accepted": false
+          },
+          {
+            "lemma": "grime",
+            "inflected": "grime",
+            "semantic_sim": 0.8298,
+            "accepted": false
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "litter",
+            "inflected": "litter",
+            "semantic_sim": 0.8981,
+            "accepted": true
+          },
+          {
+            "lemma": "poison",
+            "inflected": "poison",
+            "semantic_sim": 0.8891,
+            "accepted": true
+          },
+          {
+            "lemma": "foul",
+            "inflected": "foul",
+            "semantic_sim": 0.8675,
+            "accepted": true
+          },
+          {
+            "lemma": "contaminate",
+            "inflected": "contaminate",
+            "semantic_sim": 0.8664,
+            "accepted": true
+          },
+          {
+            "lemma": "sully",
+            "inflected": "sully",
+            "semantic_sim": 0.8543,
+            "accepted": true
+          },
+          {
+            "lemma": "soil",
+            "inflected": "soil",
+            "semantic_sim": 0.845,
+            "accepted": false
+          },
+          {
+            "lemma": "spoil",
+            "inflected": "spoil",
+            "semantic_sim": 0.8388,
+            "accepted": false
+          },
+          {
+            "lemma": "dirty",
+            "inflected": "dirty",
+            "semantic_sim": 0.8302,
+            "accepted": false
+          },
+          {
+            "lemma": "grime",
+            "inflected": "grime",
+            "semantic_sim": 0.8298,
+            "accepted": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-041-core-dense_mixed_generic",
+    "original_text": "In general, renewable energy sources pollute much less than fossil fuels.",
+    "reformulated_text": "In general, renewable energy activities pollute much less than fossil fuels.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 5,
+        "span_text": "sources",
+        "original": "sources",
+        "replacement": "activities",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9612,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.3759,
+          "difficulty_after": 0.3896,
+          "contextual_fit": 0.0010023954091593623
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "sources",
+        "base_lemma": "source",
+        "chosen_replacement": "activities",
+        "chosen_rank_in_production_pool": 2,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "resource",
+            "inflected": "resources",
+            "semantic_sim": 0.9716,
+            "accepted": true
+          },
+          {
+            "lemma": "supplies",
+            "inflected": "supplies",
+            "semantic_sim": 0.9698,
+            "accepted": true
+          },
+          {
+            "lemma": "activity",
+            "inflected": "activities",
+            "semantic_sim": 0.9612,
+            "accepted": true
+          },
+          {
+            "lemma": "reference",
+            "inflected": "references",
+            "semantic_sim": 0.9419,
+            "accepted": true
+          },
+          {
+            "lemma": "action",
+            "inflected": "actions",
+            "semantic_sim": 0.9323,
+            "accepted": true
+          },
+          {
+            "lemma": "author",
+            "inflected": "authors",
+            "semantic_sim": 0.9168,
+            "accepted": true
+          },
+          {
+            "lemma": "beginning",
+            "inflected": "beginnings",
+            "semantic_sim": 0.9124,
+            "accepted": true
+          },
+          {
+            "lemma": "origin",
+            "inflected": "origins",
+            "semantic_sim": 0.9141,
+            "accepted": true
+          },
+          {
+            "lemma": "root",
+            "inflected": "roots",
+            "semantic_sim": 0.9047,
+            "accepted": true
+          },
+          {
+            "lemma": "channel",
+            "inflected": "channels",
+            "semantic_sim": 0.8554,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "resource",
+            "inflected": "resources",
+            "semantic_sim": 0.9716,
+            "accepted": true
+          },
+          {
+            "lemma": "supplies",
+            "inflected": "supplies",
+            "semantic_sim": 0.9698,
+            "accepted": true
+          },
+          {
+            "lemma": "activity",
+            "inflected": "activities",
+            "semantic_sim": 0.9612,
+            "accepted": true
+          },
+          {
+            "lemma": "reference",
+            "inflected": "references",
+            "semantic_sim": 0.9419,
+            "accepted": true
+          },
+          {
+            "lemma": "action",
+            "inflected": "actions",
+            "semantic_sim": 0.9323,
+            "accepted": true
+          },
+          {
+            "lemma": "generator",
+            "inflected": "generators",
+            "semantic_sim": 0.9289,
+            "accepted": true
+          },
+          {
+            "lemma": "provider",
+            "inflected": "providers",
+            "semantic_sim": 0.9254,
+            "accepted": true
+          },
+          {
+            "lemma": "author",
+            "inflected": "authors",
+            "semantic_sim": 0.9168,
+            "accepted": true
+          },
+          {
+            "lemma": "beginning",
+            "inflected": "beginnings",
+            "semantic_sim": 0.9124,
+            "accepted": true
+          },
+          {
+            "lemma": "origin",
+            "inflected": "origins",
+            "semantic_sim": 0.9141,
+            "accepted": true
+          },
+          {
+            "lemma": "root",
+            "inflected": "roots",
+            "semantic_sim": 0.9047,
+            "accepted": true
+          },
+          {
+            "lemma": "vendor",
+            "inflected": "vendors",
+            "semantic_sim": 0.8957,
+            "accepted": true
+          },
+          {
+            "lemma": "seed",
+            "inflected": "seeds",
+            "semantic_sim": 0.8832,
+            "accepted": true
+          },
+          {
+            "lemma": "informant",
+            "inflected": "informants",
+            "semantic_sim": 0.8924,
+            "accepted": true
+          },
+          {
+            "lemma": "exporter",
+            "inflected": "exporters",
+            "semantic_sim": 0.885,
+            "accepted": true
+          },
+          {
+            "lemma": "channel",
+            "inflected": "channels",
+            "semantic_sim": 0.8554,
+            "accepted": true
+          },
+          {
+            "lemma": "germ",
+            "inflected": "germs",
+            "semantic_sim": 0.8685,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-042-core-dense_mixed_generic",
+    "original_text": "Water can generate electricity with a conversion efficiency of about 90%, which is the highest rate in renewable energy.",
+    "reformulated_text": "Water can generate electricity with a conversion efficiency of about 90 %, which is the highest place in renewable energy.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 17,
+        "span_text": "rate",
+        "original": "rate",
+        "replacement": "place",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9699,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.288,
+          "difficulty_after": 0.547,
+          "contextual_fit": 1.3882528037356678e-05
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "rate",
+        "base_lemma": "rate",
+        "chosen_replacement": "place",
+        "chosen_rank_in_production_pool": 1,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "value",
+            "inflected": "value",
+            "semantic_sim": 0.9789,
+            "accepted": true
+          },
+          {
+            "lemma": "place",
+            "inflected": "place",
+            "semantic_sim": 0.9699,
+            "accepted": true
+          },
+          {
+            "lemma": "grade",
+            "inflected": "grade",
+            "semantic_sim": 0.9747,
+            "accepted": true
+          },
+          {
+            "lemma": "range",
+            "inflected": "range",
+            "semantic_sim": 0.9705,
+            "accepted": true
+          },
+          {
+            "lemma": "order",
+            "inflected": "order",
+            "semantic_sim": 0.9635,
+            "accepted": true
+          },
+          {
+            "lemma": "pace",
+            "inflected": "pace",
+            "semantic_sim": 0.9719,
+            "accepted": true
+          },
+          {
+            "lemma": "merit",
+            "inflected": "merit",
+            "semantic_sim": 0.9703,
+            "accepted": true
+          },
+          {
+            "lemma": "rank",
+            "inflected": "rank",
+            "semantic_sim": 0.9612,
+            "accepted": true
+          },
+          {
+            "lemma": "exchange",
+            "inflected": "exchange",
+            "semantic_sim": 0.9509,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "value",
+            "inflected": "value",
+            "semantic_sim": 0.9789,
+            "accepted": true
+          },
+          {
+            "lemma": "place",
+            "inflected": "place",
+            "semantic_sim": 0.9699,
+            "accepted": true
+          },
+          {
+            "lemma": "grade",
+            "inflected": "grade",
+            "semantic_sim": 0.9747,
+            "accepted": true
+          },
+          {
+            "lemma": "range",
+            "inflected": "range",
+            "semantic_sim": 0.9705,
+            "accepted": true
+          },
+          {
+            "lemma": "order",
+            "inflected": "order",
+            "semantic_sim": 0.9635,
+            "accepted": true
+          },
+          {
+            "lemma": "pace",
+            "inflected": "pace",
+            "semantic_sim": 0.9719,
+            "accepted": true
+          },
+          {
+            "lemma": "merit",
+            "inflected": "merit",
+            "semantic_sim": 0.9703,
+            "accepted": true
+          },
+          {
+            "lemma": "rank",
+            "inflected": "rank",
+            "semantic_sim": 0.9612,
+            "accepted": true
+          },
+          {
+            "lemma": "exchange",
+            "inflected": "exchange",
+            "semantic_sim": 0.9509,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-043-core-word",
+    "original_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+    "reformulated_text": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or perform a computation.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+        "original": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+        "replacement": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or perform a computation.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.9854,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3476,
+          "difficulty_after": 0.3399,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "error": "'DifficultyEntry' object has no attribute 'lower'",
+        "source": "restructuring"
+      }
+    ]
+  },
+  {
+    "run_id": "R10-043-calib-multi_word",
+    "original_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+    "reformulated_text": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or perform a computation.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+        "original": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+        "replacement": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or perform a computation.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.9854,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3476,
+          "difficulty_after": 0.3399,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "error": "'DifficultyEntry' object has no attribute 'lower'",
+        "source": "restructuring"
+      }
+    ]
+  },
+  {
+    "run_id": "R10-044-core-word",
+    "original_text": "Algorithms is used as specifications for performing calculations and data processing.",
+    "reformulated_text": "Algorithms is used as standards for performing computations and data processing.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 4,
+        "span_text": "specifications",
+        "original": "specifications",
+        "replacement": "standards",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9371,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.6974,
+          "difficulty_after": 0.5118,
+          "contextual_fit": 0.00030627596424892545
+        }
+      },
+      {
+        "sentence_index": 0,
+        "position": 7,
+        "span_text": "calculations",
+        "original": "calculations",
+        "replacement": "computations",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9156,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.7175,
+          "difficulty_after": 0.7633,
+          "contextual_fit": 0.4694449082016945
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "specifications",
+        "base_lemma": "specification",
+        "chosen_replacement": "standards",
+        "chosen_rank_in_production_pool": 1,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "description",
+            "inflected": "descriptions",
+            "semantic_sim": 0.9457,
+            "accepted": true
+          },
+          {
+            "lemma": "standard",
+            "inflected": "standards",
+            "semantic_sim": 0.9371,
+            "accepted": true
+          },
+          {
+            "lemma": "spec",
+            "inflected": "specs",
+            "semantic_sim": 0.9397,
+            "accepted": true
+          },
+          {
+            "lemma": "specialty",
+            "inflected": "specialties",
+            "semantic_sim": 0.9174,
+            "accepted": true
+          },
+          {
+            "lemma": "designation",
+            "inflected": "designations",
+            "semantic_sim": 0.912,
+            "accepted": true
+          },
+          {
+            "lemma": "speciality",
+            "inflected": "specialities",
+            "semantic_sim": 0.9174,
+            "accepted": true
+          },
+          {
+            "lemma": "specialization",
+            "inflected": "specializations",
+            "semantic_sim": 0.8929,
+            "accepted": true
+          },
+          {
+            "lemma": "establishment",
+            "inflected": "establishments",
+            "semantic_sim": 0.8649,
+            "accepted": true
+          },
+          {
+            "lemma": "booklet",
+            "inflected": "booklets",
+            "semantic_sim": 0.8377,
+            "accepted": false
+          },
+          {
+            "lemma": "monograph",
+            "inflected": "monographs",
+            "semantic_sim": 0.8037,
+            "accepted": false
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "description",
+            "inflected": "descriptions",
+            "semantic_sim": 0.9457,
+            "accepted": true
+          },
+          {
+            "lemma": "standard",
+            "inflected": "standards",
+            "semantic_sim": 0.9371,
+            "accepted": true
+          },
+          {
+            "lemma": "spec",
+            "inflected": "specs",
+            "semantic_sim": 0.9397,
+            "accepted": true
+          },
+          {
+            "lemma": "specialty",
+            "inflected": "specialties",
+            "semantic_sim": 0.9174,
+            "accepted": true
+          },
+          {
+            "lemma": "designation",
+            "inflected": "designations",
+            "semantic_sim": 0.912,
+            "accepted": true
+          },
+          {
+            "lemma": "speciality",
+            "inflected": "specialities",
+            "semantic_sim": 0.9174,
+            "accepted": true
+          },
+          {
+            "lemma": "specialization",
+            "inflected": "specializations",
+            "semantic_sim": 0.8929,
+            "accepted": true
+          },
+          {
+            "lemma": "stipulation",
+            "inflected": "stipulations",
+            "semantic_sim": 0.8932,
+            "accepted": true
+          },
+          {
+            "lemma": "establishment",
+            "inflected": "establishments",
+            "semantic_sim": 0.8649,
+            "accepted": true
+          },
+          {
+            "lemma": "enumeration",
+            "inflected": "enumerations",
+            "semantic_sim": 0.876,
+            "accepted": true
+          },
+          {
+            "lemma": "booklet",
+            "inflected": "booklets",
+            "semantic_sim": 0.8377,
+            "accepted": false
+          },
+          {
+            "lemma": "workbook",
+            "inflected": "workbooks",
+            "semantic_sim": 0.8411,
+            "accepted": false
+          },
+          {
+            "lemma": "monograph",
+            "inflected": "monographs",
+            "semantic_sim": 0.8037,
+            "accepted": false
+          }
+        ]
+      },
+      {
+        "tier": "substitution",
+        "original_word": "calculations",
+        "base_lemma": "calculation",
+        "chosen_replacement": "computations",
+        "chosen_rank_in_production_pool": 4,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "math",
+            "inflected": "maths",
+            "semantic_sim": 0.9811,
+            "accepted": true
+          },
+          {
+            "lemma": "maths",
+            "inflected": "maths",
+            "semantic_sim": 0.9811,
+            "accepted": true
+          },
+          {
+            "lemma": "formula",
+            "inflected": "formulas",
+            "semantic_sim": 0.9688,
+            "accepted": true
+          },
+          {
+            "lemma": "computing",
+            "inflected": "computings",
+            "semantic_sim": 0.9706,
+            "accepted": true
+          },
+          {
+            "lemma": "computation",
+            "inflected": "computations",
+            "semantic_sim": 0.9776,
+            "accepted": true
+          },
+          {
+            "lemma": "process",
+            "inflected": "processes",
+            "semantic_sim": 0.9521,
+            "accepted": true
+          },
+          {
+            "lemma": "procedure",
+            "inflected": "procedures",
+            "semantic_sim": 0.9572,
+            "accepted": true
+          },
+          {
+            "lemma": "arithmetic",
+            "inflected": "arithmetics",
+            "semantic_sim": 0.9662,
+            "accepted": true
+          },
+          {
+            "lemma": "figuring",
+            "inflected": "figurings",
+            "semantic_sim": 0.9552,
+            "accepted": true
+          },
+          {
+            "lemma": "calculus",
+            "inflected": "calculi",
+            "semantic_sim": 0.9161,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "math",
+            "inflected": "maths",
+            "semantic_sim": 0.9811,
+            "accepted": true
+          },
+          {
+            "lemma": "maths",
+            "inflected": "maths",
+            "semantic_sim": 0.9811,
+            "accepted": true
+          },
+          {
+            "lemma": "formula",
+            "inflected": "formulas",
+            "semantic_sim": 0.9688,
+            "accepted": true
+          },
+          {
+            "lemma": "computing",
+            "inflected": "computings",
+            "semantic_sim": 0.9706,
+            "accepted": true
+          },
+          {
+            "lemma": "computation",
+            "inflected": "computations",
+            "semantic_sim": 0.9776,
+            "accepted": true
+          },
+          {
+            "lemma": "process",
+            "inflected": "processes",
+            "semantic_sim": 0.9521,
+            "accepted": true
+          },
+          {
+            "lemma": "procedure",
+            "inflected": "procedures",
+            "semantic_sim": 0.9572,
+            "accepted": true
+          },
+          {
+            "lemma": "arithmetic",
+            "inflected": "arithmetics",
+            "semantic_sim": 0.9662,
+            "accepted": true
+          },
+          {
+            "lemma": "figuring",
+            "inflected": "figurings",
+            "semantic_sim": 0.9552,
+            "accepted": true
+          },
+          {
+            "lemma": "calculus",
+            "inflected": "calculi",
+            "semantic_sim": 0.9161,
+            "accepted": true
+          },
+          {
+            "lemma": "deliberation",
+            "inflected": "deliberations",
+            "semantic_sim": 0.8613,
+            "accepted": true
+          },
+          {
+            "lemma": "reckoning",
+            "inflected": "reckonings",
+            "semantic_sim": 0.779,
+            "accepted": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-044-core-dense_mixed_generic",
+    "original_text": "Algorithms is used as specifications for performing calculations and data processing.",
+    "reformulated_text": "Algorithms are used as parameters for performing calculations and data processing.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Algorithms is used as specifications for performing calculations and data processing.",
+        "original": "Algorithms is used as specifications for performing calculations and data processing.",
+        "replacement": "Algorithms are used as parameters for performing calculations and data processing.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.9124,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.402,
+          "difficulty_after": 0.4044,
+          "beam_kills": 18
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "error": "'DifficultyEntry' object has no attribute 'lower'",
+        "source": "restructuring"
+      }
+    ]
+  },
+  {
+    "run_id": "R10-047-core-dense_mixed_generic",
+    "original_text": "Starting from an initial state and input, a computation occurs at each step, eventually producing output and terminating.",
+    "reformulated_text": "A computation begins from an initial condition and input and occurs at each point, eventually producing output and terminating.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Starting from an initial state and input, a computation occurs at each step, eventually producing output and terminating.",
+        "original": "Starting from an initial state and input, a computation occurs at each step, eventually producing output and terminating.",
+        "replacement": "A computation begins from an initial condition and input and occurs at each point, eventually producing output and terminating.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.9157,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3305,
+          "difficulty_after": 0.3297,
+          "beam_kills": 21
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "error": "'DifficultyEntry' object has no attribute 'lower'",
+        "source": "restructuring"
+      }
+    ]
+  },
+  {
+    "run_id": "R10-051-core-dense_mixed_generic",
+    "original_text": "Since the coin is fair, the two outcomes ( heads and tails ) are both equally probable; the probability of heads equals the probability of tails; and since no other outcomes are possible, the probability of either heads or tails are 1/2 ( which could also be written as 0.5 or 50 % ).",
+    "reformulated_text": "Since the coin is fair, the two outcomes ( heads and tails ) are both equally probable; the probability of heads equals the probability of tails; and since no other outcomes are possible, the probability of either heads or tails are 1/2 ( which could also be composed as 0.5 or 50 % ).",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 51,
+        "span_text": "written",
+        "original": "written",
+        "replacement": "composed",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9977,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.3652,
+          "difficulty_after": 0.5503,
+          "contextual_fit": 1.5986959624569863e-05
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "written",
+        "base_lemma": "write",
+        "chosen_replacement": "composed",
+        "chosen_rank_in_production_pool": 2,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "spell",
+            "inflected": "spelled",
+            "semantic_sim": 0.9962,
+            "accepted": true
+          },
+          {
+            "lemma": "print",
+            "inflected": "printed",
+            "semantic_sim": 0.9891,
+            "accepted": true
+          },
+          {
+            "lemma": "compose",
+            "inflected": "composed",
+            "semantic_sim": 0.9977,
+            "accepted": true
+          },
+          {
+            "lemma": "publish",
+            "inflected": "published",
+            "semantic_sim": 0.9884,
+            "accepted": true
+          },
+          {
+            "lemma": "letter",
+            "inflected": "lettered",
+            "semantic_sim": 0.9755,
+            "accepted": true
+          },
+          {
+            "lemma": "handwriting",
+            "inflected": "handwriting",
+            "semantic_sim": 0.9865,
+            "accepted": true
+          },
+          {
+            "lemma": "script",
+            "inflected": "scripted",
+            "semantic_sim": 0.9766,
+            "accepted": true
+          },
+          {
+            "lemma": "scribe",
+            "inflected": "scribed",
+            "semantic_sim": 0.9868,
+            "accepted": true
+          },
+          {
+            "lemma": "pen",
+            "inflected": "pent",
+            "semantic_sim": 0.9712,
+            "accepted": true
+          },
+          {
+            "lemma": "annotate",
+            "inflected": "annotated",
+            "semantic_sim": 0.9951,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "spell",
+            "inflected": "spelled",
+            "semantic_sim": 0.9962,
+            "accepted": true
+          },
+          {
+            "lemma": "print",
+            "inflected": "printed",
+            "semantic_sim": 0.9891,
+            "accepted": true
+          },
+          {
+            "lemma": "compose",
+            "inflected": "composed",
+            "semantic_sim": 0.9977,
+            "accepted": true
+          },
+          {
+            "lemma": "publish",
+            "inflected": "published",
+            "semantic_sim": 0.9884,
+            "accepted": true
+          },
+          {
+            "lemma": "letter",
+            "inflected": "lettered",
+            "semantic_sim": 0.9755,
+            "accepted": true
+          },
+          {
+            "lemma": "handwriting",
+            "inflected": "handwriting",
+            "semantic_sim": 0.9865,
+            "accepted": true
+          },
+          {
+            "lemma": "script",
+            "inflected": "scripted",
+            "semantic_sim": 0.9766,
+            "accepted": true
+          },
+          {
+            "lemma": "scribe",
+            "inflected": "scribed",
+            "semantic_sim": 0.9868,
+            "accepted": true
+          },
+          {
+            "lemma": "pen",
+            "inflected": "pent",
+            "semantic_sim": 0.9712,
+            "accepted": true
+          },
+          {
+            "lemma": "annotate",
+            "inflected": "annotated",
+            "semantic_sim": 0.9951,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-055-calib-single_word",
+    "original_text": "In economics, inflation is an increase in the average price of goods and services in terms of money.",
+    "reformulated_text": "In economies, inflation is an increase in the average price of goods and services in terms of money.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 1,
+        "span_text": "economics",
+        "original": "economics",
+        "replacement": "economies",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.983,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.4106,
+          "difficulty_after": 0.4333,
+          "contextual_fit": 0.009020240977406502
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "economics",
+        "base_lemma": "economics",
+        "chosen_replacement": "economies",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "economy",
+            "inflected": "economies",
+            "semantic_sim": 0.983,
+            "accepted": true
+          },
+          {
+            "lemma": "economist",
+            "inflected": "economists",
+            "semantic_sim": 0.9825,
+            "accepted": true
+          },
+          {
+            "lemma": "finance",
+            "inflected": "finances",
+            "semantic_sim": 0.9457,
+            "accepted": true
+          },
+          {
+            "lemma": "profitability",
+            "inflected": "profitabilities",
+            "semantic_sim": 0.9513,
+            "accepted": true
+          },
+          {
+            "lemma": "finances",
+            "inflected": "finances",
+            "semantic_sim": 0.9457,
+            "accepted": true
+          },
+          {
+            "lemma": "science",
+            "inflected": "sciences",
+            "semantic_sim": 0.9246,
+            "accepted": true
+          },
+          {
+            "lemma": "sciences",
+            "inflected": "sciences",
+            "semantic_sim": 0.9246,
+            "accepted": true
+          },
+          {
+            "lemma": "sociology",
+            "inflected": "sociologies",
+            "semantic_sim": 0.9164,
+            "accepted": true
+          },
+          {
+            "lemma": "saving",
+            "inflected": "savings",
+            "semantic_sim": 0.8909,
+            "accepted": true
+          },
+          {
+            "lemma": "conservation",
+            "inflected": "conservations",
+            "semantic_sim": 0.8501,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "economy",
+            "inflected": "economies",
+            "semantic_sim": 0.983,
+            "accepted": true
+          },
+          {
+            "lemma": "economist",
+            "inflected": "economists",
+            "semantic_sim": 0.9825,
+            "accepted": true
+          },
+          {
+            "lemma": "finance",
+            "inflected": "finances",
+            "semantic_sim": 0.9457,
+            "accepted": true
+          },
+          {
+            "lemma": "profitability",
+            "inflected": "profitabilities",
+            "semantic_sim": 0.9513,
+            "accepted": true
+          },
+          {
+            "lemma": "finances",
+            "inflected": "finances",
+            "semantic_sim": 0.9457,
+            "accepted": true
+          },
+          {
+            "lemma": "science",
+            "inflected": "sciences",
+            "semantic_sim": 0.9246,
+            "accepted": true
+          },
+          {
+            "lemma": "sciences",
+            "inflected": "sciences",
+            "semantic_sim": 0.9246,
+            "accepted": true
+          },
+          {
+            "lemma": "sociology",
+            "inflected": "sociologies",
+            "semantic_sim": 0.9164,
+            "accepted": true
+          },
+          {
+            "lemma": "saving",
+            "inflected": "savings",
+            "semantic_sim": 0.8909,
+            "accepted": true
+          },
+          {
+            "lemma": "saver",
+            "inflected": "savers",
+            "semantic_sim": 0.8912,
+            "accepted": true
+          },
+          {
+            "lemma": "conservation",
+            "inflected": "conservations",
+            "semantic_sim": 0.8501,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-055-calib-word_plus_sound",
+    "original_text": "In economics, inflation is an increase in the average price of goods and services in terms of money.",
+    "reformulated_text": "In economies, inflation is an increase in the average cost of goods and services in terms of money.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 1,
+        "span_text": "economics",
+        "original": "economics",
+        "replacement": "economies",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.983,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.4106,
+          "difficulty_after": 0.4333,
+          "contextual_fit": 0.007844870910048485
+        }
+      },
+      {
+        "sentence_index": 0,
+        "position": 10,
+        "span_text": "price",
+        "original": "price",
+        "replacement": "cost",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.966,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.5675,
+          "difficulty_after": 0.4338,
+          "contextual_fit": 0.02108757384121418
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "economics",
+        "base_lemma": "economics",
+        "chosen_replacement": "economies",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "economy",
+            "inflected": "economies",
+            "semantic_sim": 0.983,
+            "accepted": true
+          },
+          {
+            "lemma": "economist",
+            "inflected": "economists",
+            "semantic_sim": 0.9825,
+            "accepted": true
+          },
+          {
+            "lemma": "finance",
+            "inflected": "finances",
+            "semantic_sim": 0.9457,
+            "accepted": true
+          },
+          {
+            "lemma": "profitability",
+            "inflected": "profitabilities",
+            "semantic_sim": 0.9513,
+            "accepted": true
+          },
+          {
+            "lemma": "finances",
+            "inflected": "finances",
+            "semantic_sim": 0.9457,
+            "accepted": true
+          },
+          {
+            "lemma": "science",
+            "inflected": "sciences",
+            "semantic_sim": 0.9246,
+            "accepted": true
+          },
+          {
+            "lemma": "sciences",
+            "inflected": "sciences",
+            "semantic_sim": 0.9246,
+            "accepted": true
+          },
+          {
+            "lemma": "sociology",
+            "inflected": "sociologies",
+            "semantic_sim": 0.9164,
+            "accepted": true
+          },
+          {
+            "lemma": "saving",
+            "inflected": "savings",
+            "semantic_sim": 0.8909,
+            "accepted": true
+          },
+          {
+            "lemma": "conservation",
+            "inflected": "conservations",
+            "semantic_sim": 0.8501,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "economy",
+            "inflected": "economies",
+            "semantic_sim": 0.983,
+            "accepted": true
+          },
+          {
+            "lemma": "economist",
+            "inflected": "economists",
+            "semantic_sim": 0.9825,
+            "accepted": true
+          },
+          {
+            "lemma": "finance",
+            "inflected": "finances",
+            "semantic_sim": 0.9457,
+            "accepted": true
+          },
+          {
+            "lemma": "profitability",
+            "inflected": "profitabilities",
+            "semantic_sim": 0.9513,
+            "accepted": true
+          },
+          {
+            "lemma": "finances",
+            "inflected": "finances",
+            "semantic_sim": 0.9457,
+            "accepted": true
+          },
+          {
+            "lemma": "science",
+            "inflected": "sciences",
+            "semantic_sim": 0.9246,
+            "accepted": true
+          },
+          {
+            "lemma": "sciences",
+            "inflected": "sciences",
+            "semantic_sim": 0.9246,
+            "accepted": true
+          },
+          {
+            "lemma": "sociology",
+            "inflected": "sociologies",
+            "semantic_sim": 0.9164,
+            "accepted": true
+          },
+          {
+            "lemma": "saving",
+            "inflected": "savings",
+            "semantic_sim": 0.8909,
+            "accepted": true
+          },
+          {
+            "lemma": "saver",
+            "inflected": "savers",
+            "semantic_sim": 0.8912,
+            "accepted": true
+          },
+          {
+            "lemma": "conservation",
+            "inflected": "conservations",
+            "semantic_sim": 0.8501,
+            "accepted": true
+          }
+        ]
+      },
+      {
+        "tier": "substitution",
+        "original_word": "price",
+        "base_lemma": "price",
+        "chosen_replacement": "cost",
+        "chosen_rank_in_production_pool": 1,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "terms",
+            "inflected": "terms",
+            "semantic_sim": 0.9887,
+            "accepted": true
+          },
+          {
+            "lemma": "cost",
+            "inflected": "cost",
+            "semantic_sim": 0.9873,
+            "accepted": true
+          },
+          {
+            "lemma": "pay",
+            "inflected": "pay",
+            "semantic_sim": 0.982,
+            "accepted": true
+          },
+          {
+            "lemma": "rates",
+            "inflected": "rates",
+            "semantic_sim": 0.9865,
+            "accepted": true
+          },
+          {
+            "lemma": "inflation",
+            "inflected": "inflation",
+            "semantic_sim": 0.9887,
+            "accepted": true
+          },
+          {
+            "lemma": "purchase",
+            "inflected": "purchase",
+            "semantic_sim": 0.9824,
+            "accepted": true
+          },
+          {
+            "lemma": "charge",
+            "inflected": "charge",
+            "semantic_sim": 0.9782,
+            "accepted": true
+          },
+          {
+            "lemma": "sale",
+            "inflected": "sale",
+            "semantic_sim": 0.9763,
+            "accepted": true
+          },
+          {
+            "lemma": "discount",
+            "inflected": "discount",
+            "semantic_sim": 0.9622,
+            "accepted": true
+          },
+          {
+            "lemma": "damage",
+            "inflected": "damage",
+            "semantic_sim": 0.9197,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "terms",
+            "inflected": "terms",
+            "semantic_sim": 0.9887,
+            "accepted": true
+          },
+          {
+            "lemma": "cost",
+            "inflected": "cost",
+            "semantic_sim": 0.9873,
+            "accepted": true
+          },
+          {
+            "lemma": "pay",
+            "inflected": "pay",
+            "semantic_sim": 0.982,
+            "accepted": true
+          },
+          {
+            "lemma": "rates",
+            "inflected": "rates",
+            "semantic_sim": 0.9865,
+            "accepted": true
+          },
+          {
+            "lemma": "inflation",
+            "inflected": "inflation",
+            "semantic_sim": 0.9887,
+            "accepted": true
+          },
+          {
+            "lemma": "purchase",
+            "inflected": "purchase",
+            "semantic_sim": 0.9824,
+            "accepted": true
+          },
+          {
+            "lemma": "charge",
+            "inflected": "charge",
+            "semantic_sim": 0.9782,
+            "accepted": true
+          },
+          {
+            "lemma": "sale",
+            "inflected": "sale",
+            "semantic_sim": 0.9763,
+            "accepted": true
+          },
+          {
+            "lemma": "discount",
+            "inflected": "discount",
+            "semantic_sim": 0.9622,
+            "accepted": true
+          },
+          {
+            "lemma": "invoice",
+            "inflected": "invoice",
+            "semantic_sim": 0.9531,
+            "accepted": true
+          },
+          {
+            "lemma": "tariff",
+            "inflected": "tariff",
+            "semantic_sim": 0.9452,
+            "accepted": true
+          },
+          {
+            "lemma": "toll",
+            "inflected": "toll",
+            "semantic_sim": 0.9289,
+            "accepted": true
+          },
+          {
+            "lemma": "damage",
+            "inflected": "damage",
+            "semantic_sim": 0.9197,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-058-core-word",
+    "original_text": "The negative effects would include an increase in the opportunity cost of holding money.",
+    "reformulated_text": "The bad effects would include an change in the opportunity cost of holding money.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 1,
+        "span_text": "negative",
+        "original": "negative",
+        "replacement": "bad",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9351,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.453,
+          "difficulty_after": 0.4213,
+          "contextual_fit": 0.00013229282922111452
+        }
+      },
+      {
+        "sentence_index": 0,
+        "position": 6,
+        "span_text": "increase",
+        "original": "increase",
+        "replacement": "change",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9246,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.2323,
+          "difficulty_after": 0.4209,
+          "contextual_fit": 7.866239684517495e-06
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "negative",
+        "base_lemma": "negative",
+        "chosen_replacement": "bad",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "bad",
+            "inflected": "bad",
+            "semantic_sim": 0.9351,
+            "accepted": true
+          },
+          {
+            "lemma": "minus",
+            "inflected": "minus",
+            "semantic_sim": 0.9253,
+            "accepted": true
+          },
+          {
+            "lemma": "damaging",
+            "inflected": "damaging",
+            "semantic_sim": 0.8963,
+            "accepted": true
+          },
+          {
+            "lemma": "harmful",
+            "inflected": "harmful",
+            "semantic_sim": 0.8927,
+            "accepted": true
+          },
+          {
+            "lemma": "backward",
+            "inflected": "backward",
+            "semantic_sim": 0.8782,
+            "accepted": true
+          },
+          {
+            "lemma": "counter",
+            "inflected": "counter",
+            "semantic_sim": 0.8533,
+            "accepted": true
+          },
+          {
+            "lemma": "perverse",
+            "inflected": "perverse",
+            "semantic_sim": 0.8626,
+            "accepted": true
+          },
+          {
+            "lemma": "destructive",
+            "inflected": "destructive",
+            "semantic_sim": 0.8397,
+            "accepted": false
+          },
+          {
+            "lemma": "dissident",
+            "inflected": "dissident",
+            "semantic_sim": 0.834,
+            "accepted": false
+          },
+          {
+            "lemma": "dissenting",
+            "inflected": "dissenting",
+            "semantic_sim": 0.8268,
+            "accepted": false
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "bad",
+            "inflected": "bad",
+            "semantic_sim": 0.9351,
+            "accepted": true
+          },
+          {
+            "lemma": "minus",
+            "inflected": "minus",
+            "semantic_sim": 0.9253,
+            "accepted": true
+          },
+          {
+            "lemma": "damaging",
+            "inflected": "damaging",
+            "semantic_sim": 0.8963,
+            "accepted": true
+          },
+          {
+            "lemma": "harmful",
+            "inflected": "harmful",
+            "semantic_sim": 0.8927,
+            "accepted": true
+          },
+          {
+            "lemma": "antagonistic",
+            "inflected": "antagonistic",
+            "semantic_sim": 0.8999,
+            "accepted": true
+          },
+          {
+            "lemma": "backward",
+            "inflected": "backward",
+            "semantic_sim": 0.8782,
+            "accepted": true
+          },
+          {
+            "lemma": "disadvantageous",
+            "inflected": "disadvantageous",
+            "semantic_sim": 0.8817,
+            "accepted": true
+          },
+          {
+            "lemma": "counter",
+            "inflected": "counter",
+            "semantic_sim": 0.8533,
+            "accepted": true
+          },
+          {
+            "lemma": "perverse",
+            "inflected": "perverse",
+            "semantic_sim": 0.8626,
+            "accepted": true
+          },
+          {
+            "lemma": "destructive",
+            "inflected": "destructive",
+            "semantic_sim": 0.8397,
+            "accepted": false
+          },
+          {
+            "lemma": "dissident",
+            "inflected": "dissident",
+            "semantic_sim": 0.834,
+            "accepted": false
+          },
+          {
+            "lemma": "dismissive",
+            "inflected": "dismissive",
+            "semantic_sim": 0.8331,
+            "accepted": false
+          },
+          {
+            "lemma": "dissenting",
+            "inflected": "dissenting",
+            "semantic_sim": 0.8268,
+            "accepted": false
+          }
+        ]
+      },
+      {
+        "tier": "substitution",
+        "original_word": "increase",
+        "base_lemma": "increase",
+        "chosen_replacement": "change",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "change",
+            "inflected": "change",
+            "semantic_sim": 0.9862,
+            "accepted": true
+          },
+          {
+            "lemma": "addition",
+            "inflected": "addition",
+            "semantic_sim": 0.9826,
+            "accepted": true
+          },
+          {
+            "lemma": "gain",
+            "inflected": "gain",
+            "semantic_sim": 0.9774,
+            "accepted": true
+          },
+          {
+            "lemma": "growth",
+            "inflected": "growth",
+            "semantic_sim": 0.9706,
+            "accepted": true
+          },
+          {
+            "lemma": "growing",
+            "inflected": "growing",
+            "semantic_sim": 0.9704,
+            "accepted": true
+          },
+          {
+            "lemma": "modification",
+            "inflected": "modification",
+            "semantic_sim": 0.9725,
+            "accepted": true
+          },
+          {
+            "lemma": "step-up",
+            "inflected": "step-up",
+            "semantic_sim": 0.9581,
+            "accepted": true
+          },
+          {
+            "lemma": "alteration",
+            "inflected": "alteration",
+            "semantic_sim": 0.9765,
+            "accepted": true
+          },
+          {
+            "lemma": "enlargement",
+            "inflected": "enlargement",
+            "semantic_sim": 0.9668,
+            "accepted": true
+          },
+          {
+            "lemma": "amplification",
+            "inflected": "amplification",
+            "semantic_sim": 0.9261,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "change",
+            "inflected": "change",
+            "semantic_sim": 0.9862,
+            "accepted": true
+          },
+          {
+            "lemma": "addition",
+            "inflected": "addition",
+            "semantic_sim": 0.9826,
+            "accepted": true
+          },
+          {
+            "lemma": "gain",
+            "inflected": "gain",
+            "semantic_sim": 0.9774,
+            "accepted": true
+          },
+          {
+            "lemma": "growth",
+            "inflected": "growth",
+            "semantic_sim": 0.9706,
+            "accepted": true
+          },
+          {
+            "lemma": "growing",
+            "inflected": "growing",
+            "semantic_sim": 0.9704,
+            "accepted": true
+          },
+          {
+            "lemma": "modification",
+            "inflected": "modification",
+            "semantic_sim": 0.9725,
+            "accepted": true
+          },
+          {
+            "lemma": "step-up",
+            "inflected": "step-up",
+            "semantic_sim": 0.9581,
+            "accepted": true
+          },
+          {
+            "lemma": "alteration",
+            "inflected": "alteration",
+            "semantic_sim": 0.9765,
+            "accepted": true
+          },
+          {
+            "lemma": "enlargement",
+            "inflected": "enlargement",
+            "semantic_sim": 0.9668,
+            "accepted": true
+          },
+          {
+            "lemma": "increment",
+            "inflected": "increment",
+            "semantic_sim": 0.9661,
+            "accepted": true
+          },
+          {
+            "lemma": "amplification",
+            "inflected": "amplification",
+            "semantic_sim": 0.9261,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-060-core-dense_mixed_generic",
+    "original_text": "Low inflation reduces the likelihood of economic recessions by enabling the labor market to adjust more quickly.",
+    "reformulated_text": "Low inflation decreases the likelihood of economic crises by enabling the labor market to adjust more quickly.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 2,
+        "span_text": "reduces",
+        "original": "reduces",
+        "replacement": "decreases",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9877,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.4878,
+          "difficulty_after": 0.6528,
+          "contextual_fit": 0.048269666731357574
+        }
+      },
+      {
+        "sentence_index": 0,
+        "position": 7,
+        "span_text": "recessions",
+        "original": "recessions",
+        "replacement": "crises",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9408,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.5426,
+          "difficulty_after": 0.7137,
+          "contextual_fit": 0.03236978128552437
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "reduces",
+        "base_lemma": "reduce",
+        "chosen_replacement": "decreases",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "decrease",
+            "inflected": "decreases",
+            "semantic_sim": 0.9877,
+            "accepted": true
+          },
+          {
+            "lemma": "cut",
+            "inflected": "cuts",
+            "semantic_sim": 0.9749,
+            "accepted": true
+          },
+          {
+            "lemma": "concentrate",
+            "inflected": "concentrates",
+            "semantic_sim": 0.97,
+            "accepted": true
+          },
+          {
+            "lemma": "shrink",
+            "inflected": "shrinks",
+            "semantic_sim": 0.9735,
+            "accepted": true
+          },
+          {
+            "lemma": "tighten",
+            "inflected": "tightens",
+            "semantic_sim": 0.9684,
+            "accepted": true
+          },
+          {
+            "lemma": "simplify",
+            "inflected": "simplifies",
+            "semantic_sim": 0.9683,
+            "accepted": true
+          },
+          {
+            "lemma": "thin",
+            "inflected": "thins",
+            "semantic_sim": 0.9507,
+            "accepted": true
+          },
+          {
+            "lemma": "trim",
+            "inflected": "trims",
+            "semantic_sim": 0.9543,
+            "accepted": true
+          },
+          {
+            "lemma": "contract",
+            "inflected": "contracts",
+            "semantic_sim": 0.9391,
+            "accepted": true
+          },
+          {
+            "lemma": "slim",
+            "inflected": "slims",
+            "semantic_sim": 0.9373,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "decrease",
+            "inflected": "decreases",
+            "semantic_sim": 0.9877,
+            "accepted": true
+          },
+          {
+            "lemma": "cut",
+            "inflected": "cuts",
+            "semantic_sim": 0.9749,
+            "accepted": true
+          },
+          {
+            "lemma": "lessen",
+            "inflected": "lessens",
+            "semantic_sim": 0.982,
+            "accepted": true
+          },
+          {
+            "lemma": "shorten",
+            "inflected": "shortens",
+            "semantic_sim": 0.9805,
+            "accepted": true
+          },
+          {
+            "lemma": "concentrate",
+            "inflected": "concentrates",
+            "semantic_sim": 0.97,
+            "accepted": true
+          },
+          {
+            "lemma": "shrink",
+            "inflected": "shrinks",
+            "semantic_sim": 0.9735,
+            "accepted": true
+          },
+          {
+            "lemma": "repress",
+            "inflected": "represses",
+            "semantic_sim": 0.9814,
+            "accepted": true
+          },
+          {
+            "lemma": "tighten",
+            "inflected": "tightens",
+            "semantic_sim": 0.9684,
+            "accepted": true
+          },
+          {
+            "lemma": "simplify",
+            "inflected": "simplifies",
+            "semantic_sim": 0.9683,
+            "accepted": true
+          },
+          {
+            "lemma": "thin",
+            "inflected": "thins",
+            "semantic_sim": 0.9507,
+            "accepted": true
+          },
+          {
+            "lemma": "trim",
+            "inflected": "trims",
+            "semantic_sim": 0.9543,
+            "accepted": true
+          },
+          {
+            "lemma": "quash",
+            "inflected": "quashes",
+            "semantic_sim": 0.9669,
+            "accepted": true
+          },
+          {
+            "lemma": "contract",
+            "inflected": "contracts",
+            "semantic_sim": 0.9391,
+            "accepted": true
+          },
+          {
+            "lemma": "subdue",
+            "inflected": "subdues",
+            "semantic_sim": 0.9563,
+            "accepted": true
+          },
+          {
+            "lemma": "dilute",
+            "inflected": "dilutes",
+            "semantic_sim": 0.9541,
+            "accepted": true
+          },
+          {
+            "lemma": "slim",
+            "inflected": "slims",
+            "semantic_sim": 0.9373,
+            "accepted": true
+          },
+          {
+            "lemma": "abbreviate",
+            "inflected": "abbreviates",
+            "semantic_sim": 0.9413,
+            "accepted": true
+          },
+          {
+            "lemma": "subjugate",
+            "inflected": "subjugates",
+            "semantic_sim": 0.935,
+            "accepted": true
+          }
+        ]
+      },
+      {
+        "tier": "substitution",
+        "original_word": "recessions",
+        "base_lemma": "recession",
+        "chosen_replacement": "crises",
+        "chosen_rank_in_production_pool": 1,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "economy",
+            "inflected": "economies",
+            "semantic_sim": 0.9597,
+            "accepted": true
+          },
+          {
+            "lemma": "crisis",
+            "inflected": "crises",
+            "semantic_sim": 0.9588,
+            "accepted": true
+          },
+          {
+            "lemma": "corner",
+            "inflected": "corners",
+            "semantic_sim": 0.9332,
+            "accepted": true
+          },
+          {
+            "lemma": "contraction",
+            "inflected": "contractions",
+            "semantic_sim": 0.943,
+            "accepted": true
+          },
+          {
+            "lemma": "receding",
+            "inflected": "recedings",
+            "semantic_sim": 0.9444,
+            "accepted": true
+          },
+          {
+            "lemma": "regression",
+            "inflected": "regressions",
+            "semantic_sim": 0.9356,
+            "accepted": true
+          },
+          {
+            "lemma": "retreat",
+            "inflected": "retreats",
+            "semantic_sim": 0.9258,
+            "accepted": true
+          },
+          {
+            "lemma": "niche",
+            "inflected": "niches",
+            "semantic_sim": 0.9267,
+            "accepted": true
+          },
+          {
+            "lemma": "flat",
+            "inflected": "flats",
+            "semantic_sim": 0.8987,
+            "accepted": true
+          },
+          {
+            "lemma": "recess",
+            "inflected": "recesses",
+            "semantic_sim": 0.9008,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "economy",
+            "inflected": "economies",
+            "semantic_sim": 0.9597,
+            "accepted": true
+          },
+          {
+            "lemma": "crisis",
+            "inflected": "crises",
+            "semantic_sim": 0.9588,
+            "accepted": true
+          },
+          {
+            "lemma": "corner",
+            "inflected": "corners",
+            "semantic_sim": 0.9332,
+            "accepted": true
+          },
+          {
+            "lemma": "contraction",
+            "inflected": "contractions",
+            "semantic_sim": 0.943,
+            "accepted": true
+          },
+          {
+            "lemma": "receding",
+            "inflected": "recedings",
+            "semantic_sim": 0.9444,
+            "accepted": true
+          },
+          {
+            "lemma": "regression",
+            "inflected": "regressions",
+            "semantic_sim": 0.9356,
+            "accepted": true
+          },
+          {
+            "lemma": "regress",
+            "inflected": "regresses",
+            "semantic_sim": 0.9467,
+            "accepted": true
+          },
+          {
+            "lemma": "retreat",
+            "inflected": "retreats",
+            "semantic_sim": 0.9258,
+            "accepted": true
+          },
+          {
+            "lemma": "niche",
+            "inflected": "niches",
+            "semantic_sim": 0.9267,
+            "accepted": true
+          },
+          {
+            "lemma": "flat",
+            "inflected": "flats",
+            "semantic_sim": 0.8987,
+            "accepted": true
+          },
+          {
+            "lemma": "recess",
+            "inflected": "recesses",
+            "semantic_sim": 0.9008,
+            "accepted": true
+          },
+          {
+            "lemma": "deflation",
+            "inflected": "deflations",
+            "semantic_sim": 0.9082,
+            "accepted": true
+          },
+          {
+            "lemma": "backspace",
+            "inflected": "backspaces",
+            "semantic_sim": 0.9078,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-061-calib-single_word",
+    "original_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+    "reformulated_text": "Civil engineering is a professional engineering discipline that deals with the design, expression, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 13,
+        "span_text": "construction",
+        "original": "construction",
+        "replacement": "expression",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9989,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.5953,
+          "difficulty_after": 0.33,
+          "contextual_fit": 2.70245254796464e-05
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "construction",
+        "base_lemma": "construction",
+        "chosen_replacement": "expression",
+        "chosen_rank_in_production_pool": 3,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "business",
+            "inflected": "business",
+            "semantic_sim": 0.9992,
+            "accepted": true
+          },
+          {
+            "lemma": "building",
+            "inflected": "building",
+            "semantic_sim": 0.9997,
+            "accepted": true
+          },
+          {
+            "lemma": "structure",
+            "inflected": "structure",
+            "semantic_sim": 0.9994,
+            "accepted": true
+          },
+          {
+            "lemma": "expression",
+            "inflected": "expression",
+            "semantic_sim": 0.9989,
+            "accepted": true
+          },
+          {
+            "lemma": "architecture",
+            "inflected": "architecture",
+            "semantic_sim": 0.9993,
+            "accepted": true
+          },
+          {
+            "lemma": "architect",
+            "inflected": "architect",
+            "semantic_sim": 0.9991,
+            "accepted": true
+          },
+          {
+            "lemma": "contractor",
+            "inflected": "contractor",
+            "semantic_sim": 0.9986,
+            "accepted": true
+          },
+          {
+            "lemma": "twist",
+            "inflected": "twist",
+            "semantic_sim": 0.9965,
+            "accepted": true
+          },
+          {
+            "lemma": "builder",
+            "inflected": "builder",
+            "semantic_sim": 0.9996,
+            "accepted": true
+          },
+          {
+            "lemma": "workmanship",
+            "inflected": "workmanship",
+            "semantic_sim": 0.9985,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "business",
+            "inflected": "business",
+            "semantic_sim": 0.9992,
+            "accepted": true
+          },
+          {
+            "lemma": "building",
+            "inflected": "building",
+            "semantic_sim": 0.9997,
+            "accepted": true
+          },
+          {
+            "lemma": "structure",
+            "inflected": "structure",
+            "semantic_sim": 0.9994,
+            "accepted": true
+          },
+          {
+            "lemma": "expression",
+            "inflected": "expression",
+            "semantic_sim": 0.9989,
+            "accepted": true
+          },
+          {
+            "lemma": "architecture",
+            "inflected": "architecture",
+            "semantic_sim": 0.9993,
+            "accepted": true
+          },
+          {
+            "lemma": "architect",
+            "inflected": "architect",
+            "semantic_sim": 0.9991,
+            "accepted": true
+          },
+          {
+            "lemma": "contractor",
+            "inflected": "contractor",
+            "semantic_sim": 0.9986,
+            "accepted": true
+          },
+          {
+            "lemma": "twist",
+            "inflected": "twist",
+            "semantic_sim": 0.9965,
+            "accepted": true
+          },
+          {
+            "lemma": "builder",
+            "inflected": "builder",
+            "semantic_sim": 0.9996,
+            "accepted": true
+          },
+          {
+            "lemma": "workmanship",
+            "inflected": "workmanship",
+            "semantic_sim": 0.9985,
+            "accepted": true
+          },
+          {
+            "lemma": "edifice",
+            "inflected": "edifice",
+            "semantic_sim": 0.9985,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-061-calib-word_plus_sound",
+    "original_text": "Civil engineering is a professional engineering discipline that deals with the design, construction, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+    "reformulated_text": "Civil engineering is a paid engineering discipline that deals with the design, expression, and maintenance of the physical and naturally built environment, including public works such as roads, bridges, canals, dams, airports, sewage systems, pipelines, structural components of buildings, and railways.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 4,
+        "span_text": "professional",
+        "original": "professional",
+        "replacement": "paid",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9811,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.8002,
+          "difficulty_after": 0.4389,
+          "contextual_fit": 1.8422784364702238e-07
+        }
+      },
+      {
+        "sentence_index": 0,
+        "position": 13,
+        "span_text": "construction",
+        "original": "construction",
+        "replacement": "expression",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.981,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.5953,
+          "difficulty_after": 0.33,
+          "contextual_fit": 3.214222670067102e-05
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "professional",
+        "base_lemma": "professional",
+        "chosen_replacement": "paid",
+        "chosen_rank_in_production_pool": 2,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "pro",
+            "inflected": "pro",
+            "semantic_sim": 0.99,
+            "accepted": true
+          },
+          {
+            "lemma": "expert",
+            "inflected": "expert",
+            "semantic_sim": 0.9869,
+            "accepted": true
+          },
+          {
+            "lemma": "paid",
+            "inflected": "paid",
+            "semantic_sim": 0.9811,
+            "accepted": true
+          },
+          {
+            "lemma": "trained",
+            "inflected": "trained",
+            "semantic_sim": 0.9835,
+            "accepted": true
+          },
+          {
+            "lemma": "master",
+            "inflected": "master",
+            "semantic_sim": 0.9795,
+            "accepted": true
+          },
+          {
+            "lemma": "occupational",
+            "inflected": "occupational",
+            "semantic_sim": 0.9885,
+            "accepted": true
+          },
+          {
+            "lemma": "vocational",
+            "inflected": "vocational",
+            "semantic_sim": 0.9871,
+            "accepted": true
+          },
+          {
+            "lemma": "professed",
+            "inflected": "professed",
+            "semantic_sim": 0.9931,
+            "accepted": true
+          },
+          {
+            "lemma": "white-collar",
+            "inflected": "white-collar",
+            "semantic_sim": 0.9639,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "pro",
+            "inflected": "pro",
+            "semantic_sim": 0.99,
+            "accepted": true
+          },
+          {
+            "lemma": "expert",
+            "inflected": "expert",
+            "semantic_sim": 0.9869,
+            "accepted": true
+          },
+          {
+            "lemma": "paid",
+            "inflected": "paid",
+            "semantic_sim": 0.9811,
+            "accepted": true
+          },
+          {
+            "lemma": "trained",
+            "inflected": "trained",
+            "semantic_sim": 0.9835,
+            "accepted": true
+          },
+          {
+            "lemma": "master",
+            "inflected": "master",
+            "semantic_sim": 0.9795,
+            "accepted": true
+          },
+          {
+            "lemma": "occupational",
+            "inflected": "occupational",
+            "semantic_sim": 0.9885,
+            "accepted": true
+          },
+          {
+            "lemma": "vocational",
+            "inflected": "vocational",
+            "semantic_sim": 0.9871,
+            "accepted": true
+          },
+          {
+            "lemma": "professed",
+            "inflected": "professed",
+            "semantic_sim": 0.9931,
+            "accepted": true
+          },
+          {
+            "lemma": "white-collar",
+            "inflected": "white-collar",
+            "semantic_sim": 0.9639,
+            "accepted": true
+          }
+        ]
+      },
+      {
+        "tier": "substitution",
+        "original_word": "construction",
+        "base_lemma": "construction",
+        "chosen_replacement": "expression",
+        "chosen_rank_in_production_pool": 3,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "business",
+            "inflected": "business",
+            "semantic_sim": 0.9992,
+            "accepted": true
+          },
+          {
+            "lemma": "building",
+            "inflected": "building",
+            "semantic_sim": 0.9997,
+            "accepted": true
+          },
+          {
+            "lemma": "structure",
+            "inflected": "structure",
+            "semantic_sim": 0.9994,
+            "accepted": true
+          },
+          {
+            "lemma": "expression",
+            "inflected": "expression",
+            "semantic_sim": 0.9989,
+            "accepted": true
+          },
+          {
+            "lemma": "architecture",
+            "inflected": "architecture",
+            "semantic_sim": 0.9993,
+            "accepted": true
+          },
+          {
+            "lemma": "architect",
+            "inflected": "architect",
+            "semantic_sim": 0.9991,
+            "accepted": true
+          },
+          {
+            "lemma": "contractor",
+            "inflected": "contractor",
+            "semantic_sim": 0.9986,
+            "accepted": true
+          },
+          {
+            "lemma": "twist",
+            "inflected": "twist",
+            "semantic_sim": 0.9965,
+            "accepted": true
+          },
+          {
+            "lemma": "builder",
+            "inflected": "builder",
+            "semantic_sim": 0.9996,
+            "accepted": true
+          },
+          {
+            "lemma": "workmanship",
+            "inflected": "workmanship",
+            "semantic_sim": 0.9985,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "business",
+            "inflected": "business",
+            "semantic_sim": 0.9992,
+            "accepted": true
+          },
+          {
+            "lemma": "building",
+            "inflected": "building",
+            "semantic_sim": 0.9997,
+            "accepted": true
+          },
+          {
+            "lemma": "structure",
+            "inflected": "structure",
+            "semantic_sim": 0.9994,
+            "accepted": true
+          },
+          {
+            "lemma": "expression",
+            "inflected": "expression",
+            "semantic_sim": 0.9989,
+            "accepted": true
+          },
+          {
+            "lemma": "architecture",
+            "inflected": "architecture",
+            "semantic_sim": 0.9993,
+            "accepted": true
+          },
+          {
+            "lemma": "architect",
+            "inflected": "architect",
+            "semantic_sim": 0.9991,
+            "accepted": true
+          },
+          {
+            "lemma": "contractor",
+            "inflected": "contractor",
+            "semantic_sim": 0.9986,
+            "accepted": true
+          },
+          {
+            "lemma": "twist",
+            "inflected": "twist",
+            "semantic_sim": 0.9965,
+            "accepted": true
+          },
+          {
+            "lemma": "builder",
+            "inflected": "builder",
+            "semantic_sim": 0.9996,
+            "accepted": true
+          },
+          {
+            "lemma": "workmanship",
+            "inflected": "workmanship",
+            "semantic_sim": 0.9985,
+            "accepted": true
+          },
+          {
+            "lemma": "edifice",
+            "inflected": "edifice",
+            "semantic_sim": 0.9985,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-064-core-word",
+    "original_text": "The first self-proclaimed civil engineer was John Smeaton, who constructed the Eddystone Lighthouse.",
+    "reformulated_text": "The first self-made civil engineer was John Smeaton, who built the Eddystone Lighthouse.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 2,
+        "span_text": "self-proclaimed",
+        "original": "self-proclaimed",
+        "replacement": "self-made",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.984,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.5722,
+          "difficulty_after": 0.4368,
+          "contextual_fit": 0.36490290037666756
+        }
+      },
+      {
+        "sentence_index": 0,
+        "position": 10,
+        "span_text": "constructed",
+        "original": "constructed",
+        "replacement": "built",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9826,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.6245,
+          "difficulty_after": 0.441,
+          "contextual_fit": 0.207559734582901
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "self-proclaimed",
+        "base_lemma": "self-proclaimed",
+        "chosen_replacement": "self-made",
+        "chosen_rank_in_production_pool": 1,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "so-called",
+            "inflected": "so-called",
+            "semantic_sim": 0.9841,
+            "accepted": true
+          },
+          {
+            "lemma": "self-made",
+            "inflected": "self-made",
+            "semantic_sim": 0.984,
+            "accepted": true
+          },
+          {
+            "lemma": "supposed",
+            "inflected": "supposed",
+            "semantic_sim": 0.9812,
+            "accepted": true
+          },
+          {
+            "lemma": "self-styled",
+            "inflected": "self-styled",
+            "semantic_sim": 0.9901,
+            "accepted": true
+          },
+          {
+            "lemma": "declared",
+            "inflected": "declared",
+            "semantic_sim": 0.9802,
+            "accepted": true
+          },
+          {
+            "lemma": "self-appointed",
+            "inflected": "self-appointed",
+            "semantic_sim": 0.9782,
+            "accepted": true
+          },
+          {
+            "lemma": "self-educated",
+            "inflected": "self-educated",
+            "semantic_sim": 0.9756,
+            "accepted": true
+          },
+          {
+            "lemma": "alleged",
+            "inflected": "alleged",
+            "semantic_sim": 0.9738,
+            "accepted": true
+          },
+          {
+            "lemma": "anonymous",
+            "inflected": "anonymous",
+            "semantic_sim": 0.9528,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "so-called",
+            "inflected": "so-called",
+            "semantic_sim": 0.9841,
+            "accepted": true
+          },
+          {
+            "lemma": "self-made",
+            "inflected": "self-made",
+            "semantic_sim": 0.984,
+            "accepted": true
+          },
+          {
+            "lemma": "supposed",
+            "inflected": "supposed",
+            "semantic_sim": 0.9812,
+            "accepted": true
+          },
+          {
+            "lemma": "self-styled",
+            "inflected": "self-styled",
+            "semantic_sim": 0.9901,
+            "accepted": true
+          },
+          {
+            "lemma": "declared",
+            "inflected": "declared",
+            "semantic_sim": 0.9802,
+            "accepted": true
+          },
+          {
+            "lemma": "self-appointed",
+            "inflected": "self-appointed",
+            "semantic_sim": 0.9782,
+            "accepted": true
+          },
+          {
+            "lemma": "self-educated",
+            "inflected": "self-educated",
+            "semantic_sim": 0.9756,
+            "accepted": true
+          },
+          {
+            "lemma": "alleged",
+            "inflected": "alleged",
+            "semantic_sim": 0.9738,
+            "accepted": true
+          },
+          {
+            "lemma": "anonymous",
+            "inflected": "anonymous",
+            "semantic_sim": 0.9528,
+            "accepted": true
+          }
+        ]
+      },
+      {
+        "tier": "substitution",
+        "original_word": "constructed",
+        "base_lemma": "construct",
+        "chosen_replacement": "built",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "build",
+            "inflected": "built",
+            "semantic_sim": 0.9981,
+            "accepted": true
+          },
+          {
+            "lemma": "structure",
+            "inflected": "structured",
+            "semantic_sim": 0.9921,
+            "accepted": true
+          },
+          {
+            "lemma": "produce",
+            "inflected": "produced",
+            "semantic_sim": 0.9868,
+            "accepted": true
+          },
+          {
+            "lemma": "determine",
+            "inflected": "determined",
+            "semantic_sim": 0.9862,
+            "accepted": true
+          },
+          {
+            "lemma": "generate",
+            "inflected": "generated",
+            "semantic_sim": 0.987,
+            "accepted": true
+          },
+          {
+            "lemma": "manufacture",
+            "inflected": "manufactured",
+            "semantic_sim": 0.9881,
+            "accepted": true
+          },
+          {
+            "lemma": "assemble",
+            "inflected": "assembled",
+            "semantic_sim": 0.9893,
+            "accepted": true
+          },
+          {
+            "lemma": "fabricate",
+            "inflected": "fabricated",
+            "semantic_sim": 0.9854,
+            "accepted": true
+          },
+          {
+            "lemma": "reconstruct",
+            "inflected": "reconstructed",
+            "semantic_sim": 0.9776,
+            "accepted": true
+          },
+          {
+            "lemma": "retrace",
+            "inflected": "retraced",
+            "semantic_sim": 0.9729,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "build",
+            "inflected": "built",
+            "semantic_sim": 0.9981,
+            "accepted": true
+          },
+          {
+            "lemma": "structure",
+            "inflected": "structured",
+            "semantic_sim": 0.9921,
+            "accepted": true
+          },
+          {
+            "lemma": "produce",
+            "inflected": "produced",
+            "semantic_sim": 0.9868,
+            "accepted": true
+          },
+          {
+            "lemma": "determine",
+            "inflected": "determined",
+            "semantic_sim": 0.9862,
+            "accepted": true
+          },
+          {
+            "lemma": "generate",
+            "inflected": "generated",
+            "semantic_sim": 0.987,
+            "accepted": true
+          },
+          {
+            "lemma": "manufacture",
+            "inflected": "manufactured",
+            "semantic_sim": 0.9881,
+            "accepted": true
+          },
+          {
+            "lemma": "assemble",
+            "inflected": "assembled",
+            "semantic_sim": 0.9893,
+            "accepted": true
+          },
+          {
+            "lemma": "fabricate",
+            "inflected": "fabricated",
+            "semantic_sim": 0.9854,
+            "accepted": true
+          },
+          {
+            "lemma": "reconstruct",
+            "inflected": "reconstructed",
+            "semantic_sim": 0.9776,
+            "accepted": true
+          },
+          {
+            "lemma": "retrace",
+            "inflected": "retraced",
+            "semantic_sim": 0.9729,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-065-core-word",
+    "original_text": "General civil engineers work closely with surveyors and specialized civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communications supply.",
+    "reformulated_text": "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communication supply.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "General civil engineers work closely with surveyors and specialized civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communications supply.",
+        "original": "General civil engineers work closely with surveyors and specialized civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communications supply.",
+        "replacement": "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communication supply.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.9775,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.4276,
+          "difficulty_after": 0.4176,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "error": "'DifficultyEntry' object has no attribute 'lower'",
+        "source": "restructuring"
+      }
+    ]
+  },
+  {
+    "run_id": "R10-070-core-word",
+    "original_text": "Honestly, I don't think that restaurant is as good as everyone says.",
+    "reformulated_text": "Honestly, I don't think that restaurants are as good as everybody says.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Honestly, I don't think that restaurant is as good as everyone says.",
+        "original": "Honestly, I don't think that restaurant is as good as everyone says.",
+        "replacement": "Honestly, I don't think that restaurants are as good as everybody says.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.93,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.2619,
+          "difficulty_after": 0.2717,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "error": "'DifficultyEntry' object has no attribute 'lower'",
+        "source": "restructuring"
+      }
+    ]
+  },
+  {
+    "run_id": "R10-071-core-word",
+    "original_text": "We haven't decided yet whether we're driving or taking the train.",
+    "reformulated_text": "We haven't chosen yet whether we're riding or taking the train.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 3,
+        "span_text": "decided",
+        "original": "decided",
+        "replacement": "chosen",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9366,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.5902,
+          "difficulty_after": 0.5358,
+          "contextual_fit": 0.00012540121679194272
+        }
+      },
+      {
+        "sentence_index": 0,
+        "position": 8,
+        "span_text": "driving",
+        "original": "driving",
+        "replacement": "riding",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.8555,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.6567,
+          "difficulty_after": 0.3909,
+          "contextual_fit": 0.022407734766602516
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "decided",
+        "base_lemma": "decide",
+        "chosen_replacement": "chosen",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "choose",
+            "inflected": "chosen",
+            "semantic_sim": 0.9366,
+            "accepted": true
+          },
+          {
+            "lemma": "choosing",
+            "inflected": "choosing",
+            "semantic_sim": 0.932,
+            "accepted": true
+          },
+          {
+            "lemma": "determined",
+            "inflected": "determined",
+            "semantic_sim": 0.9209,
+            "accepted": true
+          },
+          {
+            "lemma": "determine",
+            "inflected": "determined",
+            "semantic_sim": 0.9209,
+            "accepted": true
+          },
+          {
+            "lemma": "select",
+            "inflected": "selected",
+            "semantic_sim": 0.9065,
+            "accepted": true
+          },
+          {
+            "lemma": "declare",
+            "inflected": "declared",
+            "semantic_sim": 0.8914,
+            "accepted": true
+          },
+          {
+            "lemma": "settle",
+            "inflected": "settled",
+            "semantic_sim": 0.8824,
+            "accepted": true
+          },
+          {
+            "lemma": "resolve",
+            "inflected": "resolved",
+            "semantic_sim": 0.8622,
+            "accepted": true
+          },
+          {
+            "lemma": "solve",
+            "inflected": "solved",
+            "semantic_sim": 0.8218,
+            "accepted": false
+          },
+          {
+            "lemma": "elect",
+            "inflected": "elected",
+            "semantic_sim": 0.8052,
+            "accepted": false
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "choose",
+            "inflected": "chosen",
+            "semantic_sim": 0.9366,
+            "accepted": true
+          },
+          {
+            "lemma": "choosing",
+            "inflected": "choosing",
+            "semantic_sim": 0.932,
+            "accepted": true
+          },
+          {
+            "lemma": "determined",
+            "inflected": "determined",
+            "semantic_sim": 0.9209,
+            "accepted": true
+          },
+          {
+            "lemma": "determine",
+            "inflected": "determined",
+            "semantic_sim": 0.9209,
+            "accepted": true
+          },
+          {
+            "lemma": "select",
+            "inflected": "selected",
+            "semantic_sim": 0.9065,
+            "accepted": true
+          },
+          {
+            "lemma": "declare",
+            "inflected": "declared",
+            "semantic_sim": 0.8914,
+            "accepted": true
+          },
+          {
+            "lemma": "opt",
+            "inflected": "opted",
+            "semantic_sim": 0.893,
+            "accepted": true
+          },
+          {
+            "lemma": "settle",
+            "inflected": "settled",
+            "semantic_sim": 0.8824,
+            "accepted": true
+          },
+          {
+            "lemma": "resolve",
+            "inflected": "resolved",
+            "semantic_sim": 0.8622,
+            "accepted": true
+          },
+          {
+            "lemma": "ascertain",
+            "inflected": "ascertained",
+            "semantic_sim": 0.866,
+            "accepted": true
+          },
+          {
+            "lemma": "solve",
+            "inflected": "solved",
+            "semantic_sim": 0.8218,
+            "accepted": false
+          },
+          {
+            "lemma": "elect",
+            "inflected": "elected",
+            "semantic_sim": 0.8052,
+            "accepted": false
+          }
+        ]
+      },
+      {
+        "tier": "substitution",
+        "original_word": "driving",
+        "base_lemma": "drive",
+        "chosen_replacement": "riding",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "ride",
+            "inflected": "riding",
+            "semantic_sim": 0.9311,
+            "accepted": true
+          },
+          {
+            "lemma": "travel",
+            "inflected": "travelling",
+            "semantic_sim": 0.9236,
+            "accepted": true
+          },
+          {
+            "lemma": "go",
+            "inflected": "going",
+            "semantic_sim": 0.906,
+            "accepted": true
+          },
+          {
+            "lemma": "run",
+            "inflected": "running",
+            "semantic_sim": 0.8872,
+            "accepted": true
+          },
+          {
+            "lemma": "move",
+            "inflected": "moving",
+            "semantic_sim": 0.8874,
+            "accepted": true
+          },
+          {
+            "lemma": "cause",
+            "inflected": "causing",
+            "semantic_sim": 0.8751,
+            "accepted": true
+          },
+          {
+            "lemma": "push",
+            "inflected": "pushing",
+            "semantic_sim": 0.8162,
+            "accepted": false
+          },
+          {
+            "lemma": "campaign",
+            "inflected": "campaigning",
+            "semantic_sim": 0.8097,
+            "accepted": false
+          },
+          {
+            "lemma": "pull",
+            "inflected": "pulling",
+            "semantic_sim": 0.7806,
+            "accepted": false
+          },
+          {
+            "lemma": "force",
+            "inflected": "forcing",
+            "semantic_sim": 0.7192,
+            "accepted": false
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "ride",
+            "inflected": "riding",
+            "semantic_sim": 0.9311,
+            "accepted": true
+          },
+          {
+            "lemma": "travel",
+            "inflected": "travelling",
+            "semantic_sim": 0.9236,
+            "accepted": true
+          },
+          {
+            "lemma": "go",
+            "inflected": "going",
+            "semantic_sim": 0.906,
+            "accepted": true
+          },
+          {
+            "lemma": "motor",
+            "inflected": "motoring",
+            "semantic_sim": 0.9126,
+            "accepted": true
+          },
+          {
+            "lemma": "run",
+            "inflected": "running",
+            "semantic_sim": 0.8872,
+            "accepted": true
+          },
+          {
+            "lemma": "move",
+            "inflected": "moving",
+            "semantic_sim": 0.8874,
+            "accepted": true
+          },
+          {
+            "lemma": "cause",
+            "inflected": "causing",
+            "semantic_sim": 0.8751,
+            "accepted": true
+          },
+          {
+            "lemma": "labour",
+            "inflected": "labouring",
+            "semantic_sim": 0.835,
+            "accepted": false
+          },
+          {
+            "lemma": "labor",
+            "inflected": "laboring",
+            "semantic_sim": 0.8279,
+            "accepted": false
+          },
+          {
+            "lemma": "push",
+            "inflected": "pushing",
+            "semantic_sim": 0.8162,
+            "accepted": false
+          },
+          {
+            "lemma": "thrust",
+            "inflected": "thrusting",
+            "semantic_sim": 0.8249,
+            "accepted": false
+          },
+          {
+            "lemma": "campaign",
+            "inflected": "campaigning",
+            "semantic_sim": 0.8097,
+            "accepted": false
+          },
+          {
+            "lemma": "aim",
+            "inflected": "aiming",
+            "semantic_sim": 0.8095,
+            "accepted": false
+          },
+          {
+            "lemma": "pull",
+            "inflected": "pulling",
+            "semantic_sim": 0.7806,
+            "accepted": false
+          },
+          {
+            "lemma": "tug",
+            "inflected": "tugging",
+            "semantic_sim": 0.7824,
+            "accepted": false
+          },
+          {
+            "lemma": "ram",
+            "inflected": "ramming",
+            "semantic_sim": 0.766,
+            "accepted": false
+          },
+          {
+            "lemma": "repulse",
+            "inflected": "repulsing",
+            "semantic_sim": 0.7827,
+            "accepted": false
+          },
+          {
+            "lemma": "tool",
+            "inflected": "tooling",
+            "semantic_sim": 0.7446,
+            "accepted": false
+          },
+          {
+            "lemma": "force",
+            "inflected": "forcing",
+            "semantic_sim": 0.7192,
+            "accepted": false
+          },
+          {
+            "lemma": "crusade",
+            "inflected": "crusading",
+            "semantic_sim": 0.7342,
+            "accepted": false
+          },
+          {
+            "lemma": "repel",
+            "inflected": "repelling",
+            "semantic_sim": 0.737,
+            "accepted": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-073-calib-word_plus_sound",
+    "original_text": "The professor explained the concept twice before moving on to the next topic.",
+    "reformulated_text": "The teacher explained the concept twice before moving on to the next topic.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 1,
+        "span_text": "professor",
+        "original": "professor",
+        "replacement": "teacher",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word",
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.8771,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.7317,
+          "difficulty_after": 0.5242,
+          "contextual_fit": 0.001774225733242929
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "professor",
+        "base_lemma": "professor",
+        "chosen_replacement": "teacher",
+        "chosen_rank_in_production_pool": 2,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "prof",
+            "inflected": "prof",
+            "semantic_sim": 0.911,
+            "accepted": true
+          },
+          {
+            "lemma": "faculty",
+            "inflected": "faculty",
+            "semantic_sim": 0.8879,
+            "accepted": true
+          },
+          {
+            "lemma": "teacher",
+            "inflected": "teacher",
+            "semantic_sim": 0.8771,
+            "accepted": true
+          },
+          {
+            "lemma": "academic",
+            "inflected": "academic",
+            "semantic_sim": 0.8772,
+            "accepted": true
+          },
+          {
+            "lemma": "instructor",
+            "inflected": "instructor",
+            "semantic_sim": 0.8782,
+            "accepted": true
+          },
+          {
+            "lemma": "teaching",
+            "inflected": "teaching",
+            "semantic_sim": 0.8424,
+            "accepted": false
+          },
+          {
+            "lemma": "teach",
+            "inflected": "teach",
+            "semantic_sim": 0.8287,
+            "accepted": false
+          },
+          {
+            "lemma": "instruction",
+            "inflected": "instruction",
+            "semantic_sim": 0.8207,
+            "accepted": false
+          },
+          {
+            "lemma": "sir",
+            "inflected": "sir",
+            "semantic_sim": 0.7739,
+            "accepted": false
+          },
+          {
+            "lemma": "visiting",
+            "inflected": "visiting",
+            "semantic_sim": 0.6721,
+            "accepted": false
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "prof",
+            "inflected": "prof",
+            "semantic_sim": 0.911,
+            "accepted": true
+          },
+          {
+            "lemma": "lecturer",
+            "inflected": "lecturer",
+            "semantic_sim": 0.8981,
+            "accepted": true
+          },
+          {
+            "lemma": "faculty",
+            "inflected": "faculty",
+            "semantic_sim": 0.8879,
+            "accepted": true
+          },
+          {
+            "lemma": "teacher",
+            "inflected": "teacher",
+            "semantic_sim": 0.8771,
+            "accepted": true
+          },
+          {
+            "lemma": "academic",
+            "inflected": "academic",
+            "semantic_sim": 0.8772,
+            "accepted": true
+          },
+          {
+            "lemma": "instructor",
+            "inflected": "instructor",
+            "semantic_sim": 0.8782,
+            "accepted": true
+          },
+          {
+            "lemma": "tutor",
+            "inflected": "tutor",
+            "semantic_sim": 0.8518,
+            "accepted": true
+          },
+          {
+            "lemma": "teaching",
+            "inflected": "teaching",
+            "semantic_sim": 0.8424,
+            "accepted": false
+          },
+          {
+            "lemma": "teach",
+            "inflected": "teach",
+            "semantic_sim": 0.8287,
+            "accepted": false
+          },
+          {
+            "lemma": "instruction",
+            "inflected": "instruction",
+            "semantic_sim": 0.8207,
+            "accepted": false
+          },
+          {
+            "lemma": "educator",
+            "inflected": "educator",
+            "semantic_sim": 0.8268,
+            "accepted": false
+          },
+          {
+            "lemma": "scholar",
+            "inflected": "scholar",
+            "semantic_sim": 0.8186,
+            "accepted": false
+          },
+          {
+            "lemma": "schoolteacher",
+            "inflected": "schoolteacher",
+            "semantic_sim": 0.8162,
+            "accepted": false
+          },
+          {
+            "lemma": "academician",
+            "inflected": "academician",
+            "semantic_sim": 0.8147,
+            "accepted": false
+          },
+          {
+            "lemma": "sir",
+            "inflected": "sir",
+            "semantic_sim": 0.7739,
+            "accepted": false
+          },
+          {
+            "lemma": "schoolmaster",
+            "inflected": "schoolmaster",
+            "semantic_sim": 0.7561,
+            "accepted": false
+          },
+          {
+            "lemma": "visiting",
+            "inflected": "visiting",
+            "semantic_sim": 0.6721,
+            "accepted": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-074-core-word",
+    "original_text": "Students who struggle with the material is encouraged to attend office hours.",
+    "reformulated_text": "Students who struggle with the stuff is supported to attend office hours.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 5,
+        "span_text": "material",
+        "original": "material",
+        "replacement": "stuff",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9753,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.5212,
+          "difficulty_after": 0.4214,
+          "contextual_fit": 2.0676256099250168e-05
+        }
+      },
+      {
+        "sentence_index": 0,
+        "position": 7,
+        "span_text": "encouraged",
+        "original": "encouraged",
+        "replacement": "supported",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9218,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.3399,
+          "difficulty_after": 0.4578,
+          "contextual_fit": 2.9657367122126743e-05
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "material",
+        "base_lemma": "material",
+        "chosen_replacement": "stuff",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "stuff",
+            "inflected": "stuff",
+            "semantic_sim": 0.9753,
+            "accepted": true
+          },
+          {
+            "lemma": "matter",
+            "inflected": "matter",
+            "semantic_sim": 0.963,
+            "accepted": true
+          },
+          {
+            "lemma": "real",
+            "inflected": "real",
+            "semantic_sim": 0.9078,
+            "accepted": true
+          },
+          {
+            "lemma": "fabric",
+            "inflected": "fabric",
+            "semantic_sim": 0.9151,
+            "accepted": true
+          },
+          {
+            "lemma": "applicant",
+            "inflected": "applicant",
+            "semantic_sim": 0.91,
+            "accepted": true
+          },
+          {
+            "lemma": "cloth",
+            "inflected": "cloth",
+            "semantic_sim": 0.8852,
+            "accepted": true
+          },
+          {
+            "lemma": "textile",
+            "inflected": "textile",
+            "semantic_sim": 0.854,
+            "accepted": true
+          },
+          {
+            "lemma": "corporal",
+            "inflected": "corporal",
+            "semantic_sim": 0.8138,
+            "accepted": false
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "stuff",
+            "inflected": "stuff",
+            "semantic_sim": 0.9753,
+            "accepted": true
+          },
+          {
+            "lemma": "matter",
+            "inflected": "matter",
+            "semantic_sim": 0.963,
+            "accepted": true
+          },
+          {
+            "lemma": "real",
+            "inflected": "real",
+            "semantic_sim": 0.9078,
+            "accepted": true
+          },
+          {
+            "lemma": "fabric",
+            "inflected": "fabric",
+            "semantic_sim": 0.9151,
+            "accepted": true
+          },
+          {
+            "lemma": "applicant",
+            "inflected": "applicant",
+            "semantic_sim": 0.91,
+            "accepted": true
+          },
+          {
+            "lemma": "cloth",
+            "inflected": "cloth",
+            "semantic_sim": 0.8852,
+            "accepted": true
+          },
+          {
+            "lemma": "textile",
+            "inflected": "textile",
+            "semantic_sim": 0.854,
+            "accepted": true
+          },
+          {
+            "lemma": "corporal",
+            "inflected": "corporal",
+            "semantic_sim": 0.8138,
+            "accepted": false
+          }
+        ]
+      },
+      {
+        "tier": "substitution",
+        "original_word": "encouraged",
+        "base_lemma": "encourage",
+        "chosen_replacement": "supported",
+        "chosen_rank_in_production_pool": 1,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "further",
+            "inflected": "furthered",
+            "semantic_sim": 0.9494,
+            "accepted": true
+          },
+          {
+            "lemma": "support",
+            "inflected": "supported",
+            "semantic_sim": 0.9455,
+            "accepted": true
+          },
+          {
+            "lemma": "boost",
+            "inflected": "boosted",
+            "semantic_sim": 0.9488,
+            "accepted": true
+          },
+          {
+            "lemma": "engage",
+            "inflected": "engaged",
+            "semantic_sim": 0.9479,
+            "accepted": true
+          },
+          {
+            "lemma": "drive",
+            "inflected": "driven",
+            "semantic_sim": 0.9333,
+            "accepted": true
+          },
+          {
+            "lemma": "prompting",
+            "inflected": "prompting",
+            "semantic_sim": 0.9504,
+            "accepted": true
+          },
+          {
+            "lemma": "advance",
+            "inflected": "advanced",
+            "semantic_sim": 0.934,
+            "accepted": true
+          },
+          {
+            "lemma": "promote",
+            "inflected": "promoted",
+            "semantic_sim": 0.9226,
+            "accepted": true
+          },
+          {
+            "lemma": "motivate",
+            "inflected": "motivated",
+            "semantic_sim": 0.9177,
+            "accepted": true
+          },
+          {
+            "lemma": "motivating",
+            "inflected": "motivating",
+            "semantic_sim": 0.919,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "further",
+            "inflected": "furthered",
+            "semantic_sim": 0.9494,
+            "accepted": true
+          },
+          {
+            "lemma": "support",
+            "inflected": "supported",
+            "semantic_sim": 0.9455,
+            "accepted": true
+          },
+          {
+            "lemma": "boost",
+            "inflected": "boosted",
+            "semantic_sim": 0.9488,
+            "accepted": true
+          },
+          {
+            "lemma": "engage",
+            "inflected": "engaged",
+            "semantic_sim": 0.9479,
+            "accepted": true
+          },
+          {
+            "lemma": "drive",
+            "inflected": "driven",
+            "semantic_sim": 0.9333,
+            "accepted": true
+          },
+          {
+            "lemma": "prompting",
+            "inflected": "prompting",
+            "semantic_sim": 0.9504,
+            "accepted": true
+          },
+          {
+            "lemma": "advance",
+            "inflected": "advanced",
+            "semantic_sim": 0.934,
+            "accepted": true
+          },
+          {
+            "lemma": "promote",
+            "inflected": "promoted",
+            "semantic_sim": 0.9226,
+            "accepted": true
+          },
+          {
+            "lemma": "enliven",
+            "inflected": "enlivened",
+            "semantic_sim": 0.9477,
+            "accepted": true
+          },
+          {
+            "lemma": "motivate",
+            "inflected": "motivated",
+            "semantic_sim": 0.9177,
+            "accepted": true
+          },
+          {
+            "lemma": "motivating",
+            "inflected": "motivating",
+            "semantic_sim": 0.919,
+            "accepted": true
+          },
+          {
+            "lemma": "abet",
+            "inflected": "abetted",
+            "semantic_sim": 0.9287,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-074-core-single_sound",
+    "original_text": "Students who struggle with the material is encouraged to attend office hours.",
+    "reformulated_text": "Students who conflict with the material is encouraged to attend office hours.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 2,
+        "span_text": "struggle",
+        "original": "struggle",
+        "replacement": "conflict",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9344,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.652,
+          "difficulty_after": 0.5345,
+          "contextual_fit": 0.00020395402680151165
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "struggle",
+        "base_lemma": "struggle",
+        "chosen_replacement": "conflict",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "conflict",
+            "inflected": "conflict",
+            "semantic_sim": 0.9344,
+            "accepted": true
+          },
+          {
+            "lemma": "battle",
+            "inflected": "battle",
+            "semantic_sim": 0.9314,
+            "accepted": true
+          },
+          {
+            "lemma": "strive",
+            "inflected": "strive",
+            "semantic_sim": 0.9423,
+            "accepted": true
+          },
+          {
+            "lemma": "fight",
+            "inflected": "fight",
+            "semantic_sim": 0.9256,
+            "accepted": true
+          },
+          {
+            "lemma": "endeavor",
+            "inflected": "endeavor",
+            "semantic_sim": 0.9384,
+            "accepted": true
+          },
+          {
+            "lemma": "endeavour",
+            "inflected": "endeavour",
+            "semantic_sim": 0.9335,
+            "accepted": true
+          },
+          {
+            "lemma": "scramble",
+            "inflected": "scramble",
+            "semantic_sim": 0.8781,
+            "accepted": true
+          },
+          {
+            "lemma": "skin",
+            "inflected": "skin",
+            "semantic_sim": 0.8602,
+            "accepted": true
+          },
+          {
+            "lemma": "brawl",
+            "inflected": "brawl",
+            "semantic_sim": 0.8375,
+            "accepted": false
+          },
+          {
+            "lemma": "shin",
+            "inflected": "shin",
+            "semantic_sim": 0.8118,
+            "accepted": false
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "conflict",
+            "inflected": "conflict",
+            "semantic_sim": 0.9344,
+            "accepted": true
+          },
+          {
+            "lemma": "battle",
+            "inflected": "battle",
+            "semantic_sim": 0.9314,
+            "accepted": true
+          },
+          {
+            "lemma": "strive",
+            "inflected": "strive",
+            "semantic_sim": 0.9423,
+            "accepted": true
+          },
+          {
+            "lemma": "fight",
+            "inflected": "fight",
+            "semantic_sim": 0.9256,
+            "accepted": true
+          },
+          {
+            "lemma": "endeavor",
+            "inflected": "endeavor",
+            "semantic_sim": 0.9384,
+            "accepted": true
+          },
+          {
+            "lemma": "endeavour",
+            "inflected": "endeavour",
+            "semantic_sim": 0.9335,
+            "accepted": true
+          },
+          {
+            "lemma": "wrangle",
+            "inflected": "wrangle",
+            "semantic_sim": 0.9406,
+            "accepted": true
+          },
+          {
+            "lemma": "tussle",
+            "inflected": "tussle",
+            "semantic_sim": 0.9253,
+            "accepted": true
+          },
+          {
+            "lemma": "clamber",
+            "inflected": "clamber",
+            "semantic_sim": 0.9186,
+            "accepted": true
+          },
+          {
+            "lemma": "scuffle",
+            "inflected": "scuffle",
+            "semantic_sim": 0.8952,
+            "accepted": true
+          },
+          {
+            "lemma": "scramble",
+            "inflected": "scramble",
+            "semantic_sim": 0.8781,
+            "accepted": true
+          },
+          {
+            "lemma": "skin",
+            "inflected": "skin",
+            "semantic_sim": 0.8602,
+            "accepted": true
+          },
+          {
+            "lemma": "shinny",
+            "inflected": "shinny",
+            "semantic_sim": 0.8807,
+            "accepted": true
+          },
+          {
+            "lemma": "sputter",
+            "inflected": "sputter",
+            "semantic_sim": 0.8753,
+            "accepted": true
+          },
+          {
+            "lemma": "brawl",
+            "inflected": "brawl",
+            "semantic_sim": 0.8375,
+            "accepted": false
+          },
+          {
+            "lemma": "shin",
+            "inflected": "shin",
+            "semantic_sim": 0.8118,
+            "accepted": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-075-core-dense_mixed_generic",
+    "original_text": "The exam covers everything we studied in the first six chapters.",
+    "reformulated_text": "The exam covers everything we took in the first six chapters.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 5,
+        "span_text": "studied",
+        "original": "studied",
+        "replacement": "took",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9672,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.5242,
+          "difficulty_after": 0.4222,
+          "contextual_fit": 0.0004850717668887228
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "studied",
+        "base_lemma": "study",
+        "chosen_replacement": "took",
+        "chosen_rank_in_production_pool": 1,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "consider",
+            "inflected": "considered",
+            "semantic_sim": 0.9793,
+            "accepted": true
+          },
+          {
+            "lemma": "take",
+            "inflected": "took",
+            "semantic_sim": 0.9672,
+            "accepted": true
+          },
+          {
+            "lemma": "subject",
+            "inflected": "subjected",
+            "semantic_sim": 0.9678,
+            "accepted": true
+          },
+          {
+            "lemma": "read",
+            "inflected": "read",
+            "semantic_sim": 0.9605,
+            "accepted": true
+          },
+          {
+            "lemma": "learn",
+            "inflected": "learned",
+            "semantic_sim": 0.9619,
+            "accepted": true
+          },
+          {
+            "lemma": "field",
+            "inflected": "fielded",
+            "semantic_sim": 0.9564,
+            "accepted": true
+          },
+          {
+            "lemma": "survey",
+            "inflected": "surveyed",
+            "semantic_sim": 0.942,
+            "accepted": true
+          },
+          {
+            "lemma": "report",
+            "inflected": "reported",
+            "semantic_sim": 0.9363,
+            "accepted": true
+          },
+          {
+            "lemma": "work",
+            "inflected": "wrought",
+            "semantic_sim": 0.8837,
+            "accepted": true
+          },
+          {
+            "lemma": "discipline",
+            "inflected": "disciplined",
+            "semantic_sim": 0.888,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "consider",
+            "inflected": "considered",
+            "semantic_sim": 0.9793,
+            "accepted": true
+          },
+          {
+            "lemma": "take",
+            "inflected": "took",
+            "semantic_sim": 0.9672,
+            "accepted": true
+          },
+          {
+            "lemma": "subject",
+            "inflected": "subjected",
+            "semantic_sim": 0.9678,
+            "accepted": true
+          },
+          {
+            "lemma": "read",
+            "inflected": "read",
+            "semantic_sim": 0.9605,
+            "accepted": true
+          },
+          {
+            "lemma": "learn",
+            "inflected": "learned",
+            "semantic_sim": 0.9619,
+            "accepted": true
+          },
+          {
+            "lemma": "field",
+            "inflected": "fielded",
+            "semantic_sim": 0.9564,
+            "accepted": true
+          },
+          {
+            "lemma": "examine",
+            "inflected": "examined",
+            "semantic_sim": 0.9661,
+            "accepted": true
+          },
+          {
+            "lemma": "analyse",
+            "inflected": "analysed",
+            "semantic_sim": 0.9567,
+            "accepted": true
+          },
+          {
+            "lemma": "survey",
+            "inflected": "surveyed",
+            "semantic_sim": 0.942,
+            "accepted": true
+          },
+          {
+            "lemma": "report",
+            "inflected": "reported",
+            "semantic_sim": 0.9363,
+            "accepted": true
+          },
+          {
+            "lemma": "analyze",
+            "inflected": "analyzed",
+            "semantic_sim": 0.9455,
+            "accepted": true
+          },
+          {
+            "lemma": "contemplate",
+            "inflected": "contemplated",
+            "semantic_sim": 0.9472,
+            "accepted": true
+          },
+          {
+            "lemma": "canvas",
+            "inflected": "canvased",
+            "semantic_sim": 0.9297,
+            "accepted": true
+          },
+          {
+            "lemma": "canvass",
+            "inflected": "canvassed",
+            "semantic_sim": 0.9416,
+            "accepted": true
+          },
+          {
+            "lemma": "meditate",
+            "inflected": "meditated",
+            "semantic_sim": 0.9237,
+            "accepted": true
+          },
+          {
+            "lemma": "work",
+            "inflected": "wrought",
+            "semantic_sim": 0.8837,
+            "accepted": true
+          },
+          {
+            "lemma": "sketch",
+            "inflected": "sketched",
+            "semantic_sim": 0.8946,
+            "accepted": true
+          },
+          {
+            "lemma": "discipline",
+            "inflected": "disciplined",
+            "semantic_sim": 0.888,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-079-core-sparse_common_sound",
+    "original_text": "The manager asked everyone to submit their reports by the end of the day.",
+    "reformulated_text": "The manager asked everyone to present their reports by the end of the day.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 5,
+        "span_text": "submit",
+        "original": "submit",
+        "replacement": "present",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9413,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.3999,
+          "difficulty_after": 0.6447,
+          "contextual_fit": 0.009828919544816017
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "submit",
+        "base_lemma": "submit",
+        "chosen_replacement": "present",
+        "chosen_rank_in_production_pool": 1,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "take",
+            "inflected": "take",
+            "semantic_sim": 0.9438,
+            "accepted": true
+          },
+          {
+            "lemma": "present",
+            "inflected": "present",
+            "semantic_sim": 0.9413,
+            "accepted": true
+          },
+          {
+            "lemma": "state",
+            "inflected": "state",
+            "semantic_sim": 0.9207,
+            "accepted": true
+          },
+          {
+            "lemma": "undergo",
+            "inflected": "undergo",
+            "semantic_sim": 0.9312,
+            "accepted": true
+          },
+          {
+            "lemma": "suggest",
+            "inflected": "suggest",
+            "semantic_sim": 0.9135,
+            "accepted": true
+          },
+          {
+            "lemma": "propose",
+            "inflected": "propose",
+            "semantic_sim": 0.9072,
+            "accepted": true
+          },
+          {
+            "lemma": "render",
+            "inflected": "render",
+            "semantic_sim": 0.8785,
+            "accepted": true
+          },
+          {
+            "lemma": "advise",
+            "inflected": "advise",
+            "semantic_sim": 0.8706,
+            "accepted": true
+          },
+          {
+            "lemma": "bow",
+            "inflected": "bow",
+            "semantic_sim": 0.806,
+            "accepted": false
+          },
+          {
+            "lemma": "resign",
+            "inflected": "resign",
+            "semantic_sim": 0.7927,
+            "accepted": false
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "take",
+            "inflected": "take",
+            "semantic_sim": 0.9438,
+            "accepted": true
+          },
+          {
+            "lemma": "present",
+            "inflected": "present",
+            "semantic_sim": 0.9413,
+            "accepted": true
+          },
+          {
+            "lemma": "state",
+            "inflected": "state",
+            "semantic_sim": 0.9207,
+            "accepted": true
+          },
+          {
+            "lemma": "undergo",
+            "inflected": "undergo",
+            "semantic_sim": 0.9312,
+            "accepted": true
+          },
+          {
+            "lemma": "suggest",
+            "inflected": "suggest",
+            "semantic_sim": 0.9135,
+            "accepted": true
+          },
+          {
+            "lemma": "accede",
+            "inflected": "accede",
+            "semantic_sim": 0.9318,
+            "accepted": true
+          },
+          {
+            "lemma": "propose",
+            "inflected": "propose",
+            "semantic_sim": 0.9072,
+            "accepted": true
+          },
+          {
+            "lemma": "posit",
+            "inflected": "posit",
+            "semantic_sim": 0.9111,
+            "accepted": true
+          },
+          {
+            "lemma": "render",
+            "inflected": "render",
+            "semantic_sim": 0.8785,
+            "accepted": true
+          },
+          {
+            "lemma": "advise",
+            "inflected": "advise",
+            "semantic_sim": 0.8706,
+            "accepted": true
+          },
+          {
+            "lemma": "bow",
+            "inflected": "bow",
+            "semantic_sim": 0.806,
+            "accepted": false
+          },
+          {
+            "lemma": "reconcile",
+            "inflected": "reconcile",
+            "semantic_sim": 0.8117,
+            "accepted": false
+          },
+          {
+            "lemma": "relegate",
+            "inflected": "relegate",
+            "semantic_sim": 0.824,
+            "accepted": false
+          },
+          {
+            "lemma": "defer",
+            "inflected": "defer",
+            "semantic_sim": 0.8059,
+            "accepted": false
+          },
+          {
+            "lemma": "resign",
+            "inflected": "resign",
+            "semantic_sim": 0.7927,
+            "accepted": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-079-calib-multi_word",
+    "original_text": "The manager asked everyone to submit their reports by the end of the day.",
+    "reformulated_text": "The management asked all to submit their report by the end of the day.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "The manager asked everyone to submit their reports by the end of the day.",
+        "original": "The manager asked everyone to submit their reports by the end of the day.",
+        "replacement": "The management asked all to submit their report by the end of the day.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.9035,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.2757,
+          "difficulty_after": 0.26,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "error": "'DifficultyEntry' object has no attribute 'lower'",
+        "source": "restructuring"
+      }
+    ]
+  },
+  {
+    "run_id": "R10-080-core-word",
+    "original_text": "We're understaffed this week, so deadlines might slip a little.",
+    "reformulated_text": "This week we're under-staffed, so the deadline might slip a little.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "We're understaffed this week, so deadlines might slip a little.",
+        "original": "We're understaffed this week, so deadlines might slip a little.",
+        "replacement": "This week we're under-staffed, so the deadline might slip a little.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.8728,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.306,
+          "difficulty_after": 0.2947,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "error": "'DifficultyEntry' object has no attribute 'lower'",
+        "source": "restructuring"
+      }
+    ]
+  },
+  {
+    "run_id": "R10-080-core-multi_sound",
+    "original_text": "We're understaffed this week, so deadlines might slip a little.",
+    "reformulated_text": "We're understaffed this week, so deadlines might case a little.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 9,
+        "span_text": "slip",
+        "original": "slip",
+        "replacement": "case",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9699,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.4582,
+          "difficulty_after": 0.4205,
+          "contextual_fit": 3.734367908236891e-07
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "slip",
+        "base_lemma": "slip",
+        "chosen_replacement": "case",
+        "chosen_rank_in_production_pool": 2,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "slide",
+            "inflected": "slide",
+            "semantic_sim": 0.9829,
+            "accepted": true
+          },
+          {
+            "lemma": "trip",
+            "inflected": "trip",
+            "semantic_sim": 0.9771,
+            "accepted": true
+          },
+          {
+            "lemma": "case",
+            "inflected": "case",
+            "semantic_sim": 0.9699,
+            "accepted": true
+          },
+          {
+            "lemma": "shift",
+            "inflected": "shift",
+            "semantic_sim": 0.9754,
+            "accepted": true
+          },
+          {
+            "lemma": "mistake",
+            "inflected": "mistake",
+            "semantic_sim": 0.9706,
+            "accepted": true
+          },
+          {
+            "lemma": "sneak",
+            "inflected": "sneak",
+            "semantic_sim": 0.9718,
+            "accepted": true
+          },
+          {
+            "lemma": "strip",
+            "inflected": "strip",
+            "semantic_sim": 0.9677,
+            "accepted": true
+          },
+          {
+            "lemma": "cutting",
+            "inflected": "cutting",
+            "semantic_sim": 0.9626,
+            "accepted": true
+          },
+          {
+            "lemma": "decline",
+            "inflected": "decline",
+            "semantic_sim": 0.962,
+            "accepted": true
+          },
+          {
+            "lemma": "steal",
+            "inflected": "steal",
+            "semantic_sim": 0.93,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "slide",
+            "inflected": "slide",
+            "semantic_sim": 0.9829,
+            "accepted": true
+          },
+          {
+            "lemma": "trip",
+            "inflected": "trip",
+            "semantic_sim": 0.9771,
+            "accepted": true
+          },
+          {
+            "lemma": "case",
+            "inflected": "case",
+            "semantic_sim": 0.9699,
+            "accepted": true
+          },
+          {
+            "lemma": "shift",
+            "inflected": "shift",
+            "semantic_sim": 0.9754,
+            "accepted": true
+          },
+          {
+            "lemma": "mistake",
+            "inflected": "mistake",
+            "semantic_sim": 0.9706,
+            "accepted": true
+          },
+          {
+            "lemma": "err",
+            "inflected": "err",
+            "semantic_sim": 0.9829,
+            "accepted": true
+          },
+          {
+            "lemma": "sneak",
+            "inflected": "sneak",
+            "semantic_sim": 0.9718,
+            "accepted": true
+          },
+          {
+            "lemma": "strip",
+            "inflected": "strip",
+            "semantic_sim": 0.9677,
+            "accepted": true
+          },
+          {
+            "lemma": "cutting",
+            "inflected": "cutting",
+            "semantic_sim": 0.9626,
+            "accepted": true
+          },
+          {
+            "lemma": "berth",
+            "inflected": "berth",
+            "semantic_sim": 0.973,
+            "accepted": true
+          },
+          {
+            "lemma": "slew",
+            "inflected": "slew",
+            "semantic_sim": 0.9739,
+            "accepted": true
+          },
+          {
+            "lemma": "decline",
+            "inflected": "decline",
+            "semantic_sim": 0.962,
+            "accepted": true
+          },
+          {
+            "lemma": "skid",
+            "inflected": "skid",
+            "semantic_sim": 0.9671,
+            "accepted": true
+          },
+          {
+            "lemma": "worsen",
+            "inflected": "worsen",
+            "semantic_sim": 0.966,
+            "accepted": true
+          },
+          {
+            "lemma": "eluding",
+            "inflected": "eluding",
+            "semantic_sim": 0.9738,
+            "accepted": true
+          },
+          {
+            "lemma": "slick",
+            "inflected": "slick",
+            "semantic_sim": 0.9561,
+            "accepted": true
+          },
+          {
+            "lemma": "mooring",
+            "inflected": "mooring",
+            "semantic_sim": 0.9617,
+            "accepted": true
+          },
+          {
+            "lemma": "dislocate",
+            "inflected": "dislocate",
+            "semantic_sim": 0.9623,
+            "accepted": true
+          },
+          {
+            "lemma": "steal",
+            "inflected": "steal",
+            "semantic_sim": 0.93,
+            "accepted": true
+          },
+          {
+            "lemma": "shimmy",
+            "inflected": "shimmy",
+            "semantic_sim": 0.9486,
+            "accepted": true
+          },
+          {
+            "lemma": "splay",
+            "inflected": "splay",
+            "semantic_sim": 0.9349,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-084-core-multi_sound",
+    "original_text": "The team meets every Monday to review what went wrong the previous week.",
+    "reformulated_text": "The team meets every Monday to critique what went wrong the previous week.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 6,
+        "span_text": "review",
+        "original": "review",
+        "replacement": "critique",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9515,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.3639,
+          "difficulty_after": 0.7025,
+          "contextual_fit": 0.00011939417163375765
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "review",
+        "base_lemma": "review",
+        "chosen_replacement": "critique",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "critique",
+            "inflected": "critique",
+            "semantic_sim": 0.9515,
+            "accepted": true
+          },
+          {
+            "lemma": "inspect",
+            "inflected": "inspect",
+            "semantic_sim": 0.9472,
+            "accepted": true
+          },
+          {
+            "lemma": "survey",
+            "inflected": "survey",
+            "semantic_sim": 0.9116,
+            "accepted": true
+          },
+          {
+            "lemma": "recap",
+            "inflected": "recap",
+            "semantic_sim": 0.9209,
+            "accepted": true
+          },
+          {
+            "lemma": "reexamine",
+            "inflected": "reexamine",
+            "semantic_sim": 0.9249,
+            "accepted": true
+          },
+          {
+            "lemma": "refresh",
+            "inflected": "refresh",
+            "semantic_sim": 0.8982,
+            "accepted": true
+          },
+          {
+            "lemma": "retrospect",
+            "inflected": "retrospect",
+            "semantic_sim": 0.9006,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "critique",
+            "inflected": "critique",
+            "semantic_sim": 0.9515,
+            "accepted": true
+          },
+          {
+            "lemma": "inspect",
+            "inflected": "inspect",
+            "semantic_sim": 0.9472,
+            "accepted": true
+          },
+          {
+            "lemma": "survey",
+            "inflected": "survey",
+            "semantic_sim": 0.9116,
+            "accepted": true
+          },
+          {
+            "lemma": "recap",
+            "inflected": "recap",
+            "semantic_sim": 0.9209,
+            "accepted": true
+          },
+          {
+            "lemma": "reexamine",
+            "inflected": "reexamine",
+            "semantic_sim": 0.9249,
+            "accepted": true
+          },
+          {
+            "lemma": "refresh",
+            "inflected": "refresh",
+            "semantic_sim": 0.8982,
+            "accepted": true
+          },
+          {
+            "lemma": "retrospect",
+            "inflected": "retrospect",
+            "semantic_sim": 0.9006,
+            "accepted": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-086-core-word",
+    "original_text": "Make sure you arrive at the airport at least two hours before departure.",
+    "reformulated_text": "Make sure you arrive at the plane at least two hours before leaving.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 6,
+        "span_text": "airport",
+        "original": "airport",
+        "replacement": "plane",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.915,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.2426,
+          "difficulty_after": 0.5894,
+          "contextual_fit": 0.0008850063313730061
+        }
+      },
+      {
+        "sentence_index": 0,
+        "position": 12,
+        "span_text": "departure",
+        "original": "departure",
+        "replacement": "leaving",
+        "source": "substitution",
+        "triggered_by": [
+          "declared_word"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.8803,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.6275,
+          "difficulty_after": 0.3699,
+          "contextual_fit": 0.09242844581604004
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "airport",
+        "base_lemma": "airport",
+        "chosen_replacement": "plane",
+        "chosen_rank_in_production_pool": 1,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "airline",
+            "inflected": "airline",
+            "semantic_sim": 0.9298,
+            "accepted": true
+          },
+          {
+            "lemma": "plane",
+            "inflected": "plane",
+            "semantic_sim": 0.915,
+            "accepted": true
+          },
+          {
+            "lemma": "airplane",
+            "inflected": "airplane",
+            "semantic_sim": 0.9137,
+            "accepted": true
+          },
+          {
+            "lemma": "aviation",
+            "inflected": "aviation",
+            "semantic_sim": 0.9067,
+            "accepted": true
+          },
+          {
+            "lemma": "aircraft",
+            "inflected": "aircraft",
+            "semantic_sim": 0.9001,
+            "accepted": true
+          },
+          {
+            "lemma": "field",
+            "inflected": "field",
+            "semantic_sim": 0.8167,
+            "accepted": false
+          },
+          {
+            "lemma": "port",
+            "inflected": "port",
+            "semantic_sim": 0.8213,
+            "accepted": false
+          },
+          {
+            "lemma": "machine",
+            "inflected": "machine",
+            "semantic_sim": 0.8162,
+            "accepted": false
+          },
+          {
+            "lemma": "terminal",
+            "inflected": "terminal",
+            "semantic_sim": 0.8191,
+            "accepted": false
+          },
+          {
+            "lemma": "phone",
+            "inflected": "phone",
+            "semantic_sim": 0.8047,
+            "accepted": false
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "airline",
+            "inflected": "airline",
+            "semantic_sim": 0.9298,
+            "accepted": true
+          },
+          {
+            "lemma": "plane",
+            "inflected": "plane",
+            "semantic_sim": 0.915,
+            "accepted": true
+          },
+          {
+            "lemma": "airplane",
+            "inflected": "airplane",
+            "semantic_sim": 0.9137,
+            "accepted": true
+          },
+          {
+            "lemma": "aviation",
+            "inflected": "aviation",
+            "semantic_sim": 0.9067,
+            "accepted": true
+          },
+          {
+            "lemma": "aircraft",
+            "inflected": "aircraft",
+            "semantic_sim": 0.9001,
+            "accepted": true
+          },
+          {
+            "lemma": "airfield",
+            "inflected": "airfield",
+            "semantic_sim": 0.9077,
+            "accepted": true
+          },
+          {
+            "lemma": "tsa",
+            "inflected": "tsa",
+            "semantic_sim": 0.8739,
+            "accepted": true
+          },
+          {
+            "lemma": "airstrip",
+            "inflected": "airstrip",
+            "semantic_sim": 0.8678,
+            "accepted": true
+          },
+          {
+            "lemma": "aerodrome",
+            "inflected": "aerodrome",
+            "semantic_sim": 0.8549,
+            "accepted": true
+          },
+          {
+            "lemma": "field",
+            "inflected": "field",
+            "semantic_sim": 0.8167,
+            "accepted": false
+          },
+          {
+            "lemma": "port",
+            "inflected": "port",
+            "semantic_sim": 0.8213,
+            "accepted": false
+          },
+          {
+            "lemma": "machine",
+            "inflected": "machine",
+            "semantic_sim": 0.8162,
+            "accepted": false
+          },
+          {
+            "lemma": "terminal",
+            "inflected": "terminal",
+            "semantic_sim": 0.8191,
+            "accepted": false
+          },
+          {
+            "lemma": "phone",
+            "inflected": "phone",
+            "semantic_sim": 0.8047,
+            "accepted": false
+          }
+        ]
+      },
+      {
+        "tier": "substitution",
+        "original_word": "departure",
+        "base_lemma": "departure",
+        "chosen_replacement": "leaving",
+        "chosen_rank_in_production_pool": 1,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "going",
+            "inflected": "going",
+            "semantic_sim": 0.9783,
+            "accepted": true
+          },
+          {
+            "lemma": "leaving",
+            "inflected": "leaving",
+            "semantic_sim": 0.9828,
+            "accepted": true
+          },
+          {
+            "lemma": "passing",
+            "inflected": "passing",
+            "semantic_sim": 0.961,
+            "accepted": true
+          },
+          {
+            "lemma": "exit",
+            "inflected": "exit",
+            "semantic_sim": 0.9609,
+            "accepted": true
+          },
+          {
+            "lemma": "release",
+            "inflected": "release",
+            "semantic_sim": 0.9039,
+            "accepted": true
+          },
+          {
+            "lemma": "difference",
+            "inflected": "difference",
+            "semantic_sim": 0.9026,
+            "accepted": true
+          },
+          {
+            "lemma": "deed",
+            "inflected": "deed",
+            "semantic_sim": 0.8458,
+            "accepted": false
+          },
+          {
+            "lemma": "act",
+            "inflected": "act",
+            "semantic_sim": 0.8167,
+            "accepted": false
+          },
+          {
+            "lemma": "expiration",
+            "inflected": "expiration",
+            "semantic_sim": 0.8169,
+            "accepted": false
+          },
+          {
+            "lemma": "loss",
+            "inflected": "loss",
+            "semantic_sim": 0.762,
+            "accepted": false
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "going",
+            "inflected": "going",
+            "semantic_sim": 0.9783,
+            "accepted": true
+          },
+          {
+            "lemma": "leaving",
+            "inflected": "leaving",
+            "semantic_sim": 0.9828,
+            "accepted": true
+          },
+          {
+            "lemma": "passing",
+            "inflected": "passing",
+            "semantic_sim": 0.961,
+            "accepted": true
+          },
+          {
+            "lemma": "exit",
+            "inflected": "exit",
+            "semantic_sim": 0.9609,
+            "accepted": true
+          },
+          {
+            "lemma": "release",
+            "inflected": "release",
+            "semantic_sim": 0.9039,
+            "accepted": true
+          },
+          {
+            "lemma": "difference",
+            "inflected": "difference",
+            "semantic_sim": 0.9026,
+            "accepted": true
+          },
+          {
+            "lemma": "deed",
+            "inflected": "deed",
+            "semantic_sim": 0.8458,
+            "accepted": false
+          },
+          {
+            "lemma": "act",
+            "inflected": "act",
+            "semantic_sim": 0.8167,
+            "accepted": false
+          },
+          {
+            "lemma": "deviation",
+            "inflected": "deviation",
+            "semantic_sim": 0.8357,
+            "accepted": false
+          },
+          {
+            "lemma": "egress",
+            "inflected": "egress",
+            "semantic_sim": 0.8454,
+            "accepted": false
+          },
+          {
+            "lemma": "expiration",
+            "inflected": "expiration",
+            "semantic_sim": 0.8169,
+            "accepted": false
+          },
+          {
+            "lemma": "loss",
+            "inflected": "loss",
+            "semantic_sim": 0.762,
+            "accepted": false
+          },
+          {
+            "lemma": "divergence",
+            "inflected": "divergence",
+            "semantic_sim": 0.7609,
+            "accepted": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run_id": "R10-087-core-multi_sound",
+    "original_text": "The hotel is closer to the train station than the one we stayed at last time.",
+    "reformulated_text": "The hotel is closer to the train place than the one we continued at last time.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": 7,
+        "span_text": "station",
+        "original": "station",
+        "replacement": "place",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9767,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.502,
+          "difficulty_after": 0.547,
+          "contextual_fit": 2.5465453290962614e-05
+        }
+      },
+      {
+        "sentence_index": 0,
+        "position": 12,
+        "span_text": "stayed",
+        "original": "stayed",
+        "replacement": "continued",
+        "source": "substitution",
+        "triggered_by": [
+          "global_sound"
+        ],
+        "verification": {
+          "antonym_check": "pass",
+          "sbert_sim": 0.9468,
+          "nli": "not_run",
+          "phoneme_ok": true,
+          "difficulty_before": 0.4475,
+          "difficulty_after": 0.5958,
+          "contextual_fit": 3.801408183790045e-06
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "substitution",
+        "original_word": "station",
+        "base_lemma": "station",
+        "chosen_replacement": "place",
+        "chosen_rank_in_production_pool": 0,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "place",
+            "inflected": "place",
+            "semantic_sim": 0.9767,
+            "accepted": true
+          },
+          {
+            "lemma": "base",
+            "inflected": "base",
+            "semantic_sim": 0.9505,
+            "accepted": true
+          },
+          {
+            "lemma": "railway",
+            "inflected": "railway",
+            "semantic_sim": 0.944,
+            "accepted": true
+          },
+          {
+            "lemma": "post",
+            "inflected": "post",
+            "semantic_sim": 0.926,
+            "accepted": true
+          },
+          {
+            "lemma": "position",
+            "inflected": "position",
+            "semantic_sim": 0.9278,
+            "accepted": true
+          },
+          {
+            "lemma": "railroad",
+            "inflected": "railroad",
+            "semantic_sim": 0.9293,
+            "accepted": true
+          },
+          {
+            "lemma": "points",
+            "inflected": "points",
+            "semantic_sim": 0.9193,
+            "accepted": true
+          },
+          {
+            "lemma": "terminal",
+            "inflected": "terminal",
+            "semantic_sim": 0.9233,
+            "accepted": true
+          },
+          {
+            "lemma": "subway",
+            "inflected": "subway",
+            "semantic_sim": 0.9067,
+            "accepted": true
+          },
+          {
+            "lemma": "parking",
+            "inflected": "parking",
+            "semantic_sim": 0.8948,
+            "accepted": true
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "place",
+            "inflected": "place",
+            "semantic_sim": 0.9767,
+            "accepted": true
+          },
+          {
+            "lemma": "base",
+            "inflected": "base",
+            "semantic_sim": 0.9505,
+            "accepted": true
+          },
+          {
+            "lemma": "railway",
+            "inflected": "railway",
+            "semantic_sim": 0.944,
+            "accepted": true
+          },
+          {
+            "lemma": "post",
+            "inflected": "post",
+            "semantic_sim": 0.926,
+            "accepted": true
+          },
+          {
+            "lemma": "position",
+            "inflected": "position",
+            "semantic_sim": 0.9278,
+            "accepted": true
+          },
+          {
+            "lemma": "railroad",
+            "inflected": "railroad",
+            "semantic_sim": 0.9293,
+            "accepted": true
+          },
+          {
+            "lemma": "points",
+            "inflected": "points",
+            "semantic_sim": 0.9193,
+            "accepted": true
+          },
+          {
+            "lemma": "terminal",
+            "inflected": "terminal",
+            "semantic_sim": 0.9233,
+            "accepted": true
+          },
+          {
+            "lemma": "subway",
+            "inflected": "subway",
+            "semantic_sim": 0.9067,
+            "accepted": true
+          },
+          {
+            "lemma": "parking",
+            "inflected": "parking",
+            "semantic_sim": 0.8948,
+            "accepted": true
+          },
+          {
+            "lemma": "layover",
+            "inflected": "layover",
+            "semantic_sim": 0.9015,
+            "accepted": true
+          },
+          {
+            "lemma": "stopover",
+            "inflected": "stopover",
+            "semantic_sim": 0.8811,
+            "accepted": true
+          },
+          {
+            "lemma": "firehouse",
+            "inflected": "firehouse",
+            "semantic_sim": 0.8745,
+            "accepted": true
+          },
+          {
+            "lemma": "wharf",
+            "inflected": "wharf",
+            "semantic_sim": 0.8618,
+            "accepted": true
+          }
+        ]
+      },
+      {
+        "tier": "substitution",
+        "original_word": "stayed",
+        "base_lemma": "stay",
+        "chosen_replacement": "continued",
+        "chosen_rank_in_production_pool": 1,
+        "production_top_k": 10,
+        "production_pool": [
+          {
+            "lemma": "remain",
+            "inflected": "remained",
+            "semantic_sim": 0.9829,
+            "accepted": true
+          },
+          {
+            "lemma": "continue",
+            "inflected": "continued",
+            "semantic_sim": 0.9679,
+            "accepted": true
+          },
+          {
+            "lemma": "check",
+            "inflected": "checked",
+            "semantic_sim": 0.9611,
+            "accepted": true
+          },
+          {
+            "lemma": "stop",
+            "inflected": "stopped",
+            "semantic_sim": 0.9547,
+            "accepted": true
+          },
+          {
+            "lemma": "rest",
+            "inflected": "rested",
+            "semantic_sim": 0.9268,
+            "accepted": true
+          },
+          {
+            "lemma": "abide",
+            "inflected": "abode",
+            "semantic_sim": 0.9402,
+            "accepted": true
+          },
+          {
+            "lemma": "stick",
+            "inflected": "stuck",
+            "semantic_sim": 0.926,
+            "accepted": true
+          },
+          {
+            "lemma": "halt",
+            "inflected": "halted",
+            "semantic_sim": 0.8876,
+            "accepted": true
+          },
+          {
+            "lemma": "delay",
+            "inflected": "delayed",
+            "semantic_sim": 0.8754,
+            "accepted": true
+          },
+          {
+            "lemma": "arrest",
+            "inflected": "arrested",
+            "semantic_sim": 0.807,
+            "accepted": false
+          }
+        ],
+        "extended_top_k": 30,
+        "extended_pool": [
+          {
+            "lemma": "remain",
+            "inflected": "remained",
+            "semantic_sim": 0.9829,
+            "accepted": true
+          },
+          {
+            "lemma": "continue",
+            "inflected": "continued",
+            "semantic_sim": 0.9679,
+            "accepted": true
+          },
+          {
+            "lemma": "check",
+            "inflected": "checked",
+            "semantic_sim": 0.9611,
+            "accepted": true
+          },
+          {
+            "lemma": "stop",
+            "inflected": "stopped",
+            "semantic_sim": 0.9547,
+            "accepted": true
+          },
+          {
+            "lemma": "persist",
+            "inflected": "persisted",
+            "semantic_sim": 0.959,
+            "accepted": true
+          },
+          {
+            "lemma": "rest",
+            "inflected": "rested",
+            "semantic_sim": 0.9268,
+            "accepted": true
+          },
+          {
+            "lemma": "bide",
+            "inflected": "bode",
+            "semantic_sim": 0.9528,
+            "accepted": true
+          },
+          {
+            "lemma": "abide",
+            "inflected": "abode",
+            "semantic_sim": 0.9402,
+            "accepted": true
+          },
+          {
+            "lemma": "stick",
+            "inflected": "stuck",
+            "semantic_sim": 0.926,
+            "accepted": true
+          },
+          {
+            "lemma": "quell",
+            "inflected": "quelled",
+            "semantic_sim": 0.9292,
+            "accepted": true
+          },
+          {
+            "lemma": "appease",
+            "inflected": "appeased",
+            "semantic_sim": 0.9216,
+            "accepted": true
+          },
+          {
+            "lemma": "hitch",
+            "inflected": "hitched",
+            "semantic_sim": 0.9114,
+            "accepted": true
+          },
+          {
+            "lemma": "halt",
+            "inflected": "halted",
+            "semantic_sim": 0.8876,
+            "accepted": true
+          },
+          {
+            "lemma": "delay",
+            "inflected": "delayed",
+            "semantic_sim": 0.8754,
+            "accepted": true
+          },
+          {
+            "lemma": "detain",
+            "inflected": "detained",
+            "semantic_sim": 0.8445,
+            "accepted": false
+          },
+          {
+            "lemma": "arrest",
+            "inflected": "arrested",
+            "semantic_sim": 0.807,
+            "accepted": false
+          }
+        ]
+      }
+    ]
+  }
+]

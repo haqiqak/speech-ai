@@ -5438,3 +5438,88 @@ design but not independently re-verified against R45's original
 nondeterminism population a third time, not a fresh finding each time —
 relevant context for reading the CLEAN-rate delta against the already-
 established ~1-2 point noise band.
+
+## 53. Architecture Go/No-Go, Step 2 — is WRONG_WORD_OR_SENSE a generation problem or a ranking problem? (executed 2026-08-27)
+
+Per the agreed 4-step plan. Analysis only, no production code changed.
+The exact question from the approved proposal: "determine whether the
+correct reformulation is absent from the candidate pool or merely
+ranked incorrectly." Full record: `eval/step2_wrong_sense_report.md`.
+
+**[FACT] Method:** all 88 currently-DEFECTIVE, WRONG_WORD_OR_SENSE
+runs re-instrumented to expose the FULL candidate pool the pipeline
+actually considered (not just the winner) — production `top_k`/`k` plus
+an extended `top_k=30`/`k=15` pass — then classified with FULL context
+(not blind; root-cause diagnosis, same methodological distinction
+Phase 10B drew) by 4 independent subagents into ABSENT_FROM_POOL,
+PRESENT_BUT_MISRANKED, NO_GOOD_OPTION_POSSIBLE, or OTHER.
+
+**[FACT, self-caught bug, fixed before any number reported]** The
+first instrumentation pass crashed on 19/24 restructuring-tier cases
+(`'DifficultyEntry' object has no attribute 'lower'`, a dead line of
+code). Fixed and all 19 re-diagnosed from real data; the earlier, data-
+free classifications were discarded, not blended in.
+
+**[FACT] Result: 98 classification objects across 88 cases —
+PRESENT_BUT_MISRANKED 70 (71%), ABSENT_FROM_POOL 20 (20%), NO_GOOD_
+OPTION_POSSIBLE 5 (5%), OTHER 3 (3%).** The dominant answer is
+unambiguous: for 71% of these defects, a correct or better candidate
+was already sitting in the pipeline's own pool — this is primarily a
+**selection problem**, not a lexical/generation-coverage gap. Within
+those 70: ~57 had the better candidate already in *production's own*
+top_k/k window (a pure ranking-function problem); ~13 only appeared at
+the extended, larger pool (a genuine cutoff-size issue, separable and
+cheaper to fix if pursued).
+
+**[FACT, mechanistically confirmed, not inferred] A specific, traceable
+cause of several ranking failures**: `R10-007`'s "biochemical and
+physiological" → "chemical and physical" and similar cases, verified
+directly against `semantic.combined_score()`:
+```
+combined(chemical,   sim=0.9897) = 0.9733   <- shipped, wrong sense
+combined(biological, sim=0.9911) = 0.9723   <- correct sense, HIGHER similarity, LOWER combined score
+combined(physical,   sim=0.9954) = 0.9815   <- shipped, wrong sense
+combined(biological, sim=0.9973) = 0.9779   <- correct sense, HIGHER similarity, LOWER combined score
+```
+`biological` has higher raw SBERT similarity in both cases and still
+loses, because `combined_score()`'s documented 90%-semantic/10%-
+frequency blend rewards `chemical`/`physical` for simply being more
+common words (Zipf 4.57/4.94 vs. 4.31) — when two candidates' semantic
+similarity is this close, the 10% frequency term is large enough to
+flip the order toward the less meaning-preserving word. This is the
+formula working exactly as designed and documented, not broken code —
+but the evidence shows this weak signal is a real, demonstrated
+contributor to the dominant remaining defect class.
+
+**[LIMITATION, per Practice.md's standing rule — no config/weight
+change made here]** The 0.90/0.10 semantic/frequency weighting is
+flagged as evidence for a future, SEPARATE, explicit decision, exactly
+like the MIN_SEMANTIC threshold question has been flagged throughout
+this project — not changed as a side effect of this analysis.
+
+**[FINDING] The remaining 25% (ABSENT_FROM_POOL + NO_GOOD_OPTION_
+POSSIBLE)** clusters around two patterns: category/hypernym words with
+no true single-word WordNet synonym (`carbohydrates`,
+`hydroelectricity`), and genuinely irreplaceable fixed-collocation/
+technical terms (`economics`, `century` in an ordinal slot) where no
+engineering fix — learned or not — helps without changing what the
+user is allowed to say.
+
+**[LABELED AS, evidence for Step 3, not a decision]** If Step 3
+concludes a learned component is warranted, this evidence points
+specifically at a **learned reranker/scorer** — replacing or augmenting
+`combined_score()`'s fixed linear blend — not a bigger candidate
+generator, since generation is demonstrably not the bottleneck for
+71% of this defect class. Any such component still needs to clear the
+Phase 9B/9C generalization bar (held-out testing, not training-set
+numbers) before being trusted, per the criteria agreed before this
+step began.
+
+**[LIMITATION]** All 4 classifying subagents are Claude instances,
+given full context (not blind), appropriate for root-cause diagnosis
+per Phase 10B's precedent. The ~57/~13 production-pool-vs-extended-pool
+split was computed by a keyword heuristic over free-text rationale,
+spot-checked directly against several cases (confirmed accurate) but
+not independently re-verified for all 70. Diagnoses the 88 currently-
+DEFECTIVE WRONG_WORD_OR_SENSE cases in the R10 corpus specifically, not
+a claim about all future input.

@@ -1,0 +1,688 @@
+[
+  {
+    "run_id": "R10-001-core-sparse_common_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "smaller and smaller -> tiny and lesser (restructuring)",
+    "best_available_alternative": "\"tiny and tiny\" variants (extended-only, e.g. 'Digestion refers to the breakdown of food into tiny and tiny components...')",
+    "rationale": "The shipped 'tiny and lesser' introduces a confusing 'lesser' (inferiority/quantity) sense absent from the original 'smaller and smaller' (progressive size decrease); production's k=5 candidates never use 'tiny' at all, but the extended k=15 pool's 'tiny and tiny' variants stay in the size domain and are a clearly better, if still imperfect, fit."
+  },
+  {
+    "run_id": "R10-001-calib-multi_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "smaller and smaller -> tiny and lesser (restructuring)",
+    "best_available_alternative": "\"tiny and tiny\" variants (extended-only, e.g. 'Digestion involves the breakdown of the food into tiny and tiny components...')",
+    "rationale": "Production (k=5) only offers 'absorbed and assimilated'/'fewer and fewer' variants, none of which is what shipped; the extended pool's 'tiny and tiny' options preserve the size-based meaning far better than the shipped 'tiny and lesser', which wrongly implies inferiority rather than smallness."
+  },
+  {
+    "run_id": "R10-002-core-multi_sound",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "Chewing mixes the food with saliva... (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "All 5 production and 8 extended T5 candidates replace 'saliva' with a nonsensical substance ('mollusks' in production, 'hyaluronic acid' in extended) rather than preserving it; no candidate at either k retains the correct concept, indicating the correct paraphrase is genuinely absent from the model's sampled output distribution."
+  },
+  {
+    "run_id": "R10-007-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "biochemical -> chemical (substitution)",
+    "best_available_alternative": "\"biological\" (production pool, rank 1, semantic_sim 0.9911)",
+    "rationale": "'Biological' scores higher (0.9911) than the shipped 'chemical' (0.9897) and keeps the living-organism sense of 'biochemical' that plain 'chemical' drops, yet it sat lower in the pool actually used for selection."
+  },
+  {
+    "run_id": "R10-007-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "physiological -> physical (substitution)",
+    "best_available_alternative": "\"biological\" (production pool, rank 1, semantic_sim 0.9973)",
+    "rationale": "'Biological' (0.9973) outscores the shipped 'physical' (0.9954) and preserves the body/organism-specific sense of 'physiological' that 'physical' loses (physical can mean mechanical/matter-related), but was not selected despite being available and higher-scoring in the same production pool."
+  },
+  {
+    "run_id": "R10-007-core-dense_mixed_generic",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "support -> give (substitution)",
+    "best_available_alternative": "\"keep\" (production pool, rank 4, semantic_sim 0.9878); \"sustain\" is an even better semantic fit but only appears in the extended pool (semantic_sim 0.9932)",
+    "rationale": "'Give its life' reverses the original meaning (idiomatically 'give one's life' = die/sacrifice), while 'keep' or the extended-only 'sustain' correctly preserve 'support' = 'maintain'; the pipeline instead picked the highest raw-similarity word ('give', 0.9905) over meaning-appropriate candidates already present lower in the same production pool."
+  },
+  {
+    "run_id": "R10-007-calib-single_word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "physiological -> physical (substitution)",
+    "best_available_alternative": "\"biological\" (production pool, rank 1, semantic_sim 0.9973)",
+    "rationale": "'Biological' (0.9973) outscores the shipped 'physical' (0.9954) and preserves the body/organism-specific sense of 'physiological', but was ranked below 'physical' in the same production pool."
+  },
+  {
+    "run_id": "R10-007-calib-word_plus_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "physiological -> physical (substitution)",
+    "best_available_alternative": "\"biological\" (production pool, rank 1, semantic_sim 0.9973)",
+    "rationale": "Same production pool as the other R10-007 physiological substitutions: 'biological' scores higher (0.9973 vs. 0.9954) and is a closer sense match, yet was not the word shipped."
+  },
+  {
+    "run_id": "R10-007-calib-word_plus_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "process -> act (substitution)",
+    "best_available_alternative": "\"operation\" (production pool, rank 2, semantic_sim 0.9825)",
+    "rationale": "'Act' implies a single deliberate action while the original 'process' denotes an ongoing multi-step system; 'operation', already in the same production top-10, preserves that systemic sense far better and was passed over for the highest raw-similarity but sense-mismatched 'act'."
+  },
+  {
+    "run_id": "R10-007-calib-multi_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "support -> give (substitution)",
+    "best_available_alternative": "\"keep\" (production pool, rank 4, semantic_sim 0.9878); \"sustain\" (extended-only, semantic_sim 0.9932) is even better",
+    "rationale": "Identical defect and pool to R10-007-core-dense_mixed_generic: 'give' reverses the meaning of 'support', while 'keep'/'sustain' correctly preserve it and are present lower in the same pools."
+  },
+  {
+    "run_id": "R10-007-calib-sparse_common_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "support -> give (substitution)",
+    "best_available_alternative": "\"keep\" (production pool, rank 4, semantic_sim 0.9878); \"sustain\" (extended-only, semantic_sim 0.9932) is even better",
+    "rationale": "Identical defect and pool to the other R10-007 support->give runs: 'give' reverses the meaning of 'support its life', while 'keep'/'sustain' correctly preserve it."
+  },
+  {
+    "run_id": "R10-008-core-dense_mixed_generic",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "stroke -> travel (substitution)",
+    "best_available_alternative": "\"cva\" or \"apoplexy\" (extended-only, semantic_sim 0.9947 and 0.9965 respectively)",
+    "rationale": "All 10 production candidates (shot, travel, pull, throw, assault, slash, diagonal, stroking, locomotion, caress) reflect only the physical-blow/swimming-stroke senses of the word, none the medical 'cerebrovascular event' sense needed in this disease list; the correct-sense synonyms 'cva' and 'apoplexy' only surface once top_k is extended to 30, making this specifically a top_k-too-small failure for the medical sense, not merely a scoring-formula issue."
+  },
+  {
+    "run_id": "R10-009-core-word",
+    "classification": "NO_GOOD_OPTION_POSSIBLE",
+    "implicated_word_or_tier": "molecules -> compounds (substitution)",
+    "best_available_alternative": null,
+    "rationale": "'Compound' is already the top-ranked, highest-similarity (0.9771) candidate and the extended top-30 pool is identical to production's top-10 (resource exhausted at 10 items); every other option (chemical, particle, atom, formula, speck, unit, drug, mole, polymer) is a worse fit, so no better single-word option exists in what the resource can produce."
+  },
+  {
+    "run_id": "R10-010-core-word",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "carbohydrates -> sugars (substitution)",
+    "best_available_alternative": null,
+    "rationale": "Production and extended pools are identical (10 items, resource exhausted) and every candidate (sugar, glucose, starch, hydrate, glycogen, hydrocarbon, polysaccharide, fructose, maltose, cellulose) is a specific carbohydrate subtype rather than a category-level synonym; the resource never offers a correct hypernym replacement (e.g. 'carbs')."
+  },
+  {
+    "run_id": "R10-010-core-word",
+    "classification": "NO_GOOD_OPTION_POSSIBLE",
+    "implicated_word_or_tier": "organisms -> beings (substitution)",
+    "best_available_alternative": null,
+    "rationale": "'Being' is already the top-ranked candidate; while it narrows 'organism' toward sentient life, every alternative (system, scheme, micro-organism, organ, bacteria, pathogen) is a clearly worse fit, so 'being' is effectively the best option this genuinely hard-to-simplify biological hypernym allows."
+  },
+  {
+    "run_id": "R10-013-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "rearranged -> arranged (substitution)",
+    "best_available_alternative": "\"reorganize\" (production pool, rank 2, semantic_sim 0.943); \"reposition\" scores even higher (0.964, rank 1) but is a weaker contextual fit",
+    "rationale": "Dropping the 're-' prefix turns 'atoms are reorganized' into merely 'atoms are put in order', losing the transformation sense; 'reorganize' (a natural fit for chemistry) and the higher-scoring 'reposition' both already sit in the production pool above where 'arrange' (rank 0) was shipped from."
+  },
+  {
+    "run_id": "R10-013-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "accompanied -> followed (substitution)",
+    "best_available_alternative": "\"complemented\" (production pool, rank 9, semantic_sim 0.9808)",
+    "rationale": "'Followed by' wrongly implies the energy change happens after the reaction, whereas 'accompanied by' means simultaneous co-occurrence; 'complemented by', already in the production top-10, keeps that concurrent sense much better despite scoring slightly lower on raw similarity than 'follow' (0.9974)."
+  },
+  {
+    "run_id": "R10-013-calib-single_word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "accompanied -> followed (substitution)",
+    "best_available_alternative": "\"complemented\" (production pool, rank 9, semantic_sim 0.9808)",
+    "rationale": "Same pool and same issue as R10-013-core-word: 'followed by' introduces a wrong before/after sequencing that 'accompanied by' didn't have; 'complemented by', already present in the production pool, avoids that error."
+  },
+  {
+    "run_id": "R10-013-calib-word_plus_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "accompanied -> followed (substitution)",
+    "best_available_alternative": "\"complemented\" (production pool, rank 9, semantic_sim 0.9808)",
+    "rationale": "Same pool and same issue as the other R10-013 accompanied->followed cases: the temporal-sequencing error introduced by 'followed' could have been avoided with the already-present 'complemented'."
+  },
+  {
+    "run_id": "R10-013-calib-word_plus_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "products -> goods (substitution)",
+    "best_available_alternative": "\"chemical\" (production pool, rank 0, semantic_sim 0.9765)",
+    "rationale": "'Goods' imports a commercial/retail sense ('new goods are generated') that is wrong for a chemistry sentence about reaction products; 'chemical(s)' is not only present but is the single highest-scoring candidate in the same production pool (0.9765 vs. the shipped 'goods' at 0.9659), making this a clear ranking miss."
+  },
+  {
+    "run_id": "R10-017-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "reactions -> results (substitution)",
+    "best_available_alternative": "\"reactivity\" (extended-only, semantic_sim 0.954)",
+    "rationale": "'Results' turns 'forward and reverse reactions' (the chemical processes) into 'forward and reverse results' (outcomes), a wrong-sense swap; the extended top-30 pool contains 'reactivity', a genuine chemistry term scoring higher (0.954) than the shipped 'result' (0.9329), but it never appears in production's top-10."
+  },
+  {
+    "run_id": "R10-022-core-multi_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "straight -> even (substitution)",
+    "best_available_alternative": "\"direct\" (production pool, rank 4, semantic_sim 0.9843)",
+    "rationale": "'Even line' fails to convey non-curved/linear motion the way 'straight line' does; 'direct' ('a direct line') is a standard, correct paraphrase already sitting in the same production pool with higher similarity (0.9843 vs. 0.9785 for the shipped 'even')."
+  },
+  {
+    "run_id": "R10-022-core-multi_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "speed -> hurry (substitution)",
+    "best_available_alternative": "\"velocity\" (production pool, rank 1, semantic_sim 0.9945)",
+    "rationale": "'Constant hurry' is nonsensical for a physics quantity, while 'velocity' is the textbook-correct term for 'constant speed' in exactly this Newton's-law context, and it scores higher (0.9945) than the shipped 'hurry' (0.9883) in the same production pool."
+  },
+  {
+    "run_id": "R10-023-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "accelerate -> change (substitution)",
+    "best_available_alternative": "\"quicken\" (extended-only, semantic_sim 0.9316)",
+    "rationale": "'Does not change' is a much broader (and physically incorrect) claim than 'does not accelerate' (which still allows constant-velocity motion); the extended pool's 'quicken' at least preserves the 'speed up' sense, though it only appears once top_k is extended past production's 10, and even it is an imperfect fix for a genuinely hard physics term."
+  },
+  {
+    "run_id": "R10-024-core-dense_mixed_generic",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "second (1st occurrence) -> forward (substitution)",
+    "best_available_alternative": null,
+    "rationale": "The pool only offers exact restatements of 'second' ('2nd', 'sec') or unrelated senses of the polysemous word (forward, intermediate, instant, minute); nothing in production or the identical extended list captures the 'other item of a pair' sense needed here, so the correct anaphoric substitute genuinely isn't in the resource."
+  },
+  {
+    "run_id": "R10-024-core-dense_mixed_generic",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "second (2nd occurrence) -> intermediate (substitution)",
+    "best_available_alternative": null,
+    "rationale": "Same pool and same gap as the first 'second' substitution in this sentence: only exact-restatement ('2nd') or wrong-sense (forward/intermediate/instant/minute) options exist, none preserving 'the other body in this pair' meaning."
+  },
+  {
+    "run_id": "R10-031-calib-multi_sound",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "surface -> grade (substitution)",
+    "best_available_alternative": null,
+    "rationale": "Production and extended pools are identical (8 items, resource exhausted) and consist entirely of verb/adjective senses of 'surface' (open, rise, coat, shallow) or unrelated nouns (layer, strip, airfoil); none correctly conveys 'the earth's outer boundary/ground level', so no good replacement exists anywhere in the resource."
+  },
+  {
+    "run_id": "R10-031-calib-sparse_common_sound",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "surface -> rise (substitution)",
+    "best_available_alternative": null,
+    "rationale": "Same exhausted 8-item pool as the other R10-031 runs; 'rise' (an elevation) is arguably a worse fit than 'grade' for 'ground level', but neither it nor any other candidate in the identical production/extended lists preserves the intended meaning."
+  },
+  {
+    "run_id": "R10-031-calib-dense_mixed_generic",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "surface -> grade (substitution)",
+    "best_available_alternative": null,
+    "rationale": "Same exhausted 8-item pool as the other R10-031 runs (production = extended); no candidate (open, rise, grade, layer, coat, shallow, strip, airfoil) correctly conveys 'ground level/earth's surface'."
+  },
+  {
+    "run_id": "R10-038-core-word",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "hydroelectricity -> electricity (substitution)",
+    "best_available_alternative": null,
+    "rationale": "The underlying resource has only 2 entries for this rare compound word ('electricity', 'utilities') and extended top-30 finds no more; neither preserves the 'generated from water' component of 'hydroelectricity', so a correct simplification (e.g. 'hydropower') simply isn't in the resource."
+  },
+  {
+    "run_id": "R10-040-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "conditions -> terms (substitution)",
+    "best_available_alternative": "\"circumstance\" (production pool, rank 4, semantic_sim 0.997)",
+    "rationale": "'Cloudless terms' is nonsensical (terms = words/contract language, not weather), while 'circumstance' ('cloudless circumstances') keeps the weather-conditions sense and scores higher (0.997) than the shipped 'term' (0.9927) in the same production pool."
+  },
+  {
+    "run_id": "R10-041-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "pollute (substitution)",
+    "best_available_alternative": "contaminate (production pool, rank 3, sim 0.8664); poison (rank 1, sim 0.8891) also viable",
+    "rationale": "'contaminate'/'poison' are near-exact synonyms of 'pollute' and sit in the production pool, but raw semantic_sim ranked the wrong-sense 'litter' (0.8981) above them purely on embedding proximity, not correctness of sense."
+  },
+  {
+    "run_id": "R10-041-core-dense_mixed_generic",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "sources (substitution)",
+    "best_available_alternative": "resource/resources (production pool, rank 0, sim 0.9716)",
+    "rationale": "'resource' is the top-ranked candidate by semantic_sim in the production pool and preserves meaning ('renewable energy resources'), yet the pipeline shipped 'activities' (rank 2, sim 0.9612) instead -- a selection failure, not a resource gap."
+  },
+  {
+    "run_id": "R10-042-core-dense_mixed_generic",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "rate (substitution)",
+    "best_available_alternative": "value (production pool, rank 0, sim 0.9789)",
+    "rationale": "'value' outranks the shipped 'place' (rank 1, sim 0.9699) in the same production pool and cleanly preserves the 'highest X' meaning describing the conversion-efficiency percentage."
+  },
+  {
+    "run_id": "R10-044-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "specifications (substitution)",
+    "best_available_alternative": "spec (production pool, index 2, sim 0.9397); description (index 0, sim 0.9457) also viable",
+    "rationale": "'spec' is essentially the same word as 'specifications' and preserves meaning exactly; it sits in the production pool with a higher raw sim (0.9397) than the shipped 'standard' (0.9371, index 1), but was list-ranked below it. The co-occurring calculations->computations swap is a fine synonym and is not the defect."
+  },
+  {
+    "run_id": "R10-051-core-dense_mixed_generic",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "written (substitution)",
+    "best_available_alternative": null,
+    "rationale": "Every candidate in both the production and (identical) extended pool -- spell, print, compose, publish, letter, handwriting, script, scribe, pen, annotate -- is a synonym of 'write' in the general authorship sense; none captures the 'expressed/notated as a number' sense needed for 'written as 0.5', so no correct substitute exists anywhere in the resource for this polysemous slot."
+  },
+  {
+    "run_id": "R10-055-calib-single_word",
+    "classification": "NO_GOOD_OPTION_POSSIBLE",
+    "implicated_word_or_tier": "economics (substitution)",
+    "best_available_alternative": null,
+    "rationale": "'economics' names an academic discipline with no true single-word synonym in English; the pool (economy, economist, finance, science, sociology, saving, conservation) only offers morphological/topical relatives, none of which substitutes correctly -- finding a one-word replacement for this sense is inherently unsolvable, not merely under-resourced."
+  },
+  {
+    "run_id": "R10-055-calib-word_plus_sound",
+    "classification": "NO_GOOD_OPTION_POSSIBLE",
+    "implicated_word_or_tier": "economics (substitution)",
+    "best_available_alternative": null,
+    "rationale": "Same word, same pool, same conclusion as R10-055-calib-single_word: no one-word substitute for the discipline sense of 'economics' exists. The co-occurring price->cost substitution in this run is a reasonable, largely meaning-preserving swap and is not the source of the defect."
+  },
+  {
+    "run_id": "R10-058-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "increase (substitution)",
+    "best_available_alternative": "growth (production pool, rank 3, sim 0.9706)",
+    "rationale": "'growth' keeps the upward-direction meaning of 'increase' that matters here (rising opportunity cost), and is present in the production pool, but was outranked by the direction-neutral 'change' (rank 0), which was shipped and breaks the original's entailment. The co-occurring negative->bad swap is an acceptable synonym and is not the defect."
+  },
+  {
+    "run_id": "R10-060-core-dense_mixed_generic",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "recessions (substitution)",
+    "best_available_alternative": "contraction (production pool, rank 3, sim 0.943)",
+    "rationale": "'economic contractions' is a standard, precise synonym for 'economic recessions' and is present in the production pool, but the pipeline shipped 'crises' (rank 1), a broader/different concept, instead. The co-occurring reduces->decreases swap is a near-perfect synonym and is not the defect."
+  },
+  {
+    "run_id": "R10-061-calib-single_word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "construction (substitution)",
+    "best_available_alternative": "building (production pool, rank 1, sim 0.9997 -- the highest raw score in the whole pool)",
+    "rationale": "'building' has the single highest semantic_sim value in the entire production pool and preserves meaning almost exactly ('design, building, and maintenance'), yet the shipped word was 'expression' (rank 3, sim 0.9989) -- proof the selection mechanism isn't simply taking the top-scored item either."
+  },
+  {
+    "run_id": "R10-061-calib-word_plus_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "professional (substitution)",
+    "best_available_alternative": "occupational (production pool, index 5, sim 0.9885)",
+    "rationale": "'occupational' (and 'vocational'/'expert') are present in the production pool and keep the 'relating to a recognized profession' meaning, all superior to the shipped 'paid' (index 2), which nonsensically implies a discipline itself is compensated."
+  },
+  {
+    "run_id": "R10-061-calib-word_plus_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "construction (substitution)",
+    "best_available_alternative": "building (production pool, rank 1, sim 0.9997)",
+    "rationale": "Identical defect and identical pool to R10-061-calib-single_word: 'building' is the best-scored candidate in the pool but 'expression' (rank 3) was shipped instead."
+  },
+  {
+    "run_id": "R10-064-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "self-proclaimed (substitution)",
+    "best_available_alternative": "self-styled (production pool, index 3, sim 0.9901 -- highest in the pool)",
+    "rationale": "'self-styled' is a near-exact synonym of 'self-proclaimed' (both mean self-declared/self-titled) and has the highest semantic_sim of any candidate in the production pool, yet the lower-scored 'self-made' (index 1, sim 0.984) -- which changes the historical claim about Smeaton entirely -- was shipped. The co-occurring constructed->built swap is a perfect synonym and is not the defect."
+  },
+  {
+    "run_id": "R10-071-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "driving (substitution)",
+    "best_available_alternative": "travel/travelling (production pool, rank 1, sim 0.9236)",
+    "rationale": "'travel' preserves the car-vs-train contrast without the redundancy 'riding' creates against 'taking the train'; it's present in the production pool just below the shipped 'ride' (rank 0), chosen purely on raw semantic_sim despite the contextual clash. The co-occurring decided->chosen swap is a minor, acceptable near-synonym and is not the defect."
+  },
+  {
+    "run_id": "R10-073-calib-word_plus_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "professor (substitution)",
+    "best_available_alternative": "prof (production pool, rank 0, sim 0.911)",
+    "rationale": "'prof' is the single top-ranked candidate in the production pool and preserves the original meaning exactly (informal shorthand for professor), but the pipeline shipped 'teacher' (rank 2, sim 0.8771), which drops the university-level specificity."
+  },
+  {
+    "run_id": "R10-074-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "encouraged (substitution)",
+    "best_available_alternative": "motivated (production pool, index 8, sim 0.9177)",
+    "rationale": "'motivated to attend office hours' is idiomatic and keeps the active-prompting sense 'encouraged' has; it is present in the production pool but ranked well below the shipped 'supported' (index 1), which reads as an awkward, weaker collocation ('supported to attend'). The co-occurring material->stuff swap is a minor register shift and is not the primary defect."
+  },
+  {
+    "run_id": "R10-074-core-single_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "struggle (substitution)",
+    "best_available_alternative": "battle (production pool, index 1, sim 0.9314)",
+    "rationale": "'battle with the material' is a common, meaning-preserving collocation for having difficulty with content, and is present in the production pool, but the shipped 'conflict' (index 0) instead implies disagreement/opposition with the material, which is nonsensical in context."
+  },
+  {
+    "run_id": "R10-075-core-dense_mixed_generic",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "studied (substitution)",
+    "best_available_alternative": "learned (production pool, index 4, sim 0.9619); consider (index 0, sim 0.9793) and read (index 3) also viable",
+    "rationale": "Multiple good, meaning-preserving candidates ('consider', 'read', 'learned') sit in the production pool, several scored higher than the shipped 'took' (index 1, sim 0.9672), yet 'took' -- which reads oddly as 'everything we took in the first six chapters' -- was the one selected."
+  },
+  {
+    "run_id": "R10-079-core-sparse_common_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "submit (substitution)",
+    "best_available_alternative": "render (production pool, index 6, sim 0.8785)",
+    "rationale": "'render their reports' is an established (if slightly formal) collocation meaning to deliver/hand in a report, present in the production pool; the shipped 'present' (index 1) instead implies an oral/visual presentation, changing the task described."
+  },
+  {
+    "run_id": "R10-080-core-multi_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "slip (substitution)",
+    "best_available_alternative": "slide (production pool, rank 0, sim 0.9829 -- the highest score in the pool)",
+    "rationale": "'deadlines might slide a little' is an established idiom and the top-scored candidate in the production pool, but the pipeline shipped the nonsensical 'case' (rank 2, sim 0.9699) instead."
+  },
+  {
+    "run_id": "R10-084-core-multi_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "review (substitution)",
+    "best_available_alternative": "recap (production pool, index 3, sim 0.9209)",
+    "rationale": "'recap what went wrong' is standard workplace phrasing that preserves the neutral, informational sense of the weekly review; it's present in the production pool below the shipped 'critique' (index 0), which imports an evaluative/critical connotation absent from the original."
+  },
+  {
+    "run_id": "R10-086-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "airport (substitution)",
+    "best_available_alternative": "airfield (extended pool only, sim 0.9077; not present in production's top_k=10)",
+    "rationale": "None of production's top-10 items (airline, plane, airplane, aviation, aircraft, field, port, machine, terminal, phone) is a place one naturally 'arrives at'; a workable candidate, 'airfield', only surfaces once top_k is widened to 30 -- a top_k-cutoff miss, not just a ranking-function miss. Note 'terminal', which would fit best of all, is present in the production pool but flagged accepted:false by the pipeline's own filter, so it was never actually selectable. The co-occurring departure->leaving swap is a clean synonym and is not the defect."
+  },
+  {
+    "run_id": "R10-087-core-multi_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "station (substitution)",
+    "best_available_alternative": "terminal (production pool, index 7, sim 0.9233)",
+    "rationale": "'train terminal' is a natural, meaning-preserving substitute for 'train station' and is present in the production pool, but it's ranked far below the shipped 'place' (rank 0, sim 0.9767), which is generic enough to lose the transit-specific meaning."
+  },
+  {
+    "run_id": "R10-087-core-multi_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "stayed (substitution)",
+    "best_available_alternative": "remain (production pool, rank 0, sim 0.9829)",
+    "rationale": "'remain' is the single top-ranked item in the production pool and preserves the 'lodged at' meaning of 'stayed', but the shipped word was 'continued' (rank 1, sim 0.9679), which doesn't mean 'stayed overnight at a hotel'."
+  },
+  {
+    "run_id": "R10-089-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "crowded (substitution)",
+    "best_available_alternative": "mobbed (production pool, rank 6 of 10, sim 0.9289)",
+    "rationale": "\"less approached beach\" is nonsensical since 'approach' has no crowd-density sense; 'mobbed' is a natural, meaning-preserving synonym for crowded that was present in the production pool but outranked by the higher-SBERT-score but wrong-sense 'approached' (rank 0, sim 0.968)."
+  },
+  {
+    "run_id": "R10-091-core-multi_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "recipe (substitution)",
+    "best_available_alternative": "dish (production pool, rank 2 of 10, sim 0.9113)",
+    "rationale": "\"This way calls for...\" loses the instructional sense of recipe; 'dish' preserves the common idiom \"this dish calls for X\" and was present in the production pool but ranked below the higher-scoring, ill-fitting 'cooking' (rank 0) and 'way' (rank 1, chosen)."
+  },
+  {
+    "run_id": "R10-091-calib-dense_mixed_generic",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "recipe (substitution)",
+    "best_available_alternative": "dish (production pool, rank 2 of 10, sim 0.9113)",
+    "rationale": "Identical case/pool to R10-091-core-multi_sound: 'dish' is a natural fit present in the production pool but was ranked below 'cooking' and the chosen 'way', which breaks the meaning of the recipe reference."
+  },
+  {
+    "run_id": "R10-093-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "develop (substitution)",
+    "best_available_alternative": "grow (production pool, rank 3, sim 0.9813) or evolve (production pool, rank 8, sim 0.9613)",
+    "rationale": "\"time to produce\" is nonsensical for flavors (intransitive use breaks), whereas 'grow'/'evolve' are natural, meaning-preserving synonyms present in the same production pool; 'produce' was chosen purely for the top semantic_sim score (0.9885) despite a near-zero contextual_fit (0.00022), showing the ranking ignored the very contextual-fit signal it computed."
+  },
+  {
+    "run_id": "R10-094-core-word",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "shellfish (substitution)",
+    "best_available_alternative": null,
+    "rationale": "The only candidates the resource ever surfaces for 'shellfish', even at extended top_k=30 (which still returned just 4 total: shell, fishes, fruit, clam), fail to preserve the allergen meaning; a correct option like 'seafood' or 'crustaceans' never appears in either pool, indicating a genuine resource gap rather than a ranking failure."
+  },
+  {
+    "run_id": "R10-100-core-multi_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "see (substitution)",
+    "best_available_alternative": "meet (production pool, rank 1, sim 0.9731)",
+    "rationale": "'find' breaks the meaning of 'see each other' (visiting/meeting) into a search-and-locate sense; 'meet' sits right next to it in the production pool with an even higher semantic_sim than the chosen 'find' (0.9704), making this a clear ranking-function error rather than a missing candidate."
+  },
+  {
+    "run_id": "R10-103-calib-multi_sound",
+    "classification": "OTHER",
+    "implicated_word_or_tier": "staircase/step (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "The shipped text ('passageway'/'climb') appears nowhere in either the production or extended candidate lists, which instead show a beam-search collapse into near-duplicate 'escalator...step[-----]' strings (beam_kills 123/257); the instrumentation doesn't capture what actually produced the shipped output, so pool-absence vs. misranking can't be assessed, and the visible 'escalator' candidate is itself meaning-breaking for an old house's staircase."
+  },
+  {
+    "run_id": "R10-103-calib-sparse_common_sound",
+    "classification": "OTHER",
+    "implicated_word_or_tier": "staircase/step (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "Same as R10-103-calib-multi_sound: the logged candidates are all degenerate beam-collapsed 'escalator...step[-----]' variants that don't match the shipped 'passageway'/'climb' text at all, so the instrumentation can't support a pool-absence-vs-misranking call here."
+  },
+  {
+    "run_id": "R10-105-core-sparse_common_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "steeper (substitution)",
+    "best_available_alternative": "high/higher (production pool, rank 0, sim 0.9501 — higher than the chosen 'heavier's 0.9414)",
+    "rationale": "\"heavier and rockier\" trail nonsensically conflates weight with steepness; 'higher' sits at the very top of the same production pool by score yet was passed over for the rank-1 item, showing the selection did not simply take the top-scored candidate."
+  },
+  {
+    "run_id": "R10-109-calib-single_word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "replace (substitution)",
+    "best_available_alternative": "substitute (production pool, rank 0, sim 0.949 — higher than chosen 'repair's 0.9001)",
+    "rationale": "'repair' changes the instructed action from swapping the fixture to fixing it; 'substitute' is a near-exact synonym for 'replace' sitting at the top of the same production pool by score, yet the rank-1 'repair' was shipped instead."
+  },
+  {
+    "run_id": "R10-109-calib-word_plus_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "replace (substitution)",
+    "best_available_alternative": "substitute (production pool, rank 0, sim 0.949)",
+    "rationale": "Identical pool and defect to R10-109-calib-single_word: 'substitute' outscores the shipped 'repair' and sits at rank 0 of the production pool, but was not selected."
+  },
+  {
+    "run_id": "R10-111-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "button (substitution)",
+    "best_available_alternative": "switch (production pool, rank 3, sim 0.947)",
+    "rationale": "\"hold the click\" is nonsensical since 'click' names an action/sound, not a physical object; 'switch' is a plausible physical-control synonym present in the same production pool but ranked below the top-scoring, wrong-category 'click'."
+  },
+  {
+    "run_id": "R10-111-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "seconds (substitution)",
+    "best_available_alternative": "secs (production pool, rank 2, sim 0.9916 — the highest score in the whole pool)",
+    "rationale": "\"for five times\" replaces a duration with a repetition count, a serious instructional error; 'secs' scores higher than every other candidate including the chosen 'times' (0.9834) yet sits at rank 2 and was not selected, so the fix was in plain sight in the production pool."
+  },
+  {
+    "run_id": "R10-113-core-dense_mixed_generic",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "steps (substitution)",
+    "best_available_alternative": null,
+    "rationale": "'steps' here means sequential instructions, but every candidate in both production and extended pools (pace, walk, measure, gradation, footprint, stair, footfall, tread, stride, tone) comes from the literal gait/footstep sense of 'step'; no candidate for the 'procedural stage' sense exists in either pool, a word-sense resource gap rather than a ranking problem."
+  },
+  {
+    "run_id": "R10-122-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "factories (substitution)",
+    "best_available_alternative": "plant (present in both production and extended pools but marked accepted:false, sim 0.7693)",
+    "rationale": "'manufacturers' is an awkward fit with \"work in\" (you work for/at a manufacturer, not 'in' one); 'plant' is the ideal real-world synonym for factory and is present in the pool data shown, but was excluded from selection by the acceptance/similarity-threshold filter rather than any meaning check, so a good option was screened out before ranking could favor it."
+  },
+  {
+    "run_id": "R10-123-core-sparse_common_sound",
+    "classification": "NO_GOOD_OPTION_POSSIBLE",
+    "implicated_word_or_tier": "century (substitution)",
+    "best_available_alternative": null,
+    "rationale": "'century' is the fixed collocate in the rigid \"[ordinal] + century\" construction; every candidate in the pool (period, decade, hundred, millennium, centenary, etc.) sounds equally broken slotted after 'twentieth', so no single-word substitution here can succeed — the sentence would need restructuring (e.g. \"the early 1900s\"), not a better-ranked synonym."
+  },
+  {
+    "run_id": "R10-124-core-multi_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "city (substitution)",
+    "best_available_alternative": "town (production pool, rank 0, sim 0.9654 — higher than the chosen 'downtown's 0.937)",
+    "rationale": "'downtown' narrows scope from 'the whole city' to just its commercial core, a real meaning shift; 'town' is a much closer-scope synonym sitting at the top of the same production pool by score, yet rank-1 'downtown' was shipped instead."
+  },
+  {
+    "run_id": "R10-125-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "earlier (substitution)",
+    "best_available_alternative": "earliest (extended pool only, not in production top-10, sim 0.9915)",
+    "rationale": "\"opens older\" swaps the temporal sense of 'earlier' for an age sense, the wrong category entirely; production's top-10 pool is dominated by malformed age/order comparatives (otherrer, firster, formerrer) with no correct temporal option, but the extended top_k=30 pool surfaces 'earliest' (and 'beforehand') which stay in the right semantic category, making this specifically a top_k-cutoff problem rather than a ranking-function one."
+  },
+  {
+    "run_id": "R10-128-core-sparse_common_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "second (substitution)",
+    "best_available_alternative": "2nd (production pool, rank 1, sim 0.9953 — higher than the chosen 'back's 0.9883)",
+    "rationale": "\"his back marriage\" is nonsensical; '2nd' is the literal numeral form of 'second' and sits in the same production pool scoring even higher than the shipped 'back', making this one of the clearest ranking-function failures in the batch."
+  },
+  {
+    "run_id": "R10-129-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "scholarship (substitution)",
+    "best_available_alternative": "bursary (extended pool only, not in production top-10, sim 0.9683)",
+    "rationale": "\"a two-year learning to Kilmarnock Academy\" is ungrammatical since 'learning' doesn't fit the 'X to [institution]' scholarship construction; 'bursary' — the standard Scottish/British term for scholarship, fitting this Kilmarnock context well — only appears once top_k is extended to 30, so production's smaller top_k=10 window is what caused the miss."
+  },
+  {
+    "run_id": "R10-129-core-dense_mixed_generic",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "scholarship (substitution)",
+    "best_available_alternative": "bursary (extended pool only, not in production top-10, sim 0.9683)",
+    "rationale": "Identical case/pool to R10-129-core-word: 'bursary' is a strong meaning-preserving fit that only surfaces at extended top_k=30, missed entirely at production's top_k=10."
+  },
+  {
+    "run_id": "R10-133-calib-multi_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "school (substitution)",
+    "best_available_alternative": "schoolhouse (extended pool only, not in production top-10, sim 0.9111)",
+    "rationale": "\"qualified... from the courses\" loses the specific-institution sense of 'the school'; 'schoolhouse' retains an institution/place sense far closer to the original but only shows up once top_k is extended to 30 (only 11 total candidates found even then), so production's top_k=10 cutoff is what excluded it."
+  },
+  {
+    "run_id": "R10-133-calib-sparse_common_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "school (substitution)",
+    "best_available_alternative": "schoolhouse (extended pool only, not in production top-10, sim 0.9111)",
+    "rationale": "Identical case/pool to R10-133-calib-multi_sound: 'schoolhouse' preserves the institution sense but is only reachable at extended top_k=30."
+  },
+  {
+    "run_id": "R10-133-calib-dense_mixed_generic",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "school (substitution)",
+    "best_available_alternative": "schoolhouse (extended pool only, not in production top-10, sim 0.9111)",
+    "rationale": "Identical case/pool to R10-133-calib-multi_sound: 'schoolhouse' preserves the institution sense but is only reachable at extended top_k=30."
+  },
+  {
+    "run_id": "R10-001-calib-dense_mixed_generic",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "smaller and smaller (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "The comparative-doubling construction 'smaller and smaller' (progressive size decrease during digestion) has no faithful paraphrase anywhere in the pool: production candidates either nonsensically duplicate 'absorbed and assimilated' or shift to 'fewer and fewer' (a count claim, and arguably the wrong direction since breakdown increases the number of components); extended k=15 only adds ungrammatical 'tiny and tiny' repeats. No candidate at either k expresses the progressive-size-reduction meaning correctly."
+  },
+  {
+    "run_id": "R10-016-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "bimolecular (restructuring)",
+    "best_available_alternative": "\"Two molecules collide and react with each other in a bi-molecular reaction.\" — present in the production k=5 pool at rank 1 (the very top of the list).",
+    "rationale": "'bi-molecular' is a meaning-identical hyphenated respelling of the technical term and sits at the top of the production candidate list, yet the pipeline shipped 'bifocal' (nonsensical, glasses-related) from rank 2 instead — a straightforward misranking within production's own k=5, not a pool-absence problem."
+  },
+  {
+    "run_id": "R10-034-core-word",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "dissolved (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "'dissolved' (a state: gas already in solution) is replaced by 'soluble' (a property: gas capable of dissolving) in every one of the 5 production and 15 extended candidates without exception — the model's output distribution never once retains 'dissolved' or an equivalent state-describing synonym, so a correct option is absent from the pool at any k."
+  },
+  {
+    "run_id": "R10-037-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "continuously (restructuring)",
+    "best_available_alternative": "\"Renewable energy is usually understood as energy harnessed from constantly occurring natural phenomena.\" — rank 1 (top) of the production k=5 pool, one slot above the shipped 'continually occurring' candidate.",
+    "rationale": "'constantly' (incessant, uninterrupted) is the closer synonym to 'continuously' than 'continually' (recurring at intervals); the better-matching candidate is literally the top-ranked production output, so the worse candidate shipped despite being outranked within production's own k=5."
+  },
+  {
+    "run_id": "R10-037-calib-single_word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "continuously (restructuring)",
+    "best_available_alternative": "\"Renewable energy is usually understood as energy harnessed from constantly occurring natural phenomena.\" — rank 1 (top) of the production k=5 pool, one slot above the shipped 'continually occurring' candidate.",
+    "rationale": "Same candidate pool as R10-037-core-word: 'constantly' is the closer synonym to 'continuously' and is the top-ranked production candidate, yet the weaker 'continually' variant (rank 2) was shipped — a ranking failure, not a pool-absence issue."
+  },
+  {
+    "run_id": "R10-037-calib-word_plus_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "continuously (restructuring)",
+    "best_available_alternative": "\"Renewable energy is usually understood as energy harnessed from constantly occurring natural phenomena.\" — rank 1 (top) of the production k=5 pool, one slot above the shipped 'continually occurring' candidate.",
+    "rationale": "Identical candidate data to the other two R10-037 variants: the closer synonym 'constantly' ranks above the shipped 'continually', so this is a misranking present already at production k=5, not an absent-from-pool case."
+  },
+  {
+    "run_id": "R10-043-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "mathematically (restructuring)",
+    "best_available_alternative": "\"In math and computer science, an algorithm is a finite sequence of mathematically rigorous logical commands, typically used to solve a class of specific problems or to perform a computation.\" — appears only in the extended k=15 pool, not in production's k=5.",
+    "rationale": "Production's entire k=5 uniformly substitutes 'numerically' for 'mathematically' (a different technical concept — numerical precision vs. logical rigor) and never preserves the original adjective; a candidate that keeps 'mathematically' (paired with the grammatically-correct plural 'commands') only surfaces once k is raised to 15, making this a pure k-too-small issue rather than a ranking-function failure."
+  },
+  {
+    "run_id": "R10-043-calib-multi_word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "mathematically (restructuring)",
+    "best_available_alternative": "\"In math and computer science, an algorithm is a finite sequence of mathematically rigorous logical commands, typically used to solve a class of specific problems or to perform a computation.\" — appears only in the extended k=15 pool, not in production's k=5.",
+    "rationale": "Same candidate data as R10-043-core-word: the meaning-preserving candidate retaining 'mathematically' only appears once k is extended to 15, so this is a k-too-small issue rather than a bad ranking function operating on production's own k=5."
+  },
+  {
+    "run_id": "R10-044-core-dense_mixed_generic",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "specifications (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "The model offers only two flawed families and never both fixes together: production's entire k=5 keeps the closer-meaning word 'description' but leaves the original subject-verb disagreement ('Algorithms is') uncorrected, while the meaning-changing 'parameters' (algorithms are not parameters) only appears paired with the grammar fix 'are' once the pool is extended to k=15; no candidate at either k pairs correct grammar with a meaning-preserving noun for 'specifications'."
+  },
+  {
+    "run_id": "R10-047-core-dense_mixed_generic",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "step (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "Every one of the 5 production and 15 extended candidates converts 'step' to either 'point' or 'phase', both looser fits for a discrete computational step than a term like 'stage' would be; no candidate at either k preserves or better-approximates the original 'step' sense."
+  },
+  {
+    "run_id": "R10-065-core-word",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "surveyors (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "All 5 production and all but one of the 15 extended candidates replace the person-noun 'surveyors' with the document-noun 'surveys', a category error (engineers work with survey professionals, not survey documents); the sole exception, 'surveyers', is a misspelling rather than a legitimate well-formed alternative, so no clean meaning-preserving candidate exists in the pool at either k."
+  },
+  {
+    "run_id": "R10-070-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "restaurant (restructuring)",
+    "best_available_alternative": "\"Honestly, I don't think that it is as good as everybody says.\" — rank 1 (top) of the production k=5 pool.",
+    "rationale": "Pluralizing 'restaurant' to 'restaurants' changes the sentence from a comment about one specific place to a generic plural claim; the top-ranked production candidate keeps the singular referent via 'it', preserving meaning, yet the pipeline shipped the pluralized rank-2 candidate instead."
+  },
+  {
+    "run_id": "R10-079-calib-multi_word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "manager (restructuring)",
+    "best_available_alternative": "\"The supervisor asked all to submit their report by the end of the day.\" — production k=5 pool, rank 2, directly below the shipped 'management' candidate.",
+    "rationale": "'management' shifts the singular specific person ('the manager') into an abstract collective entity, while 'supervisor' preserves the singular-person meaning and sits in the production pool immediately below the shipped candidate — a straightforward misranking within production's own k=5."
+  },
+  {
+    "run_id": "R10-080-core-word",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "deadlines (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "Every production and extended candidate converts the original plural 'deadlines' to a definite singular 'the deadline', narrowing a general statement about multiple deadlines to one specific deadline; no candidate at either k preserves the plural."
+  },
+  {
+    "run_id": "R10-103-calib-dense_mixed_generic",
+    "classification": "OTHER",
+    "implicated_word_or_tier": "staircase / step (restructuring beam collapse)",
+    "best_available_alternative": null,
+    "rationale": "Both the production and extended candidate lists are garbled beam-search artifacts (repeated dash characters degenerating into random trailing tokens/fragments like '------------------ de'), and none of them even match the actually-shipped text ('passageway'/'climb'); there is no usable semantic information in either pool from which to classify a candidate-quality root cause."
+  },
+  {
+    "run_id": "R10-109-core-word",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "fixture (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "'light fixture' (the whole lighting apparatus) is replaced by 'light bulb' or 'light source' in literally every production and extended candidate at both k=5 and k=15; the pipeline never generates an option preserving the larger-apparatus meaning, so the correct alternative is absent from the pool entirely."
+  },
+  {
+    "run_id": "R10-109-calib-multi_word",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "fixture (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "Same pattern as R10-109-core-word: all production and extended candidates convert 'fixture' to 'bulb'/'light source'/'the light', never preserving the whole-apparatus meaning at either k."
+  },
+  {
+    "run_id": "R10-123-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "renovated (restructuring)",
+    "best_available_alternative": "\"The bridge was built in the early 20th century and has since been refurbished twice.\" — production k=5 pool, rank 1 (top), one slot above the shipped 'rebuilt' candidate.",
+    "rationale": "'refurbished' is the closest synonym to 'renovated' (cosmetic/functional upgrade, not full reconstruction), and it is the top-ranked production candidate, yet the pipeline shipped 'rebuilt' (implying full reconstruction, a materially larger claim) from rank 2."
+  },
+  {
+    "run_id": "R10-124-core-word",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "public (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "The qualifier 'public' (as opposed to private parks) is dropped in all 5 production and all 15 extended candidates — every option becomes generic 'park areas/spaces/sites/parklands' with no reintroduction of 'public' or an equivalent qualifier — so a fully meaning-preserving option is absent from the pool at any k; the verifier's own rev_label flipping to 'neutral' corroborates a genuine, if subtle, meaning loss."
+  }
+]

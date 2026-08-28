@@ -6,6 +6,20 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-27, sixth** docs: Architecture Go/No-Go Step 2 — diagnosed
+  whether the dominant remaining defect (WRONG_WORD_OR_SENSE) is a
+  candidate-generation gap or a ranking failure. Re-instrumented all 88
+  currently-DEFECTIVE cases to expose the full candidate pool actually
+  considered (not just the winner), classified with full context by 4
+  subagents. Self-caught and fixed a diagnostic-tooling bug (19
+  crashed cases) before reporting. Result: 71% are PRESENT_BUT_
+  MISRANKED — a better candidate was already in the pipeline's own
+  pool — with a specific, mechanistically confirmed cause traced for
+  several cases to combined_score()'s 90%/10% semantic/frequency blend
+  favoring a common-but-wrong word over a rarer-but-correct one.
+  Weighting flagged as evidence for a future, separate decision, not
+  changed. Analysis only, no production code touched. →
+  `DECISION_LOG.md` 2026-08-27-F, `VALIDATION.md` §53.
 - **2026-08-27, fifth** feat: Architecture Go/No-Go Step 1 — ported
   R45/R46's phoneme-aware decoding-time constraint (the largest
   measured improvement in this project's history, previously stuck

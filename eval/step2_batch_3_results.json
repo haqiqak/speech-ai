@@ -1,0 +1,205 @@
+[
+  {
+    "run_id": "R10-089-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "crowded (substitution)",
+    "best_available_alternative": "mobbed (production pool, rank 6 of 10, sim 0.9289)",
+    "rationale": "\"less approached beach\" is nonsensical since 'approach' has no crowd-density sense; 'mobbed' is a natural, meaning-preserving synonym for crowded that was present in the production pool but outranked by the higher-SBERT-score but wrong-sense 'approached' (rank 0, sim 0.968)."
+  },
+  {
+    "run_id": "R10-091-core-multi_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "recipe (substitution)",
+    "best_available_alternative": "dish (production pool, rank 2 of 10, sim 0.9113)",
+    "rationale": "\"This way calls for...\" loses the instructional sense of recipe; 'dish' preserves the common idiom \"this dish calls for X\" and was present in the production pool but ranked below the higher-scoring, ill-fitting 'cooking' (rank 0) and 'way' (rank 1, chosen)."
+  },
+  {
+    "run_id": "R10-091-calib-dense_mixed_generic",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "recipe (substitution)",
+    "best_available_alternative": "dish (production pool, rank 2 of 10, sim 0.9113)",
+    "rationale": "Identical case/pool to R10-091-core-multi_sound: 'dish' is a natural fit present in the production pool but was ranked below 'cooking' and the chosen 'way', which breaks the meaning of the recipe reference."
+  },
+  {
+    "run_id": "R10-093-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "develop (substitution)",
+    "best_available_alternative": "grow (production pool, rank 3, sim 0.9813) or evolve (production pool, rank 8, sim 0.9613)",
+    "rationale": "\"time to produce\" is nonsensical for flavors (intransitive use breaks), whereas 'grow'/'evolve' are natural, meaning-preserving synonyms present in the same production pool; 'produce' was chosen purely for the top semantic_sim score (0.9885) despite a near-zero contextual_fit (0.00022), showing the ranking ignored the very contextual-fit signal it computed."
+  },
+  {
+    "run_id": "R10-094-core-word",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "shellfish (substitution)",
+    "best_available_alternative": null,
+    "rationale": "The only candidates the resource ever surfaces for 'shellfish', even at extended top_k=30 (which still returned just 4 total: shell, fishes, fruit, clam), fail to preserve the allergen meaning; a correct option like 'seafood' or 'crustaceans' never appears in either pool, indicating a genuine resource gap rather than a ranking failure."
+  },
+  {
+    "run_id": "R10-100-core-multi_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "see (substitution)",
+    "best_available_alternative": "meet (production pool, rank 1, sim 0.9731)",
+    "rationale": "'find' breaks the meaning of 'see each other' (visiting/meeting) into a search-and-locate sense; 'meet' sits right next to it in the production pool with an even higher semantic_sim than the chosen 'find' (0.9704), making this a clear ranking-function error rather than a missing candidate."
+  },
+  {
+    "run_id": "R10-103-calib-multi_sound",
+    "classification": "OTHER",
+    "implicated_word_or_tier": "staircase/step (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "The shipped text ('passageway'/'climb') appears nowhere in either the production or extended candidate lists, which instead show a beam-search collapse into near-duplicate 'escalator...step[-----]' strings (beam_kills 123/257); the instrumentation doesn't capture what actually produced the shipped output, so pool-absence vs. misranking can't be assessed, and the visible 'escalator' candidate is itself meaning-breaking for an old house's staircase."
+  },
+  {
+    "run_id": "R10-103-calib-sparse_common_sound",
+    "classification": "OTHER",
+    "implicated_word_or_tier": "staircase/step (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "Same as R10-103-calib-multi_sound: the logged candidates are all degenerate beam-collapsed 'escalator...step[-----]' variants that don't match the shipped 'passageway'/'climb' text at all, so the instrumentation can't support a pool-absence-vs-misranking call here."
+  },
+  {
+    "run_id": "R10-103-calib-dense_mixed_generic",
+    "classification": "OTHER",
+    "implicated_word_or_tier": "staircase/step (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "The diagnostic instrumentation crashed ('DifficultyEntry' object has no attribute 'lower') before any production/extended candidates could be logged, so there is no pool data at all to judge whether a correct restructuring existed or was merely misranked."
+  },
+  {
+    "run_id": "R10-105-core-sparse_common_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "steeper (substitution)",
+    "best_available_alternative": "high/higher (production pool, rank 0, sim 0.9501 — higher than the chosen 'heavier's 0.9414)",
+    "rationale": "\"heavier and rockier\" trail nonsensically conflates weight with steepness; 'higher' sits at the very top of the same production pool by score yet was passed over for the rank-1 item, showing the selection did not simply take the top-scored candidate."
+  },
+  {
+    "run_id": "R10-109-core-word",
+    "classification": "OTHER",
+    "implicated_word_or_tier": "fixture (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "The reformulation swaps 'light fixture' for 'light bulb', a real scope change for a safety instruction, but the diagnostic crashed ('DifficultyEntry' object has no attribute 'lower') and logged zero candidates, so whether a faithful restructuring was available cannot be determined from the given data."
+  },
+  {
+    "run_id": "R10-109-calib-single_word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "replace (substitution)",
+    "best_available_alternative": "substitute (production pool, rank 0, sim 0.949 — higher than chosen 'repair's 0.9001)",
+    "rationale": "'repair' changes the instructed action from swapping the fixture to fixing it; 'substitute' is a near-exact synonym for 'replace' sitting at the top of the same production pool by score, yet the rank-1 'repair' was shipped instead."
+  },
+  {
+    "run_id": "R10-109-calib-multi_word",
+    "classification": "OTHER",
+    "implicated_word_or_tier": "fixture (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "Same 'fixture'->'bulb' scope-change defect as R10-109-core-word, and again the diagnostic crashed with no candidates logged, so root cause is indeterminate from the given data."
+  },
+  {
+    "run_id": "R10-109-calib-word_plus_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "replace (substitution)",
+    "best_available_alternative": "substitute (production pool, rank 0, sim 0.949)",
+    "rationale": "Identical pool and defect to R10-109-calib-single_word: 'substitute' outscores the shipped 'repair' and sits at rank 0 of the production pool, but was not selected."
+  },
+  {
+    "run_id": "R10-111-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "button (substitution)",
+    "best_available_alternative": "switch (production pool, rank 3, sim 0.947)",
+    "rationale": "\"hold the click\" is nonsensical since 'click' names an action/sound, not a physical object; 'switch' is a plausible physical-control synonym present in the same production pool but ranked below the top-scoring, wrong-category 'click'."
+  },
+  {
+    "run_id": "R10-111-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "seconds (substitution)",
+    "best_available_alternative": "secs (production pool, rank 2, sim 0.9916 — the highest score in the whole pool)",
+    "rationale": "\"for five times\" replaces a duration with a repetition count, a serious instructional error; 'secs' scores higher than every other candidate including the chosen 'times' (0.9834) yet sits at rank 2 and was not selected, so the fix was in plain sight in the production pool."
+  },
+  {
+    "run_id": "R10-113-core-dense_mixed_generic",
+    "classification": "ABSENT_FROM_POOL",
+    "implicated_word_or_tier": "steps (substitution)",
+    "best_available_alternative": null,
+    "rationale": "'steps' here means sequential instructions, but every candidate in both production and extended pools (pace, walk, measure, gradation, footprint, stair, footfall, tread, stride, tone) comes from the literal gait/footstep sense of 'step'; no candidate for the 'procedural stage' sense exists in either pool, a word-sense resource gap rather than a ranking problem."
+  },
+  {
+    "run_id": "R10-122-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "factories (substitution)",
+    "best_available_alternative": "plant (present in both production and extended pools but marked accepted:false, sim 0.7693)",
+    "rationale": "'manufacturers' is an awkward fit with \"work in\" (you work for/at a manufacturer, not 'in' one); 'plant' is the ideal real-world synonym for factory and is present in the pool data shown, but was excluded from selection by the acceptance/similarity-threshold filter rather than any meaning check, so a good option was screened out before ranking could favor it."
+  },
+  {
+    "run_id": "R10-123-core-word",
+    "classification": "OTHER",
+    "implicated_word_or_tier": "renovated/rebuilt (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "'rebuilt' implies full reconstruction versus the milder 'renovated', a modest sense shift, but the diagnostic crashed with no candidates logged, so it can't be determined whether a closer paraphrase was available in the model's distribution."
+  },
+  {
+    "run_id": "R10-123-core-sparse_common_sound",
+    "classification": "NO_GOOD_OPTION_POSSIBLE",
+    "implicated_word_or_tier": "century (substitution)",
+    "best_available_alternative": null,
+    "rationale": "'century' is the fixed collocate in the rigid \"[ordinal] + century\" construction; every candidate in the pool (period, decade, hundred, millennium, centenary, etc.) sounds equally broken slotted after 'twentieth', so no single-word substitution here can succeed — the sentence would need restructuring (e.g. \"the early 1900s\"), not a better-ranked synonym."
+  },
+  {
+    "run_id": "R10-124-core-word",
+    "classification": "OTHER",
+    "implicated_word_or_tier": "public parks (restructuring)",
+    "best_available_alternative": null,
+    "rationale": "The restructuring drops 'public' and reshapes 'parks' into 'park areas'; the diagnostic crashed with no candidate data logged, so it can't be established whether a more faithful restructuring was available in the model's distribution."
+  },
+  {
+    "run_id": "R10-124-core-multi_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "city (substitution)",
+    "best_available_alternative": "town (production pool, rank 0, sim 0.9654 — higher than the chosen 'downtown's 0.937)",
+    "rationale": "'downtown' narrows scope from 'the whole city' to just its commercial core, a real meaning shift; 'town' is a much closer-scope synonym sitting at the top of the same production pool by score, yet rank-1 'downtown' was shipped instead."
+  },
+  {
+    "run_id": "R10-125-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "earlier (substitution)",
+    "best_available_alternative": "earliest (extended pool only, not in production top-10, sim 0.9915)",
+    "rationale": "\"opens older\" swaps the temporal sense of 'earlier' for an age sense, the wrong category entirely; production's top-10 pool is dominated by malformed age/order comparatives (otherrer, firster, formerrer) with no correct temporal option, but the extended top_k=30 pool surfaces 'earliest' (and 'beforehand') which stay in the right semantic category, making this specifically a top_k-cutoff problem rather than a ranking-function one."
+  },
+  {
+    "run_id": "R10-128-core-sparse_common_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "second (substitution)",
+    "best_available_alternative": "2nd (production pool, rank 1, sim 0.9953 — higher than the chosen 'back's 0.9883)",
+    "rationale": "\"his back marriage\" is nonsensical; '2nd' is the literal numeral form of 'second' and sits in the same production pool scoring even higher than the shipped 'back', making this one of the clearest ranking-function failures in the batch."
+  },
+  {
+    "run_id": "R10-129-core-word",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "scholarship (substitution)",
+    "best_available_alternative": "bursary (extended pool only, not in production top-10, sim 0.9683)",
+    "rationale": "\"a two-year learning to Kilmarnock Academy\" is ungrammatical since 'learning' doesn't fit the 'X to [institution]' scholarship construction; 'bursary' — the standard Scottish/British term for scholarship, fitting this Kilmarnock context well — only appears once top_k is extended to 30, so production's smaller top_k=10 window is what caused the miss."
+  },
+  {
+    "run_id": "R10-129-core-dense_mixed_generic",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "scholarship (substitution)",
+    "best_available_alternative": "bursary (extended pool only, not in production top-10, sim 0.9683)",
+    "rationale": "Identical case/pool to R10-129-core-word: 'bursary' is a strong meaning-preserving fit that only surfaces at extended top_k=30, missed entirely at production's top_k=10."
+  },
+  {
+    "run_id": "R10-133-calib-multi_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "school (substitution)",
+    "best_available_alternative": "schoolhouse (extended pool only, not in production top-10, sim 0.9111)",
+    "rationale": "\"qualified... from the courses\" loses the specific-institution sense of 'the school'; 'schoolhouse' retains an institution/place sense far closer to the original but only shows up once top_k is extended to 30 (only 11 total candidates found even then), so production's top_k=10 cutoff is what excluded it."
+  },
+  {
+    "run_id": "R10-133-calib-sparse_common_sound",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "school (substitution)",
+    "best_available_alternative": "schoolhouse (extended pool only, not in production top-10, sim 0.9111)",
+    "rationale": "Identical case/pool to R10-133-calib-multi_sound: 'schoolhouse' preserves the institution sense but is only reachable at extended top_k=30."
+  },
+  {
+    "run_id": "R10-133-calib-dense_mixed_generic",
+    "classification": "PRESENT_BUT_MISRANKED",
+    "implicated_word_or_tier": "school (substitution)",
+    "best_available_alternative": "schoolhouse (extended pool only, not in production top-10, sim 0.9111)",
+    "rationale": "Identical case/pool to R10-133-calib-multi_sound: 'schoolhouse' preserves the institution sense but is only reachable at extended top_k=30."
+  }
+]

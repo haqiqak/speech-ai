@@ -1,0 +1,1116 @@
+[
+  {
+    "run_id": "R10-001-calib-dense_mixed_generic",
+    "original_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "reformulated_text": "Digestion involves the breakdown of food into tiny and lesser components until they can be absorbed and assimilated into the body.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+        "original": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+        "replacement": "Digestion involves the breakdown of food into tiny and lesser components until they can be absorbed and assimilated into the body.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.9925,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3332,
+          "difficulty_after": 0.3293,
+          "beam_kills": 16
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "Digestion involves the breakdown of the food into absorbed and assimilated components until they can be absorbed into the body.",
+          "Digestion involves the breakdown of the food into fewer and fewer components until they can be absorbed and assimilated into the body.",
+          "Digestion involves the breakdown of the food into absorbed and assimilated parts until they can be absorbed into the body.",
+          "Digestion involves the breakdown of the food into absorbed and assimilated components until it can be absorbed into the body.",
+          "Digestion involves the breakdown of the food into absorbed and assimilated parts until it can be absorbed into the body."
+        ],
+        "production_beam_kills": 39,
+        "extended_k": 15,
+        "extended_candidates": [
+          "Digestion involves the breakdown of the food into tiny and tiny components until they can be absorbed and assimilated into the body.",
+          "Digestion involves the breakdown of the food into tiny and tiny parts until they can be absorbed and assimilated into the body.",
+          "Digestion involves the breakdown of the food into tiny and tiny components until it can be absorbed and assimilated into the body.",
+          "Digestion involves the breakdown of the food into tiny and tiny components until they can be absorbed into the body and assimilated.",
+          "Digestion involves the breakdown of the food into absorbed and assimilated components until they can be absorbed into the body.",
+          "Digestion involves the breakdown of the food into tiny and tiny components until they can be absorbed and assimilated in the body.",
+          "Digestion involves the breakdown of the food into tiny and tiny components until they are absorbed and assimilated into the body.",
+          "Digestion involves the breakdown of the food into absorbed and assimilated parts until they can be absorbed into the body.",
+          "Digestion involves the breakdown of the food into absorbed and assimilated components until it can be absorbed into the body.",
+          "Digestion involves the breakdown of the food into absorbed and assimilated parts until it can be absorbed into the body.",
+          "Digestion involves the breakdown of the food into tiny and tiny components until they can be absorbed and absorbed into the body."
+        ],
+        "extended_beam_kills": 41
+      }
+    ]
+  },
+  {
+    "run_id": "R10-016-core-word",
+    "original_text": "In a bimolecular reaction, two molecules collide and react with each other.",
+    "reformulated_text": "Two molecules collide and react with each other in a bifocal reaction.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "In a bimolecular reaction, two molecules collide and react with each other.",
+        "original": "In a bimolecular reaction, two molecules collide and react with each other.",
+        "replacement": "Two molecules collide and react with each other in a bifocal reaction.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.8573,
+          "nli": {
+            "fwd_label": "neutral",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3265,
+          "difficulty_after": 0.3193,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "Two molecules collide and react with each other in a bi-molecular reaction.",
+          "Two molecules collide and react with each other in a bifocal reaction.",
+          "Two molecules collide and react with each other in a bimolécular reaction.",
+          "Two molecules collide and react with each other in a bicollicular reaction.",
+          "Two molecules collide and react with each other in a bifidal reaction."
+        ],
+        "production_beam_kills": 0,
+        "extended_k": 15,
+        "extended_candidates": [
+          "In a bi-molecular reaction two molecules collide and react with each other.",
+          "In a bi-molecular reaction, two molecules collide and react with each other.",
+          "Two molecules collide and react with each other in a bi-molecular reaction.",
+          "In a bi-molecular reaction, two molecules collide and react each other.",
+          "In a bi-molecular reaction, two molecules collide and react with each other",
+          "In a bi-molecular reaction two molecules collide and react with one another.",
+          "In a bi-molecular reaction, two molecules collide and react with one another.",
+          "In a bi-molecular reaction, two molecules collide and react together.",
+          "In a bi-molecular reaction, two molecules collide and react to each other."
+        ],
+        "extended_beam_kills": 0
+      }
+    ]
+  },
+  {
+    "run_id": "R10-034-core-word",
+    "original_text": "Magma commonly explodes as the gas dissolved in it comes out of solution as the pressure decreases when it flows to the surface.",
+    "reformulated_text": "Magma often explodes as the gas soluble in it comes out of the solution as the pressure drops when it flows to the surface.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Magma commonly explodes as the gas dissolved in it comes out of solution as the pressure decreases when it flows to the surface.",
+        "original": "Magma commonly explodes as the gas dissolved in it comes out of solution as the pressure decreases when it flows to the surface.",
+        "replacement": "Magma often explodes as the gas soluble in it comes out of the solution as the pressure drops when it flows to the surface.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.973,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3131,
+          "difficulty_after": 0.2877,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "Magma often explodes as the gas soluble in it comes out of the solution as the pressure drops when it flows to the surface.",
+          "Magma frequently explodes as the gas soluble in it comes out of the solution as the pressure drops when it flows to the surface.",
+          "Magma often explodes when the gas soluble in it comes out of the solution as the pressure drops when it flows to the surface.",
+          "Magma frequently explodes when the gas soluble in it comes out of the solution as the pressure drops when it flows to the surface.",
+          "Magma often explodes as the gas soluble in it comes out of the solution as the pressure drops when it comes to the surface."
+        ],
+        "production_beam_kills": 0,
+        "extended_k": 15,
+        "extended_candidates": [
+          "Magma often explodes as the gas soluble in it comes out of the solution as the pressure drops when it flows to the surface.",
+          "Magma frequently explodes as the gas soluble in it comes out of the solution as the pressure drops when it flows to the surface.",
+          "Magma often explodes when the gas soluble in it comes out of the solution as the pressure drops when it flows to the surface.",
+          "Magma frequently explodes when the gas soluble in it comes out of the solution as the pressure drops when it flows to the surface.",
+          "Magma usually explodes as the gas soluble in it comes out of the solution as the pressure drops when it flows to the surface.",
+          "Magma often explodes as the gas soluble in it comes out of the solution as the pressure drops when it comes to the surface.",
+          "Magma often explodes as the gas soluble in it comes out of the solution as the pressure drops as it flows to the surface.",
+          "Magma frequently explodes as the gas soluble in it comes out of the solution as the pressure drops when it comes to the surface.",
+          "Magma frequently explodes as the gas soluble in it comes out of the solution as the pressure drops as it flows to the surface.",
+          "Magma often explodes when the gas soluble in it comes out of the solution as the pressure drops when it comes to the surface.",
+          "Magma frequently explodes when the gas soluble in it comes out of the solution as the pressure drops when it comes to the surface.",
+          "Magma often explodes as the gas soluble in it comes out of the solution as the pressure drops when it reaches the surface."
+        ],
+        "extended_beam_kills": 0
+      }
+    ]
+  },
+  {
+    "run_id": "R10-037-core-word",
+    "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+    "reformulated_text": "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+        "original": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+        "replacement": "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.987,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3896,
+          "difficulty_after": 0.3898,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "Renewable energy is usually understood as energy harnessed from constantly occurring natural phenomena.",
+          "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena.",
+          "Renewable energy is usually understood as energy that is harnessed from constantly occurring natural phenomena.",
+          "Renewable energy is usually understood as energy that is harnessed from continually occurring natural phenomena.",
+          "Renewable energy is usually understood as energy derived from constantly occurring natural phenomena."
+        ],
+        "production_beam_kills": 0,
+        "extended_k": 15,
+        "extended_candidates": [
+          "Renewable energy is usually understood as energy harnessed from constantly occurring natural phenomena.",
+          "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena.",
+          "Renewable energy is usually understood as energy derived from constantly occurring natural phenomena.",
+          "Renewable energy is usually understood as energy harnessed from continuous natural phenomena.",
+          "Renewable energy is usually understood as energy harnessed from naturally occurring natural phenomena.",
+          "Renewable energy is usually understood as energy that is harnessed from constantly occurring natural phenomena.",
+          "Renewable energy is usually understood as energy that is harnessed from continually occurring natural phenomena.",
+          "Renewable energy is usually understood as energy that is harnessed from naturally occurring natural phenomena."
+        ],
+        "extended_beam_kills": 0
+      }
+    ]
+  },
+  {
+    "run_id": "R10-037-calib-single_word",
+    "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+    "reformulated_text": "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+        "original": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+        "replacement": "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.987,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3896,
+          "difficulty_after": 0.3898,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "Renewable energy is usually understood as energy harnessed from constantly occurring natural phenomena.",
+          "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena.",
+          "Renewable energy is usually understood as energy that is harnessed from constantly occurring natural phenomena.",
+          "Renewable energy is usually understood as energy that is harnessed from continually occurring natural phenomena.",
+          "Renewable energy is usually understood as energy derived from constantly occurring natural phenomena."
+        ],
+        "production_beam_kills": 0,
+        "extended_k": 15,
+        "extended_candidates": [
+          "Renewable energy is usually understood as energy harnessed from constantly occurring natural phenomena.",
+          "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena.",
+          "Renewable energy is usually understood as energy derived from constantly occurring natural phenomena.",
+          "Renewable energy is usually understood as energy harnessed from continuous natural phenomena.",
+          "Renewable energy is usually understood as energy harnessed from naturally occurring natural phenomena.",
+          "Renewable energy is usually understood as energy that is harnessed from constantly occurring natural phenomena.",
+          "Renewable energy is usually understood as energy that is harnessed from continually occurring natural phenomena.",
+          "Renewable energy is usually understood as energy that is harnessed from naturally occurring natural phenomena."
+        ],
+        "extended_beam_kills": 0
+      }
+    ]
+  },
+  {
+    "run_id": "R10-037-calib-word_plus_sound",
+    "original_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+    "reformulated_text": "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+        "original": "Renewable energy is usually understood as energy harnessed from continuously occurring natural phenomena.",
+        "replacement": "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.987,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3896,
+          "difficulty_after": 0.3898,
+          "beam_kills": 1
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "Renewable energy is usually understood as energy harnessed from constantly occurring natural phenomena.",
+          "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena.",
+          "Renewable energy is usually understood as energy that is harnessed from constantly occurring natural phenomena.",
+          "Renewable energy is usually understood as energy that is harnessed from continually occurring natural phenomena.",
+          "Renewable energy is usually understood as energy derived from constantly occurring natural phenomena."
+        ],
+        "production_beam_kills": 1,
+        "extended_k": 15,
+        "extended_candidates": [
+          "Renewable energy is usually understood as energy harnessed from constantly occurring natural phenomena.",
+          "Renewable energy is usually understood as energy harnessed from continually occurring natural phenomena.",
+          "Renewable energy is usually understood as energy derived from constantly occurring natural phenomena.",
+          "Renewable energy is usually understood as energy harnessed from continuous natural phenomena.",
+          "Renewable energy is usually understood as energy harnessed from naturally occurring natural phenomena.",
+          "Renewable energy is usually understood as energy that is harnessed from constantly occurring natural phenomena.",
+          "Renewable energy is usually understood as energy that is harnessed from continually occurring natural phenomena.",
+          "Renewable energy is usually understood as energy that is harnessed from naturally occurring natural phenomena."
+        ],
+        "extended_beam_kills": 1
+      }
+    ]
+  },
+  {
+    "run_id": "R10-043-core-word",
+    "original_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+    "reformulated_text": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or perform a computation.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+        "original": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+        "replacement": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or perform a computation.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.9854,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3476,
+          "difficulty_after": 0.3399,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction, typically used to solve a class of specific problems or to perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical commands typically used to solve a class of specific problems or to perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or to perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical commands typically used to solve a class of specific problems or perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or perform a computation."
+        ],
+        "production_beam_kills": 0,
+        "extended_k": 15,
+        "extended_candidates": [
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction, typically used to solve a class of specific problems or to perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical commands typically used to solve a class of specific problems or to perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or to perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical commands typically used to solve a class of specific problems or perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of rigorous mathematical logical commands typically used to solve a class of specific problems or to perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of rigorous mathematical logical commands typically used to solve a class of specific problems or perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of mathematically rigorous logical commands, typically used to solve a class of specific problems or to perform a computation",
+          "In math and computer science, an algorithm is a finite sequence of mathematically rigorous logical commands typically used to solve a class of specific problems or to perform a computation",
+          "In math and computer science, an algorithm is a finite sequence of mathematically rigorous logical commands typically used to solve a class of specific problems or to perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical commands that are typically used to solve a class of specific problems or to perform a computation."
+        ],
+        "extended_beam_kills": 0
+      }
+    ]
+  },
+  {
+    "run_id": "R10-043-calib-multi_word",
+    "original_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+    "reformulated_text": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or perform a computation.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+        "original": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous logical instructions, typically used to solve a class of specific problems or to perform a computation.",
+        "replacement": "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or perform a computation.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.9854,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3476,
+          "difficulty_after": 0.3399,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction, typically used to solve a class of specific problems or to perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical commands typically used to solve a class of specific problems or to perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or to perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical commands typically used to solve a class of specific problems or perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or perform a computation."
+        ],
+        "production_beam_kills": 0,
+        "extended_k": 15,
+        "extended_candidates": [
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction, typically used to solve a class of specific problems or to perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical commands typically used to solve a class of specific problems or to perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or to perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical commands typically used to solve a class of specific problems or perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of rigorous mathematical logical commands typically used to solve a class of specific problems or to perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical instruction typically used to solve a class of specific problems or perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of rigorous mathematical logical commands typically used to solve a class of specific problems or perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of mathematically rigorous logical commands, typically used to solve a class of specific problems or to perform a computation",
+          "In math and computer science, an algorithm is a finite sequence of mathematically rigorous logical commands typically used to solve a class of specific problems or to perform a computation",
+          "In math and computer science, an algorithm is a finite sequence of mathematically rigorous logical commands typically used to solve a class of specific problems or to perform a computation.",
+          "In math and computer science, an algorithm is a finite sequence of numerically rigorous logical commands that are typically used to solve a class of specific problems or to perform a computation."
+        ],
+        "extended_beam_kills": 0
+      }
+    ]
+  },
+  {
+    "run_id": "R10-044-core-dense_mixed_generic",
+    "original_text": "Algorithms is used as specifications for performing calculations and data processing.",
+    "reformulated_text": "Algorithms are used as parameters for performing calculations and data processing.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Algorithms is used as specifications for performing calculations and data processing.",
+        "original": "Algorithms is used as specifications for performing calculations and data processing.",
+        "replacement": "Algorithms are used as parameters for performing calculations and data processing.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.9124,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.402,
+          "difficulty_after": 0.4044,
+          "beam_kills": 18
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "Algorithms is used as a description for performing calculations and data processing.",
+          "Algorithms is used as a description for the calculation and data processing.",
+          "Algorithms is used as a description for completing calculations and data processing.",
+          "Algorithms is used as a description for calculations and data processing.",
+          "Algorithms is used as a description to perform calculations and data processing."
+        ],
+        "production_beam_kills": 27,
+        "extended_k": 15,
+        "extended_candidates": [
+          "Algorithms are used as parameters for performing calculations and data processing.",
+          "Algorithms are used as parameters for the calculation and data processing.",
+          "Algorithms are used as parameters for performing computations and data processing.",
+          "Algorithms are used as parameters for the calculations and data processing.",
+          "Algorithms are used as parameters for performing calculations and data processing",
+          "Algorithms is used as a description for performing calculations and data processing.",
+          "Algorithms are used as parameters for the performance of calculations and data processing.",
+          "Algorithms are used as parameters for the computation and data processing.",
+          "Algorithms are used as parameters for the performing of calculations and data processing.",
+          "Algorithms is used as a description for performing calculations and data processing"
+        ],
+        "extended_beam_kills": 30
+      }
+    ]
+  },
+  {
+    "run_id": "R10-047-core-dense_mixed_generic",
+    "original_text": "Starting from an initial state and input, a computation occurs at each step, eventually producing output and terminating.",
+    "reformulated_text": "A computation begins from an initial condition and input and occurs at each point, eventually producing output and terminating.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Starting from an initial state and input, a computation occurs at each step, eventually producing output and terminating.",
+        "original": "Starting from an initial state and input, a computation occurs at each step, eventually producing output and terminating.",
+        "replacement": "A computation begins from an initial condition and input and occurs at each point, eventually producing output and terminating.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.9157,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3305,
+          "difficulty_after": 0.3297,
+          "beam_kills": 21
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "A computation begins from an initial condition and input and occurs at each phase, eventually producing output and terminating.",
+          "A computation begins from an initial condition and input and occurs at each point, eventually producing output and terminating.",
+          "A computation begins from an initial condition and input and occurs at each phase, ultimately producing output and terminating.",
+          "A computation begins from an initial condition and input and occurs at each point, ultimately producing output and terminating.",
+          "A computation begins from an initial condition and input and occurs at each phase, eventually producing output and ending."
+        ],
+        "production_beam_kills": 43,
+        "extended_k": 15,
+        "extended_candidates": [
+          "A computation begins from an initial condition and input and occurs at each phase, eventually producing output and terminating.",
+          "A computation begins from an initial condition and input and occurs at each point, eventually producing output and terminating.",
+          "A computation begins from an initial condition and input and occurs at each phase, ultimately producing output and terminating.",
+          "A computation begins from an initial condition and input and occurs at each point, ultimately producing output and terminating.",
+          "A computation begins from an initial condition and input and occurs at each phase, eventually producing output and ending.",
+          "A computation begins from an initial condition and input and occurs at each phase, eventually producing output and terminating",
+          "A computation begins from an initial condition and input and occurs at each point, eventually producing output and ending.",
+          "A computation begins from an initial condition and input and occurs at each phase, eventually generating output and terminating."
+        ],
+        "extended_beam_kills": 55
+      }
+    ]
+  },
+  {
+    "run_id": "R10-065-core-word",
+    "original_text": "General civil engineers work closely with surveyors and specialized civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communications supply.",
+    "reformulated_text": "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communication supply.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "General civil engineers work closely with surveyors and specialized civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communications supply.",
+        "original": "General civil engineers work closely with surveyors and specialized civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communications supply.",
+        "replacement": "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communication supply.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.9775,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.4276,
+          "difficulty_after": 0.4176,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communication supply.",
+          "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewerage service, dams, electric and communication supply.",
+          "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communication systems.",
+          "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewerage, dams, electric and communication supply.",
+          "General civil engineers work closely with surveys and specialised civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communication supply."
+        ],
+        "production_beam_kills": 0,
+        "extended_k": 15,
+        "extended_candidates": [
+          "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communication supply.",
+          "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewerage service, dams, electric and communication supply.",
+          "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communication systems.",
+          "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewerage, dams, electric and communication supply.",
+          "General civil engineers work closely with surveys and specialised civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communication supply.",
+          "General civil engineers work closely with surveys and specialist civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communication supply.",
+          "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communication services.",
+          "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communication supplies.",
+          "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewerage service, dams, electric and communication systems.",
+          "General civil engineers work closely with surveys and special civil engineers to design grading, drainage, pavement, water supply, sewerage, dams, electric and communication systems.",
+          "General civil engineers work closely with surveyers and special civil engineers to design grading, drainage, pavement, water supply, sewer service, dams, electric and communication supply."
+        ],
+        "extended_beam_kills": 0
+      }
+    ]
+  },
+  {
+    "run_id": "R10-070-core-word",
+    "original_text": "Honestly, I don't think that restaurant is as good as everyone says.",
+    "reformulated_text": "Honestly, I don't think that restaurants are as good as everybody says.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Honestly, I don't think that restaurant is as good as everyone says.",
+        "original": "Honestly, I don't think that restaurant is as good as everyone says.",
+        "replacement": "Honestly, I don't think that restaurants are as good as everybody says.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.93,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.2619,
+          "difficulty_after": 0.2717,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "Honestly, I don't think that it is as good as everybody says.",
+          "Honestly, I don't think that restaurants are as good as everybody says.",
+          "Honestly, I don't think that the place is as good as everybody says.",
+          "Honestly, I don't think that this is as good as everybody says.",
+          "Honestly, I don't think that is as good as everybody says."
+        ],
+        "production_beam_kills": 0,
+        "extended_k": 15,
+        "extended_candidates": [
+          "Honestly, I don't think that it is as good as everybody says.",
+          "Honestly, I don't think that restaurants are as good as everybody says.",
+          "Honestly, I don't think that the place is as good as everybody says.",
+          "Honestly, I don't think that this is as good as everybody says.",
+          "Honestly, I don't think that is as good as everybody says.",
+          "Honestly, I don't think that this place is as good as everybody says.",
+          "Honestly, I don't think that it is as good as anyone says.",
+          "Honestly, I don't think that 's as good as everybody says."
+        ],
+        "extended_beam_kills": 0
+      }
+    ]
+  },
+  {
+    "run_id": "R10-079-calib-multi_word",
+    "original_text": "The manager asked everyone to submit their reports by the end of the day.",
+    "reformulated_text": "The management asked all to submit their report by the end of the day.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "The manager asked everyone to submit their reports by the end of the day.",
+        "original": "The manager asked everyone to submit their reports by the end of the day.",
+        "replacement": "The management asked all to submit their report by the end of the day.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.9035,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.2757,
+          "difficulty_after": 0.26,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "The management asked all to submit their report by the end of the day.",
+          "The supervisor asked all to submit their report by the end of the day.",
+          "The management asked all of them to submit their report by the end of the day.",
+          "The management asked all of them to submit their report by the end of day.",
+          "The management asked all of them to submit their report by the end of the day"
+        ],
+        "production_beam_kills": 0,
+        "extended_k": 15,
+        "extended_candidates": [
+          "The management asked all of them to submit their report by the end of the day.",
+          "The management asked all of them to submit their report by the end of day.",
+          "The management asked all of them to submit their report by the end of the day",
+          "By the end of the day, the management asked everybody to submit their report.",
+          "At the end of the day, the management asked everybody to submit their report.",
+          "At the end of the day, the boss asked everybody to submit their report.",
+          "At the end of the day, the boss asked all of the employees to submit their report.",
+          "By the end of the day, the boss asked all of the employees to submit their report.",
+          "At the end of the day, the management asked all of the employees to submit their report.",
+          "By the end of the day, the management asked all of the employees to submit their report."
+        ],
+        "extended_beam_kills": 0
+      }
+    ]
+  },
+  {
+    "run_id": "R10-080-core-word",
+    "original_text": "We're understaffed this week, so deadlines might slip a little.",
+    "reformulated_text": "This week we're under-staffed, so the deadline might slip a little.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "We're understaffed this week, so deadlines might slip a little.",
+        "original": "We're understaffed this week, so deadlines might slip a little.",
+        "replacement": "This week we're under-staffed, so the deadline might slip a little.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.8728,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.306,
+          "difficulty_after": 0.2947,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "We're under-staffed this week, so the deadline might slip a little.",
+          "We're under-staffed this week, so the deadline may slip a little.",
+          "We're under-staffed this week, so the deadline could slip a little.",
+          "This week we're under-staffed, so the deadline might slip a little.",
+          "This week we're under-staffed, so the deadline may slip a little."
+        ],
+        "production_beam_kills": 0,
+        "extended_k": 15,
+        "extended_candidates": [
+          "We're under-staffed this week, so the deadline might slip a little.",
+          "We're under-staffed this week, so the deadline may slip a little.",
+          "We're under-staffed this week, so the deadline could slip a little.",
+          "This week we're under-staffed, so the deadline might slip a little.",
+          "This week we're under-staffed, so the deadline may slip a little.",
+          "We're under-staffed this week, so that the deadline might slip a little.",
+          "We're under-staffed this week, so that the deadline may slip a little."
+        ],
+        "extended_beam_kills": 0
+      }
+    ]
+  },
+  {
+    "run_id": "R10-103-calib-dense_mixed_generic",
+    "original_text": "The old house had a narrow staircase that creaked with every step.",
+    "reformulated_text": "The old house had a narrow passageway that creaked with every climb.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "The old house had a narrow staircase that creaked with every step.",
+        "original": "The old house had a narrow staircase that creaked with every step.",
+        "replacement": "The old house had a narrow passageway that creaked with every climb.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.8721,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3081,
+          "difficulty_after": 0.334,
+          "beam_kills": 21
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "The old house had a narrow escalator that creaked with every step",
+          "The old house had a narrow escalator that creaked with every step-",
+          "The old house had a narrow escalator that creaked with every step--",
+          "The old house had a narrow escalator that creaked with every step---",
+          "The old house had a narrow escalator that creaked with every step----"
+        ],
+        "production_beam_kills": 123,
+        "extended_k": 15,
+        "extended_candidates": [
+          "The old house had a narrow escalator that creaked with every step------------------ de",
+          "The old house had a narrow escalator that creaked with every step------------------’",
+          "The old house had a narrow escalator that creaked with every step------------------:",
+          "The old house had a narrow escalator that creaked with every step------------------ in",
+          "The old house had a narrow escalator that creaked with every step------------------ to",
+          "The old house had a narrow escalator that creaked with every step------------------ the",
+          "The old house had a narrow escalator that creaked with every step-------------------",
+          "The old house had a narrow escalator that creaked with every step------------------X",
+          "The old house had a narrow escalator that creaked with every step------------------i",
+          "The old house had a narrow escalator that creaked with every step------------------.",
+          "The old house had a narrow escalator that creaked with every step------------------e",
+          "The old house had a narrow escalator that creaked with every step------------------ of"
+        ],
+        "extended_beam_kills": 257
+      }
+    ]
+  },
+  {
+    "run_id": "R10-109-core-word",
+    "original_text": "Turn off the power before you attempt to replace the light fixture.",
+    "reformulated_text": "Turn off the power before you attempt replacing the light bulb.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Turn off the power before you attempt to replace the light fixture.",
+        "original": "Turn off the power before you attempt to replace the light fixture.",
+        "replacement": "Turn off the power before you attempt replacing the light bulb.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.8928,
+          "nli": {
+            "fwd_label": "neutral",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3205,
+          "difficulty_after": 0.3325,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "Turn off the power before you try replacing the light bulb.",
+          "Turn off the power before replacing the light bulb.",
+          "Turn off the power before you attempt to change the light bulb.",
+          "Turn off the power before you try to change the light bulb.",
+          "Turn off the power before you attempt replacing the light bulb."
+        ],
+        "production_beam_kills": 0,
+        "extended_k": 15,
+        "extended_candidates": [
+          "Turn off the power before you try replacing the light bulb.",
+          "Turn off the power before replacing the light bulb.",
+          "Turn off the power before you attempt to change the light bulb.",
+          "Turn off the power before you try to change the light bulb.",
+          "Turn off the power before you attempt replacing the light bulb.",
+          "Turn off the power before you try replacing the light source.",
+          "Turn off the power before you begin replacing the light bulb.",
+          "Turn off the power before you attempt to substitute the light bulb.",
+          "Turn off the power before you attempt to replacement the light bulb.",
+          "Turn off the power before you attempt to change the light source.",
+          "Turn off the power before you attempt to remove the light bulb."
+        ],
+        "extended_beam_kills": 0
+      }
+    ]
+  },
+  {
+    "run_id": "R10-109-calib-multi_word",
+    "original_text": "Turn off the power before you attempt to replace the light fixture.",
+    "reformulated_text": "Turn off the power before replacing the light bulb.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "Turn off the power before you attempt to replace the light fixture.",
+        "original": "Turn off the power before you attempt to replace the light fixture.",
+        "replacement": "Turn off the power before replacing the light bulb.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.8766,
+          "nli": {
+            "fwd_label": "neutral",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3205,
+          "difficulty_after": 0.3562,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "Turn off the power before you try replacing the light bulb.",
+          "Turn off the power before replacing the light bulb.",
+          "Turn off the power before you try to change the light bulb.",
+          "Turn off the power before you try replacing the light source.",
+          "Turn off the power before you try replacing the bulb."
+        ],
+        "production_beam_kills": 0,
+        "extended_k": 15,
+        "extended_candidates": [
+          "Turn off the power before you try replacing the light bulb.",
+          "Turn off the power before replacing the light bulb.",
+          "Turn off the power before you try replacing the light source.",
+          "Turn off the power before you try replacing the bulb.",
+          "Turn off the power before you begin replacing the light bulb.",
+          "Turn off the power before you try replacing the light.",
+          "Turn off the power before you try to change the light bulb.",
+          "Turn off the power before you try to change the light source.",
+          "Turn off the power before you try to substitute the light bulb.",
+          "Turn off the power before you try to remove the light bulb."
+        ],
+        "extended_beam_kills": 0
+      }
+    ]
+  },
+  {
+    "run_id": "R10-123-core-word",
+    "original_text": "The bridge was built in the early twentieth century and renovated twice since then.",
+    "reformulated_text": "The bridge was built in the early 20th century and rebuilt twice since then.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "The bridge was built in the early twentieth century and renovated twice since then.",
+        "original": "The bridge was built in the early twentieth century and renovated twice since then.",
+        "replacement": "The bridge was built in the early 20th century and rebuilt twice since then.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.9408,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "entailment",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.3518,
+          "difficulty_after": 0.3248,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "The bridge was built in the early 20th century and has since been refurbished twice.",
+          "The bridge was built in the early 20th century and rebuilt twice since then.",
+          "The bridge was built in the early 20th century and restored twice since then.",
+          "The bridge was built in the early 20th century and since then reconstructed twice.",
+          "The bridge was built in the early 20th century and has since been restored twice."
+        ],
+        "production_beam_kills": 0,
+        "extended_k": 15,
+        "extended_candidates": [
+          "The bridge was built in the early 20th century and has since been refurbished twice.",
+          "The bridge was built in the early 20th century and reconstructed twice since then.",
+          "The bridge was built in the early 20th century and rebuilt twice since then.",
+          "The bridge was built in the early 20th century and restored twice since then.",
+          "The bridge was built in the early 20th century and since then reconstructed twice.",
+          "The bridge was built in the early 20th century and has since been restored twice.",
+          "The bridge was built in the early 20th century and since then refurbished twice.",
+          "The bridge was built in the early 20th century and has been refurbished twice since then.",
+          "The bridge was built in the early 20th century and has since been reconstructed twice."
+        ],
+        "extended_beam_kills": 0
+      }
+    ]
+  },
+  {
+    "run_id": "R10-124-core-word",
+    "original_text": "There are more public parks on the east side of the city than on the west.",
+    "reformulated_text": "On the east side of the city there are more park areas than on the west.",
+    "changes": [
+      {
+        "sentence_index": 0,
+        "position": null,
+        "span_text": "There are more public parks on the east side of the city than on the west.",
+        "original": "There are more public parks on the east side of the city than on the west.",
+        "replacement": "On the east side of the city there are more park areas than on the west.",
+        "source": "restructuring",
+        "triggered_by": [
+          "multiple_difficulties_or_no_valid_substitution"
+        ],
+        "verification": {
+          "antonym_check": "n/a_sentence_level",
+          "sbert_sim": 0.9284,
+          "nli": {
+            "fwd_label": "entailment",
+            "rev_label": "neutral",
+            "contradiction": false
+          },
+          "phoneme_ok": true,
+          "difficulty_before": 0.2301,
+          "difficulty_after": 0.216,
+          "beam_kills": 0
+        }
+      }
+    ],
+    "change_diagnoses": [
+      {
+        "tier": "restructuring",
+        "production_k": 5,
+        "production_candidates": [
+          "On the east side of the city there are more park areas than on the west side.",
+          "On the east side of the city there are more parklands than on the west side.",
+          "On the east side of the city there are more park spaces than on the west side.",
+          "On the east side of the city there are more park sites than on the west side.",
+          "On the east side of the city there are more park areas than on the west."
+        ],
+        "production_beam_kills": 0,
+        "extended_k": 15,
+        "extended_candidates": [
+          "On the east side of the city there are more park areas than on the west side.",
+          "On the east side of the city there are more parklands than on the west side.",
+          "On the east side of the city there are more park spaces than on the west side.",
+          "On the east side of the city there are more park sites than on the west side.",
+          "On the east side of the city there are more park areas than on the west.",
+          "On the east side of the city there are more parklands than on the west.",
+          "On the east side of the city there are more parkland than on the west side.",
+          "On the east side of the city, there are more park areas than on the west side.",
+          "On the east side of the city, there are more parklands than on the west side."
+        ],
+        "extended_beam_kills": 0
+      }
+    ]
+  }
+]
