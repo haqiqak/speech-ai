@@ -3784,3 +3784,49 @@ trusted, per the criteria already agreed before this step began.
 agreed 4-step plan. No production code touched, self-caught bug was in
 the diagnostic tooling only. Full record: `VALIDATION.md` §53,
 `eval/step2_wrong_sense_report.md`.
+
+### 2026-08-27/28-G — Architecture Go/No-Go, Step 3 prep: generalization check on a genuinely fresh corpus
+
+User selected "run a small fresh-corpus check first" to close a gap
+identified while scoping Step 3: every evaluation since Phase 10 (11,
+11B, 11C, Architecture Gate Step 1, Step 2) re-verified the SAME frozen
+R10 corpus, so none of it answers how the architecture performs on
+material it hasn't been iteratively patched against.
+
+Built an 18-sentence / 36-run fresh corpus (10 technical, from 5
+Wikipedia topics never used before in this project; 8 hand-authored
+general sentences), harvested through today's unchanged production
+`reformulate()`, blind-judged the 28 reformulated outputs with the same
+no-metadata rubric used every prior phase.
+
+**Result: CLEAN rate 6/28 (21.4%)** — roughly 10 points below every
+R10-corpus figure this exact architecture has produced (26.1% -> 32.6%
+-> 31.6% -> 34.0% -> 31.2%), well outside the ~1-2 point noise band this
+project independently established across three prior re-harvests. The
+gap concentrates exactly where Steps 1-2 already pointed: `dense_mixed`
+profiles scored **0/10 CLEAN** on fresh material (vs. 6/18 for
+`core_word`), and WRONG_WORD_OR_SENSE remains the dominant defect (12 of
+22 DEFECTIVE cases), consistent with, not a new mechanism versus, Step
+2's finding.
+
+**Reading, not yet a decision:** a meaningful fraction of the R10-corpus
+improvement measured across Phases 11/11B/11C and Architecture Gate
+Step 1 looks like it was fitting to that corpus's specific, by-now
+well-studied failure modes rather than a generalizable architectural
+gain — this is the first direct evidence for that reading, not a final
+verdict. This result is load-bearing input to Step 3's formal
+assessment, specifically the "generalization to unseen material"
+criterion.
+
+**Also disclosed:** the corpus file's docstring originally overclaimed
+"verbatim Wikipedia" for all 10 technical sentences; 4 of the 10 (G2,
+G3, G5, G7) actually had a parenthetical example/abbreviation trimmed
+for brevity when the corpus was first built. Corrected in the corpus
+file itself before any results were reported on it, per Practice.md's
+evidence-tagging discipline.
+
+**Category:** Evaluation/analysis, on direct instruction (user's
+AskUserQuestion selection). No production code touched. Full record:
+`VALIDATION.md` §54, `eval/step3_gencheck_corpus.py`,
+`eval/step3_gencheck_harvest.py`, `eval/step3_gencheck_raw_results.json`,
+`eval/step3_gencheck_blind_results.json`.

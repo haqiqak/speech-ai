@@ -1901,6 +1901,42 @@ bottleneck for 71% of this defect class. Any such component still
 needs to clear the Phase 9B/9C generalization bar before being
 trusted.
 
+### Architecture Go/No-Go, Step 3 prep. Generalization check on a fresh corpus — **DONE, 2026-08-27/28**
+**Linked finding:** closes a gap flagged while scoping Step 3 — every
+evaluation since Phase 10 re-verified the same frozen R10 corpus, none
+of it evidence about unseen material. Full record: `VALIDATION.md` §54.
+**What was done:** built and harvested an 18-sentence/36-run corpus
+genuinely new to this project (10 technical from 5 never-used Wikipedia
+topics, 8 hand-authored general sentences) through unchanged production
+`reformulate()`; blind-judged the 28 reformulated outputs with the
+standard no-metadata rubric.
+**Result: CLEAN rate 6/28 (21.4%)** — roughly 10 points below every
+R10-corpus figure this architecture has produced across Phases 11
+through Architecture Gate Step 1 (26.1%→32.6%→31.6%→34.0%→31.2%), well
+outside the ~1-2 point established noise band. Gap concentrates exactly
+where prior steps predicted: `dense_mixed` profiles scored **0/10
+CLEAN**; WRONG_WORD_OR_SENSE remains the dominant defect (12/22).
+Reading (not a verdict): a meaningful share of the R10-corpus gains
+looks like fitting to that corpus's specific, well-studied failure
+modes rather than a generalizable improvement — direct evidence for
+Step 3's "generalization to unseen material" criterion.
+
+---
+
+## Next: Architecture Go/No-Go, Step 3 — the formal assessment
+
+**Not yet started.** Synthesize all evidence gathered this arc (Phase
+10's stress test, Phase 10B's failure analysis, Phases 11/11B/11C,
+Architecture Gate Step 1, Step 2, and the Step 3 generalization check
+above) against the 8 explicitly named criteria from the agreed plan:
+CLEAN rate, defective-output rate, dangerous semantic reversals
+specifically, refusal/escalation rate, dense-profile performance,
+generalization to unseen material, consistency/reproducibility, and
+computational cost — leading into Step 4's three-way decision (A:
+stabilize as-is / B: add a learned component / C: freeze the current
+architecture as the maintained/shipped state with no further
+optimization).
+
 ---
 
 ## Lower priority / hypotheses proposed by this review (§4-style — explicitly unvalidated)

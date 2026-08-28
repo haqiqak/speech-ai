@@ -6,6 +6,18 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-27/28, seventh** docs: Architecture Go/No-Go Step 3 prep —
+  a generalization check on an 18-sentence/36-run corpus genuinely new
+  to this project (fresh Wikipedia topics + hand-authored general
+  sentences), closing the gap that every evaluation since Phase 10 had
+  re-verified the same frozen R10 corpus. Result: CLEAN rate 6/28
+  (21.4%) on fresh material, ~10 points below every R10-corpus figure
+  this architecture has produced (26.1%→34.0%), outside the established
+  noise band, with dense_mixed profiles at 0/10 CLEAN. Also disclosed
+  and fixed an undisclosed non-verbatim trim in 4 of the corpus's 10
+  technical sentences before reporting results. Analysis only, no
+  production code touched. → `DECISION_LOG.md` 2026-08-27/28-G,
+  `VALIDATION.md` §54.
 - **2026-08-27, sixth** docs: Architecture Go/No-Go Step 2 — diagnosed
   whether the dominant remaining defect (WRONG_WORD_OR_SENSE) is a
   candidate-generation gap or a ranking failure. Re-instrumented all 88

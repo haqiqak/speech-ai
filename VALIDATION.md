@@ -5523,3 +5523,101 @@ spot-checked directly against several cases (confirmed accurate) but
 not independently re-verified for all 70. Diagnoses the 88 currently-
 DEFECTIVE WRONG_WORD_OR_SENSE cases in the R10 corpus specifically, not
 a claim about all future input.
+
+## 54. Architecture Go/No-Go, Step 3 preparation — generalization check on a genuinely fresh corpus (executed 2026-08-27/28)
+
+Per the user's selection ("run a small fresh-corpus check first")
+answering a gap identified while scoping Step 3: every evaluation since
+Phase 10's original stress test — Phase 11/11B/11C, Architecture Gate
+Step 1, Step 2 — re-verified the SAME frozen R10 corpus. None of it is
+evidence about how the current, fully-upgraded architecture performs on
+material it hasn't been iteratively patched against. Full record:
+`eval/step3_gencheck_corpus.py`, `eval/step3_gencheck_harvest.py`,
+`eval/step3_gencheck_raw_results.json`, `eval/step3_gencheck_blind_results.json`.
+
+**[FACT] Corpus:** 18 sentences genuinely new to this project — 10
+technical (5 Wikipedia topics never used in R10 or Phase 8/8B, see the
+corpus file's own disclosed verbatim/trimmed-parenthetical limitation
+above) and 8 hand-authored general-domain sentences, freshly written for
+this check. 36 runs total: one `core_word` (single declared hard word)
+and one `dense_mixed` (2 declared words + a declared sound pattern)
+profile per sentence, matching the profile-type split this project has
+used since Phase 8.
+
+**[FACT] Harvest result, through today's live production `reformulate()`,
+unchanged from Architecture Gate Step 1's code:** 28/36 `reformulated`,
+8/36 `could_not_safely_reformulate` (refusal rate 22.2%). All 28
+reformulated outputs blind-judged, no metadata, same rubric as every
+prior phase: **6 CLEAN, 22 DEFECTIVE (15 SEVERE, 7 MINOR).**
+
+**[FACT, the actual answer this check exists to produce] Overall CLEAN
+rate on fresh material: 6/28 (21.4%)** — compare against this
+architecture's own R10-corpus figures across the exact same sequence of
+changes: Phase 10 26.1% → Phase 11 32.6% → Phase 11B 31.6% → Phase 11C
+34.0% → Architecture Gate Step 1 31.2% (§52). **21.4% is roughly 10
+points below every one of those, well outside the ~1-2 point
+run-to-run noise band this project has independently established and
+re-confirmed across three separate re-harvests (Phase 11C, Architecture
+Gate Step 1).** This is not noise; it is the first direct measurement of
+how much of the R10-corpus improvement was genuine architectural gain
+versus fitting to that corpus's specific, by-now-well-studied failure
+modes.
+
+**[FINDING] The gap concentrates exactly where Steps 1-2 already said
+the remaining problem lives.** By profile type: `core_word` 6/18 CLEAN
+(33.3%, roughly in line with the R10-corpus figures above) vs.
+`dense_mixed` **0/10 CLEAN (0%)** — every single densely-constrained
+fresh-corpus run produced a defective output. By domain: technical 2/14
+(14.3%) vs. general 4/14 (28.6%) — the domain half built from verbatim
+external text fares worse than hand-authored everyday sentences, though
+the small N here (14 each) means this split should be read as directional,
+not conclusive. Defect-type breakdown among the 22 DEFECTIVE fresh-corpus
+cases: WRONG_WORD_OR_SENSE 12 (55%), GRAMMAR 6 (27%),
+NATURALNESS_OR_REGISTER 3 (14%), FACTUAL_OR_LOGICAL_REVERSAL 1 (5%) —
+WRONG_WORD_OR_SENSE remains the dominant defect class, consistent with
+Steps 1-2's finding on the frozen corpus, and a genuinely new factual/
+logical reversal appeared (`G12-dense_mixed`, "storm" → "hurricane",
+an unwarranted specificity increase presented as a synonym swap).
+
+**[FACT] Representative fresh SEVERE defects** (full list in the blind
+results file): `pathogens`→`diseases` misclassifies viruses/bacteria/
+parasites as diseases (a factual error, not just an awkward word);
+`oxidizing`→`changing` strips the defining chemical concept from a
+definition sentence; `practiced`→`performed` turns solo rehearsal into
+a public performance; `overgrown`→`covered` is illogical against
+"trimming the ... hedges" in the same sentence; `stay hydrated`→`keep
+hydration` breaks a fixed idiom into an ungrammatical fragment; two
+outright nonsensical outputs (`going things downtown`, `The airline
+told that...`). None of these are new *mechanisms* — they are the same
+WRONG_WORD_OR_SENSE/GRAMMAR/idiom-breakage failure modes Phases 10B,
+11, 11B and Step 2 already characterized — but on sentences and word
+combinations none of this project's blocklists, gates, or NLI checks
+have ever seen before.
+
+**[FACT] Computational cost:** mean latency across the 36 fresh runs,
+7.44s — consistent with Architecture Gate Step 1's escalation-tier
+figures on the R10 corpus (§52), no fresh-material cost anomaly.
+
+**[LABELED AS, direct evidence for Step 3's "generalization to unseen
+material" criterion, not a full verdict on its own]** This is a single
+36-run check, not a corpus-scale stress test, and inherits this
+project's standing Claude-judge-only limitation. But it is large enough,
+and the gap large enough (~10 points, non-overlapping with the
+established noise band, concentrated exactly on dense profiles as
+predicted by this project's own architecture — the profile type every
+phase since 10B has flagged as hardest), to answer the question it was
+built for: **the current architecture's real generalization CLEAN rate
+on genuinely fresh material is closer to ~21% than to the ~31-34%
+measured on the by-now heavily-studied R10 corpus, and dense/multi-
+constraint profiles specifically show no measured generalization at
+all (0/10 CLEAN).** This is load-bearing evidence for Step 3, which
+follows next.
+
+**[LIMITATION]** N=36 runs / 28 reformulated is small; domain and
+profile-type sub-splits (14, 14, 18, 10) are too small to support strong
+quantitative claims beyond direction and rough magnitude. All judging
+is by Claude instances, this project's standing limitation. The corpus
+was built and judged in one sitting by the same process that built the
+architecture being tested — an independent corpus/judge pool was not
+available. 4 of the 10 technical sentences have minor, disclosed
+edits (parenthetical trims) versus true verbatim source text.

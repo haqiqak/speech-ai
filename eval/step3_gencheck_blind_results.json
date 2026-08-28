@@ -1,0 +1,226 @@
+[
+  {
+    "run_id": "G1-core_word",
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "NATURALNESS_OR_REGISTER",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"network\" was replaced with \"net,\" which is an unusual, informal choice in a technical definition; \"a net of biological systems\" is comprehensible but reads oddly."
+  },
+  {
+    "run_id": "G1-dense_mixed",
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "\"an being\" is a grammatical article error (should be \"a being\"), and \"being\" is a vague, wrong-sense substitute for \"organism.\""
+  },
+  {
+    "run_id": "G2-core_word",
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "FACTUAL_OR_LOGICAL_REVERSAL",
+    "secondary_defects": ["WRONG_WORD_OR_SENSE"],
+    "rationale": "Replacing \"pathogens\" with \"diseases\" misclassifies viruses, bacteria, and parasites (which cause disease) as being themselves diseases, introducing a factual error."
+  },
+  {
+    "run_id": "G3-core_word",
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["NATURALNESS_OR_REGISTER"],
+    "rationale": "\"linkage\" is an imprecise stand-in for \"network\" (linkage has a distinct mechanical-engineering sense), though the sentence otherwise reads clearly and even fixes the original's apostrophe/pluralization errors."
+  },
+  {
+    "run_id": "G4-core_word",
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["FACTUAL_OR_LOGICAL_REVERSAL"],
+    "rationale": "Substituting \"system\" for \"circuit\" changes the term being defined; an electrical system is not equivalent to an electrical circuit, so the definition no longer matches its own subject."
+  },
+  {
+    "run_id": "G4-dense_mixed",
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "NATURALNESS_OR_REGISTER",
+    "secondary_defects": [],
+    "rationale": "\"a path for the current back\" is awkwardly ordered compared to \"a return path for the current,\" though the meaning is fully preserved."
+  },
+  {
+    "run_id": "G5-core_word",
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"changing biological fuels\" drops the specific chemical meaning of \"oxidizing,\" which is central to the definition of cellular respiration."
+  },
+  {
+    "run_id": "G6-core_word",
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"metabolism reactions\" uses the noun \"metabolism\" attributively instead of the adjective \"metabolic,\" which is nonstandard and slightly awkward."
+  },
+  {
+    "run_id": "G7-core_word",
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"approaches\" is a reasonable, natural synonym for \"algorithms\" in this machine-learning context; the sentence stays grammatical and faithful."
+  },
+  {
+    "run_id": "G7-dense_mixed",
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"generalize to\" became the nonsensical \"talk to,\" and \"explicitly\" became \"especially,\" both wrong-sense substitutions that break the sentence's meaning."
+  },
+  {
+    "run_id": "G8-core_word",
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"approaches\" was replaced with \"comings,\" a nonsensical word that breaks the sentence."
+  },
+  {
+    "run_id": "G9-core_word",
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"percentage\" is a natural, commonly used near-synonym for \"proportion\" when describing an interest rate; the sentence remains grammatical and faithful."
+  },
+  {
+    "run_id": "G10-core_word",
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "Article usage becomes inconsistent (\"the principal sum, compounding frequencies and the length of time\"), and pluralizing \"frequencies\" breaks the parallelism with the other singular list items."
+  },
+  {
+    "run_id": "G10-dense_mixed",
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"quantities find total interest\" is a wrong-sense substitution for \"determine\" — \"find\" does not fit this usage and reads as broken."
+  },
+  {
+    "run_id": "G11-core_word",
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"offered\" is a natural, faithful synonym for \"volunteered.\""
+  },
+  {
+    "run_id": "G12-core_word",
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"The airline told that...\" is ungrammatical; \"told\" needs an indirect object (\"told passengers that...\") or should be \"said\"/\"announced.\""
+  },
+  {
+    "run_id": "G12-dense_mixed",
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"storm\" was changed to the more specific \"hurricane,\" an unwarranted meaning change, and \"would delay\" (intransitive) is grammatically awkward compared to \"would be delayed.\""
+  },
+  {
+    "run_id": "G13-core_word",
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"performed the piano\" shifts the meaning from private practice/rehearsal to a public performance, and is also an odd collocation (\"performed on the piano\" would be standard)."
+  },
+  {
+    "run_id": "G13-dense_mixed",
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "Same practiced-to-performed meaning shift as G13-core_word; the additional finishing-to-completing change is fine but does not offset the core defect."
+  },
+  {
+    "run_id": "G14-core_word",
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"delayed\" is a natural, faithful synonym for \"postponed.\""
+  },
+  {
+    "run_id": "G14-dense_mixed",
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "NATURALNESS_OR_REGISTER",
+    "secondary_defects": [],
+    "rationale": "\"until they had a more thorough review of the budget\" is a somewhat stilted paraphrase of \"until they could review the budget more carefully,\" though meaning is preserved."
+  },
+  {
+    "run_id": "G15-core_word",
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"inadvertently\" is a faithful, natural synonym for \"accidentally.\""
+  },
+  {
+    "run_id": "G15-dense_mixed",
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": [],
+    "rationale": "\"going things downtown\" is ungrammatical and nonsensical in place of \"running errands downtown.\""
+  },
+  {
+    "run_id": "G16-core_word",
+    "acceptability": "CLEAN",
+    "severity": "CLEAN",
+    "primary_defect": "CLEAN",
+    "secondary_defects": [],
+    "rationale": "\"presented\" is a natural, faithful synonym for \"introduced\" here."
+  },
+  {
+    "run_id": "G17-core_word",
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"overgrown\" (implying the hedges need trimming) was changed to \"covered,\" which describes a different and illogical condition for hedges being trimmed."
+  },
+  {
+    "run_id": "G17-dense_mixed",
+    "acceptability": "DEFECTIVE",
+    "severity": "MINOR",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": [],
+    "rationale": "\"thinning\" is a related but distinct hedge-maintenance action from \"trimming,\" and dropping the \"re-\" in \"painting\" slightly changes the implication, though overall meaning is largely preserved."
+  },
+  {
+    "run_id": "G18-core_word",
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "GRAMMAR",
+    "secondary_defects": ["FIXED_TERM_OR_IDIOM"],
+    "rationale": "\"keep hydration\" breaks the standard idiom \"stay hydrated\" and reads as ungrammatical, non-native phrasing."
+  },
+  {
+    "run_id": "G18-dense_mixed",
+    "acceptability": "DEFECTIVE",
+    "severity": "SEVERE",
+    "primary_defect": "WRONG_WORD_OR_SENSE",
+    "secondary_defects": ["GRAMMAR"],
+    "rationale": "\"thought the team to stay hydrated\" is an ungrammatical, wrong-verb substitution for \"reminded,\" and \"use session\" is a nonsensical replacement for \"practice session.\""
+  }
+]
