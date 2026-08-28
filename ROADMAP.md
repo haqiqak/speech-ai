@@ -1921,21 +1921,41 @@ looks like fitting to that corpus's specific, well-studied failure
 modes rather than a generalizable improvement — direct evidence for
 Step 3's "generalization to unseen material" criterion.
 
+### Architecture Go/No-Go, Step 3 (formal assessment) + Step 4 (recommendation) — **DONE, 2026-08-28, recommendation pending user ratification**
+**Linked finding:** the culmination of this entire arc. Full record:
+`VALIDATION.md` §55, `eval/step3_architecture_assessment.md`, `eval/
+step4_recommendation.md`.
+**What was done:** synthesized all evidence from Phase 10 through the
+Step 3 generalization check against the 8 named criteria. Disclosed
+honestly that concrete numeric pass/fail thresholds were never actually
+pre-registered as an artifact, only the criteria themselves.
+**Result:** CLEAN rate plateaued 31-34% on the tuned R10 corpus across
+three phases of real fixes after Phase 11's initial jump; dense/
+multi-constraint profiles score 0% CLEAN on both the ORIGINAL frozen
+corpus (Phase 10, before any fix) and a completely FRESH corpus (after
+every fix) — the identical failure mode, unmoved across the whole arc;
+fresh-material CLEAN rate (21.4%) sits ~10-13 points below every
+frozen-corpus figure, outside the established noise band; the dominant
+defect (WRONG_WORD_OR_SENSE, per Step 2 a ranking problem) is untouched
+by every mechanism added across Phases 11 through Architecture Gate 1.
+**Recommendation (awaiting ratification): Option C** — freeze the
+current architecture as the maintained/shipped state, do not pursue a
+learned reranker. Reasoning: Option A isn't supported by the quality
+evidence; against Option B, this project's own Phase 9B/9C precedent
+(a prior learned component failing 99% of the time on held-out data)
+plus this exact fresh-corpus check (the current, simpler, more
+inspectable system already failing an equivalent generalization test)
+give specific reason to doubt a learned component built the way this
+project would build one would fare any better. Not a permanent ban.
+
 ---
 
-## Next: Architecture Go/No-Go, Step 3 — the formal assessment
+## Next: user ratification of the Step 4 recommendation
 
-**Not yet started.** Synthesize all evidence gathered this arc (Phase
-10's stress test, Phase 10B's failure analysis, Phases 11/11B/11C,
-Architecture Gate Step 1, Step 2, and the Step 3 generalization check
-above) against the 8 explicitly named criteria from the agreed plan:
-CLEAN rate, defective-output rate, dangerous semantic reversals
-specifically, refusal/escalation rate, dense-profile performance,
-generalization to unseen material, consistency/reproducibility, and
-computational cost — leading into Step 4's three-way decision (A:
-stabilize as-is / B: add a learned component / C: freeze the current
-architecture as the maintained/shipped state with no further
-optimization).
+**Awaiting the user.** Once ratified (as Option C, or a different call),
+document the final decision and, if C, close out this arc's active
+engineering track per the "freeze" terms in `eval/
+step4_recommendation.md`.
 
 ---
 

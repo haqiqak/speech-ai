@@ -3830,3 +3830,53 @@ AskUserQuestion selection). No production code touched. Full record:
 `VALIDATION.md` §54, `eval/step3_gencheck_corpus.py`,
 `eval/step3_gencheck_harvest.py`, `eval/step3_gencheck_raw_results.json`,
 `eval/step3_gencheck_blind_results.json`.
+
+### 2026-08-28-H — Architecture Go/No-Go Step 3 (formal assessment) and Step 4 (RECOMMENDATION, pending ratification)
+
+**What was done:** synthesized all evidence gathered across this arc
+(Phase 10's stress test, Phase 10B, Phases 11/11B/11C, Architecture
+Gate Step 1, Step 2, and the just-completed fresh-corpus check) against
+the 8 criteria named in the agreed plan (CLEAN rate, defective-output
+rate, dangerous semantic reversals, refusal/escalation rate,
+dense-profile performance, generalization to unseen material,
+consistency/reproducibility, computational cost). Full record: `eval/
+step3_architecture_assessment.md`, `eval/step4_recommendation.md`,
+`VALIDATION.md` §55.
+
+**Disclosed process gap:** the agreed plan called for pre-registered
+numeric thresholds per criterion; only the 8 criteria themselves were
+ever actually written down in advance, not concrete pass/fail numbers.
+Named honestly rather than silently worked around; the mitigation is
+that every cited number was recorded before this synthesis was
+written, and the fresh-corpus check was interpreted independently
+before this document existed.
+
+**Key synthesis finding:** CLEAN rate plateaued at 31-34% on the
+R10 corpus across three full phases of work after Phase 11's initial
+jump from 26.1%; dense/multi-constraint profiles score 0% CLEAN on
+BOTH the original frozen corpus (before any fix, Phase 10) and a
+completely fresh corpus (after every fix) -- an unmoved failure mode
+across the entire optimization arc; fresh-corpus CLEAN rate (21.4%) is
+~10-13 points below every frozen-corpus figure, outside the established
+~1-2 point noise band; the dominant defect (WRONG_WORD_OR_SENSE) is a
+ranking problem (per Step 2) that no mechanism added across
+Phases 11/11B/11C/Architecture-Gate-1 actually touches.
+
+**RECOMMENDATION (not yet ratified): Option C** -- freeze the current
+architecture as the maintained/shipped state, do not pursue a learned
+reranker. Option A is not supported by the evidence (21.4% fresh CLEAN,
+0% on dense profiles is not "good enough"). Against Option B: Step 2's
+reranker diagnosis is well-motivated on its own, but this project's own
+evidence -- Phase 9B/9C's prior learned validator failing 99% of the
+time on held-out data (the mandatory bar the user required), plus this
+exact fresh-corpus check just showing the CURRENT, simpler,
+human-inspectable system fail an equivalent generalization test using
+the same limited Claude-judged evaluation infrastructure a reranker
+would also depend on -- gives specific, not hypothetical, reason to
+doubt a learned component built the way this project would have to
+build one would generalize any better. Not a permanent ban; reopenable
+if independently-collected, larger labeled data becomes available.
+
+**Category:** Evaluation/synthesis + recommendation, on direct
+instruction following the agreed 4-step plan. No production code
+touched. Awaiting user ratification before Step 4 is treated as closed.

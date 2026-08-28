@@ -6,6 +6,20 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-28, eighth** docs: Architecture Go/No-Go Step 3 (formal
+  assessment) + Step 4 (recommendation, pending ratification) — the
+  arc's culmination. Synthesized all evidence since Phase 10 against
+  the 8 named criteria; disclosed that numeric thresholds were never
+  actually pre-registered. Key finding: dense/multi-constraint profiles
+  score 0% CLEAN on both the original frozen corpus and a completely
+  fresh one, unmoved across the whole optimization arc; fresh-material
+  CLEAN rate sits ~10-13 points below the tuned corpus. Recommendation:
+  Option C (freeze current architecture as shipped, no learned
+  component) — reasoning grounded in this project's own Phase 9B/9C
+  generalization-failure precedent plus this arc's own fresh-corpus
+  result. Analysis + recommendation only, no production code touched,
+  awaiting user ratification. → `DECISION_LOG.md` 2026-08-28-H,
+  `VALIDATION.md` §55.
 - **2026-08-27/28, seventh** docs: Architecture Go/No-Go Step 3 prep —
   a generalization check on an 18-sentence/36-run corpus genuinely new
   to this project (fresh Wikipedia topics + hand-authored general

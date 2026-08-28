@@ -5621,3 +5621,82 @@ was built and judged in one sitting by the same process that built the
 architecture being tested — an independent corpus/judge pool was not
 available. 4 of the 10 technical sentences have minor, disclosed
 edits (parenthetical trims) versus true verbatim source text.
+
+## 55. Architecture Go/No-Go, Step 3 — formal assessment, and Step 4 — recommendation (executed 2026-08-28, pending ratification)
+
+Per the agreed 4-step plan. Full record: `eval/
+step3_architecture_assessment.md` (Step 3) and `eval/
+step4_recommendation.md` (Step 4). **Step 4's content below is a
+RECOMMENDATION, explicitly not yet a ratified decision** — every prior
+consequential step in this arc was ratified by the user before being
+treated as final, and this follows the same discipline.
+
+**[LIMITATION, disclosed before the synthesis, not after]** The agreed
+plan called for a formal assessment "against pre-registered criteria."
+The 8 criteria themselves were named explicitly in advance and steered
+what evidence got gathered at every step. A concrete numeric pass/fail
+threshold per criterion was never actually written down as an artifact,
+despite the intent being agreed — a real gap against that refinement,
+named here rather than patched over. Mitigation in place: every number
+in the synthesis was recorded in this document *before* the synthesis
+was written, and the fresh-corpus check (§54) was interpreted on its
+own before this section was started.
+
+**[FACT] Synthesis across the 8 criteria (full detail and tables in
+`eval/step3_architecture_assessment.md`):** CLEAN rate on the R10
+corpus this architecture was tuned against plateaued in a 31-34% band
+across Phases 11/11B/11C/Architecture-Gate-1 despite three additional
+full phases of individually-verified real fixes after Phase 11's
+initial 26.1%→32.6% jump. Dense/multi-constraint profiles scored 0%
+CLEAN on the ORIGINAL frozen corpus before any fix (Phase 10:
+`multi_word` 0/13) and 0% CLEAN on a completely fresh corpus after
+every fix (§54: `dense_mixed` 0/10) — the identical failure mode,
+unmoved across the project's entire optimization history. Dangerous
+semantic reversals held in a persistent ~5-11% minority band across
+every measurement (never the dominant class, never eliminated either);
+Architecture Gate Step 1 did not re-measure this breakdown, a disclosed
+gap. Refusal behavior generalizes reasonably well (~20-27% band on both
+frozen and fresh corpora) and is a real, working safety backstop.
+Reproducibility noise is measured at ~1-2 points, too small to explain
+the ~10-13 point frozen-vs-fresh CLEAN-rate gap. Computational cost is
+bounded and well-understood (+3% total harvest time from the largest
+single change). The dominant defect class (WRONG_WORD_OR_SENSE) has
+been the largest class at every measurement in this project's history,
+and Step 2 already showed it's structurally a ranking/selection
+problem no mechanism added across Phases 11/11B/11C/Architecture-Gate-1
+touches (they all operate on generation or binary rejection, none on
+ranking among survivors).
+
+**[RECOMMENDATION, not a decision] Option C: freeze the current
+architecture as the maintained/shipped state; do not pursue a learned
+reranker or other learned component as a next step.** Option A (good
+enough, stop optimizing) is not supported — 21.4% fresh CLEAN rate and
+0% on dense profiles is not "good enough" against the stated research
+objective. The real choice is B vs. C. Step 2's diagnosis (a learned
+reranker replacing `combined_score()`'s fixed blend) is scoped and
+well-motivated on its own terms. But this project's own evidence gives
+a specific, not hypothetical, reason to doubt it would generalize: (1)
+Phase 9B/9C's own prior learned validator predicted DEFECTIVE 99% of
+the time on genuinely held-out data — a mandatory bar the user required
+this recommendation to weigh; (2) this exact fresh-corpus check just
+showed the current, simpler, human-inspectable, rule-based system fails
+the identical generalization test by ~10-13 points, using the same
+Claude-judged evaluation infrastructure and the same limited per-class
+sample sizes (documented since Phase 8/8B/50) a reranker would have to
+be trained/validated against. A learned component built the way this
+project would have to build one is not well-positioned to clear a bar
+the current architecture just failed. "Freeze" means stop adding
+rule/gate patches per individual newly-observed failure (ending the
+"Phase 11D/E/F" pattern this arc exists to avoid), keep the current
+9-gate + phoneme-constrained-generation system as shipped, continue
+routine maintenance, and disclose the measured failure rate honestly
+rather than overstating reliability. Not a permanent ban — reopenable
+if a genuinely larger, independently-collected labeled corpus becomes
+available later.
+
+**[LIMITATION]** This entire arc's evidence (Steps 1-3, this section)
+was gathered and judged by the same Claude-based process throughout —
+no independent human evaluation exists anywhere in this project's
+history. The recommendation weighs this project's OWN precedent
+(Phase 9B/9C) as the generalization bar, per explicit user instruction,
+rather than external literature on reranker generalization generally.
