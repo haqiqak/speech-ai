@@ -5,6 +5,43 @@ built to satisfy — the vocabulary, the evidence standard, and the review
 protocol (§19) all come from there, not from this file. This file exists
 only to tell you where to go next.
 
+## ARCHITECTURE FREEZE IN EFFECT (ratified 2026-08-28) — read this before touching the reformulation engine
+
+The reformulation pipeline (`reformulate.py`, `rephrase.py`,
+`semantic.py`, `combined_score()`'s ranking formula, and every gate/
+blocklist accumulated across Phases 11/11B/11C and Architecture Gate
+Step 1 — code unchanged since commit `7451ec4`, tagged
+`architecture-freeze-v1`) is **frozen as the maintained/shipped
+baseline**, per the user's explicit ratification after a formal 4-step
+Architecture Go/No-Go assessment. Full record: `VALIDATION.md` §§52-56,
+`DECISION_LOG.md` 2026-08-27-E through 2026-08-28-I, `eval/
+step3_architecture_assessment.md`, `eval/step4_recommendation.md`.
+
+**Do not propose or implement further rules, gates, ranking-weight
+changes, threshold changes, or blocklist entries in response to an
+individually-observed failure** — that is exactly the "Phase 11D/E/F"
+pattern this arc was opened to stop, and the evidence (measured CLEAN
+rate plateaued at 31-34% across three further phases of real fixes;
+dense/multi-constraint profiles at 0% CLEAN on both the original and a
+completely fresh corpus; a ~10-13 point fresh-corpus generalization
+gap) says that style of fix has hit its ceiling. Do not propose a
+learned component (reranker, WSD model, etc.) on the current evidence
+either — this project's own Phase 9B/9C precedent (a prior learned
+validator failing 99% of the time on held-out data) plus the fresh-
+corpus result argue against it generalizing any better, for reasons
+detailed in the documents above.
+
+This is **not** project abandonment: routine maintenance continues, and
+the frozen architecture is the **reference baseline** any future,
+fundamentally different approach must beat. Reopening optimization
+work requires new evidence: (1) a substantially larger, independently
+collected labeled dataset, or (2) a genuinely different modeling
+approach that clears this project's own held-out generalization bar
+before being trusted over the frozen baseline. If neither condition is
+met, the correct response to a newly observed failure is to note it
+(e.g. in `REFORMULATION_PROBLEM_MAP.md`, still useful as a living
+record of failure modes) — not to patch it.
+
 ## Reading order for a cold start
 
 1. `Practice.md` (external — the governing methodology; not reproduced here)
@@ -33,11 +70,22 @@ only to tell you where to go next.
    grammaticality, naturalness/idiomaticity, profile-difficulty resolution,
    word sense, cross-substitution interaction, restructuring vs.
    substitution, and the help-vs-harm change budget), not a single
-   word-substitution problem — unlike the dated research passes above, this
-   one is meant to be re-opened and edited every time new evidence appears;
-   read it before proposing or prioritizing any reformulation-engine fix
-10. `ROADMAP.md` — what's next, and the finding or gap that justifies each item
-11. `CHANGELOG.md` — fast-scan index into the decision log
+   word-substitution problem — still useful as a living record of failure
+   modes under the architecture freeze above, but **not** a queue of fixes
+   to implement against the frozen baseline
+10. `VALIDATION.md` §§52-56 / `eval/step3_architecture_assessment.md` /
+    `eval/step4_recommendation.md` — the Architecture Go/No-Go arc: the
+    formal 4-step evidence-gathering process (port the best-known
+    generation fix, diagnose the dominant failure class, assess against
+    8 named criteria including a fresh-corpus generalization check, then
+    a ratified 3-way decision) that produced the freeze above — **read
+    this before forming any opinion on whether the reformulation engine
+    needs more engineering work**; it's the most complete evidence this
+    project has on that exact question
+11. `ROADMAP.md` — what's next (now: nothing on the reformulation engine
+    itself, per the freeze; other items are unaffected), and the finding
+    or gap that justifies each item
+12. `CHANGELOG.md` — fast-scan index into the decision log
 
 ## The handful of standing rules (from Practice.md, restated briefly)
 

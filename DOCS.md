@@ -12,6 +12,12 @@ move/removal-from-the-live-path pass: no reformulation algorithm, threshold,
 weight, or scoring method was changed. See `DECISION_LOG.md` for the entry
 recording this decision.
 
+**Architecture freeze notice (2026-08-28):** the reformulation pipeline
+(`reformulate.py`/`rephrase.py`/`semantic.py`) is frozen as the
+maintained/shipped baseline, ratified after a formal Architecture
+Go/No-Go assessment — see `CLAUDE.md`'s freeze banner and
+`VALIDATION.md` §56 before proposing any change to those files.
+
 ## Documentation (reader: humans, new contributors, future Claude instances)
 
 | File | Purpose | Update cadence | Drift status |

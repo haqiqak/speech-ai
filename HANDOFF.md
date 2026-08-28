@@ -16,6 +16,15 @@ See Practice.md §1 for the precise, citable statement of the research
 objective — that sentence is the actual yardstick, not "does the app
 work."
 
+**Architecture freeze (2026-08-28) — read before touching
+`reformulate.py`/`rephrase.py`/`semantic.py`:** the reformulation
+pipeline is frozen as the maintained/shipped baseline after a formal
+Architecture Go/No-Go assessment (`VALIDATION.md` §§52-56). No further
+rules, gates, ranking-weight/threshold changes, or learned components
+are authorized against it on current evidence — see `CLAUDE.md`'s
+freeze banner for the full reopening conditions before proposing any
+reformulation-engine change.
+
 **Scope note (added 2026-08-15, Stage 2 narrowing pass):** this repo used to
 also contain a CrisperWhisper ASR wrapper, a rule-based ASR-timing disfluency
 detector, and a browser voice-input/voice-output UI layer — code that
