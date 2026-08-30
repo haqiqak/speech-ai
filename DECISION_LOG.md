@@ -3997,3 +3997,43 @@ unaffected. The branch is explicitly not authorized to merge into
 generalization bar (Phase 9B/9C precedent) -- see the charter file's
 own "Relationship to the frozen baseline" section. Full record:
 `LEARNED_REFORMULATION_RESEARCH.md`.
+
+---
+
+### 2026-08-30-C — Stage 8 renamed to Stage LR; branch renamed to `stage-lr`
+
+**What was done:** per direct user instruction, renamed "Stage 8" to
+**"Stage LR"** everywhere it's referenced (`LEARNED_REFORMULATION_
+RESEARCH.md`, `DOCS.md`, `CLAUDE.md`, `ROADMAP.md`) and renamed the
+branch from `research/stage8-learned-reformulation` to `stage-lr`
+(deleted the old branch on `origin`, pushed the new one). "LR" stands
+for **Learned Reformulation** -- the stage's actual subject, spelled
+out in full at the top of the charter file so the abbreviation is never
+opaque on its own. No scope, content, or authorization changed: Stage
+LR is exactly the same charter as 2026-08-30-B, still off `main`, still
+not authorized to merge until it clears the freeze's held-out
+generalization bar.
+
+**Alternatives considered:** Keeping "Stage 8" (rejected -- the user's
+own stated reason: accurate but "a tough long name," harder to say/
+remember day to day than what it stands for). A number-free name
+unrelated to the existing stage sequence was not chosen either, to keep
+this discoverable inside the project's own numbering the way every
+other stage document is (per 2026-08-30-B's own reasoning for picking
+a stage slot in the first place) -- "LR" replaces "8" as this slot's
+label, it doesn't remove the slot.
+
+**Why:** Direct, practical: a name used constantly in conversation and
+commands should be short and self-explanatory. "Stage LR" reads as
+what it is (Learned Reformulation) without needing the numbering
+history looked up first, while still slotting into that history for
+anyone who does look it up.
+
+**Measured result:** N/A -- naming/branch-mechanics change only. No
+code touched, no research performed.
+
+**Category:** Engineering/process decision (renaming). Per this
+project's own append-only discipline (see this file's header), the
+2026-08-30-B entry above is left as originally written rather than
+edited -- this entry is the correction on record. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md`, `CHANGELOG.md`.

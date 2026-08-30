@@ -6,6 +6,12 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-30, third** docs: renamed Stage 8 to **Stage LR** ("LR" =
+  Learned Reformulation) and its branch from
+  `research/stage8-learned-reformulation` to `stage-lr`, across
+  `LEARNED_REFORMULATION_RESEARCH.md`, `DOCS.md`, `CLAUDE.md`,
+  `ROADMAP.md`. No scope/content/authorization change — same charter,
+  still off `main`. → `DECISION_LOG.md` 2026-08-30-C.
 - **2026-08-30, second** docs: opened Stage 8 — a named, charter-only
   container (`LEARNED_REFORMULATION_RESEARCH.md`) for a learned-
   reformulation research direction, developed on branch
