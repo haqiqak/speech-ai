@@ -4037,3 +4037,57 @@ project's own append-only discipline (see this file's header), the
 2026-08-30-B entry above is left as originally written rather than
 edited -- this entry is the correction on record. Full record:
 `LEARNED_REFORMULATION_RESEARCH.md`, `CHANGELOG.md`.
+
+---
+
+### 2026-08-30-D — Stage LR Matter 1 consolidated: phoneme-as-constraint audit, two decisions made
+
+**What was done:** consolidated a multi-turn review of whether this
+project's existing phoneme-as-constraint engineering decisions
+(`PROBLEM_FORMULATION.md` §11) still hold once the `DifficultyProfile`
+schema becomes reward-signal/training input rather than only rule-engine
+input. Four representational ceilings were verified directly against
+`phonetic.py`/`difficulty_profile.py`/`PROBLEM_FORMULATION.md` §11
+(onset-only sounds, binary/static difficulty, phrases lacking any
+phonetic decomposition, first-listed-pronunciation-variant noise) --
+all four already disclosed in §11, not new findings; the contribution is
+reframing them as an ML training ceiling rather than a rule-engine
+limitation. Two follow-up refinements then applied: (a) found that an
+interim, literature-based sanity check for the onset-only ceiling
+already exists in this repo (`REFORMULATION_RESEARCH.md` §2.1 -- 92-100%
+word-initial/syllable-initial stuttering occurrence across cited
+studies), so it did not need to be newly researched; (b) made an actual
+decision on phrase phonetic representation, previously left as an open
+tension.
+
+**Alternatives considered:** For the phrase-representation decision --
+(i) a separate reward-model pathway/head for phrases, kept structurally
+distinct from sounds/words. Rejected: adds real new architecture before
+any evidence the simpler fix is insufficient, and doesn't give phrases
+real phonetic content, just isolates the gap into its own lane. (ii) The
+chosen fix -- represent a phrase as the concatenation of its words'
+existing `full_pronunciation()` phone sequences, OOV words contributing
+no phones. Chosen because it reuses existing code (no new phonetic
+mechanism), unifies the feature space across all three profile
+categories (directly closes the "category-as-spurious-signal" risk
+named earlier in this review), and matches the precedent
+`PROBLEM_FORMULATION.md` §11.4 already set (don't add structure for a
+distinction not yet shown to matter) -- cross-word coarticulation is
+explicitly named as still unmodeled by this fix, not silently solved.
+
+**Why:** A representational gap in a rule engine just drops one
+candidate (locally recoverable); the same gap in a training schema is
+baked into every example a model ever sees (a hard ceiling on what any
+training method can learn). Worth resolving explicitly before any
+Stage LR training-set builder is written, not discovering later as an
+unexplained ceiling effect.
+
+**Measured result:** N/A -- literature citation reuse (already existing
+in this repo) plus two design decisions; no training-set builder or
+model code written yet.
+
+**Category:** Stage LR design decision. Recorded on branch `stage-lr`,
+not `main`, per direct instruction to keep this direction's work off
+`main` until it's ready to report back. Does not touch the frozen
+pipeline or any file `main` currently ships. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md`.

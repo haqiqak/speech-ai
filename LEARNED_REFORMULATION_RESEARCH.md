@@ -75,6 +75,103 @@ see `HANDOFF.md`'s freeze banner. Promotion of any Stage LR result to
 same discipline that closed the Architecture Go/No-Go arc — not an
 automatic merge once something looks better on a training corpus.
 
+## Matter 1 — phoneme-as-constraint representation audit (2026-08-30)
+
+**Trigger:** before designing any reward function on top of the existing
+`DifficultyProfile` schema, a direct question was raised and investigated:
+do the phoneme-as-constraint engineering decisions this project already
+made (Stage 4A, `PROBLEM_FORMULATION.md` §11) still hold once that
+schema becomes training/reward-signal input, not just a rule-engine
+input? Investigated directly against source (`phonetic.py`,
+`difficulty_profile.py`, `PROBLEM_FORMULATION.md` §11), not evaluated
+from prose alone.
+
+**[FACT] Four representational ceilings confirmed, all already disclosed
+in `PROBLEM_FORMULATION.md` §11, not new findings:**
+1. `sounds` entries are onset-only (`phonetic._onset_from_phones()` stops
+   at the first vowel) — §11.1 already names this as inherited, not
+   re-derived, and deliberately not extended ("no second value it could
+   take yet").
+2. `DifficultyEntry` (`difficulty_profile.py`) has no severity, context,
+   or time axis — `value`/`normalized`/`category`/`source`/`added_at`/
+   `pronunciation`/`problem_phones`/`meta` only. Difficulty is a flat,
+   declared, binary fact.
+3. Words get a full phone sequence (`phonetic.full_pronunciation()`);
+   phrases get none — stored as opaque declared text, matching deferred
+   to `ROADMAP.md` R13 (§11.1).
+4. `full_pronunciation()` silently uses CMU's first-listed pronunciation
+   variant — real, silent label noise for heteronyms, already named in
+   §11.3, already partially mitigated (`meta["has_alternate_pronunciations"]`
+   exists and is currently unused downstream).
+
+**[INTERPRETATION]** These were sound, disclosed simplifications for a
+*rule engine*, where a representational gap just means one candidate
+isn't filtered — a locally recoverable miss. For a *learned* component,
+the same gap is baked into every training example: whatever the schema
+can't represent becomes a hard ceiling on what any model trained against
+it can ever learn, regardless of training method. This reframing, not
+the four facts themselves, is Matter 1's actual contribution.
+
+**[FINDING] Interim, literature-based sanity check for ceiling (1) — already exists in this repo, not a new task.** `REFORMULATION_RESEARCH.md`
+§2.1 (Stage 5) already cites quantified stuttering-loci data: one study
+found 97.8% of stuttering events on first syllables of words (76.5% on
+the first sound specifically), another found 92–100% word-initial/
+syllable-initial occurrence in adults who stutter. This is a real, if
+population-level (not this-project's-speakers-level), sanity check that
+onset-only is a reasonable *primary* approximation, not a silent miss of
+something common. The same section also already names what it does
+*not* cover: stress and sentence position (Brown's factor 3) are
+real, evidenced loci that neither existing difficulty formula captures —
+a distinct, already-tracked gap in `phonetic.word_difficulty()`, not the
+profile schema this audit concerns. **This literature check is a cheap
+companion to, not a replacement for, a real held-out audit** — it says
+onset-only is defensible as a population-level prior, not that it's
+correct for any specific Stage LR speaker.
+
+**[LIMITATION, not a new task]** The full version of that audit — "how
+often does *this project's* actual declared/observed difficulty fall
+outside what the schema can represent" — needs real speaker data.
+`ROADMAP.md` R2 already names this exact, standing gap (both difficulty
+formulas are validated against nothing but self-declared profiles,
+blocked on the separate, not-yet-built Audio Module). Reusing R2 here
+rather than opening a duplicate blocker.
+
+**[DECISION] Ceiling (4) gets a one-line fix, not a research task.**
+Any Stage LR training-set builder excludes or down-weights entries
+carrying `meta["has_alternate_pronunciations"] = True` (already set by
+the existing Stage 4A refinement — no new instrumentation needed).
+
+**[DECISION] Ceiling (3) — phrases get a minimal phonetic
+representation before any training, not an open tension.** Phrases are
+represented as the **concatenation of their words' existing
+`full_pronunciation()` phone sequences** (word boundaries preserved,
+OOV words contribute no phones rather than a guess, consistent with
+`full_pronunciation()`'s own no-guessing policy). This is the smallest
+change that closes the actual named risk — a shared feature space
+(phone sequences) across sounds/words/phrases, so a reward model can't
+learn "this is a phrase" as a shortcut for "I have no real phonetic
+signal here." **Explicitly not fixing cross-word coarticulation** —
+concatenation captures each word's own phones, not how one word's
+ending phone interacts with the next word's starting phone — that stays
+a named, separate, still-open limitation, not silently solved by this
+decision.
+
+**Alternative considered and rejected:** a separate reward-model
+pathway/head for phrases (structurally distinct feature space, matching
+their current opaque-string-match reality). Rejected as premature
+architecture — it adds a second model pathway before any evidence the
+simpler, shared-representation fix is insufficient, and it doesn't
+actually give phrases real phonetic content, it just isolates the gap
+into its own lane. Same reasoning `PROBLEM_FORMULATION.md` §11.4 already
+used to reject adding a speculative `position` field: don't build
+structure for a distinction not yet shown to matter.
+
+**Category:** Stage LR design decisions, recorded on `stage-lr`, not
+`main` — per direct instruction, this branch's work stays here until
+ready to report back. No code written yet; these are representation
+requirements for whenever Stage LR's first training-set builder is
+implemented. Full record: `DECISION_LOG.md` 2026-08-30-D.
+
 ## Scope — not yet decided
 
 Left deliberately open for the first real Stage LR research pass, per
