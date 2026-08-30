@@ -6,6 +6,15 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-30, second** docs: opened Stage 8 — a named, charter-only
+  container (`LEARNED_REFORMULATION_RESEARCH.md`) for a learned-
+  reformulation research direction, developed on branch
+  `research/stage8-learned-reformulation`, never on `main`. Corrects a
+  naming collision (a prior draft proposed "Stage 5," already taken by
+  `REFORMULATION_RESEARCH.md`) by using the next unused stage number.
+  `main` remains the frozen, shipped implementation partners should
+  build against. No code touched, no research performed yet. →
+  `DECISION_LOG.md` 2026-08-30-B.
 - **2026-08-30** docs: recorded an external literature connection —
   Rich Sutton's "The Bitter Lesson" — to the just-closed Architecture
   Go/No-Go arc (rules plateaued, dominant defect is a ranking problem).

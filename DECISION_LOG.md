@@ -3956,3 +3956,44 @@ vocabulary, not [FACT] or [FINDING].
 **not** change the freeze's scope, status, or reopening conditions --
 those stand exactly as ratified in 2026-08-28-I / `VALIDATION.md` §56.
 Full record: `VALIDATION.md` §57.
+
+---
+
+### 2026-08-30-B — Stage 8 opened: charter + branch for a learned-reformulation research direction, kept off `main`
+
+**What was done:** per direct user instruction, opened a named
+container for exploring reopening condition (2) from the freeze
+(`VALIDATION.md` §56) -- a genuinely different, likely learned,
+modeling approach to the ranking problem Step 2 diagnosed. Created
+`LEARNED_REFORMULATION_RESEARCH.md` (charter only, no research
+performed) and the branch `research/stage8-learned-reformulation`,
+opened from `main` at this commit. `main` is untouched by this entry
+beyond the doc-trail updates listed below.
+
+**Alternatives considered:** The user's own prior-session draft proposed
+naming this "Stage 5 -- Learned Reformulation." Rejected on a direct
+check against `DOCS.md`/`HANDOFF.md`: "Stage 5" already names
+`REFORMULATION_RESEARCH.md` (Stage 6 and Stage 7 are also already
+taken, by the `reformulate.py` evaluation and the human pilot
+respectively). "Stage 8" is the next unused number in the existing
+sequence -- kept the existing convention's intent (discoverability
+inside the project's own numbering) while fixing the collision, rather
+than inventing an unrelated codename.
+
+**Why:** The user asked how to package the frozen implementation for
+partners while continuing new research in the same repo, and for a name
+for that new direction. Per this project's own freeze terms, new
+optimization work is only authorized as an explicit instance of
+condition (1) or (2) -- this is condition (2)'s work, so it gets a
+named, evidence-gated container rather than starting as loose commits
+on `main`, which the freeze already forbids for architecture changes.
+
+**Measured result:** N/A -- setup only, no research performed yet.
+
+**Category:** Engineering/process decision (branching, naming,
+charter). No production code touched; `main`'s frozen implementation is
+unaffected. The branch is explicitly not authorized to merge into
+`main` until a Stage 8 result clears the freeze's held-out
+generalization bar (Phase 9B/9C precedent) -- see the charter file's
+own "Relationship to the frozen baseline" section. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md`.

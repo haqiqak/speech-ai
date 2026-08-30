@@ -37,7 +37,13 @@ fundamentally different approach must beat. Reopening optimization
 work requires new evidence: (1) a substantially larger, independently
 collected labeled dataset, or (2) a genuinely different modeling
 approach that clears this project's own held-out generalization bar
-before being trusted over the frozen baseline. If neither condition is
+before being trusted over the frozen baseline. **Condition (2) now has
+a named container**, opened 2026-08-30: `LEARNED_REFORMULATION_RESEARCH.md`
+(Stage 8), developed on branch `research/stage8-learned-reformulation`,
+never on `main` — see `DECISION_LOG.md` 2026-08-30-B. `main` stays the
+frozen, shipped implementation; anyone building against this repo
+(including partners integrating it with the separate Audio Module)
+should track `main`, not that branch. If neither condition is
 met, the correct response to a newly observed failure is to note it
 (e.g. in `REFORMULATION_PROBLEM_MAP.md`, still useful as a living
 record of failure modes) — not to patch it.

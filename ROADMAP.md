@@ -51,6 +51,14 @@ caveat (the essay's argument presupposes sufficient data/compute are
 actually available to the general method, which is precisely what
 condition (1) above requires before it applies here).
 
+**Stage 8 opened, 2026-08-30 (condition (2)'s container, not yet
+condition (2) met):** `LEARNED_REFORMULATION_RESEARCH.md` charters a
+learned-reformulation research direction on its own branch
+(`research/stage8-learned-reformulation`), kept off `main` until it
+clears the freeze's held-out generalization bar. `main` remains the
+frozen, shipped implementation partners should build against — see
+`DECISION_LOG.md` 2026-08-30-B.
+
 ---
 
 ## Highest priority — not a research question, an exposure
