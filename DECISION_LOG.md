@@ -3918,3 +3918,41 @@ project's own evidence produced. No production code touched --
 documentation/versioning only (`VALIDATION.md` §56, `ROADMAP.md`,
 `CHANGELOG.md`, and git tag `architecture-freeze-v1`). Full record:
 `VALIDATION.md` §56.
+
+---
+
+### 2026-08-30-A — External literature connection recorded: the Bitter Lesson (Sutton)
+
+**What was done:** the user surfaced Rich Sutton's essay "The Bitter
+Lesson" and observed that this project's own Architecture Go/No-Go arc
+(2026-08-27-E through 2026-08-28-I above) independently rediscovered
+its core pattern in miniature -- a hand-engineered rule/gate stack
+plateauing while the dominant remaining defect was diagnosed as a
+ranking problem, the kind general/learned methods are typically better
+suited to. Recorded as durable context, per direct instruction to add
+it to documentation.
+
+**Alternatives considered:** N/A -- documentation/context addition, not
+an implementation decision; no code or config changed.
+
+**Why:** Practice.md's evidence-classification discipline (§5) calls
+for situating findings against relevant outside literature where it
+exists. This connection is genuine but was recorded with its own
+caveat rather than taken at face value: Sutton's argument requires the
+general/learned method to actually have sufficient data and compute
+available, not merely be tried instead of hand engineering. This
+project's own Phase 9B/9C precedent -- a prior learned validator
+failing 99% of the time on held-out data -- is a case of exactly that
+precondition being unmet, and it lost, which the essay's own logic
+predicts rather than contradicts. Read this way, the essay corroborates
+the freeze's two existing reopening conditions (`VALIDATION.md` §56)
+rather than arguing to loosen them.
+
+**Measured result:** N/A -- no experiment; a literature/interpretation
+note, tagged [OBSERVATION]/[INTERPRETATION] per Practice.md §5's
+vocabulary, not [FACT] or [FINDING].
+
+**Category:** Documentation only. No production code touched. Does
+**not** change the freeze's scope, status, or reopening conditions --
+those stand exactly as ratified in 2026-08-28-I / `VALIDATION.md` §56.
+Full record: `VALIDATION.md` §57.

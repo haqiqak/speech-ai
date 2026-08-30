@@ -6,6 +6,15 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-30** docs: recorded an external literature connection —
+  Rich Sutton's "The Bitter Lesson" — to the just-closed Architecture
+  Go/No-Go arc (rules plateaued, dominant defect is a ranking problem).
+  Added with its own caveat: the essay's mechanism presupposes
+  sufficient data/compute for the general method, which is what the
+  freeze's reopening condition (1) already requires — corroborates the
+  freeze's existing reopening conditions, changes neither them nor the
+  freeze itself. Documentation only, no code touched. →
+  `DECISION_LOG.md` 2026-08-30-A, `VALIDATION.md` §57.
 - **2026-08-28, ninth** docs: Architecture Go/No-Go Step 4 RATIFIED —
   the user explicitly froze the current reformulation architecture as
   the maintained/shipped baseline, ending the Architecture Go/No-Go arc.

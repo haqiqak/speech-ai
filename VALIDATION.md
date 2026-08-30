@@ -5775,3 +5775,40 @@ process (§55's own disclosed limitation) — reopening under condition
 (2) above should weigh that any new approach faces the same
 measurement-infrastructure constraint unless the independent-dataset
 condition (1) is also met.
+
+## 57. External literature connection: the Bitter Lesson (added 2026-08-30, no new evidence)
+
+**[OBSERVATION]** The user surfaced Rich Sutton's essay "The Bitter
+Lesson" (2019) after reading this document set: its recurring
+historical finding is that hand-engineered, human-knowledge-encoding
+methods are consistently overtaken, given enough data and compute, by
+general methods that let learning/search do the work instead. The
+user's observation, stated directly: this project's own Architecture
+Go/No-Go arc (§52-56) independently rediscovered that pattern in
+miniature — a rule/gate-accumulation architecture (Phases 11/11B/11C,
+Architecture Gate Step 1) plateaued at 31-34% CLEAN despite four full
+phases of individually-verified real fixes, while the dominant
+remaining defect class was diagnosed (§53) as structurally a *ranking*
+problem — the shape of problem general/learned methods are typically
+better suited to than a fixed rule stack.
+
+**[INTERPRETATION, not a new finding — a re-reading of §55-56's
+existing evidence through this framing]** The connection is real but
+cuts less cleanly than "therefore go learned" — Sutton's own claimed
+mechanism requires the general method to actually have enough data and
+compute *available to it*, not merely used instead of hand engineering.
+This project's directly relevant precedent (Phase 9B/9C: a prior
+learned validator predicted DEFECTIVE 99% of the time on genuinely
+held-out data) is a case where a general/learned method was tried
+*without* that precondition met, and it lost badly — which the bitter
+lesson's own logic predicts, not contradicts. Read this way, the essay
+corroborates §56's existing two reopening conditions rather than
+arguing for loosening them: condition (1) (a substantially larger,
+independently collected labeled dataset) is exactly the "enough data"
+precondition the essay's argument depends on, and condition (2) (a
+learned approach must clear this project's own held-out generalization
+bar before being trusted) is exactly the check that Phase 9B/9C shows
+is not optional to skip. This section adds context to §56, not a
+change to it — the freeze, its scope, and its two reopening conditions
+stand exactly as ratified there. Full record of the user's framing and
+this addition: `DECISION_LOG.md` 2026-08-30-A.

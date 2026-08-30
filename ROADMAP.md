@@ -42,6 +42,15 @@ Everything below this banner reflects roadmap items identified *before*
 the freeze and is retained as historical record / candidate material
 for a future re-opening, not active work.
 
+**Added context, 2026-08-30 (no change to the two conditions above):**
+this arc's own shape — hand-engineered rules plateauing while the
+dominant defect is a ranking problem — is a small-scale instance of the
+pattern Rich Sutton's "The Bitter Lesson" describes; see `VALIDATION.md`
+§57 / `DECISION_LOG.md` 2026-08-30-A for the connection and its own
+caveat (the essay's argument presupposes sufficient data/compute are
+actually available to the general method, which is precisely what
+condition (1) above requires before it applies here).
+
 ---
 
 ## Highest priority — not a research question, an exposure
