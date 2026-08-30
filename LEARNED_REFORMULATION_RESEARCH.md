@@ -156,6 +156,28 @@ ending phone interacts with the next word's starting phone — that stays
 a named, separate, still-open limitation, not silently solved by this
 decision.
 
+**[DECISION, added 2026-08-30 — closes a scoping gap the first pass of
+this decision left unstated] The phrase phone sequence is a fingerprint
+of that phrase occurrence, not a set of per-word or per-phone claims.**
+"This phrase is difficult" is one declared fact about the phrase as a
+sequence — it is **not** the same as "every word in this phrase is
+individually difficult," for the identical reason
+`PROBLEM_FORMULATION.md` §11.1 already establishes one level down: a
+word's `problem_phones` never auto-generalizes into a global `sounds`
+entry. `difficulty_profile.py:212-219`'s `add_sound_from_phones()`
+states this outright — promotion from a word-specific pattern to a
+global sound is *"always an EXPLICIT call — nothing in this module
+calls it automatically."* The phrase decomposition above must follow
+the identical rule: nothing in Stage LR's feature extraction, training,
+or any future consumer may read a phrase's concatenated phone sequence
+as "flag these words, or these phones, as difficult everywhere on their
+own." That reading is only valid as a separate, deliberate, explicitly-
+triggered action — the same kind `add_sound_from_phones()` already
+requires for words — never an automatic side effect of decomposing a
+phrase into phones. **Not yet implemented as an enforced constraint**
+(no training-set builder exists yet to enforce it against) — recorded
+here as a binding design requirement for whichever one gets built.
+
 **Alternative considered and rejected:** a separate reward-model
 pathway/head for phrases (structurally distinct feature space, matching
 their current opaque-string-match reality). Rejected as premature

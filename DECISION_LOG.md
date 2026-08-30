@@ -4091,3 +4091,38 @@ not `main`, per direct instruction to keep this direction's work off
 `main` until it's ready to report back. Does not touch the frozen
 pipeline or any file `main` currently ships. Full record:
 `LEARNED_REFORMULATION_RESEARCH.md`.
+
+---
+
+### 2026-08-30-E — Correction to 2026-08-30-D: phrase phone sequence must not auto-generalize to word/phone-level claims
+
+**What was done:** 2026-08-30-D's phrase-representation decision
+(concatenated per-word `full_pronunciation()` sequences) was found
+incomplete on further review -- it specified *what* the phrase gets as
+a feature but not the scoping rule for how that feature may be
+interpreted downstream. Named and closed directly: "this phrase is
+difficult" is one fact about the phrase-as-a-sequence, not "every word
+in it is individually difficult" or "these phones are difficult
+anywhere" -- the same category error `PROBLEM_FORMULATION.md` §11.1
+already rules out one level down (a word's `problem_phones` never
+auto-generalizes to a global `sounds` entry).
+
+**Alternatives considered:** N/A -- this is a scoping clarification on
+an already-made decision, not a new option being chosen between.
+
+**Why:** Verified directly against `difficulty_profile.py:212-219`
+(`add_sound_from_phones()`): promotion from a word-specific pattern to a
+global sound is *"always an EXPLICIT call — nothing in this module
+calls it automatically."* The phrase decomposition must inherit the
+identical rule, or it silently reintroduces, one level up, the exact
+kind of over-broad generalization this project's own profile schema was
+deliberately designed to avoid at the word level.
+
+**Measured result:** N/A -- design correction, recorded before any
+training-set builder exists to violate it.
+
+**Category:** Stage LR design decision (correction). Recorded on
+`stage-lr`, not `main`, same as 2026-08-30-D. Per this project's
+append-only discipline, 2026-08-30-D is left as originally written;
+this entry is the correction on record. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md`.
