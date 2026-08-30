@@ -4126,3 +4126,69 @@ training-set builder exists to violate it.
 append-only discipline, 2026-08-30-D is left as originally written;
 this entry is the correction on record. Full record:
 `LEARNED_REFORMULATION_RESEARCH.md`.
+
+---
+
+### 2026-08-30-F — Stage LR Matter 2: founding proposal reviewed, three corrections + one load-bearing gap found, working plan set
+
+**What was done:** `PROPOSAL_LEARNED_REFORMULATION_ENGINE.md` (a
+profile-conditioned DPO reward/reranker model, then RL-trained
+end-to-end generation) was submitted as Stage LR's founding proposal
+and reviewed directly against the live repository, not evaluated from
+its own prose. Saved verbatim (encoding cleanup only) as the historical
+record; `STAGE_LR_PROPOSAL_REVIEW.md` holds the full review.
+
+**Findings, all verified directly:** (1) the proposal's allowlist
+"existing precedent" claim is false for the live pipeline -- zero
+matches for `allowlist` in `reformulate.py`; the concept only exists in
+the dead `grammar.py::SentenceRewriter` comparison baseline, and the
+live schema (`users/default.json`) has no such field (confirmed by
+direct inspection: `sounds`/`words`/`phrases` only). (2) its
+"`problem_phones` not wired to anything" citation is stale --
+`reformulate.py::_flagged_positions` became a real consumer in the
+2026-08-16 refinement; only `phrases` is still genuinely unconsumed.
+(3) the phrase feature is named but never specified how it becomes a
+numeric feature -- Matter 1's decision (2026-08-30-D/E) needed to be
+wired in explicitly, not left implicit. (4) **Load-bearing**: the
+claimed reusable preference data ("reformatting, not fresh collection")
+does not exist at DPO's needed scale/shape -- checked directly: 20
+single-participant ratings (`eval/pilot_responses/P1.csv`), 135
+single-output Claude-judged verdicts (`eval/r50_dataset/
+labeled_dataset.json`), neither pairwise nor multi-profile, and no
+second profile exists to run the proposal's own held-out-by-speaker
+split against. This project's own Phase 9B/9C precedent
+(2026-08-25-B/C) already shows what training a similarly-sized model on
+data this size produces on fresh material (99% single-class collapse /
+62%->34% retention). (5) hardware was never costed: confirmed CPU-only
+(`torch.cuda.is_available()` -> False), `trl` not installed, and
+`ROADMAP.md` R23 already measured a 10-40x slowdown for a comparable
+small decoder-only model on this exact machine.
+
+**Alternatives considered:** Accept the proposal as written and start
+Stage LR.1 as originally scoped (train DPO on "existing" data).
+Rejected -- the data doesn't exist as claimed, and training anyway
+risks reproducing Phase 9B/9C's outcome, which is exactly the
+generalization failure the freeze's own evidence already warns against.
+Reject the proposal outright. Also rejected -- the core thesis (reward
+as structured input, not spelling-inference) and reward decomposition
+(reusing SBERT/MeaningBERT/NLI/`contextual_fit_score()`/`phonetic.py`)
+are sound and worth keeping.
+
+**Why:** Practice.md §5's discipline -- verify before stating something
+as settled, especially when it's load-bearing for an entire plan. The
+proposal's own author, on review, confirmed the allowlist and data
+claims were stated as fact without checking live code first, agreed the
+Phase 9B/9C precedent was the most important miss, and endorsed the
+revised plan's structure -- recorded in `STAGE_LR_PROPOSAL_REVIEW.md`
+§6 so this isn't a one-sided record.
+
+**Measured result:** N/A -- review and re-plan only; no training-set
+builder, feature extractor, or model exists yet.
+
+**Category:** Stage LR design decision (major). Recorded on `stage-lr`,
+not `main`. Working plan going forward: Stage LR.1 (data reality check,
+hard prerequisite) -> Stage LR.2 (feature extractor, buildable now,
+not gated on LR.1) -> Stage LR.3 (reranker validation, conditional on
+LR.1's result) -> Stage 2 generative RL (on hold pending GPU access or
+a validated cheaper proxy, not rejected). Full record:
+`STAGE_LR_PROPOSAL_REVIEW.md`, `LEARNED_REFORMULATION_RESEARCH.md`.

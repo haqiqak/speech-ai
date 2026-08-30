@@ -194,16 +194,40 @@ ready to report back. No code written yet; these are representation
 requirements for whenever Stage LR's first training-set builder is
 implemented. Full record: `DECISION_LOG.md` 2026-08-30-D.
 
-## Scope — not yet decided
+## Scope — Matter 2: proposal reviewed, working plan set (2026-08-30)
 
-Left deliberately open for the first real Stage LR research pass, per
-Practice.md §19's own step ordering (define the problem before choosing
-an architecture): what a "genuinely different modeling approach" means
-concretely here (a learned reranker over the existing candidate pool,
-per §55's Option B; a different candidate-generation mechanism; or
-something not yet considered), what data it would train/validate
-against given condition (1) above is not yet met, and what the
-held-out generalization bar's pass criterion is, stated as a number in
-advance — not reconstructed after seeing a result, per the gap
-`VALIDATION.md` §55 itself disclosed about the Go/No-Go arc's own
-criteria.
+A founding proposal (`PROPOSAL_LEARNED_REFORMULATION_ENGINE.md` — a
+profile-conditioned DPO reward/reranker, then RL-trained generation)
+was submitted and critically reviewed against the live code, current
+data, and this machine's actual hardware. Three of its claims did not
+hold (a dead-code allowlist precedent, a stale "not wired up" citation,
+an unspecified phrase feature); one gap was load-bearing (the claimed
+reusable preference data does not exist at the needed scale or shape,
+and this project's own Phase 9B/9C precedent already shows what
+training on data this small produces on fresh material); hardware was
+never costed (CPU-only, no GPU, and R23's own 10-40x slowdown result
+for a comparable small-model approach). Full review, corrections, and
+reasoning: `STAGE_LR_PROPOSAL_REVIEW.md` — read that first for *why*
+the plan below looks like this, not just what it says.
+
+**Current working plan**, superseding the "not yet decided" framing
+this section previously had:
+
+1. **Stage LR.1 — data reality check.** Quantify how much real
+   pairwise-preference, multi-profile data can actually be produced
+   before assuming any exists. Hard prerequisite for LR.3.
+2. **Stage LR.2 — feature extractor.** Build the profile-conditioned
+   reward features (meaning/naturalness/phoneme-difficulty) from
+   already-validated components only (SBERT, MeaningBERT, NLI,
+   `contextual_fit_score()`, `phonetic.py` + Matter 1's decisions). Not
+   gated on LR.1 — buildable now, low risk.
+3. **Stage LR.3 — reranker validation.** Only if LR.1 finds enough real
+   data to make a held-out-by-speaker split meaningful. Otherwise,
+   named explicitly blocked on data, same as `ROADMAP.md` R2.
+4. **Stage 2 (generative RL) — on hold**, not rejected, pending GPU
+   access or a validated cheaper proxy. Not scoped in detail until one
+   of those is true.
+
+This section is no longer "not yet decided" for the near-term sequence
+above; what remains genuinely open is LR.1's actual result and whatever
+LR.3/Stage 2 look like once it lands.
