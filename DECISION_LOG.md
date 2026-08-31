@@ -4117,3 +4117,52 @@ instruction. No reformulation algorithm, weight, threshold, or gate
 changed. Installed versions after this fix: `protobuf==5.29.6`,
 `pyinflect==0.5.1`, `tensorflow`/`keras` removed (were not in
 `requirements.txt`).
+
+---
+
+### 2026-08-30-E — Fixed: `language_tool_python` was missing, silently disabling a live grammar gate in `reformulate.py`
+
+**What was done:** found (while wiring a grammar signal into Stage LR's
+LR.2 feature extractor, on the `stage-lr` branch) that
+`language_tool_python` -- a direct `requirements.txt` dependency
+(`language-tool-python>=3.4.0`) -- was not installed in this venv.
+`semantic.grammar_issue_count()` returns `None` when the tool can't
+load; `reformulate.py` uses it as a live gate in two places
+(`_try_escalation`/phrase-tier: `if (sem.grammar_issue_count(cand) or
+0) > 0: reject`) -- with the tool missing, `None or 0` is `0`, so `0 >
+0` is `False`, meaning the gate has been **silently never firing**,
+the same class of bug as 2026-08-30-D's SBERT/MeaningBERT finding, but
+this one is a hard accept/reject gate on the live pipeline, not just a
+reported metric. Installed the missing package (already pinned in
+`requirements.txt`, nothing new added).
+
+**Verified with real output, not just status flags:** `grammar_issue_count("She go to the store.")` → 1 (catches the real error);
+`grammar_issue_count("She goes to the store.")` → 0; the specific
+"softwares" pluralization case found during Stage LR's LR.2 sanity
+check → 1. `tests/smoke.py` (SBERT on) vs. `tests/baseline_sbert.txt`:
+**no new diff** beyond the single, already-disclosed, non-behavioral
+line from 2026-08-30-D (the 'dont'→"don't" spelling/contraction
+label) -- this fix did not change the frozen substitution-tier
+corpus's output.
+
+**A real, pre-existing problem found and NOT caused by this fix,
+verified directly, not assumed:** `tests/reformulate_test.py`'s
+`EscalationTest.test_count_threshold_triggers_restructuring`/
+`UnknownTokenRejectionTest.test_garbled_token_detected` and
+`tests/reformulate_v2_test.py`'s
+`PhonemeConstrainedGenerationTest.test_output_never_contains_blocked_sound`
+fail. Before assuming this fix caused it, tested both ways directly:
+uninstalled `language_tool_python` again and re-ran the same 3 tests --
+**they fail identically without the fix too.** Confirmed pre-existing,
+unrelated to this change. Not investigated or fixed here -- out of
+scope for a dependency fix, flagged for separate attention rather than
+silently left for someone to rediscover.
+
+**Category:** Routine maintenance / dependency fix, explicitly
+permitted under the freeze. Affects `main` directly -- a real,
+previously-silent hard gate on the shipped pipeline is now live, not
+just a diagnostic. No reformulation algorithm, weight, or threshold
+changed; the gate itself is unchanged code, only its dependency is
+restored. Installed: `language-tool-python==3.4.0`. Known, pre-existing,
+separate issue flagged: the 3 named test failures above, confirmed
+independent of this fix.

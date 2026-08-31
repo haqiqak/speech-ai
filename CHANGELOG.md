@@ -6,6 +6,17 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-30, fifth** fix: restored missing `language-tool-python`
+  (a declared `requirements.txt` dependency) — its absence was
+  silently disabling a live grammar gate in `reformulate.py`'s
+  escalation/phrase-tier paths (`grammar_issue_count() or 0 > 0` was
+  always `False` with the tool missing, so the gate never rejected
+  anything). Verified with real output (catches real grammar errors,
+  0 false positives on clean sentences); `tests/smoke.py` shows no new
+  diff beyond the already-disclosed one. Also found and disclosed 3
+  pre-existing, unrelated test failures (confirmed independent of this
+  fix by testing both with and without it) — not fixed here, flagged
+  separately. → `DECISION_LOG.md` 2026-08-30-E.
 - **2026-08-30, fourth** fix: removed unused `tensorflow`/`keras`
   (protobuf gencode conflict was silently breaking SBERT/MeaningBERT/
   contextual-fit model loading — all three were falling back to
