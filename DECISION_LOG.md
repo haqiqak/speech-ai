@@ -4605,3 +4605,88 @@ one path (hand-tuning) and sets binding preconditions for the other
 (learned reranker), not itself research or code. Full record:
 `LEARNED_REFORMULATION_RESEARCH.md` ("Fork resolved" section),
 `stage_lr/data/human_agreement_ceiling_check.json`.
+
+---
+
+### 2026-08-30-O — Claude-as-judge established as the standard method (meaning/naturalness/grammar only, never phonemes); batch 3 run (68 total pairs); path (b) distinction logged explicitly
+
+**What was done:** per direct instruction, five things:
+
+1. **Claude-as-judge standardized.** A general-purpose Claude call (the
+Agent tool, in this environment -- no direct API tool exists for a
+script to call itself) is now the standard method for judging
+candidate pairs in data path (a) and future evaluation, replacing
+manual/ad hoc judging. Formalized as code:
+`stage_lr/judge_pairs.py` (prompt-building + response-parsing) with 7
+tests (`tests/stage_lr_judge_pairs_test.py`).
+
+2. **Phoneme-avoidance confirmed as never a Claude call, enforced not
+just stated.** `judge_pairs.py`'s prompt has no phonetic-judgment
+language at all -- checked directly by a dedicated test
+(`test_prompt_never_mentions_phoneme_judgment`), not just described in
+a docstring. Phoneme-avoidance stays exactly what it already was:
+`generate_pairs.py` only ever hands a judge candidates that already
+survived the real `reformulate()` pipeline's own phoneme gate
+(`phonetic.py`'s ARPAbet/onset matching against `profile.sounds`) --
+nothing changed here, this entry only makes the invariant explicit and
+tested.
+
+3. **Ceiling check (2026-08-30-N) accepted as-is.** No revision --
+caveat (Claude-consistency, not a true human ceiling) stands exactly
+as logged.
+
+4. **Claude-as-judge vs. path (b), distinguished explicitly.**
+Claude-as-judge resolves the judging-bottleneck half of path (a) only.
+Path (b)'s gap is data diversity (real distinct declared profiles from
+real people, to test generalization across speakers), not a judging-
+mechanism question -- no amount of faster/cheaper judging touches it.
+Both LR.3 prerequisites (path (a) grown meaningfully larger; path (b)
+real people) remain exactly as gated in 2026-08-30-N.
+
+5. **Batch 3 run, using the new standard method for the first time.**
+No unused existing corpus of the right shape was found (checked: R11's
+reverify data is the same 398 R10 runs batch 2 already used, not new
+sentences; R43a/R44/R49 don't carry substitution-tier `changes` lists)
+-- used the pre-approved fallback, 30 fresh sentences (new domains:
+gardening, travel, cars, sports, home repair, finance, pets, art,
+health, shopping) x the same 4 existing profile templates, run through
+`reformulate()` for the first time (`stage_lr/harvest_batch3.py`).
+
+**Result, honest, not padded:** 120 sentence/profile combinations
+attempted -> 97 produced no substitution-tier change at all (expected:
+unlike batches 1-2, which only tried combinations already known to
+trigger one, batch 3 tried every combination blind) -> 13 second
+candidates found -> 0 contaminated -> 3 duplicates collapsed -> **10
+unique pairs, all 10 judged via the new standard method in one Claude
+call**. Running total: **68 judged pairs** (58 + 10), appended to the
+same `lr1_preference_pairs.json`. Batch 3's found-rate (13/120 = 10.8%)
+is much lower than batches 1-2's (~24-36%, on pre-filtered records) --
+disclosed as the real, expected denominator effect of trying every
+combination rather than only pre-known successes, not a sign of
+breakage.
+
+**Alternatives considered:** Reuse R11's reverify corpus for batch 3
+(same 398 runs as batch 2, different harvest snapshot). Rejected --
+same underlying sentences/profiles as batch 2, would inflate the pair
+count without adding genuine sentence/profile diversity, and risks
+misrepresenting overlap as new data.
+
+**Why:** Direct instruction, explicit reasoning given: judging was the
+real bottleneck in batches 1-2 (manual, one pair at a time); Claude-as-
+judge removes that bottleneck specifically, without changing anything
+about what data path (a) can or can't provide on its own (still no
+real distinct profiles -- that's path (b)'s job alone).
+
+**Measured result:** `stage_lr/judge_pairs.py` 7/7 tests pass. 68 total
+pairs now in `lr1_preference_pairs.json`, each carrying `judged_by`
+where applicable so future readers can see which pairs used the new
+standard method vs. the earlier manual pass.
+
+**Category:** Stage LR infrastructure (judging standardization) + data
+generation (batch 3) + policy clarification (path (a) vs (b)).
+Recorded on `stage-lr`. LR.3's two-prerequisite gating from
+2026-08-30-N is unchanged by this entry -- reaffirmed, not loosened.
+Full record: `LEARNED_REFORMULATION_RESEARCH.md` ("Claude-as-judge
+established" + "does not substitute for path (b)" sections),
+`stage_lr/data/lr1_preference_pairs.json`,
+`stage_lr/data/lr1_candidate_generation_log_batch3.json`.

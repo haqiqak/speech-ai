@@ -1,0 +1,269 @@
+[
+  {
+    "id": 101,
+    "source_uids": [
+      "B3-heavy_dense-19",
+      "B3-single_common_sound-20"
+    ],
+    "original_sentence": "Grandpa always tells the same story about his first fishing trip.",
+    "difficulty_profile": {
+      "name": "heavy_dense",
+      "sounds": [
+        "s",
+        "th",
+        "r"
+      ],
+      "words": [
+        "temperature",
+        "technology",
+        "important"
+      ],
+      "phrases": [
+        "as well as"
+      ]
+    },
+    "flagged_word": "same",
+    "candidate_A": "identical",
+    "candidate_B": "aforementioned",
+    "candidate_a_sentence": "Grandpa always tells the identical history about his first fishing trip.",
+    "candidate_b_sentence": "Grandpa always tells the aforementioned history about his first fishing trip."
+  },
+  {
+    "id": 102,
+    "source_uids": [
+      "B3-moderate_mixed-22"
+    ],
+    "original_sentence": "The recipe requires precise measurements for the sauce to thicken properly.",
+    "difficulty_profile": {
+      "name": "moderate_mixed",
+      "sounds": [
+        "pr",
+        "gr"
+      ],
+      "words": [
+        "particular",
+        "significant"
+      ],
+      "phrases": []
+    },
+    "flagged_word": "precise",
+    "candidate_A": "accurate",
+    "candidate_B": "very",
+    "candidate_a_sentence": "The recipe requires accurate measurements for the sauce to thicken right.",
+    "candidate_b_sentence": "The recipe requires very measurements for the sauce to thicken right."
+  },
+  {
+    "id": 103,
+    "source_uids": [
+      "B3-moderate_mixed-34"
+    ],
+    "original_sentence": "He forgot his umbrella again despite the forecast predicting heavy rain.",
+    "difficulty_profile": {
+      "name": "moderate_mixed",
+      "sounds": [
+        "pr",
+        "gr"
+      ],
+      "words": [
+        "particular",
+        "significant"
+      ],
+      "phrases": []
+    },
+    "flagged_word": "predicting",
+    "candidate_A": "calling",
+    "candidate_B": "guessing",
+    "candidate_a_sentence": "He forgot his umbrella again despite the forecast calling heavy rain.",
+    "candidate_b_sentence": "He forgot his umbrella again despite the forecast guessing heavy rain."
+  },
+  {
+    "id": 104,
+    "source_uids": [
+      "B3-heavy_dense-39"
+    ],
+    "original_sentence": "The museum's new exhibit features artifacts from ancient trading routes.",
+    "difficulty_profile": {
+      "name": "heavy_dense",
+      "sounds": [
+        "s",
+        "th",
+        "r"
+      ],
+      "words": [
+        "temperature",
+        "technology",
+        "important"
+      ],
+      "phrases": [
+        "as well as"
+      ]
+    },
+    "flagged_word": "routes",
+    "candidate_A": "paths",
+    "candidate_B": "lines",
+    "candidate_a_sentence": "The museum's new exhibit features artifacts from ancient trading paths.",
+    "candidate_b_sentence": "The museum's new exhibit features artifacts from ancient trading lines."
+  },
+  {
+    "id": 105,
+    "source_uids": [
+      "B3-heavy_dense-43"
+    ],
+    "original_sentence": "Prices for groceries have risen sharply over the past few months.",
+    "difficulty_profile": {
+      "name": "heavy_dense",
+      "sounds": [
+        "s",
+        "th",
+        "r"
+      ],
+      "words": [
+        "temperature",
+        "technology",
+        "important"
+      ],
+      "phrases": [
+        "as well as"
+      ]
+    },
+    "flagged_word": "risen",
+    "candidate_A": "climbed",
+    "candidate_B": "grown",
+    "candidate_a_sentence": "Prices for groceries have climbed sharply over the past few months.",
+    "candidate_b_sentence": "Prices for groceries have grown sharply over the past few months."
+  },
+  {
+    "id": 106,
+    "source_uids": [
+      "B3-heavy_dense-51"
+    ],
+    "original_sentence": "Her thesis argues that early exposure to music improves language development.",
+    "difficulty_profile": {
+      "name": "heavy_dense",
+      "sounds": [
+        "s",
+        "th",
+        "r"
+      ],
+      "words": [
+        "temperature",
+        "technology",
+        "important"
+      ],
+      "phrases": [
+        "as well as"
+      ]
+    },
+    "flagged_word": "thesis",
+    "candidate_A": "dissertation",
+    "candidate_B": "treatise",
+    "candidate_a_sentence": "Her dissertation argues that early exposure to music improves language development.",
+    "candidate_b_sentence": "Her treatise argues that early exposure to music improves language development."
+  },
+  {
+    "id": 107,
+    "source_uids": [
+      "B3-moderate_mixed-54"
+    ],
+    "original_sentence": "The coach benched the striker after he missed three straight practices.",
+    "difficulty_profile": {
+      "name": "moderate_mixed",
+      "sounds": [
+        "pr",
+        "gr"
+      ],
+      "words": [
+        "particular",
+        "significant"
+      ],
+      "phrases": []
+    },
+    "flagged_word": "practices",
+    "candidate_A": "trainings",
+    "candidate_B": "exercises",
+    "candidate_a_sentence": "The coach benched the striker after he missed three straight trainings.",
+    "candidate_b_sentence": "The coach benched the striker after he missed three straight exercises."
+  },
+  {
+    "id": 108,
+    "source_uids": [
+      "B3-heavy_dense-67",
+      "B3-single_common_sound-68"
+    ],
+    "original_sentence": "A sudden gust of wind knocked over the outdoor market stalls.",
+    "difficulty_profile": {
+      "name": "heavy_dense",
+      "sounds": [
+        "s",
+        "th",
+        "r"
+      ],
+      "words": [
+        "temperature",
+        "technology",
+        "important"
+      ],
+      "phrases": [
+        "as well as"
+      ]
+    },
+    "flagged_word": "sudden",
+    "candidate_A": "fast",
+    "candidate_B": "sharp",
+    "candidate_a_sentence": "A fast gust of wind knocked over the outdoor market malfunctions.",
+    "candidate_b_sentence": "A sharp gust of wind knocked over the outdoor market malfunctions."
+  },
+  {
+    "id": 109,
+    "source_uids": [
+      "B3-moderate_mixed-86"
+    ],
+    "original_sentence": "The startup raised significant funding to expand its engineering team.",
+    "difficulty_profile": {
+      "name": "moderate_mixed",
+      "sounds": [
+        "pr",
+        "gr"
+      ],
+      "words": [
+        "particular",
+        "significant"
+      ],
+      "phrases": []
+    },
+    "flagged_word": "significant",
+    "candidate_A": "meaningful",
+    "candidate_B": "meaning",
+    "candidate_a_sentence": "The startup raised meaningful funding to expand its engineering team.",
+    "candidate_b_sentence": "The startup raised meaning funding to expand its engineering team."
+  },
+  {
+    "id": 110,
+    "source_uids": [
+      "B3-heavy_dense-91",
+      "B3-single_common_sound-92"
+    ],
+    "original_sentence": "She switched careers after realizing accounting wasn't fulfilling.",
+    "difficulty_profile": {
+      "name": "heavy_dense",
+      "sounds": [
+        "s",
+        "th",
+        "r"
+      ],
+      "words": [
+        "temperature",
+        "technology",
+        "important"
+      ],
+      "phrases": [
+        "as well as"
+      ]
+    },
+    "flagged_word": "switched",
+    "candidate_A": "flipped",
+    "candidate_B": "operated",
+    "candidate_a_sentence": "She flipped careers after gaining accounting wasn't fulfilling.",
+    "candidate_b_sentence": "She operated careers after gaining accounting wasn't fulfilling."
+  }
+]

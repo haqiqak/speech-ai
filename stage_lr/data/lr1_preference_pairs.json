@@ -17,7 +17,18 @@
       "unique_pairs_after_dedup": 41,
       "judged": 41
     },
-    "running_total_judged_pairs": 58
+    "running_total_judged_pairs": 68,
+    "batch_3_fresh": {
+      "source": "stage_lr/harvest_batch3.py -- 30 fresh, previously-unused sentences x 4 existing profile templates, run through reformulate() for the first time (no unused existing corpus of the right shape was found)",
+      "total_sentence_profile_pairs": 120,
+      "no_substitution_change": 97,
+      "second_candidates_found_raw": 13,
+      "excluded_multi_word_contaminated": 0,
+      "clean_single_variable_pairs_raw": 13,
+      "unique_pairs_after_dedup": 10,
+      "judged": 10,
+      "judging_method": "claude_api_standard_method (stage_lr/judge_pairs.py, DECISION_LOG.md 2026-08-30-O) -- first batch judged this way, not manually"
+    }
   },
   "pairs": [
     {
@@ -1280,6 +1291,273 @@
       "candidate_B": "informed",
       "preferred": "A",
       "reason": "'Indicated' is grammatically clean and a reasonably close synonym for 'suggested'. 'Informed that' has a mild missing-object awkwardness (usually 'informed HIM that'), a smaller but real quality gap."
+    },
+    {
+      "source_uids": [
+        "B3-heavy_dense-19",
+        "B3-single_common_sound-20"
+      ],
+      "original_sentence": "Grandpa always tells the same story about his first fishing trip.",
+      "difficulty_profile": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "flagged_word": "same",
+      "candidate_A": "identical",
+      "candidate_B": "aforementioned",
+      "preferred": "A",
+      "reason": "\"identical\" preserves the meaning and reads naturally, while \"aforementioned\" wrongly implies the story was previously mentioned in this discourse and is oddly formal/legalistic in register.",
+      "judged_by": "claude_api_standard_method"
+    },
+    {
+      "source_uids": [
+        "B3-moderate_mixed-22"
+      ],
+      "original_sentence": "The recipe requires precise measurements for the sauce to thicken properly.",
+      "difficulty_profile": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "flagged_word": "precise",
+      "candidate_A": "accurate",
+      "candidate_B": "very",
+      "preferred": "A",
+      "reason": "\"accurate measurements\" is grammatical and preserves the meaning; \"very measurements\" is ungrammatical since \"very\" cannot modify a noun this way.",
+      "judged_by": "claude_api_standard_method"
+    },
+    {
+      "source_uids": [
+        "B3-moderate_mixed-34"
+      ],
+      "original_sentence": "He forgot his umbrella again despite the forecast predicting heavy rain.",
+      "difficulty_profile": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "flagged_word": "predicting",
+      "candidate_A": "calling",
+      "candidate_B": "guessing",
+      "preferred": "A",
+      "reason": "Both drop the needed \"for\" (\"calling/guessing heavy rain\"), but \"calling for heavy rain\" is a near-miss to a standard forecasting idiom, whereas \"guessing\" wrongly implies the forecast is uncertain speculation rather than a prediction.",
+      "judged_by": "claude_api_standard_method"
+    },
+    {
+      "source_uids": [
+        "B3-heavy_dense-39"
+      ],
+      "original_sentence": "The museum's new exhibit features artifacts from ancient trading routes.",
+      "difficulty_profile": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "flagged_word": "routes",
+      "candidate_A": "paths",
+      "candidate_B": "lines",
+      "preferred": "A",
+      "reason": "\"trading paths\" is a natural, meaning-preserving synonym for routes, while \"trading lines\" is awkward and risks being misread as financial/credit lines.",
+      "judged_by": "claude_api_standard_method"
+    },
+    {
+      "source_uids": [
+        "B3-heavy_dense-43"
+      ],
+      "original_sentence": "Prices for groceries have risen sharply over the past few months.",
+      "difficulty_profile": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "flagged_word": "risen",
+      "candidate_A": "climbed",
+      "candidate_B": "grown",
+      "preferred": "A",
+      "reason": "\"climbed sharply\" is an idiomatic, natural collocation for price increases; \"grown sharply\" is grammatical but a less natural pairing with \"sharply.\"",
+      "judged_by": "claude_api_standard_method"
+    },
+    {
+      "source_uids": [
+        "B3-heavy_dense-51"
+      ],
+      "original_sentence": "Her thesis argues that early exposure to music improves language development.",
+      "difficulty_profile": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "flagged_word": "thesis",
+      "candidate_A": "dissertation",
+      "candidate_B": "treatise",
+      "preferred": "A",
+      "reason": "\"dissertation\" is a close, natural synonym for \"thesis\" in academic register; \"treatise\" shifts the meaning toward a different genre of writing not necessarily original research.",
+      "judged_by": "claude_api_standard_method"
+    },
+    {
+      "source_uids": [
+        "B3-moderate_mixed-54"
+      ],
+      "original_sentence": "The coach benched the striker after he missed three straight practices.",
+      "difficulty_profile": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "flagged_word": "practices",
+      "candidate_A": "trainings",
+      "candidate_B": "exercises",
+      "preferred": "A",
+      "reason": "\"trainings\" (though slightly nonstandard as a plural) still reads as practice sessions, while \"exercises\" changes the meaning to sound like individual drills or problems rather than sessions attended.",
+      "judged_by": "claude_api_standard_method"
+    },
+    {
+      "source_uids": [
+        "B3-heavy_dense-67",
+        "B3-single_common_sound-68"
+      ],
+      "original_sentence": "A sudden gust of wind knocked over the outdoor market stalls.",
+      "difficulty_profile": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "flagged_word": "sudden",
+      "candidate_A": "fast",
+      "candidate_B": "sharp",
+      "preferred": "B",
+      "reason": "\"a sharp gust\" is an idiomatic phrase that keeps the sense of abruptness; \"a fast gust\" shifts the meaning toward speed rather than suddenness and is less natural.",
+      "judged_by": "claude_api_standard_method"
+    },
+    {
+      "source_uids": [
+        "B3-moderate_mixed-86"
+      ],
+      "original_sentence": "The startup raised significant funding to expand its engineering team.",
+      "difficulty_profile": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "flagged_word": "significant",
+      "candidate_A": "meaningful",
+      "candidate_B": "meaning",
+      "preferred": "A",
+      "reason": "\"meaningful funding\" is grammatical though it drifts slightly from \"substantial amount\" toward \"purposeful\"; \"meaning funding\" is outright ungrammatical.",
+      "judged_by": "claude_api_standard_method"
+    },
+    {
+      "source_uids": [
+        "B3-heavy_dense-91",
+        "B3-single_common_sound-92"
+      ],
+      "original_sentence": "She switched careers after realizing accounting wasn't fulfilling.",
+      "difficulty_profile": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "flagged_word": "switched",
+      "candidate_A": "flipped",
+      "candidate_B": "operated",
+      "preferred": "A",
+      "reason": "\"flipped careers\" is an odd but parseable metaphorical extension of switching; \"operated careers\" is nonsensical and distorts the meaning entirely.",
+      "judged_by": "claude_api_standard_method"
     }
   ],
   "excluded_multi_word_contaminated": {
