@@ -4879,3 +4879,48 @@ history via `git reset`, not left reachable via an old commit hash.
 Full record: `LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), first
 real participant" section), `stage_lr/harvest_real_profile.py`,
 `.gitignore`.
+
+---
+
+### 2026-08-30-S — First real human-vs-Claude comparison: 1/4 agree (25%), n=4, not a result to act on
+
+**What was done:** the participant's picks on the 4 candidate pairs came
+back. Per `ingest_real_human_pair.py`'s hard rule, obtained a Claude
+verdict on the identical 4 pairs, blind, via the standard method
+(`stage_lr/judge_pairs.py`, a fresh subagent with no memory of the
+human picks), in the same session, then logged both together via
+`record_real_human_pair()`. All 4 records now exist in
+`stage_lr/data/real_human_pairs.json` (gitignored, confirmed not
+tracked). No participant-specific content (the actual sentences/words)
+is recorded here or in `LEARNED_REFORMULATION_RESEARCH.md` -- only the
+aggregate result.
+
+**Result:** 1/4 agree (25%).
+
+**Alternatives considered:** Treat this as a real signal about Claude's
+judgment quality. Rejected explicitly -- n=4 cannot distinguish
+anything statistically; this project's own discipline (per the human-
+agreement ceiling check's own n=1-rater caveat, 2026-08-30-N) already
+argues against treating a tiny single-participant sample as a
+conclusion. Ignore the number since it's too small to matter. Also
+rejected -- it's still worth naming as a directional flag: 25% sits
+below both the earlier Claude-vs-Claude ceiling check (68%/81%) and
+LR.2's own model (55.2%/58.8%), consistent with (not proof of) the
+ceiling check's own disclosed caveat that Claude-vs-Claude agreement
+may overstate Claude-vs-real-human agreement.
+
+**Why:** Direct continuation of the same-session logging rule already
+built (2026-08-30-Q) -- this is that mechanism's first real use, not a
+new decision.
+
+**Measured result:** 4/4 pairs logged with both verdicts.
+`stage_lr/ingest_real_human_pair.summarize()` reports `{"n": 4,
+"agree": 1, "rate": 0.25}` directly from the data, not computed by
+hand.
+
+**Category:** Stage LR data point (path (b), first real result). No
+conclusion drawn, no LR.2 weights touched, no change to LR.3's gating
+-- explicitly named as too small to act on, not smoothed into looking
+more decisive than it is. Recorded on `stage-lr`. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), first real
+participant" section, updated).
