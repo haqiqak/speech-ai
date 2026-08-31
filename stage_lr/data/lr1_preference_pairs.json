@@ -28,7 +28,8 @@
       "unique_pairs_after_dedup": 10,
       "judged": 10,
       "judging_method": "claude_api_standard_method (stage_lr/judge_pairs.py, DECISION_LOG.md 2026-08-30-O) -- first batch judged this way, not manually"
-    }
+    },
+    "schema_note_2026_08_30": "All pairs in this file are source=synthetic_profile_template (researcher-authored profile templates, judged by Claude). Real-human-judged pairs (source=real_human, both a real friend verdict and a same-session Claude verdict on the same pair) live in the SEPARATE file stage_lr/data/real_human_pairs.json, never merged in here, per direct instruction -- they answer a different question and must not be silently pooled with these when computing agreement rates."
   },
   "pairs": [
     {
@@ -50,7 +51,8 @@
       "candidate_A": "powerful",
       "candidate_B": "fertiler",
       "preferred": "A",
-      "reason": "Both candidates are grammatically broken (missing the 'more ___ than' comparative form, a real defect already confirmed by this record's own human rating). But A retains a plausible intensity/magnitude sense, while B substitutes an unrelated semantic domain (fertility, not strength) for a physical-intensity comparison \u2014 a much larger meaning break on top of the shared grammar issue."
+      "reason": "Both candidates are grammatically broken (missing the 'more ___ than' comparative form, a real defect already confirmed by this record's own human rating). But A retains a plausible intensity/magnitude sense, while B substitutes an unrelated semantic domain (fertility, not strength) for a physical-intensity comparison \u2014 a much larger meaning break on top of the shared grammar issue.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -69,7 +71,8 @@
       "candidate_A": "way",
       "candidate_B": "scheme",
       "preferred": "B",
-      "reason": "Both are grammatical. 'Way' is generic and loses the 'deliberate technique/approach' sense of 'strategy'. 'Scheme' keeps that deliberate-plan sense more precisely, despite a mild negative-connotation risk ('scheming') the original doesn't carry."
+      "reason": "Both are grammatical. 'Way' is generic and loses the 'deliberate technique/approach' sense of 'strategy'. 'Scheme' keeps that deliberate-plan sense more precisely, despite a mild negative-connotation risk ('scheming') the original doesn't carry.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -92,7 +95,8 @@
       "candidate_A": "places",
       "candidate_B": "constructs",
       "preferred": "B",
-      "reason": "A ('places') is a severe, nonsensical substitution \u2014 locations have nothing to do with an ontology's attributes. B ('constructs') stays correctly within the abstract/conceptual technical register the sentence needs."
+      "reason": "A ('places') is a severe, nonsensical substitution \u2014 locations have nothing to do with an ontology's attributes. B ('constructs') stays correctly within the abstract/conceptual technical register the sentence needs.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -115,7 +119,8 @@
       "candidate_A": "options",
       "candidate_B": "orientations",
       "preferred": "B",
-      "reason": "Both drift from 'preferences', but 'options' shifts to an external-availability sense (what's on offer) while 'orientations' stays closer to an internal-disposition sense (what one favors) \u2014 a smaller category error for describing what an agent 'has' as a goal-driver."
+      "reason": "Both drift from 'preferences', but 'options' shifts to an external-availability sense (what's on offer) while 'orientations' stays closer to an internal-disposition sense (what one favors) \u2014 a smaller category error for describing what an agent 'has' as a goal-driver.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -138,7 +143,8 @@
       "candidate_A": "softwares",
       "candidate_B": "packages",
       "preferred": "B",
-      "reason": "A has a real countability/grammar error \u2014 'software' is a mass noun in standard English, 'softwares' is non-standard pluralization (the same class of bug this project's own countability work targeted). B ('packages') is grammatical and a natural, common near-synonym for 'programs' in a computing context."
+      "reason": "A has a real countability/grammar error \u2014 'software' is a mass noun in standard English, 'softwares' is non-standard pluralization (the same class of bug this project's own countability work targeted). B ('packages') is grammatical and a natural, common near-synonym for 'programs' in a computing context.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -161,7 +167,8 @@
       "candidate_A": "gas",
       "candidate_B": "building",
       "preferred": "A",
-      "reason": "A produces an awkward duplicate ('gas gas emissions') but the surviving phrase 'gas emissions' stays coherent and climate-relevant. B ('building gas emissions') is not a real, coherent technical concept \u2014 a larger meaning break despite reading more smoothly on the surface."
+      "reason": "A produces an awkward duplicate ('gas gas emissions') but the surviving phrase 'gas emissions' stays coherent and climate-relevant. B ('building gas emissions') is not a real, coherent technical concept \u2014 a larger meaning break despite reading more smoothly on the surface.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -184,7 +191,8 @@
       "candidate_A": "gas",
       "candidate_B": "building",
       "preferred": "A",
-      "reason": "Same pattern as the other 'greenhouse' case in this set: A's 'gas gases are trapping heat' is repetitive but keeps a coherent, climate-relevant claim; B's 'building gases' is not an established or coherent concept, a larger meaning break."
+      "reason": "Same pattern as the other 'greenhouse' case in this set: A's 'gas gases are trapping heat' is repetitive but keeps a coherent, climate-relevant claim; B's 'building gases' is not an established or coherent concept, a larger meaning break.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -207,7 +215,8 @@
       "candidate_A": "welcome",
       "candidate_B": "salutation",
       "preferred": "B",
-      "reason": "Both grammatical. 'Welcome' subtly shifts toward a hosting-specific connotation. 'Salutation' is the more precise, commonly interchangeable synonym for 'greeting' in this listing-of-parts context."
+      "reason": "Both grammatical. 'Welcome' subtly shifts toward a hosting-specific connotation. 'Salutation' is the more precise, commonly interchangeable synonym for 'greeting' in this listing-of-parts context.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -230,7 +239,8 @@
       "candidate_A": "natural",
       "candidate_B": "naive",
       "preferred": "B",
-      "reason": "'Natural languages' collides with an unrelated, well-established linguistics term (human vs. constructed/formal language) \u2014 actively misleading in a sentence about linguistics. 'Naive' is an odd word choice for describing a language, but at least gestures toward the 'unsophisticated/simple' sense 'primitive' originally carried."
+      "reason": "'Natural languages' collides with an unrelated, well-established linguistics term (human vs. constructed/formal language) \u2014 actively misleading in a sentence about linguistics. 'Naive' is an odd word choice for describing a language, but at least gestures toward the 'unsophisticated/simple' sense 'primitive' originally carried.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -258,7 +268,8 @@
       "candidate_A": "work",
       "candidate_B": "field",
       "preferred": "B",
-      "reason": "'The work of programs' reads as 'produced/performed by programs' \u2014 a sense shift away from 'academic discipline'. 'The field of programs' keeps more of the discipline/domain sense 'study' carried, even if the phrasing is slightly awkward either way."
+      "reason": "'The work of programs' reads as 'produced/performed by programs' \u2014 a sense shift away from 'academic discipline'. 'The field of programs' keeps more of the discipline/domain sense 'study' carried, even if the phrasing is slightly awkward either way.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -285,7 +296,8 @@
       "candidate_A": "device",
       "candidate_B": "button",
       "preferred": "tie",
-      "reason": "Both are broken the same way \u2014 'device'/'button' used as verbs make the sentence nonsensical. This is a real word-sense-disambiguation failure (the generator matched 'release' the noun/mechanism sense \u2014 as in a latch or trigger release \u2014 against a verb usage), not one candidate being better than the other. Useful as a negative example either way."
+      "reason": "Both are broken the same way \u2014 'device'/'button' used as verbs make the sentence nonsensical. This is a real word-sense-disambiguation failure (the generator matched 'release' the noun/mechanism sense \u2014 as in a latch or trigger release \u2014 against a verb usage), not one candidate being better than the other. Useful as a negative example either way.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -313,7 +325,8 @@
       "candidate_A": "ocean",
       "candidate_B": "water",
       "preferred": "A",
-      "reason": "'Ocean' is a precise, close synonym for 'sea' in this earth-science context. 'Water' is a much broader, vaguer substitution that loses the specific marine meaning \u2014 a real instance of this project's own previously-diagnosed genericness bias (a more generic, higher-frequency word outranking a more precise one)."
+      "reason": "'Ocean' is a precise, close synonym for 'sea' in this earth-science context. 'Water' is a much broader, vaguer substitution that loses the specific marine meaning \u2014 a real instance of this project's own previously-diagnosed genericness bias (a more generic, higher-frequency word outranking a more precise one).",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -340,7 +353,8 @@
       "candidate_A": "new",
       "candidate_B": "uncooked",
       "preferred": "B",
-      "reason": "A ('new food') is an unrelated, severe meaning substitution that destroys the food-safety-relevant distinction the sentence depends on (raw = uncooked, not 'new'). B ('uncooked') is essentially the exact intended meaning."
+      "reason": "A ('new food') is an unrelated, severe meaning substitution that destroys the food-safety-relevant distinction the sentence depends on (raw = uncooked, not 'new'). B ('uncooked') is essentially the exact intended meaning.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -367,7 +381,8 @@
       "candidate_A": "buildings",
       "candidate_B": "eateries",
       "preferred": "B",
-      "reason": "Another genericness-bias case: 'buildings' is far too broad (loses the food-service meaning entirely, and reads oddly next to 'other food establishments'). 'Eateries' is accurate, natural, and fits the sentence."
+      "reason": "Another genericness-bias case: 'buildings' is far too broad (loses the food-service meaning entirely, and reads oddly next to 'other food establishments'). 'Eateries' is accurate, natural, and fits the sentence.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -394,7 +409,8 @@
       "candidate_A": "esteem",
       "candidate_B": "notoriety",
       "preferred": "A",
-      "reason": "'Esteem' is an imperfect but plausible, neutral-to-positive substitute. 'Notoriety' specifically implies negative fame \u2014 an incorrect connotation shift in a positive, professional-networking context."
+      "reason": "'Esteem' is an imperfect but plausible, neutral-to-positive substitute. 'Notoriety' specifically implies negative fame \u2014 an incorrect connotation shift in a positive, professional-networking context.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -413,7 +429,8 @@
       "candidate_A": "detailed",
       "candidate_B": "gradual",
       "preferred": "A",
-      "reason": "'Detailed reasoning' is natural and stays in a related 'thoroughness' sense even without capturing sequentiality. 'Gradual reasoning' is an unusual, less coherent collocation that drifts toward an unrelated temporal-pace meaning."
+      "reason": "'Detailed reasoning' is natural and stays in a related 'thoroughness' sense even without capturing sequentiality. 'Gradual reasoning' is an unusual, less coherent collocation that drifts toward an unrelated temporal-pace meaning.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -434,7 +451,8 @@
       "candidate_A": "critique",
       "candidate_B": "inspect",
       "preferred": "A",
-      "reason": "'Critique' is a very common, natural request verb for reviewing written documents. 'Inspect' carries a more formal/compliance-oriented connotation (inspecting a building, a product) that's a less natural register fit for this everyday request."
+      "reason": "'Critique' is a very common, natural request verb for reviewing written documents. 'Inspect' carries a more formal/compliance-oriented connotation (inspecting a building, a product) that's a less natural register fit for this everyday request.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -456,7 +474,8 @@
       "candidate_A": "absorbed",
       "candidate_B": "imbibed",
       "preferred": "B",
-      "reason": "A creates an awkward, confusing duplicate word ('absorbed and absorbed'). B avoids the repetition and 'imbibed' is a plausible, if slightly formal, near-synonym for taking in nutrients."
+      "reason": "A creates an awkward, confusing duplicate word ('absorbed and absorbed'). B avoids the repetition and 'imbibed' is a plausible, if slightly formal, near-synonym for taking in nutrients.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -475,7 +494,8 @@
       "candidate_A": "bowel",
       "candidate_B": "gut",
       "preferred": "A",
-      "reason": "'Small bowel' is standard anatomical terminology for 'small intestine' \u2014 accurate and natural. 'Small gut' is a less natural collocation; 'gut' alone is the common usage, not usually modified by 'small'."
+      "reason": "'Small bowel' is standard anatomical terminology for 'small intestine' \u2014 accurate and natural. 'Small gut' is a less natural collocation; 'gut' alone is the common usage, not usually modified by 'small'.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -494,7 +514,8 @@
       "candidate_A": "assumed",
       "candidate_B": "absorbed",
       "preferred": "B",
-      "reason": "A ('assumed') is a severe, nonsensical meaning substitution \u2014 has nothing to do with being physically taken back into the blood. B ('absorbed') loses the 're-' nuance but preserves the core physical-process meaning coherently."
+      "reason": "A ('assumed') is a severe, nonsensical meaning substitution \u2014 has nothing to do with being physically taken back into the blood. B ('absorbed') loses the 're-' nuance but preserves the core physical-process meaning coherently.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -513,7 +534,8 @@
       "candidate_A": "compounds",
       "candidate_B": "units",
       "preferred": "A",
-      "reason": "'Compounds' stays within the correct chemical/biological domain, a plausible near-synonym for molecules. 'Units' is too generic and loses the specific chemical meaning entirely."
+      "reason": "'Compounds' stays within the correct chemical/biological domain, a plausible near-synonym for molecules. 'Units' is too generic and loses the specific chemical meaning entirely.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -533,7 +555,8 @@
       "candidate_A": "beings",
       "candidate_B": "systems",
       "preferred": "A",
-      "reason": "'Beings' stays within a plausible 'living things' semantic space appropriate for organisms being consumed. 'Systems' is a severe, nonsensical substitution \u2014 you don't consume a system."
+      "reason": "'Beings' stays within a plausible 'living things' semantic space appropriate for organisms being consumed. 'Systems' is a severe, nonsensical substitution \u2014 you don't consume a system.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -557,7 +580,8 @@
       "candidate_A": "quick",
       "candidate_B": "fast",
       "preferred": "tie",
-      "reason": "'Quick decrease' and 'fast decrease' are both natural, accurate, near-synonymous substitutions for 'sudden' here \u2014 no meaningful quality difference."
+      "reason": "'Quick decrease' and 'fast decrease' are both natural, accurate, near-synonymous substitutions for 'sudden' here \u2014 no meaningful quality difference.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -581,7 +605,8 @@
       "candidate_A": "value",
       "candidate_B": "pace",
       "preferred": "B",
-      "reason": "A breaks the core physics meaning: 'the value at which momentum is changing' isn't coherent (a value doesn't have a rate; this loses the entire 'speed of change' concept 'rate' was expressing). B ('pace') is a natural, meaning-preserving substitution in this exact 'rate/pace at which X changes' construction."
+      "reason": "A breaks the core physics meaning: 'the value at which momentum is changing' isn't coherent (a value doesn't have a rate; this loses the entire 'speed of change' concept 'rate' was expressing). B ('pace') is a natural, meaning-preserving substitution in this exact 'rate/pace at which X changes' construction.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -600,7 +625,8 @@
       "candidate_A": "one",
       "candidate_B": "like",
       "preferred": "B",
-      "reason": "Both are odd, but 'the like magnitude' at least gestures toward 'similar/equal' (an archaic but interpretable phrasing), while 'the one magnitude' reads as a clearer determiner/grammar error with less recoverable meaning."
+      "reason": "Both are odd, but 'the like magnitude' at least gestures toward 'similar/equal' (an archaic but interpretable phrasing), while 'the one magnitude' reads as a clearer determiner/grammar error with less recoverable meaning.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -623,7 +649,8 @@
       "candidate_A": "open",
       "candidate_B": "layer",
       "preferred": "B",
-      "reason": "A ('below the open') is nonsensical \u2014 'the open' as a bare noun doesn't fit here. B ('below the layer'), while vague about which layer, stays within plausible geological-structure vocabulary."
+      "reason": "A ('below the open') is nonsensical \u2014 'the open' as a bare noun doesn't fit here. B ('below the layer'), while vague about which layer, stays within plausible geological-structure vocabulary.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -642,7 +669,8 @@
       "candidate_A": "terms",
       "candidate_B": "states",
       "preferred": "B",
-      "reason": "A ('cloudless terms') uses the contract/agreement sense of 'terms', nonsensical for weather description. B ('cloudless states') stays closer to the intended condition/status meaning, even if slightly awkward."
+      "reason": "A ('cloudless terms') uses the contract/agreement sense of 'terms', nonsensical for weather description. B ('cloudless states') stays closer to the intended condition/status meaning, even if slightly awkward.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -663,7 +691,8 @@
       "candidate_A": "quits",
       "candidate_B": "discontinues",
       "preferred": "A",
-      "reason": "'Quits' is the natural, common way to describe a program/algorithm terminating. 'Discontinues' is accurate but carries a register mismatch, more typical of product lines than execution halting."
+      "reason": "'Quits' is the natural, common way to describe a program/algorithm terminating. 'Discontinues' is accurate but carries a register mismatch, more typical of product lines than execution halting.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -683,7 +712,8 @@
       "candidate_A": "mathematical",
       "candidate_B": "quantitative",
       "preferred": "B",
-      "reason": "'Quantitative' is a more precise semantic match for 'numerical' (expressed as numbers/quantities) than 'mathematical', which names a broader field. Both work, but B is the closer fit."
+      "reason": "'Quantitative' is a more precise semantic match for 'numerical' (expressed as numbers/quantities) than 'mathematical', which names a broader field. Both work, but B is the closer fit.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -704,7 +734,8 @@
       "candidate_A": "official",
       "candidate_B": "polite",
       "preferred": "tie",
-      "reason": "Both substitute an unrelated sense of 'civil' for its 'civil engineering' technical/proper-noun-adjacent meaning \u2014 'official' invents a status the original didn't have, 'polite' uses the courtesy sense entirely wrongly. A genuine word-sense-disambiguation failure either way."
+      "reason": "Both substitute an unrelated sense of 'civil' for its 'civil engineering' technical/proper-noun-adjacent meaning \u2014 'official' invents a status the original didn't have, 'polite' uses the courtesy sense entirely wrongly. A genuine word-sense-disambiguation failure either way.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -728,7 +759,8 @@
       "candidate_A": "told",
       "candidate_B": "expressed",
       "preferred": "B",
-      "reason": "'Told' is transitive and needs an object ('told them') \u2014 'told she might be late' is a harder grammar violation. 'Expressed' is mildly awkward (missing 'that') but a smaller violation."
+      "reason": "'Told' is transitive and needs an object ('told them') \u2014 'told she might be late' is a harder grammar violation. 'Expressed' is mildly awkward (missing 'that') but a smaller violation.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -748,7 +780,8 @@
       "candidate_A": "maybe",
       "candidate_B": "likely",
       "preferred": "tie",
-      "reason": "'Maybe' and 'likely' are both natural, accurate substitutes for 'probably' here \u2014 no clear quality difference."
+      "reason": "'Maybe' and 'likely' are both natural, accurate substitutes for 'probably' here \u2014 no clear quality difference.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -768,7 +801,8 @@
       "candidate_A": "prof",
       "candidate_B": "academic",
       "preferred": "A",
-      "reason": "'Prof' preserves the specific role meaning (professor) despite being informal in register. 'Academic' is broader \u2014 loses the specific 'teacher explaining a concept' role implication."
+      "reason": "'Prof' preserves the specific role meaning (professor) despite being informal in register. 'Academic' is broader \u2014 loses the specific 'teacher explaining a concept' role implication.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -789,7 +823,8 @@
       "candidate_A": "faculty",
       "candidate_B": "academic",
       "preferred": "B",
-      "reason": "'Faculty' is typically a collective noun (a body of professors/a department), so 'the faculty explained' introduces a confusing single-vs-collective mismatch for describing one professor. 'Academic' is grammatically clean, even though it loses some role-specificity."
+      "reason": "'Faculty' is typically a collective noun (a body of professors/a department), so 'the faculty explained' introduces a confusing single-vs-collective mismatch for describing one professor. 'Academic' is grammatically clean, even though it loses some role-specificity.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -813,7 +848,8 @@
       "candidate_A": "considered",
       "candidate_B": "examined",
       "preferred": "B",
-      "reason": "'Examined' preserves the 'engaged with course material' sense of 'studied' more closely. 'Considered' drifts toward 'pondered', a mild sense weakening."
+      "reason": "'Examined' preserves the 'engaged with course material' sense of 'studied' more closely. 'Considered' drifts toward 'pondered', a mild sense weakening.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -832,7 +868,8 @@
       "candidate_A": "take",
       "candidate_B": "propose",
       "preferred": "B",
-      "reason": "A ('take their reports') is close to a meaning reversal \u2014 take and submit are near-opposite transfer directions. B ('propose their reports') is imprecise but at least preserves an offering/presenting directionality."
+      "reason": "A ('take their reports') is close to a meaning reversal \u2014 take and submit are near-opposite transfer directions. B ('propose their reports') is imprecise but at least preserves an offering/presenting directionality.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -853,7 +890,8 @@
       "candidate_A": "trip",
       "candidate_B": "decline",
       "preferred": "B",
-      "reason": "A ('deadlines might trip') is a category error \u2014 deadlines can't physically stumble, nonsensical. B ('deadlines might decline') carries a directional/negative-shift sense at least loosely compatible with 'slip'."
+      "reason": "A ('deadlines might trip') is a category error \u2014 deadlines can't physically stumble, nonsensical. B ('deadlines might decline') carries a directional/negative-shift sense at least loosely compatible with 'slip'.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -873,7 +911,8 @@
       "candidate_A": "past",
       "candidate_B": "old",
       "preferred": "A",
-      "reason": "'The past week' is completely natural and standard. 'The old week' is not idiomatic English \u2014 weeks aren't described as 'old' this way."
+      "reason": "'The past week' is completely natural and standard. 'The old week' is not idiomatic English \u2014 weeks aren't described as 'old' this way.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -892,7 +931,8 @@
       "candidate_A": "watch",
       "candidate_B": "view",
       "preferred": "B",
-      "reason": "(Note: 'skipped'->'missed' also changed in both sentences, held constant across A and B, not part of this comparison.) 'View everything' fits the museum-exhibit context slightly more naturally than 'watch everything', which implies more sustained/continuous observation."
+      "reason": "(Note: 'skipped'->'missed' also changed in both sentences, held constant across A and B, not part of this comparison.) 'View everything' fits the museum-exhibit context slightly more naturally than 'watch everything', which implies more sustained/continuous observation.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -912,7 +952,8 @@
       "candidate_A": "produce",
       "candidate_B": "grow",
       "preferred": "B",
-      "reason": "A ('time to produce') is grammatically incomplete \u2014 'produce' is transitive and needs an object here. B ('time to grow') is natural, idiomatic, and grammatically sound for flavors developing."
+      "reason": "A ('time to produce') is grammatically incomplete \u2014 'produce' is transitive and needs an object here. B ('time to grow') is natural, idiomatic, and grammatically sound for flavors developing.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -931,7 +972,8 @@
       "candidate_A": "road",
       "candidate_B": "neighborhood",
       "preferred": "A",
-      "reason": "'Down the road' is completely natural and idiomatic. 'Down the neighborhood' is a non-standard, awkward collocation (you'd say 'in the neighborhood')."
+      "reason": "'Down the road' is completely natural and idiomatic. 'Down the neighborhood' is a non-standard, awkward collocation (you'd say 'in the neighborhood').",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -952,7 +994,8 @@
       "candidate_A": "apologised",
       "candidate_B": "excused",
       "preferred": "A",
-      "reason": "A is essentially the same word (British spelling variant 'apologised'), perfectly natural. B ('excused for') has a real grammar error \u2014 'excused' normally needs a reflexive object ('excused herself')."
+      "reason": "A is essentially the same word (British spelling variant 'apologised'), perfectly natural. B ('excused for') has a real grammar error \u2014 'excused' normally needs a reflexive object ('excused herself').",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -972,7 +1015,8 @@
       "candidate_A": "taken",
       "candidate_B": "regarded",
       "preferred": "B",
-      "reason": "'Regarded' is a much closer semantic match to 'considered' (both mean viewed/thought of as). Both have a minor missing-preposition issue ('regarded/taken AS impolite'), but 'taken impolite' reads as more broken than 'regarded impolite'."
+      "reason": "'Regarded' is a much closer semantic match to 'considered' (both mean viewed/thought of as). Both have a minor missing-preposition issue ('regarded/taken AS impolite'), but 'taken impolite' reads as more broken than 'regarded impolite'.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -993,7 +1037,8 @@
       "candidate_A": "find",
       "candidate_B": "play",
       "preferred": "A",
-      "reason": "'Find each other' is an imperfect but plausible reading (locating time to meet). 'Play each other' introduces a wrong competitive/sports sense entirely inappropriate for old friends socializing."
+      "reason": "'Find each other' is an imperfect but plausible reading (locating time to meet). 'Play each other' introduces a wrong competitive/sports sense entirely inappropriate for old friends socializing.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1012,7 +1057,8 @@
       "candidate_A": "shocked",
       "candidate_B": "impressed",
       "preferred": "A",
-      "reason": "'Shocked' preserves the surprise-emotion meaning closely (a stronger degree, same direction). 'Impressed' substitutes an unrelated, different emotional response (admiration, not being caught off guard)."
+      "reason": "'Shocked' preserves the surprise-emotion meaning closely (a stronger degree, same direction). 'Impressed' substitutes an unrelated, different emotional response (admiration, not being caught off guard).",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1036,7 +1082,8 @@
       "candidate_A": "person",
       "candidate_B": "individual",
       "preferred": "tie",
-      "reason": "Both substitutions introduce the identical missing-article grammar error ('meeting person'/'meeting individual' instead of 'meeting A person'/'AN individual') \u2014 no quality difference between the two words themselves."
+      "reason": "Both substitutions introduce the identical missing-article grammar error ('meeting person'/'meeting individual' instead of 'meeting A person'/'AN individual') \u2014 no quality difference between the two words themselves.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1058,7 +1105,8 @@
       "candidate_A": "stairs",
       "candidate_B": "stairway",
       "preferred": "B",
-      "reason": "(Note: 'creaked'->'noised' also changed in both sentences, held constant across A and B, not part of this comparison.) A ('a narrow stairs') has a real number-agreement error \u2014 'stairs' is plural, mismatching the singular article. B ('a narrow stairway') is grammatically clean and a natural, accurate synonym."
+      "reason": "(Note: 'creaked'->'noised' also changed in both sentences, held constant across A and B, not part of this comparison.) A ('a narrow stairs') has a real number-agreement error \u2014 'stairs' is plural, mismatching the singular article. B ('a narrow stairway') is grammatically clean and a natural, accurate synonym.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1079,7 +1127,8 @@
       "candidate_A": "weird",
       "candidate_B": "other",
       "preferred": "A",
-      "reason": "A ('a weird noise') is natural, accurate, near-perfect. B ('a other noise') has both a grammar error (a/an mismatch) and a meaning shift toward 'different/additional' rather than 'unusual'."
+      "reason": "A ('a weird noise') is natural, accurate, near-perfect. B ('a other noise') has both a grammar error (a/an mismatch) and a meaning shift toward 'different/additional' rather than 'unusual'.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1099,7 +1148,8 @@
       "candidate_A": "substitute",
       "candidate_B": "regenerate",
       "preferred": "A",
-      "reason": "'Substitute' is imperfectly phrased (usually needs 'for'/'with') but retains the core 'swap out' meaning of replace. 'Regenerate' substitutes a completely different concept \u2014 regrowth/restoration, not replacement with something new."
+      "reason": "'Substitute' is imperfectly phrased (usually needs 'for'/'with') but retains the core 'swap out' meaning of replace. 'Regenerate' substitutes a completely different concept \u2014 regrowth/restoration, not replacement with something new.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1119,7 +1169,8 @@
       "candidate_A": "click",
       "candidate_B": "push",
       "preferred": "tie",
-      "reason": "(Note: 'seconds'->'times' also changed in both sentences, held constant across A and B, not part of this comparison.) Both substitute a verb-like/action word for what should be a physical object noun (the button itself), producing similarly awkward 'press and hold the [verb]' constructions. Neither is clearly better, though 'push' has some loose association with 'push-button'."
+      "reason": "(Note: 'seconds'->'times' also changed in both sentences, held constant across A and B, not part of this comparison.) Both substitute a verb-like/action word for what should be a physical object noun (the button itself), producing similarly awkward 'press and hold the [verb]' constructions. Neither is clearly better, though 'push' has some loose association with 'push-button'.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1143,7 +1194,8 @@
       "candidate_A": "paces",
       "candidate_B": "footsteps",
       "preferred": "tie",
-      "reason": "Both substitute the literal/physical-walking sense of 'step' (paces, footsteps) for its procedural/sequential sense in a manual \u2014 a genuine word-sense failure either way, not one candidate being clearly better."
+      "reason": "Both substitute the literal/physical-walking sense of 'step' (paces, footsteps) for its procedural/sequential sense in a manual \u2014 a genuine word-sense failure either way, not one candidate being clearly better.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1165,7 +1217,8 @@
       "candidate_A": "believe",
       "candidate_B": "mean",
       "preferred": "A",
-      "reason": "'Believe' is a precise, natural synonym for 'think' as an opinion marker. 'Mean' serves a different discourse function (clarifying/rephrasing a prior statement), a real functional meaning shift."
+      "reason": "'Believe' is a precise, natural synonym for 'think' as an opinion marker. 'Mean' serves a different discourse function (clarifying/rephrasing a prior statement), a real functional meaning shift.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1184,7 +1237,8 @@
       "candidate_A": "manufacturings",
       "candidate_B": "manufactories",
       "preferred": "B",
-      "reason": "A ('manufacturings') has a real grammar error \u2014 'manufacturing' is normally uncountable, this pluralization is non-standard. B ('manufactories') is a real, grammatically valid (if old-fashioned) word meaning factories."
+      "reason": "A ('manufacturings') has a real grammar error \u2014 'manufacturing' is normally uncountable, this pluralization is non-standard. B ('manufactories') is a real, grammatically valid (if old-fashioned) word meaning factories.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1205,7 +1259,8 @@
       "candidate_A": "town",
       "candidate_B": "municipality",
       "preferred": "B",
-      "reason": "'Municipality' is administratively accurate and doesn't imply a smaller scale (a city is a type of municipality). 'Town' introduces an unwarranted scale-down assumption relative to 'city'."
+      "reason": "'Municipality' is administratively accurate and doesn't imply a smaller scale (a city is a type of municipality). 'Town' introduces an unwarranted scale-down assumption relative to 'city'.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1226,7 +1281,8 @@
       "candidate_A": "newer",
       "candidate_B": "earliest",
       "preferred": "B",
-      "reason": "A ('opens newer') is nonsensical \u2014 'newer' relates to recency of existence, not time-of-day, a wrong-sense substitution. B ('opens earliest') has a comparative/superlative mismatch but stays within the correct 'opening time' semantic domain."
+      "reason": "A ('opens newer') is nonsensical \u2014 'newer' relates to recency of existence, not time-of-day, a wrong-sense substitution. B ('opens earliest') has a comparative/superlative mismatch but stays within the correct 'opening time' semantic domain.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1247,7 +1303,8 @@
       "candidate_A": "studies",
       "candidate_B": "aid",
       "preferred": "B",
-      "reason": "A ('earned a two-year studies') has a real singular/plural agreement error. B ('earned a two-year aid') is a little ambiguous in its 'to' attachment but avoids that grammar problem and stays closer to the 'financial support' meaning of scholarship."
+      "reason": "A ('earned a two-year studies') has a real singular/plural agreement error. B ('earned a two-year aid') is a little ambiguous in its 'to' attachment but avoids that grammar problem and stays closer to the 'financial support' meaning of scholarship.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1271,7 +1328,8 @@
       "candidate_A": "learning",
       "candidate_B": "aid",
       "preferred": "B",
-      "reason": "A ('earned a two-year learning') has an awkward countability issue (learning is normally uncountable) and shifts meaning toward 'knowledge gained' rather than 'financial award'. B ('aid') retains the financial-support sense central to 'scholarship'."
+      "reason": "A ('earned a two-year learning') has an awkward countability issue (learning is normally uncountable) and shifts meaning toward 'knowledge gained' rather than 'financial award'. B ('aid') retains the financial-support sense central to 'scholarship'.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1290,7 +1348,8 @@
       "candidate_A": "indicated",
       "candidate_B": "informed",
       "preferred": "A",
-      "reason": "'Indicated' is grammatically clean and a reasonably close synonym for 'suggested'. 'Informed that' has a mild missing-object awkwardness (usually 'informed HIM that'), a smaller but real quality gap."
+      "reason": "'Indicated' is grammatically clean and a reasonably close synonym for 'suggested'. 'Informed that' has a mild missing-object awkwardness (usually 'informed HIM that'), a smaller but real quality gap.",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1319,7 +1378,8 @@
       "candidate_B": "aforementioned",
       "preferred": "A",
       "reason": "\"identical\" preserves the meaning and reads naturally, while \"aforementioned\" wrongly implies the story was previously mentioned in this discourse and is oddly formal/legalistic in register.",
-      "judged_by": "claude_api_standard_method"
+      "judged_by": "claude_api_standard_method",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1343,7 +1403,8 @@
       "candidate_B": "very",
       "preferred": "A",
       "reason": "\"accurate measurements\" is grammatical and preserves the meaning; \"very measurements\" is ungrammatical since \"very\" cannot modify a noun this way.",
-      "judged_by": "claude_api_standard_method"
+      "judged_by": "claude_api_standard_method",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1367,7 +1428,8 @@
       "candidate_B": "guessing",
       "preferred": "A",
       "reason": "Both drop the needed \"for\" (\"calling/guessing heavy rain\"), but \"calling for heavy rain\" is a near-miss to a standard forecasting idiom, whereas \"guessing\" wrongly implies the forecast is uncertain speculation rather than a prediction.",
-      "judged_by": "claude_api_standard_method"
+      "judged_by": "claude_api_standard_method",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1395,7 +1457,8 @@
       "candidate_B": "lines",
       "preferred": "A",
       "reason": "\"trading paths\" is a natural, meaning-preserving synonym for routes, while \"trading lines\" is awkward and risks being misread as financial/credit lines.",
-      "judged_by": "claude_api_standard_method"
+      "judged_by": "claude_api_standard_method",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1423,7 +1486,8 @@
       "candidate_B": "grown",
       "preferred": "A",
       "reason": "\"climbed sharply\" is an idiomatic, natural collocation for price increases; \"grown sharply\" is grammatical but a less natural pairing with \"sharply.\"",
-      "judged_by": "claude_api_standard_method"
+      "judged_by": "claude_api_standard_method",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1451,7 +1515,8 @@
       "candidate_B": "treatise",
       "preferred": "A",
       "reason": "\"dissertation\" is a close, natural synonym for \"thesis\" in academic register; \"treatise\" shifts the meaning toward a different genre of writing not necessarily original research.",
-      "judged_by": "claude_api_standard_method"
+      "judged_by": "claude_api_standard_method",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1475,7 +1540,8 @@
       "candidate_B": "exercises",
       "preferred": "A",
       "reason": "\"trainings\" (though slightly nonstandard as a plural) still reads as practice sessions, while \"exercises\" changes the meaning to sound like individual drills or problems rather than sessions attended.",
-      "judged_by": "claude_api_standard_method"
+      "judged_by": "claude_api_standard_method",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1504,7 +1570,8 @@
       "candidate_B": "sharp",
       "preferred": "B",
       "reason": "\"a sharp gust\" is an idiomatic phrase that keeps the sense of abruptness; \"a fast gust\" shifts the meaning toward speed rather than suddenness and is less natural.",
-      "judged_by": "claude_api_standard_method"
+      "judged_by": "claude_api_standard_method",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1528,7 +1595,8 @@
       "candidate_B": "meaning",
       "preferred": "A",
       "reason": "\"meaningful funding\" is grammatical though it drifts slightly from \"substantial amount\" toward \"purposeful\"; \"meaning funding\" is outright ungrammatical.",
-      "judged_by": "claude_api_standard_method"
+      "judged_by": "claude_api_standard_method",
+      "source": "synthetic_profile_template"
     },
     {
       "source_uids": [
@@ -1557,7 +1625,8 @@
       "candidate_B": "operated",
       "preferred": "A",
       "reason": "\"flipped careers\" is an odd but parseable metaphorical extension of switching; \"operated careers\" is nonsensical and distorts the meaning entirely.",
-      "judged_by": "claude_api_standard_method"
+      "judged_by": "claude_api_standard_method",
+      "source": "synthetic_profile_template"
     }
   ],
   "excluded_multi_word_contaminated": {

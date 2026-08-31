@@ -529,6 +529,13 @@ Both must exist before LR.3 training is attempted — not one or the other, and 
 
 **[NOT DONE]** No profile has been collected yet — this is the ask itself, not a result. Once any real answers come back, ingesting them requires no new code: `DifficultyProfile.add_sound()`/`add_word()`/`add_phrase()` and the existing `generate_pairs.py`/`judge_pairs.py` pipeline handle it as-is.
 
+**[DECISION] Ingestion mechanism built ahead of any real data, per direct instruction, to close off a specific risk before it can happen.** `stage_lr/ingest_real_human_pair.py` is now the only sanctioned way to record a friend's verdict. Two hard rules, enforced structurally, not just documented:
+
+1. **A human verdict is never logged without a Claude verdict on the exact same pair, obtained in the same session.** `record_real_human_pair()`'s `human_preferred`, `claude_preferred`, and `claude_reason` are required keyword arguments with no default — there is no code path that writes a record carrying only one verdict. This closes off, by construction, the two-pass drift risk this project already has concrete precedent for (Phase 9B/9C's own instability across separate runs; R28's test-set leakage, only caught by re-checking) — a changed prompt, pipeline state, or model version between a "log the human answer now" pass and a "run Claude on it later" pass could silently desynchronize two verdicts meant to be directly comparable.
+2. **Real-human pairs live in a separate file**, `stage_lr/data/real_human_pairs.json`, not merged into `lr1_preference_pairs.json`'s 68 pairs (which are now retroactively tagged `source: "synthetic_profile_template"` for schema consistency, not just new entries going forward). Every real-human record also carries `source: "real_human"` as a second, redundant safeguard. Structural separation, not just a filterable tag, was chosen specifically because the instruction was that these "shouldn't get silently merged... when computing agreement rates later" — a different file makes that require a deliberate action, not an accidental one.
+
+9 tests (`tests/stage_lr_ingest_real_human_pair_test.py`) prove both rules directly — including calling the function without `claude_preferred` and confirming it raises `TypeError`, not just asserting the intent in a docstring. Exercised with synthetic stand-in verdicts only; no real human data exists yet, and none was fabricated to test this — the mechanism is proven correct, not "tested" against invented results.
+
 This section is no longer "not yet decided" for the near-term sequence
 above; what remains genuinely open is LR.1's actual result and whatever
 LR.3/LR.4 look like once it lands.

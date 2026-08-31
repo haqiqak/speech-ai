@@ -4753,3 +4753,55 @@ ceiling and gives path (b) a concrete first move, doesn't loosen either
 requirement. Full record: `LEARNED_REFORMULATION_RESEARCH.md` ("Path
 (a) declared at a practical ceiling" + "Path (b) — a concrete, minimal
 ask" sections).
+
+---
+
+### 2026-08-30-Q — Real-human ingestion mechanism built ahead of any real data: same-session dual verdicts enforced structurally, separate file from the 68 template pairs
+
+**What was done:** per direct instruction, before the path (b) ask goes
+out to any friend, built the ingestion mechanism that will receive
+their answers -- `stage_lr/ingest_real_human_pair.py`. Two rules
+enforced by construction, not just stated: (1) `record_real_human_pair()`
+requires `human_preferred`, `claude_preferred`, and `claude_reason` as
+keyword arguments with no default -- there is no way to call it with
+only a human verdict; a Claude verdict on the exact same pair must be
+obtained in the same ingestion session (via `judge_pairs.py`'s same
+prompt-building path) before a record can be written at all. (2)
+Real-human pairs are written to a separate file,
+`stage_lr/data/real_human_pairs.json`, never merged into
+`lr1_preference_pairs.json`. Retroactively tagged all 68 existing pairs
+there with `source: "synthetic_profile_template"` for schema
+consistency (not just new entries going forward); every real-human
+record also carries `source: "real_human"` as a second, redundant
+safeguard alongside the file separation.
+
+**Alternatives considered:** Log human verdicts as they come in and run
+Claude judging in a batch afterward. Rejected -- explicitly the
+two-pass pattern the instruction was written to prevent, and this
+project has concrete precedent for what goes wrong with it (Phase
+9B/9C's cross-run instability; R28's test-set leakage, caught only by
+re-checking, not by design). Tag real-human pairs with a `source` field
+inside the same file as the 68 template pairs, rely on filtering.
+Considered, but structural file separation was chosen additionally --
+a different file makes accidental pooling require a deliberate action,
+matching the instruction that these "shouldn't get silently merged...
+when computing agreement rates later" more strongly than a tag alone.
+
+**Why:** Direct instruction, with the reasoning stated explicitly: two
+passes that turn out not to line up is a real, previously-seen failure
+class in this project, not a hypothetical one -- worth closing off
+before any real data exists, not after a first mistake.
+
+**Measured result:** 9/9 tests pass (`tests/stage_lr_ingest_real_human_pair_test.py`),
+including direct proof (not just docstring claims) that calling the
+recorder without `claude_preferred` raises `TypeError`. No real human
+data collected or fabricated -- the mechanism is proven correct against
+synthetic stand-in verdicts only, cleaned up after each test run (no
+stray `real_human_pairs.json` left behind).
+
+**Category:** Stage LR infrastructure, built ahead of data per direct
+instruction. Recorded on `stage-lr`. Does not touch LR.3's gating or
+the path (b) ask itself (`DECISION_LOG.md` 2026-08-30-N/P) -- this is
+purely the receiving mechanism for whatever the ask produces. Full
+record: `LEARNED_REFORMULATION_RESEARCH.md` ("Ingestion mechanism built
+ahead of any real data" section), `stage_lr/ingest_real_human_pair.py`.
