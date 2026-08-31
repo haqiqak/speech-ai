@@ -1,0 +1,1281 @@
+{
+  "counts": {
+    "total": 135,
+    "not_substitution": 21,
+    "profile_unrecoverable": 0,
+    "attempt_error": 0,
+    "no_second_candidate": 82,
+    "second_candidate_found": 32
+  },
+  "results": [
+    {
+      "uid": "R40-001",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-002",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were stronger than the cooling effect of airborne particulates in air pollution.",
+      "original_word": "stronger",
+      "profile_spec": {
+        "name": "light_single_sound",
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "powerful",
+      "candidate_a_sentence": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were powerful than the cooling effect of airborne particulates in air pollution.",
+      "candidate_b": "fertiler",
+      "candidate_b_sentence": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were fertiler than the cooling effect of airborne particulates in air pollution."
+    },
+    {
+      "uid": "R40-003",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Small talk is a bonding ritual and a strategy for managing interpersonal distance.",
+      "original_word": "strategy",
+      "profile_spec": {
+        "name": "light_single_sound",
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "way",
+      "candidate_a_sentence": "Small talk is a bonding ritual and a way for managing interpersonal distance.",
+      "candidate_b": "scheme",
+      "candidate_b_sentence": "Small talk is a bonding ritual and a scheme for managing interpersonal distance."
+    },
+    {
+      "uid": "R40-004",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-005",
+      "outcome": "second_candidate_found",
+      "original_sentence": "An ontology is the set of objects, relations, concepts, and properties used by a particular domain of knowledge.",
+      "original_word": "properties",
+      "profile_spec": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "places",
+      "candidate_a_sentence": "An ontology is the set of objects, relations, concepts, and places used by a specific domain of knowledge.",
+      "candidate_b": "constructs",
+      "candidate_b_sentence": "An ontology is the set of objects, relations, concepts, and constructs used by a specific domain of knowledge."
+    },
+    {
+      "uid": "R40-006",
+      "outcome": "second_candidate_found",
+      "original_sentence": "An ontology is the set of objects, relations, concepts, and properties used by a particular domain of knowledge.",
+      "original_word": "particular",
+      "profile_spec": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "specific",
+      "candidate_a_sentence": "An ontology is the set of objects, relations, concepts, and places used by a specific domain of knowledge.",
+      "candidate_b": "special",
+      "candidate_b_sentence": "An ontology is the set of objects, relations, concepts, and constructs used by a special domain of knowledge."
+    },
+    {
+      "uid": "R40-007",
+      "outcome": "second_candidate_found",
+      "original_sentence": "A rational agent has goals or preferences and take actions to make them happen.",
+      "original_word": "preferences",
+      "profile_spec": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "options",
+      "candidate_a_sentence": "A rational agent has goals or options and take actions to make them happen.",
+      "candidate_b": "orientations",
+      "candidate_b_sentence": "A rational agent has goals or orientations and take actions to make them happen."
+    },
+    {
+      "uid": "R40-008",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Machine learning is the study of programs that can improve their performance on a given task automatically.",
+      "original_word": "programs",
+      "profile_spec": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "softwares",
+      "candidate_a_sentence": "Machine learning is the study of softwares that can improve their performance on a given task automatically.",
+      "candidate_b": "packages",
+      "candidate_b_sentence": "Machine learning is the study of packages that can improve their performance on a given task automatically."
+    },
+    {
+      "uid": "R40-009",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-010",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-011",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Fossil fuel use, deforestation, and some agricultural and industrial practices release greenhouse gases.",
+      "original_word": "practices",
+      "profile_spec": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "workings",
+      "candidate_a_sentence": "Fossil fuel use, deforestation, and some agricultural and industrial workings release warming gases.",
+      "candidate_b": "knowledges",
+      "candidate_b_sentence": "Fossil fuel use, deforestation, and some agricultural and industrial knowledges release building gases."
+    },
+    {
+      "uid": "R40-012",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Fossil fuel use, deforestation, and some agricultural and industrial practices release greenhouse gases.",
+      "original_word": "greenhouse",
+      "profile_spec": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "warming",
+      "candidate_a_sentence": "Fossil fuel use, deforestation, and some agricultural and industrial workings release warming gases.",
+      "candidate_b": "building",
+      "candidate_b_sentence": "Fossil fuel use, deforestation, and some agricultural and industrial knowledges release building gases."
+    },
+    {
+      "uid": "R40-013",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-014",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Between the 18th century and 1970 there was little net warming, as the warming impact of greenhouse gas emissions were offset by cooling from sulfur dioxide emissions.",
+      "original_word": "greenhouse",
+      "profile_spec": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "gas",
+      "candidate_a_sentence": "Between the 18th century and 1970 there was little net warming, as the warming impact of gas gas emissions were offset by cooling from sulfur dioxide emissions.",
+      "candidate_b": "building",
+      "candidate_b_sentence": "Between the 18th century and 1970 there was little net warming, as the warming impact of building gas emissions were offset by cooling from sulfur dioxide emissions."
+    },
+    {
+      "uid": "R40-015",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-016",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The upper atmosphere is cooling, because greenhouse gases are trapping heat near the Earth's surface, and so less heat is radiating into space.",
+      "original_word": "greenhouse",
+      "profile_spec": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "gas",
+      "candidate_a_sentence": "The upper atmosphere is cooling, because gas gases are trapping heat near the Earth's surface, and so less heat is radiating into space.",
+      "candidate_b": "building",
+      "candidate_b_sentence": "The upper atmosphere is cooling, because building gases are trapping heat near the Earth's surface, and so less heat is radiating into space."
+    },
+    {
+      "uid": "R40-017",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-018",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-019",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-020",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-021",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-022",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-023",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Cooking is done both by people in their own dwellings and by professional cooks and chefs in restaurants and other food establishments.",
+      "original_word": "professional",
+      "profile_spec": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "expert",
+      "candidate_a_sentence": "Cooking is done both by people in their own dwellings and by expert cooks and chefs in restaurants and other food establishments.",
+      "candidate_b": "white-collar",
+      "candidate_b_sentence": "Cooking is done both by people in their own dwellings and by white-collar cooks and chefs in restaurants and other food establishments."
+    },
+    {
+      "uid": "R40-024",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Small talk consists of three main parts: a greeting, conversation, and a closing.",
+      "original_word": "greeting",
+      "profile_spec": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "welcome",
+      "candidate_a_sentence": "Small talk consists of three main parts: a welcome, conversation, and a closing.",
+      "candidate_b": "salutation",
+      "candidate_b_sentence": "Small talk consists of three main parts: a salutation, conversation, and a closing."
+    },
+    {
+      "uid": "R40-025",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The phenomenon of small talk was initially studied in 1923 by Bronislaw Malinowski in his essay on the problem of meaning in primitive languages.",
+      "original_word": "problem",
+      "profile_spec": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "trouble",
+      "candidate_a_sentence": "The phenomenon of small talk was initially studied in 1923 by Bronislaw Malinowski in his essay on the trouble of meaning in natural languages.",
+      "candidate_b": "difficulty",
+      "candidate_b_sentence": "The phenomenon of small talk was initially studied in 1923 by Bronislaw Malinowski in his essay on the difficulty of meaning in naive languages."
+    },
+    {
+      "uid": "R40-026",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The phenomenon of small talk was initially studied in 1923 by Bronislaw Malinowski in his essay on the problem of meaning in primitive languages.",
+      "original_word": "primitive",
+      "profile_spec": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "natural",
+      "candidate_a_sentence": "The phenomenon of small talk was initially studied in 1923 by Bronislaw Malinowski in his essay on the trouble of meaning in natural languages.",
+      "candidate_b": "naive",
+      "candidate_b_sentence": "The phenomenon of small talk was initially studied in 1923 by Bronislaw Malinowski in his essay on the trouble of meaning in naive languages."
+    },
+    {
+      "uid": "R40-027",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-028",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-029",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-030",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-031",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Machine learning is the study of programs that can improve their performance on a given task automatically.",
+      "original_word": "study",
+      "profile_spec": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "work",
+      "candidate_a_sentence": "Machine learning is the work of programs that can improve their performance on a given task automatically.",
+      "candidate_b": "field",
+      "candidate_b_sentence": "Machine learning is the field of programs that can improve their performance on a given task automatically."
+    },
+    {
+      "uid": "R40-032",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-033",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-034",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-035",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-036",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-037",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-038",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-039",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Fossil fuel use, deforestation, and some agricultural and industrial practices release greenhouse gases.",
+      "original_word": "release",
+      "profile_spec": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "device",
+      "candidate_a_sentence": "Fossil fuel use, deforestation, and some agricultural and industrial practices device greenhouse gases.",
+      "candidate_b": "button",
+      "candidate_b_sentence": "Fossil fuel use, deforestation, and some agricultural and industrial practices button greenhouse gases."
+    },
+    {
+      "uid": "R40-040",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The Arctic has warmed the most, and temperatures on land have generally increased more than sea surface temperatures.",
+      "original_word": "sea",
+      "profile_spec": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "ocean",
+      "candidate_a_sentence": "The Arctic has warmed the most, and temperatures on land have generally increased more than ocean layer temperatures.",
+      "candidate_b": "water",
+      "candidate_b_sentence": "The Arctic has warmed the most, and temperatures on land have generally increased more than water layer temperatures."
+    },
+    {
+      "uid": "R40-041",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-042",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were stronger than the cooling effect of airborne particulates in air pollution.",
+      "original_word": "stronger",
+      "profile_spec": {
+        "name": "light_single_sound",
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "powerful",
+      "candidate_a_sentence": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were powerful than the cooling effect of airborne particulates in air pollution.",
+      "candidate_b": "fertiler",
+      "candidate_b_sentence": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were fertiler than the cooling effect of airborne particulates in air pollution."
+    },
+    {
+      "uid": "R40-043",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-044",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-045",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The range of hundreds of North American birds has shifted northward at an average rate of 1.5 kilometers per year over the past 55 years.",
+      "original_word": "range",
+      "profile_spec": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "place",
+      "candidate_a_sentence": "The place of hundreds of North American birds has shifted northward at an average place of 1.5 kilometers per year over the past 55 years.",
+      "candidate_b": "parcel",
+      "candidate_b_sentence": "The parcel of hundreds of North American birds has shifted northward at an average pace of 1.5 kilometers per year over the past 55 years."
+    },
+    {
+      "uid": "R40-046",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The range of hundreds of North American birds has shifted northward at an average rate of 1.5 kilometers per year over the past 55 years.",
+      "original_word": "rate",
+      "profile_spec": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "place",
+      "candidate_a_sentence": "The place of hundreds of North American birds has shifted northward at an average place of 1.5 kilometers per year over the past 55 years.",
+      "candidate_b": "pace",
+      "candidate_b_sentence": "The parcel of hundreds of North American birds has shifted northward at an average pace of 1.5 kilometers per year over the past 55 years."
+    },
+    {
+      "uid": "R40-047",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-048",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-049",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-050",
+      "outcome": "not_substitution",
+      "reason": "granularity='restructuring', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R40-051",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Cooking can prevent many forborne illnesses that would otherwise occur if raw food is consumed.",
+      "original_word": "raw",
+      "profile_spec": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "new",
+      "candidate_a_sentence": "Cooking can prevent many forborne illnesses that would otherwise occur if new food is consumed.",
+      "candidate_b": "uncooked",
+      "candidate_b_sentence": "Cooking can prevent many forborne illnesses that would otherwise occur if uncooked food is consumed."
+    },
+    {
+      "uid": "R40-052",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-053",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Home-cooked meals tend to be healthier with fewer calories, and less saturated fat, cholesterol and sodium on a per calorie basis.",
+      "original_word": "sodium",
+      "profile_spec": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "na",
+      "candidate_a_sentence": "Home-cooked meals tend to be healthier with fewer calories, and less pure fat, cholesterol and na on a per calorie basis.",
+      "candidate_b": "metal",
+      "candidate_b_sentence": "Home-cooked meals tend to be healthier with fewer calories, and less concentrated fat, cholesterol and metal on a per calorie basis."
+    },
+    {
+      "uid": "R40-054",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-055",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-056",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Cooking is done both by people in their own dwellings and by professional cooks and chefs in restaurants and other food establishments.",
+      "original_word": "restaurants",
+      "profile_spec": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "buildings",
+      "candidate_a_sentence": "Cooking is done both by people in their own dwellings and by professional cooks and chefs in buildings and other food establishments.",
+      "candidate_b": "eateries",
+      "candidate_b_sentence": "Cooking is done both by people in their own dwellings and by professional cooks and chefs in eateries and other food establishments."
+    },
+    {
+      "uid": "R40-057",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-058",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-059",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-060",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-061",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-062",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-063",
+      "outcome": "second_candidate_found",
+      "original_sentence": "In a business meeting, it enables people to establish each other's reputation and level of expertise.",
+      "original_word": "reputation",
+      "profile_spec": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "esteem",
+      "candidate_a_sentence": "In a business meeting, it enables people to establish each other's esteem and level of expertise.",
+      "candidate_b": "notoriety",
+      "candidate_b_sentence": "In a business meeting, it enables people to establish each other's notoriety and level of expertise."
+    },
+    {
+      "uid": "R40-064",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-065",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-066",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-067",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-068",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-069",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-070",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Early researchers developed algorithms that imitated step-by-step reasoning that humans use when solving puzzles or making logical deductions.",
+      "original_word": "step-by-step",
+      "profile_spec": {
+        "name": "single_common_sound",
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "detailed",
+      "candidate_a_sentence": "Early researchers developed algorithms that imitated detailed reasoning that humans use when working puzzles or making logical deductions.",
+      "candidate_b": "gradual",
+      "candidate_b_sentence": "Early researchers developed algorithms that imitated gradual reasoning that humans use when working puzzles or making logical deductions."
+    },
+    {
+      "uid": "R40-071",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Early researchers developed algorithms that imitated step-by-step reasoning that humans use when solving puzzles or making logical deductions.",
+      "original_word": "solving",
+      "profile_spec": {
+        "name": "single_common_sound",
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "working",
+      "candidate_a_sentence": "Early researchers developed algorithms that imitated detailed reasoning that humans use when working puzzles or making logical deductions.",
+      "candidate_b": "understanding",
+      "candidate_b_sentence": "Early researchers developed algorithms that imitated gradual reasoning that humans use when understanding puzzles or making logical deductions."
+    },
+    {
+      "uid": "R40-072",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-073",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-074",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-075",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Machine learning is the study of programs that can improve their performance on a given task automatically.",
+      "original_word": "study",
+      "profile_spec": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "work",
+      "candidate_a_sentence": "Machine learning is the work of programs that can improve their performance on a given task automatically.",
+      "candidate_b": "field",
+      "candidate_b_sentence": "Machine learning is the field of programs that can improve their performance on a given task automatically."
+    },
+    {
+      "uid": "R40-076",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-077",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-078",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-079",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-080",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-081",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-082",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The Arctic has warmed the most, and temperatures on land have generally increased more than sea surface temperatures.",
+      "original_word": "sea",
+      "profile_spec": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "ocean",
+      "candidate_a_sentence": "The Arctic has warmed the most, and temperatures on land have generally increased more than ocean layer temperatures.",
+      "candidate_b": "water",
+      "candidate_b_sentence": "The Arctic has warmed the most, and temperatures on land have generally increased more than water layer temperatures."
+    },
+    {
+      "uid": "R40-083",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-084",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were stronger than the cooling effect of airborne particulates in air pollution.",
+      "original_word": "stronger",
+      "profile_spec": {
+        "name": "light_single_sound",
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "powerful",
+      "candidate_a_sentence": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were powerful than the cooling effect of airborne particulates in air pollution.",
+      "candidate_b": "fertiler",
+      "candidate_b_sentence": "Before the 1980s, it was unclear whether the warming effect of increased greenhouse gases were fertiler than the cooling effect of airborne particulates in air pollution."
+    },
+    {
+      "uid": "R40-085",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-086",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-087",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-088",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-089",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-090",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-091",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-092",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-093",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-094",
+      "outcome": "not_substitution",
+      "reason": "granularity='restructuring', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R40-095",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-096",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-097",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-098",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Home-cooked meals tend to be healthier with fewer calories, and less saturated fat, cholesterol and sodium on a per calorie basis.",
+      "original_word": "sodium",
+      "profile_spec": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "na",
+      "candidate_a_sentence": "Home-cooked meals tend to be healthier with fewer calories, and less pure fat, cholesterol and na on a per calorie basis.",
+      "candidate_b": "metal",
+      "candidate_b_sentence": "Home-cooked meals tend to be healthier with fewer calories, and less concentrated fat, cholesterol and metal on a per calorie basis."
+    },
+    {
+      "uid": "R40-099",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-100",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-101",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-102",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-103",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-104",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-105",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-106",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-107",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Small talk is a bonding ritual and a strategy for managing interpersonal distance.",
+      "original_word": "strategy",
+      "profile_spec": {
+        "name": "light_single_sound",
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r40_change_audit_data.json",
+      "candidate_a": "way",
+      "candidate_a_sentence": "Little talk is a bonding ritual and a way for managing interpersonal distance.",
+      "candidate_b": "scheme",
+      "candidate_b_sentence": "Small talk is a bonding ritual and a scheme for managing interpersonal distance."
+    },
+    {
+      "uid": "R40-108",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-109",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-110",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-111",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R40-112",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R47-grab_presentation-v1v2",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R47-quickly_finished-nochange",
+      "outcome": "not_substitution",
+      "reason": "granularity='n/a', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R47-review_documents-v1v2",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Can you please review these three documents before Friday?",
+      "original_word": "review",
+      "profile_spec": {
+        "name": "review_documents",
+        "sounds": [
+          "r",
+          "th",
+          "f"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r47_fresh_sample_results.json",
+      "candidate_a": "critique",
+      "candidate_a_sentence": "Can you please critique these three documents before Friday?",
+      "candidate_b": "inspect",
+      "candidate_b_sentence": "Can you please inspect these three documents before Friday?"
+    },
+    {
+      "uid": "R47-restaurant_quiet-v1v2",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R47-reschedule_strategy-nochange",
+      "outcome": "not_substitution",
+      "reason": "granularity='n/a', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R47-children_playing-v1v2",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R47-presentation_renewable-v2only",
+      "outcome": "not_substitution",
+      "reason": "granularity='restructuring', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R47-presentation_renewable_v1_sva_bug",
+      "outcome": "not_substitution",
+      "reason": "granularity='n/a (unintended pipeline mutation)', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R47-struggled_quantum-nochange",
+      "outcome": "not_substitution",
+      "reason": "granularity='n/a', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R47-weather_forecast-nochange",
+      "outcome": "not_substitution",
+      "reason": "granularity='n/a', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R47-research_discovered-nochange",
+      "outcome": "not_substitution",
+      "reason": "granularity='n/a', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R48-00",
+      "outcome": "not_substitution",
+      "reason": "granularity='restructuring', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R48-02",
+      "outcome": "not_substitution",
+      "reason": "granularity='restructuring', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R48-03",
+      "outcome": "not_substitution",
+      "reason": "granularity='restructuring', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R48-04",
+      "outcome": "not_substitution",
+      "reason": "granularity='restructuring', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R48-08",
+      "outcome": "not_substitution",
+      "reason": "granularity='restructuring', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R48-09",
+      "outcome": "not_substitution",
+      "reason": "granularity='restructuring', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R48-11",
+      "outcome": "not_substitution",
+      "reason": "granularity='restructuring', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R48-12",
+      "outcome": "not_substitution",
+      "reason": "granularity='restructuring', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R48-13",
+      "outcome": "not_substitution",
+      "reason": "granularity='restructuring', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R48-15",
+      "outcome": "not_substitution",
+      "reason": "granularity='restructuring', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R48-17",
+      "outcome": "not_substitution",
+      "reason": "granularity='restructuring', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    },
+    {
+      "uid": "R48-rejected-rational-irrational",
+      "outcome": "not_substitution",
+      "reason": "granularity='restructuring', not a word-level substitution \u2014 no candidate pool to regenerate against"
+    }
+  ]
+}

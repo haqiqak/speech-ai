@@ -342,6 +342,81 @@ builder, no ranking policy, no call from `reformulate.py`. It produces
 a scorecard; using it to actually rank or filter candidates is LR.3's
 job, still blocked on data per LR.1's finding.
 
+## LR.1, data path (a) — real pairwise preference data generated, 2026-08-30
+
+**[FACT] Method** (`stage_lr/generate_pairs.py`, `stage_lr/data/`):
+for each of the 135 records in `eval/r50_dataset/labeled_dataset.json`,
+its real profile was reconstructed (not guessed) from the raw harvest
+file behind it (`r40_change_audit_data.json` / `r47_fresh_sample_results.json`
+/ `r48_v3_verification_results.json` — `labeled_dataset.json` itself
+drops the profile field). `reformulate._raw_candidates` was then
+wrapped, for one call, to exclude the already-rated replacement's lemma
+from the pool handed to the real, unmodified `reformulate.reformulate()`
+— every gate (antonym/phoneme/duplicate/blocklist/countability/etc.)
+still runs exactly as production. Whatever survives is a genuine,
+pipeline-approved runner-up, not hand-picked.
+
+**[FACT, a real bug caught before trusting any result]** The first pass
+matched records to profiles by sentence text alone and produced
+plausible-looking but silently wrong results (one record showed an
+unrelated word changing between the historical and regenerated
+sentence). Checked directly, not assumed correct: R40's harvest tests
+most sentences under **up to 4 different profiles** — 36 of 41 unique
+R40 sentences, confirmed by direct count. A text-only lookup collapses
+to whichever profile was read last for that sentence. Fixed by matching
+on (sentence, original word, replacement word), verified against each
+record's own `changed_word_pair` rather than assumed from lookup order.
+The corrected run changed the result meaningfully: 22 candidates found
+under the broken matching, 32 under the correct one.
+
+**[FACT] Honest final counts, all 135 records:**
+- 21 not substitution-tier (restructuring/other — no word-level
+  candidate pool to regenerate against).
+- 0 profile-unrecoverable (every substitution-tier record's real profile
+  was found and verified).
+- 82 attempted, no second candidate survived every gate once the
+  original was excluded — the original was the pipeline's only viable
+  choice at that position.
+- **32 genuine second candidates found.**
+
+**[FACT] Of the 32, 11 are not clean single-variable comparisons.**
+Checked by direct token-level diff between the two candidate sentences,
+not assumed: when a sentence has 2+ words flagged by the same profile,
+ranking is contextual (scored against the sentence as it's being
+rebuilt), so excluding one word's top choice can legitimately shift
+which candidate ranks best for a *different* flagged word too — the
+same interaction this project's own R32 investigation named for the
+frozen pipeline's own candidate selection, now observed from the other
+side. These 11 are disclosed, not discarded silently, and not forced
+into a format that misrepresents what actually varied — see
+`stage_lr/data/lr1_preference_pairs.json`'s
+`excluded_multi_word_contaminated`.
+
+**[FACT] Of the 21 clean pairs, 4 are exact re-verification duplicates**
+(the same sentence/profile/word pair harvested more than once across
+different phases) — **17 unique clean comparisons**, all 17 judged
+(A/B/tie + reasoning, not a template) and logged in
+`stage_lr/data/lr1_preference_pairs.json` in the requested pairwise
+format. Preference split: 7 A, 9 B, 1 tie. One real, substantively
+interesting finding surfaced by the judging itself: the "sea"→"ocean"
+vs. "water" and "restaurants"→"buildings" vs. "eateries" pairs are live
+instances of this project's own previously-diagnosed genericness bias
+(§53/R26-R29) — a more generic, higher-frequency word beating a more
+precise one — caught here in freshly-generated data, not retrieved from
+the historical record.
+
+**[INTERPRETATION]** This is a real, if modest, first real dataset —
+17 judged pairs from more genuinely-collected comparisons than existed
+anywhere in this project before today (LR.1's original count was
+effectively 0). It is **not** yet enough to run LR.3's held-out-by-
+speaker split meaningfully: all 17 pairs still come from the same small
+set of researcher-authored profile templates (`light_single_sound`,
+`moderate_mixed`, `heavy_dense`, `single_common_sound`, plus one-off
+R47 profiles) — not independently-collected real speakers, the same
+limitation LR.1's original pass already named. LR.3 stays blocked on
+that broader condition; this data path is a real, disclosed step
+toward it, not a resolution of it.
+
 This section is no longer "not yet decided" for the near-term sequence
 above; what remains genuinely open is LR.1's actual result and whatever
 LR.3/LR.4 look like once it lands.

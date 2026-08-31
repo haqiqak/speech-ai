@@ -4305,3 +4305,77 @@ model output yet.
 branch). Recorded on `stage-lr`, not `main`. Does not touch any frozen
 file; `stage_lr/` is a new, isolated package. Full record:
 `LEARNED_REFORMULATION_RESEARCH.md` (LR.2 section).
+
+---
+
+### 2026-08-30-J — Data path (a) executed: 17 real judged preference pairs generated from the frozen pipeline's own runner-up candidates
+
+**What was done:** per direct instruction, built `stage_lr/generate_pairs.py`
+to attempt a genuine second candidate for each of the 135 records in
+`eval/r50_dataset/labeled_dataset.json`: each record's real profile was
+reconstructed from the raw harvest file behind it (profile fields exist
+there, dropped in the distilled `labeled_dataset.json`); `reformulate.
+_raw_candidates` was wrapped for one call to exclude the already-rated
+replacement's lemma, then the real, unmodified `reformulate.reformulate()`
+was run so every existing gate (antonym/phoneme/duplicate/blocklist/
+countability/etc.) still applied exactly as production. 17 resulting
+pairs were then judged (A/B/tie + real reasoning per pair, not a
+template) and logged in `stage_lr/data/lr1_preference_pairs.json` in
+the requested schema.
+
+**A real bug caught before trusting any result:** the first matching
+pass (sentence text only) silently picked the wrong profile for most
+R40-provenance records -- confirmed directly that 36 of 41 unique R40
+sentences were tested under up to 4 different profiles in the original
+harvest, and a text-only lookup collapses to whichever was read last.
+Visible symptom: a regenerated sentence showed an unrelated word
+changing. Fixed by matching on (sentence, original word, replacement
+word), verified against each record's own `changed_word_pair`. The
+fix changed the result materially: 22 candidates found under the
+broken matching, 32 under the corrected one -- not a cosmetic
+difference.
+
+**Honest final counts, all 135 records, not smoothed over:** 21 not
+substitution-tier (no candidate pool to regenerate against); 0
+profile-unrecoverable; 82 attempted with no second candidate surviving
+every gate once the original was excluded (the original was the only
+viable choice); **32 genuine second candidates found**. Of those 32,
+11 were found -- by direct token-level diff, not assumed -- to be
+multi-word-contaminated (a sentence with 2+ profile-flagged words means
+regenerating one word's candidate can legitimately shift a *different*
+flagged word's own best candidate too, since ranking is contextual --
+the same interaction this project's own R32 already named for the
+frozen pipeline, observed here from the generation side). Those 11 are
+disclosed, not discarded silently or forced into a clean-pair format
+that would misrepresent what actually varied. Of the remaining 21
+clean pairs, 4 were exact re-verification duplicates (same sentence/
+profile/word harvested more than once across phases) -- **17 unique
+pairs**, all 17 judged.
+
+**Result:** preference split 7 A / 9 B / 1 tie. Two of the judged pairs
+("sea"->"ocean" vs. "water"; "restaurants"->"buildings" vs. "eateries")
+are live instances of this project's own previously-diagnosed
+genericness bias (VALIDATION.md SS53, ROADMAP.md R26-R29) -- caught in
+freshly-generated data today, not retrieved from the historical record.
+
+**Why the counts are reported this way:** per direct instruction and
+this project's own standing discipline (LR.1's original near-zero
+finding was recorded plainly, not smoothed over) -- the honest number
+is 17 judged pairs, not 32 or 135; the 11 excluded and 4 deduplicated
+are named with their specific reasons, not folded silently into either
+the numerator or a vague footnote.
+
+**Measured result:** 17/17 pairs judged with individual reasoning
+(not templated), logged in the exact requested schema plus traceability
+fields (`source_uids`, `profile` name). `stage_lr/data/lr1_candidate_
+generation_log.json` retains the full 135-record log (every outcome,
+not just successes) for audit.
+
+**Category:** Stage LR data generation (first real dataset this branch
+has produced). Recorded on `stage-lr`, not `main`. Does not touch any
+frozen file or `eval/`'s existing corpora -- read-only against them,
+output lives entirely under `stage_lr/data/`. Still far short of what
+LR.3 needs (all profiles are researcher-authored templates, not
+independently-collected real speakers -- LR.1's original limitation
+stands). Full record: `LEARNED_REFORMULATION_RESEARCH.md` (LR.1 data
+path (a) section), `stage_lr/data/lr1_preference_pairs.json`.
