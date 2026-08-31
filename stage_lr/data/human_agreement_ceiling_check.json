@@ -1,0 +1,39 @@
+{
+  "_meta": {
+    "description": "Agreement-ceiling check: how often does a second, blind judgment agree with the original judgment on the same 25 pairs (sampled from the 58 in lr1_preference_pairs.json)? Establishes roughly how much of the LR.2 sanity check's 55-58.8% agreement gap is 'model underperforming' vs. 'this task's inherent ceiling'.",
+    "sample_method": "random.seed(42); random.sample(range(58), 25) on the pairs list order in lr1_preference_pairs.json at the time of this check.",
+    "IMPORTANT_CAVEAT": "This is NOT true human-human inter-rater agreement. Both judgments were made by Claude: the original (this conversation, full context) and the second (a fresh subagent instance with zero memory of this conversation or the original verdicts, given only the blind input below). It is a genuine blind re-judgment -- the second judge could not see or recall the first verdict -- but both are the same underlying model family, which plausibly inflates agreement relative to two genuinely different human raters. Reported as a real, disclosed limitation, same discipline as this project's other single-rater findings (e.g. the P1 pilot, n=1).",
+    "n": 25,
+    "raw_agreement": "17/25 (68.0%) -- exact three-way match (A/B/tie) required",
+    "non_tie_committed_agreement": "17/21 (81.0%) -- restricted to the 21 of 25 pairs where NEITHER judge hedged with 'tie'; all 4 tie-involving pairs were disagreements (one judge said tie, the other committed to a side)",
+    "comparison_to_lr2_model": "LR.2 (5-term score) agreement on the FULL 58-pair set was 55.2% overall / 58.8% on the non-tie subset (stage_lr/data/lr2_sanity_check_results.json). Both ceiling-check numbers (68%/81%) sit above both LR.2 figures, suggesting real headroom -- LR.2 is not already near this (imperfect, Claude-only) ceiling."
+  },
+  "sample_ids": [1, 2, 5, 6, 7, 8, 12, 13, 14, 15, 17, 26, 27, 32, 34, 35, 37, 40, 41, 43, 45, 47, 51, 54, 55],
+  "comparisons": [
+    {"id": 1, "flagged_word": "strategy", "candidate_A": "way", "candidate_B": "scheme", "original_preferred": "B", "blind_preferred": "A", "agree": false},
+    {"id": 2, "flagged_word": "properties", "candidate_A": "places", "candidate_B": "constructs", "original_preferred": "B", "blind_preferred": "B", "agree": true},
+    {"id": 5, "flagged_word": "greenhouse", "candidate_A": "gas", "candidate_B": "building", "original_preferred": "A", "blind_preferred": "B", "agree": false},
+    {"id": 6, "flagged_word": "greenhouse", "candidate_A": "gas", "candidate_B": "building", "original_preferred": "A", "blind_preferred": "B", "agree": false},
+    {"id": 7, "flagged_word": "greeting", "candidate_A": "welcome", "candidate_B": "salutation", "original_preferred": "B", "blind_preferred": "tie", "agree": false},
+    {"id": 8, "flagged_word": "primitive", "candidate_A": "natural", "candidate_B": "naive", "original_preferred": "B", "blind_preferred": "tie", "agree": false},
+    {"id": 12, "flagged_word": "raw", "candidate_A": "new", "candidate_B": "uncooked", "original_preferred": "B", "blind_preferred": "B", "agree": true},
+    {"id": 13, "flagged_word": "restaurants", "candidate_A": "buildings", "candidate_B": "eateries", "original_preferred": "B", "blind_preferred": "B", "agree": true},
+    {"id": 14, "flagged_word": "reputation", "candidate_A": "esteem", "candidate_B": "notoriety", "original_preferred": "A", "blind_preferred": "A", "agree": true},
+    {"id": 15, "flagged_word": "step-by-step", "candidate_A": "detailed", "candidate_B": "gradual", "original_preferred": "A", "blind_preferred": "B", "agree": false},
+    {"id": 17, "flagged_word": "assimilated", "candidate_A": "absorbed", "candidate_B": "imbibed", "original_preferred": "B", "blind_preferred": "B", "agree": true},
+    {"id": 26, "flagged_word": "conditions", "candidate_A": "terms", "candidate_B": "states", "original_preferred": "B", "blind_preferred": "B", "agree": true},
+    {"id": 27, "flagged_word": "stops", "candidate_A": "quits", "candidate_B": "discontinues", "original_preferred": "A", "blind_preferred": "A", "agree": true},
+    {"id": 32, "flagged_word": "professor", "candidate_A": "prof", "candidate_B": "academic", "original_preferred": "A", "blind_preferred": "tie", "agree": false},
+    {"id": 34, "flagged_word": "studied", "candidate_A": "considered", "candidate_B": "examined", "original_preferred": "B", "blind_preferred": "B", "agree": true},
+    {"id": 35, "flagged_word": "submit", "candidate_A": "take", "candidate_B": "propose", "original_preferred": "B", "blind_preferred": "B", "agree": true},
+    {"id": 37, "flagged_word": "previous", "candidate_A": "past", "candidate_B": "old", "original_preferred": "A", "blind_preferred": "A", "agree": true},
+    {"id": 40, "flagged_word": "street", "candidate_A": "road", "candidate_B": "neighborhood", "original_preferred": "A", "blind_preferred": "A", "agree": true},
+    {"id": 41, "flagged_word": "apologized", "candidate_A": "apologised", "candidate_B": "excused", "original_preferred": "A", "blind_preferred": "A", "agree": true},
+    {"id": 43, "flagged_word": "see", "candidate_A": "find", "candidate_B": "play", "original_preferred": "A", "blind_preferred": "A", "agree": true},
+    {"id": 45, "flagged_word": "someone", "candidate_A": "person", "candidate_B": "individual", "original_preferred": "tie", "blind_preferred": "A", "agree": false},
+    {"id": 47, "flagged_word": "strange", "candidate_A": "weird", "candidate_B": "other", "original_preferred": "A", "blind_preferred": "A", "agree": true},
+    {"id": 51, "flagged_word": "think", "candidate_A": "believe", "candidate_B": "mean", "original_preferred": "A", "blind_preferred": "A", "agree": true},
+    {"id": 54, "flagged_word": "earlier", "candidate_A": "newer", "candidate_B": "earliest", "original_preferred": "B", "blind_preferred": "B", "agree": true},
+    {"id": 55, "flagged_word": "scholarship", "candidate_A": "studies", "candidate_B": "aid", "original_preferred": "B", "blind_preferred": "B", "agree": true}
+  ]
+}

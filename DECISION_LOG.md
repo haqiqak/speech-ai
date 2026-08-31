@@ -4551,3 +4551,57 @@ generalize.
 increment. Recorded on `stage-lr`. Full record:
 `LEARNED_REFORMULATION_RESEARCH.md` ("LR.2's 5th term added" section),
 `stage_lr/data/lr2_sanity_check_results.json`.
+
+---
+
+### 2026-08-30-N — Hand-tuning closed; human-agreement ceiling checked (68%/81%, n=1 Claude rater); LR.3 gated on path (a) AND path (b), not either/or
+
+**What was done:** per direct instruction, closed hand-tuning as an
+option outright (not paused) -- the 3/4/5-term progression's three
+consecutive chance-level results, each buying less than the last, is
+read as this project's own "Phase 11D/E/F" pattern reproduced inside
+Stage LR. Before pursuing a learned reranker (LR.3), ran the requested
+human-agreement ceiling check: 25 of the 58 pairs (`random.seed(42)`,
+reproducible) re-judged **blind** by a fresh subagent -- zero memory of
+this conversation or the original verdicts, given only `(sentence,
+profile, candidate_A, candidate_B)`, same blind-judging pattern as
+Phase 10. Full data: `stage_lr/data/human_agreement_ceiling_check.json`.
+
+**Result, honest, caveat stated every time:** raw three-way agreement
+17/25 (68.0%); restricted to the 21/25 pairs where neither judge
+hedged with "tie", 17/21 (81.0%). **This is not true human-human
+agreement** -- both judges are Claude (the original, full-context; the
+second, a genuinely blind fresh instance) -- reported as a real,
+disclosed limitation, not smoothed over, same discipline as this
+project's other single-rater findings.
+
+**Decision:** both ceiling numbers sit clearly above LR.2's 5-term
+result (55.2%/58.8% on the full 58 pairs) -- read as evidence of real
+headroom for a learned approach, not a low task ceiling, at least by
+this one imperfect estimate. LR.3 is now gated on **two sequential
+prerequisites, not parallel work**: (1) growing data path (a) to
+meaningfully more than 58 pairs, same method; (2) path (b), real
+distinct profiles from real people, not more researcher-authored
+templates. Both required before LR.3 training is attempted -- not
+"start now, keep collecting alongside it." Reasoning carried directly
+from the Phase 9B/9C precedent: a larger-but-still-thin dataset already
+failed to generalize once in this project's history; training again on
+data with the same two structural gaps risks reproducing that exact
+failure.
+
+**Alternatives considered:** Proceed straight to LR.3 training on the
+existing 58 pairs now that a ceiling estimate exists. Rejected --
+explicit instruction treats path (a)/(b) growth as prerequisites to
+attempting LR.3 at all, not conditions to satisfy in parallel with a
+training run already underway. Skip the ceiling check and just start
+growing data. Rejected -- per instruction, the ceiling check needed to
+happen first specifically to distinguish "model underperforming" from
+"task ceiling," which now correctly informs whether growing data is
+even worth doing (it is: real headroom exists).
+
+**Category:** Stage LR policy/gating decision (major). Recorded on
+`stage-lr`. No training-set builder or model exists yet; this closes
+one path (hand-tuning) and sets binding preconditions for the other
+(learned reranker), not itself research or code. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md` ("Fork resolved" section),
+`stage_lr/data/human_agreement_ceiling_check.json`.
