@@ -4805,3 +4805,77 @@ the path (b) ask itself (`DECISION_LOG.md` 2026-08-30-N/P) -- this is
 purely the receiving mechanism for whatever the ask produces. Full
 record: `LEARNED_REFORMULATION_RESEARCH.md` ("Ingestion mechanism built
 ahead of any real data" section), `stage_lr/ingest_real_human_pair.py`.
+
+---
+
+### 2026-08-30-R — First real path (b) profile processed; participant content kept local by explicit decision; one new main defect found and disclosed, not fixed
+
+**What was done:** a real participant answered the path (b) ask. Built
+a real `DifficultyProfile` from their answer and ran 15 hand-picked
+sentences through the real, unmodified `reformulate()` for the first
+time, then the same generate-second-candidate method as data path (a).
+**Before pushing anything, asked the user directly whether this real
+participant's data (unnamed, but genuinely personal) should go to the
+shared `stage-lr` branch on GitHub. Answer: no, local only.** A first
+commit had already been made containing the participant's actual
+words/sounds/phrases (in both a hardcoded `.py` file and this
+document's prose) -- caught before it was pushed, `git reset` to
+remove it from history entirely, not just from the working tree.
+
+**Corrected the mechanism, not just the data-handling:** the original
+script hardcoded one participant's real words as Python literals --
+itself the mistake, independent of the push question. Rewritten as
+`stage_lr/harvest_real_profile.py`, generic and content-free, reading
+per-participant input from `stage_lr/data/private/` (newly gitignored,
+along with `stage_lr/data/real_human_pairs.json`). The mechanism stays
+tracked and reusable for future participants; only actual personal
+content is excluded.
+
+**Result, aggregate only, no participant content, matches what's
+recorded in `LEARNED_REFORMULATION_RESEARCH.md`:** 15 sentences -> 5 no
+substitution change -> 5 no second candidate -> 5 found -> 0
+contaminated -> 5 unique. 4 of the 5 "no substitution change" results
+trace to `ROADMAP.md` R13's already-documented gap (declared phrases
+never matched against input text) -- first concrete, non-hypothetical
+evidence this costs something real.
+
+**A new `main` defect found and disclosed, not fixed, safe to record in
+full since it's about the system, not the participant:**
+`sanitize_input()` incorrectly applies third-person-singular agreement
+to an infinitive after "wants to" (a generic English construction).
+Confirmed directly; confirmed the other 4 sentences unaffected by
+checking each one's own `sanitize_input()` output individually, not
+assumed. One candidate pair built from the affected sentence was
+excluded from what gets shown to the participant -- doesn't bias the
+A-vs-B comparison (both candidates share the identical pre-existing
+error), but would have shown a real first-time participant an
+unexplained, unrelated error. Not fixed here, per `CLAUDE.md`'s
+standing instruction for a newly observed failure against the frozen
+architecture.
+
+**Alternatives considered:** Keep the specific participant content in
+the shared docs since it's already answered and the "harm" is
+abstract. Rejected outright once asked -- the user's answer was a
+plain no, and asking first rather than assuming was the correct call
+given this project's own standing caution about committed personal
+data (`ROADMAP.md` R0). Gitignore only the JSON outputs, keep the
+hardcoded script committed since "it's just code." Rejected -- the
+script itself contained the real content as literals; the fix is
+separating mechanism from data, not just hiding one file format.
+
+**Why:** Direct instruction on the push question, plus this project's
+own standing discipline (never commit real personal data without it
+being a deliberate, asked-first decision) applied proactively rather
+than only when directly instructed.
+
+**Measured result:** 4 candidate pairs generated, held locally, ready
+for the participant to judge. Zero verdicts recorded on either side --
+correct, matches `ingest_real_human_pair.py`'s rule.
+
+**Category:** Stage LR data generation (path (b)) + privacy correction
++ a disclosed `main` finding. Recorded on `stage-lr`. The commit
+containing participant content was fully removed from `stage-lr`'s
+history via `git reset`, not left reachable via an old commit hash.
+Full record: `LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), first
+real participant" section), `stage_lr/harvest_real_profile.py`,
+`.gitignore`.

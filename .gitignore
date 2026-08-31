@@ -70,3 +70,12 @@ desktop.ini
 .pytest_cache/
 .coverage
 htmlcov/
+
+# ── Stage LR: real-participant data (path (b)) — local only by user decision, ──
+# 2026-08-30 — never commit real friends' declared difficulty profiles,
+# their sentences, or their judgments, even unnamed. The MECHANISM
+# (stage_lr/harvest_real_profile.py, stage_lr/ingest_real_human_pair.py)
+# is generic and stays tracked; only actual per-participant content,
+# entirely confined to this directory, is excluded.
+stage_lr/data/private/
+stage_lr/data/real_human_pairs.json
