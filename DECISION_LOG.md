@@ -4690,3 +4690,66 @@ Full record: `LEARNED_REFORMULATION_RESEARCH.md` ("Claude-as-judge
 established" + "does not substitute for path (b)" sections),
 `stage_lr/data/lr1_preference_pairs.json`,
 `stage_lr/data/lr1_candidate_generation_log_batch3.json`.
+
+---
+
+### 2026-08-30-P — No batch 4 (path (a) at a practical ceiling for this generation setup); concrete path (b) ask drafted
+
+**What was done:** before running a 4th data-path-(a) batch, checked
+two things across all 68 pairs rather than deciding on instinct: (1)
+profile-shape diversity -- capped at ~4-6 fundamentally distinct
+sound/word constraint patterns regardless of label variant, a direct
+consequence of only 4 profile templates existing; (2) vocabulary
+diversity -- 62 distinct flagged words out of 68 pairs, still healthy,
+not saturated. Decided **not** to run batch 4: not because sentences
+ran out (they haven't), but because batch 3's found-rate already
+dropped to 10.8% (vs. 24-36% on batches 1-2's pre-filtered records), a
+fresh batch 4 would cost real writing effort for a similarly small
+yield, would almost certainly recur already-well-represented failure
+categories (countability errors, wrong-sense substitutions, register
+mismatches, missing-object grammar errors -- batch 3 surfaced nothing
+qualitatively new), and would add zero profile-shape diversity
+regardless of size. Then drafted the concrete, minimal ask for path
+(b), per direct instruction to make it something actionable this week
+rather than a named-but-inert gap.
+
+**The ask (recorded in full in `LEARNED_REFORMULATION_RESEARCH.md`,
+"Path (b) — a concrete, minimal ask" section):** two steps per friend,
+~20 minutes total -- (1) declare a real difficulty profile in plain
+language (sounds, words, optionally phrases that are personally hard
+to say), ~5 min; (2) judge ~10-15 real pairs generated from their own
+declared profile (pick A/B/doesn't-matter, no explanation required),
+~15 min. Both steps included deliberately, not just the profile alone
+-- step 2 produces a real human preference tied to a real declared
+difficulty, the actual gold-standard signal (comparable against
+Claude's own judgment on the same pairs), not just a better-sourced
+profile for Claude to keep judging alone.
+
+**Alternatives considered:** Run batch 4 anyway since the mechanism is
+cheap and sentences technically aren't exhausted. Rejected -- conflates
+"can produce more" with "produces new signal"; the explicit instruction
+was not to force batches just to inflate the count, and the checked
+numbers support that this is exactly such a case. Ask friends for a
+profile only, defer the judging step to later. Rejected -- would leave
+path (b)'s contribution indistinguishable in kind from what path (a)
+already produces (Claude-judged pairs), missing the actual point of
+getting a real person involved.
+
+**Why:** Direct instruction to ground the batch-4 decision in evidence
+rather than a gut call, and to turn path (b) from a named gap into
+something concretely actionable this week.
+
+**Measured result:** No new data generated this entry -- a decision (no
+batch 4) and a drafted, ready-to-send request (path (b)). Ingesting a
+real profile once one arrives requires no new code: existing
+`DifficultyProfile.add_sound()`/`add_word()`/`add_phrase()` plus the
+already-built `generate_pairs.py`/`judge_pairs.py` pipeline handle it
+as-is.
+
+**Category:** Stage LR data-strategy decision + path (b) unblocking.
+Recorded on `stage-lr`. Does not change LR.3's two-prerequisite gating
+(2026-08-30-N) -- clarifies path (a) is currently at its practical
+ceiling and gives path (b) a concrete first move, doesn't loosen either
+requirement. Full record: `LEARNED_REFORMULATION_RESEARCH.md` ("Path
+(a) declared at a practical ceiling" + "Path (b) — a concrete, minimal
+ask" sections).
