@@ -437,6 +437,24 @@ toward it, not a resolution of it.
 
 **[NOT DONE]** Adding a grammar signal to LR.2 is a real, concrete next step this check surfaced — not implemented here, since redesigning the score is a deliberate decision (what weight, what threshold, re-validate against these same 58 pairs) rather than a quick patch alongside a sanity check. Named here so it isn't lost.
 
+## LR.2's 4th term added (grammar), re-checked — still not enough to resume path (a), 2026-08-30
+
+**[FACT] Real code, not a proposal:** `score_candidate()` now calls `semantic.grammar_issue_count()` (LanguageTool, already validated/used live in `reformulate.py`'s own escalation gate) on the full candidate sentence, for every source — no scope restriction, unlike `contextual_fit_score()`. Two new regression tests confirm it catches a real error and is computed for phrase-sourced candidates too (`tests/stage_lr_features_test.py`). **A dependency was missing here as well** — `language_tool_python` was absent from this venv, the exact same class of silent-degradation bug as the SBERT one, except this one was live on `main`'s own shipped gate (`reformulate.py`'s `if (sem.grammar_issue_count(cand) or 0) > 0` was silently always `False`) — fixed on `main` separately (`DECISION_LOG.md` 2026-08-30-E there), verified with real output, and confirmed via direct A/B testing (installed vs. not) that 3 unrelated, pre-existing test failures found along the way are **not** caused by this fix.
+
+**[FACT] Re-ran the sanity check against the same 58 pairs, honest result, not rounded up:**
+
+| | before (3 terms) | after (4 terms) |
+|---|---|---|
+| Overall agreement | 28/58 (48%) | **30/58 (52%)** |
+| Non-tie pairs (51) | 26/51 (51%) | **28/51 (55%)** |
+| — LR.2 said tie (no discrimination) | 17 | 16 |
+| — LR.2 confidently wrong | 8 | 7 |
+| Human-tie pairs (7), LR.2 also tie | 2/7 | 2/7 |
+
+**[INTERPRETATION]** A real, small, honest improvement — not a wash, not a fix. 52% (55% on the non-tie subset) is **not meaningfully above the 50% chance level** for a binary call on n=51 — a 4-5 point shift on this sample size is well within noise, not a result to act on as if the ranking problem is solved. Per the explicit standing instruction, **path (a) stays paused** — growing the pair count further would only produce more data to validate against a reward function still this close to chance.
+
+**[FACT] One specific flip is worth naming, not just the aggregate number.** The "greenhouse"→"gas" vs. "building" pair (R40-014/016): the human judgment preferred "gas" despite an awkward word-duplication ("gas gas emissions") because "building gas emissions" is semantically incoherent, not just awkward. Adding the grammar term flipped LR.2 to prefer "building" — LanguageTool likely flags (or at least doesn't reward) the duplication, but has no way to detect that "building gas" isn't a real, coherent concept in context. This is a concrete illustration of what grammar alone can't fix: `semantic.py` already has `logical_consistency_check()` (NLI, validated in Architecture Gate Step 1) that's a plausible next candidate signal for exactly this gap — surfaced here, not implemented, per the same discipline as the grammar term itself (a deliberate decision, not a reflexive addition to chase one case).
+
 ## Path (b) — still separate, still unstarted, still people-dependent
 
 **[FACT, flagged per direct instruction, not a task for this session]** Growing data path (a) — however many more batches — does not touch path (b)'s actual gap: every profile behind all 58 pairs (and everything path (a) could ever produce from existing corpora) is a researcher-authored template (`light_single_sound`, `moderate_mixed`, `heavy_dense`, `single_common_sound`, `sentence_specific_word`, plus R47's one-offs) or Phase 10's own synthetic density categories — not a real, independently-declared profile from a real distinct person. LR.3's held-out-by-speaker evaluation needs the latter specifically. Path (b) remains separate, unstarted, and dependent on real people (recruiting more participants like the original pilot's P1) — not something more generation or more judging from this pipeline can substitute for.

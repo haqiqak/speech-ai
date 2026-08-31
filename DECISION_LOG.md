@@ -4453,3 +4453,48 @@ judging substitutes for; noted in
 record: `LEARNED_REFORMULATION_RESEARCH.md` (batch 2 + LR.2 sanity
 check + path (b) sections), `stage_lr/data/lr1_preference_pairs.json`,
 `stage_lr/data/lr2_sanity_check_results.json`.
+
+---
+
+### 2026-08-30-L — Grammar added as LR.2's 4th term; re-check: 48% -> 52%, still not enough to resume path (a)
+
+**What was done:** per direct instruction, wired `semantic.grammar_issue_count()`
+(LanguageTool, already validated and live-gating in `reformulate.py`)
+into `stage_lr/features.py::score_candidate()` as a 4th term -- scored
+for every source (no scope restriction, unlike `contextual_fit_score()`),
+with 2 new regression tests. Found the same class of dependency problem
+along the way: `language_tool_python` was missing from this venv,
+silently disabling `reformulate.py`'s own live grammar gate on `main`
+-- fixed there separately (`main`'s 2026-08-30-E), verified with real
+output, and confirmed (by testing installed vs. not, directly) that 3
+unrelated pre-existing test failures found in the process are not
+caused by this fix. Re-ran `stage_lr/sanity_check_lr2.py` against the
+same 58 pairs with the new 4-term score.
+
+**Result, honest, not rounded up:** overall agreement 28/58 (48%) ->
+30/58 (52%). Non-tie subset (51 pairs): 26/51 (51%) -> 28/51 (55%).
+LR.2-said-tie-when-human-had-a-preference: 17 -> 16. LR.2-confidently-
+wrong: 8 -> 7. A real but small improvement.
+
+**Decision, per the explicit standing instruction:** 52% (55% non-tie)
+is not meaningfully above the 50% chance level for a binary call on
+n=51 -- a 4-5 point shift at this sample size is noise-range, not a
+result to build further data collection on. **Data path (a) stays
+paused.** Not resuming until the agreement rate clears chance by a
+margin that means something.
+
+**A specific case named, not just the aggregate:** the "greenhouse"->
+"gas" vs. "building" pair flipped to the wrong answer after adding the
+grammar term -- the human judgment preferred the awkward-but-coherent
+"gas gas emissions" over the grammatical-but-nonsensical "building gas
+emissions"; LanguageTool has no way to catch the latter. `semantic.py`'s
+already-validated `logical_consistency_check()` (NLI) is named as a
+plausible next signal for this specific gap -- not implemented, per the
+same discipline as the grammar term itself.
+
+**Category:** Stage LR feature-extractor iteration + defect fix (main).
+Recorded on `stage-lr` (this entry) and `main` (the dependency fix,
+2026-08-30-E there) respectively -- correctly split by which branch
+each change actually affects. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md` ("LR.2's 4th term added" section),
+`stage_lr/data/lr2_sanity_check_results.json`.

@@ -1,7 +1,7 @@
 {
   "counts": {
-    "agree": 28,
-    "disagree": 30,
+    "agree": 30,
+    "disagree": 28,
     "no_signal": 0,
     "total": 58
   },
@@ -130,10 +130,10 @@
       "candidate_B": "packages",
       "preferred": "B",
       "reason": "A has a real countability/grammar error \u2014 'software' is a mass noun in standard English, 'softwares' is non-standard pluralization (the same class of bug this project's own countability work targeted). B ('packages') is grammatical and a natural, common near-synonym for 'programs' in a computing context.",
-      "score_A": 0.9686,
+      "score_A": 0.7686,
       "score_B": 0.9242,
-      "lr2_preferred": "A",
-      "agrees_with_judgment": false
+      "lr2_preferred": "B",
+      "agrees_with_judgment": true
     },
     {
       "source_uids": [
@@ -157,9 +157,9 @@
       "candidate_B": "building",
       "preferred": "A",
       "reason": "A produces an awkward duplicate ('gas gas emissions') but the surviving phrase 'gas emissions' stays coherent and climate-relevant. B ('building gas emissions') is not a real, coherent technical concept \u2014 a larger meaning break despite reading more smoothly on the surface.",
-      "score_A": 0.9647,
+      "score_A": 0.7647,
       "score_B": 0.9592,
-      "lr2_preferred": "tie",
+      "lr2_preferred": "B",
       "agrees_with_judgment": false
     },
     {
@@ -238,8 +238,8 @@
       "candidate_B": "naive",
       "preferred": "B",
       "reason": "'Natural languages' collides with an unrelated, well-established linguistics term (human vs. constructed/formal language) \u2014 actively misleading in a sentence about linguistics. 'Naive' is an odd word choice for describing a language, but at least gestures toward the 'unsophisticated/simple' sense 'primitive' originally carried.",
-      "score_A": 0.9601,
-      "score_B": 0.9477,
+      "score_A": 0.7601,
+      "score_B": 0.7477,
       "lr2_preferred": "A",
       "agrees_with_judgment": false
     },
@@ -301,9 +301,9 @@
       "candidate_B": "button",
       "preferred": "tie",
       "reason": "Both are broken the same way \u2014 'device'/'button' used as verbs make the sentence nonsensical. This is a real word-sense-disambiguation failure (the generator matched 'release' the noun/mechanism sense \u2014 as in a latch or trigger release \u2014 against a verb usage), not one candidate being better than the other. Useful as a negative example either way.",
-      "score_A": 0.945,
+      "score_A": 0.745,
       "score_B": 0.8977,
-      "lr2_preferred": "A",
+      "lr2_preferred": "B",
       "agrees_with_judgment": false
     },
     {
@@ -1044,8 +1044,8 @@
       "candidate_B": "grow",
       "preferred": "B",
       "reason": "A ('time to produce') is grammatically incomplete \u2014 'produce' is transitive and needs an object here. B ('time to grow') is natural, idiomatic, and grammatically sound for flavors developing.",
-      "score_A": 0.9423,
-      "score_B": 0.9446,
+      "score_A": 0.7423,
+      "score_B": 0.7446,
       "lr2_preferred": "tie",
       "agrees_with_judgment": false
     },
@@ -1092,7 +1092,7 @@
       "candidate_B": "excused",
       "preferred": "A",
       "reason": "A is essentially the same word (British spelling variant 'apologised'), perfectly natural. B ('excused for') has a real grammar error \u2014 'excused' normally needs a reflexive object ('excused herself').",
-      "score_A": 1.8165,
+      "score_A": 1.6165,
       "score_B": 0.8631,
       "lr2_preferred": "A",
       "agrees_with_judgment": true
@@ -1218,7 +1218,7 @@
       "candidate_B": "stairway",
       "preferred": "B",
       "reason": "(Note: 'creaked'->'noised' also changed in both sentences, held constant across A and B, not part of this comparison.) A ('a narrow stairs') has a real number-agreement error \u2014 'stairs' is plural, mismatching the singular article. B ('a narrow stairway') is grammatically clean and a natural, accurate synonym.",
-      "score_A": 0.8586,
+      "score_A": 0.6586,
       "score_B": 0.8857,
       "lr2_preferred": "B",
       "agrees_with_judgment": true
@@ -1244,7 +1244,7 @@
       "preferred": "A",
       "reason": "A ('a weird noise') is natural, accurate, near-perfect. B ('a other noise') has both a grammar error (a/an mismatch) and a meaning shift toward 'different/additional' rather than 'unusual'.",
       "score_A": 0.9739,
-      "score_B": 0.9071,
+      "score_B": 0.7071,
       "lr2_preferred": "A",
       "agrees_with_judgment": true
     },
@@ -1443,10 +1443,10 @@
       "candidate_B": "aid",
       "preferred": "B",
       "reason": "A ('earned a two-year studies') has a real singular/plural agreement error. B ('earned a two-year aid') is a little ambiguous in its 'to' attachment but avoids that grammar problem and stays closer to the 'financial support' meaning of scholarship.",
-      "score_A": 0.9604,
-      "score_B": 0.9191,
-      "lr2_preferred": "A",
-      "agrees_with_judgment": false
+      "score_A": 0.3604,
+      "score_B": 0.5191,
+      "lr2_preferred": "B",
+      "agrees_with_judgment": true
     },
     {
       "source_uids": [
@@ -1471,8 +1471,8 @@
       "candidate_B": "aid",
       "preferred": "B",
       "reason": "A ('earned a two-year learning') has an awkward countability issue (learning is normally uncountable) and shifts meaning toward 'knowledge gained' rather than 'financial award'. B ('aid') retains the financial-support sense central to 'scholarship'.",
-      "score_A": 0.9186,
-      "score_B": 0.9191,
+      "score_A": 0.5186,
+      "score_B": 0.5191,
       "lr2_preferred": "tie",
       "agrees_with_judgment": false
     },

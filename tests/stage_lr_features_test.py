@@ -195,6 +195,42 @@ class ScoreCandidateSmokeTest(unittest.TestCase):
         )
         self.assertIsNotNone(score.meaning_sbert, "SBERT silently returned None — load_sbert() call may be missing")
 
+    def test_grammar_issue_count_catches_a_real_error(self):
+        """The 4th reward term, added 2026-08-30 after the LR.2 sanity
+        check found grammaticality was a recurring real distinguishing
+        factor in judged pairs with zero signal in the scorecard."""
+        import semantic
+        if not semantic.load_grammar_tool():
+            self.skipTest("LanguageTool cannot load in this environment — nothing to regress against")
+        p = _profile()
+        bad = score_candidate(
+            "Machine learning is the study of programs that can improve their performance automatically.",
+            "Machine learning is the study of softwares that can improve their performance automatically.",
+            "softwares", p, source="substitution",
+        )
+        good = score_candidate(
+            "Machine learning is the study of programs that can improve their performance automatically.",
+            "Machine learning is the study of packages that can improve their performance automatically.",
+            "packages", p, source="substitution",
+        )
+        self.assertIsNotNone(bad.grammar_issue_count)
+        self.assertGreater(bad.grammar_issue_count, 0)
+        self.assertEqual(good.grammar_issue_count, 0)
+
+    def test_grammar_issue_count_computed_for_phrase_source_too(self):
+        """Unlike contextual_fit, no scope restriction — grammar_issue_count()
+        scores the whole sentence regardless of source."""
+        import semantic
+        if not semantic.load_grammar_tool():
+            self.skipTest("LanguageTool cannot load in this environment — nothing to regress against")
+        p = _profile()
+        score = score_candidate(
+            "Let's push the meeting to Friday.",
+            "Let's postpone the meeting to Friday.",
+            "postpone the meeting", p, source="phrase",
+        )
+        self.assertIsNotNone(score.grammar_issue_count)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

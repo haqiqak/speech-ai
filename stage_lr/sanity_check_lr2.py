@@ -50,6 +50,9 @@ def load_sentence_lookup() -> dict[str, dict]:
     return lookup
 
 
+GRAMMAR_PENALTY_PER_ISSUE = 0.2  # provisional, inspectable — not a tuned/validated weight
+
+
 def combined_score(s) -> float | None:
     """Simple, inspectable combination for this sanity check only — NOT
     a proposed ranking formula. meaning = average of available signals
@@ -57,7 +60,12 @@ def combined_score(s) -> float | None:
     versa -- here both rescaled to 0-1); naturalness added directly
     (already 0-1); phoneme_difficulty subtracted as a large penalty
     (should be ~0 for both sides here, since both candidates already
-    passed the live pipeline's own phoneme gate by construction)."""
+    passed the live pipeline's own phoneme gate by construction);
+    grammar_issue_count subtracted at GRAMMAR_PENALTY_PER_ISSUE per
+    issue — added 2026-08-30 as the 4th term, a provisional weight
+    chosen to be large relative to the typical meaning-score gap
+    between two candidates that both already cleared the SBERT floor
+    (often 0.02-0.1), not fitted or validated against this data."""
     parts = []
     if s.meaning_sbert is not None:
         parts.append(s.meaning_sbert)
@@ -67,7 +75,8 @@ def combined_score(s) -> float | None:
         return None
     meaning = sum(parts) / len(parts)
     naturalness = s.naturalness_contextual_fit if s.naturalness_contextual_fit is not None else 0.0
-    return meaning + naturalness - (s.phoneme_difficulty * 10.0)
+    grammar_penalty = (s.grammar_issue_count or 0) * GRAMMAR_PENALTY_PER_ISSUE
+    return meaning + naturalness - (s.phoneme_difficulty * 10.0) - grammar_penalty
 
 
 def main() -> None:

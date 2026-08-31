@@ -38,6 +38,16 @@ not by convention:
     substitution candidates, per its own validated scope
     (`semantic.py`'s docstring) — not called for phrase-tier or
     restructuring candidates.
+  - `grammar_issue_count()` (LanguageTool, `semantic.py`) added
+    2026-08-30 as a fourth term, after the LR.2 sanity check against 58
+    real judged pairs found meaning+naturalness alone agreeing with the
+    human judgment at chance level (28/58), and — reading the actual
+    judged reasons, not guessing — grammaticality was a recurring real
+    distinguishing factor (`lr1_preference_pairs.json`) this scorecard
+    had zero signal for. Unlike `contextual_fit_score()`, this is
+    computed for every source (it scores the whole candidate sentence,
+    same call this project's own `reformulate.py` already makes as a
+    live gate — no scope restriction applies).
 """
 import paths  # noqa: F401
 
@@ -56,6 +66,7 @@ class CandidateScore:
     meaning_sbert: Optional[float] = None
     meaning_meaningbert: Optional[float] = None
     naturalness_contextual_fit: Optional[float] = None
+    grammar_issue_count: Optional[int] = None
     phoneme_difficulty: float = 0.0
     phoneme_difficulty_reasons: list[str] = field(default_factory=list)
     pronunciation_ambiguous: bool = False
@@ -152,6 +163,10 @@ def score_candidate(
         score.naturalness_contextual_fit = semantic.contextual_fit_score(
             candidate_sentence, candidate_text, occurrence=occurrence
         )
+
+    # -- grammar: whole-sentence check, no scope restriction (same call
+    # reformulate.py already makes as a live gate) ----------------------
+    score.grammar_issue_count = semantic.grammar_issue_count(candidate_sentence)
 
     # -- phoneme difficulty: profile.sounds (global onset) + exact
     # word/phrase matches only. problem_phones is deliberately not
