@@ -17,7 +17,7 @@
       "unique_pairs_after_dedup": 41,
       "judged": 41
     },
-    "running_total_judged_pairs": 68,
+    "running_total_judged_pairs": 75,
     "batch_3_fresh": {
       "source": "stage_lr/harvest_batch3.py -- 30 fresh, previously-unused sentences x 4 existing profile templates, run through reformulate() for the first time (no unused existing corpus of the right shape was found)",
       "total_sentence_profile_pairs": 120,
@@ -29,7 +29,18 @@
       "judged": 10,
       "judging_method": "claude_api_standard_method (stage_lr/judge_pairs.py, DECISION_LOG.md 2026-08-30-O) -- first batch judged this way, not manually"
     },
-    "schema_note_2026_08_30": "All pairs in this file are source=synthetic_profile_template (researcher-authored profile templates, judged by Claude). Real-human-judged pairs (source=real_human, both a real friend verdict and a same-session Claude verdict on the same pair) live in the SEPARATE file stage_lr/data/real_human_pairs.json, never merged in here, per direct instruction -- they answer a different question and must not be silently pooled with these when computing agreement rates."
+    "schema_note_2026_08_30": "All pairs in this file are source=synthetic_profile_template (researcher-authored profile templates, judged by Claude). Real-human-judged pairs (source=real_human, both a real friend verdict and a same-session Claude verdict on the same pair) live in the SEPARATE file stage_lr/data/real_human_pairs.json, never merged in here, per direct instruction -- they answer a different question and must not be silently pooled with these when computing agreement rates.",
+    "batch_4_new_templates": {
+      "source": "stage_lr/harvest_batch4_new_templates.py -- 3 NEW profile shapes (deliberately messier/idiosyncratic, informed by the first real participant's actual profile structure), run against batch 3's existing 30 sentences unchanged -- isolates template diversity as the variable, not sentence novelty",
+      "total_sentence_profile_pairs": 90,
+      "no_substitution_change": 71,
+      "second_candidates_found_raw": 8,
+      "excluded_multi_word_contaminated": 1,
+      "clean_single_variable_pairs_raw": 7,
+      "unique_pairs_after_dedup": 7,
+      "judged": 7,
+      "note": "one template (word_heavy_sparse_sound) produced ZERO hits across all 30 sentences -- its declared words never appeared in this sentence pool. Disclosed, not hidden: a real illustration that idiosyncratic profiles won't always intersect with whatever text exists, relevant to the real-world problem this project is solving."
+    }
   },
   "pairs": [
     {
@@ -1625,6 +1636,191 @@
       "candidate_B": "operated",
       "preferred": "A",
       "reason": "\"flipped careers\" is an odd but parseable metaphorical extension of switching; \"operated careers\" is nonsensical and distorts the meaning entirely.",
+      "judged_by": "claude_api_standard_method",
+      "source": "synthetic_profile_template"
+    },
+    {
+      "source_uids": [
+        "B4-messy_s_plus_unrelated_words-13"
+      ],
+      "original_sentence": "Grandpa always tells the same story about his first fishing trip.",
+      "difficulty_profile": {
+        "name": "messy_s_plus_unrelated_words",
+        "sounds": [
+          "s"
+        ],
+        "words": [
+          "essential",
+          "possibility",
+          "necessary",
+          "convenient",
+          "opportunity"
+        ],
+        "phrases": []
+      },
+      "flagged_word": "same",
+      "candidate_A": "identical",
+      "candidate_B": "aforementioned",
+      "preferred": "A",
+      "reason": "\"Identical\" preserves the meaning of 'same' and is grammatical, if slightly formal; \"aforementioned\" is wrong because no story was previously mentioned in the sentence, so it breaks the reference/meaning.",
+      "judged_by": "claude_api_standard_method",
+      "source": "synthetic_profile_template"
+    },
+    {
+      "source_uids": [
+        "B4-no_common_thread_multi_sound-17"
+      ],
+      "original_sentence": "The recipe requires precise measurements for the sauce to thicken properly.",
+      "difficulty_profile": {
+        "name": "no_common_thread_multi_sound",
+        "sounds": [
+          "th",
+          "w",
+          "k"
+        ],
+        "words": [
+          "quality",
+          "wonderful"
+        ],
+        "phrases": []
+      },
+      "flagged_word": "thicken",
+      "candidate_A": "modify",
+      "candidate_B": "change",
+      "preferred": "B",
+      "reason": "Neither preserves 'thicken's specific meaning, but \"change\" works naturally as an intransitive verb with 'sauce', while \"modify\" reads awkwardly without an explicit agent/object.",
+      "judged_by": "claude_api_standard_method",
+      "source": "synthetic_profile_template"
+    },
+    {
+      "source_uids": [
+        "B4-no_common_thread_multi_sound-38"
+      ],
+      "original_sentence": "Her thesis argues that early exposure to music improves language development.",
+      "difficulty_profile": {
+        "name": "no_common_thread_multi_sound",
+        "sounds": [
+          "th",
+          "w",
+          "k"
+        ],
+        "words": [
+          "quality",
+          "wonderful"
+        ],
+        "phrases": []
+      },
+      "flagged_word": "thesis",
+      "candidate_A": "dissertation",
+      "candidate_B": "treatise",
+      "preferred": "A",
+      "reason": "\"Dissertation\" pairs naturally with 'her ... argues' in an academic context and closely matches how 'thesis' is commonly used; \"treatise\" is a more generic, less personally-authored genre term that fits slightly less well here.",
+      "judged_by": "claude_api_standard_method",
+      "source": "synthetic_profile_template"
+    },
+    {
+      "source_uids": [
+        "B4-messy_s_plus_unrelated_words-49"
+      ],
+      "original_sentence": "A sudden gust of wind knocked over the outdoor market stalls.",
+      "difficulty_profile": {
+        "name": "messy_s_plus_unrelated_words",
+        "sounds": [
+          "s"
+        ],
+        "words": [
+          "essential",
+          "possibility",
+          "necessary",
+          "convenient",
+          "opportunity"
+        ],
+        "phrases": []
+      },
+      "flagged_word": "sudden",
+      "candidate_A": "fast",
+      "candidate_B": "sharp",
+      "preferred": "B",
+      "reason": "\"Sharp gust\" is an idiomatic, natural collocation conveying suddenness/abruptness like the original; \"fast gust\" is an unusual, awkward pairing that doesn't capture 'sudden' well.",
+      "judged_by": "claude_api_standard_method",
+      "source": "synthetic_profile_template"
+    },
+    {
+      "source_uids": [
+        "B4-messy_s_plus_unrelated_words-67"
+      ],
+      "original_sentence": "She switched careers after realizing accounting wasn't fulfilling.",
+      "difficulty_profile": {
+        "name": "messy_s_plus_unrelated_words",
+        "sounds": [
+          "s"
+        ],
+        "words": [
+          "essential",
+          "possibility",
+          "necessary",
+          "convenient",
+          "opportunity"
+        ],
+        "phrases": []
+      },
+      "flagged_word": "switched",
+      "candidate_A": "flipped",
+      "candidate_B": "operated",
+      "preferred": "A",
+      "reason": "\"Flipped careers\" is informal but understandable and grammatical; \"operated careers\" is nonsensical since 'operate' doesn't take 'careers' as an object in this sense.",
+      "judged_by": "claude_api_standard_method",
+      "source": "synthetic_profile_template"
+    },
+    {
+      "source_uids": [
+        "B4-no_common_thread_multi_sound-68"
+      ],
+      "original_sentence": "She switched careers after realizing accounting wasn't fulfilling.",
+      "difficulty_profile": {
+        "name": "no_common_thread_multi_sound",
+        "sounds": [
+          "th",
+          "w",
+          "k"
+        ],
+        "words": [
+          "quality",
+          "wonderful"
+        ],
+        "phrases": []
+      },
+      "flagged_word": "careers",
+      "candidate_A": "advancements",
+      "candidate_B": "advances",
+      "preferred": "tie",
+      "reason": "Both substitutions destroy the original meaning (career vs. advancement/advance) and produce equally odd, semantically confusing sentences.",
+      "judged_by": "claude_api_standard_method",
+      "source": "synthetic_profile_template"
+    },
+    {
+      "source_uids": [
+        "B4-no_common_thread_multi_sound-71"
+      ],
+      "original_sentence": "The children built a sandcastle before the tide came rushing in.",
+      "difficulty_profile": {
+        "name": "no_common_thread_multi_sound",
+        "sounds": [
+          "th",
+          "w",
+          "k"
+        ],
+        "words": [
+          "quality",
+          "wonderful"
+        ],
+        "phrases": []
+      },
+      "flagged_word": "came",
+      "candidate_A": "turned",
+      "candidate_B": "became",
+      "preferred": "tie",
+      "reason": "Both \"turned rushing in\" and \"became rushing in\" are grammatically broken combinations with the phrasal 'rushing in', neither reading naturally.",
       "judged_by": "claude_api_standard_method",
       "source": "synthetic_profile_template"
     }

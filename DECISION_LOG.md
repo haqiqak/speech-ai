@@ -4924,3 +4924,51 @@ conclusion drawn, no LR.2 weights touched, no change to LR.3's gating
 more decisive than it is. Recorded on `stage-lr`. Full record:
 `LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), first real
 participant" section, updated).
+
+---
+
+### 2026-08-30-T — Path (a) batch 4: new profile shapes (not new sentences), 75 total pairs
+
+**What was done:** per direct instruction to act on "build the dataset,"
+grew path (a) again -- but not by repeating the batch declined in
+2026-08-30-P (more sentences against the same 4 templates, explicitly
+ruled out as buying recurrence not signal). This targets the actual
+capped dimension that decision named: 3 new profile shapes, designed
+deliberately messier/more idiosyncratic than the original 4 -- directly
+informed by what the first real path (b) participant's actual profile
+looked like (a common sound plus several unrelated, personally-
+anticipated words, not one tidy pattern) -- run against batch 3's
+existing 30 sentences unchanged, isolating template diversity as the
+variable (`stage_lr/harvest_batch4_new_templates.py`).
+
+**Result, honest counts:** 90 attempted (30 sentences x 3 templates) ->
+71 no substitution change -> 8 found -> 1 contaminated (excluded, same
+diff check) -> 7 unique, all judged via the standard Claude-judge
+method. Running total: **75 judged pairs**.
+
+**Disclosed, not hidden:** one of the 3 new templates produced zero
+hits across all 30 sentences -- its declared words never appeared in
+this sentence pool. Named as a real, relevant illustration (an
+idiosyncratic profile won't always intersect with available text) 
+rather than smoothed over as a wasted template.
+
+**Alternatives considered:** Treat this as the same kind of batch
+already declined. Rejected -- 2026-08-30-P's own reasoning explicitly
+named template/profile-shape diversity, not sentence count, as the
+capped dimension; new templates against old sentences is a different
+variable, not a repeat.
+
+**Why:** Direct instruction to act on the already-agreed plan (grow the
+dataset) using the lever that's actually available without needing
+anything from a real person -- profile-shape diversity, informed by
+real-participant structure without using their actual content.
+
+**Measured result:** 75 pairs now in `stage_lr/data/lr1_preference_pairs.json`,
+all `source: "synthetic_profile_template"`, `judged_by:
+"claude_api_standard_method"`.
+
+**Category:** Stage LR data generation (path (a), batch 4). Recorded on
+`stage-lr`. No participant content involved -- new templates are
+researcher-designed (informed by, not copied from, the real profile).
+Full record: `LEARNED_REFORMULATION_RESEARCH.md` ("Path (a), batch 4"
+section), `stage_lr/harvest_batch4_new_templates.py`.
