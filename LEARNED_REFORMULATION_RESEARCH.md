@@ -290,6 +290,58 @@ exists.
 new comparison pairs or recruit new participants — that's the concrete
 next action under path (1)/(2) above, a separate, later decision.
 
+## LR.2 — feature extractor, built and tested 2026-08-30
+
+**[FACT] Real code exists now**, not just a spec: `stage_lr/features.py`
+(new package, never imported by `app.py`/`reformulate.py`/anything on
+`main`) implements `score_candidate(sentence, candidate_sentence,
+candidate_text, profile, source, occurrence) -> CandidateScore` —
+meaning (SBERT + MeaningBERT), naturalness (`contextual_fit_score()`,
+single-word substitutions only, per its own validated scope), and
+phoneme difficulty (profile.sounds onset match + exact word/phrase
+match). 13 tests in `tests/stage_lr_features_test.py`, all passing.
+
+**[DECISION, implemented not just specified] Every Stage LR guardrail
+decided so far is enforced in code, with a regression test per
+guardrail:**
+- The ARPAbet-key fix (§2.1 of `STAGE_LR_PROPOSAL_REVIEW.md`): `_word_onset_hits()`
+  compares `phonetic.onset()` directly against each `sounds` entry's
+  stored `.normalized` key — never re-derives it from `.value` via
+  `phonetic.normalize_pattern()`'s spelling guess, the exact lossy path
+  behind the ZH bug. `test_onset_hit_works_for_sounds_added_via_phones_not_just_spelling`
+  checks this against a real `add_sound_from_phones()` entry, not just
+  the easy spelling-guess path.
+- Matter 1's word-level guardrail: `test_word_specific_pattern_never_leaks_into_a_global_onset_hit`
+  checks directly that a word's `problem_phones` never makes an
+  unrelated word match a global sound.
+- Matter 1's phrase-level guardrail (2026-08-30-E): `test_phrase_match_never_flags_a_lone_word_from_that_phrase`
+  checks directly that a declared difficult phrase does not cause its
+  own component word, used alone, to register as declared-difficult.
+- No allowlist term (per the review's correction) — not implemented,
+  not faked.
+
+**[LIMITATION, found while testing, not before]** The end-to-end smoke
+test passed, but on loose assertions ("if not None, must be in bounds")
+that pass vacuously when a model fails to load. A direct manual check
+(not the test suite) found all three models — SBERT, MeaningBERT,
+contextual-fit — currently fail to load **in this environment**, from
+the same root cause: `protobuf` 5.29.6 installed, but something
+requires gencode >= 6.31.1 (a `tensorflow` 2.21.0-side dependency,
+`tensorflow` itself not in `requirements.txt` — likely a transitive
+install, not a direct one). **This is not a Stage LR bug** — `semantic.py`
+is shared with the frozen, live pipeline, so this machine's `main`
+branch is *also* silently running on frequency-only ranking right now,
+same root cause. Flagged to the user as a separate, real, live-pipeline-
+affecting environment issue; not fixed here without a decision on
+whether to bump `protobuf` (a dependency-version change, the kind
+routine maintenance already permits under the freeze, but touching
+installed versions warrants a decision, not a silent fix mid-task).
+
+**[NOT DONE]** LR.2 is not wired into anything — no training-set
+builder, no ranking policy, no call from `reformulate.py`. It produces
+a scorecard; using it to actually rank or filter candidates is LR.3's
+job, still blocked on data per LR.1's finding.
+
 This section is no longer "not yet decided" for the near-term sequence
 above; what remains genuinely open is LR.1's actual result and whatever
 LR.3/LR.4 look like once it lands.

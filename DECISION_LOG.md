@@ -4253,3 +4253,55 @@ LR.1's job was to quantify, not to start collecting.
 **Category:** Stage LR data-check finding. Recorded on `stage-lr`. No
 training-set builder or model exists yet -- this is measurement only.
 Full record: `LEARNED_REFORMULATION_RESEARCH.md` (LR.1 section).
+
+---
+
+### 2026-08-30-I — LR.2 (feature extractor) built and tested; unrelated environment finding surfaced
+
+**What was done:** per direct instruction to build LR.2 in parallel with
+LR.1, wrote real code: `stage_lr/features.py` (new package, not
+imported by `app.py`/`reformulate.py`/anything on `main`) --
+`score_candidate()` returning meaning (SBERT + MeaningBERT), naturalness
+(`contextual_fit_score()`, single-word substitutions only, matching its
+own validated scope), and phoneme difficulty (profile.sounds onset
+match via the entry's stored ARPAbet key, plus exact word/phrase
+match). 13 tests in `tests/stage_lr_features_test.py`, all passing --
+four of them are direct regression checks on Stage LR's own prior
+guardrail decisions (the ARPAbet-key-not-spelling-guess fix; Matter 1's
+word-level and phrase-level non-generalization rules), not just
+generic coverage.
+
+**Finding, not assumed away:** the end-to-end smoke test's assertions
+were loose enough to pass even if a model failed to load. A direct
+manual check (prompted by wanting to see real numbers, not just a green
+test) found SBERT/MeaningBERT/contextual-fit all fail to load on this
+machine right now -- `protobuf` 5.29.6 installed, something (a
+`tensorflow` 2.21.0-side dependency, not itself in `requirements.txt`)
+requires gencode >= 6.31.1. **Not a Stage LR-specific problem** --
+`semantic.py` is shared with the live pipeline, so `main` is currently
+also running on frequency-only ranking on this machine, same cause.
+
+**Alternatives considered:** Fix the protobuf mismatch immediately,
+inline. Not done -- it's a dependency-version change affecting the
+live/frozen pipeline's runtime behavior on this machine; per this
+project's own discipline, that's a decision to surface, not to make
+silently mid-task, even though it falls under the freeze's allowed
+"routine maintenance" category.
+
+**Why:** LR.2 was scoped as zero-risk, buildable-now work independent
+of LR.1's data finding -- confirmed true: it needed no training data,
+only already-validated components, and is fully testable (and mostly
+tested) without any model loading at all (9 of 13 tests are pure logic,
+no model dependency).
+
+**Measured result:** 13/13 tests pass. Guardrail-enforcement tests pass
+against real `DifficultyProfile`/`phonetic`/`difficulty_profile.py`
+behavior, not mocks. Model-dependent fields (meaning/naturalness)
+currently return `None` on this machine due to the protobuf issue above
+-- code fails closed exactly as designed, not verified against live
+model output yet.
+
+**Category:** Stage LR implementation (first real code on this
+branch). Recorded on `stage-lr`, not `main`. Does not touch any frozen
+file; `stage_lr/` is a new, isolated package. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md` (LR.2 section).
