@@ -231,6 +231,43 @@ class ScoreCandidateSmokeTest(unittest.TestCase):
         )
         self.assertIsNotNone(score.grammar_issue_count)
 
+    def test_logical_contradiction_catches_a_real_case(self):
+        """The 5th reward term, added 2026-08-30 after the grammar term
+        alone only moved agreement 48%->52% and one specific case
+        (grammatical-but-nonsensical beating awkward-but-coherent)
+        showed grammar can't catch a factual/logical break. Reuses this
+        project's own already-validated known-contradiction pair
+        (tests/reformulate_v2_test.py's NLIConsistencyCheckTest)."""
+        import semantic
+        if not semantic.load_nli_model():
+            self.skipTest("NLI model cannot load in this environment — nothing to regress against")
+        p = _profile()
+        bad = score_candidate(
+            "The 2016 to 2025 decade warmed to an average of 1.26 degrees compared to the pre-industrial baseline.",
+            "The 2016 to 2025 decade warmed to an average of 1.26 degrees compared to the palaeolithic baseline.",
+            "palaeolithic", p, source="substitution",
+        )
+        good = score_candidate(
+            "Vitamin C is especially prone to oxidation during cooking.",
+            "Vitamin C is especially vulnerable to oxidation during cooking.",
+            "vulnerable", p, source="substitution",
+        )
+        self.assertIsNotNone(bad.logical_contradiction)
+        self.assertTrue(bad.logical_contradiction)
+        self.assertFalse(good.logical_contradiction)
+
+    def test_logical_contradiction_computed_for_phrase_source_too(self):
+        import semantic
+        if not semantic.load_nli_model():
+            self.skipTest("NLI model cannot load in this environment — nothing to regress against")
+        p = _profile()
+        score = score_candidate(
+            "Let's push the meeting to Friday.",
+            "Let's postpone the meeting to Friday.",
+            "postpone the meeting", p, source="phrase",
+        )
+        self.assertIsNotNone(score.logical_contradiction)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

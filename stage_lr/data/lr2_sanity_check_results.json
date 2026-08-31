@@ -1,7 +1,7 @@
 {
   "counts": {
-    "agree": 30,
-    "disagree": 28,
+    "agree": 32,
+    "disagree": 26,
     "no_signal": 0,
     "total": 58
   },
@@ -364,7 +364,7 @@
       "candidate_B": "uncooked",
       "preferred": "B",
       "reason": "A ('new food') is an unrelated, severe meaning substitution that destroys the food-safety-relevant distinction the sentence depends on (raw = uncooked, not 'new'). B ('uncooked') is essentially the exact intended meaning.",
-      "score_A": 0.9488,
+      "score_A": 0.6488,
       "score_B": 1.8686,
       "lr2_preferred": "B",
       "agrees_with_judgment": true
@@ -449,9 +449,9 @@
       "candidate_B": "gradual",
       "preferred": "A",
       "reason": "'Detailed reasoning' is natural and stays in a related 'thoroughness' sense even without capturing sequentiality. 'Gradual reasoning' is an unusual, less coherent collocation that drifts toward an unrelated temporal-pace meaning.",
-      "score_A": 0.9156,
+      "score_A": 0.6156,
       "score_B": 0.9247,
-      "lr2_preferred": "tie",
+      "lr2_preferred": "B",
       "agrees_with_judgment": false
     },
     {
@@ -672,10 +672,10 @@
       "candidate_B": "like",
       "preferred": "B",
       "reason": "Both are odd, but 'the like magnitude' at least gestures toward 'similar/equal' (an archaic but interpretable phrasing), while 'the one magnitude' reads as a clearer determiner/grammar error with less recoverable meaning.",
-      "score_A": 0.9641,
+      "score_A": 0.6641,
       "score_B": 0.9632,
-      "lr2_preferred": "tie",
-      "agrees_with_judgment": false
+      "lr2_preferred": "B",
+      "agrees_with_judgment": true
     },
     {
       "source_uids": [
@@ -796,7 +796,7 @@
       "candidate_B": "polite",
       "preferred": "tie",
       "reason": "Both substitute an unrelated sense of 'civil' for its 'civil engineering' technical/proper-noun-adjacent meaning \u2014 'official' invents a status the original didn't have, 'polite' uses the courtesy sense entirely wrongly. A genuine word-sense-disambiguation failure either way.",
-      "score_A": 0.7551,
+      "score_A": 0.4551,
       "score_B": 0.7955,
       "lr2_preferred": "B",
       "agrees_with_judgment": false
@@ -948,10 +948,10 @@
       "candidate_B": "propose",
       "preferred": "B",
       "reason": "A ('take their reports') is close to a meaning reversal \u2014 take and submit are near-opposite transfer directions. B ('propose their reports') is imprecise but at least preserves an offering/presenting directionality.",
-      "score_A": 0.9043,
+      "score_A": 0.6043,
       "score_B": 0.8804,
-      "lr2_preferred": "A",
-      "agrees_with_judgment": false
+      "lr2_preferred": "B",
+      "agrees_with_judgment": true
     },
     {
       "source_uids": [

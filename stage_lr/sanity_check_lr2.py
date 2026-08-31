@@ -51,6 +51,7 @@ def load_sentence_lookup() -> dict[str, dict]:
 
 
 GRAMMAR_PENALTY_PER_ISSUE = 0.2  # provisional, inspectable — not a tuned/validated weight
+CONTRADICTION_PENALTY = 0.3  # provisional, inspectable — not a tuned/validated weight
 
 
 def combined_score(s) -> float | None:
@@ -62,10 +63,12 @@ def combined_score(s) -> float | None:
     (should be ~0 for both sides here, since both candidates already
     passed the live pipeline's own phoneme gate by construction);
     grammar_issue_count subtracted at GRAMMAR_PENALTY_PER_ISSUE per
-    issue — added 2026-08-30 as the 4th term, a provisional weight
-    chosen to be large relative to the typical meaning-score gap
-    between two candidates that both already cleared the SBERT floor
-    (often 0.02-0.1), not fitted or validated against this data."""
+    issue (4th term, 2026-08-30); logical_contradiction subtracted at
+    a flat CONTRADICTION_PENALTY when True (5th term, 2026-08-30).
+    Both new penalties are provisional weights sized to be noticeable
+    against the typical meaning-score gap between two candidates that
+    already cleared the SBERT floor (often 0.02-0.1) — not fitted or
+    validated against this data."""
     parts = []
     if s.meaning_sbert is not None:
         parts.append(s.meaning_sbert)
@@ -76,7 +79,8 @@ def combined_score(s) -> float | None:
     meaning = sum(parts) / len(parts)
     naturalness = s.naturalness_contextual_fit if s.naturalness_contextual_fit is not None else 0.0
     grammar_penalty = (s.grammar_issue_count or 0) * GRAMMAR_PENALTY_PER_ISSUE
-    return meaning + naturalness - (s.phoneme_difficulty * 10.0) - grammar_penalty
+    contradiction_penalty = CONTRADICTION_PENALTY if s.logical_contradiction else 0.0
+    return meaning + naturalness - (s.phoneme_difficulty * 10.0) - grammar_penalty - contradiction_penalty
 
 
 def main() -> None:

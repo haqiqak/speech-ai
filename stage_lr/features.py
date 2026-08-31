@@ -48,6 +48,15 @@ not by convention:
     computed for every source (it scores the whole candidate sentence,
     same call this project's own `reformulate.py` already makes as a
     live gate — no scope restriction applies).
+  - `logical_consistency_check()` (bidirectional NLI, `semantic.py`,
+    validated in Architecture Gate Step 1) added 2026-08-30 as a fifth
+    term, after re-checking with the grammar term found only a small
+    improvement (48%->52%) and one concrete case (`"greenhouse"->"gas"`
+    vs. `"building"`) where a grammatically-clean-but-nonsensical
+    candidate beat a grammatically-awkward-but-coherent one — exactly
+    the gap NLI is suited to, not grammar. Also computed for every
+    source, same as grammar; `logical_consistency_check()` carries no
+    scope restriction in its own contract either.
 """
 import paths  # noqa: F401
 
@@ -67,6 +76,7 @@ class CandidateScore:
     meaning_meaningbert: Optional[float] = None
     naturalness_contextual_fit: Optional[float] = None
     grammar_issue_count: Optional[int] = None
+    logical_contradiction: Optional[bool] = None
     phoneme_difficulty: float = 0.0
     phoneme_difficulty_reasons: list[str] = field(default_factory=list)
     pronunciation_ambiguous: bool = False
@@ -167,6 +177,13 @@ def score_candidate(
     # -- grammar: whole-sentence check, no scope restriction (same call
     # reformulate.py already makes as a live gate) ----------------------
     score.grammar_issue_count = semantic.grammar_issue_count(candidate_sentence)
+
+    # -- logical consistency: bidirectional NLI between original and
+    # candidate sentence, catches coherent-but-wrong-claim cases grammar
+    # can't (e.g. "building gas emissions" — clean grammar, no such
+    # concept) -----------------------------------------------------------
+    nli = semantic.logical_consistency_check(original_sentence, candidate_sentence)
+    score.logical_contradiction = nli["contradiction"] if nli is not None else None
 
     # -- phoneme difficulty: profile.sounds (global onset) + exact
     # word/phrase matches only. problem_phones is deliberately not

@@ -4498,3 +4498,56 @@ Recorded on `stage-lr` (this entry) and `main` (the dependency fix,
 each change actually affects. Full record:
 `LEARNED_REFORMULATION_RESEARCH.md` ("LR.2's 4th term added" section),
 `stage_lr/data/lr2_sanity_check_results.json`.
+
+---
+
+### 2026-08-30-M — NLI added as LR.2's 5th term; re-check statistically indistinguishable from chance -- stop adding terms one at a time
+
+**What was done:** per direct instruction, wired `semantic.
+logical_consistency_check()` (bidirectional NLI, already validated in
+Architecture Gate Step 1) into `score_candidate()` as a 5th term,
+motivated by a named, concrete gap (the "gas"/"building" flip from
+2026-08-30-L, not a reflexive addition) -- computed for every source,
+2 new regression tests reusing this project's own already-validated
+known-contradiction pair rather than inventing a new one. Re-ran
+`stage_lr/sanity_check_lr2.py` against the same 58 pairs.
+
+**Result, honest, not rounded up:** overall agreement 30/58 (52%) ->
+32/58 (55%). Non-tie subset (51 pairs): 28/51 (55%) -> 30/51 (58.8%).
+Ran the actual significance check the "meaningfully above chance" bar
+implies, not just eyeballed the percentage: one-sample proportion
+z-test against p=0.5 on the non-tie subset (n=51, x=30) gives z=1.26,
+one-sided p~0.10 -- not significant at any conventional threshold.
+Full progression across all three configurations tested today (3
+terms: 48%/51%; +grammar: 52%/55%; +NLI: 55%/58.8%) is statistically
+indistinguishable from chance at every step, at this sample size.
+
+**Decision, per the explicit standing instruction:** this is the
+signal to stop adding terms one at a time. Five real, already-
+validated signals are now wired in -- the full set this project has
+actually built and validated (SBERT, MeaningBERT, contextual-fit,
+grammar, NLI). None of the three incremental configurations cleared
+chance. Named directly, not softened: hand-picking which of these
+signals matters and how much may not be the right approach at all --
+the concrete alternative this check itself points to is a small
+learned model weighting these same 5 signals from real preference
+data (LR.3's original shape), now with 58 real judged examples to
+attempt it on instead of the ~0 that blocked LR.3 when LR.1 first ran.
+
+**Alternatives considered:** Add a 6th term and re-check again.
+Rejected -- per the explicit standing instruction, this was named in
+advance as the last incremental addition before stepping back, and the
+result (still not significant) is exactly the condition that instruction
+named for stopping. Decide now whether to pursue a learned reranker.
+Not decided here -- a genuine fork in the road (grow pairs to attempt
+a small model vs. keep hand-tuning weights despite three chance-level
+results vs. something else), left as an open question for direct
+instruction, not assumed unilaterally. 58 pairs is likely still too
+few for reliable training either way -- this project's own Phase 9B/9C
+precedent used a larger, still-thin dataset and still failed to
+generalize.
+
+**Category:** Stage LR feature-extractor iteration, concluding this
+increment. Recorded on `stage-lr`. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md` ("LR.2's 5th term added" section),
+`stage_lr/data/lr2_sanity_check_results.json`.
