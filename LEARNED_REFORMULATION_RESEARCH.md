@@ -417,6 +417,30 @@ limitation LR.1's original pass already named. LR.3 stays blocked on
 that broader condition; this data path is a real, disclosed step
 toward it, not a resolution of it.
 
+## LR.1, data path (a), batch 2 — grown using the exact same method, 2026-08-30
+
+**[FACT]** Per instruction, batch 2 reused the identical pipeline (`stage_lr/generate_pairs.py`'s `attempt_second_candidate()`, unchanged) against a different, previously-uncovered source: `eval/r10_raw_results.json` (Phase 10's 398-run stress-test harvest — never part of the 135 `labeled_dataset.json` records). No new source material had to be invented; this corpus already existed and already carries each run's exact `profile_spec` directly, so there was no cross-file matching step at all (and therefore no way to repeat batch 1's profile-matching bug — nothing to disambiguate).
+
+**[FACT] Honest counts, same drop-off shape as batch 1, reported plainly:** 239 substitution-sourced changes examined → 154 no second candidate survived exclusion → **85 second candidates found** → 32 excluded as multi-word-contaminated (same diff-based check as batch 1, same underlying cause: contextual ranking, a second flagged word shifting when the first is excluded) → 53 clean → 12 exact re-verification duplicates collapsed → **41 unique pairs, all 41 judged**.
+
+**[FACT] Running total: 58 judged pairs** (17 from batch 1 + 41 from batch 2), appended to the same `stage_lr/data/lr1_preference_pairs.json` — one growing source of truth, not a parallel file. `excluded_multi_word_contaminated.uids` similarly grew to 43 (11 + 32).
+
+## LR.2 sanity check against the 58 pairs — a real finding, not a clean bill of health
+
+**[FACT] A real bug in LR.2 itself, caught by this check, not before it:** `stage_lr/sanity_check_lr2.py`'s first run produced a suspicious, repeating ~0.945 score across dozens of unrelated pairs. Traced directly, not assumed: `semantic.py`'s three load functions are inconsistent — `meaningbert_score()` and `contextual_fit_score()` both auto-load their model on first call, but `semantic_similarity()` (SBERT) does not; it only checks an already-set flag. `stage_lr/features.py`'s `score_candidate()` never called `semantic.load_sbert()`, so SBERT silently returned `None` on every one of the 58 calls, with no error, degrading "meaning" to MeaningBERT alone the entire time. **Fixed in `stage_lr/features.py`** (one line, `semantic.load_sbert()` before use) and locked in with a new regression test (`test_sbert_is_actually_populated_not_silently_none`, `tests/stage_lr_features_test.py`) that fails loudly if the call is ever removed. This is exactly the class of blind spot this sanity check was for.
+
+**[FACT] Result after the fix, all 58 pairs, real numbers:** a naive `meaning + naturalness − phoneme_difficulty` combination (this check's own scoring, not a proposed ranking formula) agreed with the human/Claude judgment on **28/58 (48%)** — barely better than chance for a binary call. Broken down, not smoothed over:
+- On the 51 pairs where a human expressed a real preference (not a tie): **26/51 agreed (51%)**, chance level. Of the 25 disagreements, **17 (68%) were LR.2 calling it a tie** — no discriminative power at all, not a wrong-direction error — and only 8 (32%) were LR.2 confidently picking the wrong side.
+- On the 7 pairs a human called a genuine tie, LR.2 agreed on only 2 — mostly picking a confident side where a human found none.
+
+**[INTERPRETATION]** This is not noise — it's a coherent, informative result. Both candidates in every pair already survived the frozen pipeline's own SBERT floor before either was offered, so meaning-similarity scores cluster tightly among survivors by construction; LR.2's current signals (SBERT/MeaningBERT/contextual-fit) are the *same class* of signal the frozen `combined_score()` already ranks with, and they show the same low resolution here that `VALIDATION.md` §53 already diagnosed as the frozen pipeline's dominant failure (WRONG_WORD_OR_SENSE as a ranking problem, not a generation problem). Read against the actual judged reasons in `lr1_preference_pairs.json`, a real, recurring pattern in what *did* distinguish A from B is **grammaticality/well-formedness** ("softwares" plural error, "excused for" missing its reflexive object, "manufacturings" invalid pluralization, "a other noise" article mismatch, "It's taken impolite" missing "to be") — a dimension `score_candidate()` currently has **zero signal for**. `semantic.py` already has `grammar_issue_count()`/`logical_consistency_check()` built and validated (Architecture Gate Step 1) that LR.2 doesn't yet call at all.
+
+**[NOT DONE]** Adding a grammar signal to LR.2 is a real, concrete next step this check surfaced — not implemented here, since redesigning the score is a deliberate decision (what weight, what threshold, re-validate against these same 58 pairs) rather than a quick patch alongside a sanity check. Named here so it isn't lost.
+
+## Path (b) — still separate, still unstarted, still people-dependent
+
+**[FACT, flagged per direct instruction, not a task for this session]** Growing data path (a) — however many more batches — does not touch path (b)'s actual gap: every profile behind all 58 pairs (and everything path (a) could ever produce from existing corpora) is a researcher-authored template (`light_single_sound`, `moderate_mixed`, `heavy_dense`, `single_common_sound`, `sentence_specific_word`, plus R47's one-offs) or Phase 10's own synthetic density categories — not a real, independently-declared profile from a real distinct person. LR.3's held-out-by-speaker evaluation needs the latter specifically. Path (b) remains separate, unstarted, and dependent on real people (recruiting more participants like the original pilot's P1) — not something more generation or more judging from this pipeline can substitute for.
+
 This section is no longer "not yet decided" for the near-term sequence
 above; what remains genuinely open is LR.1's actual result and whatever
 LR.3/LR.4 look like once it lands.

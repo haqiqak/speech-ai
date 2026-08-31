@@ -4379,3 +4379,77 @@ LR.3 needs (all profiles are researcher-authored templates, not
 independently-collected real speakers -- LR.1's original limitation
 stands). Full record: `LEARNED_REFORMULATION_RESEARCH.md` (LR.1 data
 path (a) section), `stage_lr/data/lr1_preference_pairs.json`.
+
+---
+
+### 2026-08-30-K — Data path (a) batch 2 (41 more pairs, 58 total) + LR.2 sanity check finds and fixes a real bug, then a real blind spot
+
+**What was done:** per direct instruction, grew data path (a) using
+the identical method (no shortcuts, same guardrails) against a
+different, previously-uncovered source: `eval/r10_raw_results.json`
+(Phase 10's 398-run harvest, never part of the 135 `labeled_dataset.json`
+records). 239 substitution changes examined -> 85 second candidates
+found -> 32 excluded as multi-word-contaminated (same diff check as
+batch 1) -> 12 exact duplicates collapsed -> 41 unique pairs, all
+judged, appended to the same `lr1_preference_pairs.json` (58 total
+running). Then used the full 58-pair set to sanity-check LR.2 per
+direct instruction: `stage_lr/sanity_check_lr2.py` runs every pair's
+two candidates through `score_candidate()` and compares a naive
+meaning+naturalness combination against the human/Claude judgment.
+
+**A real bug caught by the check itself:** the first sanity-check run
+produced a suspicious, repeating ~0.945 score across dozens of
+unrelated pairs. Traced directly: `semantic.py`'s `meaningbert_score()`/
+`contextual_fit_score()` both auto-load their model on first call;
+`semantic_similarity()` (SBERT) does not -- it only checks an
+already-set flag. `stage_lr/features.py` never called
+`semantic.load_sbert()`, so SBERT silently returned `None` on all 58
+calls, no error, "meaning" quietly degrading to MeaningBERT alone the
+entire time. Fixed (one line) and locked in with a new regression test
+(`test_sbert_is_actually_populated_not_silently_none`) that fails
+loudly if the call is ever removed.
+
+**Result after the fix, real numbers, not smoothed over:** naive
+meaning+naturalness agreed with the human judgment on 28/58 (48% --
+chance level for a binary call). On the 51 non-tie human judgments:
+26/51 (51%) agreed; of the 25 disagreements, 17 (68%) were LR.2 calling
+it a tie (no discrimination at all, not a wrong-direction error), only
+8 (32%) were LR.2 confidently wrong. On the 7 human ties, LR.2 agreed
+on only 2, mostly picking a confident side where a human found none.
+
+**Alternatives considered:** Treat the low agreement rate as noise from
+a small sample and move on. Rejected -- the pattern is coherent, not
+random: both candidates in every pair already survived the frozen
+pipeline's own SBERT floor, so meaning-similarity signals cluster
+tightly among survivors by construction, and LR.2's current signals are
+the same class the frozen `combined_score()` already ranks with. Read
+against the actual judged reasons, grammaticality/well-formedness was a
+recurring real distinguishing factor ('softwares', 'excused for',
+'manufacturings', 'a other noise') that `score_candidate()` has zero
+signal for today, despite `semantic.py` already having
+`grammar_issue_count()`/`logical_consistency_check()` built and
+validated. Adding that signal is named as a concrete next step, not
+implemented here -- a deliberate design decision, not a quick patch
+alongside a sanity check.
+
+**Why:** Direct instruction -- use the pairs cheaply, immediately, to
+sanity-check LR.2 before farming more data, exactly to surface feature-
+extractor problems while the pair count is still small enough to
+inspect by eye. It worked as intended: found one real bug (fixed) and
+one real, named blind spot (not yet fixed, flagged for a deliberate
+decision).
+
+**Measured result:** 58/58 pairs judged and logged; 14/14 `stage_lr`
+tests pass including the new regression test; sanity-check output
+(28/58 agree, full per-pair breakdown) saved to
+`stage_lr/data/lr2_sanity_check_results.json`.
+
+**Category:** Stage LR data generation + LR.2 defect fix. Recorded on
+`stage-lr`, not `main`. Path (b) (real distinct profiles from real
+people) explicitly flagged as still separate, still unstarted, still
+people-dependent -- not something more data-path-(a) batches or more
+judging substitutes for; noted in
+`LEARNED_REFORMULATION_RESEARCH.md` per direct instruction. Full
+record: `LEARNED_REFORMULATION_RESEARCH.md` (batch 2 + LR.2 sanity
+check + path (b) sections), `stage_lr/data/lr1_preference_pairs.json`,
+`stage_lr/data/lr2_sanity_check_results.json`.

@@ -130,7 +130,17 @@ def score_candidate(
     score = CandidateScore(candidate=candidate_text, source=source)
 
     # -- meaning: the two independently-trained signals already
-    # validated in the frozen pipeline, called as-is -------------------
+    # validated in the frozen pipeline, called as-is. semantic.py's own
+    # load functions are inconsistent about auto-loading on first call --
+    # meaningbert_score()/contextual_fit_score() both do
+    # ("if not X_ok and not load_X(): return None"), but
+    # semantic_similarity() does NOT (it only checks the already-set
+    # flag). Found by direct comparison against real output, not
+    # assumed: without this explicit call, SBERT silently returns None
+    # on every invocation in a fresh process, degrading "meaning" to
+    # MeaningBERT alone with no visible error. Idempotent, per
+    # reformulate.py's own use of the same call.
+    semantic.load_sbert()
     score.meaning_sbert = semantic.semantic_similarity(original_sentence, candidate_sentence)
     score.meaning_meaningbert = semantic.meaningbert_score(original_sentence, candidate_sentence)
 

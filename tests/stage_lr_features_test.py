@@ -174,6 +174,27 @@ class ScoreCandidateSmokeTest(unittest.TestCase):
         if score.meaning_meaningbert is not None:
             self.assertIsInstance(score.meaning_meaningbert, float)
 
+    def test_sbert_is_actually_populated_not_silently_none(self):
+        """Regression test for a real bug found during the LR.2 sanity
+        check (2026-08-30): semantic.semantic_similarity() does NOT
+        auto-load SBERT the way meaningbert_score()/contextual_fit_score()
+        do -- without score_candidate() calling semantic.load_sbert()
+        itself, this field silently stays None forever in a fresh
+        process, with no error, degrading "meaning" to MeaningBERT alone
+        with nothing visibly wrong. This test fails loudly if that call
+        is ever removed, on a machine capable of loading SBERT at all
+        (skipped, not failed, if the model genuinely can't load here)."""
+        import semantic
+        if not semantic.load_sbert():
+            self.skipTest("SBERT cannot load in this environment — nothing to regress against")
+        p = _profile()
+        score = score_candidate(
+            "The team will finalize the report tomorrow.",
+            "The team will finalize the summary tomorrow.",
+            "summary", p, source="substitution",
+        )
+        self.assertIsNotNone(score.meaning_sbert, "SBERT silently returned None — load_sbert() call may be missing")
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
