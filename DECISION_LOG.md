@@ -4192,3 +4192,64 @@ not gated on LR.1) -> Stage LR.3 (reranker validation, conditional on
 LR.1's result) -> Stage 2 generative RL (on hold pending GPU access or
 a validated cheaper proxy, not rejected). Full record:
 `STAGE_LR_PROPOSAL_REVIEW.md`, `LEARNED_REFORMULATION_RESEARCH.md`.
+
+---
+
+### 2026-08-30-G — "Stage 2" (generative RL) renamed to LR.4; GPU access confirmed arrangeable
+
+**What was done:** the label "Stage 2," used in 2026-08-30-F for the
+proposal's generative-RL phase, was found to collide with this
+project's own, much earlier "Stage 2" (the scope-narrowing pass --
+`DOCS.md`/`HANDOFF.md`). Renamed to **LR.4**, continuing the LR.1-LR.3
+numbering rather than reusing a taken label -- same fix pattern as the
+Stage 5/Stage LR rename (2026-08-30-C). Separately, recorded that GPU
+access can be arranged for this project, so hardware is not the hard
+stop §4 of `STAGE_LR_PROPOSAL_REVIEW.md` implied.
+
+**Why it doesn't change the plan:** LR.4 was never gated on hardware
+alone -- it's gated on LR.3 producing a validated reward signal first.
+Training a generative model against an unproven reward, even on a GPU,
+risks reproducing Phase 9B/9C's failure mode faster and more
+expensively, not avoiding it. GPU access removes one blocker for LR.4
+once LR.1-LR.3 clear; it does not let LR.4 start before them.
+
+**Category:** Stage LR naming/process correction. Recorded on
+`stage-lr`. No code touched. Full record: `STAGE_LR_PROPOSAL_REVIEW.md`,
+`LEARNED_REFORMULATION_RESEARCH.md`.
+
+---
+
+### 2026-08-30-H — LR.1 (data reality check) executed: effectively 0 usable comparison pairs found
+
+**What was done:** per the working plan (2026-08-30-F), LR.1 was
+executed, not just scoped. Direct inspection, not estimation, of every
+labeled corpus in the repo: `eval/r50_dataset/labeled_dataset.json`
+(135 records) grouped by (original sentence, word replaced) to check
+for two *different* rated replacement candidates for the same slot;
+`eval/pilot_responses/P1.csv` (the only real human data) checked for
+its actual field shape; the profile-construction code behind
+`eval/r10_corpus.json` (`eval/r10_build_corpus.py`) checked for how
+many genuinely distinct profiles were used.
+
+**Result:** (1) **1 usable same-context comparison pair found out of
+135 records** ("search"->"look" vs. "search"->"research") -- every
+other apparent repeat was the identical substitution re-verified across
+phases, not a second option. (2) Test profiles are built from 7-9
+fixed, project-authored templates reused across ~133-210 sentences --
+template variety, not independently-collected real speakers. (3) The
+only real human data (P1, 20 items) is genuinely pairwise in shape
+(prefer original vs. rewrite) but answers a different question than
+"which candidate word is better," and is one participant.
+
+**Decision:** LR.3 (reranker training/validation) is named **explicitly
+blocked on data**, per the plan's own conditional design -- not trained
+on what's available. Two concrete unblocking paths identified, both new
+work rather than reformatting: generate genuine second candidates for
+already-rated cases and run new A-vs-B judgments (reuses the
+established Claude-as-judge harvesting pattern from Phase 8/8B/9/10/11);
+or obtain more than one real declared profile. Neither attempted here --
+LR.1's job was to quantify, not to start collecting.
+
+**Category:** Stage LR data-check finding. Recorded on `stage-lr`. No
+training-set builder or model exists yet -- this is measurement only.
+Full record: `LEARNED_REFORMULATION_RESEARCH.md` (LR.1 section).

@@ -232,6 +232,64 @@ this section previously had:
    signal. GPU access removes one blocker once LR.1–LR.3 clear; it
    doesn't let LR.4 skip ahead of them.
 
+## LR.1 — data reality check, executed 2026-08-30
+
+**Method:** direct inspection of every labeled/evaluation corpus in this
+repo, not an estimate — `eval/r50_dataset/labeled_dataset.json` (the
+largest, 135 records), `eval/pilot_responses/P1.csv` (the only real
+human data), and the profile-construction code behind `eval/r10_corpus.json`
+et al. (`eval/r10_build_corpus.py`, `eval/r10_harvest.py`).
+
+**[FACT] Part A — same-context comparison pairs, checked directly:**
+`eval/r50_dataset/labeled_dataset.json`'s 135 records are each a single
+(sentence, one substitution tried, one quality rating) triple — not a
+choice between candidates. Grouping records by (original sentence,
+word being replaced) and checking for two *different* replacement words
+rated differently for the same slot: **1 usable pair found out of 135
+records** ("search"→"look" vs. "search"→"research," both rated SEVERE
+independently). Every other apparent repeat was the identical
+substitution re-verified across phases (e.g. "strategy"→"way" logged
+three times, same word, same severity, from re-runs) — not a second
+option to compare against. **Real, ready-to-use A-vs-B substitution
+pairs in this project's entire recorded history: effectively 0.**
+
+**[FACT] Part B — profile diversity, checked directly:** the eval
+corpora's test profiles are built from **7-9 fixed templates**
+(`single_sound`, `single_word`, `multi_word`, `dense_mixed_generic`,
+`multi_sound`, `word_plus_sound`, `sparse_common_sound` —
+`eval/r10_build_corpus.py`), authored by this project and reused across
+~133-210 sentences. This is template variety, not independently-
+collected distinct speakers. The only real human data,
+`eval/pilot_responses/P1.csv` (20 rated items, participant P1), is a
+genuine preference pair in shape — `pair_id` + `preference:
+Reformulated/Original` — but it's "do you prefer the rewrite over the
+original," not "which of two candidate words is better," and it's one
+person.
+
+**[INTERPRETATION]** The proposal's "reformatting, not fresh
+collection" claim doesn't just need softening — the actual count is
+close to zero, checked, not assumed. Getting real training data for a
+reranker means new work on one of two paths: (1) generate a genuine
+second candidate for cases already rated once, run a new A-vs-B
+judgment on the pair (buildable — reuses this project's established
+Claude-as-judge harvesting pattern from Phase 8/8B/9/10/11 — but it's
+new data collection, starting from 1 real pair today, not a
+reformatting task); (2) get more than one real declared profile — more
+real participants, or explicit, disclosed use of synthetic-template
+diversity with the caveat that it doesn't test generalization to an
+actual new speaker.
+
+**[DECISION] LR.3 status, per the plan's own conditional design:**
+named **explicitly blocked on data**, same treatment `ROADMAP.md` R2
+already gives the difficulty-formula weights — not trained on what's
+available. Reopens once path (1) or (2) above produces a real, counted
+number of pairs from more than one profile, not once "some" data
+exists.
+
+**[NOT DONE]** LR.1 quantified what exists; it did not attempt to build
+new comparison pairs or recruit new participants — that's the concrete
+next action under path (1)/(2) above, a separate, later decision.
+
 This section is no longer "not yet decided" for the near-term sequence
 above; what remains genuinely open is LR.1's actual result and whatever
 LR.3/LR.4 look like once it lands.
