@@ -224,10 +224,14 @@ this section previously had:
 3. **Stage LR.3 — reranker validation.** Only if LR.1 finds enough real
    data to make a held-out-by-speaker split meaningful. Otherwise,
    named explicitly blocked on data, same as `ROADMAP.md` R2.
-4. **Stage 2 (generative RL) — on hold**, not rejected, pending GPU
-   access or a validated cheaper proxy. Not scoped in detail until one
-   of those is true.
+4. **LR.4 — generative RL (renamed from "Stage 2," which collided with
+   this project's own earlier Stage 2 — see `STAGE_LR_PROPOSAL_REVIEW.md`).
+   On hold**, not rejected. **Update 2026-08-30: GPU access can be
+   arranged**, so hardware is not the hard stop it looked like — but
+   LR.4 still doesn't start until LR.3 has produced a validated reward
+   signal. GPU access removes one blocker once LR.1–LR.3 clear; it
+   doesn't let LR.4 skip ahead of them.
 
 This section is no longer "not yet decided" for the near-term sequence
 above; what remains genuinely open is LR.1's actual result and whatever
-LR.3/Stage 2 look like once it lands.
+LR.3/LR.4 look like once it lands.

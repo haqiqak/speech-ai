@@ -128,18 +128,19 @@ bar (`VALIDATION.md` §55-56).
   CPU-only.
 - `trl` (the library named for DPO) — **not installed**, not in
   `requirements.txt`.
-- `ROADMAP.md` R23 already ran the closest real precedent to Stage 2's
-  approach: small decoder-only instruction-tuned models (Qwen2.5-0.5B/
+- `ROADMAP.md` R23 already ran the closest real precedent to the
+  proposal's generative-RL phase's approach: small decoder-only
+  instruction-tuned models (Qwen2.5-0.5B/
   1.5B) tested against the T5 baseline on this exact CPU-only setup.
   Result: **10–40× slower** than T5 (31–97s/case vs. 2.6s/case) and
   *worse* output quality. That was single-shot inference, not training.
   An RL loop (LoRA fine-tune + PPO/GRPO rollouts — many forward+backward
   passes per update) is categorically more expensive again.
 
-**[INTERPRETATION]** Stage 2 as scoped is very likely not executable on
-this hardware in any reasonable timeframe. The proposal does not cost
-this out or mention the R23 precedent, which is the project's own
-directly relevant data point.
+**[INTERPRETATION]** LR.4 (the generative-RL phase) as scoped is very
+likely not executable on this hardware in any reasonable timeframe. The
+proposal does not cost this out or mention the R23 precedent, which is
+the project's own directly relevant data point.
 
 ## 5. Revised plan
 
@@ -184,13 +185,20 @@ move this project already made for `word_difficulty()`'s weights
 (`ROADMAP.md` R2) — rather than training on what's available and
 risking a repeat of §3.1's Phase 9B/9C outcome.
 
-### Stage 2 (generative RL) — on hold, not rejected
+### LR.4 (generative RL, formerly labeled "Stage 2") — on hold, not rejected
 
-Not scoped in detail until either (a) GPU access exists, or (b) a
-cheaper proxy is validated first — e.g. whether a *frozen*, non-fine-
-tuned small model can be steered by the LR.2 reward at inference time
-(rerank/rescore only, no training) before committing to a training run
-this hardware cannot obviously run.
+**Renamed 2026-08-30** — "Stage 2" collided with this project's own,
+earlier "Stage 2" (the scope-narrowing pass, see `DOCS.md`/`HANDOFF.md`).
+Same content, continuing the LR.1–LR.3 numbering instead.
+
+**Update 2026-08-30:** GPU access can be arranged — the hardware gate
+named in §4 is not a hard stop. This does **not** change the ordering:
+LR.4 is still gated on LR.3 producing a validated reward signal first,
+not on hardware alone. Training a generative model against an unproven
+reward — even on a GPU — risks the same failure Phase 9B/9C already
+demonstrated on this project's own data, just faster and more
+expensively. GPU access removes one blocker for LR.4 once LR.1–LR.3
+clear; it doesn't let LR.4 start before them.
 
 ## 6. Where the original proposal's author agreed, verbatim reasoning kept for the record
 
@@ -201,6 +209,6 @@ without checking the live code first, agreed the Phase 9B/9C precedent
 was the most important miss, and endorsed the revised plan's structure
 (LR.1 as a hard prerequisite that converts the false data claim into a
 measurement; LR.2 as low-risk and worth doing regardless of LR.1's
-result; Stage 2 genuinely on hold rather than quietly scoped around the
+result; LR.4 genuinely on hold rather than quietly scoped around the
 hardware gap) — recorded here so this isn't read as a one-sided
 critique the original proposal never had a chance to respond to.
