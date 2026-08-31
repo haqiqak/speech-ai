@@ -4037,3 +4037,83 @@ project's own append-only discipline (see this file's header), the
 2026-08-30-B entry above is left as originally written rather than
 edited -- this entry is the correction on record. Full record:
 `LEARNED_REFORMULATION_RESEARCH.md`, `CHANGELOG.md`.
+
+---
+
+### 2026-08-30-D — Fixed: SBERT/MeaningBERT/contextual-fit were silently failing to load on this machine (environment fix, affects the frozen baseline)
+
+**What was done:** found (while testing unrelated Stage LR code, on the
+`stage-lr` branch) that all three semantic-preservation/naturalness
+signals in `semantic.py` -- SBERT, MeaningBERT, and the contextual-fit
+model -- were failing to load on this machine, silently falling back to
+frequency-only ranking. Root cause: `protobuf` 5.29.6 installed, but
+`tensorflow` 2.21.0 (present in this venv, imported transitively when
+`transformers`/`sentence-transformers` probe for available backends)
+requires protobuf gencode >= 6.31.1. Fixed by removing the actual root
+cause rather than bumping a shared dependency: `tensorflow` and `keras`
+were uninstalled -- confirmed first, by direct grep, that no file in
+this repo imports `tensorflow`, and that neither `sentence-transformers`
+nor `transformers` declares it as a requirement (both run on `torch`
+alone, already a direct requirement). `protobuf` was left at 5.29.6,
+since two *other* unrelated packages present in this same venv
+(`google-ai-generativelanguage`, `grpcio-status` -- neither used by this
+project, not in `requirements.txt`) require protobuf `<6.0`; bumping
+protobuf instead of removing `tensorflow` would have fixed this
+project's models while breaking those two. Separately found and fixed:
+`pyinflect` (a direct `requirements.txt` dependency) was missing
+entirely from this venv, pre-existing and unrelated to the protobuf
+issue -- installed, since `tests/contextual_fit_test.py` and
+`tests/meaningbert_test.py` both import `reformulate.py` -> `grammar.py`
+-> `pyinflect` and could not even be collected without it.
+
+**Alternatives considered:** Upgrade `protobuf` to `>=6.31.1` instead.
+Tried first, then reverted -- confirmed via `pip install` output that
+it breaks `google-ai-generativelanguage`'s and `grpcio-status`'s own
+declared constraints. Removing the unused `tensorflow`/`keras` instead
+fixes the same problem with a smaller blast radius, since nothing in
+this project needs them.
+
+**Why:** Direct instruction, after this was found to affect not just
+Stage LR's new code but `semantic.py` itself -- shared with the live,
+frozen pipeline `main` ships. Verified as real, not just "tests pass,"
+per the same standard applied when the silent failure was first caught:
+loading status flags alone were insufficient evidence last time (they
+reported failure clearly, so that wasn't the issue here), but real
+numeric output was still checked directly rather than trusted from
+status alone.
+
+**Measured result:** All three models load and produce real, correctly-
+directioned numbers, checked directly, not just via status flags:
+SBERT similarity 0.829 (paraphrase-shaped pair) vs. 0.038 (unrelated
+pair); MeaningBERT 94.32 vs. 0.02 (same pairs, native 0-100 scale);
+contextual-fit produces small positive probabilities in the expected
+range for both a known-natural and a known-natural-adjacent word
+(0.0003-0.0068 -- consistent with this signal's own documented
+low-magnitude-but-real-signal behavior, R33-R37). This project's own
+test suites confirm it with real assertions, not just imports
+succeeding: `tests/semantic_test.py` 18/18 pass; `tests/
+contextual_fit_test.py` + `tests/meaningbert_test.py` 21/21 pass
+together, including `test_known_bad_case_scores_low`/
+`test_known_good_case_scores_higher`-style real-number checks, not just
+`test_status_reports_loaded`. `tests/smoke.py` (SBERT on) vs. `tests/
+baseline_sbert.txt`: **one line differs** -- `'dont' -> "don't"` is
+labeled `[spelling]` in the committed baseline, `[contraction]` in
+today's run; the actual corrected output text is byte-identical, only
+the internal layer-attribution label differs. This is in the
+`pyspellchecker`-based grammar-correction layer, a different subsystem
+from the three models this fix touched -- flagged as likely pre-
+existing drift (this environment could not run `tests/smoke.py` at all
+before `pyinflect` was restored, so there was no way to have observed
+this diff earlier), not investigated further and not fixed here since
+it's non-behavioral and out of this fix's scope. Baseline file left
+untouched -- regenerating it is a separate, deliberate decision, not
+made silently alongside an unrelated fix.
+
+**Category:** Routine maintenance / dependency fix, explicitly permitted
+under the freeze (`VALIDATION.md` §56 -- "routine maintenance...
+continues normally"). Affects `main` directly, recorded here because it
+affects the frozen baseline partners are relying on, per direct
+instruction. No reformulation algorithm, weight, threshold, or gate
+changed. Installed versions after this fix: `protobuf==5.29.6`,
+`pyinflect==0.5.1`, `tensorflow`/`keras` removed (were not in
+`requirements.txt`).

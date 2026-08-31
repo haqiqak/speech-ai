@@ -6,6 +6,19 @@ entry exists; most commits below have no decision-log entry because they
 were routine/incremental — per Practice.md §14, the changelog is the fast
 index, the decision log is the full record, and not every line needs both.
 
+- **2026-08-30, fourth** fix: removed unused `tensorflow`/`keras`
+  (protobuf gencode conflict was silently breaking SBERT/MeaningBERT/
+  contextual-fit model loading — all three were falling back to
+  frequency-only ranking on this machine); restored missing
+  `pyinflect` (declared in `requirements.txt`, absent from this venv).
+  Verified with real numeric output, not just status flags, and
+  against this project's own test suites (39 tests across
+  `semantic_test.py`/`contextual_fit_test.py`/`meaningbert_test.py`,
+  all passing). One non-behavioral smoke-test diagnostic-label diff
+  found and disclosed, not fixed (output text unchanged). Routine
+  maintenance, explicitly permitted under the freeze; no reformulation
+  algorithm/weight/threshold/gate touched. → `DECISION_LOG.md`
+  2026-08-30-D.
 - **2026-08-30, third** docs: renamed Stage 8 to **Stage LR** ("LR" =
   Learned Reformulation) and its branch from
   `research/stage8-learned-reformulation` to `stage-lr`, across
