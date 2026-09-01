@@ -5211,3 +5211,40 @@ three distinct real participants (friend_1: 6, friend_2: 1, friend_3:
 result). Recorded on `stage-lr`. No participant content committed.
 Full record: `LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), real
 participants" section, updated).
+
+---
+
+### 2026-09-01-E — Fifth real participant: zero yield again, but from
+three distinct, non-overlapping mechanisms including a new one (NLI
+false positive) — `REFORMULATION_PROBLEM_MAP.md` §3.7 updated with a
+concrete instance
+
+**What was done:** built a profile from a real declared sound-class,
+2 words, and 1 phrase; harvested 25 natural sentences. Diagnosed all
+three zero-outcomes directly against the real pipeline rather than
+guessed. (1) One declared word's clean, correct single-word synonym
+passed every other gate and was rejected every time by
+`semantic.logical_consistency_check()` (the frozen pipeline's own
+Phase 11C NLI gate) as a false-positive "contradiction" — re-tested
+across 4 sentences, never once accepted. This is the first concrete
+instance of a risk `REFORMULATION_PROBLEM_MAP.md` §3.7's literature
+review had named but marked untested; that section now records it.
+(2) The other declared word has exactly one usable synonym in WordNet
+at all, so path (b)'s need for a *second*, different candidate can
+never be met — same no-true-synonym shape already found twice before
+(2026-09-01-A, -C), not new. (3) The declared phrase's sound-bearing
+word is a stopword the pipeline never flags as substitutable by
+design, so the phrase is never engaged at all (silent non-treatment,
+not a broken output this time) — a different-flavored consequence of
+the already-open `ROADMAP.md` R13 gap, not a new item.
+
+**What was *not* done:** no gate, threshold, or NLI/WSD/phrase-
+matching logic changed on `main` or `stage-lr`, per the architecture
+freeze. Nothing was shown to the participant — no candidate cleared
+every gate this round.
+
+**Category:** Stage LR data point (path (b), fifth real participant)
+plus a `REFORMULATION_PROBLEM_MAP.md` §3.7 update. Recorded on
+`stage-lr`. No participant content committed — profile words, phrase,
+and sentences stay in `stage_lr/data/private/`, gitignored. Zero
+records added to `real_human_pairs.json` this entry; n=8 unchanged.

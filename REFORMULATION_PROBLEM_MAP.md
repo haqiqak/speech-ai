@@ -694,6 +694,25 @@ this section.
   here is now partially closed for MeaningBERT specifically; still open
   for BERTScore/MoverScore/NLI-entailment, none of which were tested.
 
+  **Update, 2026-09-01 — Stage LR (branch `stage-lr`) path (b) exercised
+  `semantic.logical_consistency_check()` (the frozen pipeline's own
+  Phase 11C NLI gate, `reformulate.py::_try_substitution`'s final
+  assembled-sentence check) against a real participant's declared
+  profile for the first time, and found a concrete false positive
+  [FINDING].** A single-word substitution — a plain, direct synonym in
+  a different regional variety of English for a common hand tool —
+  passed every other gate cleanly (SBERT similarity ~0.89, antonym
+  check, duplicate check, all of it) and was then rejected outright by
+  this NLI check as a "contradiction." The two sentences differ only in
+  that one noun; nothing about the claim changed. This is exactly the
+  failure mode this section's own literature review flagged as
+  untested and worth watching for NLI specifically, now measured
+  concretely rather than left as a literature gap. Traced directly,
+  same session, via `reformulate._try_substitution`. Not fixed, per the
+  architecture freeze (`CLAUDE.md`) — recorded as a disclosed,
+  measured limitation. Full record: `DECISION_LOG.md` 2026-09-01 entry,
+  `LEARNED_REFORMULATION_RESEARCH.md` path (b) section.
+
 ### 3.8 Phrase-level replacement — a third tier between word-substitution and whole-sentence restructuring
 
 Prompted directly by the user's question: instead of only choosing
