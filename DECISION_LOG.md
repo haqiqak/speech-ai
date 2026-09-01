@@ -5386,3 +5386,29 @@ decided before either verdict is known.
 **Category:** Stage LR mechanism change (`ingest_real_human_pair.py`)
 plus a test-isolation bugfix plus a data migration. Recorded on
 `stage-lr`. No participant content committed.
+
+---
+
+### 2026-09-01-I — Correction: the 7 near-synonym-tagged records
+(2026-09-01-G/H) removed outright, per direct follow-up instruction;
+n=8, 7/8 agree (87.5%) again
+
+**What was done:** per direct instruction ("remove those 7... a bad
+test once recognized must be let separate from the ones we are gonna
+use for our conclusions... make sure your conclusions are only drawn
+from real ones"), the 7 records tagged `pair_distinguishability:
+"near_synonym"` were deleted from `real_human_pairs.json`, not merely
+excluded via `summarize(exclude_near_synonym=True)`. The mechanism
+added in 2026-09-01-H stays in the codebase for any future batch where
+filtering (not deletion) is preferred; for this batch, deletion is
+what happened.
+
+**Measured result:** n=8, 7/8 agree (87.5%) — back to the figure
+standing before 2026-09-01-G, since that batch is now gone rather than
+just excluded. `LEARNED_REFORMULATION_RESEARCH.md`'s two-figure
+framing from 2026-09-01-H is left as originally written and superseded
+by an append-only correction note, per this log's own precedent for
+handling a dropped result (2026-08-30-W).
+
+**Category:** Data correction, recorded per direct instruction.
+Recorded on `stage-lr`. No participant content committed.
