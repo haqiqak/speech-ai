@@ -5119,3 +5119,27 @@ words and sentences stay in `stage_lr/data/private/`, gitignored. The
 per the established same-session dual-verdict protocol
 (`stage_lr/ingest_real_human_pair.py`) -- not yet judged by either
 side as of this entry.
+
+---
+
+### 2026-09-01-B — friend 2's single pair judged same-session; real human-vs-Claude data now spans two participants, n=7, 6/7 agree
+
+**What was done:** the one clean pair from 2026-09-01-A was relayed to
+the participant (human picked candidate A), and a fresh, blind
+general-purpose Claude judgment was obtained in the same session
+immediately after (independently also picked candidate A, citing
+closer meaning preservation and more idiomatic phrasing than candidate
+B). Both verdicts logged together via `stage_lr/ingest_real_human_pair.
+record_real_human_pair()`, satisfying its hard same-session,
+no-default-kwargs rule (2026-08-30-Q), now exercised across two real
+participants.
+
+**Measured result:** n=7, 6/7 agree (86%), up from n=6, 5/6 (83%) --
+friend_1's 6 records plus friend_2's 1. No conclusion drawn, no LR.2
+weights touched, no change to LR.3's gating -- still well below any
+scale this project treats as actionable.
+
+**Category:** Stage LR data point (path (b), friend 2's first judged
+result). Recorded on `stage-lr`. No participant content committed.
+Full record: `LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), real
+participants" section, updated).
