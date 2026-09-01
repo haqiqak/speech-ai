@@ -5460,3 +5460,25 @@ friend_1 pairs are queued for relay, not yet judged as of this entry.
 existing participants, per direct instruction). Recorded on
 `stage-lr`. No participant content committed — profile words and
 sentences stay in `stage_lr/data/private/`, gitignored.
+
+---
+
+### 2026-09-01-K — friend_1's 7 queued pairs judged same-session,
+6/7 agree, a genuine directional split not a tie artifact
+
+**What was done:** the participant gave definite A/B picks on all 7
+queued pairs. A single batched blind Claude judgment was obtained for
+all 7 in the same session. Both logged via `record_real_human_pair()`.
+
+**Measured result:** 6/7 agree. The one disagreement is a real
+directional split (Claude picked the opposite letter from the
+participant, both with a stated reason, neither a "tie") — unlike
+2026-09-01-G's removed batch, this is exactly the shape of
+disagreement path (b) exists to surface, not a pair-selection
+artifact. n=15, 13/15 agree (86.7%), up from n=8, 7/8 (87.5%) — four
+distinct real participants (friend_1: 13; friend_2: 1; friend_3: 1).
+
+**What was *not* done:** no conclusion drawn, no LR.2/LR.3 change.
+
+**Category:** Stage LR data point (path (b), friend_1's second judged
+batch). Recorded on `stage-lr`. No participant content committed.
