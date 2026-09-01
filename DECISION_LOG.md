@@ -5057,3 +5057,22 @@ act on, consistent with 2026-08-30-S's treatment of the first result.
 Recorded on `stage-lr`. No participant content committed. Full record:
 `LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), second real
 participant" section, updated).
+
+---
+
+### 2026-08-30-W — Correction: the participant behind 2026-08-30-S's result was excluded per direct instruction; real human-vs-Claude data now reflects one participant, n=6
+
+**What was done:** per direct instruction, the 4 records described in
+2026-08-30-S (and folded into 2026-08-30-V's cumulative figure) were
+removed from `stage_lr/data/real_human_pairs.json`, along with all
+associated local files. `LEARNED_REFORMULATION_RESEARCH.md`'s path (b)
+sections were rewritten to reflect the corrected data (now: one
+participant, n=6, 5/6 agree). 2026-08-30-S and 2026-08-30-V are left as
+originally written, per this log's own append-only rule, rather than
+edited or removed.
+
+**Category:** Data correction, recorded per direct instruction to keep
+this log internally consistent with what `stage_lr/data/real_human_pairs.json`
+actually contains going forward. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), real participants"
+section).
