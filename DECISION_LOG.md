@@ -5143,3 +5143,38 @@ scale this project treats as actionable.
 result). Recorded on `stage-lr`. No participant content committed.
 Full record: `LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), real
 participants" section, updated).
+
+---
+
+### 2026-09-01-C — Fourth real participant (counted "friend 3"): two
+independent zero-yield mechanisms found, one already-known gap (R13)
+now concretely broken output, not just a hypothesis
+
+**What was done:** built a profile from the participant's declared
+sound-class, one declared word, and one declared phrase; harvested 20
+natural sentences. Result: the declared word produced no usable
+candidate in any sentence (root-caused: its common senses have no
+single-word WordNet synonym at all, a different and more fundamental
+shape than 2026-09-01-A's WSD-narrows-to-a-weak-candidate case, though
+the same disambiguation mechanism was involved). The declared phrase
+produced exactly one candidate pair, and it was broken: one word
+inside the phrase also matched the declared sound-class independently,
+got flagged and substituted as an ordinary single word (phrases have
+no consumer in the pipeline at all — `ROADMAP.md` R13, already an open
+item, not a new discovery), and the fixed expression's anchor word was
+replaced with an unrelated superlative-adjective form. Traced directly
+against the real pipeline, same session.
+
+**What was *not* done:** the broken pair was **not** shown to the
+participant — excluded before relay, same "never ship a bad guess"
+discipline `REFORMULATION_PROBLEM_MAP.md` §2.4 already established for
+idiom spans. No gate, threshold, or WSD logic changed on `main` or
+`stage-lr`, per the architecture freeze. `ROADMAP.md` R13 updated with
+this concrete instance rather than left as an abstract gap.
+
+**Category:** Stage LR data point (path (b), fourth real participant /
+counted "friend 3") plus a `ROADMAP.md` R13 update. Recorded on
+`stage-lr`. No participant content committed — profile words, phrase,
+and sentences stay in `stage_lr/data/private/`, gitignored. Zero
+records added to `real_human_pairs.json` this entry — nothing usable
+was produced for this participant yet.

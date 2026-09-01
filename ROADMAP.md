@@ -525,6 +525,28 @@ differently than a plain word-level flag would — that finer distinction
 is still open). Part (a), phrase matching, is untouched — `phrase_values()`
 is not called anywhere in `reformulate.py`. Still open.
 
+**Update, 2026-09-01 — Stage LR (branch `stage-lr`) path (b) gave a
+concrete, measured instance of this gap causing a visibly broken output,
+not just an abstract missing feature [FINDING].** A real participant
+declared both a sound-class and a phrase, where one word inside the
+declared phrase happens to also match the declared sound-class. Since
+`phrase_values()` is never read (this item, still open), that word was
+flagged and substituted purely as an ordinary single word — with no
+awareness it sits inside a declared multi-word phrase — producing a
+grammatically-parseable but semantically broken result (the fixed
+expression's anchor word replaced by an unrelated superlative
+adjective form). Traced directly against the real pipeline, same
+session. Not fixed, per the architecture freeze (`CLAUDE.md`) — this
+item was already correctly labeled future work; this is a real-world
+confirmation that leaving it unaddressed has a user-visible cost, not
+just a theoretical one. Practical handling: the broken pair was
+excluded before being shown to the participant, same discipline as
+`REFORMULATION_PROBLEM_MAP.md` §2.4's "never ship a bad guess"
+precedent for idiom spans — this one just wasn't caught by that guard,
+since the guard only covers a fixed, hardcoded list, not the
+speaker's own declared phrases. Full record: `DECISION_LOG.md`
+2026-09-01 entry, `LEARNED_REFORMULATION_RESEARCH.md` path (b) section.
+
 ### R14. Build and browser-verify the inline text-selection flagging component
 **Linked finding:** `PROBLEM_FORMULATION.md` §7 — a true "select text
 in-place, a small button appears" interaction was researched and its
