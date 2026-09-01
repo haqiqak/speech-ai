@@ -5021,3 +5021,39 @@ participant) + a strengthened `main` finding. Recorded on `stage-lr`.
 No participant content committed. Full record:
 `LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), second real
 participant" section).
+
+---
+
+### 2026-08-30-V — Second real human-vs-Claude comparison: 5/6 agree; cumulative n=10, 6/10 (60%); the spread across people is the finding, not the pooled number
+
+**What was done:** the second participant's picks on the 6 candidate
+pairs came back. Per `ingest_real_human_pair.py`'s rule, obtained a
+Claude verdict on the identical 6 pairs, blind, in the same session,
+then logged both together via `record_real_human_pair()`.
+
+**Result:** 5/6 agree. Cumulative across both real participants so far
+(computed directly from `stage_lr/ingest_real_human_pair.summarize()`,
+not by hand): **n=10, 6/10 agree (60%)**. Per participant: participant
+1 was 1/4 (25%); participant 2 was 5/6 (83%).
+
+**Alternatives considered:** Report only the pooled 60% figure.
+Rejected -- the per-participant spread (25% vs. 83%) is more
+informative than the pooled number and would be lost by reporting only
+the aggregate. Treat the higher second-participant number as evidence
+the model is "actually fine." Rejected -- two participants can't
+establish which number (if either) is representative; the spread
+itself is exactly the reason path (b) needs many real people, not a
+sign the question is already answered.
+
+**Why:** Direct continuation of the same-session logging rule
+(2026-08-30-Q), now exercised twice.
+
+**Measured result:** 10/10 real pairs logged with both verdicts across
+2 participants. No conclusion drawn, no LR.2 weights touched, no
+change to LR.3's gating -- explicitly named as still too few people to
+act on, consistent with 2026-08-30-S's treatment of the first result.
+
+**Category:** Stage LR data point (path (b), second real result).
+Recorded on `stage-lr`. No participant content committed. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), second real
+participant" section, updated).
