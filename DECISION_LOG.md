@@ -5248,3 +5248,54 @@ plus a `REFORMULATION_PROBLEM_MAP.md` §3.7 update. Recorded on
 `stage-lr`. No participant content committed — profile words, phrase,
 and sentences stay in `stage_lr/data/private/`, gitignored. Zero
 records added to `real_human_pairs.json` this entry; n=8 unchanged.
+
+---
+
+### 2026-09-01-F — Fifth participant's profile expanded with 5 more
+self-chosen same-sound words, per direct instruction; 11 candidate
+pairs found, two new grammaticality/meaning findings surfaced and
+excluded before relay
+
+**What was done:** per direct instruction to supply additional words
+matching the participant's declared sound-class myself rather than ask
+again, 5 more everyday adjectives were added and 20 more natural
+sentences written; harvest re-run (45 sentences total). Result: 11
+clean candidate pairs, by far the highest yield of any real profile
+this session. All 11 were manually quality-checked before any were
+queued for relay (per this session's own "never ship a bad guess"
+practice) rather than passed through automatically.
+
+**Two new findings surfaced and confirmed directly against the real
+pipeline, both disclosed, neither fixed:**
+1. Indefinite-article agreement ("a"/"an") is not adjusted when a
+   substitution changes the following word's leading sound — a
+   consonant-initial declared word was replaced with a vowel-initial
+   synonym inside an "a ___" slot, and the article was left as "a".
+   `REFORMULATION_PROBLEM_MAP.md` §2.3 updated with this concrete
+   instance (a narrower gap than the section's existing "beyond
+   single-word morphology, nothing is checked" finding).
+2. WSD can pick an outright wrong sense for a short, common,
+   locally-ambiguous adjective, not just a narrow-but-correct one — a
+   literal/physical sense of a declared word was replaced using
+   candidates from its figurative/emotional sense instead, changing
+   what the sentence claims. Reproduced on 2 sentences.
+   `REFORMULATION_PROBLEM_MAP.md` §2.6 updated with this instance,
+   distinguished from the already-known "narrow pool" cost as a
+   sharper variant of the same root cause.
+
+Also reproduced (third time, no new documentation needed — already on
+record from 2026-08-30-R): `sanitize_input()`'s infinitive-after-"to"
+conjugation bug, this time appearing in `sanitize_input()`'s own
+correction pass before any substitution occurred.
+
+**What was *not* done:** no gate, threshold, WSD, or inflection logic
+changed on `main` or `stage-lr`, per the architecture freeze. The
+pairs carrying either defect (1 grammar-broken, 2 meaning-changed via
+wrong sense, 1 article-agreement-broken) were excluded from what gets
+shown to the participant — of the 11 found, 7 clean pairs remain
+queued for the participant's judgment, not yet relayed as of this
+entry.
+
+**Category:** Stage LR data point (path (b), fifth participant,
+expanded) plus two `REFORMULATION_PROBLEM_MAP.md` updates (§2.3, §2.6).
+Recorded on `stage-lr`. No participant content committed.

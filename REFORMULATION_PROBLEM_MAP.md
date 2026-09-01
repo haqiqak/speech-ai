@@ -145,6 +145,22 @@ pipeline itself. Still unaddressed, still open — this factor keeps
 accumulating separate, real evidence across every tier that's been
 built (substitution, and now phrase replacement).
 
+**Update, 2026-09-01 — Stage LR (branch `stage-lr`) path (b) found a
+fifth, specific instance: indefinite-article agreement ("a" vs. "an")
+is not adjusted after a substitution changes the following word's
+leading sound [FINDING].** A real participant's declared word,
+consonant-initial, was substituted with a vowel-initial synonym in an
+"a ___" slot; `reformulate()` — traced via a direct, real call, not
+inferred — produced "a" followed by the vowel-initial replacement
+unchanged, rather than "an". `inflect()`/`_preserve_case()`'s
+morphological agreement (§2.3's opening paragraph) covers the
+replaced word itself, not the determiner preceding it — a narrower,
+previously undemonstrated gap in the same "beyond single-word
+morphology, nothing is checked" category this section already
+documents. Not fixed, per the architecture freeze (`CLAUDE.md`). Full
+record: `DECISION_LOG.md` 2026-09-01 entry, `LEARNED_REFORMULATION_
+RESEARCH.md` path (b) section.
+
 ### 2.4 Naturalness and idiomaticity
 
 **Current state [FINDING, the single best-evidenced problem in this
@@ -285,6 +301,31 @@ changing `MIN_SEMANTIC`, `disambiguate_synset()`, or any gate on `main` or
 the same declared words (matching path (a) batch-3/4 precedent), not by
 loosening any gate. Full detail: `DECISION_LOG.md` 2026-09-01 entry,
 `LEARNED_REFORMULATION_RESEARCH.md` path (b) section.
+
+**Update, 2026-09-01, same day — a sharper variant found on the same
+Stage LR path: WSD doesn't just sometimes narrow to a *weak* candidate
+pool, it can pick an actively *wrong* sense for a short, common,
+locally-ambiguous adjective, changing the sentence's meaning outright
+rather than just under-serving it [FINDING].** A real participant's
+declared word — a short, very common adjective with both a literal
+(physical) sense and a distinct figurative (emotional) sense — was
+substituted in a sentence using the literal sense, but
+`disambiguate_synset()` picked the figurative sense's synset instead
+(confirmed directly: `sem.disambiguate_synset()` called on the exact
+sentence returns the affection/emotional-warmth synset, not the
+physical-temperature one). Every resulting candidate was therefore
+drawn from the wrong sense, changing what the sentence actually claims
+(a physical-property description became an emotional one) — this
+passed `MIN_SEMANTIC` (SBERT can't see it's the wrong sense, only that
+the sentences are similar-shaped) and every other gate, and would have
+shipped as a "reformulated" success on the pipeline's own metrics.
+Reproduced on two different sentences using the same declared word.
+Not fixed, per the architecture freeze — recorded as a disclosed,
+measured limitation, sharper than (but consistent with) the abstract
+cost already named in this section's 2026-08-17 update. Excluded from
+what was shown to the participant, same "never ship a bad guess"
+discipline as §2.4's idiom guard. Full record: `DECISION_LOG.md`
+2026-09-01 entry, `LEARNED_REFORMULATION_RESEARCH.md` path (b) section.
 
 ### 2.7 Interactions between multiple substitutions in one sentence
 
