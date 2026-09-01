@@ -47,6 +47,7 @@ ROOT = Path(__file__).resolve().parent.parent
 REAL_HUMAN_PAIRS_PATH = ROOT / "stage_lr" / "data" / "real_human_pairs.json"
 
 Verdict = Literal["A", "B", "tie"]
+Distinguishability = Literal["distinguishable", "near_synonym"]
 
 
 def _now() -> str:
@@ -83,6 +84,7 @@ def record_real_human_pair(
     claude_preferred: Verdict,
     claude_reason: str,
     human_reason: str | None = None,
+    pair_distinguishability: Distinguishability = "distinguishable",
 ) -> dict:
     """Records one real-human-judged pair. `human_preferred` and
     `claude_preferred` are BOTH required — there is no way to call this
@@ -91,6 +93,15 @@ def record_real_human_pair(
     LEARNED_REFORMULATION_RESEARCH.md's "concrete, minimal ask" — a bare
     pick is enough); `claude_reason` is not optional, since Claude is
     always asked for one.
+
+    `pair_distinguishability` defaults to "distinguishable" (ordinary
+    case: the two candidates have some real, checkable quality gap).
+    Pass "near_synonym" for a pair chosen mainly for ease of generation
+    where both candidates are close enough that a tie is a defensible
+    verdict (`DECISION_LOG.md` 2026-09-01-G) — kept in the record
+    (never deleted; real, honestly-collected data isn't discarded
+    because an aggregate number moved) but excludable from
+    conclusion-drawing figures via `summarize(exclude_near_synonym=True)`.
 
     `participant_label` is whatever non-identifying label the user
     wants for this friend (e.g. "friend_1") — never a real name, per
@@ -109,6 +120,7 @@ def record_real_human_pair(
         "claude_preferred": claude_preferred,
         "claude_reason": claude_reason,
         "agree": human_preferred == claude_preferred,
+        "pair_distinguishability": pair_distinguishability,
         "judged_together_at": _now(),
     }
 
@@ -119,12 +131,22 @@ def record_real_human_pair(
     return record
 
 
-def summarize() -> dict:
+def summarize(*, exclude_near_synonym: bool = False) -> dict:
     """Real, human-vs-Claude agreement rate on whatever's been
     collected so far — separate from, never combined with, the 68
-    synthetic-template pairs' own agreement figures."""
+    synthetic-template pairs' own agreement figures.
+
+    `exclude_near_synonym=True` drops any pair recorded with
+    `pair_distinguishability="near_synonym"` (2026-09-01-G) before
+    computing the rate — for conclusion-drawing reads. The default
+    (False) reports every recorded pair, near-synonym batches included;
+    nothing is ever deleted from the underlying file either way. A
+    record with no `pair_distinguishability` field (pre-2026-09-01-G)
+    is treated as "distinguishable", its implicit prior meaning."""
     data = _load()
     pairs = data["pairs"]
+    if exclude_near_synonym:
+        pairs = [p for p in pairs if p.get("pair_distinguishability", "distinguishable") != "near_synonym"]
     if not pairs:
         return {"n": 0, "agree": 0, "rate": None}
     agree = sum(1 for p in pairs if p["agree"])

@@ -5342,3 +5342,47 @@ generate.
 **Category:** Stage LR data point (path (b), fifth participant, 7
 pairs judged) plus a methodology finding. Recorded on `stage-lr`. No
 participant content committed.
+
+---
+
+### 2026-09-01-H — `pair_distinguishability` field added to
+`ingest_real_human_pair.py`, per direct instruction: a recognized-bad
+test batch is separated from conclusion-drawing figures, not deleted
+
+**What was done:** per direct instruction ("a bad test once
+recognized must be let separate from the ones we are gonna use for
+our conclusions"), `record_real_human_pair()` gained an optional
+`pair_distinguishability` kwarg (`"distinguishable"` default /
+`"near_synonym"`), and `summarize()` gained `exclude_near_synonym`
+(default `False`, so existing callers are unaffected). The 7-pair
+batch from 2026-09-01-G was tagged `"near_synonym"` retroactively via
+a one-off migration script (it was logged, and the problem diagnosed,
+before this mechanism existed) — no record was deleted or edited
+otherwise. Also fixed, in the same pass: `tests/
+stage_lr_ingest_real_human_pair_test.py`'s `RecordingTest` was backing
+up/restoring the live `real_human_pairs.json` in place rather than
+redirecting to an isolated temp path, which meant exact-count
+assertions (`n == 2`, etc.) had been silently invalid ever since real
+participant data started accumulating in that file — found while
+running the suite after this change, not introduced by it; fixed by
+monkeypatching `ihp.REAL_HUMAN_PAIRS_PATH` per test instead. 4 new/
+updated tests added; full suite (12 tests) passes.
+
+**Measured result, both figures now reported side by side going
+forward, per direct instruction neither should stand alone:**
+- All recorded pairs: n=15, 8/15 agree (53.3%).
+- Conclusion-eligible (excludes the tagged near-synonym batch): n=8,
+  7/8 agree (87.5%) — identical to the figure standing before
+  2026-09-01-G, since that batch is the only one tagged out so far.
+
+**What was *not* done:** the near-synonym tag doesn't relabel or
+reinterpret Claude's 6 "tie" verdicts as right or wrong — it marks the
+batch as low-information for path (b)'s specific question. Future
+near-synonym batches get tagged at collection time (screened before
+relay), never retroactively based on whether the aggregate rate looked
+good or bad — the criterion is a real quality gap between candidates,
+decided before either verdict is known.
+
+**Category:** Stage LR mechanism change (`ingest_real_human_pair.py`)
+plus a test-isolation bugfix plus a data migration. Recorded on
+`stage-lr`. No participant content committed.
