@@ -4972,3 +4972,52 @@ all `source: "synthetic_profile_template"`, `judged_by:
 researcher-designed (informed by, not copied from, the real profile).
 Full record: `LEARNED_REFORMULATION_RESEARCH.md` ("Path (a), batch 4"
 section), `stage_lr/harvest_batch4_new_templates.py`.
+
+---
+
+### 2026-08-30-U — Second real path (b) participant processed; sanitize_input() defect independently reproduced on a different sentence
+
+**What was done:** a second real participant answered the path (b) ask.
+Reused `stage_lr/harvest_real_profile.py` unchanged (no new code
+needed -- the generic-mechanism fix from 2026-08-30-R paid off
+immediately). Same privacy handling as the first participant: real
+content confined to `stage_lr/data/private/` (gitignored), only
+aggregate, non-identifying facts recorded here.
+
+**Result:** 15 sentences -> 5 no substitution change -> 3 no second
+candidate -> 7 found -> 0 contaminated -> 7 unique. Higher yield than
+participant 1 (5 found/5 unique) -- noted, not explained or
+generalized from at n=2.
+
+**The same `sanitize_input()` defect found for participant 1
+(`DECISION_LOG.md` 2026-08-30-R) reproduced independently on a
+different sentence:** `"He tried to predict..."` -> `"He tried to
+predicts..."` -- confirmed directly, same verification method (checked
+each sentence's own `sanitize_input()` output individually before
+trusting any of them). Two different real sentences, two different
+participants, identical failure shape (infinitive after "to"
+incorrectly conjugated). This upgrades the finding from "one odd case"
+to "a reproducible pattern" -- still not fixed here, but the case for
+treating it as a priority routine-maintenance item (the freeze's own
+permitted category) is now measurably stronger. One pair excluded
+again; **6 unique clean pairs remain**, ready for the participant.
+
+**Alternatives considered:** Treat this as a coincidence /
+low-priority curiosity given it's still not fixed. Rejected -- two
+independent real-world reproductions of the identical failure shape is
+exactly the kind of evidence this project's own discipline treats as
+worth escalating (pattern, not anecdote), even though fixing it
+remains a separate, deliberate decision on `main`, not bundled in here.
+
+**Why:** Direct continuation of path (b) as already built -- generate,
+verify, exclude any newly-found defects, hold for the participant's
+picks.
+
+**Measured result:** 6 clean candidate pairs held locally, awaiting the
+second participant's picks. No verdicts recorded yet, correctly.
+
+**Category:** Stage LR data generation (path (b), second real
+participant) + a strengthened `main` finding. Recorded on `stage-lr`.
+No participant content committed. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), second real
+participant" section).
