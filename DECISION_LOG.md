@@ -5412,3 +5412,51 @@ handling a dropped result (2026-08-30-W).
 
 **Category:** Data correction, recorded per direct instruction.
 Recorded on `stage-lr`. No participant content committed.
+
+---
+
+### 2026-09-01-J — Final round, per direct instruction: more sentences
+added to all three existing "friend" profiles using only their already-
+declared words (no new words invented for participants not present to
+ask); friend_1 yields 7 new clean pairs, friend_2/friend_3 yield none
+
+**What was done:** ~10 more natural sentences were added to each of
+friend_1's, friend_2's, and friend_3's existing input files, using
+only words/sounds/phrases each participant had already declared —
+unlike the fifth participant's profile (their own, expanded with
+their own authorization), no new content was invented on a friend's
+behalf. Harvest re-run on all three.
+
+**friend_1: 13 raw candidate pairs found, manually quality-screened
+before relay (same discipline as every prior round) down to 7 clean,
+distinguishable pairs.** 6 excluded: 1 for a clear grammar break (an
+adverb-only candidate word used in an adjective slot — same already-
+documented "beyond single-word morphology, nothing is checked" class
+as `REFORMULATION_PROBLEM_MAP.md` §2.3, no new doc entry needed), and
+5 for wrong-meaning substitutions traced to the same declared word's
+several distinct verb senses (introduce/display vs. represent/symbolize
+vs. comprise/constitute vs. allocate/distribute) — a further concrete
+instance of the already well-documented WSD factor (§2.6), not a new
+mechanism, so no new doc entry either. The 7 kept pairs each have a
+real, checkable quality gap (not near-synonyms), per 2026-09-01-H/I's
+now-standing screening rule.
+
+**friend_2 and friend_3: zero new pairs from either, despite the added
+sentences.** Every "found" outcome on both re-derived a pair already
+in hand from an earlier round (the same declared-word pair already
+recorded for friend_2; the same broken phrase pair and the same
+already-judged pair for friend_3) — no new information. Both profiles'
+remaining declared
+words continue to fail via mechanisms already on record (WSD-narrows-
+to-weak-candidate, no-true-synonym-exists, or the R13 phrase gap) —
+treated as effectively exhausted for this architecture, not re-tried
+further this round.
+
+**What was *not* done:** no gate, threshold, WSD, or grammar logic
+changed on `main` or `stage-lr`, per the architecture freeze. The 7
+friend_1 pairs are queued for relay, not yet judged as of this entry.
+
+**Category:** Stage LR data point (path (b), final round across three
+existing participants, per direct instruction). Recorded on
+`stage-lr`. No participant content committed — profile words and
+sentences stay in `stage_lr/data/private/`, gitignored.
