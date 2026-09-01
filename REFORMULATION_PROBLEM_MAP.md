@@ -253,6 +253,39 @@ forced to the identical sense) and one real, disclosed cost that
 *wasn't* fixed (single-sense candidate pools are sometimes smaller and
 score lower than the old sense-mixed pools, even when correct).
 
+**Update, 2026-09-01 — Stage LR (branch `stage-lr`, not `main`) real-participant
+data path (b) gave a concrete, measured instance of the disclosed cost above,
+not just a predicted one [FINDING, code-verified mechanism].** Per this
+project's standing privacy rule, the participant's actual declared words and
+sentences are not reproduced here — they live only under
+`stage_lr/data/private/` (gitignored). The mechanism, illustrated with a
+non-participant example of the same shape: an adjective with several distinct
+WordNet senses (e.g. "sharp," which has senses ranging from a broad
+"perceptive/intelligent" sense with many synonyms to a narrow, literal
+"keen-edged" sense with only one or two) gets `disambiguate_synset()`'d down
+to a single sense before candidate generation.
+When the sense picked for a given sentence happens to be a narrow one whose
+only synonym scores just under the live `MIN_SEMANTIC` threshold (0.85), the
+word ends up with zero usable candidates and the whole sentence is left
+unreformulated (`could_not_safely_reformulate`) — even though a different,
+equally valid sense of the same word would have had several synonyms that
+plausibly clear the threshold easily. Traced directly (not inferred), on the
+real participant's own declared word and sentence, via
+`reformulate._raw_candidates` → `semantic.disambiguate_synset` →
+`semantic.rank_candidates_contextually`, same-session. The same mechanism
+affected a second of the participant's three declared words. Practical effect
+on Stage LR path (b) harvesting specifically: this participant's full profile
+against 25 natural (not threshold-gamed) sentences yielded exactly **1** clean
+candidate-pair — most rejections were this WSD-narrows-to-one-weak-candidate
+shape, not missing synonyms (each affected word had several synonyms
+available once senses were unioned). Recorded here as a disclosed, measured
+limitation per the architecture freeze (`CLAUDE.md`) — **not** acted on by
+changing `MIN_SEMANTIC`, `disambiguate_synset()`, or any gate on `main` or
+`stage-lr`; Stage LR path (b) proceeded by adding more natural sentences for
+the same declared words (matching path (a) batch-3/4 precedent), not by
+loosening any gate. Full detail: `DECISION_LOG.md` 2026-09-01 entry,
+`LEARNED_REFORMULATION_RESEARCH.md` path (b) section.
+
 ### 2.7 Interactions between multiple substitutions in one sentence
 
 **Current state [FINDING, code-verified mechanism, not just a hypothesis]:**

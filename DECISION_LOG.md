@@ -5076,3 +5076,46 @@ this log internally consistent with what `stage_lr/data/real_human_pairs.json`
 actually contains going forward. Full record:
 `LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), real participants"
 section).
+
+---
+
+### 2026-09-01-A — Third real participant (counted as "friend 2" per
+2026-08-30's renumbering): profile harvest initially yielded 0/12 clean
+pairs; root-caused, not patched; expanded to 1/25 by adding sentences only
+
+**What was done:** built `stage_lr/data/private/real_profile_2_input.json`
+from the participant's declared profile (3 words, 1 sound-class set, 1
+phrase -- no participant content in this entry). First harvest run (12
+sentences) produced **0** clean pairs (11 no_substitution_change, 1
+no_second_candidate). Diagnosed directly against the real, unmodified
+`reformulate()` pipeline rather than guessed: two of the three declared
+words are polysemous in WordNet (4 and multiple senses respectively);
+`semantic.disambiguate_synset()` picked a single sense whose only
+synonym then failed the live 0.85 `MIN_SEMANTIC` threshold, while a
+different, equally valid sense of the same word had several synonyms
+that would likely have passed. This is the exact cost
+`REFORMULATION_PROBLEM_MAP.md` §2.6's 2026-08-17 update already named
+in the abstract ("single-sense candidate pools are sometimes smaller
+and score lower... even when correct") -- now measured concretely, not
+merely predicted. Detail and the exact traced mechanism:
+`REFORMULATION_PROBLEM_MAP.md` §2.6, 2026-09-01 update.
+
+**What was *not* done:** `MIN_SEMANTIC`, `disambiguate_synset()`, and
+every other gate were left untouched on both `main` and `stage-lr`, per
+the architecture freeze -- this is a disclosed limitation, not a bug to
+patch mid-harvest. The only change made was adding 13 more natural
+sentences (same declared words, not written to dodge the threshold) to
+the same participant's input file, matching path (a)'s own batch-3/4
+precedent of adding sentence material rather than changing the engine.
+Re-run on 25 sentences total yielded **1** clean pair (up from 0), still
+low -- reported honestly as the real yield for this profile, not
+padded or retried indefinitely.
+
+**Category:** Stage LR data point (path (b), third real participant /
+counted "friend 2") plus a `REFORMULATION_PROBLEM_MAP.md` update.
+Recorded on `stage-lr`. No participant content committed -- profile
+words and sentences stay in `stage_lr/data/private/`, gitignored. The
+1 pair is being held locally for the participant's blind A/B pick,
+per the established same-session dual-verdict protocol
+(`stage_lr/ingest_real_human_pair.py`) -- not yet judged by either
+side as of this entry.
