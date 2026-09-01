@@ -5299,3 +5299,46 @@ entry.
 **Category:** Stage LR data point (path (b), fifth participant,
 expanded) plus two `REFORMULATION_PROBLEM_MAP.md` updates (§2.3, §2.6).
 Recorded on `stage-lr`. No participant content committed.
+
+---
+
+### 2026-09-01-G — Fifth participant's 7 queued pairs judged
+same-session; aggregate rate swung from 87.5% to 53.3%, root cause
+identified as a pair-selection artifact, not a Claude-vs-human gap
+
+**What was done:** the participant gave a definite A pick on all 7
+queued pairs. A single batched blind Claude judgment was obtained for
+all 7 in the same session (`judge_pairs.py`'s batching pattern). Result:
+Claude returned `"tie"` on 6 of 7 (reasoning: near-synonyms,
+interchangeable, equally idiomatic) and matched the human's "A" on
+only 1. All 7 logged via `record_real_human_pair()`.
+
+**Measured result:** n=15, 8/15 agree (53.3%), down from n=8, 7/8
+(87.5%) — a 34-point swing from one 7-pair batch. `agree` is strict
+equality (`human_preferred == claude_preferred`) by the module's own
+design, so tie-vs-definite-pick correctly scores as disagreement; the
+question is what that disagreement means.
+
+**Root cause identified, not guessed:** asked directly what they were
+judging on, the participant independently volunteered that the pairs
+"were all close and not really different" — before being told any of
+Claude's verdicts. This matches Claude's own stated reasoning on 6 of
+the 7 almost exactly. The 5 words used for this batch were chosen
+specifically for unusually rich WordNet synonym availability, to clear
+this profile's earlier zero-yield problem (2026-09-01-A/C/E) — the
+same richness produced candidate pairs too close together to carry a
+real preference signal. Favors the reading that this batch's low
+agreement is a pair-selection artifact (near-ties forced into an A/B
+choice), not evidence Claude's judgment diverges from real human
+judgment on genuinely distinguishable pairs.
+
+**What was *not* done:** no conclusion drawn about Claude-as-judge's
+general validity, no change to `judge_pairs.py`'s tie handling, no
+LR.2/LR.3 change. `LEARNED_REFORMULATION_RESEARCH.md` updated with a
+methodological note for future batches: favor pairs with a
+demonstrable quality gap over whichever candidates are easiest to
+generate.
+
+**Category:** Stage LR data point (path (b), fifth participant, 7
+pairs judged) plus a methodology finding. Recorded on `stage-lr`. No
+participant content committed.
