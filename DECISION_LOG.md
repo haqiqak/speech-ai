@@ -5178,3 +5178,36 @@ counted "friend 3") plus a `ROADMAP.md` R13 update. Recorded on
 and sentences stay in `stage_lr/data/private/`, gitignored. Zero
 records added to `real_human_pairs.json` this entry — nothing usable
 was produced for this participant yet.
+
+---
+
+### 2026-09-01-D — friend 3's declared-word list expanded per direct
+instruction; one new legitimate-but-awkward pair judged same-session,
+n=8 across three participants, 7/8 agree
+
+**What was done:** per direct instruction, three more declared words
+were added to friend 3's profile (same sound-class, same phrase) and
+the harvest re-run on an expanded, still-natural sentence set (not
+written to dodge any prior finding). Result: the already-known broken
+phrase pair recurred once more (excluded again, no new information —
+same R13 mechanism as 2026-09-01-C). One new pair was found from a
+different declared word: legitimate in the sense that both candidates
+are real dictionary words and the sentence is grammatical, but
+awkward — the declared word was used idiomatically/informally in the
+source sentence, and the substitution produced a literal plural of an
+otherwise-uncountable sense, which a careful proofreader would flag on
+naturalness grounds even though it isn't nonsense the way the phrase
+case is. This was disclosed to the user as borderline before relaying,
+rather than silently sent or silently withheld. User chose to send it.
+
+**Measured result:** participant and a same-session blind Claude
+verdict agreed on the same candidate (reason given independently
+converged on the same meaning-preservation point the disclosure had
+already flagged). n=8, 7/8 agree (87.5%), up from n=7, 6/7 -- now
+three distinct real participants (friend_1: 6, friend_2: 1, friend_3:
+1). No conclusion drawn, no LR.2/LR.3 change.
+
+**Category:** Stage LR data point (path (b), friend 3's first judged
+result). Recorded on `stage-lr`. No participant content committed.
+Full record: `LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), real
+participants" section, updated).
