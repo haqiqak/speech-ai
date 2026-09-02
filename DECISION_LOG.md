@@ -5482,3 +5482,51 @@ distinct real participants (friend_1: 13; friend_2: 1; friend_3: 1).
 
 **Category:** Stage LR data point (path (b), friend_1's second judged
 batch). Recorded on `stage-lr`. No participant content committed.
+
+---
+
+### 2026-09-01-L — Consolidation pass across `ROADMAP.md`,
+`REFORMULATION_PROBLEM_MAP.md`, and `VALIDATION.md`, per direct
+instruction: this round's 7 findings cross-referenced (not duplicated),
+two escalated, one gap closed
+
+**What was done:** per direct instruction to consolidate this
+session's Stage LR path (b) round before doing anything further,
+three things were checked and fixed:
+
+1. **A genuinely missing entry, closed.** Finding #3 ("some ordinary
+   declared words have no true single-word WordNet synonym at all") had
+   been discussed narratively in `DECISION_LOG.md`/`LEARNED_
+   REFORMULATION_RESEARCH.md` but never given its own
+   `REFORMULATION_PROBLEM_MAP.md` entry, unlike the other 6 findings.
+   Added under §2.6, explicitly distinguished from the two WSD findings
+   next to it (a lexical gap, not a disambiguation failure).
+2. **Two findings escalated**, per direct instruction: `ROADMAP.md` R13
+   (phrases have no consumer — now with a second, independent
+   participant's reproduction added: silent non-treatment, not just a
+   broken output) and `REFORMULATION_PROBLEM_MAP.md` §3.7's NLI
+   false-positive finding (now noting it's the same gate underlying
+   every CLEAN-rate/found-rate figure `VALIDATION.md` §§51-56 reports).
+   Both marked **[ESCALATED]** in their headers/openers — still not
+   fixed, per the freeze, but flagged for priority attention if the
+   freeze is ever revisited under its own stated conditions.
+3. **`VALIDATION.md` gained a new §58**, cross-referencing all 7
+   findings to their actual homes (no duplication), stating the
+   NLI-false-positive caveat on §§51-56's existing CLEAN-rate/
+   found-rate numbers explicitly (as an open caveat on the numbers,
+   not a re-measurement — no corpus was re-run with the gate isolated
+   this session), and recording the current path (b) headline figure
+   (n=15, 13/15 agree, 86.7%, explicitly not yet statistically decisive)
+   and friend_2/friend_3's exhausted status, both by reference to
+   `LEARNED_REFORMULATION_RESEARCH.md` rather than restated in full.
+
+**What was explicitly not done:** the NLI-caveat addition to
+`VALIDATION.md` §58 does not re-open, re-litigate, or cast doubt on
+the architecture freeze (§56) — it names an unmeasured-effect-size
+caveat on existing numbers, which is not, by itself, either of §56's
+two named reopening conditions. No gate, threshold, or pipeline logic
+was changed on `main` or `stage-lr`.
+
+**Category:** Documentation consolidation, per direct instruction.
+Recorded on `stage-lr`. No participant content committed — verified by
+diff scan across all three files before commit.

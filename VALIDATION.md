@@ -5812,3 +5812,82 @@ is not optional to skip. This section adds context to §56, not a
 change to it — the freeze, its scope, and its two reopening conditions
 stand exactly as ratified there. Full record of the user's framing and
 this addition: `DECISION_LOG.md` 2026-08-30-A.
+
+## 58. Stage LR path (b) findings bearing on `main`'s measured behavior (added 2026-09-01, cross-reference only — full record lives in `LEARNED_REFORMULATION_RESEARCH.md` and `REFORMULATION_PROBLEM_MAP.md`, not duplicated here)
+
+**[OBSERVATION]** Stage LR (branch `stage-lr`, never `main`) path (b)
+— real, self-declared participant profiles run through the actual,
+unmodified `reformulate()` — surfaced 7 concrete findings this session
+(2026-09-01). Each is fully described at its own home, linked here
+rather than re-described:
+
+1. WSD narrows candidate generation to a single WordNet sense, and
+   that sense sometimes has a weak or empty synonym pool —
+   `REFORMULATION_PROBLEM_MAP.md` §2.6, 2026-09-01 update.
+2. WSD can pick an outright *wrong* sense, not just a narrow one,
+   changing sentence meaning — `REFORMULATION_PROBLEM_MAP.md` §2.6,
+   second 2026-09-01 update (a sharper variant of #1).
+3. Some ordinary declared words have no true single-word WordNet
+   synonym at all, independent of which sense gets picked — a genuine
+   lexical gap, not a disambiguation failure — `REFORMULATION_PROBLEM_MAP.md`
+   §2.6, third 2026-09-01 update.
+4. **[ESCALATED]** Declared phrases have no consumer anywhere in
+   `reformulate.py` — `ROADMAP.md` R13 (an already-open item, now
+   flagged escalated after two independent real participants
+   reproduced real user-facing impact from it in one session: one
+   broken output, one silent non-treatment of a declared difficulty).
+5. **[ESCALATED]** `semantic.logical_consistency_check()` (the §51
+   Phase 11C NLI gate) produces a reproducible false positive: a
+   clean, correct synonym that passes every other gate gets rejected
+   as a "contradiction." Reproduced across 4 independent sentences,
+   never once accepted — `REFORMULATION_PROBLEM_MAP.md` §3.7,
+   2026-09-01 update.
+6. Indefinite-article ("a"/"an") agreement is not adjusted after a
+   substitution changes the following word's leading sound —
+   `REFORMULATION_PROBLEM_MAP.md` §2.3, 2026-09-01 update.
+7. `sanitize_input()`'s infinitive-after-"to" conjugation bug, already
+   on record (`DECISION_LOG.md` 2026-08-30-R), reproduced independently
+   several further times against different real participants'
+   sentences — no new documentation, cited here only because it
+   recurred again.
+
+**[LIMITATION, a caveat on this document's own existing numbers, not a
+re-measurement]** Item 5 is the same NLI gate exercised throughout §51
+(where it was ported) and every CLEAN-rate/found-rate figure measured
+in §§51-56 afterward, including the 31-34% plateau (§48-51) and the
+21.4% fresh-corpus figure (§54-56) the architecture freeze (§56) rests
+on. Those figures were never separately checked for how much of their
+"not clean"/"could not safely reformulate" share is this specific
+false-positive mechanism versus a genuine absence of a valid
+candidate. Item 5 establishes the mechanism exists and produces real
+false rejections; it does not establish the *size* of that effect on
+any specific already-reported number — no §§51-56 corpus was re-run
+with this gate isolated or disabled this session. Recorded as an open
+caveat on existing figures, not a re-measurement, and **not, by
+itself, grounds to revisit the freeze** — §56's own two reopening
+conditions govern that, and a single newly observed gate behavior on
+new data is neither of them.
+
+**[FACT]** Stage LR path (b)'s own separate question — does
+Claude-as-judge track real human preference — stands at **n=15, 13/15
+agree (86.7%)** across 4 distinct real participants as of 2026-09-01,
+explicitly **not yet statistically decisive** at this scale (the
+agreement-rate confidence interval does not yet cleanly clear chance,
+and the sample is dominated by one participant). Two of the four
+participants' declared profiles (friend_2, friend_3) are now treated
+as **exhausted** for this architecture — every remaining declared word
+in each fails via one of items 1-4 above, confirmed by adding further
+natural sentences against each and finding no new material. Full
+record, including a 7-pair near-synonym batch that was found,
+diagnosed as low-information, and removed per direct instruction
+(never folded into the 86.7% figure above): `LEARNED_REFORMULATION_
+RESEARCH.md` "Path (b), real participants" section; `DECISION_LOG.md`
+2026-09-01-A through -K.
+
+**[NOT DONE]** No gate, threshold, WSD, phrase-matching,
+article-agreement, or `sanitize_input()` logic was changed on `main`
+or `stage-lr` as a result of this round, per the architecture freeze.
+Items 4 and 5's escalated flags mark them for priority attention if
+and when the freeze is revisited under its own stated conditions —
+they do not themselves constitute the new evidence §56 requires to
+reopen it.

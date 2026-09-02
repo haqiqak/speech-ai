@@ -327,6 +327,26 @@ what was shown to the participant, same "never ship a bad guess"
 discipline as §2.4's idiom guard. Full record: `DECISION_LOG.md`
 2026-09-01 entry, `LEARNED_REFORMULATION_RESEARCH.md` path (b) section.
 
+**Update, 2026-09-01 — a third, distinct mechanism found on the same
+Stage LR path: some ordinary declared words have no true single-word
+WordNet synonym at all, in any sense, independent of which sense gets
+picked [FINDING].** Not a disambiguation failure (WSD choosing badly
+between senses, the two updates above) — a genuine lexical gap: the
+word's own WordNet synset(s) contain no other lemma, so even perfect
+sense-picking has nothing to substitute with. Confirmed directly via
+`nltk.corpus.wordnet` for multiple declared words across two different
+real participants' profiles (one common abstract noun with a single
+noun sense and no synonym at all; one common concrete noun whose only
+literal-sense synonym came from hypernym expansion, giving exactly one
+usable candidate — enough for a first substitution but never a second,
+which Stage LR path (b)'s pair-generation methodology needs). This
+factor is upstream of, and independent from, both WSD findings above:
+even a hypothetically perfect WSD implementation cannot substitute a
+word that has no synonym to offer. Not fixed, per the architecture
+freeze — recorded as a disclosed limitation. Full record:
+`DECISION_LOG.md` 2026-09-01-A, -C, -E entries;
+`LEARNED_REFORMULATION_RESEARCH.md` path (b) section.
+
 ### 2.7 Interactions between multiple substitutions in one sentence
 
 **Current state [FINDING, code-verified mechanism, not just a hypothesis]:**
@@ -739,20 +759,34 @@ this section.
   `semantic.logical_consistency_check()` (the frozen pipeline's own
   Phase 11C NLI gate, `reformulate.py::_try_substitution`'s final
   assembled-sentence check) against a real participant's declared
-  profile for the first time, and found a concrete false positive
-  [FINDING].** A single-word substitution — a plain, direct synonym in
-  a different regional variety of English for a common hand tool —
-  passed every other gate cleanly (SBERT similarity ~0.89, antonym
-  check, duplicate check, all of it) and was then rejected outright by
-  this NLI check as a "contradiction." The two sentences differ only in
-  that one noun; nothing about the claim changed. This is exactly the
-  failure mode this section's own literature review flagged as
-  untested and worth watching for NLI specifically, now measured
-  concretely rather than left as a literature gap. Traced directly,
-  same session, via `reformulate._try_substitution`. Not fixed, per the
-  architecture freeze (`CLAUDE.md`) — recorded as a disclosed,
-  measured limitation. Full record: `DECISION_LOG.md` 2026-09-01 entry,
-  `LEARNED_REFORMULATION_RESEARCH.md` path (b) section.
+  profile for the first time, and found a concrete false positive —
+  **[ESCALATED]** [FINDING].** A single-word substitution — a plain,
+  direct synonym in a different regional variety of English for a
+  common hand tool — passed every other gate cleanly (SBERT similarity
+  ~0.89, antonym check, duplicate check, all of it) and was then
+  rejected outright by this NLI check as a "contradiction." The two
+  sentences differ only in that one noun; nothing about the claim
+  changed. Re-tested across 4 independent sentences using the same
+  candidate pair: rejected in all 4 (2 by this NLI gate directly, 2 by
+  the similarity score dropping just under threshold in that specific
+  context) — never once accepted. This is exactly the failure mode
+  this section's own literature review flagged as untested and worth
+  watching for NLI specifically, now measured concretely and shown to
+  be consistent, not a one-off fluke. Traced directly, same session,
+  via `reformulate._try_substitution`. **Flagged escalated because this
+  is the same gate exercised throughout `VALIDATION.md` §51 (where it
+  was ported) and every CLEAN-rate/found-rate figure measured after —
+  a reproducible false-positive mechanism in a gate that directly
+  shapes those already-reported numbers is a higher-priority item to
+  revisit than an ordinary disclosed limitation, if/when the freeze's
+  own reopening conditions are ever met** (`VALIDATION.md` §58 records
+  this as an open caveat on those existing figures — the *size* of the
+  effect was not measured this session, and this is not, by itself,
+  new evidence sufficient to reopen the freeze under `CLAUDE.md`'s own
+  terms). Not fixed here either way, per the architecture freeze —
+  recorded as a disclosed, measured limitation. Full record:
+  `DECISION_LOG.md` 2026-09-01 entry, `LEARNED_REFORMULATION_RESEARCH.md`
+  path (b) section.
 
 ### 3.8 Phrase-level replacement — a third tier between word-substitution and whole-sentence restructuring
 

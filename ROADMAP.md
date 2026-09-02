@@ -500,7 +500,7 @@ reconciliation by *not* combining the two signals rather than by merging
 them — `profiling/profile.py` remains in the repo, untouched, in case
 audio input returns to scope later.
 
-### R13. Give `difficulty_profile.phrases` (and now `problem_phones`) a consumer
+### R13. Give `difficulty_profile.phrases` (and now `problem_phones`) a consumer — **[ESCALATED, 2026-09-01]**
 **Linked finding:** `PROBLEM_FORMULATION.md` §6/§10 — phrases and (as of
 the Stage 4A refinement) word-specific `problem_phones` are declared and
 persisted but nothing in the current reformulation pipeline accepts or acts
@@ -546,6 +546,21 @@ precedent for idiom spans — this one just wasn't caught by that guard,
 since the guard only covers a fixed, hardcoded list, not the
 speaker's own declared phrases. Full record: `DECISION_LOG.md`
 2026-09-01 entry, `LEARNED_REFORMULATION_RESEARCH.md` path (b) section.
+
+**Update, 2026-09-01, same day — a second, independent participant's
+profile reproduced this gap a different way: silently, not broken.**
+Where the case above shipped a visibly broken output, this one
+produced no output at all for the declared phrase — the word inside
+it carrying the declared sound was a function word/stopword, which
+`reformulate.py` never treats as substitutable by design, so the
+phrase was never flagged and the speaker's declared difficulty on it
+was never addressed in any of the sentences tested. Two independent
+real participants, two different concrete failure shapes (one broken,
+one silent), from the same underlying gap in one session — **flagged
+escalated**: still not fixed here, per the architecture freeze, but
+marked for priority attention if/when the freeze's own reopening
+conditions are met, rather than left at the same priority as other
+open roadmap items. Full record: `DECISION_LOG.md` 2026-09-01-E entry.
 
 ### R14. Build and browser-verify the inline text-selection flagging component
 **Linked finding:** `PROBLEM_FORMULATION.md` §7 — a true "select text
