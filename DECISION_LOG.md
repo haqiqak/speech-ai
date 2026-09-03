@@ -5667,3 +5667,42 @@ change.
 **Category:** Stage LR data point (path (b), researcher-proposed
 words for friend_2/friend_3). Recorded on `stage-lr`. No participant
 content committed.
+
+---
+
+### 2026-09-01-P — Large deliberate push across all four existing
+profiles at once, per direct instruction; 18 pairs judged same-session,
+n=39, 28/39 agree (71.8%), participant concentration substantially
+improved
+
+**What was done:** per direct instruction to grow n substantially
+across all profiles currently held, targeted 5 clean pairs each
+against friend_1, friend_2, friend_3, and self. friend_1: 20 raw pairs
+found (7 already-logged repeats excluded), screened to 5 clean.
+friend_3 and self: additional sentences against already-reliable
+declared words closed each to 5. friend_2: despite adding one more
+candidate word and further sentences, topped out at 3 clean pairs —
+reported as the real, measured yield rather than padded to 5; the
+profile is showing genuine diminishing returns after this session's
+several rounds of expansion.
+
+**Measured result:** all 18 pairs (5+3+5+5) relayed and judged
+same-session: 11/18 agree. Not a near-synonym artifact — a real,
+legible pattern in the disagreements: on one declared word repeated
+across several sentences, Claude consistently preferred one of its two
+candidates for sentences describing a publicly-admired figure and the
+other candidate for sentences describing a personal relation, while
+the participant's picks favored one candidate almost uniformly with
+one exception — a genuine semantic/register disagreement, not noise.
+**n=39, 28/39 agree (71.8%)**, down from 81.0% -- the expected, honest
+behavior of a larger sample surfacing real disagreement, not treated
+as a problem. Participant concentration improved substantially:
+friend_1: 18, friend_2: 7, friend_3: 7, self: 7 -- friend_1's share
+now 46% of the data, down from 62%, no longer dominant.
+
+**What was *not* done:** no conclusion drawn, no LR.2/LR.3 change, no
+gate or pipeline logic touched. friend_2's shortfall was not closed by
+inventing further words past the point of genuine yield.
+
+**Category:** Stage LR data point (path (b), large multi-profile
+batch). Recorded on `stage-lr`. No participant content committed.
