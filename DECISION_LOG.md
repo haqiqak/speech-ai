@@ -5628,3 +5628,42 @@ removed). No conclusion drawn, no LR.2/LR.3 change.
 **Category:** Stage LR data point (path (b), self's second sound-class,
 first judged). Recorded on `stage-lr`. No participant content
 committed.
+
+---
+
+### 2026-09-01-O — Researcher-proposed words for friend_2 and friend_3
+(previously exhausted), per direct instruction; 4 new pairs judged,
+n=21, 17/21 agree (81.0%), friend_1's share of the data down to 62%
+
+**What was done:** per direct instruction, additional same-sound-class
+words were chosen by the researcher (not self-reported by either
+participant) and added to friend_2's and friend_3's profiles. Basis,
+stated to the user before generating anything: match the participant's
+already-declared sound(s); require a non-trivial WordNet synonym pool;
+favor a dominant single sense over heavy polysemy, since this session's
+own repeated finding is that highly ambiguous words are the ones WSD
+mis-resolves. This provenance (researcher-chosen, not participant- or
+self-declared) is recorded explicitly for traceability, distinct from
+2026-09-01-J/N's self- and friend-authorized additions.
+
+**Measured result:** friend_2 yielded 3 new clean pairs (3 of 6 raw
+excluded: 1 repeat of already-logged data, 1 grammar-broken via the
+recurring `sanitize_input()` bug, 1 unnatural/wrong-register — no new
+documentation for either). friend_3 yielded 1 new clean pair (5 of 6
+raw excluded: 2 repeats, 2 wrong-sense meaning changes, 1
+article-agreement-broken — all already-documented classes). All 4
+judged same-session: 2/4 agree — a real, mixed batch, not a
+near-synonym artifact (Claude split its verdict on the identical
+candidate pair depending on sentence context, i.e. genuine
+context-sensitivity, not blanket indifference).
+
+**n=21, 17/21 agree (81.0%)**, up from n=17, 15/17 — same four
+participants (friend_1: 13, friend_2: 4, friend_3: 2, self: 2).
+friend_1's share of the total data is now 62%, down from 76% before
+this entry — real progress on the standing diversity concern, though
+still the dominant contributor. No conclusion drawn, no LR.2/LR.3
+change.
+
+**Category:** Stage LR data point (path (b), researcher-proposed
+words for friend_2/friend_3). Recorded on `stage-lr`. No participant
+content committed.
