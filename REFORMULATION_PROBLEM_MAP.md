@@ -779,13 +779,24 @@ this section.
   a reproducible false-positive mechanism in a gate that directly
   shapes those already-reported numbers is a higher-priority item to
   revisit than an ordinary disclosed limitation, if/when the freeze's
-  own reopening conditions are ever met** (`VALIDATION.md` §58 records
-  this as an open caveat on those existing figures — the *size* of the
-  effect was not measured this session, and this is not, by itself,
-  new evidence sufficient to reopen the freeze under `CLAUDE.md`'s own
-  terms). Not fixed here either way, per the architecture freeze —
-  recorded as a disclosed, measured limitation. Full record:
-  `DECISION_LOG.md` 2026-09-01 entry, `LEARNED_REFORMULATION_RESEARCH.md`
+  own reopening conditions are ever met.** **Update, 2026-09-01, same
+  day — the effect size on those specific numbers has now been
+  measured, not left open** (`VALIDATION.md` §58): isolating the
+  deterministic substitution tier and toggling this gate off across
+  both reference corpora (the 36-run fresh corpus and the full 398-run
+  R10 corpus) found 23 substitution outcomes this gate alone flips
+  from failure to success — and blind judging all 23 found every one
+  independently DEFECTIVE regardless of NLI. **On these two specific
+  corpora, this gate is not costing the CLEAN rate anything measurable
+  — the false positive stays real (confirmed independently on a real
+  participant's sentence, outside both corpora), but its measured
+  effect on the already-reported 31-34%/21.4% figures is null.** Still
+  not, by itself, new evidence sufficient to reopen the freeze under
+  `CLAUDE.md`'s own terms — if anything this measurement narrows the
+  case rather than strengthening it. Not fixed here either way, per
+  the architecture freeze — recorded as a disclosed, now precisely
+  measured limitation. Full record: `DECISION_LOG.md` 2026-09-01
+  entry, `LEARNED_REFORMULATION_RESEARCH.md`
   path (b) section.
 
 ### 3.8 Phrase-level replacement — a third tier between word-substitution and whole-sentence restructuring

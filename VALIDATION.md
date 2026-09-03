@@ -5851,22 +5851,69 @@ rather than re-described:
    sentences — no new documentation, cited here only because it
    recurred again.
 
-**[LIMITATION, a caveat on this document's own existing numbers, not a
-re-measurement]** Item 5 is the same NLI gate exercised throughout §51
-(where it was ported) and every CLEAN-rate/found-rate figure measured
-in §§51-56 afterward, including the 31-34% plateau (§48-51) and the
-21.4% fresh-corpus figure (§54-56) the architecture freeze (§56) rests
-on. Those figures were never separately checked for how much of their
-"not clean"/"could not safely reformulate" share is this specific
-false-positive mechanism versus a genuine absence of a valid
-candidate. Item 5 establishes the mechanism exists and produces real
-false rejections; it does not establish the *size* of that effect on
-any specific already-reported number — no §§51-56 corpus was re-run
-with this gate isolated or disabled this session. Recorded as an open
-caveat on existing figures, not a re-measurement, and **not, by
-itself, grounds to revisit the freeze** — §56's own two reopening
-conditions govern that, and a single newly observed gate behavior on
-new data is neither of them.
+**[FACT, 2026-09-01, same day — the caveat below was measured, not left
+open]** Item 5's effect size on §§51-56's own numbers was directly
+measured, not estimated. Method: `reformulate.py::_try_substitution()`
+(deterministic — `VALIDATION.md` §8.4 already established that only
+the T5 escalation tier is non-deterministic, not substitution) was run
+twice per (sentence, profile) pair — once with
+`semantic.logical_consistency_check()` live, once monkeypatched at the
+module level to always return `None` (its own documented "no signal"
+fallback, already a normal return value every caller handles) — across
+**both** reference corpora these figures come from: the 36-run fresh
+corpus behind the 21.4% figure (§54, `eval/step3_gencheck_corpus.py`)
+and the full 398-run R10 corpus behind the 31-34% plateau (§48-53,
+`eval/r10_corpus.json`/`r10_run_plan.json`), using today's live,
+unmodified, frozen code both times. Scripts: `eval/
+step3_gencheck_nli_isolation.py`, `eval/r10_nli_isolation.py`
+(diagnostic-only, additive; no existing file edited).
+
+**[FACT] Result: 8/36 (fresh corpus) and 15/398 (R10) substitution-tier
+outcomes flip from failure to success specifically because this NLI
+gate stopped rejecting the assembled sentence — 23 flips total, each
+confirmed to be the direct, sole cause (in every flip, and only in
+those runs, `logical_consistency_check()` had reported "contradiction"
+in the live-NLI pass; disabling it changes no other gate's behavior).
+Every one of the 23 newly-unblocked outputs was then blind-judged
+(same CLEAN/DEFECTIVE/SEVERE/MINOR rubric as §54 and every prior
+phase, judge given no metadata): **23/23 DEFECTIVE (22 SEVERE, 1
+MINOR) — zero CLEAN.** Representative examples: "reducing
+unemployment" → "bumping unemployment" (meaning reversed), "nervous"
+→ "excited" (meaning reversed), "single lamp" → "a several lamp"
+(ungrammatical and meaning-reversed), "flows to the surface" →
+"flows to the artefact" (nonsensical).
+
+**[FACT, what this implies for the 31-34% plateau and 21.4%
+fresh-corpus figures, stated plainly] It does not meaningfully change
+their interpretation.** Every substitution the NLI gate blocked in
+these two corpora was independently, severely defective for reasons
+having nothing to do with NLI — the gate is not the cause of lost
+CLEAN outputs here; it is (on this evidence) blocking outputs that
+were already going to be scored DEFECTIVE regardless. Disabling it
+would not raise either figure: it would still fail 23/23 blind
+judging, just via a `reformulated` status carrying a defective output
+instead of a `could_not_safely_reformulate` refusal — the CLEAN
+numerator is unaffected either way. This is the opposite of what the
+open caveat worried about, and it is corpus-specific, measured
+evidence, not speculation either direction.
+
+**[LIMITATION, precisely scoped, replacing the prior open-ended one]**
+This result does **not** contradict item 5's own finding — that
+false positive was confirmed on a real participant's own sentence,
+outside both corpora measured here, and stays a real, reproducible
+false positive on its own evidence. What today's
+measurement adds is narrower: on the *specific* sentences these two
+plateau-defining corpora contain, this gate's false-positive failure
+mode was not exercised — its blocks there happen to coincide with
+independently-bad candidates, not to reject good ones. A corpus built
+specifically to probe this gate's false-positive rate (rather than
+these two, built for other purposes) could still find a different
+result; this measurement bounds the effect on §§51-56's *existing,
+already-reported* numbers specifically, not on the gate's general
+reliability. **Not, by itself, grounds to revisit the freeze** — §56's
+own two reopening conditions govern that, and this measurement, if
+anything, narrows rather than strengthens the case for reopening it on
+this specific point.
 
 **[FACT]** Stage LR path (b)'s own separate question — does
 Claude-as-judge track real human preference — stands at **n=15, 13/15

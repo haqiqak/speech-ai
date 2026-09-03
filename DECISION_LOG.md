@@ -5530,3 +5530,65 @@ was changed on `main` or `stage-lr`.
 **Category:** Documentation consolidation, per direct instruction.
 Recorded on `stage-lr`. No participant content committed — verified by
 diff scan across all three files before commit.
+
+---
+
+### 2026-09-01-M — Diagnostic experiment, per direct instruction:
+measured the NLI false-positive's actual effect size on the 31-34%
+plateau and 21.4% fresh-corpus figures — result: null on both, stated
+plainly in `VALIDATION.md` §58
+
+**What was done:** two new, additive diagnostic scripts (`eval/
+step3_gencheck_nli_isolation.py`, `eval/r10_nli_isolation.py` — no
+existing file touched) isolate `reformulate.py::_try_substitution()`
+(the deterministic tier — `VALIDATION.md` §8.4 already established
+only T5 escalation is non-deterministic) and run it twice per
+(sentence, profile) pair, once with `semantic.logical_consistency_
+check()` live and once monkeypatched to always return `None` (its own
+documented "no signal" fallback). Run across both reference corpora:
+the 36-run fresh corpus behind the 21.4% figure and the full 398-run
+R10 corpus behind the 31-34% plateau, using today's live frozen code
+both times. A first attempt (`eval/step3_gencheck_harvest_no_nli.py`,
+comparing full `reformulate()` outcomes rather than the isolated
+substitution tier) was run first and discarded before drawing any
+conclusion from it — it produced flips in both directions, inconsistent
+with a gate that can only ever remove a rejection reason, and was
+correctly traced to T5 escalation's own documented non-determinism
+contaminating the comparison, not a new finding. The corrected,
+isolated method has no such confound (confirmed: every direct-NLI-block
+in the with-NLI pass is exactly the same run that flips in the
+without-NLI pass, 1:1, no exceptions in 434 runs).
+
+**Measured result:** 23 total substitution-tier outcomes (8/36 fresh
+corpus + 15/398 R10) flip from failure to success specifically because
+this NLI gate stopped rejecting the assembled sentence. Every one of
+the 23 newly-unblocked outputs was blind-judged (same CLEAN/DEFECTIVE/
+SEVERE/MINOR rubric as every prior phase, no metadata given, two
+separate judging calls — one per corpus): **23/23 DEFECTIVE (22
+SEVERE, 1 MINOR), zero CLEAN.** Every substitution this gate blocked
+in these two corpora was independently, severely defective for
+unrelated reasons (meaning reversals like "reducing" -> "bumping",
+"nervous" -> "excited"; ungrammatical output like "a several lamp";
+nonsensical output like "flows to the artefact").
+
+**What this means, stated plainly:** the 31-34% plateau and 21.4%
+fresh-corpus figures are not meaningfully affected by this gate's
+false-positive behavior — on these two specific corpora, disabling it
+would not raise either figure, since every blocked case fails blind
+judging anyway via a different mechanism. This narrows rather than
+confirms the concern `VALIDATION.md` §58 originally left open. It does
+NOT contradict or retract the real false positive found on real
+participant data (`REFORMULATION_PROBLEM_MAP.md` §3.7) — that
+reproduction stands on its own, independent evidence, on a sentence
+outside both corpora measured here; today's result only bounds this
+gate's effect on these two corpora's *already-reported* numbers
+specifically, not its general reliability.
+
+**What was *not* done:** no gate, threshold, or pipeline logic changed
+on `main` or `stage-lr`. This measurement is not, by itself, grounds
+to revisit the architecture freeze — `VALIDATION.md` §56's two named
+reopening conditions govern that, unchanged.
+
+**Category:** Diagnostic experiment, per direct instruction. Recorded
+on `stage-lr`. No participant content involved (both corpora are
+pre-existing, non-participant technical/general-domain text).
