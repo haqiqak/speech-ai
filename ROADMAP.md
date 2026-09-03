@@ -562,6 +562,20 @@ marked for priority attention if/when the freeze's own reopening
 conditions are met, rather than left at the same priority as other
 open roadmap items. Full record: `DECISION_LOG.md` 2026-09-01-E entry.
 
+**Update, 2026-09-01, same day — a third reproduction, and a useful
+nuance: the gap doesn't always break output.** A third case of a
+declared phrase's anchor word coincidentally matching a separately
+declared sound was found — and this time the resulting single-word
+substitution produced a clean, natural result (a less syntactically
+fixed phrase tolerated the swap; contrast the first reproduction
+above, a rigid idiom that didn't). Doesn't change the escalated status
+or the underlying gap (phrases are still never consulted as phrases
+either way) — it refines what's known about the gap's *consequences*:
+whether a coincidental match breaks output, silently no-ops, or
+happens to survive intact appears to depend on how syntactically rigid
+the specific phrase is, not on any property this pipeline currently
+checks for. Full record: `DECISION_LOG.md` 2026-09-01-N entry.
+
 ### R14. Build and browser-verify the inline text-selection flagging component
 **Linked finding:** `PROBLEM_FORMULATION.md` §7 — a true "select text
 in-place, a small button appears" interaction was researched and its

@@ -5592,3 +5592,39 @@ reopening conditions govern that, unchanged.
 **Category:** Diagnostic experiment, per direct instruction. Recorded
 on `stage-lr`. No participant content involved (both corpora are
 pre-existing, non-participant technical/general-domain text).
+
+---
+
+### 2026-09-01-N — Fifth participant (self) declared a second, distinct
+sound-class; 2 new clean pairs judged same-session, n=17, 15/17 agree
+(88.2%), and a useful nuance found on the R13 phrase gap
+
+**What was done:** the same participant (self) declared a new sound,
+word, and phrase — extending their existing profile, not a new person.
+Harvest against the expanded profile found 16 raw pairs. Most either
+re-derived the already-removed near-synonym batch (2026-09-01-G/I) or
+hit the already-known `sanitize_input()` grammar bug again (recurred
+twice more; no new documentation needed for either, both already on
+record). 2 new pairs survived quality screening and were relayed;
+participant gave definite picks on both, a same-session blind Claude
+judgment was obtained, both agreed (2/2).
+
+**A third reproduction of the R13 phrase gap, with a new nuance:** one
+of the two clean pairs came from the declared phrase's anchor word
+coincidentally matching the newly-declared sound — the same mechanism
+as the two prior reproductions (2026-09-01-E/J) — but this time the
+substitution produced a clean, natural result rather than a broken or
+silently-skipped one. `ROADMAP.md` R13 updated: doesn't change the
+escalated status, refines what's known about the gap's consequences
+(whether a coincidental match breaks, no-ops, or survives intact
+appears to depend on the phrase's syntactic rigidity, not anything
+this pipeline checks for).
+
+**Measured result:** n=17, 15/17 agree (88.2%), up from n=15, 13/15 —
+same four distinct participants (self's share: 2 of 17, the first
+surviving data from this participant since their earlier batch was
+removed). No conclusion drawn, no LR.2/LR.3 change.
+
+**Category:** Stage LR data point (path (b), self's second sound-class,
+first judged). Recorded on `stage-lr`. No participant content
+committed.
