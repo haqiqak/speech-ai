@@ -5706,3 +5706,57 @@ inventing further words past the point of genuine yield.
 
 **Category:** Stage LR data point (path (b), large multi-profile
 batch). Recorded on `stage-lr`. No participant content committed.
+
+---
+
+### 2026-09-01-Q — New system built, per direct instruction ("this is
+wasting a lot of time... a good system for using human as a test just
+if that is the best way, and some by claude if too"): a real
+batch-judging tool for humans, and a separate Claude-only track for
+dataset volume that doesn't need one
+
+**What was done:** the one-pair-at-a-time chat relay was the actual
+bottleneck this whole session, not the underlying method. Three new
+pieces, all additive, nothing existing changed:
+
+1. `stage_lr/human_test_tool.html` — a static, offline, local-only
+   page (no server, no network calls, never to be hosted, per this
+   project's standing local-only rule for real participant data). A
+   real participant loads a `*_pairs_for_review.json` file directly
+   (the exact format `harvest_real_profile.py` already produces),
+   clicks through every pair (A/B/tie, keyboard shortcuts), and
+   downloads a small results file — replacing manual "a,b,a" chat
+   transcription with one sitting at a page.
+2. `stage_lr/merge_human_test_results.py` — joins that results file
+   back with the original pairs (reconstructing `original_sentence`
+   the same way this session always did by hand), builds the exact
+   payload `judge_pairs.build_judge_prompt()` expects (send via a
+   fresh Agent call, same blind discipline as every prior round), and
+   logs everything via `record_real_human_pair()` afterward — refuses
+   to log a pair with no matching Claude verdict, same hard rule as
+   before. 7 tests.
+3. `stage_lr/claude_only_pairs.py` — a genuinely new, separate track,
+   answering the "just if that is the best way" half of the
+   instruction directly: not every pair needs a real human's verdict
+   to be useful data. Pairs generated from real participants' declared
+   profiles, judged by Claude alone, tagged `source:
+   "real_profile_claude_only"`, stored in its own gitignored file
+   (`stage_lr/data/claude_only_pairs.json`, added to `.gitignore`) —
+   structurally separate from `real_human_pairs.json` so it can never
+   be silently pooled into the human-agreement figures. 3 tests.
+
+**Demonstrated end-to-end, not just built:** one declared word from
+the self participant's profile, 4 fresh sentences, judged by Claude
+alone (no human relay) and logged via the new track. `claude_only_pairs`
+now has n=4. This is a separate, additional dataset from the n=39
+human-comparison figure — never combined with it.
+
+**What was *not* done:** no change to `ingest_real_human_pair.py`'s
+hard same-session dual-verdict rule — the new Claude-only track is a
+genuinely separate file and function, not a loosening of that rule.
+No gate or pipeline logic touched.
+
+**Category:** Stage LR infrastructure, per direct instruction.
+Recorded on `stage-lr`. No participant content committed — the demo
+batch's real sentence content stays in the gitignored
+`claude_only_pairs.json`; only the mechanism is tracked.

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<!--
+  stage_lr/human_test_tool.html -- local, offline batch-judging tool for
+  Stage LR path (b) real human testing. Added 2026-09-01 to replace the
+  one-pair-at-a-time chat relay (the actual bottleneck, not the
+  underlying method) with something a real participant can click through
+  in one sitting.
+
+  Pure static HTML + JS. No server, no network calls, no external
+  scripts, nothing sent anywhere. Opens directly in a browser via
+  file:// -- keep it that way; do not host this anywhere, per this
+  project's standing rule that real participant data stays local.
+
+  This file itself carries NO participant content -- same discipline as
+  harvest_real_profile.py: the mechanism is generic and reusable, actual
+  words/sentences are loaded at runtime from a local
+  *_pairs_for_review.json file (already the exact real_profile_N format
+  produced by harvest_real_profile.py -- load it here unmodified).
+
+  Workflow:
+    1. Open this file in a browser (double-click it, or File > Open).
+    2. Load a *_pairs_for_review.json file (button below), or paste its
+       contents into the textarea.
+    3. Click through every pair: A / B / Tie, or keyboard shortcuts
+       A / B / T. Use Back to revisit and change an answer.
+    4. When done, click "Download results" -- saves a small JSON file
+       with just {review_id, human_preferred} per pair, nothing else.
+    5. Hand that results file back for merging with the original pairs
+       (via record_real_human_pair()) -- same downstream logging as
+       every prior round this session, just without manual transcription.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Stage LR - Human Pair Judging</title>
+<style>
+  :root {
+    --bg: #f7f7f5; --card: #ffffff; --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #2f6f4f; --accent-ink: #ffffff; --border: #e2e2df;
+    --a-color: #2f6f4f; --b-color: #4a5fa5; --tie-color: #8a6d2f;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: var(--bg); color: var(--ink); padding: 24px;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .sub { color: var(--muted); font-size: 13px; margin-bottom: 20px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 20px; margin-bottom: 16px;
+  }
+  textarea {
+    width: 100%; min-height: 90px; font-family: monospace; font-size: 12px;
+    border: 1px solid var(--border); border-radius: 6px; padding: 8px;
+  }
+  button {
+    font-size: 14px; padding: 8px 16px; border-radius: 6px; border: 1px solid var(--border);
+    background: #fff; cursor: pointer; margin-right: 8px;
+  }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  button:disabled { opacity: 0.45; cursor: default; }
+  #setup { display: block; }
+  #judging { display: none; }
+  #done { display: none; }
+  .progress { color: var(--muted); font-size: 13px; margin-bottom: 10px; }
+  .sentence-row { display: flex; gap: 14px; margin: 16px 0; }
+  .choice {
+    flex: 1; border: 2px solid var(--border); border-radius: 8px; padding: 16px;
+    cursor: pointer; font-size: 15px; line-height: 1.45; transition: border-color 0.1s, background 0.1s;
+  }
+  .choice:hover { border-color: #bbb; }
+  .choice.chosen-a { border-color: var(--a-color); background: #f1f8f4; }
+  .choice.chosen-b { border-color: var(--b-color); background: #f0f2fa; }
+  .choice-label { font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
+  .choice-label.a { color: var(--a-color); }
+  .choice-label.b { color: var(--b-color); }
+  .tie-row { text-align: center; margin: 4px 0 18px; }
+  button.tie-btn { border-color: var(--tie-color); color: var(--tie-color); }
+  button.tie-btn.chosen { background: var(--tie-color); color: #fff; }
+  .nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+  .hint { color: var(--muted); font-size: 12px; }
+  .orig { color: var(--muted); font-size: 13px; margin-bottom: 4px; font-style: italic; }
+  .error { color: #a33; font-size: 13px; margin-top: 6px; }
+  .summary-line { font-size: 14px; margin: 6px 0; }
+  kbd {
+    background: #eee; border: 1px solid #ccc; border-radius: 3px; padding: 1px 6px;
+    font-family: monospace; font-size: 12px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Stage LR &mdash; Human Pair Judging</h1>
+  <div class="sub">Runs entirely in this browser. Nothing leaves this machine.</div>
+
+  <div id="setup" class="card">
+    <p>Load a <code>*_pairs_for_review.json</code> file, or paste its contents below.</p>
+    <input type="file" id="fileInput" accept=".json">
+    <p class="hint" style="margin-top:12px;">or paste JSON:</p>
+    <textarea id="pasteArea" placeholder="[{&quot;review_id&quot;: 1, &quot;sentence_with_A&quot;: &quot;...&quot;, &quot;sentence_with_B&quot;: &quot;...&quot;}, ...]"></textarea>
+    <div style="margin-top:12px;">
+      <button class="primary" id="startBtn">Start judging</button>
+    </div>
+    <div class="error" id="setupError"></div>
+  </div>
+
+  <div id="judging" class="card">
+    <div class="progress" id="progressLine"></div>
+    <div class="orig" id="origLine"></div>
+    <div class="sentence-row">
+      <div class="choice" id="choiceA">
+        <div class="choice-label a">A</div>
+        <div id="textA"></div>
+      </div>
+      <div class="choice" id="choiceB">
+        <div class="choice-label b">B</div>
+        <div id="textB"></div>
+      </div>
+    </div>
+    <div class="tie-row">
+      <button class="tie-btn" id="tieBtn">Tie / equally good</button>
+    </div>
+    <div class="nav-row">
+      <button id="backBtn">&larr; Back</button>
+      <span class="hint">Click a card, or press <kbd>A</kbd> <kbd>B</kbd> <kbd>T</kbd></span>
+      <button id="nextBtn" disabled>Next &rarr;</button>
+    </div>
+  </div>
+
+  <div id="done" class="card">
+    <h2 style="font-size:16px;margin-top:0;">All done</h2>
+    <div id="summaryLines"></div>
+    <button class="primary" id="downloadBtn">Download results</button>
+    <button id="restartBtn">Start over</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var pairs = [];
+  var answers = {};     // review_id -> "A" | "B" | "tie"
+  var current = 0;
+
+  var setupEl = document.getElementById("setup");
+  var judgingEl = document.getElementById("judging");
+  var doneEl = document.getElementById("done");
+  var setupError = document.getElementById("setupError");
+
+  document.getElementById("fileInput").addEventListener("change", function (e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function (evt) {
+      document.getElementById("pasteArea").value = evt.target.result;
+    };
+    reader.readAsText(file);
+  });
+
+  document.getElementById("startBtn").addEventListener("click", function () {
+    setupError.textContent = "";
+    var raw = document.getElementById("pasteArea").value.trim();
+    if (!raw) { setupError.textContent = "Load a file or paste JSON first."; return; }
+    var parsed;
+    try {
+      parsed = JSON.parse(raw);
+    } catch (err) {
+      setupError.textContent = "Could not parse JSON: " + err.message;
+      return;
+    }
+    if (!Array.isArray(parsed) || parsed.length === 0) {
+      setupError.textContent = "Expected a non-empty JSON array of pairs.";
+      return;
+    }
+    for (var i = 0; i < parsed.length; i++) {
+      var p = parsed[i];
+      if (!p.sentence_with_A || !p.sentence_with_B) {
+        setupError.textContent = "Item " + i + " is missing sentence_with_A / sentence_with_B.";
+        return;
+      }
+    }
+    pairs = parsed;
+    answers = {};
+    current = 0;
+    setupEl.style.display = "none";
+    judgingEl.style.display = "block";
+    doneEl.style.display = "none";
+    renderCurrent();
+  });
+
+  function idOf(p) { return p.review_id !== undefined ? p.review_id : pairs.indexOf(p); }
+
+  function renderCurrent() {
+    var p = pairs[current];
+    document.getElementById("progressLine").textContent =
+      "Pair " + (current + 1) + " of " + pairs.length +
+      (answers[idOf(p)] ? "  (answered)" : "");
+    document.getElementById("origLine").textContent = p.original_sentence
+      ? "Original: " + p.original_sentence : "";
+    document.getElementById("textA").textContent = p.sentence_with_A;
+    document.getElementById("textB").textContent = p.sentence_with_B;
+
+    var choiceA = document.getElementById("choiceA");
+    var choiceB = document.getElementById("choiceB");
+    var tieBtn = document.getElementById("tieBtn");
+    choiceA.className = "choice";
+    choiceB.className = "choice";
+    tieBtn.className = "tie-btn";
+    var ans = answers[idOf(p)];
+    if (ans === "A") choiceA.className = "choice chosen-a";
+    if (ans === "B") choiceB.className = "choice chosen-b";
+    if (ans === "tie") tieBtn.className = "tie-btn chosen";
+
+    document.getElementById("backBtn").disabled = (current === 0);
+    document.getElementById("nextBtn").disabled = !ans;
+    document.getElementById("nextBtn").textContent = (current === pairs.length - 1) ? "Finish" : "Next →";
+  }
+
+  function choose(val) {
+    var p = pairs[current];
+    answers[idOf(p)] = val;
+    renderCurrent();
+  }
+
+  document.getElementById("choiceA").addEventListener("click", function () { choose("A"); });
+  document.getElementById("choiceB").addEventListener("click", function () { choose("B"); });
+  document.getElementById("tieBtn").addEventListener("click", function () { choose("tie"); });
+
+  document.getElementById("backBtn").addEventListener("click", function () {
+    if (current > 0) { current--; renderCurrent(); }
+  });
+
+  document.getElementById("nextBtn").addEventListener("click", function () {
+    if (current < pairs.length - 1) {
+      current++;
+      renderCurrent();
+    } else {
+      finish();
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (judgingEl.style.display !== "block") return;
+    var k = e.key.toLowerCase();
+    if (k === "a") choose("A");
+    else if (k === "b") choose("B");
+    else if (k === "t") choose("tie");
+    else if (k === "enter" && !document.getElementById("nextBtn").disabled) {
+      document.getElementById("nextBtn").click();
+    }
+  });
+
+  function finish() {
+    judgingEl.style.display = "none";
+    doneEl.style.display = "block";
+    var nA = 0, nB = 0, nTie = 0;
+    Object.keys(answers).forEach(function (k) {
+      if (answers[k] === "A") nA++; else if (answers[k] === "B") nB++; else nTie++;
+    });
+    document.getElementById("summaryLines").innerHTML =
+      '<div class="summary-line">' + pairs.length + ' pairs judged: ' +
+      nA + ' A, ' + nB + ' B, ' + nTie + ' tie.</div>';
+  }
+
+  document.getElementById("downloadBtn").addEventListener("click", function () {
+    var results = pairs.map(function (p) {
+      return { review_id: idOf(p), human_preferred: answers[idOf(p)] };
+    });
+    var blob = new Blob([JSON.stringify({ results: results }, null, 2)], { type: "application/json" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "human_test_results.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  document.getElementById("restartBtn").addEventListener("click", function () {
+    pairs = []; answers = {}; current = 0;
+    document.getElementById("pasteArea").value = "";
+    document.getElementById("fileInput").value = "";
+    setupEl.style.display = "block";
+    judgingEl.style.display = "none";
+    doneEl.style.display = "none";
+  });
+})();
+</script>
+</body>
+</html>

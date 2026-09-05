@@ -79,3 +79,4 @@ htmlcov/
 # entirely confined to this directory, is excluded.
 stage_lr/data/private/
 stage_lr/data/real_human_pairs.json
+stage_lr/data/claude_only_pairs.json
