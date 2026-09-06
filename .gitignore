@@ -45,8 +45,14 @@ users/*.fluency_profile.json
 .streamlit/secrets.toml
 
 # ── Jupyter / IPython ─────────────────────────────────────────────────────────
+# Scratch notebooks stay untracked by default (this rule predates Stage LR).
+# notebooks/ is an exception: deliberately authored, checked Colab notebooks
+# with no executed outputs/data embedded -- tracked project artifacts, not
+# scratch. Added 2026-09-06 for notebooks/reranker_diagnostic.ipynb and
+# notebooks/generation_backbone_comparison.ipynb.
 .ipynb_checkpoints/
 *.ipynb
+!notebooks/*.ipynb
 
 # ── IDEs ──────────────────────────────────────────────────────────────────────
 .vscode/
