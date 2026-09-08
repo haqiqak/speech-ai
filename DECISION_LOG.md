@@ -5760,3 +5760,74 @@ No gate or pipeline logic touched.
 Recorded on `stage-lr`. No participant content committed — the demo
 batch's real sentence content stays in the gitignored
 `claude_only_pairs.json`; only the mechanism is tracked.
+
+---
+
+### 2026-09-08-A — First real Colab runs of both notebooks: reranker
+diagnostic reproduces the Phase 9C collapse exactly as framed; generation
+backbone comparison finds a real, substantial quality gap favoring a
+GPU-scale instruct model over both T5 options
+
+**`reranker_diagnostic.ipynb`, first real run (109 rows, 46 groups —
+75 synthetic + real human + Claude-only data, held out by
+speaker/profile):** `test_pred_A_rate: 1.0` — the model predicted "A"
+for all 7 held-out test rows regardless of input, and `test_accuracy`
+(0.286) lands exactly on the "always guess the majority label"
+baseline. A clean, textbook reproduction of the Phase 9C collapse
+(`VALIDATION.md` §46), on a dataset that is if anything smaller and
+less diverse than Phase 9's own (109 rows/46 groups here vs. 205
+rows there). Exactly the outcome this notebook's own framing named as
+live and informative: the fixes (conservative LR, gradient clipping,
+NaN-abort safety net, held-out-by-speaker split) worked as designed —
+training didn't diverge, it correctly hit a data-size wall instead.
+**Not evidence the reranker approach is unworkable — evidence there
+is nowhere near enough data yet for this diagnostic to say anything
+past that.**
+
+**`generation_backbone_comparison.ipynb`, first valid run (after
+fixing `flan-t5-base`'s repo id and the leak-counting bug,
+`2026-09-06`'s prior entries):** Mechanical leak safety: `flan-t5-base`
+0/12 no-clean-candidate runs, `Vamsi/T5_Paraphrase_Paws` (current
+default) 1/12, `Qwen/Qwen2.5-3B-Instruct` 1/12 — all three roughly
+comparable on this axis. **Blind quality judging (34 items — the
+actual first-clean-candidate each backbone would ship per run, no
+backbone identity revealed to the judge) found a large, real gap the
+mechanical check alone couldn't see:**
+
+| Backbone | CLEAN rate |
+|---|---|
+| `google/flan-t5-base` | 1/12 (8.3%) |
+| `Vamsi/T5_Paraphrase_Paws` (current default) | 4/11 (36.4%) |
+| `Qwen/Qwen2.5-3B-Instruct` | 6/11 (54.5%) |
+
+The current default's 36.4% on this small sample is consistent with
+this project's own historically-measured ~31-34% plateau on similar
+material — a rough sanity check that this mini-corpus and judging
+pass are calibrated to match established numbers, not an artifact of
+a different method. `flan-t5-base`'s perfect mechanical safety score
+came at a severe, specific cost: most of its "clean" (leak-free)
+outputs achieved that by **deleting the clause containing the blocked
+word** rather than genuinely rephrasing it (e.g. dropping "that
+protects an organism from diseases" entirely, or collapsing "she
+practiced the piano... after finishing her homework" down to "she
+finished her homework every evening") — 8 of its 11 defects were
+SEVERE, most tagged `MEANING_LOSS`. Qwen showed the opposite profile:
+higher CLEAN rate than either T5 option, but with two known, fixable
+rough edges already visible in the raw output — a stray `<tool_call>`
+special-token leak, and a missing-space tokenization glitch
+("tointerest", "totalinterest") in one candidate.
+
+**What this means for Stage LR, stated plainly:** this is the first
+concrete evidence that swapping the generation backbone (not just
+reranking among a fixed generator's outputs) could produce a larger
+quality improvement than anything the ranking side alone has found so
+far. Still exploratory Stage LR research on a tiny (12-run) sample —
+not remotely enough to authorize anything, and does not touch `main`
+either way, per the freeze. Worth a larger run and the two Qwen-side
+fixes (prompt/chat-template cleanup) before drawing anything stronger.
+
+**Category:** Stage LR data point (path, generation-backbone research)
+plus a diagnostic result (reranker). Recorded on `stage-lr`. No
+participant content involved — all material is the tracked, public
+fresh-corpus subset and the synthetic/real preference data already on
+record.
