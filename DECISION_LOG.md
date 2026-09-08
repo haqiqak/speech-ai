@@ -5831,3 +5831,113 @@ plus a diagnostic result (reranker). Recorded on `stage-lr`. No
 participant content involved — all material is the tracked, public
 fresh-corpus subset and the synthetic/real preference data already on
 record.
+
+---
+
+### 2026-09-08-B — Generation backbone comparison, round 2 (86
+sentences, 6 backbones): round 1's Qwen2.5-3B read does NOT replicate
+at scale; two new failure modes found that the mechanical check
+cannot see; T5-family remains the more reliable option
+
+**Direct instruction was to expand before drawing conclusions** ("See
+which one(s) clear a real bar... not just 'better than the current
+default'"). This is exactly what that expansion found — and it
+reverses part of round 1's read, which is the point of running it.
+
+**Mechanical hard-safety numbers, 86 sentences (36 from the step3
+fresh corpus + 50 stratified from R10), corrected leak-counting
+methodology from `2026-09-06`:**
+
+| Backbone | no-clean-candidate rate | any-leak rate | mean latency |
+|---|---|---|---|
+| `Vamsi/T5_Paraphrase_Paws` (current default) | 2.3% (2/86) | 9.3% | 1.09s |
+| `google/flan-t5-base` | **0.0% (0/86)** | 3.5% | 0.75s |
+| `microsoft/Phi-3.5-mini-instruct` | 8.1% (7/86) | 10.5% | 1.78s |
+| `Qwen/Qwen2.5-7B-Instruct` | 17.4% (15/86) | 25.6% | 4.35s |
+| `Qwen/Qwen2.5-3B-Instruct` | **31.4% (27/86)** | 38.4% | 1.77s |
+| `Qwen/Qwen2.5-1.5B-Instruct` | **41.9% (36/86)** | 51.2% | 1.23s |
+
+Round 1's Qwen2.5-3B number, at n=12, was 1/12 (8.3%) no-clean. At
+n=86 it is 31.4% — nearly 4x worse, and now the *worst* decoder-only
+option tested apart from the smaller 1.5B model. This is precisely
+the outcome a properly-sized sample is supposed to catch, and directly
+validates not treating the n=12 result as a conclusion.
+
+**Two further failure modes found by manual review, neither caught by
+the mechanical leak-checker (which only scans Latin-script words
+against blocked patterns) — meaning the true Qwen failure rate is
+worse than the table above states:**
+
+1. **Code-switching to dodge a blocked word.** All three Qwen sizes,
+   under a `bad_words_ids` block, sometimes route around the block by
+   switching to Chinese for the blocked word/clause rather than
+   finding an English synonym — defeating the point of the constraint
+   for an English-speaking recipient. Examples, quoted directly
+   (Qwen2.5-3B-Instruct): blocked word "meeting" → *"Do you wanna grab
+   a咖啡喝之前先去喝杯咖啡？"*; blocked word "button" → *"Tap and keep
+   pressed on the按钮for five seconds..."*; blocked word "weather" →
+   *"Our flight was held up for nearly three hours due
+   to恶劣天气."* All three would pass today's mechanical clean check
+   (no Latin-script word matches the block) while being useless output
+   for the actual use case.
+2. **Meta-commentary leaking into the "clean" output.** Several Qwen
+   completions include the model's own narration about the constraint,
+   inside the text meant to be the final answer — e.g. (same run as
+   above, "button"): *"...(Note: The word 'button' has been replaced
+   with 'tap' and 'keep pressed' to avoid using 'button,' but the
+   meaning remains the same.)"*; and ("weather"): *"...(Note: This
+   word '恶劣天气' directly translates to 'bad weather' but is not in
+   the restricted list.)"*. Manual review of Qwen2.5-3B-Instruct's 86
+   runs found at least 21 with code-switch contamination (~24%) and at
+   least 6 with explicit meta-commentary leakage (~7%) — on top of,
+   not instead of, the 31.4% already counted as no-clean-candidate.
+
+A third, unrelated finding: on the one biographical sentence in the
+corpus with a specific date (Alexander Fleming's birth year, 1881),
+**both T5-family models preserved it correctly; all three Qwen sizes
+corrupted it to 1981** (7B additionally disintegrated into
+Chinese-language meta-commentary and failed to complete the rewrite at
+all on this item). Sample size of one, not something to generalize
+from alone, but consistent with the code-switch/meta-leak pattern
+above — a sign these decoder-only chat models are less controllable
+under this prompt/decoding setup, not more capable underneath.
+
+**Phi-3.5-mini-instruct is the one decoder-only model that did not
+show either new failure mode** in manual review — no CJK contamination,
+no meta-commentary leaks. Where it fails under the hardest
+multi-constraint items, it fails safe (empty candidate list, e.g. on
+the `calib-multi_sound` items blocking "s"/"th"/"r" simultaneously)
+rather than emitting garbage — a meaningfully better failure mode for
+a production system, since an empty result is trivially detectable
+and can fall back cleanly, unlike silently-returned garbage. Still
+worse than both T5 options on the hard mechanical number (8.1% vs.
+2.3%/0.0%).
+
+**Verdict against the stated bar ("genuinely usable," not just "beats
+the current default"):** none of the three Qwen sizes clear it at this
+scale — the hard mechanical failure rate alone (17-42%) is
+disqualifying before quality is even considered, and the newly-found
+contamination modes make the real Qwen failure rate higher than
+reported. `flan-t5-base` remains mechanically the safest (0%
+no-clean) but round 1 already showed its safety comes from deleting
+the clause containing the blocked word rather than genuinely
+rephrasing it — a defect its own kind, just not one this mechanical
+check catches either. The current production default remains, on this
+evidence, the most balanced of the six tested.
+
+**What this doesn't mean:** it doesn't mean open decoder-only models
+are inherently unusable for this task — it means beam search under an
+aggressive multi-pattern `LogitsProcessor` block is a bad interaction
+with this specific decoding setup for these specific models, at these
+specific sizes. A different decoding strategy (no beam search, or a
+smaller/differently-tuned constraint) is a real next question, not
+tested here. Full blind Claude-quality-judging of the surviving
+"clean" candidates was not run this round — the hard structural
+failures already answer the "does this clear the bar" question without
+it, and running it would mostly re-confirm what manual review already
+found directly in the raw text.
+
+**Category:** Stage LR data point, generation-backbone research.
+Corrects/extends `2026-09-08-A`'s reading of the same mechanism at 12
+sentences. Recorded on `stage-lr`. No participant content involved —
+material is the tracked, public fresh-corpus/R10 subsets only.
