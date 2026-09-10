@@ -4040,7 +4040,14 @@ edited -- this entry is the correction on record. Full record:
 
 ---
 
-### 2026-08-30-D — Stage LR Matter 1 consolidated: phoneme-as-constraint audit, two decisions made
+### 2026-08-30-D2 — Stage LR Matter 1 consolidated: phoneme-as-constraint audit, two decisions made
+
+**Relabeled 2026-09-10, on merging `stage-lr` into `main`:** this entry
+was originally labeled `2026-08-30-D` on the `stage-lr` branch. `main`
+independently used that same label for an unrelated entry (the
+SBERT/MeaningBERT dependency fix, below) after the branches diverged.
+Relabeled to `D2` to keep every label in the merged file unique; no
+content changed. See `STAGE_LR_CLOSEOUT_REPORT.md` for the merge itself.
 
 **What was done:** consolidated a multi-turn review of whether this
 project's existing phoneme-as-constraint engineering decisions
@@ -4094,9 +4101,14 @@ pipeline or any file `main` currently ships. Full record:
 
 ---
 
-### 2026-08-30-E — Correction to 2026-08-30-D: phrase phone sequence must not auto-generalize to word/phone-level claims
+### 2026-08-30-E2 — Correction to 2026-08-30-D2: phrase phone sequence must not auto-generalize to word/phone-level claims
 
-**What was done:** 2026-08-30-D's phrase-representation decision
+**Relabeled 2026-09-10, on merging `stage-lr` into `main`:** originally
+`2026-08-30-E` on `stage-lr`; renamed to `E2` for the same reason as
+`D2` above (`main` independently used `E` for its own, unrelated
+`language_tool_python` fix). No content changed.
+
+**What was done:** 2026-08-30-D2's phrase-representation decision
 (concatenated per-word `full_pronunciation()` sequences) was found
 incomplete on further review -- it specified *what* the phrase gets as
 a feature but not the scoping rule for how that feature may be
@@ -4122,8 +4134,8 @@ deliberately designed to avoid at the word level.
 training-set builder exists to violate it.
 
 **Category:** Stage LR design decision (correction). Recorded on
-`stage-lr`, not `main`, same as 2026-08-30-D. Per this project's
-append-only discipline, 2026-08-30-D is left as originally written;
+`stage-lr`, not `main`, same as 2026-08-30-D2. Per this project's
+append-only discipline, 2026-08-30-D2 is left as originally written;
 this entry is the correction on record. Full record:
 `LEARNED_REFORMULATION_RESEARCH.md`.
 
@@ -4148,7 +4160,7 @@ direct inspection: `sounds`/`words`/`phrases` only). (2) its
 `reformulate.py::_flagged_positions` became a real consumer in the
 2026-08-16 refinement; only `phrases` is still genuinely unconsumed.
 (3) the phrase feature is named but never specified how it becomes a
-numeric feature -- Matter 1's decision (2026-08-30-D/E) needed to be
+numeric feature -- Matter 1's decision (2026-08-30-D2/E2) needed to be
 wired in explicitly, not left implicit. (4) **Load-bearing**: the
 claimed reusable preference data ("reformatting, not fresh collection")
 does not exist at DPO's needed scale/shape -- checked directly: 20

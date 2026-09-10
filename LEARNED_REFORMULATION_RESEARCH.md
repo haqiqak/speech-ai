@@ -192,7 +192,9 @@ structure for a distinction not yet shown to matter.
 `main` — per direct instruction, this branch's work stays here until
 ready to report back. No code written yet; these are representation
 requirements for whenever Stage LR's first training-set builder is
-implemented. Full record: `DECISION_LOG.md` 2026-08-30-D.
+implemented. Full record: `DECISION_LOG.md` 2026-08-30-D2 (relabeled
+from `-D` on merging into `main`, 2026-09-10 — see
+`STAGE_LR_CLOSEOUT_REPORT.md`).
 
 ## Scope — Matter 2: proposal reviewed, working plan set (2026-08-30)
 
@@ -314,7 +316,8 @@ guardrail:**
 - Matter 1's word-level guardrail: `test_word_specific_pattern_never_leaks_into_a_global_onset_hit`
   checks directly that a word's `problem_phones` never makes an
   unrelated word match a global sound.
-- Matter 1's phrase-level guardrail (2026-08-30-E): `test_phrase_match_never_flags_a_lone_word_from_that_phrase`
+- Matter 1's phrase-level guardrail (2026-08-30-E2, relabeled from `-E`
+  on merging into `main`): `test_phrase_match_never_flags_a_lone_word_from_that_phrase`
   checks directly that a declared difficult phrase does not cause its
   own component word, used alone, to register as declared-difficult.
 - No allowlist term (per the review's correction) — not implemented,
