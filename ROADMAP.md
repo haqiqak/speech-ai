@@ -500,7 +500,7 @@ reconciliation by *not* combining the two signals rather than by merging
 them — `profiling/profile.py` remains in the repo, untouched, in case
 audio input returns to scope later.
 
-### R13. Give `difficulty_profile.phrases` (and now `problem_phones`) a consumer
+### R13. Give `difficulty_profile.phrases` (and now `problem_phones`) a consumer — **[ESCALATED, 2026-09-01]**
 **Linked finding:** `PROBLEM_FORMULATION.md` §6/§10 — phrases and (as of
 the Stage 4A refinement) word-specific `problem_phones` are declared and
 persisted but nothing in the current reformulation pipeline accepts or acts
@@ -524,6 +524,57 @@ treating a word-specific pattern the same as a whole-word flag for
 differently than a plain word-level flag would — that finer distinction
 is still open). Part (a), phrase matching, is untouched — `phrase_values()`
 is not called anywhere in `reformulate.py`. Still open.
+
+**Update, 2026-09-01 — Stage LR (branch `stage-lr`) path (b) gave a
+concrete, measured instance of this gap causing a visibly broken output,
+not just an abstract missing feature [FINDING].** A real participant
+declared both a sound-class and a phrase, where one word inside the
+declared phrase happens to also match the declared sound-class. Since
+`phrase_values()` is never read (this item, still open), that word was
+flagged and substituted purely as an ordinary single word — with no
+awareness it sits inside a declared multi-word phrase — producing a
+grammatically-parseable but semantically broken result (the fixed
+expression's anchor word replaced by an unrelated superlative
+adjective form). Traced directly against the real pipeline, same
+session. Not fixed, per the architecture freeze (`CLAUDE.md`) — this
+item was already correctly labeled future work; this is a real-world
+confirmation that leaving it unaddressed has a user-visible cost, not
+just a theoretical one. Practical handling: the broken pair was
+excluded before being shown to the participant, same discipline as
+`REFORMULATION_PROBLEM_MAP.md` §2.4's "never ship a bad guess"
+precedent for idiom spans — this one just wasn't caught by that guard,
+since the guard only covers a fixed, hardcoded list, not the
+speaker's own declared phrases. Full record: `DECISION_LOG.md`
+2026-09-01 entry, `LEARNED_REFORMULATION_RESEARCH.md` path (b) section.
+
+**Update, 2026-09-01, same day — a second, independent participant's
+profile reproduced this gap a different way: silently, not broken.**
+Where the case above shipped a visibly broken output, this one
+produced no output at all for the declared phrase — the word inside
+it carrying the declared sound was a function word/stopword, which
+`reformulate.py` never treats as substitutable by design, so the
+phrase was never flagged and the speaker's declared difficulty on it
+was never addressed in any of the sentences tested. Two independent
+real participants, two different concrete failure shapes (one broken,
+one silent), from the same underlying gap in one session — **flagged
+escalated**: still not fixed here, per the architecture freeze, but
+marked for priority attention if/when the freeze's own reopening
+conditions are met, rather than left at the same priority as other
+open roadmap items. Full record: `DECISION_LOG.md` 2026-09-01-E entry.
+
+**Update, 2026-09-01, same day — a third reproduction, and a useful
+nuance: the gap doesn't always break output.** A third case of a
+declared phrase's anchor word coincidentally matching a separately
+declared sound was found — and this time the resulting single-word
+substitution produced a clean, natural result (a less syntactically
+fixed phrase tolerated the swap; contrast the first reproduction
+above, a rigid idiom that didn't). Doesn't change the escalated status
+or the underlying gap (phrases are still never consulted as phrases
+either way) — it refines what's known about the gap's *consequences*:
+whether a coincidental match breaks output, silently no-ops, or
+happens to survive intact appears to depend on how syntactically rigid
+the specific phrase is, not on any property this pipeline currently
+checks for. Full record: `DECISION_LOG.md` 2026-09-01-N entry.
 
 ### R14. Build and browser-verify the inline text-selection flagging component
 **Linked finding:** `PROBLEM_FORMULATION.md` §7 — a true "select text

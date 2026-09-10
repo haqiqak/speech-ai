@@ -1,0 +1,857 @@
+{
+  "counts": {
+    "total_sentence_profile_pairs": 120,
+    "no_substitution_change": 97,
+    "attempt_error": 0,
+    "no_second_candidate": 10,
+    "second_candidate_found": 13
+  },
+  "results": [
+    {
+      "uid": "B3-light_single_sound-1",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-2",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-3",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-4",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-5",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-6",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-7",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-8",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-9",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-10",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline re-selected the same replacement even after exclusion (inflection/case variant only, not a genuinely different word)"
+    },
+    {
+      "uid": "B3-heavy_dense-11",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "B3-single_common_sound-12",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "B3-light_single_sound-13",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-14",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-15",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-16",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-17",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-18",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-19",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Grandpa always tells the same story about his first fishing trip.",
+      "original_word": "same",
+      "profile_spec": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "profile_source_file": "harvest_batch3.py (fresh, first-run)",
+      "candidate_a": "identical",
+      "candidate_a_sentence": "Grandpa always tells the identical history about his first fishing trip.",
+      "candidate_b": "aforementioned",
+      "candidate_b_sentence": "Grandpa always tells the aforementioned history about his first fishing trip."
+    },
+    {
+      "uid": "B3-single_common_sound-20",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Grandpa always tells the same story about his first fishing trip.",
+      "original_word": "same",
+      "profile_spec": {
+        "name": "single_common_sound",
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "harvest_batch3.py (fresh, first-run)",
+      "candidate_a": "identical",
+      "candidate_a_sentence": "Grandpa always tells the identical history about his first fishing trip.",
+      "candidate_b": "aforementioned",
+      "candidate_b_sentence": "Grandpa always tells the aforementioned history about his first fishing trip."
+    },
+    {
+      "uid": "B3-light_single_sound-21",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-22",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The recipe requires precise measurements for the sauce to thicken properly.",
+      "original_word": "precise",
+      "profile_spec": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "harvest_batch3.py (fresh, first-run)",
+      "candidate_a": "accurate",
+      "candidate_a_sentence": "The recipe requires accurate measurements for the sauce to thicken right.",
+      "candidate_b": "very",
+      "candidate_b_sentence": "The recipe requires very measurements for the sauce to thicken right."
+    },
+    {
+      "uid": "B3-heavy_dense-23",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-24",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-25",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-26",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-27",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-28",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-29",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-30",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-31",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-32",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-33",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-34",
+      "outcome": "second_candidate_found",
+      "original_sentence": "He forgot his umbrella again despite the forecast predicting heavy rain.",
+      "original_word": "predicting",
+      "profile_spec": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "harvest_batch3.py (fresh, first-run)",
+      "candidate_a": "calling",
+      "candidate_a_sentence": "He forgot his umbrella again despite the forecast calling heavy rain.",
+      "candidate_b": "guessing",
+      "candidate_b_sentence": "He forgot his umbrella again despite the forecast guessing heavy rain."
+    },
+    {
+      "uid": "B3-heavy_dense-35",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-36",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-37",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-38",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-39",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The museum's new exhibit features artifacts from ancient trading routes.",
+      "original_word": "routes",
+      "profile_spec": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "profile_source_file": "harvest_batch3.py (fresh, first-run)",
+      "candidate_a": "paths",
+      "candidate_a_sentence": "The museum's new exhibit features artifacts from ancient trading paths.",
+      "candidate_b": "lines",
+      "candidate_b_sentence": "The museum's new exhibit features artifacts from ancient trading lines."
+    },
+    {
+      "uid": "B3-single_common_sound-40",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-41",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-42",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-43",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Prices for groceries have risen sharply over the past few months.",
+      "original_word": "risen",
+      "profile_spec": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "profile_source_file": "harvest_batch3.py (fresh, first-run)",
+      "candidate_a": "climbed",
+      "candidate_a_sentence": "Prices for groceries have climbed sharply over the past few months.",
+      "candidate_b": "grown",
+      "candidate_b_sentence": "Prices for groceries have grown sharply over the past few months."
+    },
+    {
+      "uid": "B3-single_common_sound-44",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-45",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-46",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-47",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-48",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-49",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-50",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-51",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Her thesis argues that early exposure to music improves language development.",
+      "original_word": "thesis",
+      "profile_spec": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "profile_source_file": "harvest_batch3.py (fresh, first-run)",
+      "candidate_a": "dissertation",
+      "candidate_a_sentence": "Her dissertation argues that early exposure to music improves language development.",
+      "candidate_b": "treatise",
+      "candidate_b_sentence": "Her treatise argues that early exposure to music improves language development."
+    },
+    {
+      "uid": "B3-single_common_sound-52",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-53",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-54",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The coach benched the striker after he missed three straight practices.",
+      "original_word": "practices",
+      "profile_spec": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "harvest_batch3.py (fresh, first-run)",
+      "candidate_a": "trainings",
+      "candidate_a_sentence": "The coach benched the striker after he missed three straight trainings.",
+      "candidate_b": "exercises",
+      "candidate_b_sentence": "The coach benched the striker after he missed three straight exercises."
+    },
+    {
+      "uid": "B3-heavy_dense-55",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-56",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-57",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-58",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-59",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "B3-single_common_sound-60",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "B3-light_single_sound-61",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-62",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-63",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-64",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-65",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-66",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-67",
+      "outcome": "second_candidate_found",
+      "original_sentence": "A sudden gust of wind knocked over the outdoor market stalls.",
+      "original_word": "sudden",
+      "profile_spec": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "profile_source_file": "harvest_batch3.py (fresh, first-run)",
+      "candidate_a": "fast",
+      "candidate_a_sentence": "A fast gust of wind knocked over the outdoor market malfunctions.",
+      "candidate_b": "sharp",
+      "candidate_b_sentence": "A sharp gust of wind knocked over the outdoor market malfunctions."
+    },
+    {
+      "uid": "B3-single_common_sound-68",
+      "outcome": "second_candidate_found",
+      "original_sentence": "A sudden gust of wind knocked over the outdoor market stalls.",
+      "original_word": "sudden",
+      "profile_spec": {
+        "name": "single_common_sound",
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "harvest_batch3.py (fresh, first-run)",
+      "candidate_a": "fast",
+      "candidate_a_sentence": "A fast gust of wind knocked over the outdoor market malfunctions.",
+      "candidate_b": "sharp",
+      "candidate_b_sentence": "A sharp gust of wind knocked over the outdoor market malfunctions."
+    },
+    {
+      "uid": "B3-light_single_sound-69",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-70",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-71",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-72",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-73",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-74",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-75",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-76",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-77",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-78",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-79",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-80",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-81",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-82",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-83",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-84",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-85",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-86",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The startup raised significant funding to expand its engineering team.",
+      "original_word": "significant",
+      "profile_spec": {
+        "name": "moderate_mixed",
+        "sounds": [
+          "pr",
+          "gr"
+        ],
+        "words": [
+          "particular",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "harvest_batch3.py (fresh, first-run)",
+      "candidate_a": "meaningful",
+      "candidate_a_sentence": "The startup raised meaningful funding to expand its engineering team.",
+      "candidate_b": "meaning",
+      "candidate_b_sentence": "The startup raised meaning funding to expand its engineering team."
+    },
+    {
+      "uid": "B3-heavy_dense-87",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-88",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "B3-light_single_sound-89",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-90",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-91",
+      "outcome": "second_candidate_found",
+      "original_sentence": "She switched careers after realizing accounting wasn't fulfilling.",
+      "original_word": "switched",
+      "profile_spec": {
+        "name": "heavy_dense",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "temperature",
+          "technology",
+          "important"
+        ],
+        "phrases": [
+          "as well as"
+        ]
+      },
+      "profile_source_file": "harvest_batch3.py (fresh, first-run)",
+      "candidate_a": "flipped",
+      "candidate_a_sentence": "She flipped careers after gaining accounting wasn't fulfilling.",
+      "candidate_b": "operated",
+      "candidate_b_sentence": "She operated careers after gaining accounting wasn't fulfilling."
+    },
+    {
+      "uid": "B3-single_common_sound-92",
+      "outcome": "second_candidate_found",
+      "original_sentence": "She switched careers after realizing accounting wasn't fulfilling.",
+      "original_word": "switched",
+      "profile_spec": {
+        "name": "single_common_sound",
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "harvest_batch3.py (fresh, first-run)",
+      "candidate_a": "flipped",
+      "candidate_a_sentence": "She flipped careers after realizing accounting wasn't fulfilling.",
+      "candidate_b": "operated",
+      "candidate_b_sentence": "She operated careers after realizing accounting wasn't fulfilling."
+    },
+    {
+      "uid": "B3-light_single_sound-93",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-94",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-95",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-96",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-97",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-98",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-99",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-100",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-101",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-102",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-103",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-104",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-105",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-106",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-107",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-108",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-109",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-110",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "B3-heavy_dense-111",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-112",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-light_single_sound-113",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "B3-moderate_mixed-114",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-115",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-116",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "B3-light_single_sound-117",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-moderate_mixed-118",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-heavy_dense-119",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate, no substitution-tier change produced"
+    },
+    {
+      "uid": "B3-single_common_sound-120",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    }
+  ]
+}

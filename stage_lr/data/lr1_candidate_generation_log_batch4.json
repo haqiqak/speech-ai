@@ -1,0 +1,616 @@
+{
+  "counts": {
+    "total_sentence_profile_pairs": 90,
+    "no_substitution_change": 71,
+    "attempt_error": 0,
+    "no_second_candidate": 11,
+    "second_candidate_found": 8
+  },
+  "results": [
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-1",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-2",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-3",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-4",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-5",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-6",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-7",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-8",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-9",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-10",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-11",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-12",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-13",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Grandpa always tells the same story about his first fishing trip.",
+      "original_word": "same",
+      "profile_spec": {
+        "name": "messy_s_plus_unrelated_words",
+        "sounds": [
+          "s"
+        ],
+        "words": [
+          "essential",
+          "possibility",
+          "necessary",
+          "convenient",
+          "opportunity"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "harvest_batch4_new_templates.py (new profile shapes)",
+      "candidate_a": "identical",
+      "candidate_a_sentence": "Grandpa always tells the identical history about his first fishing trip.",
+      "candidate_b": "aforementioned",
+      "candidate_b_sentence": "Grandpa always tells the aforementioned history about his first fishing trip."
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-14",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-15",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-16",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-17",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The recipe requires precise measurements for the sauce to thicken properly.",
+      "original_word": "thicken",
+      "profile_spec": {
+        "name": "no_common_thread_multi_sound",
+        "sounds": [
+          "th",
+          "w",
+          "k"
+        ],
+        "words": [
+          "quality",
+          "wonderful"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "harvest_batch4_new_templates.py (new profile shapes)",
+      "candidate_a": "modify",
+      "candidate_a_sentence": "The recipe requires precise measurements for the sauce to modify properly.",
+      "candidate_b": "change",
+      "candidate_b_sentence": "The recipe requires precise measurements for the sauce to change properly."
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-18",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-19",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-20",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-21",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-22",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-23",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-24",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-25",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-26",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-27",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-28",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-29",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-30",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-31",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-32",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-33",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-34",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-35",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-36",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-37",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-38",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Her thesis argues that early exposure to music improves language development.",
+      "original_word": "thesis",
+      "profile_spec": {
+        "name": "no_common_thread_multi_sound",
+        "sounds": [
+          "th",
+          "w",
+          "k"
+        ],
+        "words": [
+          "quality",
+          "wonderful"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "harvest_batch4_new_templates.py (new profile shapes)",
+      "candidate_a": "dissertation",
+      "candidate_a_sentence": "Her dissertation argues that early exposure to music improves language development.",
+      "candidate_b": "treatise",
+      "candidate_b_sentence": "Her treatise argues that early exposure to music improves language development."
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-39",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-40",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-41",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-42",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-43",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-44",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-45",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-46",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-47",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-48",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-49",
+      "outcome": "second_candidate_found",
+      "original_sentence": "A sudden gust of wind knocked over the outdoor market stalls.",
+      "original_word": "sudden",
+      "profile_spec": {
+        "name": "messy_s_plus_unrelated_words",
+        "sounds": [
+          "s"
+        ],
+        "words": [
+          "essential",
+          "possibility",
+          "necessary",
+          "convenient",
+          "opportunity"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "harvest_batch4_new_templates.py (new profile shapes)",
+      "candidate_a": "fast",
+      "candidate_a_sentence": "A fast gust of wind knocked over the outdoor market malfunctions.",
+      "candidate_b": "sharp",
+      "candidate_b_sentence": "A sharp gust of wind knocked over the outdoor market malfunctions."
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-50",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-51",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-52",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-53",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-54",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-55",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-56",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-57",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-58",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-59",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-60",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-61",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-62",
+      "outcome": "second_candidate_found",
+      "original_sentence": "He struggled to parallels park in the crowded downtown street.",
+      "original_word": "crowded",
+      "profile_spec": {
+        "name": "no_common_thread_multi_sound",
+        "sounds": [
+          "th",
+          "w",
+          "k"
+        ],
+        "words": [
+          "quality",
+          "wonderful"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "harvest_batch4_new_templates.py (new profile shapes)",
+      "candidate_a": "packed",
+      "candidate_a_sentence": "He struggled to parallels park in the packed downtown street.",
+      "candidate_b": "jam-packed",
+      "candidate_b_sentence": "He struggled to parallels park in the jam-packed downtown street."
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-63",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-64",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-65",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-66",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-67",
+      "outcome": "second_candidate_found",
+      "original_sentence": "She switched careers after realizing accounting wasn't fulfilling.",
+      "original_word": "switched",
+      "profile_spec": {
+        "name": "messy_s_plus_unrelated_words",
+        "sounds": [
+          "s"
+        ],
+        "words": [
+          "essential",
+          "possibility",
+          "necessary",
+          "convenient",
+          "opportunity"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "harvest_batch4_new_templates.py (new profile shapes)",
+      "candidate_a": "flipped",
+      "candidate_a_sentence": "She flipped careers after realizing accounting wasn't fulfilling.",
+      "candidate_b": "operated",
+      "candidate_b_sentence": "She operated careers after realizing accounting wasn't fulfilling."
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-68",
+      "outcome": "second_candidate_found",
+      "original_sentence": "She switched careers after realizing accounting wasn't fulfilling.",
+      "original_word": "careers",
+      "profile_spec": {
+        "name": "no_common_thread_multi_sound",
+        "sounds": [
+          "th",
+          "w",
+          "k"
+        ],
+        "words": [
+          "quality",
+          "wonderful"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "harvest_batch4_new_templates.py (new profile shapes)",
+      "candidate_a": "advancements",
+      "candidate_a_sentence": "She switched advancements after realizing accounting wasn't fulfilling.",
+      "candidate_b": "advances",
+      "candidate_b_sentence": "She switched advances after realizing accounting wasn't fulfilling."
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-69",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-70",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-71",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The children built a sandcastle before the tide came rushing in.",
+      "original_word": "came",
+      "profile_spec": {
+        "name": "no_common_thread_multi_sound",
+        "sounds": [
+          "th",
+          "w",
+          "k"
+        ],
+        "words": [
+          "quality",
+          "wonderful"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "harvest_batch4_new_templates.py (new profile shapes)",
+      "candidate_a": "turned",
+      "candidate_a_sentence": "The children built a sandcastle before the tide turned rushing in.",
+      "candidate_b": "became",
+      "candidate_b_sentence": "The children built a sandcastle before the tide became rushing in."
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-72",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-73",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-74",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-75",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-76",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-77",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-78",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-79",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-80",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-81",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-82",
+      "outcome": "no_substitution_change",
+      "reason": "status=could_not_safely_reformulate"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-83",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-84",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-85",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-86",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-87",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    },
+    {
+      "uid": "B4-messy_s_plus_unrelated_words-88",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "B4-no_common_thread_multi_sound-89",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "B4-word_heavy_sparse_sound-90",
+      "outcome": "no_substitution_change",
+      "reason": "status=no_change_needed"
+    }
+  ]
+}

@@ -37,16 +37,31 @@ fundamentally different approach must beat. Reopening optimization
 work requires new evidence: (1) a substantially larger, independently
 collected labeled dataset, or (2) a genuinely different modeling
 approach that clears this project's own held-out generalization bar
-before being trusted over the frozen baseline. **Condition (2) now has
-a named container**, opened 2026-08-30: `LEARNED_REFORMULATION_RESEARCH.md`
-(Stage LR — "LR" = Learned Reformulation), developed on branch
-`stage-lr`, never on `main` — see `DECISION_LOG.md` 2026-08-30-B/C.
-`main` stays the frozen, shipped implementation; anyone building against
-this repo (including partners integrating it with the separate Audio
-Module) should track `main`, not that branch. If neither condition is
-met, the correct response to a newly observed failure is to note it
-(e.g. in `REFORMULATION_PROBLEM_MAP.md`, still useful as a living
-record of failure modes) — not to patch it.
+before being trusted over the frozen baseline. **Condition (2) had a
+named container**, opened 2026-08-30: `LEARNED_REFORMULATION_RESEARCH.md`
+(Stage LR — "LR" = Learned Reformulation), originally developed on its
+own branch (`stage-lr`) specifically so it stayed off `main` while
+unresolved. **Neither condition was cleared** — see
+`STAGE_LR_CLOSEOUT_REPORT.md` for the full account — and Stage LR was
+paused on that basis, 2026-09-10.
+
+**`stage-lr` was merged into `main` on 2026-09-10, after that pause —
+read this carefully, it is a documentation/archival merge, not a
+reopening of the freeze.** The merge brought in Stage LR's research
+code, notebooks, and decision history for a single reason: so this
+record isn't stranded on a branch nobody reads by default. It did
+**not** touch the frozen pipeline: `reformulate.py`, `rephrase.py`,
+`semantic.py`, `combined_score()`, and every other file the freeze
+above names were verified byte-identical immediately before and after
+the merge (diffed directly, not assumed). The freeze itself, and both
+its reopening conditions, remain exactly as stated above and are
+**unaffected by this merge**. If you are reading this after the merge
+and wondering whether Stage LR's presence in `main`'s tree means the
+freeze lifted — it doesn't. Check `STAGE_LR_CLOSEOUT_REPORT.md`'s
+verdict, not the file listing, before assuming otherwise. If neither
+condition is met, the correct response to a newly observed failure is
+to note it (e.g. in `REFORMULATION_PROBLEM_MAP.md`, still useful as a
+living record of failure modes) — not to patch it.
 
 ## Reading order for a cold start
 

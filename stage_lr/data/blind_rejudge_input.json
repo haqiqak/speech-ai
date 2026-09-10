@@ -1,0 +1,444 @@
+[
+  {
+    "id": 1,
+    "original_sentence": "Small talk is a bonding ritual and a strategy for managing interpersonal distance.",
+    "difficulty_profile": {
+      "name": "light_single_sound",
+      "sounds": [
+        "str"
+      ],
+      "words": [],
+      "phrases": []
+    },
+    "flagged_word": "strategy",
+    "candidate_A": "way",
+    "candidate_B": "scheme"
+  },
+  {
+    "id": 2,
+    "original_sentence": "An ontology is the set of objects, relations, concepts, and properties used by a particular domain of knowledge.",
+    "difficulty_profile": {
+      "name": "moderate_mixed",
+      "sounds": [
+        "pr",
+        "gr"
+      ],
+      "words": [
+        "particular",
+        "significant"
+      ],
+      "phrases": []
+    },
+    "flagged_word": "properties",
+    "candidate_A": "places",
+    "candidate_B": "constructs"
+  },
+  {
+    "id": 5,
+    "original_sentence": "Between the 18th century and 1970 there was little net warming, as the warming impact of greenhouse gas emissions were offset by cooling from sulfur dioxide emissions.",
+    "difficulty_profile": {
+      "name": "moderate_mixed",
+      "sounds": [
+        "pr",
+        "gr"
+      ],
+      "words": [
+        "particular",
+        "significant"
+      ],
+      "phrases": []
+    },
+    "flagged_word": "greenhouse",
+    "candidate_A": "gas",
+    "candidate_B": "building"
+  },
+  {
+    "id": 6,
+    "original_sentence": "The upper atmosphere is cooling, because greenhouse gases are trapping heat near the Earth's surface, and so less heat is radiating into space.",
+    "difficulty_profile": {
+      "name": "moderate_mixed",
+      "sounds": [
+        "pr",
+        "gr"
+      ],
+      "words": [
+        "particular",
+        "significant"
+      ],
+      "phrases": []
+    },
+    "flagged_word": "greenhouse",
+    "candidate_A": "gas",
+    "candidate_B": "building"
+  },
+  {
+    "id": 7,
+    "original_sentence": "Small talk consists of three main parts: a greeting, conversation, and a closing.",
+    "difficulty_profile": {
+      "name": "moderate_mixed",
+      "sounds": [
+        "pr",
+        "gr"
+      ],
+      "words": [
+        "particular",
+        "significant"
+      ],
+      "phrases": []
+    },
+    "flagged_word": "greeting",
+    "candidate_A": "welcome",
+    "candidate_B": "salutation"
+  },
+  {
+    "id": 8,
+    "original_sentence": "The phenomenon of small talk was initially studied in 1923 by Bronislaw Malinowski in his essay on the problem of meaning in primitive languages.",
+    "difficulty_profile": {
+      "name": "moderate_mixed",
+      "sounds": [
+        "pr",
+        "gr"
+      ],
+      "words": [
+        "particular",
+        "significant"
+      ],
+      "phrases": []
+    },
+    "flagged_word": "primitive",
+    "candidate_A": "natural",
+    "candidate_B": "naive"
+  },
+  {
+    "id": 12,
+    "original_sentence": "Cooking can prevent many forborne illnesses that would otherwise occur if raw food is consumed.",
+    "difficulty_profile": {
+      "name": "heavy_dense",
+      "sounds": [
+        "s",
+        "th",
+        "r"
+      ],
+      "words": [
+        "temperature",
+        "technology",
+        "important"
+      ],
+      "phrases": [
+        "as well as"
+      ]
+    },
+    "flagged_word": "raw",
+    "candidate_A": "new",
+    "candidate_B": "uncooked"
+  },
+  {
+    "id": 13,
+    "original_sentence": "Cooking is done both by people in their own dwellings and by professional cooks and chefs in restaurants and other food establishments.",
+    "difficulty_profile": {
+      "name": "heavy_dense",
+      "sounds": [
+        "s",
+        "th",
+        "r"
+      ],
+      "words": [
+        "temperature",
+        "technology",
+        "important"
+      ],
+      "phrases": [
+        "as well as"
+      ]
+    },
+    "flagged_word": "restaurants",
+    "candidate_A": "buildings",
+    "candidate_B": "eateries"
+  },
+  {
+    "id": 14,
+    "original_sentence": "In a business meeting, it enables people to establish each other's reputation and level of expertise.",
+    "difficulty_profile": {
+      "name": "heavy_dense",
+      "sounds": [
+        "s",
+        "th",
+        "r"
+      ],
+      "words": [
+        "temperature",
+        "technology",
+        "important"
+      ],
+      "phrases": [
+        "as well as"
+      ]
+    },
+    "flagged_word": "reputation",
+    "candidate_A": "esteem",
+    "candidate_B": "notoriety"
+  },
+  {
+    "id": 15,
+    "original_sentence": "Early researchers developed algorithms that imitated step-by-step reasoning that humans use when solving puzzles or making logical deductions.",
+    "difficulty_profile": {
+      "name": "single_common_sound",
+      "sounds": [
+        "s"
+      ],
+      "words": [],
+      "phrases": []
+    },
+    "flagged_word": "step-by-step",
+    "candidate_A": "detailed",
+    "candidate_B": "gradual"
+  },
+  {
+    "id": 17,
+    "original_sentence": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+    "difficulty_profile": {
+      "name": "R10-001-core-word:sentence_specific_word",
+      "sounds": [],
+      "words": [
+        "assimilated",
+        "components"
+      ],
+      "phrases": []
+    },
+    "flagged_word": "assimilated",
+    "candidate_A": "absorbed",
+    "candidate_B": "imbibed"
+  },
+  {
+    "id": 26,
+    "original_sentence": "Solar energy can only be captured during the day, and ideally in cloudless conditions.",
+    "difficulty_profile": {
+      "name": "R10-040-core-word:sentence_specific_word",
+      "sounds": [],
+      "words": [
+        "conditions"
+      ],
+      "phrases": []
+    },
+    "flagged_word": "conditions",
+    "candidate_A": "terms",
+    "candidate_B": "states"
+  },
+  {
+    "id": 27,
+    "original_sentence": "In general, a program is an algorithm only if it stops eventually.",
+    "difficulty_profile": {
+      "name": "R10-048-core-multi_sound:multi_sound",
+      "sounds": [
+        "s",
+        "th",
+        "r"
+      ],
+      "words": [],
+      "phrases": []
+    },
+    "flagged_word": "stops",
+    "candidate_A": "quits",
+    "candidate_B": "discontinues"
+  },
+  {
+    "id": 32,
+    "original_sentence": "The professor explained the concept twice before moving on to the next topic.",
+    "difficulty_profile": {
+      "name": "R10-073-core-word:sentence_specific_word",
+      "sounds": [],
+      "words": [
+        "professor"
+      ],
+      "phrases": []
+    },
+    "flagged_word": "professor",
+    "candidate_A": "prof",
+    "candidate_B": "academic"
+  },
+  {
+    "id": 34,
+    "original_sentence": "The exam covers everything we studied in the first six chapters.",
+    "difficulty_profile": {
+      "name": "R10-075-core-dense_mixed_generic:dense_mixed_generic",
+      "sounds": [
+        "s",
+        "th",
+        "r"
+      ],
+      "words": [
+        "important",
+        "significant"
+      ],
+      "phrases": []
+    },
+    "flagged_word": "studied",
+    "candidate_A": "considered",
+    "candidate_B": "examined"
+  },
+  {
+    "id": 35,
+    "original_sentence": "The manager asked everyone to submit their reports by the end of the day.",
+    "difficulty_profile": {
+      "name": "R10-079-core-sparse_common_sound:sparse_common_sound",
+      "sounds": [
+        "s"
+      ],
+      "words": [],
+      "phrases": []
+    },
+    "flagged_word": "submit",
+    "candidate_A": "take",
+    "candidate_B": "propose"
+  },
+  {
+    "id": 37,
+    "original_sentence": "The team meets every Monday to review what went wrong the previous week.",
+    "difficulty_profile": {
+      "name": "R10-084-core-word:sentence_specific_word",
+      "sounds": [],
+      "words": [
+        "previous",
+        "monday"
+      ],
+      "phrases": []
+    },
+    "flagged_word": "previous",
+    "candidate_A": "past",
+    "candidate_B": "old"
+  },
+  {
+    "id": 40,
+    "original_sentence": "The bakery down the street makes breads that's noticeably fresher than the supermarket's.",
+    "difficulty_profile": {
+      "name": "R10-096-core-single_sound:single_sound",
+      "sounds": [
+        "str"
+      ],
+      "words": [],
+      "phrases": []
+    },
+    "flagged_word": "street",
+    "candidate_A": "road",
+    "candidate_B": "neighborhood"
+  },
+  {
+    "id": 41,
+    "original_sentence": "She apologized for showing up late to the party.",
+    "difficulty_profile": {
+      "name": "R10-097-core-word:sentence_specific_word",
+      "sounds": [],
+      "words": [
+        "apologized"
+      ],
+      "phrases": []
+    },
+    "flagged_word": "apologized",
+    "candidate_A": "apologised",
+    "candidate_B": "excused"
+  },
+  {
+    "id": 43,
+    "original_sentence": "They've been friends since childhood, even though they don't see each other often now.",
+    "difficulty_profile": {
+      "name": "R10-100-core-multi_sound:multi_sound",
+      "sounds": [
+        "s",
+        "th",
+        "r"
+      ],
+      "words": [],
+      "phrases": []
+    },
+    "flagged_word": "see",
+    "candidate_A": "find",
+    "candidate_B": "play"
+  },
+  {
+    "id": 45,
+    "original_sentence": "It's normal to feels nervous before meeting someone for the first time.",
+    "difficulty_profile": {
+      "name": "R10-102-core-dense_mixed_generic:dense_mixed_generic",
+      "sounds": [
+        "s",
+        "th",
+        "r"
+      ],
+      "words": [
+        "important",
+        "significant"
+      ],
+      "phrases": []
+    },
+    "flagged_word": "someone",
+    "candidate_A": "person",
+    "candidate_B": "individual"
+  },
+  {
+    "id": 47,
+    "original_sentence": "The car's engine made a strange noise whenever it idled for too long.",
+    "difficulty_profile": {
+      "name": "R10-107-core-word:sentence_specific_word",
+      "sounds": [],
+      "words": [
+        "whenever",
+        "strange"
+      ],
+      "phrases": []
+    },
+    "flagged_word": "strange",
+    "candidate_A": "weird",
+    "candidate_B": "other"
+  },
+  {
+    "id": 51,
+    "original_sentence": "I think the new update make the ape harder to use, not easier.",
+    "difficulty_profile": {
+      "name": "R10-115-calib-multi_sound:multi_sound",
+      "sounds": [
+        "s",
+        "th",
+        "r"
+      ],
+      "words": [],
+      "phrases": []
+    },
+    "flagged_word": "think",
+    "candidate_A": "believe",
+    "candidate_B": "mean"
+  },
+  {
+    "id": 54,
+    "original_sentence": "The store doesn't open until ten, but the caf\u00e9 next door opens earlier.",
+    "difficulty_profile": {
+      "name": "R10-125-core-word:sentence_specific_word",
+      "sounds": [],
+      "words": [
+        "doesn't",
+        "earlier",
+        "store"
+      ],
+      "phrases": []
+    },
+    "flagged_word": "earlier",
+    "candidate_A": "newer",
+    "candidate_B": "earliest"
+  },
+  {
+    "id": 55,
+    "original_sentence": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year scholarship to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.",
+    "difficulty_profile": {
+      "name": "R10-129-core-word:sentence_specific_word",
+      "sounds": [],
+      "words": [
+        "scholarship",
+        "institution",
+        "polytechnic"
+      ],
+      "phrases": []
+    },
+    "flagged_word": "scholarship",
+    "candidate_A": "studies",
+    "candidate_B": "aid"
+  }
+]

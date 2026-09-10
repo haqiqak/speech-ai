@@ -145,6 +145,22 @@ pipeline itself. Still unaddressed, still open — this factor keeps
 accumulating separate, real evidence across every tier that's been
 built (substitution, and now phrase replacement).
 
+**Update, 2026-09-01 — Stage LR (branch `stage-lr`) path (b) found a
+fifth, specific instance: indefinite-article agreement ("a" vs. "an")
+is not adjusted after a substitution changes the following word's
+leading sound [FINDING].** A real participant's declared word,
+consonant-initial, was substituted with a vowel-initial synonym in an
+"a ___" slot; `reformulate()` — traced via a direct, real call, not
+inferred — produced "a" followed by the vowel-initial replacement
+unchanged, rather than "an". `inflect()`/`_preserve_case()`'s
+morphological agreement (§2.3's opening paragraph) covers the
+replaced word itself, not the determiner preceding it — a narrower,
+previously undemonstrated gap in the same "beyond single-word
+morphology, nothing is checked" category this section already
+documents. Not fixed, per the architecture freeze (`CLAUDE.md`). Full
+record: `DECISION_LOG.md` 2026-09-01 entry, `LEARNED_REFORMULATION_
+RESEARCH.md` path (b) section.
+
 ### 2.4 Naturalness and idiomaticity
 
 **Current state [FINDING, the single best-evidenced problem in this
@@ -252,6 +268,84 @@ declared-difficult word — factor 2.7 below; two occurrences of one word
 forced to the identical sense) and one real, disclosed cost that
 *wasn't* fixed (single-sense candidate pools are sometimes smaller and
 score lower than the old sense-mixed pools, even when correct).
+
+**Update, 2026-09-01 — Stage LR (branch `stage-lr`, not `main`) real-participant
+data path (b) gave a concrete, measured instance of the disclosed cost above,
+not just a predicted one [FINDING, code-verified mechanism].** Per this
+project's standing privacy rule, the participant's actual declared words and
+sentences are not reproduced here — they live only under
+`stage_lr/data/private/` (gitignored). The mechanism, illustrated with a
+non-participant example of the same shape: an adjective with several distinct
+WordNet senses (e.g. "sharp," which has senses ranging from a broad
+"perceptive/intelligent" sense with many synonyms to a narrow, literal
+"keen-edged" sense with only one or two) gets `disambiguate_synset()`'d down
+to a single sense before candidate generation.
+When the sense picked for a given sentence happens to be a narrow one whose
+only synonym scores just under the live `MIN_SEMANTIC` threshold (0.85), the
+word ends up with zero usable candidates and the whole sentence is left
+unreformulated (`could_not_safely_reformulate`) — even though a different,
+equally valid sense of the same word would have had several synonyms that
+plausibly clear the threshold easily. Traced directly (not inferred), on the
+real participant's own declared word and sentence, via
+`reformulate._raw_candidates` → `semantic.disambiguate_synset` →
+`semantic.rank_candidates_contextually`, same-session. The same mechanism
+affected a second of the participant's three declared words. Practical effect
+on Stage LR path (b) harvesting specifically: this participant's full profile
+against 25 natural (not threshold-gamed) sentences yielded exactly **1** clean
+candidate-pair — most rejections were this WSD-narrows-to-one-weak-candidate
+shape, not missing synonyms (each affected word had several synonyms
+available once senses were unioned). Recorded here as a disclosed, measured
+limitation per the architecture freeze (`CLAUDE.md`) — **not** acted on by
+changing `MIN_SEMANTIC`, `disambiguate_synset()`, or any gate on `main` or
+`stage-lr`; Stage LR path (b) proceeded by adding more natural sentences for
+the same declared words (matching path (a) batch-3/4 precedent), not by
+loosening any gate. Full detail: `DECISION_LOG.md` 2026-09-01 entry,
+`LEARNED_REFORMULATION_RESEARCH.md` path (b) section.
+
+**Update, 2026-09-01, same day — a sharper variant found on the same
+Stage LR path: WSD doesn't just sometimes narrow to a *weak* candidate
+pool, it can pick an actively *wrong* sense for a short, common,
+locally-ambiguous adjective, changing the sentence's meaning outright
+rather than just under-serving it [FINDING].** A real participant's
+declared word — a short, very common adjective with both a literal
+(physical) sense and a distinct figurative (emotional) sense — was
+substituted in a sentence using the literal sense, but
+`disambiguate_synset()` picked the figurative sense's synset instead
+(confirmed directly: `sem.disambiguate_synset()` called on the exact
+sentence returns the affection/emotional-warmth synset, not the
+physical-temperature one). Every resulting candidate was therefore
+drawn from the wrong sense, changing what the sentence actually claims
+(a physical-property description became an emotional one) — this
+passed `MIN_SEMANTIC` (SBERT can't see it's the wrong sense, only that
+the sentences are similar-shaped) and every other gate, and would have
+shipped as a "reformulated" success on the pipeline's own metrics.
+Reproduced on two different sentences using the same declared word.
+Not fixed, per the architecture freeze — recorded as a disclosed,
+measured limitation, sharper than (but consistent with) the abstract
+cost already named in this section's 2026-08-17 update. Excluded from
+what was shown to the participant, same "never ship a bad guess"
+discipline as §2.4's idiom guard. Full record: `DECISION_LOG.md`
+2026-09-01 entry, `LEARNED_REFORMULATION_RESEARCH.md` path (b) section.
+
+**Update, 2026-09-01 — a third, distinct mechanism found on the same
+Stage LR path: some ordinary declared words have no true single-word
+WordNet synonym at all, in any sense, independent of which sense gets
+picked [FINDING].** Not a disambiguation failure (WSD choosing badly
+between senses, the two updates above) — a genuine lexical gap: the
+word's own WordNet synset(s) contain no other lemma, so even perfect
+sense-picking has nothing to substitute with. Confirmed directly via
+`nltk.corpus.wordnet` for multiple declared words across two different
+real participants' profiles (one common abstract noun with a single
+noun sense and no synonym at all; one common concrete noun whose only
+literal-sense synonym came from hypernym expansion, giving exactly one
+usable candidate — enough for a first substitution but never a second,
+which Stage LR path (b)'s pair-generation methodology needs). This
+factor is upstream of, and independent from, both WSD findings above:
+even a hypothetically perfect WSD implementation cannot substitute a
+word that has no synonym to offer. Not fixed, per the architecture
+freeze — recorded as a disclosed limitation. Full record:
+`DECISION_LOG.md` 2026-09-01-A, -C, -E entries;
+`LEARNED_REFORMULATION_RESEARCH.md` path (b) section.
 
 ### 2.7 Interactions between multiple substitutions in one sentence
 
@@ -660,6 +754,50 @@ this section.
   its own distinct blind spot, not a strict improvement. The gap named
   here is now partially closed for MeaningBERT specifically; still open
   for BERTScore/MoverScore/NLI-entailment, none of which were tested.
+
+  **Update, 2026-09-01 — Stage LR (branch `stage-lr`) path (b) exercised
+  `semantic.logical_consistency_check()` (the frozen pipeline's own
+  Phase 11C NLI gate, `reformulate.py::_try_substitution`'s final
+  assembled-sentence check) against a real participant's declared
+  profile for the first time, and found a concrete false positive —
+  **[ESCALATED]** [FINDING].** A single-word substitution — a plain,
+  direct synonym in a different regional variety of English for a
+  common hand tool — passed every other gate cleanly (SBERT similarity
+  ~0.89, antonym check, duplicate check, all of it) and was then
+  rejected outright by this NLI check as a "contradiction." The two
+  sentences differ only in that one noun; nothing about the claim
+  changed. Re-tested across 4 independent sentences using the same
+  candidate pair: rejected in all 4 (2 by this NLI gate directly, 2 by
+  the similarity score dropping just under threshold in that specific
+  context) — never once accepted. This is exactly the failure mode
+  this section's own literature review flagged as untested and worth
+  watching for NLI specifically, now measured concretely and shown to
+  be consistent, not a one-off fluke. Traced directly, same session,
+  via `reformulate._try_substitution`. **Flagged escalated because this
+  is the same gate exercised throughout `VALIDATION.md` §51 (where it
+  was ported) and every CLEAN-rate/found-rate figure measured after —
+  a reproducible false-positive mechanism in a gate that directly
+  shapes those already-reported numbers is a higher-priority item to
+  revisit than an ordinary disclosed limitation, if/when the freeze's
+  own reopening conditions are ever met.** **Update, 2026-09-01, same
+  day — the effect size on those specific numbers has now been
+  measured, not left open** (`VALIDATION.md` §58): isolating the
+  deterministic substitution tier and toggling this gate off across
+  both reference corpora (the 36-run fresh corpus and the full 398-run
+  R10 corpus) found 23 substitution outcomes this gate alone flips
+  from failure to success — and blind judging all 23 found every one
+  independently DEFECTIVE regardless of NLI. **On these two specific
+  corpora, this gate is not costing the CLEAN rate anything measurable
+  — the false positive stays real (confirmed independently on a real
+  participant's sentence, outside both corpora), but its measured
+  effect on the already-reported 31-34%/21.4% figures is null.** Still
+  not, by itself, new evidence sufficient to reopen the freeze under
+  `CLAUDE.md`'s own terms — if anything this measurement narrows the
+  case rather than strengthening it. Not fixed here either way, per
+  the architecture freeze — recorded as a disclosed, now precisely
+  measured limitation. Full record: `DECISION_LOG.md` 2026-09-01
+  entry, `LEARNED_REFORMULATION_RESEARCH.md`
+  path (b) section.
 
 ### 3.8 Phrase-level replacement — a third tier between word-substitution and whole-sentence restructuring
 

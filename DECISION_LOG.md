@@ -4166,3 +4166,1957 @@ changed; the gate itself is unchanged code, only its dependency is
 restored. Installed: `language-tool-python==3.4.0`. Known, pre-existing,
 separate issue flagged: the 3 named test failures above, confirmed
 independent of this fix.
+
+---
+
+### 2026-08-30-D2 — Stage LR Matter 1 consolidated: phoneme-as-constraint audit, two decisions made
+
+**Relabeled 2026-09-10, on merging `stage-lr` into `main`:** this entry
+was originally labeled `2026-08-30-D` on the `stage-lr` branch. `main`
+independently used that same label for an unrelated entry (the
+SBERT/MeaningBERT dependency fix, below) after the branches diverged.
+Relabeled to `D2` to keep every label in the merged file unique; no
+content changed. See `STAGE_LR_CLOSEOUT_REPORT.md` for the merge itself.
+
+**What was done:** consolidated a multi-turn review of whether this
+project's existing phoneme-as-constraint engineering decisions
+(`PROBLEM_FORMULATION.md` §11) still hold once the `DifficultyProfile`
+schema becomes reward-signal/training input rather than only rule-engine
+input. Four representational ceilings were verified directly against
+`phonetic.py`/`difficulty_profile.py`/`PROBLEM_FORMULATION.md` §11
+(onset-only sounds, binary/static difficulty, phrases lacking any
+phonetic decomposition, first-listed-pronunciation-variant noise) --
+all four already disclosed in §11, not new findings; the contribution is
+reframing them as an ML training ceiling rather than a rule-engine
+limitation. Two follow-up refinements then applied: (a) found that an
+interim, literature-based sanity check for the onset-only ceiling
+already exists in this repo (`REFORMULATION_RESEARCH.md` §2.1 -- 92-100%
+word-initial/syllable-initial stuttering occurrence across cited
+studies), so it did not need to be newly researched; (b) made an actual
+decision on phrase phonetic representation, previously left as an open
+tension.
+
+**Alternatives considered:** For the phrase-representation decision --
+(i) a separate reward-model pathway/head for phrases, kept structurally
+distinct from sounds/words. Rejected: adds real new architecture before
+any evidence the simpler fix is insufficient, and doesn't give phrases
+real phonetic content, just isolates the gap into its own lane. (ii) The
+chosen fix -- represent a phrase as the concatenation of its words'
+existing `full_pronunciation()` phone sequences, OOV words contributing
+no phones. Chosen because it reuses existing code (no new phonetic
+mechanism), unifies the feature space across all three profile
+categories (directly closes the "category-as-spurious-signal" risk
+named earlier in this review), and matches the precedent
+`PROBLEM_FORMULATION.md` §11.4 already set (don't add structure for a
+distinction not yet shown to matter) -- cross-word coarticulation is
+explicitly named as still unmodeled by this fix, not silently solved.
+
+**Why:** A representational gap in a rule engine just drops one
+candidate (locally recoverable); the same gap in a training schema is
+baked into every example a model ever sees (a hard ceiling on what any
+training method can learn). Worth resolving explicitly before any
+Stage LR training-set builder is written, not discovering later as an
+unexplained ceiling effect.
+
+**Measured result:** N/A -- literature citation reuse (already existing
+in this repo) plus two design decisions; no training-set builder or
+model code written yet.
+
+**Category:** Stage LR design decision. Recorded on branch `stage-lr`,
+not `main`, per direct instruction to keep this direction's work off
+`main` until it's ready to report back. Does not touch the frozen
+pipeline or any file `main` currently ships. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md`.
+
+---
+
+### 2026-08-30-E2 — Correction to 2026-08-30-D2: phrase phone sequence must not auto-generalize to word/phone-level claims
+
+**Relabeled 2026-09-10, on merging `stage-lr` into `main`:** originally
+`2026-08-30-E` on `stage-lr`; renamed to `E2` for the same reason as
+`D2` above (`main` independently used `E` for its own, unrelated
+`language_tool_python` fix). No content changed.
+
+**What was done:** 2026-08-30-D2's phrase-representation decision
+(concatenated per-word `full_pronunciation()` sequences) was found
+incomplete on further review -- it specified *what* the phrase gets as
+a feature but not the scoping rule for how that feature may be
+interpreted downstream. Named and closed directly: "this phrase is
+difficult" is one fact about the phrase-as-a-sequence, not "every word
+in it is individually difficult" or "these phones are difficult
+anywhere" -- the same category error `PROBLEM_FORMULATION.md` §11.1
+already rules out one level down (a word's `problem_phones` never
+auto-generalizes to a global `sounds` entry).
+
+**Alternatives considered:** N/A -- this is a scoping clarification on
+an already-made decision, not a new option being chosen between.
+
+**Why:** Verified directly against `difficulty_profile.py:212-219`
+(`add_sound_from_phones()`): promotion from a word-specific pattern to a
+global sound is *"always an EXPLICIT call — nothing in this module
+calls it automatically."* The phrase decomposition must inherit the
+identical rule, or it silently reintroduces, one level up, the exact
+kind of over-broad generalization this project's own profile schema was
+deliberately designed to avoid at the word level.
+
+**Measured result:** N/A -- design correction, recorded before any
+training-set builder exists to violate it.
+
+**Category:** Stage LR design decision (correction). Recorded on
+`stage-lr`, not `main`, same as 2026-08-30-D2. Per this project's
+append-only discipline, 2026-08-30-D2 is left as originally written;
+this entry is the correction on record. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md`.
+
+---
+
+### 2026-08-30-F — Stage LR Matter 2: founding proposal reviewed, three corrections + one load-bearing gap found, working plan set
+
+**What was done:** `PROPOSAL_LEARNED_REFORMULATION_ENGINE.md` (a
+profile-conditioned DPO reward/reranker model, then RL-trained
+end-to-end generation) was submitted as Stage LR's founding proposal
+and reviewed directly against the live repository, not evaluated from
+its own prose. Saved verbatim (encoding cleanup only) as the historical
+record; `STAGE_LR_PROPOSAL_REVIEW.md` holds the full review.
+
+**Findings, all verified directly:** (1) the proposal's allowlist
+"existing precedent" claim is false for the live pipeline -- zero
+matches for `allowlist` in `reformulate.py`; the concept only exists in
+the dead `grammar.py::SentenceRewriter` comparison baseline, and the
+live schema (`users/default.json`) has no such field (confirmed by
+direct inspection: `sounds`/`words`/`phrases` only). (2) its
+"`problem_phones` not wired to anything" citation is stale --
+`reformulate.py::_flagged_positions` became a real consumer in the
+2026-08-16 refinement; only `phrases` is still genuinely unconsumed.
+(3) the phrase feature is named but never specified how it becomes a
+numeric feature -- Matter 1's decision (2026-08-30-D2/E2) needed to be
+wired in explicitly, not left implicit. (4) **Load-bearing**: the
+claimed reusable preference data ("reformatting, not fresh collection")
+does not exist at DPO's needed scale/shape -- checked directly: 20
+single-participant ratings (`eval/pilot_responses/P1.csv`), 135
+single-output Claude-judged verdicts (`eval/r50_dataset/
+labeled_dataset.json`), neither pairwise nor multi-profile, and no
+second profile exists to run the proposal's own held-out-by-speaker
+split against. This project's own Phase 9B/9C precedent
+(2026-08-25-B/C) already shows what training a similarly-sized model on
+data this size produces on fresh material (99% single-class collapse /
+62%->34% retention). (5) hardware was never costed: confirmed CPU-only
+(`torch.cuda.is_available()` -> False), `trl` not installed, and
+`ROADMAP.md` R23 already measured a 10-40x slowdown for a comparable
+small decoder-only model on this exact machine.
+
+**Alternatives considered:** Accept the proposal as written and start
+Stage LR.1 as originally scoped (train DPO on "existing" data).
+Rejected -- the data doesn't exist as claimed, and training anyway
+risks reproducing Phase 9B/9C's outcome, which is exactly the
+generalization failure the freeze's own evidence already warns against.
+Reject the proposal outright. Also rejected -- the core thesis (reward
+as structured input, not spelling-inference) and reward decomposition
+(reusing SBERT/MeaningBERT/NLI/`contextual_fit_score()`/`phonetic.py`)
+are sound and worth keeping.
+
+**Why:** Practice.md §5's discipline -- verify before stating something
+as settled, especially when it's load-bearing for an entire plan. The
+proposal's own author, on review, confirmed the allowlist and data
+claims were stated as fact without checking live code first, agreed the
+Phase 9B/9C precedent was the most important miss, and endorsed the
+revised plan's structure -- recorded in `STAGE_LR_PROPOSAL_REVIEW.md`
+§6 so this isn't a one-sided record.
+
+**Measured result:** N/A -- review and re-plan only; no training-set
+builder, feature extractor, or model exists yet.
+
+**Category:** Stage LR design decision (major). Recorded on `stage-lr`,
+not `main`. Working plan going forward: Stage LR.1 (data reality check,
+hard prerequisite) -> Stage LR.2 (feature extractor, buildable now,
+not gated on LR.1) -> Stage LR.3 (reranker validation, conditional on
+LR.1's result) -> Stage 2 generative RL (on hold pending GPU access or
+a validated cheaper proxy, not rejected). Full record:
+`STAGE_LR_PROPOSAL_REVIEW.md`, `LEARNED_REFORMULATION_RESEARCH.md`.
+
+---
+
+### 2026-08-30-G — "Stage 2" (generative RL) renamed to LR.4; GPU access confirmed arrangeable
+
+**What was done:** the label "Stage 2," used in 2026-08-30-F for the
+proposal's generative-RL phase, was found to collide with this
+project's own, much earlier "Stage 2" (the scope-narrowing pass --
+`DOCS.md`/`HANDOFF.md`). Renamed to **LR.4**, continuing the LR.1-LR.3
+numbering rather than reusing a taken label -- same fix pattern as the
+Stage 5/Stage LR rename (2026-08-30-C). Separately, recorded that GPU
+access can be arranged for this project, so hardware is not the hard
+stop §4 of `STAGE_LR_PROPOSAL_REVIEW.md` implied.
+
+**Why it doesn't change the plan:** LR.4 was never gated on hardware
+alone -- it's gated on LR.3 producing a validated reward signal first.
+Training a generative model against an unproven reward, even on a GPU,
+risks reproducing Phase 9B/9C's failure mode faster and more
+expensively, not avoiding it. GPU access removes one blocker for LR.4
+once LR.1-LR.3 clear; it does not let LR.4 start before them.
+
+**Category:** Stage LR naming/process correction. Recorded on
+`stage-lr`. No code touched. Full record: `STAGE_LR_PROPOSAL_REVIEW.md`,
+`LEARNED_REFORMULATION_RESEARCH.md`.
+
+---
+
+### 2026-08-30-H — LR.1 (data reality check) executed: effectively 0 usable comparison pairs found
+
+**What was done:** per the working plan (2026-08-30-F), LR.1 was
+executed, not just scoped. Direct inspection, not estimation, of every
+labeled corpus in the repo: `eval/r50_dataset/labeled_dataset.json`
+(135 records) grouped by (original sentence, word replaced) to check
+for two *different* rated replacement candidates for the same slot;
+`eval/pilot_responses/P1.csv` (the only real human data) checked for
+its actual field shape; the profile-construction code behind
+`eval/r10_corpus.json` (`eval/r10_build_corpus.py`) checked for how
+many genuinely distinct profiles were used.
+
+**Result:** (1) **1 usable same-context comparison pair found out of
+135 records** ("search"->"look" vs. "search"->"research") -- every
+other apparent repeat was the identical substitution re-verified across
+phases, not a second option. (2) Test profiles are built from 7-9
+fixed, project-authored templates reused across ~133-210 sentences --
+template variety, not independently-collected real speakers. (3) The
+only real human data (P1, 20 items) is genuinely pairwise in shape
+(prefer original vs. rewrite) but answers a different question than
+"which candidate word is better," and is one participant.
+
+**Decision:** LR.3 (reranker training/validation) is named **explicitly
+blocked on data**, per the plan's own conditional design -- not trained
+on what's available. Two concrete unblocking paths identified, both new
+work rather than reformatting: generate genuine second candidates for
+already-rated cases and run new A-vs-B judgments (reuses the
+established Claude-as-judge harvesting pattern from Phase 8/8B/9/10/11);
+or obtain more than one real declared profile. Neither attempted here --
+LR.1's job was to quantify, not to start collecting.
+
+**Category:** Stage LR data-check finding. Recorded on `stage-lr`. No
+training-set builder or model exists yet -- this is measurement only.
+Full record: `LEARNED_REFORMULATION_RESEARCH.md` (LR.1 section).
+
+---
+
+### 2026-08-30-I — LR.2 (feature extractor) built and tested; unrelated environment finding surfaced
+
+**What was done:** per direct instruction to build LR.2 in parallel with
+LR.1, wrote real code: `stage_lr/features.py` (new package, not
+imported by `app.py`/`reformulate.py`/anything on `main`) --
+`score_candidate()` returning meaning (SBERT + MeaningBERT), naturalness
+(`contextual_fit_score()`, single-word substitutions only, matching its
+own validated scope), and phoneme difficulty (profile.sounds onset
+match via the entry's stored ARPAbet key, plus exact word/phrase
+match). 13 tests in `tests/stage_lr_features_test.py`, all passing --
+four of them are direct regression checks on Stage LR's own prior
+guardrail decisions (the ARPAbet-key-not-spelling-guess fix; Matter 1's
+word-level and phrase-level non-generalization rules), not just
+generic coverage.
+
+**Finding, not assumed away:** the end-to-end smoke test's assertions
+were loose enough to pass even if a model failed to load. A direct
+manual check (prompted by wanting to see real numbers, not just a green
+test) found SBERT/MeaningBERT/contextual-fit all fail to load on this
+machine right now -- `protobuf` 5.29.6 installed, something (a
+`tensorflow` 2.21.0-side dependency, not itself in `requirements.txt`)
+requires gencode >= 6.31.1. **Not a Stage LR-specific problem** --
+`semantic.py` is shared with the live pipeline, so `main` is currently
+also running on frequency-only ranking on this machine, same cause.
+
+**Alternatives considered:** Fix the protobuf mismatch immediately,
+inline. Not done -- it's a dependency-version change affecting the
+live/frozen pipeline's runtime behavior on this machine; per this
+project's own discipline, that's a decision to surface, not to make
+silently mid-task, even though it falls under the freeze's allowed
+"routine maintenance" category.
+
+**Why:** LR.2 was scoped as zero-risk, buildable-now work independent
+of LR.1's data finding -- confirmed true: it needed no training data,
+only already-validated components, and is fully testable (and mostly
+tested) without any model loading at all (9 of 13 tests are pure logic,
+no model dependency).
+
+**Measured result:** 13/13 tests pass. Guardrail-enforcement tests pass
+against real `DifficultyProfile`/`phonetic`/`difficulty_profile.py`
+behavior, not mocks. Model-dependent fields (meaning/naturalness)
+currently return `None` on this machine due to the protobuf issue above
+-- code fails closed exactly as designed, not verified against live
+model output yet.
+
+**Category:** Stage LR implementation (first real code on this
+branch). Recorded on `stage-lr`, not `main`. Does not touch any frozen
+file; `stage_lr/` is a new, isolated package. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md` (LR.2 section).
+
+---
+
+### 2026-08-30-J — Data path (a) executed: 17 real judged preference pairs generated from the frozen pipeline's own runner-up candidates
+
+**What was done:** per direct instruction, built `stage_lr/generate_pairs.py`
+to attempt a genuine second candidate for each of the 135 records in
+`eval/r50_dataset/labeled_dataset.json`: each record's real profile was
+reconstructed from the raw harvest file behind it (profile fields exist
+there, dropped in the distilled `labeled_dataset.json`); `reformulate.
+_raw_candidates` was wrapped for one call to exclude the already-rated
+replacement's lemma, then the real, unmodified `reformulate.reformulate()`
+was run so every existing gate (antonym/phoneme/duplicate/blocklist/
+countability/etc.) still applied exactly as production. 17 resulting
+pairs were then judged (A/B/tie + real reasoning per pair, not a
+template) and logged in `stage_lr/data/lr1_preference_pairs.json` in
+the requested schema.
+
+**A real bug caught before trusting any result:** the first matching
+pass (sentence text only) silently picked the wrong profile for most
+R40-provenance records -- confirmed directly that 36 of 41 unique R40
+sentences were tested under up to 4 different profiles in the original
+harvest, and a text-only lookup collapses to whichever was read last.
+Visible symptom: a regenerated sentence showed an unrelated word
+changing. Fixed by matching on (sentence, original word, replacement
+word), verified against each record's own `changed_word_pair`. The
+fix changed the result materially: 22 candidates found under the
+broken matching, 32 under the corrected one -- not a cosmetic
+difference.
+
+**Honest final counts, all 135 records, not smoothed over:** 21 not
+substitution-tier (no candidate pool to regenerate against); 0
+profile-unrecoverable; 82 attempted with no second candidate surviving
+every gate once the original was excluded (the original was the only
+viable choice); **32 genuine second candidates found**. Of those 32,
+11 were found -- by direct token-level diff, not assumed -- to be
+multi-word-contaminated (a sentence with 2+ profile-flagged words means
+regenerating one word's candidate can legitimately shift a *different*
+flagged word's own best candidate too, since ranking is contextual --
+the same interaction this project's own R32 already named for the
+frozen pipeline, observed here from the generation side). Those 11 are
+disclosed, not discarded silently or forced into a clean-pair format
+that would misrepresent what actually varied. Of the remaining 21
+clean pairs, 4 were exact re-verification duplicates (same sentence/
+profile/word harvested more than once across phases) -- **17 unique
+pairs**, all 17 judged.
+
+**Result:** preference split 7 A / 9 B / 1 tie. Two of the judged pairs
+("sea"->"ocean" vs. "water"; "restaurants"->"buildings" vs. "eateries")
+are live instances of this project's own previously-diagnosed
+genericness bias (VALIDATION.md SS53, ROADMAP.md R26-R29) -- caught in
+freshly-generated data today, not retrieved from the historical record.
+
+**Why the counts are reported this way:** per direct instruction and
+this project's own standing discipline (LR.1's original near-zero
+finding was recorded plainly, not smoothed over) -- the honest number
+is 17 judged pairs, not 32 or 135; the 11 excluded and 4 deduplicated
+are named with their specific reasons, not folded silently into either
+the numerator or a vague footnote.
+
+**Measured result:** 17/17 pairs judged with individual reasoning
+(not templated), logged in the exact requested schema plus traceability
+fields (`source_uids`, `profile` name). `stage_lr/data/lr1_candidate_
+generation_log.json` retains the full 135-record log (every outcome,
+not just successes) for audit.
+
+**Category:** Stage LR data generation (first real dataset this branch
+has produced). Recorded on `stage-lr`, not `main`. Does not touch any
+frozen file or `eval/`'s existing corpora -- read-only against them,
+output lives entirely under `stage_lr/data/`. Still far short of what
+LR.3 needs (all profiles are researcher-authored templates, not
+independently-collected real speakers -- LR.1's original limitation
+stands). Full record: `LEARNED_REFORMULATION_RESEARCH.md` (LR.1 data
+path (a) section), `stage_lr/data/lr1_preference_pairs.json`.
+
+---
+
+### 2026-08-30-K — Data path (a) batch 2 (41 more pairs, 58 total) + LR.2 sanity check finds and fixes a real bug, then a real blind spot
+
+**What was done:** per direct instruction, grew data path (a) using
+the identical method (no shortcuts, same guardrails) against a
+different, previously-uncovered source: `eval/r10_raw_results.json`
+(Phase 10's 398-run harvest, never part of the 135 `labeled_dataset.json`
+records). 239 substitution changes examined -> 85 second candidates
+found -> 32 excluded as multi-word-contaminated (same diff check as
+batch 1) -> 12 exact duplicates collapsed -> 41 unique pairs, all
+judged, appended to the same `lr1_preference_pairs.json` (58 total
+running). Then used the full 58-pair set to sanity-check LR.2 per
+direct instruction: `stage_lr/sanity_check_lr2.py` runs every pair's
+two candidates through `score_candidate()` and compares a naive
+meaning+naturalness combination against the human/Claude judgment.
+
+**A real bug caught by the check itself:** the first sanity-check run
+produced a suspicious, repeating ~0.945 score across dozens of
+unrelated pairs. Traced directly: `semantic.py`'s `meaningbert_score()`/
+`contextual_fit_score()` both auto-load their model on first call;
+`semantic_similarity()` (SBERT) does not -- it only checks an
+already-set flag. `stage_lr/features.py` never called
+`semantic.load_sbert()`, so SBERT silently returned `None` on all 58
+calls, no error, "meaning" quietly degrading to MeaningBERT alone the
+entire time. Fixed (one line) and locked in with a new regression test
+(`test_sbert_is_actually_populated_not_silently_none`) that fails
+loudly if the call is ever removed.
+
+**Result after the fix, real numbers, not smoothed over:** naive
+meaning+naturalness agreed with the human judgment on 28/58 (48% --
+chance level for a binary call). On the 51 non-tie human judgments:
+26/51 (51%) agreed; of the 25 disagreements, 17 (68%) were LR.2 calling
+it a tie (no discrimination at all, not a wrong-direction error), only
+8 (32%) were LR.2 confidently wrong. On the 7 human ties, LR.2 agreed
+on only 2, mostly picking a confident side where a human found none.
+
+**Alternatives considered:** Treat the low agreement rate as noise from
+a small sample and move on. Rejected -- the pattern is coherent, not
+random: both candidates in every pair already survived the frozen
+pipeline's own SBERT floor, so meaning-similarity signals cluster
+tightly among survivors by construction, and LR.2's current signals are
+the same class the frozen `combined_score()` already ranks with. Read
+against the actual judged reasons, grammaticality/well-formedness was a
+recurring real distinguishing factor ('softwares', 'excused for',
+'manufacturings', 'a other noise') that `score_candidate()` has zero
+signal for today, despite `semantic.py` already having
+`grammar_issue_count()`/`logical_consistency_check()` built and
+validated. Adding that signal is named as a concrete next step, not
+implemented here -- a deliberate design decision, not a quick patch
+alongside a sanity check.
+
+**Why:** Direct instruction -- use the pairs cheaply, immediately, to
+sanity-check LR.2 before farming more data, exactly to surface feature-
+extractor problems while the pair count is still small enough to
+inspect by eye. It worked as intended: found one real bug (fixed) and
+one real, named blind spot (not yet fixed, flagged for a deliberate
+decision).
+
+**Measured result:** 58/58 pairs judged and logged; 14/14 `stage_lr`
+tests pass including the new regression test; sanity-check output
+(28/58 agree, full per-pair breakdown) saved to
+`stage_lr/data/lr2_sanity_check_results.json`.
+
+**Category:** Stage LR data generation + LR.2 defect fix. Recorded on
+`stage-lr`, not `main`. Path (b) (real distinct profiles from real
+people) explicitly flagged as still separate, still unstarted, still
+people-dependent -- not something more data-path-(a) batches or more
+judging substitutes for; noted in
+`LEARNED_REFORMULATION_RESEARCH.md` per direct instruction. Full
+record: `LEARNED_REFORMULATION_RESEARCH.md` (batch 2 + LR.2 sanity
+check + path (b) sections), `stage_lr/data/lr1_preference_pairs.json`,
+`stage_lr/data/lr2_sanity_check_results.json`.
+
+---
+
+### 2026-08-30-L — Grammar added as LR.2's 4th term; re-check: 48% -> 52%, still not enough to resume path (a)
+
+**What was done:** per direct instruction, wired `semantic.grammar_issue_count()`
+(LanguageTool, already validated and live-gating in `reformulate.py`)
+into `stage_lr/features.py::score_candidate()` as a 4th term -- scored
+for every source (no scope restriction, unlike `contextual_fit_score()`),
+with 2 new regression tests. Found the same class of dependency problem
+along the way: `language_tool_python` was missing from this venv,
+silently disabling `reformulate.py`'s own live grammar gate on `main`
+-- fixed there separately (`main`'s 2026-08-30-E), verified with real
+output, and confirmed (by testing installed vs. not, directly) that 3
+unrelated pre-existing test failures found in the process are not
+caused by this fix. Re-ran `stage_lr/sanity_check_lr2.py` against the
+same 58 pairs with the new 4-term score.
+
+**Result, honest, not rounded up:** overall agreement 28/58 (48%) ->
+30/58 (52%). Non-tie subset (51 pairs): 26/51 (51%) -> 28/51 (55%).
+LR.2-said-tie-when-human-had-a-preference: 17 -> 16. LR.2-confidently-
+wrong: 8 -> 7. A real but small improvement.
+
+**Decision, per the explicit standing instruction:** 52% (55% non-tie)
+is not meaningfully above the 50% chance level for a binary call on
+n=51 -- a 4-5 point shift at this sample size is noise-range, not a
+result to build further data collection on. **Data path (a) stays
+paused.** Not resuming until the agreement rate clears chance by a
+margin that means something.
+
+**A specific case named, not just the aggregate:** the "greenhouse"->
+"gas" vs. "building" pair flipped to the wrong answer after adding the
+grammar term -- the human judgment preferred the awkward-but-coherent
+"gas gas emissions" over the grammatical-but-nonsensical "building gas
+emissions"; LanguageTool has no way to catch the latter. `semantic.py`'s
+already-validated `logical_consistency_check()` (NLI) is named as a
+plausible next signal for this specific gap -- not implemented, per the
+same discipline as the grammar term itself.
+
+**Category:** Stage LR feature-extractor iteration + defect fix (main).
+Recorded on `stage-lr` (this entry) and `main` (the dependency fix,
+2026-08-30-E there) respectively -- correctly split by which branch
+each change actually affects. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md` ("LR.2's 4th term added" section),
+`stage_lr/data/lr2_sanity_check_results.json`.
+
+---
+
+### 2026-08-30-M — NLI added as LR.2's 5th term; re-check statistically indistinguishable from chance -- stop adding terms one at a time
+
+**What was done:** per direct instruction, wired `semantic.
+logical_consistency_check()` (bidirectional NLI, already validated in
+Architecture Gate Step 1) into `score_candidate()` as a 5th term,
+motivated by a named, concrete gap (the "gas"/"building" flip from
+2026-08-30-L, not a reflexive addition) -- computed for every source,
+2 new regression tests reusing this project's own already-validated
+known-contradiction pair rather than inventing a new one. Re-ran
+`stage_lr/sanity_check_lr2.py` against the same 58 pairs.
+
+**Result, honest, not rounded up:** overall agreement 30/58 (52%) ->
+32/58 (55%). Non-tie subset (51 pairs): 28/51 (55%) -> 30/51 (58.8%).
+Ran the actual significance check the "meaningfully above chance" bar
+implies, not just eyeballed the percentage: one-sample proportion
+z-test against p=0.5 on the non-tie subset (n=51, x=30) gives z=1.26,
+one-sided p~0.10 -- not significant at any conventional threshold.
+Full progression across all three configurations tested today (3
+terms: 48%/51%; +grammar: 52%/55%; +NLI: 55%/58.8%) is statistically
+indistinguishable from chance at every step, at this sample size.
+
+**Decision, per the explicit standing instruction:** this is the
+signal to stop adding terms one at a time. Five real, already-
+validated signals are now wired in -- the full set this project has
+actually built and validated (SBERT, MeaningBERT, contextual-fit,
+grammar, NLI). None of the three incremental configurations cleared
+chance. Named directly, not softened: hand-picking which of these
+signals matters and how much may not be the right approach at all --
+the concrete alternative this check itself points to is a small
+learned model weighting these same 5 signals from real preference
+data (LR.3's original shape), now with 58 real judged examples to
+attempt it on instead of the ~0 that blocked LR.3 when LR.1 first ran.
+
+**Alternatives considered:** Add a 6th term and re-check again.
+Rejected -- per the explicit standing instruction, this was named in
+advance as the last incremental addition before stepping back, and the
+result (still not significant) is exactly the condition that instruction
+named for stopping. Decide now whether to pursue a learned reranker.
+Not decided here -- a genuine fork in the road (grow pairs to attempt
+a small model vs. keep hand-tuning weights despite three chance-level
+results vs. something else), left as an open question for direct
+instruction, not assumed unilaterally. 58 pairs is likely still too
+few for reliable training either way -- this project's own Phase 9B/9C
+precedent used a larger, still-thin dataset and still failed to
+generalize.
+
+**Category:** Stage LR feature-extractor iteration, concluding this
+increment. Recorded on `stage-lr`. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md` ("LR.2's 5th term added" section),
+`stage_lr/data/lr2_sanity_check_results.json`.
+
+---
+
+### 2026-08-30-N — Hand-tuning closed; human-agreement ceiling checked (68%/81%, n=1 Claude rater); LR.3 gated on path (a) AND path (b), not either/or
+
+**What was done:** per direct instruction, closed hand-tuning as an
+option outright (not paused) -- the 3/4/5-term progression's three
+consecutive chance-level results, each buying less than the last, is
+read as this project's own "Phase 11D/E/F" pattern reproduced inside
+Stage LR. Before pursuing a learned reranker (LR.3), ran the requested
+human-agreement ceiling check: 25 of the 58 pairs (`random.seed(42)`,
+reproducible) re-judged **blind** by a fresh subagent -- zero memory of
+this conversation or the original verdicts, given only `(sentence,
+profile, candidate_A, candidate_B)`, same blind-judging pattern as
+Phase 10. Full data: `stage_lr/data/human_agreement_ceiling_check.json`.
+
+**Result, honest, caveat stated every time:** raw three-way agreement
+17/25 (68.0%); restricted to the 21/25 pairs where neither judge
+hedged with "tie", 17/21 (81.0%). **This is not true human-human
+agreement** -- both judges are Claude (the original, full-context; the
+second, a genuinely blind fresh instance) -- reported as a real,
+disclosed limitation, not smoothed over, same discipline as this
+project's other single-rater findings.
+
+**Decision:** both ceiling numbers sit clearly above LR.2's 5-term
+result (55.2%/58.8% on the full 58 pairs) -- read as evidence of real
+headroom for a learned approach, not a low task ceiling, at least by
+this one imperfect estimate. LR.3 is now gated on **two sequential
+prerequisites, not parallel work**: (1) growing data path (a) to
+meaningfully more than 58 pairs, same method; (2) path (b), real
+distinct profiles from real people, not more researcher-authored
+templates. Both required before LR.3 training is attempted -- not
+"start now, keep collecting alongside it." Reasoning carried directly
+from the Phase 9B/9C precedent: a larger-but-still-thin dataset already
+failed to generalize once in this project's history; training again on
+data with the same two structural gaps risks reproducing that exact
+failure.
+
+**Alternatives considered:** Proceed straight to LR.3 training on the
+existing 58 pairs now that a ceiling estimate exists. Rejected --
+explicit instruction treats path (a)/(b) growth as prerequisites to
+attempting LR.3 at all, not conditions to satisfy in parallel with a
+training run already underway. Skip the ceiling check and just start
+growing data. Rejected -- per instruction, the ceiling check needed to
+happen first specifically to distinguish "model underperforming" from
+"task ceiling," which now correctly informs whether growing data is
+even worth doing (it is: real headroom exists).
+
+**Category:** Stage LR policy/gating decision (major). Recorded on
+`stage-lr`. No training-set builder or model exists yet; this closes
+one path (hand-tuning) and sets binding preconditions for the other
+(learned reranker), not itself research or code. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md` ("Fork resolved" section),
+`stage_lr/data/human_agreement_ceiling_check.json`.
+
+---
+
+### 2026-08-30-O — Claude-as-judge established as the standard method (meaning/naturalness/grammar only, never phonemes); batch 3 run (68 total pairs); path (b) distinction logged explicitly
+
+**What was done:** per direct instruction, five things:
+
+1. **Claude-as-judge standardized.** A general-purpose Claude call (the
+Agent tool, in this environment -- no direct API tool exists for a
+script to call itself) is now the standard method for judging
+candidate pairs in data path (a) and future evaluation, replacing
+manual/ad hoc judging. Formalized as code:
+`stage_lr/judge_pairs.py` (prompt-building + response-parsing) with 7
+tests (`tests/stage_lr_judge_pairs_test.py`).
+
+2. **Phoneme-avoidance confirmed as never a Claude call, enforced not
+just stated.** `judge_pairs.py`'s prompt has no phonetic-judgment
+language at all -- checked directly by a dedicated test
+(`test_prompt_never_mentions_phoneme_judgment`), not just described in
+a docstring. Phoneme-avoidance stays exactly what it already was:
+`generate_pairs.py` only ever hands a judge candidates that already
+survived the real `reformulate()` pipeline's own phoneme gate
+(`phonetic.py`'s ARPAbet/onset matching against `profile.sounds`) --
+nothing changed here, this entry only makes the invariant explicit and
+tested.
+
+3. **Ceiling check (2026-08-30-N) accepted as-is.** No revision --
+caveat (Claude-consistency, not a true human ceiling) stands exactly
+as logged.
+
+4. **Claude-as-judge vs. path (b), distinguished explicitly.**
+Claude-as-judge resolves the judging-bottleneck half of path (a) only.
+Path (b)'s gap is data diversity (real distinct declared profiles from
+real people, to test generalization across speakers), not a judging-
+mechanism question -- no amount of faster/cheaper judging touches it.
+Both LR.3 prerequisites (path (a) grown meaningfully larger; path (b)
+real people) remain exactly as gated in 2026-08-30-N.
+
+5. **Batch 3 run, using the new standard method for the first time.**
+No unused existing corpus of the right shape was found (checked: R11's
+reverify data is the same 398 R10 runs batch 2 already used, not new
+sentences; R43a/R44/R49 don't carry substitution-tier `changes` lists)
+-- used the pre-approved fallback, 30 fresh sentences (new domains:
+gardening, travel, cars, sports, home repair, finance, pets, art,
+health, shopping) x the same 4 existing profile templates, run through
+`reformulate()` for the first time (`stage_lr/harvest_batch3.py`).
+
+**Result, honest, not padded:** 120 sentence/profile combinations
+attempted -> 97 produced no substitution-tier change at all (expected:
+unlike batches 1-2, which only tried combinations already known to
+trigger one, batch 3 tried every combination blind) -> 13 second
+candidates found -> 0 contaminated -> 3 duplicates collapsed -> **10
+unique pairs, all 10 judged via the new standard method in one Claude
+call**. Running total: **68 judged pairs** (58 + 10), appended to the
+same `lr1_preference_pairs.json`. Batch 3's found-rate (13/120 = 10.8%)
+is much lower than batches 1-2's (~24-36%, on pre-filtered records) --
+disclosed as the real, expected denominator effect of trying every
+combination rather than only pre-known successes, not a sign of
+breakage.
+
+**Alternatives considered:** Reuse R11's reverify corpus for batch 3
+(same 398 runs as batch 2, different harvest snapshot). Rejected --
+same underlying sentences/profiles as batch 2, would inflate the pair
+count without adding genuine sentence/profile diversity, and risks
+misrepresenting overlap as new data.
+
+**Why:** Direct instruction, explicit reasoning given: judging was the
+real bottleneck in batches 1-2 (manual, one pair at a time); Claude-as-
+judge removes that bottleneck specifically, without changing anything
+about what data path (a) can or can't provide on its own (still no
+real distinct profiles -- that's path (b)'s job alone).
+
+**Measured result:** `stage_lr/judge_pairs.py` 7/7 tests pass. 68 total
+pairs now in `lr1_preference_pairs.json`, each carrying `judged_by`
+where applicable so future readers can see which pairs used the new
+standard method vs. the earlier manual pass.
+
+**Category:** Stage LR infrastructure (judging standardization) + data
+generation (batch 3) + policy clarification (path (a) vs (b)).
+Recorded on `stage-lr`. LR.3's two-prerequisite gating from
+2026-08-30-N is unchanged by this entry -- reaffirmed, not loosened.
+Full record: `LEARNED_REFORMULATION_RESEARCH.md` ("Claude-as-judge
+established" + "does not substitute for path (b)" sections),
+`stage_lr/data/lr1_preference_pairs.json`,
+`stage_lr/data/lr1_candidate_generation_log_batch3.json`.
+
+---
+
+### 2026-08-30-P — No batch 4 (path (a) at a practical ceiling for this generation setup); concrete path (b) ask drafted
+
+**What was done:** before running a 4th data-path-(a) batch, checked
+two things across all 68 pairs rather than deciding on instinct: (1)
+profile-shape diversity -- capped at ~4-6 fundamentally distinct
+sound/word constraint patterns regardless of label variant, a direct
+consequence of only 4 profile templates existing; (2) vocabulary
+diversity -- 62 distinct flagged words out of 68 pairs, still healthy,
+not saturated. Decided **not** to run batch 4: not because sentences
+ran out (they haven't), but because batch 3's found-rate already
+dropped to 10.8% (vs. 24-36% on batches 1-2's pre-filtered records), a
+fresh batch 4 would cost real writing effort for a similarly small
+yield, would almost certainly recur already-well-represented failure
+categories (countability errors, wrong-sense substitutions, register
+mismatches, missing-object grammar errors -- batch 3 surfaced nothing
+qualitatively new), and would add zero profile-shape diversity
+regardless of size. Then drafted the concrete, minimal ask for path
+(b), per direct instruction to make it something actionable this week
+rather than a named-but-inert gap.
+
+**The ask (recorded in full in `LEARNED_REFORMULATION_RESEARCH.md`,
+"Path (b) — a concrete, minimal ask" section):** two steps per friend,
+~20 minutes total -- (1) declare a real difficulty profile in plain
+language (sounds, words, optionally phrases that are personally hard
+to say), ~5 min; (2) judge ~10-15 real pairs generated from their own
+declared profile (pick A/B/doesn't-matter, no explanation required),
+~15 min. Both steps included deliberately, not just the profile alone
+-- step 2 produces a real human preference tied to a real declared
+difficulty, the actual gold-standard signal (comparable against
+Claude's own judgment on the same pairs), not just a better-sourced
+profile for Claude to keep judging alone.
+
+**Alternatives considered:** Run batch 4 anyway since the mechanism is
+cheap and sentences technically aren't exhausted. Rejected -- conflates
+"can produce more" with "produces new signal"; the explicit instruction
+was not to force batches just to inflate the count, and the checked
+numbers support that this is exactly such a case. Ask friends for a
+profile only, defer the judging step to later. Rejected -- would leave
+path (b)'s contribution indistinguishable in kind from what path (a)
+already produces (Claude-judged pairs), missing the actual point of
+getting a real person involved.
+
+**Why:** Direct instruction to ground the batch-4 decision in evidence
+rather than a gut call, and to turn path (b) from a named gap into
+something concretely actionable this week.
+
+**Measured result:** No new data generated this entry -- a decision (no
+batch 4) and a drafted, ready-to-send request (path (b)). Ingesting a
+real profile once one arrives requires no new code: existing
+`DifficultyProfile.add_sound()`/`add_word()`/`add_phrase()` plus the
+already-built `generate_pairs.py`/`judge_pairs.py` pipeline handle it
+as-is.
+
+**Category:** Stage LR data-strategy decision + path (b) unblocking.
+Recorded on `stage-lr`. Does not change LR.3's two-prerequisite gating
+(2026-08-30-N) -- clarifies path (a) is currently at its practical
+ceiling and gives path (b) a concrete first move, doesn't loosen either
+requirement. Full record: `LEARNED_REFORMULATION_RESEARCH.md` ("Path
+(a) declared at a practical ceiling" + "Path (b) — a concrete, minimal
+ask" sections).
+
+---
+
+### 2026-08-30-Q — Real-human ingestion mechanism built ahead of any real data: same-session dual verdicts enforced structurally, separate file from the 68 template pairs
+
+**What was done:** per direct instruction, before the path (b) ask goes
+out to any friend, built the ingestion mechanism that will receive
+their answers -- `stage_lr/ingest_real_human_pair.py`. Two rules
+enforced by construction, not just stated: (1) `record_real_human_pair()`
+requires `human_preferred`, `claude_preferred`, and `claude_reason` as
+keyword arguments with no default -- there is no way to call it with
+only a human verdict; a Claude verdict on the exact same pair must be
+obtained in the same ingestion session (via `judge_pairs.py`'s same
+prompt-building path) before a record can be written at all. (2)
+Real-human pairs are written to a separate file,
+`stage_lr/data/real_human_pairs.json`, never merged into
+`lr1_preference_pairs.json`. Retroactively tagged all 68 existing pairs
+there with `source: "synthetic_profile_template"` for schema
+consistency (not just new entries going forward); every real-human
+record also carries `source: "real_human"` as a second, redundant
+safeguard alongside the file separation.
+
+**Alternatives considered:** Log human verdicts as they come in and run
+Claude judging in a batch afterward. Rejected -- explicitly the
+two-pass pattern the instruction was written to prevent, and this
+project has concrete precedent for what goes wrong with it (Phase
+9B/9C's cross-run instability; R28's test-set leakage, caught only by
+re-checking, not by design). Tag real-human pairs with a `source` field
+inside the same file as the 68 template pairs, rely on filtering.
+Considered, but structural file separation was chosen additionally --
+a different file makes accidental pooling require a deliberate action,
+matching the instruction that these "shouldn't get silently merged...
+when computing agreement rates later" more strongly than a tag alone.
+
+**Why:** Direct instruction, with the reasoning stated explicitly: two
+passes that turn out not to line up is a real, previously-seen failure
+class in this project, not a hypothetical one -- worth closing off
+before any real data exists, not after a first mistake.
+
+**Measured result:** 9/9 tests pass (`tests/stage_lr_ingest_real_human_pair_test.py`),
+including direct proof (not just docstring claims) that calling the
+recorder without `claude_preferred` raises `TypeError`. No real human
+data collected or fabricated -- the mechanism is proven correct against
+synthetic stand-in verdicts only, cleaned up after each test run (no
+stray `real_human_pairs.json` left behind).
+
+**Category:** Stage LR infrastructure, built ahead of data per direct
+instruction. Recorded on `stage-lr`. Does not touch LR.3's gating or
+the path (b) ask itself (`DECISION_LOG.md` 2026-08-30-N/P) -- this is
+purely the receiving mechanism for whatever the ask produces. Full
+record: `LEARNED_REFORMULATION_RESEARCH.md` ("Ingestion mechanism built
+ahead of any real data" section), `stage_lr/ingest_real_human_pair.py`.
+
+---
+
+### 2026-08-30-R — First real path (b) profile processed; participant content kept local by explicit decision; one new main defect found and disclosed, not fixed
+
+**What was done:** a real participant answered the path (b) ask. Built
+a real `DifficultyProfile` from their answer and ran 15 hand-picked
+sentences through the real, unmodified `reformulate()` for the first
+time, then the same generate-second-candidate method as data path (a).
+**Before pushing anything, asked the user directly whether this real
+participant's data (unnamed, but genuinely personal) should go to the
+shared `stage-lr` branch on GitHub. Answer: no, local only.** A first
+commit had already been made containing the participant's actual
+words/sounds/phrases (in both a hardcoded `.py` file and this
+document's prose) -- caught before it was pushed, `git reset` to
+remove it from history entirely, not just from the working tree.
+
+**Corrected the mechanism, not just the data-handling:** the original
+script hardcoded one participant's real words as Python literals --
+itself the mistake, independent of the push question. Rewritten as
+`stage_lr/harvest_real_profile.py`, generic and content-free, reading
+per-participant input from `stage_lr/data/private/` (newly gitignored,
+along with `stage_lr/data/real_human_pairs.json`). The mechanism stays
+tracked and reusable for future participants; only actual personal
+content is excluded.
+
+**Result, aggregate only, no participant content, matches what's
+recorded in `LEARNED_REFORMULATION_RESEARCH.md`:** 15 sentences -> 5 no
+substitution change -> 5 no second candidate -> 5 found -> 0
+contaminated -> 5 unique. 4 of the 5 "no substitution change" results
+trace to `ROADMAP.md` R13's already-documented gap (declared phrases
+never matched against input text) -- first concrete, non-hypothetical
+evidence this costs something real.
+
+**A new `main` defect found and disclosed, not fixed, safe to record in
+full since it's about the system, not the participant:**
+`sanitize_input()` incorrectly applies third-person-singular agreement
+to an infinitive after "wants to" (a generic English construction).
+Confirmed directly; confirmed the other 4 sentences unaffected by
+checking each one's own `sanitize_input()` output individually, not
+assumed. One candidate pair built from the affected sentence was
+excluded from what gets shown to the participant -- doesn't bias the
+A-vs-B comparison (both candidates share the identical pre-existing
+error), but would have shown a real first-time participant an
+unexplained, unrelated error. Not fixed here, per `CLAUDE.md`'s
+standing instruction for a newly observed failure against the frozen
+architecture.
+
+**Alternatives considered:** Keep the specific participant content in
+the shared docs since it's already answered and the "harm" is
+abstract. Rejected outright once asked -- the user's answer was a
+plain no, and asking first rather than assuming was the correct call
+given this project's own standing caution about committed personal
+data (`ROADMAP.md` R0). Gitignore only the JSON outputs, keep the
+hardcoded script committed since "it's just code." Rejected -- the
+script itself contained the real content as literals; the fix is
+separating mechanism from data, not just hiding one file format.
+
+**Why:** Direct instruction on the push question, plus this project's
+own standing discipline (never commit real personal data without it
+being a deliberate, asked-first decision) applied proactively rather
+than only when directly instructed.
+
+**Measured result:** 4 candidate pairs generated, held locally, ready
+for the participant to judge. Zero verdicts recorded on either side --
+correct, matches `ingest_real_human_pair.py`'s rule.
+
+**Category:** Stage LR data generation (path (b)) + privacy correction
++ a disclosed `main` finding. Recorded on `stage-lr`. The commit
+containing participant content was fully removed from `stage-lr`'s
+history via `git reset`, not left reachable via an old commit hash.
+Full record: `LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), first
+real participant" section), `stage_lr/harvest_real_profile.py`,
+`.gitignore`.
+
+---
+
+### 2026-08-30-S — First real human-vs-Claude comparison: 1/4 agree (25%), n=4, not a result to act on
+
+**What was done:** the participant's picks on the 4 candidate pairs came
+back. Per `ingest_real_human_pair.py`'s hard rule, obtained a Claude
+verdict on the identical 4 pairs, blind, via the standard method
+(`stage_lr/judge_pairs.py`, a fresh subagent with no memory of the
+human picks), in the same session, then logged both together via
+`record_real_human_pair()`. All 4 records now exist in
+`stage_lr/data/real_human_pairs.json` (gitignored, confirmed not
+tracked). No participant-specific content (the actual sentences/words)
+is recorded here or in `LEARNED_REFORMULATION_RESEARCH.md` -- only the
+aggregate result.
+
+**Result:** 1/4 agree (25%).
+
+**Alternatives considered:** Treat this as a real signal about Claude's
+judgment quality. Rejected explicitly -- n=4 cannot distinguish
+anything statistically; this project's own discipline (per the human-
+agreement ceiling check's own n=1-rater caveat, 2026-08-30-N) already
+argues against treating a tiny single-participant sample as a
+conclusion. Ignore the number since it's too small to matter. Also
+rejected -- it's still worth naming as a directional flag: 25% sits
+below both the earlier Claude-vs-Claude ceiling check (68%/81%) and
+LR.2's own model (55.2%/58.8%), consistent with (not proof of) the
+ceiling check's own disclosed caveat that Claude-vs-Claude agreement
+may overstate Claude-vs-real-human agreement.
+
+**Why:** Direct continuation of the same-session logging rule already
+built (2026-08-30-Q) -- this is that mechanism's first real use, not a
+new decision.
+
+**Measured result:** 4/4 pairs logged with both verdicts.
+`stage_lr/ingest_real_human_pair.summarize()` reports `{"n": 4,
+"agree": 1, "rate": 0.25}` directly from the data, not computed by
+hand.
+
+**Category:** Stage LR data point (path (b), first real result). No
+conclusion drawn, no LR.2 weights touched, no change to LR.3's gating
+-- explicitly named as too small to act on, not smoothed into looking
+more decisive than it is. Recorded on `stage-lr`. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), first real
+participant" section, updated).
+
+---
+
+### 2026-08-30-T — Path (a) batch 4: new profile shapes (not new sentences), 75 total pairs
+
+**What was done:** per direct instruction to act on "build the dataset,"
+grew path (a) again -- but not by repeating the batch declined in
+2026-08-30-P (more sentences against the same 4 templates, explicitly
+ruled out as buying recurrence not signal). This targets the actual
+capped dimension that decision named: 3 new profile shapes, designed
+deliberately messier/more idiosyncratic than the original 4 -- directly
+informed by what the first real path (b) participant's actual profile
+looked like (a common sound plus several unrelated, personally-
+anticipated words, not one tidy pattern) -- run against batch 3's
+existing 30 sentences unchanged, isolating template diversity as the
+variable (`stage_lr/harvest_batch4_new_templates.py`).
+
+**Result, honest counts:** 90 attempted (30 sentences x 3 templates) ->
+71 no substitution change -> 8 found -> 1 contaminated (excluded, same
+diff check) -> 7 unique, all judged via the standard Claude-judge
+method. Running total: **75 judged pairs**.
+
+**Disclosed, not hidden:** one of the 3 new templates produced zero
+hits across all 30 sentences -- its declared words never appeared in
+this sentence pool. Named as a real, relevant illustration (an
+idiosyncratic profile won't always intersect with available text) 
+rather than smoothed over as a wasted template.
+
+**Alternatives considered:** Treat this as the same kind of batch
+already declined. Rejected -- 2026-08-30-P's own reasoning explicitly
+named template/profile-shape diversity, not sentence count, as the
+capped dimension; new templates against old sentences is a different
+variable, not a repeat.
+
+**Why:** Direct instruction to act on the already-agreed plan (grow the
+dataset) using the lever that's actually available without needing
+anything from a real person -- profile-shape diversity, informed by
+real-participant structure without using their actual content.
+
+**Measured result:** 75 pairs now in `stage_lr/data/lr1_preference_pairs.json`,
+all `source: "synthetic_profile_template"`, `judged_by:
+"claude_api_standard_method"`.
+
+**Category:** Stage LR data generation (path (a), batch 4). Recorded on
+`stage-lr`. No participant content involved -- new templates are
+researcher-designed (informed by, not copied from, the real profile).
+Full record: `LEARNED_REFORMULATION_RESEARCH.md` ("Path (a), batch 4"
+section), `stage_lr/harvest_batch4_new_templates.py`.
+
+---
+
+### 2026-08-30-U — Second real path (b) participant processed; sanitize_input() defect independently reproduced on a different sentence
+
+**What was done:** a second real participant answered the path (b) ask.
+Reused `stage_lr/harvest_real_profile.py` unchanged (no new code
+needed -- the generic-mechanism fix from 2026-08-30-R paid off
+immediately). Same privacy handling as the first participant: real
+content confined to `stage_lr/data/private/` (gitignored), only
+aggregate, non-identifying facts recorded here.
+
+**Result:** 15 sentences -> 5 no substitution change -> 3 no second
+candidate -> 7 found -> 0 contaminated -> 7 unique. Higher yield than
+participant 1 (5 found/5 unique) -- noted, not explained or
+generalized from at n=2.
+
+**The same `sanitize_input()` defect found for participant 1
+(`DECISION_LOG.md` 2026-08-30-R) reproduced independently on a
+different sentence:** `"He tried to predict..."` -> `"He tried to
+predicts..."` -- confirmed directly, same verification method (checked
+each sentence's own `sanitize_input()` output individually before
+trusting any of them). Two different real sentences, two different
+participants, identical failure shape (infinitive after "to"
+incorrectly conjugated). This upgrades the finding from "one odd case"
+to "a reproducible pattern" -- still not fixed here, but the case for
+treating it as a priority routine-maintenance item (the freeze's own
+permitted category) is now measurably stronger. One pair excluded
+again; **6 unique clean pairs remain**, ready for the participant.
+
+**Alternatives considered:** Treat this as a coincidence /
+low-priority curiosity given it's still not fixed. Rejected -- two
+independent real-world reproductions of the identical failure shape is
+exactly the kind of evidence this project's own discipline treats as
+worth escalating (pattern, not anecdote), even though fixing it
+remains a separate, deliberate decision on `main`, not bundled in here.
+
+**Why:** Direct continuation of path (b) as already built -- generate,
+verify, exclude any newly-found defects, hold for the participant's
+picks.
+
+**Measured result:** 6 clean candidate pairs held locally, awaiting the
+second participant's picks. No verdicts recorded yet, correctly.
+
+**Category:** Stage LR data generation (path (b), second real
+participant) + a strengthened `main` finding. Recorded on `stage-lr`.
+No participant content committed. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), second real
+participant" section).
+
+---
+
+### 2026-08-30-V — Second real human-vs-Claude comparison: 5/6 agree; cumulative n=10, 6/10 (60%); the spread across people is the finding, not the pooled number
+
+**What was done:** the second participant's picks on the 6 candidate
+pairs came back. Per `ingest_real_human_pair.py`'s rule, obtained a
+Claude verdict on the identical 6 pairs, blind, in the same session,
+then logged both together via `record_real_human_pair()`.
+
+**Result:** 5/6 agree. Cumulative across both real participants so far
+(computed directly from `stage_lr/ingest_real_human_pair.summarize()`,
+not by hand): **n=10, 6/10 agree (60%)**. Per participant: participant
+1 was 1/4 (25%); participant 2 was 5/6 (83%).
+
+**Alternatives considered:** Report only the pooled 60% figure.
+Rejected -- the per-participant spread (25% vs. 83%) is more
+informative than the pooled number and would be lost by reporting only
+the aggregate. Treat the higher second-participant number as evidence
+the model is "actually fine." Rejected -- two participants can't
+establish which number (if either) is representative; the spread
+itself is exactly the reason path (b) needs many real people, not a
+sign the question is already answered.
+
+**Why:** Direct continuation of the same-session logging rule
+(2026-08-30-Q), now exercised twice.
+
+**Measured result:** 10/10 real pairs logged with both verdicts across
+2 participants. No conclusion drawn, no LR.2 weights touched, no
+change to LR.3's gating -- explicitly named as still too few people to
+act on, consistent with 2026-08-30-S's treatment of the first result.
+
+**Category:** Stage LR data point (path (b), second real result).
+Recorded on `stage-lr`. No participant content committed. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), second real
+participant" section, updated).
+
+---
+
+### 2026-08-30-W — Correction: the participant behind 2026-08-30-S's result was excluded per direct instruction; real human-vs-Claude data now reflects one participant, n=6
+
+**What was done:** per direct instruction, the 4 records described in
+2026-08-30-S (and folded into 2026-08-30-V's cumulative figure) were
+removed from `stage_lr/data/real_human_pairs.json`, along with all
+associated local files. `LEARNED_REFORMULATION_RESEARCH.md`'s path (b)
+sections were rewritten to reflect the corrected data (now: one
+participant, n=6, 5/6 agree). 2026-08-30-S and 2026-08-30-V are left as
+originally written, per this log's own append-only rule, rather than
+edited or removed.
+
+**Category:** Data correction, recorded per direct instruction to keep
+this log internally consistent with what `stage_lr/data/real_human_pairs.json`
+actually contains going forward. Full record:
+`LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), real participants"
+section).
+
+---
+
+### 2026-09-01-A — Third real participant (counted as "friend 2" per
+2026-08-30's renumbering): profile harvest initially yielded 0/12 clean
+pairs; root-caused, not patched; expanded to 1/25 by adding sentences only
+
+**What was done:** built `stage_lr/data/private/real_profile_2_input.json`
+from the participant's declared profile (3 words, 1 sound-class set, 1
+phrase -- no participant content in this entry). First harvest run (12
+sentences) produced **0** clean pairs (11 no_substitution_change, 1
+no_second_candidate). Diagnosed directly against the real, unmodified
+`reformulate()` pipeline rather than guessed: two of the three declared
+words are polysemous in WordNet (4 and multiple senses respectively);
+`semantic.disambiguate_synset()` picked a single sense whose only
+synonym then failed the live 0.85 `MIN_SEMANTIC` threshold, while a
+different, equally valid sense of the same word had several synonyms
+that would likely have passed. This is the exact cost
+`REFORMULATION_PROBLEM_MAP.md` §2.6's 2026-08-17 update already named
+in the abstract ("single-sense candidate pools are sometimes smaller
+and score lower... even when correct") -- now measured concretely, not
+merely predicted. Detail and the exact traced mechanism:
+`REFORMULATION_PROBLEM_MAP.md` §2.6, 2026-09-01 update.
+
+**What was *not* done:** `MIN_SEMANTIC`, `disambiguate_synset()`, and
+every other gate were left untouched on both `main` and `stage-lr`, per
+the architecture freeze -- this is a disclosed limitation, not a bug to
+patch mid-harvest. The only change made was adding 13 more natural
+sentences (same declared words, not written to dodge the threshold) to
+the same participant's input file, matching path (a)'s own batch-3/4
+precedent of adding sentence material rather than changing the engine.
+Re-run on 25 sentences total yielded **1** clean pair (up from 0), still
+low -- reported honestly as the real yield for this profile, not
+padded or retried indefinitely.
+
+**Category:** Stage LR data point (path (b), third real participant /
+counted "friend 2") plus a `REFORMULATION_PROBLEM_MAP.md` update.
+Recorded on `stage-lr`. No participant content committed -- profile
+words and sentences stay in `stage_lr/data/private/`, gitignored. The
+1 pair is being held locally for the participant's blind A/B pick,
+per the established same-session dual-verdict protocol
+(`stage_lr/ingest_real_human_pair.py`) -- not yet judged by either
+side as of this entry.
+
+---
+
+### 2026-09-01-B — friend 2's single pair judged same-session; real human-vs-Claude data now spans two participants, n=7, 6/7 agree
+
+**What was done:** the one clean pair from 2026-09-01-A was relayed to
+the participant (human picked candidate A), and a fresh, blind
+general-purpose Claude judgment was obtained in the same session
+immediately after (independently also picked candidate A, citing
+closer meaning preservation and more idiomatic phrasing than candidate
+B). Both verdicts logged together via `stage_lr/ingest_real_human_pair.
+record_real_human_pair()`, satisfying its hard same-session,
+no-default-kwargs rule (2026-08-30-Q), now exercised across two real
+participants.
+
+**Measured result:** n=7, 6/7 agree (86%), up from n=6, 5/6 (83%) --
+friend_1's 6 records plus friend_2's 1. No conclusion drawn, no LR.2
+weights touched, no change to LR.3's gating -- still well below any
+scale this project treats as actionable.
+
+**Category:** Stage LR data point (path (b), friend 2's first judged
+result). Recorded on `stage-lr`. No participant content committed.
+Full record: `LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), real
+participants" section, updated).
+
+---
+
+### 2026-09-01-C — Fourth real participant (counted "friend 3"): two
+independent zero-yield mechanisms found, one already-known gap (R13)
+now concretely broken output, not just a hypothesis
+
+**What was done:** built a profile from the participant's declared
+sound-class, one declared word, and one declared phrase; harvested 20
+natural sentences. Result: the declared word produced no usable
+candidate in any sentence (root-caused: its common senses have no
+single-word WordNet synonym at all, a different and more fundamental
+shape than 2026-09-01-A's WSD-narrows-to-a-weak-candidate case, though
+the same disambiguation mechanism was involved). The declared phrase
+produced exactly one candidate pair, and it was broken: one word
+inside the phrase also matched the declared sound-class independently,
+got flagged and substituted as an ordinary single word (phrases have
+no consumer in the pipeline at all — `ROADMAP.md` R13, already an open
+item, not a new discovery), and the fixed expression's anchor word was
+replaced with an unrelated superlative-adjective form. Traced directly
+against the real pipeline, same session.
+
+**What was *not* done:** the broken pair was **not** shown to the
+participant — excluded before relay, same "never ship a bad guess"
+discipline `REFORMULATION_PROBLEM_MAP.md` §2.4 already established for
+idiom spans. No gate, threshold, or WSD logic changed on `main` or
+`stage-lr`, per the architecture freeze. `ROADMAP.md` R13 updated with
+this concrete instance rather than left as an abstract gap.
+
+**Category:** Stage LR data point (path (b), fourth real participant /
+counted "friend 3") plus a `ROADMAP.md` R13 update. Recorded on
+`stage-lr`. No participant content committed — profile words, phrase,
+and sentences stay in `stage_lr/data/private/`, gitignored. Zero
+records added to `real_human_pairs.json` this entry — nothing usable
+was produced for this participant yet.
+
+---
+
+### 2026-09-01-D — friend 3's declared-word list expanded per direct
+instruction; one new legitimate-but-awkward pair judged same-session,
+n=8 across three participants, 7/8 agree
+
+**What was done:** per direct instruction, three more declared words
+were added to friend 3's profile (same sound-class, same phrase) and
+the harvest re-run on an expanded, still-natural sentence set (not
+written to dodge any prior finding). Result: the already-known broken
+phrase pair recurred once more (excluded again, no new information —
+same R13 mechanism as 2026-09-01-C). One new pair was found from a
+different declared word: legitimate in the sense that both candidates
+are real dictionary words and the sentence is grammatical, but
+awkward — the declared word was used idiomatically/informally in the
+source sentence, and the substitution produced a literal plural of an
+otherwise-uncountable sense, which a careful proofreader would flag on
+naturalness grounds even though it isn't nonsense the way the phrase
+case is. This was disclosed to the user as borderline before relaying,
+rather than silently sent or silently withheld. User chose to send it.
+
+**Measured result:** participant and a same-session blind Claude
+verdict agreed on the same candidate (reason given independently
+converged on the same meaning-preservation point the disclosure had
+already flagged). n=8, 7/8 agree (87.5%), up from n=7, 6/7 -- now
+three distinct real participants (friend_1: 6, friend_2: 1, friend_3:
+1). No conclusion drawn, no LR.2/LR.3 change.
+
+**Category:** Stage LR data point (path (b), friend 3's first judged
+result). Recorded on `stage-lr`. No participant content committed.
+Full record: `LEARNED_REFORMULATION_RESEARCH.md` ("Path (b), real
+participants" section, updated).
+
+---
+
+### 2026-09-01-E — Fifth real participant: zero yield again, but from
+three distinct, non-overlapping mechanisms including a new one (NLI
+false positive) — `REFORMULATION_PROBLEM_MAP.md` §3.7 updated with a
+concrete instance
+
+**What was done:** built a profile from a real declared sound-class,
+2 words, and 1 phrase; harvested 25 natural sentences. Diagnosed all
+three zero-outcomes directly against the real pipeline rather than
+guessed. (1) One declared word's clean, correct single-word synonym
+passed every other gate and was rejected every time by
+`semantic.logical_consistency_check()` (the frozen pipeline's own
+Phase 11C NLI gate) as a false-positive "contradiction" — re-tested
+across 4 sentences, never once accepted. This is the first concrete
+instance of a risk `REFORMULATION_PROBLEM_MAP.md` §3.7's literature
+review had named but marked untested; that section now records it.
+(2) The other declared word has exactly one usable synonym in WordNet
+at all, so path (b)'s need for a *second*, different candidate can
+never be met — same no-true-synonym shape already found twice before
+(2026-09-01-A, -C), not new. (3) The declared phrase's sound-bearing
+word is a stopword the pipeline never flags as substitutable by
+design, so the phrase is never engaged at all (silent non-treatment,
+not a broken output this time) — a different-flavored consequence of
+the already-open `ROADMAP.md` R13 gap, not a new item.
+
+**What was *not* done:** no gate, threshold, or NLI/WSD/phrase-
+matching logic changed on `main` or `stage-lr`, per the architecture
+freeze. Nothing was shown to the participant — no candidate cleared
+every gate this round.
+
+**Category:** Stage LR data point (path (b), fifth real participant)
+plus a `REFORMULATION_PROBLEM_MAP.md` §3.7 update. Recorded on
+`stage-lr`. No participant content committed — profile words, phrase,
+and sentences stay in `stage_lr/data/private/`, gitignored. Zero
+records added to `real_human_pairs.json` this entry; n=8 unchanged.
+
+---
+
+### 2026-09-01-F — Fifth participant's profile expanded with 5 more
+self-chosen same-sound words, per direct instruction; 11 candidate
+pairs found, two new grammaticality/meaning findings surfaced and
+excluded before relay
+
+**What was done:** per direct instruction to supply additional words
+matching the participant's declared sound-class myself rather than ask
+again, 5 more everyday adjectives were added and 20 more natural
+sentences written; harvest re-run (45 sentences total). Result: 11
+clean candidate pairs, by far the highest yield of any real profile
+this session. All 11 were manually quality-checked before any were
+queued for relay (per this session's own "never ship a bad guess"
+practice) rather than passed through automatically.
+
+**Two new findings surfaced and confirmed directly against the real
+pipeline, both disclosed, neither fixed:**
+1. Indefinite-article agreement ("a"/"an") is not adjusted when a
+   substitution changes the following word's leading sound — a
+   consonant-initial declared word was replaced with a vowel-initial
+   synonym inside an "a ___" slot, and the article was left as "a".
+   `REFORMULATION_PROBLEM_MAP.md` §2.3 updated with this concrete
+   instance (a narrower gap than the section's existing "beyond
+   single-word morphology, nothing is checked" finding).
+2. WSD can pick an outright wrong sense for a short, common,
+   locally-ambiguous adjective, not just a narrow-but-correct one — a
+   literal/physical sense of a declared word was replaced using
+   candidates from its figurative/emotional sense instead, changing
+   what the sentence claims. Reproduced on 2 sentences.
+   `REFORMULATION_PROBLEM_MAP.md` §2.6 updated with this instance,
+   distinguished from the already-known "narrow pool" cost as a
+   sharper variant of the same root cause.
+
+Also reproduced (third time, no new documentation needed — already on
+record from 2026-08-30-R): `sanitize_input()`'s infinitive-after-"to"
+conjugation bug, this time appearing in `sanitize_input()`'s own
+correction pass before any substitution occurred.
+
+**What was *not* done:** no gate, threshold, WSD, or inflection logic
+changed on `main` or `stage-lr`, per the architecture freeze. The
+pairs carrying either defect (1 grammar-broken, 2 meaning-changed via
+wrong sense, 1 article-agreement-broken) were excluded from what gets
+shown to the participant — of the 11 found, 7 clean pairs remain
+queued for the participant's judgment, not yet relayed as of this
+entry.
+
+**Category:** Stage LR data point (path (b), fifth participant,
+expanded) plus two `REFORMULATION_PROBLEM_MAP.md` updates (§2.3, §2.6).
+Recorded on `stage-lr`. No participant content committed.
+
+---
+
+### 2026-09-01-G — Fifth participant's 7 queued pairs judged
+same-session; aggregate rate swung from 87.5% to 53.3%, root cause
+identified as a pair-selection artifact, not a Claude-vs-human gap
+
+**What was done:** the participant gave a definite A pick on all 7
+queued pairs. A single batched blind Claude judgment was obtained for
+all 7 in the same session (`judge_pairs.py`'s batching pattern). Result:
+Claude returned `"tie"` on 6 of 7 (reasoning: near-synonyms,
+interchangeable, equally idiomatic) and matched the human's "A" on
+only 1. All 7 logged via `record_real_human_pair()`.
+
+**Measured result:** n=15, 8/15 agree (53.3%), down from n=8, 7/8
+(87.5%) — a 34-point swing from one 7-pair batch. `agree` is strict
+equality (`human_preferred == claude_preferred`) by the module's own
+design, so tie-vs-definite-pick correctly scores as disagreement; the
+question is what that disagreement means.
+
+**Root cause identified, not guessed:** asked directly what they were
+judging on, the participant independently volunteered that the pairs
+"were all close and not really different" — before being told any of
+Claude's verdicts. This matches Claude's own stated reasoning on 6 of
+the 7 almost exactly. The 5 words used for this batch were chosen
+specifically for unusually rich WordNet synonym availability, to clear
+this profile's earlier zero-yield problem (2026-09-01-A/C/E) — the
+same richness produced candidate pairs too close together to carry a
+real preference signal. Favors the reading that this batch's low
+agreement is a pair-selection artifact (near-ties forced into an A/B
+choice), not evidence Claude's judgment diverges from real human
+judgment on genuinely distinguishable pairs.
+
+**What was *not* done:** no conclusion drawn about Claude-as-judge's
+general validity, no change to `judge_pairs.py`'s tie handling, no
+LR.2/LR.3 change. `LEARNED_REFORMULATION_RESEARCH.md` updated with a
+methodological note for future batches: favor pairs with a
+demonstrable quality gap over whichever candidates are easiest to
+generate.
+
+**Category:** Stage LR data point (path (b), fifth participant, 7
+pairs judged) plus a methodology finding. Recorded on `stage-lr`. No
+participant content committed.
+
+---
+
+### 2026-09-01-H — `pair_distinguishability` field added to
+`ingest_real_human_pair.py`, per direct instruction: a recognized-bad
+test batch is separated from conclusion-drawing figures, not deleted
+
+**What was done:** per direct instruction ("a bad test once
+recognized must be let separate from the ones we are gonna use for
+our conclusions"), `record_real_human_pair()` gained an optional
+`pair_distinguishability` kwarg (`"distinguishable"` default /
+`"near_synonym"`), and `summarize()` gained `exclude_near_synonym`
+(default `False`, so existing callers are unaffected). The 7-pair
+batch from 2026-09-01-G was tagged `"near_synonym"` retroactively via
+a one-off migration script (it was logged, and the problem diagnosed,
+before this mechanism existed) — no record was deleted or edited
+otherwise. Also fixed, in the same pass: `tests/
+stage_lr_ingest_real_human_pair_test.py`'s `RecordingTest` was backing
+up/restoring the live `real_human_pairs.json` in place rather than
+redirecting to an isolated temp path, which meant exact-count
+assertions (`n == 2`, etc.) had been silently invalid ever since real
+participant data started accumulating in that file — found while
+running the suite after this change, not introduced by it; fixed by
+monkeypatching `ihp.REAL_HUMAN_PAIRS_PATH` per test instead. 4 new/
+updated tests added; full suite (12 tests) passes.
+
+**Measured result, both figures now reported side by side going
+forward, per direct instruction neither should stand alone:**
+- All recorded pairs: n=15, 8/15 agree (53.3%).
+- Conclusion-eligible (excludes the tagged near-synonym batch): n=8,
+  7/8 agree (87.5%) — identical to the figure standing before
+  2026-09-01-G, since that batch is the only one tagged out so far.
+
+**What was *not* done:** the near-synonym tag doesn't relabel or
+reinterpret Claude's 6 "tie" verdicts as right or wrong — it marks the
+batch as low-information for path (b)'s specific question. Future
+near-synonym batches get tagged at collection time (screened before
+relay), never retroactively based on whether the aggregate rate looked
+good or bad — the criterion is a real quality gap between candidates,
+decided before either verdict is known.
+
+**Category:** Stage LR mechanism change (`ingest_real_human_pair.py`)
+plus a test-isolation bugfix plus a data migration. Recorded on
+`stage-lr`. No participant content committed.
+
+---
+
+### 2026-09-01-I — Correction: the 7 near-synonym-tagged records
+(2026-09-01-G/H) removed outright, per direct follow-up instruction;
+n=8, 7/8 agree (87.5%) again
+
+**What was done:** per direct instruction ("remove those 7... a bad
+test once recognized must be let separate from the ones we are gonna
+use for our conclusions... make sure your conclusions are only drawn
+from real ones"), the 7 records tagged `pair_distinguishability:
+"near_synonym"` were deleted from `real_human_pairs.json`, not merely
+excluded via `summarize(exclude_near_synonym=True)`. The mechanism
+added in 2026-09-01-H stays in the codebase for any future batch where
+filtering (not deletion) is preferred; for this batch, deletion is
+what happened.
+
+**Measured result:** n=8, 7/8 agree (87.5%) — back to the figure
+standing before 2026-09-01-G, since that batch is now gone rather than
+just excluded. `LEARNED_REFORMULATION_RESEARCH.md`'s two-figure
+framing from 2026-09-01-H is left as originally written and superseded
+by an append-only correction note, per this log's own precedent for
+handling a dropped result (2026-08-30-W).
+
+**Category:** Data correction, recorded per direct instruction.
+Recorded on `stage-lr`. No participant content committed.
+
+---
+
+### 2026-09-01-J — Final round, per direct instruction: more sentences
+added to all three existing "friend" profiles using only their already-
+declared words (no new words invented for participants not present to
+ask); friend_1 yields 7 new clean pairs, friend_2/friend_3 yield none
+
+**What was done:** ~10 more natural sentences were added to each of
+friend_1's, friend_2's, and friend_3's existing input files, using
+only words/sounds/phrases each participant had already declared —
+unlike the fifth participant's profile (their own, expanded with
+their own authorization), no new content was invented on a friend's
+behalf. Harvest re-run on all three.
+
+**friend_1: 13 raw candidate pairs found, manually quality-screened
+before relay (same discipline as every prior round) down to 7 clean,
+distinguishable pairs.** 6 excluded: 1 for a clear grammar break (an
+adverb-only candidate word used in an adjective slot — same already-
+documented "beyond single-word morphology, nothing is checked" class
+as `REFORMULATION_PROBLEM_MAP.md` §2.3, no new doc entry needed), and
+5 for wrong-meaning substitutions traced to the same declared word's
+several distinct verb senses (introduce/display vs. represent/symbolize
+vs. comprise/constitute vs. allocate/distribute) — a further concrete
+instance of the already well-documented WSD factor (§2.6), not a new
+mechanism, so no new doc entry either. The 7 kept pairs each have a
+real, checkable quality gap (not near-synonyms), per 2026-09-01-H/I's
+now-standing screening rule.
+
+**friend_2 and friend_3: zero new pairs from either, despite the added
+sentences.** Every "found" outcome on both re-derived a pair already
+in hand from an earlier round (the same declared-word pair already
+recorded for friend_2; the same broken phrase pair and the same
+already-judged pair for friend_3) — no new information. Both profiles'
+remaining declared
+words continue to fail via mechanisms already on record (WSD-narrows-
+to-weak-candidate, no-true-synonym-exists, or the R13 phrase gap) —
+treated as effectively exhausted for this architecture, not re-tried
+further this round.
+
+**What was *not* done:** no gate, threshold, WSD, or grammar logic
+changed on `main` or `stage-lr`, per the architecture freeze. The 7
+friend_1 pairs are queued for relay, not yet judged as of this entry.
+
+**Category:** Stage LR data point (path (b), final round across three
+existing participants, per direct instruction). Recorded on
+`stage-lr`. No participant content committed — profile words and
+sentences stay in `stage_lr/data/private/`, gitignored.
+
+---
+
+### 2026-09-01-K — friend_1's 7 queued pairs judged same-session,
+6/7 agree, a genuine directional split not a tie artifact
+
+**What was done:** the participant gave definite A/B picks on all 7
+queued pairs. A single batched blind Claude judgment was obtained for
+all 7 in the same session. Both logged via `record_real_human_pair()`.
+
+**Measured result:** 6/7 agree. The one disagreement is a real
+directional split (Claude picked the opposite letter from the
+participant, both with a stated reason, neither a "tie") — unlike
+2026-09-01-G's removed batch, this is exactly the shape of
+disagreement path (b) exists to surface, not a pair-selection
+artifact. n=15, 13/15 agree (86.7%), up from n=8, 7/8 (87.5%) — four
+distinct real participants (friend_1: 13; friend_2: 1; friend_3: 1).
+
+**What was *not* done:** no conclusion drawn, no LR.2/LR.3 change.
+
+**Category:** Stage LR data point (path (b), friend_1's second judged
+batch). Recorded on `stage-lr`. No participant content committed.
+
+---
+
+### 2026-09-01-L — Consolidation pass across `ROADMAP.md`,
+`REFORMULATION_PROBLEM_MAP.md`, and `VALIDATION.md`, per direct
+instruction: this round's 7 findings cross-referenced (not duplicated),
+two escalated, one gap closed
+
+**What was done:** per direct instruction to consolidate this
+session's Stage LR path (b) round before doing anything further,
+three things were checked and fixed:
+
+1. **A genuinely missing entry, closed.** Finding #3 ("some ordinary
+   declared words have no true single-word WordNet synonym at all") had
+   been discussed narratively in `DECISION_LOG.md`/`LEARNED_
+   REFORMULATION_RESEARCH.md` but never given its own
+   `REFORMULATION_PROBLEM_MAP.md` entry, unlike the other 6 findings.
+   Added under §2.6, explicitly distinguished from the two WSD findings
+   next to it (a lexical gap, not a disambiguation failure).
+2. **Two findings escalated**, per direct instruction: `ROADMAP.md` R13
+   (phrases have no consumer — now with a second, independent
+   participant's reproduction added: silent non-treatment, not just a
+   broken output) and `REFORMULATION_PROBLEM_MAP.md` §3.7's NLI
+   false-positive finding (now noting it's the same gate underlying
+   every CLEAN-rate/found-rate figure `VALIDATION.md` §§51-56 reports).
+   Both marked **[ESCALATED]** in their headers/openers — still not
+   fixed, per the freeze, but flagged for priority attention if the
+   freeze is ever revisited under its own stated conditions.
+3. **`VALIDATION.md` gained a new §58**, cross-referencing all 7
+   findings to their actual homes (no duplication), stating the
+   NLI-false-positive caveat on §§51-56's existing CLEAN-rate/
+   found-rate numbers explicitly (as an open caveat on the numbers,
+   not a re-measurement — no corpus was re-run with the gate isolated
+   this session), and recording the current path (b) headline figure
+   (n=15, 13/15 agree, 86.7%, explicitly not yet statistically decisive)
+   and friend_2/friend_3's exhausted status, both by reference to
+   `LEARNED_REFORMULATION_RESEARCH.md` rather than restated in full.
+
+**What was explicitly not done:** the NLI-caveat addition to
+`VALIDATION.md` §58 does not re-open, re-litigate, or cast doubt on
+the architecture freeze (§56) — it names an unmeasured-effect-size
+caveat on existing numbers, which is not, by itself, either of §56's
+two named reopening conditions. No gate, threshold, or pipeline logic
+was changed on `main` or `stage-lr`.
+
+**Category:** Documentation consolidation, per direct instruction.
+Recorded on `stage-lr`. No participant content committed — verified by
+diff scan across all three files before commit.
+
+---
+
+### 2026-09-01-M — Diagnostic experiment, per direct instruction:
+measured the NLI false-positive's actual effect size on the 31-34%
+plateau and 21.4% fresh-corpus figures — result: null on both, stated
+plainly in `VALIDATION.md` §58
+
+**What was done:** two new, additive diagnostic scripts (`eval/
+step3_gencheck_nli_isolation.py`, `eval/r10_nli_isolation.py` — no
+existing file touched) isolate `reformulate.py::_try_substitution()`
+(the deterministic tier — `VALIDATION.md` §8.4 already established
+only T5 escalation is non-deterministic) and run it twice per
+(sentence, profile) pair, once with `semantic.logical_consistency_
+check()` live and once monkeypatched to always return `None` (its own
+documented "no signal" fallback). Run across both reference corpora:
+the 36-run fresh corpus behind the 21.4% figure and the full 398-run
+R10 corpus behind the 31-34% plateau, using today's live frozen code
+both times. A first attempt (`eval/step3_gencheck_harvest_no_nli.py`,
+comparing full `reformulate()` outcomes rather than the isolated
+substitution tier) was run first and discarded before drawing any
+conclusion from it — it produced flips in both directions, inconsistent
+with a gate that can only ever remove a rejection reason, and was
+correctly traced to T5 escalation's own documented non-determinism
+contaminating the comparison, not a new finding. The corrected,
+isolated method has no such confound (confirmed: every direct-NLI-block
+in the with-NLI pass is exactly the same run that flips in the
+without-NLI pass, 1:1, no exceptions in 434 runs).
+
+**Measured result:** 23 total substitution-tier outcomes (8/36 fresh
+corpus + 15/398 R10) flip from failure to success specifically because
+this NLI gate stopped rejecting the assembled sentence. Every one of
+the 23 newly-unblocked outputs was blind-judged (same CLEAN/DEFECTIVE/
+SEVERE/MINOR rubric as every prior phase, no metadata given, two
+separate judging calls — one per corpus): **23/23 DEFECTIVE (22
+SEVERE, 1 MINOR), zero CLEAN.** Every substitution this gate blocked
+in these two corpora was independently, severely defective for
+unrelated reasons (meaning reversals like "reducing" -> "bumping",
+"nervous" -> "excited"; ungrammatical output like "a several lamp";
+nonsensical output like "flows to the artefact").
+
+**What this means, stated plainly:** the 31-34% plateau and 21.4%
+fresh-corpus figures are not meaningfully affected by this gate's
+false-positive behavior — on these two specific corpora, disabling it
+would not raise either figure, since every blocked case fails blind
+judging anyway via a different mechanism. This narrows rather than
+confirms the concern `VALIDATION.md` §58 originally left open. It does
+NOT contradict or retract the real false positive found on real
+participant data (`REFORMULATION_PROBLEM_MAP.md` §3.7) — that
+reproduction stands on its own, independent evidence, on a sentence
+outside both corpora measured here; today's result only bounds this
+gate's effect on these two corpora's *already-reported* numbers
+specifically, not its general reliability.
+
+**What was *not* done:** no gate, threshold, or pipeline logic changed
+on `main` or `stage-lr`. This measurement is not, by itself, grounds
+to revisit the architecture freeze — `VALIDATION.md` §56's two named
+reopening conditions govern that, unchanged.
+
+**Category:** Diagnostic experiment, per direct instruction. Recorded
+on `stage-lr`. No participant content involved (both corpora are
+pre-existing, non-participant technical/general-domain text).
+
+---
+
+### 2026-09-01-N — Fifth participant (self) declared a second, distinct
+sound-class; 2 new clean pairs judged same-session, n=17, 15/17 agree
+(88.2%), and a useful nuance found on the R13 phrase gap
+
+**What was done:** the same participant (self) declared a new sound,
+word, and phrase — extending their existing profile, not a new person.
+Harvest against the expanded profile found 16 raw pairs. Most either
+re-derived the already-removed near-synonym batch (2026-09-01-G/I) or
+hit the already-known `sanitize_input()` grammar bug again (recurred
+twice more; no new documentation needed for either, both already on
+record). 2 new pairs survived quality screening and were relayed;
+participant gave definite picks on both, a same-session blind Claude
+judgment was obtained, both agreed (2/2).
+
+**A third reproduction of the R13 phrase gap, with a new nuance:** one
+of the two clean pairs came from the declared phrase's anchor word
+coincidentally matching the newly-declared sound — the same mechanism
+as the two prior reproductions (2026-09-01-E/J) — but this time the
+substitution produced a clean, natural result rather than a broken or
+silently-skipped one. `ROADMAP.md` R13 updated: doesn't change the
+escalated status, refines what's known about the gap's consequences
+(whether a coincidental match breaks, no-ops, or survives intact
+appears to depend on the phrase's syntactic rigidity, not anything
+this pipeline checks for).
+
+**Measured result:** n=17, 15/17 agree (88.2%), up from n=15, 13/15 —
+same four distinct participants (self's share: 2 of 17, the first
+surviving data from this participant since their earlier batch was
+removed). No conclusion drawn, no LR.2/LR.3 change.
+
+**Category:** Stage LR data point (path (b), self's second sound-class,
+first judged). Recorded on `stage-lr`. No participant content
+committed.
+
+---
+
+### 2026-09-01-O — Researcher-proposed words for friend_2 and friend_3
+(previously exhausted), per direct instruction; 4 new pairs judged,
+n=21, 17/21 agree (81.0%), friend_1's share of the data down to 62%
+
+**What was done:** per direct instruction, additional same-sound-class
+words were chosen by the researcher (not self-reported by either
+participant) and added to friend_2's and friend_3's profiles. Basis,
+stated to the user before generating anything: match the participant's
+already-declared sound(s); require a non-trivial WordNet synonym pool;
+favor a dominant single sense over heavy polysemy, since this session's
+own repeated finding is that highly ambiguous words are the ones WSD
+mis-resolves. This provenance (researcher-chosen, not participant- or
+self-declared) is recorded explicitly for traceability, distinct from
+2026-09-01-J/N's self- and friend-authorized additions.
+
+**Measured result:** friend_2 yielded 3 new clean pairs (3 of 6 raw
+excluded: 1 repeat of already-logged data, 1 grammar-broken via the
+recurring `sanitize_input()` bug, 1 unnatural/wrong-register — no new
+documentation for either). friend_3 yielded 1 new clean pair (5 of 6
+raw excluded: 2 repeats, 2 wrong-sense meaning changes, 1
+article-agreement-broken — all already-documented classes). All 4
+judged same-session: 2/4 agree — a real, mixed batch, not a
+near-synonym artifact (Claude split its verdict on the identical
+candidate pair depending on sentence context, i.e. genuine
+context-sensitivity, not blanket indifference).
+
+**n=21, 17/21 agree (81.0%)**, up from n=17, 15/17 — same four
+participants (friend_1: 13, friend_2: 4, friend_3: 2, self: 2).
+friend_1's share of the total data is now 62%, down from 76% before
+this entry — real progress on the standing diversity concern, though
+still the dominant contributor. No conclusion drawn, no LR.2/LR.3
+change.
+
+**Category:** Stage LR data point (path (b), researcher-proposed
+words for friend_2/friend_3). Recorded on `stage-lr`. No participant
+content committed.
+
+---
+
+### 2026-09-01-P — Large deliberate push across all four existing
+profiles at once, per direct instruction; 18 pairs judged same-session,
+n=39, 28/39 agree (71.8%), participant concentration substantially
+improved
+
+**What was done:** per direct instruction to grow n substantially
+across all profiles currently held, targeted 5 clean pairs each
+against friend_1, friend_2, friend_3, and self. friend_1: 20 raw pairs
+found (7 already-logged repeats excluded), screened to 5 clean.
+friend_3 and self: additional sentences against already-reliable
+declared words closed each to 5. friend_2: despite adding one more
+candidate word and further sentences, topped out at 3 clean pairs —
+reported as the real, measured yield rather than padded to 5; the
+profile is showing genuine diminishing returns after this session's
+several rounds of expansion.
+
+**Measured result:** all 18 pairs (5+3+5+5) relayed and judged
+same-session: 11/18 agree. Not a near-synonym artifact — a real,
+legible pattern in the disagreements: on one declared word repeated
+across several sentences, Claude consistently preferred one of its two
+candidates for sentences describing a publicly-admired figure and the
+other candidate for sentences describing a personal relation, while
+the participant's picks favored one candidate almost uniformly with
+one exception — a genuine semantic/register disagreement, not noise.
+**n=39, 28/39 agree (71.8%)**, down from 81.0% -- the expected, honest
+behavior of a larger sample surfacing real disagreement, not treated
+as a problem. Participant concentration improved substantially:
+friend_1: 18, friend_2: 7, friend_3: 7, self: 7 -- friend_1's share
+now 46% of the data, down from 62%, no longer dominant.
+
+**What was *not* done:** no conclusion drawn, no LR.2/LR.3 change, no
+gate or pipeline logic touched. friend_2's shortfall was not closed by
+inventing further words past the point of genuine yield.
+
+**Category:** Stage LR data point (path (b), large multi-profile
+batch). Recorded on `stage-lr`. No participant content committed.
+
+---
+
+### 2026-09-01-Q — New system built, per direct instruction ("this is
+wasting a lot of time... a good system for using human as a test just
+if that is the best way, and some by claude if too"): a real
+batch-judging tool for humans, and a separate Claude-only track for
+dataset volume that doesn't need one
+
+**What was done:** the one-pair-at-a-time chat relay was the actual
+bottleneck this whole session, not the underlying method. Three new
+pieces, all additive, nothing existing changed:
+
+1. `stage_lr/human_test_tool.html` — a static, offline, local-only
+   page (no server, no network calls, never to be hosted, per this
+   project's standing local-only rule for real participant data). A
+   real participant loads a `*_pairs_for_review.json` file directly
+   (the exact format `harvest_real_profile.py` already produces),
+   clicks through every pair (A/B/tie, keyboard shortcuts), and
+   downloads a small results file — replacing manual "a,b,a" chat
+   transcription with one sitting at a page.
+2. `stage_lr/merge_human_test_results.py` — joins that results file
+   back with the original pairs (reconstructing `original_sentence`
+   the same way this session always did by hand), builds the exact
+   payload `judge_pairs.build_judge_prompt()` expects (send via a
+   fresh Agent call, same blind discipline as every prior round), and
+   logs everything via `record_real_human_pair()` afterward — refuses
+   to log a pair with no matching Claude verdict, same hard rule as
+   before. 7 tests.
+3. `stage_lr/claude_only_pairs.py` — a genuinely new, separate track,
+   answering the "just if that is the best way" half of the
+   instruction directly: not every pair needs a real human's verdict
+   to be useful data. Pairs generated from real participants' declared
+   profiles, judged by Claude alone, tagged `source:
+   "real_profile_claude_only"`, stored in its own gitignored file
+   (`stage_lr/data/claude_only_pairs.json`, added to `.gitignore`) —
+   structurally separate from `real_human_pairs.json` so it can never
+   be silently pooled into the human-agreement figures. 3 tests.
+
+**Demonstrated end-to-end, not just built:** one declared word from
+the self participant's profile, 4 fresh sentences, judged by Claude
+alone (no human relay) and logged via the new track. `claude_only_pairs`
+now has n=4. This is a separate, additional dataset from the n=39
+human-comparison figure — never combined with it.
+
+**What was *not* done:** no change to `ingest_real_human_pair.py`'s
+hard same-session dual-verdict rule — the new Claude-only track is a
+genuinely separate file and function, not a loosening of that rule.
+No gate or pipeline logic touched.
+
+**Category:** Stage LR infrastructure, per direct instruction.
+Recorded on `stage-lr`. No participant content committed — the demo
+batch's real sentence content stays in the gitignored
+`claude_only_pairs.json`; only the mechanism is tracked.
+
+---
+
+### 2026-09-08-A — First real Colab runs of both notebooks: reranker
+diagnostic reproduces the Phase 9C collapse exactly as framed; generation
+backbone comparison finds a real, substantial quality gap favoring a
+GPU-scale instruct model over both T5 options
+
+**`reranker_diagnostic.ipynb`, first real run (109 rows, 46 groups —
+75 synthetic + real human + Claude-only data, held out by
+speaker/profile):** `test_pred_A_rate: 1.0` — the model predicted "A"
+for all 7 held-out test rows regardless of input, and `test_accuracy`
+(0.286) lands exactly on the "always guess the majority label"
+baseline. A clean, textbook reproduction of the Phase 9C collapse
+(`VALIDATION.md` §46), on a dataset that is if anything smaller and
+less diverse than Phase 9's own (109 rows/46 groups here vs. 205
+rows there). Exactly the outcome this notebook's own framing named as
+live and informative: the fixes (conservative LR, gradient clipping,
+NaN-abort safety net, held-out-by-speaker split) worked as designed —
+training didn't diverge, it correctly hit a data-size wall instead.
+**Not evidence the reranker approach is unworkable — evidence there
+is nowhere near enough data yet for this diagnostic to say anything
+past that.**
+
+**`generation_backbone_comparison.ipynb`, first valid run (after
+fixing `flan-t5-base`'s repo id and the leak-counting bug,
+`2026-09-06`'s prior entries):** Mechanical leak safety: `flan-t5-base`
+0/12 no-clean-candidate runs, `Vamsi/T5_Paraphrase_Paws` (current
+default) 1/12, `Qwen/Qwen2.5-3B-Instruct` 1/12 — all three roughly
+comparable on this axis. **Blind quality judging (34 items — the
+actual first-clean-candidate each backbone would ship per run, no
+backbone identity revealed to the judge) found a large, real gap the
+mechanical check alone couldn't see:**
+
+| Backbone | CLEAN rate |
+|---|---|
+| `google/flan-t5-base` | 1/12 (8.3%) |
+| `Vamsi/T5_Paraphrase_Paws` (current default) | 4/11 (36.4%) |
+| `Qwen/Qwen2.5-3B-Instruct` | 6/11 (54.5%) |
+
+The current default's 36.4% on this small sample is consistent with
+this project's own historically-measured ~31-34% plateau on similar
+material — a rough sanity check that this mini-corpus and judging
+pass are calibrated to match established numbers, not an artifact of
+a different method. `flan-t5-base`'s perfect mechanical safety score
+came at a severe, specific cost: most of its "clean" (leak-free)
+outputs achieved that by **deleting the clause containing the blocked
+word** rather than genuinely rephrasing it (e.g. dropping "that
+protects an organism from diseases" entirely, or collapsing "she
+practiced the piano... after finishing her homework" down to "she
+finished her homework every evening") — 8 of its 11 defects were
+SEVERE, most tagged `MEANING_LOSS`. Qwen showed the opposite profile:
+higher CLEAN rate than either T5 option, but with two known, fixable
+rough edges already visible in the raw output — a stray `<tool_call>`
+special-token leak, and a missing-space tokenization glitch
+("tointerest", "totalinterest") in one candidate.
+
+**What this means for Stage LR, stated plainly:** this is the first
+concrete evidence that swapping the generation backbone (not just
+reranking among a fixed generator's outputs) could produce a larger
+quality improvement than anything the ranking side alone has found so
+far. Still exploratory Stage LR research on a tiny (12-run) sample —
+not remotely enough to authorize anything, and does not touch `main`
+either way, per the freeze. Worth a larger run and the two Qwen-side
+fixes (prompt/chat-template cleanup) before drawing anything stronger.
+
+**Category:** Stage LR data point (path, generation-backbone research)
+plus a diagnostic result (reranker). Recorded on `stage-lr`. No
+participant content involved — all material is the tracked, public
+fresh-corpus subset and the synthetic/real preference data already on
+record.
+
+---
+
+### 2026-09-08-B — Generation backbone comparison, round 2 (86
+sentences, 6 backbones): round 1's Qwen2.5-3B read does NOT replicate
+at scale; two new failure modes found that the mechanical check
+cannot see; T5-family remains the more reliable option
+
+**Direct instruction was to expand before drawing conclusions** ("See
+which one(s) clear a real bar... not just 'better than the current
+default'"). This is exactly what that expansion found — and it
+reverses part of round 1's read, which is the point of running it.
+
+**Mechanical hard-safety numbers, 86 sentences (36 from the step3
+fresh corpus + 50 stratified from R10), corrected leak-counting
+methodology from `2026-09-06`:**
+
+| Backbone | no-clean-candidate rate | any-leak rate | mean latency |
+|---|---|---|---|
+| `Vamsi/T5_Paraphrase_Paws` (current default) | 2.3% (2/86) | 9.3% | 1.09s |
+| `google/flan-t5-base` | **0.0% (0/86)** | 3.5% | 0.75s |
+| `microsoft/Phi-3.5-mini-instruct` | 8.1% (7/86) | 10.5% | 1.78s |
+| `Qwen/Qwen2.5-7B-Instruct` | 17.4% (15/86) | 25.6% | 4.35s |
+| `Qwen/Qwen2.5-3B-Instruct` | **31.4% (27/86)** | 38.4% | 1.77s |
+| `Qwen/Qwen2.5-1.5B-Instruct` | **41.9% (36/86)** | 51.2% | 1.23s |
+
+Round 1's Qwen2.5-3B number, at n=12, was 1/12 (8.3%) no-clean. At
+n=86 it is 31.4% — nearly 4x worse, and now the *worst* decoder-only
+option tested apart from the smaller 1.5B model. This is precisely
+the outcome a properly-sized sample is supposed to catch, and directly
+validates not treating the n=12 result as a conclusion.
+
+**Two further failure modes found by manual review, neither caught by
+the mechanical leak-checker (which only scans Latin-script words
+against blocked patterns) — meaning the true Qwen failure rate is
+worse than the table above states:**
+
+1. **Code-switching to dodge a blocked word.** All three Qwen sizes,
+   under a `bad_words_ids` block, sometimes route around the block by
+   switching to Chinese for the blocked word/clause rather than
+   finding an English synonym — defeating the point of the constraint
+   for an English-speaking recipient. Examples, quoted directly
+   (Qwen2.5-3B-Instruct): blocked word "meeting" → *"Do you wanna grab
+   a咖啡喝之前先去喝杯咖啡？"*; blocked word "button" → *"Tap and keep
+   pressed on the按钮for five seconds..."*; blocked word "weather" →
+   *"Our flight was held up for nearly three hours due
+   to恶劣天气."* All three would pass today's mechanical clean check
+   (no Latin-script word matches the block) while being useless output
+   for the actual use case.
+2. **Meta-commentary leaking into the "clean" output.** Several Qwen
+   completions include the model's own narration about the constraint,
+   inside the text meant to be the final answer — e.g. (same run as
+   above, "button"): *"...(Note: The word 'button' has been replaced
+   with 'tap' and 'keep pressed' to avoid using 'button,' but the
+   meaning remains the same.)"*; and ("weather"): *"...(Note: This
+   word '恶劣天气' directly translates to 'bad weather' but is not in
+   the restricted list.)"*. Manual review of Qwen2.5-3B-Instruct's 86
+   runs found at least 21 with code-switch contamination (~24%) and at
+   least 6 with explicit meta-commentary leakage (~7%) — on top of,
+   not instead of, the 31.4% already counted as no-clean-candidate.
+
+A third, unrelated finding: on the one biographical sentence in the
+corpus with a specific date (Alexander Fleming's birth year, 1881),
+**both T5-family models preserved it correctly; all three Qwen sizes
+corrupted it to 1981** (7B additionally disintegrated into
+Chinese-language meta-commentary and failed to complete the rewrite at
+all on this item). Sample size of one, not something to generalize
+from alone, but consistent with the code-switch/meta-leak pattern
+above — a sign these decoder-only chat models are less controllable
+under this prompt/decoding setup, not more capable underneath.
+
+**Phi-3.5-mini-instruct is the one decoder-only model that did not
+show either new failure mode** in manual review — no CJK contamination,
+no meta-commentary leaks. Where it fails under the hardest
+multi-constraint items, it fails safe (empty candidate list, e.g. on
+the `calib-multi_sound` items blocking "s"/"th"/"r" simultaneously)
+rather than emitting garbage — a meaningfully better failure mode for
+a production system, since an empty result is trivially detectable
+and can fall back cleanly, unlike silently-returned garbage. Still
+worse than both T5 options on the hard mechanical number (8.1% vs.
+2.3%/0.0%).
+
+**Verdict against the stated bar ("genuinely usable," not just "beats
+the current default"):** none of the three Qwen sizes clear it at this
+scale — the hard mechanical failure rate alone (17-42%) is
+disqualifying before quality is even considered, and the newly-found
+contamination modes make the real Qwen failure rate higher than
+reported. `flan-t5-base` remains mechanically the safest (0%
+no-clean) but round 1 already showed its safety comes from deleting
+the clause containing the blocked word rather than genuinely
+rephrasing it — a defect its own kind, just not one this mechanical
+check catches either. The current production default remains, on this
+evidence, the most balanced of the six tested.
+
+**What this doesn't mean:** it doesn't mean open decoder-only models
+are inherently unusable for this task — it means beam search under an
+aggressive multi-pattern `LogitsProcessor` block is a bad interaction
+with this specific decoding setup for these specific models, at these
+specific sizes. A different decoding strategy (no beam search, or a
+smaller/differently-tuned constraint) is a real next question, not
+tested here. Full blind Claude-quality-judging of the surviving
+"clean" candidates was not run this round — the hard structural
+failures already answer the "does this clear the bar" question without
+it, and running it would mostly re-confirm what manual review already
+found directly in the raw text.
+
+**Category:** Stage LR data point, generation-backbone research.
+Corrects/extends `2026-09-08-A`'s reading of the same mechanism at 12
+sentences. Recorded on `stage-lr`. No participant content involved —
+material is the tracked, public fresh-corpus/R10 subsets only.
+
+---
+
+### 2026-09-10-A — Generation backbone comparison closed out: self-
+verifying re-run confirms `2026-09-08-B`'s numbers exactly; one
+correction to that entry's Phi-3.5-mini claim
+
+Re-ran the fixed `generation_backbone_comparison.ipynb` (the version
+from `2026-09-08` that emits exact run-id lists and auto-detects
+non-Latin-script/meta-commentary contamination, rather than requiring
+manual transcription to audit). All six backbones' aggregate numbers
+matched `2026-09-08-B` exactly, except Qwen2.5-7B's any-leak count
+(22→21 runs) — a one-run difference consistent with ordinary
+run-to-run non-determinism in 4-bit quantized generation, not a real
+change. This is the confirmation the self-verification fix was built
+for: the numbers are now reproducible from the tool's own output, with
+no manual retyping step in between.
+
+**Correction to `2026-09-08-B`:** that entry stated Phi-3.5-mini-
+instruct showed *neither* new failure mode (no code-switching, no
+leaked commentary) found by manual review. The automated check on this
+re-run found Phi does have meta-commentary-leak contamination on 2/86
+runs (`R10-125-core-word`, `R10-127-calib-word_plus_sound`) — missed
+by the earlier manual read. Still far below any Qwen size's rate;
+**the verdict is unchanged** (current production default remains the
+most balanced of the six backbones tested; none of the three Qwen
+sizes clear the "genuinely usable" bar) — the correction is to the
+Phi-specific claim's precision, not to the conclusion.
+
+**This closes the generation-backbone-comparison thread for now.** No
+further notebook runs are planned against the current
+prompt/decoding/model set; the open question this round didn't answer
+(whether a non-beam-search decoding strategy changes the outcome for
+Qwen/Phi) is a real, separate follow-up, not pursued here.
+
+**Category:** Stage LR data point, generation-backbone research.
+Closes the thread opened `2026-09-06`, expanded `2026-09-08-A/B`.
+Recorded on `stage-lr`.

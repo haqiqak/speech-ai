@@ -1,0 +1,2545 @@
+{
+  "counts": {
+    "total_substitution_changes": 239,
+    "attempt_error": 0,
+    "no_second_candidate": 154,
+    "second_candidate_found": 85
+  },
+  "results": [
+    {
+      "uid": "R10-001-core-word::pos10",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+      "original_word": "components",
+      "profile_spec": {
+        "name": "R10-001-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "assimilated",
+          "components"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "parts",
+      "candidate_a_sentence": "Digestion involves the breakdown of food into smaller and smaller parts, until they can be absorbed and absorbed into the body.",
+      "candidate_b": "portions",
+      "candidate_b_sentence": "Digestion involves the breakdown of food into smaller and smaller portions, until they can be absorbed and imbibed into the body."
+    },
+    {
+      "uid": "R10-001-core-word::pos18",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+      "original_word": "assimilated",
+      "profile_spec": {
+        "name": "R10-001-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "assimilated",
+          "components"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "absorbed",
+      "candidate_a_sentence": "Digestion involves the breakdown of food into smaller and smaller parts, until they can be absorbed and absorbed into the body.",
+      "candidate_b": "imbibed",
+      "candidate_b_sentence": "Digestion involves the breakdown of food into smaller and smaller parts, until they can be absorbed and imbibed into the body."
+    },
+    {
+      "uid": "R10-001-core-sparse_common_sound::pos7",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-001-core-sparse_common_sound::pos9",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-001-calib-single_word::pos18",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+      "original_word": "assimilated",
+      "profile_spec": {
+        "name": "R10-001-calib-single_word:single_word",
+        "sounds": [],
+        "words": [
+          "assimilated"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "absorbed",
+      "candidate_a_sentence": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and absorbed into the body.",
+      "candidate_b": "imbibed",
+      "candidate_b_sentence": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and imbibed into the body."
+    },
+    {
+      "uid": "R10-001-calib-word_plus_sound::pos18",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body.",
+      "original_word": "assimilated",
+      "profile_spec": {
+        "name": "R10-001-calib-word_plus_sound:word_plus_sound",
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "assimilated"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "absorbed",
+      "candidate_a_sentence": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and absorbed into the body.",
+      "candidate_b": "imbibed",
+      "candidate_b_sentence": "Digestion involves the breakdown of food into smaller and smaller components, until they can be absorbed and imbibed into the body."
+    },
+    {
+      "uid": "R10-001-calib-multi_sound::pos7",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-001-calib-multi_sound::pos9",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-001-calib-dense_mixed_generic::pos7",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-001-calib-dense_mixed_generic::pos9",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-004-core-word::pos11",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Most of the digestion of food takes place in the small intestine.",
+      "original_word": "intestine",
+      "profile_spec": {
+        "name": "R10-004-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "intestine"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "bowel",
+      "candidate_a_sentence": "Most of the digestion of food takes place in the small bowel.",
+      "candidate_b": "gut",
+      "candidate_b_sentence": "Most of the digestion of food takes place in the small gut."
+    },
+    {
+      "uid": "R10-004-core-sparse_common_sound::pos10",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-005-core-word::pos5",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Water and some minerals are reabsorbed back into the blood in the large intestine.",
+      "original_word": "reabsorbed",
+      "profile_spec": {
+        "name": "R10-005-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "reabsorbed"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "assumed",
+      "candidate_a_sentence": "Water and some minerals are assumed back into the blood in the large intestine.",
+      "candidate_b": "absorbed",
+      "candidate_b_sentence": "Water and some minerals are absorbed back into the blood in the large intestine."
+    },
+    {
+      "uid": "R10-007-core-word::pos3",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-007-core-word::pos5",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-007-core-dense_mixed_generic::pos16",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-007-calib-single_word::pos5",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-007-calib-word_plus_sound::pos5",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-007-calib-word_plus_sound::pos6",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-007-calib-multi_sound::pos16",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-007-calib-sparse_common_sound::pos16",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-008-core-dense_mixed_generic::pos12",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Over-nutrition of micronutrient is a major cause of obesity and increases the risk of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, stroke, hypertension, coronary heart disease, osteoporosis, and some forms of cancer.",
+      "original_word": "risk",
+      "profile_spec": {
+        "name": "R10-008-core-dense_mixed_generic:dense_mixed_generic",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "chance",
+      "candidate_a_sentence": "Over-nutrition of micronutrient is a major cause of obesity and increases the chance of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, shot, hypertension, coronary heart disease, osteoporosis, and some forms of cancer.",
+      "candidate_b": "danger",
+      "candidate_b_sentence": "Over-nutrition of micronutrient is a major cause of obesity and increases the danger of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, travel, hypertension, coronary heart disease, osteoporosis, and some forms of cancer."
+    },
+    {
+      "uid": "R10-008-core-dense_mixed_generic::pos27",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Over-nutrition of micronutrient is a major cause of obesity and increases the risk of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, stroke, hypertension, coronary heart disease, osteoporosis, and some forms of cancer.",
+      "original_word": "stroke",
+      "profile_spec": {
+        "name": "R10-008-core-dense_mixed_generic:dense_mixed_generic",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "shot",
+      "candidate_a_sentence": "Over-nutrition of micronutrient is a major cause of obesity and increases the chance of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, shot, hypertension, coronary heart disease, osteoporosis, and some forms of cancer.",
+      "candidate_b": "travel",
+      "candidate_b_sentence": "Over-nutrition of micronutrient is a major cause of obesity and increases the danger of developing various non-communicable diseases ( NCDs ), including type 2 diabetes, travel, hypertension, coronary heart disease, osteoporosis, and some forms of cancer."
+    },
+    {
+      "uid": "R10-009-core-word::pos16",
+      "outcome": "second_candidate_found",
+      "original_sentence": "All forms of life require carbon, energy, and water as well as various other molecules.",
+      "original_word": "molecules",
+      "profile_spec": {
+        "name": "R10-009-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "molecules"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "compounds",
+      "candidate_a_sentence": "All forms of life require carbon, energy, and water as well as various other compounds.",
+      "candidate_b": "units",
+      "candidate_b_sentence": "All forms of life require carbon, energy, and water as well as various other units."
+    },
+    {
+      "uid": "R10-010-core-word::pos6",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-010-core-word::pos18",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Animals require complex nutrients such as carbohydrates, lipids, and proteins, obtaining them by consuming other organisms.",
+      "original_word": "organisms",
+      "profile_spec": {
+        "name": "R10-010-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "carbohydrates",
+          "organisms"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "beings",
+      "candidate_a_sentence": "Animals require complex nutrients such as sugars, lipids, and proteins, obtaining them by consuming other beings.",
+      "candidate_b": "systems",
+      "candidate_b_sentence": "Animals require complex nutrients such as sugars, lipids, and proteins, obtaining them by consuming other systems."
+    },
+    {
+      "uid": "R10-011-core-word::pos0",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-011-core-word::pos10",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-011-core-sparse_common_sound::pos5",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-012-core-dense_mixed_generic::pos7",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Nutrient deficiency may be caused by a sudden decrease in nutrient intake or by an inability to absorb essential nutrients.",
+      "original_word": "sudden",
+      "profile_spec": {
+        "name": "R10-012-core-dense_mixed_generic:dense_mixed_generic",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "quick",
+      "candidate_a_sentence": "Nutrient deficiency may be caused by a quick decrease in nutrient intake or by an inability to absorb essential nutrients.",
+      "candidate_b": "fast",
+      "candidate_b_sentence": "Nutrient deficiency may be caused by a fast decrease in nutrient intake or by an inability to absorb essential nutrients."
+    },
+    {
+      "uid": "R10-013-core-word::pos8",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-013-core-word::pos13",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-013-calib-single_word::pos13",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-013-calib-word_plus_sound::pos13",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-013-calib-word_plus_sound::pos20",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-014-core-dense_mixed_generic::pos1",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-014-core-dense_mixed_generic::pos25",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-017-core-word::pos4",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The forward and reverse reactions are competing with each other and differ in reaction rates.",
+      "original_word": "reactions",
+      "profile_spec": {
+        "name": "R10-017-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "competing",
+          "reactions"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "results",
+      "candidate_a_sentence": "The forward and reverse results are rivaling with each other and differ in reaction rates.",
+      "candidate_b": "forces",
+      "candidate_b_sentence": "The forward and reverse forces are contending with each other and differ in reaction rates."
+    },
+    {
+      "uid": "R10-017-core-word::pos6",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The forward and reverse reactions are competing with each other and differ in reaction rates.",
+      "original_word": "competing",
+      "profile_spec": {
+        "name": "R10-017-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "competing",
+          "reactions"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "rivaling",
+      "candidate_a_sentence": "The forward and reverse results are rivaling with each other and differ in reaction rates.",
+      "candidate_b": "contending",
+      "candidate_b_sentence": "The forward and reverse forces are contending with each other and differ in reaction rates."
+    },
+    {
+      "uid": "R10-019-core-sparse_common_sound::pos12",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-019-core-sparse_common_sound::pos15",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-020-core-dense_mixed_generic::pos28",
+      "outcome": "second_candidate_found",
+      "original_sentence": "At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the rate at which the body's momentum is changing with time.",
+      "original_word": "rate",
+      "profile_spec": {
+        "name": "R10-020-core-dense_mixed_generic:dense_mixed_generic",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "value",
+      "candidate_a_sentence": "At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the value at which the body's momentum is changing with time.",
+      "candidate_b": "pace",
+      "candidate_b_sentence": "At any instant of time, the net force on a body is equal to the body's acceleration multiplied by its mass or, equivalently, the pace at which the body's momentum is changing with time."
+    },
+    {
+      "uid": "R10-021-core-sparse_common_sound::pos13",
+      "outcome": "second_candidate_found",
+      "original_sentence": "If two bodies exert forces on each other, these forces have the same magnitude but opposite directions.",
+      "original_word": "same",
+      "profile_spec": {
+        "name": "R10-021-core-sparse_common_sound:sparse_common_sound",
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "one",
+      "candidate_a_sentence": "If two bodies exert forces on each other, these forces have the one magnitude but opposite directions.",
+      "candidate_b": "like",
+      "candidate_b_sentence": "If two bodies exert forces on each other, these forces have the like magnitude but opposite directions."
+    },
+    {
+      "uid": "R10-022-core-word::pos4",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Newton's first law expresses the principle of inertia: the natural behavior of a body is to move in a straight line at constant speed.",
+      "original_word": "expresses",
+      "profile_spec": {
+        "name": "R10-022-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "principle",
+          "expresses"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "states",
+      "candidate_a_sentence": "Newton's first law states the rule of inertia: the natural behavior of a body is to move in a straight line at constant speed.",
+      "candidate_b": "acquires",
+      "candidate_b_sentence": "Newton's first law acquires the explanation of inertia: the natural behavior of a body is to move in a straight line at constant speed."
+    },
+    {
+      "uid": "R10-022-core-word::pos6",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Newton's first law expresses the principle of inertia: the natural behavior of a body is to move in a straight line at constant speed.",
+      "original_word": "principle",
+      "profile_spec": {
+        "name": "R10-022-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "principle",
+          "expresses"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "rule",
+      "candidate_a_sentence": "Newton's first law states the rule of inertia: the natural behavior of a body is to move in a straight line at constant speed.",
+      "candidate_b": "explanation",
+      "candidate_b_sentence": "Newton's first law acquires the explanation of inertia: the natural behavior of a body is to move in a straight line at constant speed."
+    },
+    {
+      "uid": "R10-022-core-multi_sound::pos21",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-022-core-multi_sound::pos25",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-024-core-dense_mixed_generic::pos12",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-024-core-dense_mixed_generic::pos16",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-026-core-word::pos1",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-031-calib-multi_sound::pos32",
+      "outcome": "second_candidate_found",
+      "original_sentence": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+      "original_word": "surface",
+      "profile_spec": {
+        "name": "R10-031-calib-multi_sound:multi_sound",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "open",
+      "candidate_a_sentence": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the open.",
+      "candidate_b": "layer",
+      "candidate_b_sentence": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the layer."
+    },
+    {
+      "uid": "R10-031-calib-sparse_common_sound::pos32",
+      "outcome": "second_candidate_found",
+      "original_sentence": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+      "original_word": "surface",
+      "profile_spec": {
+        "name": "R10-031-calib-sparse_common_sound:sparse_common_sound",
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "open",
+      "candidate_a_sentence": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the open.",
+      "candidate_b": "layer",
+      "candidate_b_sentence": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the layer."
+    },
+    {
+      "uid": "R10-031-calib-dense_mixed_generic::pos32",
+      "outcome": "second_candidate_found",
+      "original_sentence": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface.",
+      "original_word": "surface",
+      "profile_spec": {
+        "name": "R10-031-calib-dense_mixed_generic:dense_mixed_generic",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "open",
+      "candidate_a_sentence": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the open.",
+      "candidate_b": "layer",
+      "candidate_b_sentence": "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the layer."
+    },
+    {
+      "uid": "R10-032-core-dense_mixed_generic::pos1",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Volcanoes resulting from divergent tectonic activity is usually non-explosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
+      "original_word": "resulting",
+      "profile_spec": {
+        "name": "R10-032-core-dense_mixed_generic:dense_mixed_generic",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "causing",
+      "candidate_a_sentence": "Volcanoes causing from divergent tectonic activity is usually non-explosive whereas those happening from convergent tectonic activity cause violent eruptions.",
+      "candidate_b": "happening",
+      "candidate_b_sentence": "Volcanoes happening from divergent tectonic activity is usually non-explosive whereas those passing from convergent tectonic activity cause violent eruptions."
+    },
+    {
+      "uid": "R10-032-core-dense_mixed_generic::pos11",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Volcanoes resulting from divergent tectonic activity is usually non-explosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
+      "original_word": "resulting",
+      "profile_spec": {
+        "name": "R10-032-core-dense_mixed_generic:dense_mixed_generic",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "happening",
+      "candidate_a_sentence": "Volcanoes causing from divergent tectonic activity is usually non-explosive whereas those happening from convergent tectonic activity cause violent eruptions.",
+      "candidate_b": "occurring",
+      "candidate_b_sentence": "Volcanoes occurring from divergent tectonic activity is usually non-explosive whereas those passing from convergent tectonic activity cause violent eruptions."
+    },
+    {
+      "uid": "R10-034-core-dense_mixed_generic::pos12",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-034-core-dense_mixed_generic::pos22",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-037-core-word::pos9",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-037-calib-single_word::pos9",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-037-calib-word_plus_sound::pos9",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-038-core-word::pos6",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-038-core-word::pos8",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=reformulated \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-038-core-sparse_common_sound::pos0",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-040-core-word::pos14",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Solar energy can only be captured during the day, and ideally in cloudless conditions.",
+      "original_word": "conditions",
+      "profile_spec": {
+        "name": "R10-040-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "conditions"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "terms",
+      "candidate_a_sentence": "Solar energy can only be captured during the day, and ideally in cloudless terms.",
+      "candidate_b": "states",
+      "candidate_b_sentence": "Solar energy can only be captured during the day, and ideally in cloudless states."
+    },
+    {
+      "uid": "R10-042-core-dense_mixed_generic::pos17",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Water can generate electricity with a conversion efficiency of about 90%, which is the highest rate in renewable energy.",
+      "original_word": "rate",
+      "profile_spec": {
+        "name": "R10-042-core-dense_mixed_generic:dense_mixed_generic",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "value",
+      "candidate_a_sentence": "Water can generate electricity with a conversion efficiency of about 90 %, which is the highest value in extended energy.",
+      "candidate_b": "pace",
+      "candidate_b_sentence": "Water can generate electricity with a conversion efficiency of about 90 %, which is the highest pace in renewable energy."
+    },
+    {
+      "uid": "R10-042-core-dense_mixed_generic::pos19",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=reformulated \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-043-calib-single_word::pos13",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-043-calib-word_plus_sound::pos13",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-043-calib-word_plus_sound::pos26",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-044-core-word::pos4",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Algorithms is used as specifications for performing calculations and data processing.",
+      "original_word": "specifications",
+      "profile_spec": {
+        "name": "R10-044-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "specifications",
+          "calculations"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "descriptions",
+      "candidate_a_sentence": "Algorithms is used as descriptions for performing maths and data processing.",
+      "candidate_b": "specs",
+      "candidate_b_sentence": "Algorithms is used as specs for performing procedures and data processing."
+    },
+    {
+      "uid": "R10-044-core-word::pos7",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Algorithms is used as specifications for performing calculations and data processing.",
+      "original_word": "calculations",
+      "profile_spec": {
+        "name": "R10-044-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "specifications",
+          "calculations"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "maths",
+      "candidate_a_sentence": "Algorithms is used as descriptions for performing maths and data processing.",
+      "candidate_b": "procedures",
+      "candidate_b_sentence": "Algorithms is used as specs for performing procedures and data processing."
+    },
+    {
+      "uid": "R10-044-core-dense_mixed_generic::pos4",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-047-core-word::pos9",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-047-core-word::pos19",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-048-core-multi_sound::pos11",
+      "outcome": "second_candidate_found",
+      "original_sentence": "In general, a program is an algorithm only if it stops eventually.",
+      "original_word": "stops",
+      "profile_spec": {
+        "name": "R10-048-core-multi_sound:multi_sound",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "quits",
+      "candidate_a_sentence": "In general, a program is an algorithm only if it quits eventually.",
+      "candidate_b": "discontinues",
+      "candidate_b_sentence": "In general, a program is an algorithm only if it discontinues eventually."
+    },
+    {
+      "uid": "R10-049-calib-single_word::pos1",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-049-calib-single_word::pos16",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-049-calib-word_plus_sound::pos1",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-049-calib-word_plus_sound::pos16",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-050-core-word::pos7",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-051-core-dense_mixed_generic::pos51",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-052-core-word::pos1",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The probability of getting an outcome of head-head is 1 out of 4 outcomes, or, in numerical terms, 1/4, 0.25 or 25%.",
+      "original_word": "probability",
+      "profile_spec": {
+        "name": "R10-052-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "probability",
+          "numerical"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "chance",
+      "candidate_a_sentence": "The chance of getting an outcome of head-head is 1 out of 4 outcomes, or, in mathematical terms, 1/4, 0.25 or 25 %.",
+      "candidate_b": "amount",
+      "candidate_b_sentence": "The amount of getting an outcome of head-head is 1 out of 4 outcomes, or, in numeric terms, 1/4, 0.25 or 25 %."
+    },
+    {
+      "uid": "R10-052-core-word::pos18",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The probability of getting an outcome of head-head is 1 out of 4 outcomes, or, in numerical terms, 1/4, 0.25 or 25%.",
+      "original_word": "numerical",
+      "profile_spec": {
+        "name": "R10-052-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "probability",
+          "numerical"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "mathematical",
+      "candidate_a_sentence": "The chance of getting an outcome of head-head is 1 out of 4 outcomes, or, in mathematical terms, 1/4, 0.25 or 25 %.",
+      "candidate_b": "quantitative",
+      "candidate_b_sentence": "The chance of getting an outcome of head-head is 1 out of 4 outcomes, or, in quantitative terms, 1/4, 0.25 or 25 %."
+    },
+    {
+      "uid": "R10-055-core-dense_mixed_generic::pos14",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-055-calib-single_word::pos1",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-055-calib-word_plus_sound::pos1",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-055-calib-word_plus_sound::pos10",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-055-calib-multi_sound::pos14",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-055-calib-sparse_common_sound::pos14",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-056-core-sparse_common_sound::pos15",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-057-core-sparse_common_sound::pos11",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-059-core-dense_mixed_generic::pos3",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-059-core-dense_mixed_generic::pos9",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-060-core-dense_mixed_generic::pos2",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-060-core-dense_mixed_generic::pos7",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-061-calib-single_word::pos13",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-061-calib-word_plus_sound::pos4",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-061-calib-word_plus_sound::pos13",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-061-calib-single_sound::pos45",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-064-core-word::pos2",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The first self-proclaimed civil engineer was John Smeaton, who constructed the Eddystone Lighthouse.",
+      "original_word": "self-proclaimed",
+      "profile_spec": {
+        "name": "R10-064-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "self-proclaimed",
+          "constructed"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "so-called",
+      "candidate_a_sentence": "The first so-called civil engineer was John Smeaton, who built the Eddystone Lighthouse.",
+      "candidate_b": "declared",
+      "candidate_b_sentence": "The first declared civil engineer was John Smeaton, who manufactured the Eddystone Lighthouse."
+    },
+    {
+      "uid": "R10-064-core-word::pos10",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The first self-proclaimed civil engineer was John Smeaton, who constructed the Eddystone Lighthouse.",
+      "original_word": "constructed",
+      "profile_spec": {
+        "name": "R10-064-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "self-proclaimed",
+          "constructed"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "built",
+      "candidate_a_sentence": "The first so-called civil engineer was John Smeaton, who built the Eddystone Lighthouse.",
+      "candidate_b": "manufactured",
+      "candidate_b_sentence": "The first declared civil engineer was John Smeaton, who manufactured the Eddystone Lighthouse."
+    },
+    {
+      "uid": "R10-064-core-multi_sound::pos2",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-064-core-multi_sound::pos3",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The first self-proclaimed civil engineer was John Smeaton, who constructed the Eddystone Lighthouse.",
+      "original_word": "civil",
+      "profile_spec": {
+        "name": "R10-064-core-multi_sound:multi_sound",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "official",
+      "candidate_a_sentence": "The first declared official engineer was John Smeaton, who constructed the Eddystone Lighthouse.",
+      "candidate_b": "polite",
+      "candidate_b_sentence": "The first declared polite engineer was John Smeaton, who constructed the Eddystone Lighthouse."
+    },
+    {
+      "uid": "R10-067-core-word::pos10",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-067-calib-single_word::pos10",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-067-calib-word_plus_sound::pos10",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-068-core-word::pos9",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-068-core-multi_sound::pos10",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-069-core-word::pos6",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-069-core-word::pos10",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-069-core-dense_mixed_generic::pos1",
+      "outcome": "second_candidate_found",
+      "original_sentence": "She said she might be a little late because of traffic.",
+      "original_word": "said",
+      "profile_spec": {
+        "name": "R10-069-core-dense_mixed_generic:dense_mixed_generic",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "told",
+      "candidate_a_sentence": "She told she might be a little late because of traffic.",
+      "candidate_b": "expressed",
+      "candidate_b_sentence": "She expressed she might be a little late because of traffic."
+    },
+    {
+      "uid": "R10-071-core-word::pos3",
+      "outcome": "second_candidate_found",
+      "original_sentence": "We haven't decided yet whether we're driving or taking the train.",
+      "original_word": "decided",
+      "profile_spec": {
+        "name": "R10-071-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "decided",
+          "driving"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "chosen",
+      "candidate_a_sentence": "We haven't chosen yet whether we're riding or taking the train.",
+      "candidate_b": "determined",
+      "candidate_b_sentence": "We haven't determined yet whether we're going or taking the train."
+    },
+    {
+      "uid": "R10-071-core-word::pos8",
+      "outcome": "second_candidate_found",
+      "original_sentence": "We haven't decided yet whether we're driving or taking the train.",
+      "original_word": "driving",
+      "profile_spec": {
+        "name": "R10-071-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "decided",
+          "driving"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "riding",
+      "candidate_a_sentence": "We haven't chosen yet whether we're riding or taking the train.",
+      "candidate_b": "going",
+      "candidate_b_sentence": "We haven't determined yet whether we're going or taking the train."
+    },
+    {
+      "uid": "R10-072-core-word::pos1",
+      "outcome": "second_candidate_found",
+      "original_sentence": "He mentioned that he'd probably need more time to finish the report.",
+      "original_word": "mentioned",
+      "profile_spec": {
+        "name": "R10-072-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "mentioned",
+          "probably"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "said",
+      "candidate_a_sentence": "He said that he'd maybe need more time to finish the report.",
+      "candidate_b": "stated",
+      "candidate_b_sentence": "He stated that he'd likely need more time to finish the report."
+    },
+    {
+      "uid": "R10-072-core-word::pos5",
+      "outcome": "second_candidate_found",
+      "original_sentence": "He mentioned that he'd probably need more time to finish the report.",
+      "original_word": "probably",
+      "profile_spec": {
+        "name": "R10-072-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "mentioned",
+          "probably"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "maybe",
+      "candidate_a_sentence": "He said that he'd maybe need more time to finish the report.",
+      "candidate_b": "likely",
+      "candidate_b_sentence": "He said that he'd likely need more time to finish the report."
+    },
+    {
+      "uid": "R10-073-core-word::pos1",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The professor explained the concept twice before moving on to the next topic.",
+      "original_word": "professor",
+      "profile_spec": {
+        "name": "R10-073-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "professor"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "prof",
+      "candidate_a_sentence": "The prof explained the concept twice before moving on to the next topic.",
+      "candidate_b": "academic",
+      "candidate_b_sentence": "The academic explained the concept twice before moving on to the next topic."
+    },
+    {
+      "uid": "R10-073-calib-single_word::pos1",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The professor explained the concept twice before moving on to the next topic.",
+      "original_word": "professor",
+      "profile_spec": {
+        "name": "R10-073-calib-single_word:single_word",
+        "sounds": [],
+        "words": [
+          "professor"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "prof",
+      "candidate_a_sentence": "The prof explained the concept twice before moving on to the next topic.",
+      "candidate_b": "academic",
+      "candidate_b_sentence": "The academic explained the concept twice before moving on to the next topic."
+    },
+    {
+      "uid": "R10-073-calib-word_plus_sound::pos1",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The professor explained the concept twice before moving on to the next topic.",
+      "original_word": "professor",
+      "profile_spec": {
+        "name": "R10-073-calib-word_plus_sound:word_plus_sound",
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "professor"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "faculty",
+      "candidate_a_sentence": "The faculty explained the concept twice before moving on to the next topic.",
+      "candidate_b": "academic",
+      "candidate_b_sentence": "The academic explained the concept twice before moving on to the next topic."
+    },
+    {
+      "uid": "R10-074-core-word::pos5",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Students who struggle with the material is encouraged to attend office hours.",
+      "original_word": "material",
+      "profile_spec": {
+        "name": "R10-074-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "encouraged",
+          "material"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "stuff",
+      "candidate_a_sentence": "Students who struggle with the stuff is furthered to attend office hours.",
+      "candidate_b": "applicant",
+      "candidate_b_sentence": "Students who struggle with the applicant is supported to attend office hours."
+    },
+    {
+      "uid": "R10-074-core-word::pos7",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Students who struggle with the material is encouraged to attend office hours.",
+      "original_word": "encouraged",
+      "profile_spec": {
+        "name": "R10-074-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "encouraged",
+          "material"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "furthered",
+      "candidate_a_sentence": "Students who struggle with the stuff is furthered to attend office hours.",
+      "candidate_b": "supported",
+      "candidate_b_sentence": "Students who struggle with the applicant is supported to attend office hours."
+    },
+    {
+      "uid": "R10-074-core-single_sound::pos2",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-075-core-word::pos3",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-075-core-dense_mixed_generic::pos5",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The exam covers everything we studied in the first six chapters.",
+      "original_word": "studied",
+      "profile_spec": {
+        "name": "R10-075-core-dense_mixed_generic:dense_mixed_generic",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "considered",
+      "candidate_a_sentence": "The exam covers everything we considered in the first six chapters.",
+      "candidate_b": "examined",
+      "candidate_b_sentence": "The exam covers everything we examined in the first six chapters."
+    },
+    {
+      "uid": "R10-076-core-sparse_common_sound::pos2",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Not every student learns the same way, so the teacher varies her methods.",
+      "original_word": "student",
+      "profile_spec": {
+        "name": "R10-076-core-sparse_common_sound:sparse_common_sound",
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "university",
+      "candidate_a_sentence": "Not every university learns the very way, so the teacher varies her methods.",
+      "candidate_b": "pupil",
+      "candidate_b_sentence": "Not every pupil learns the like way, so the teacher varies her methods."
+    },
+    {
+      "uid": "R10-076-core-sparse_common_sound::pos5",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Not every student learns the same way, so the teacher varies her methods.",
+      "original_word": "same",
+      "profile_spec": {
+        "name": "R10-076-core-sparse_common_sound:sparse_common_sound",
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "very",
+      "candidate_a_sentence": "Not every university learns the very way, so the teacher varies her methods.",
+      "candidate_b": "like",
+      "candidate_b_sentence": "Not every pupil learns the like way, so the teacher varies her methods."
+    },
+    {
+      "uid": "R10-079-core-word::pos3",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-079-core-sparse_common_sound::pos5",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The manager asked everyone to submit their reports by the end of the day.",
+      "original_word": "submit",
+      "profile_spec": {
+        "name": "R10-079-core-sparse_common_sound:sparse_common_sound",
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "take",
+      "candidate_a_sentence": "The manager asked everyone to take their reports by the end of the day.",
+      "candidate_b": "propose",
+      "candidate_b_sentence": "The manager asked everyone to propose their reports by the end of the day."
+    },
+    {
+      "uid": "R10-079-calib-single_word::pos3",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-079-calib-word_plus_sound::pos3",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-080-core-multi_sound::pos9",
+      "outcome": "second_candidate_found",
+      "original_sentence": "We're understaffed this week, so deadlines might slip a little.",
+      "original_word": "slip",
+      "profile_spec": {
+        "name": "R10-080-core-multi_sound:multi_sound",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "trip",
+      "candidate_a_sentence": "We're understaffed this week, so deadlines might trip a little.",
+      "candidate_b": "decline",
+      "candidate_b_sentence": "We're understaffed this week, so deadlines might decline a little."
+    },
+    {
+      "uid": "R10-083-core-word::pos12",
+      "outcome": "second_candidate_found",
+      "original_sentence": "He didn't get the job, even though he had more experience than the other candidates.",
+      "original_word": "experience",
+      "profile_spec": {
+        "name": "R10-083-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "candidates",
+          "experience",
+          "didn't",
+          "though"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "example",
+      "candidate_a_sentence": "He didn't get the job, even though he had more example than the other elections.",
+      "candidate_b": "education",
+      "candidate_b_sentence": "He didn't get the job, even though he had more education than the other nominees."
+    },
+    {
+      "uid": "R10-083-core-word::pos16",
+      "outcome": "second_candidate_found",
+      "original_sentence": "He didn't get the job, even though he had more experience than the other candidates.",
+      "original_word": "candidates",
+      "profile_spec": {
+        "name": "R10-083-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "candidates",
+          "experience",
+          "didn't",
+          "though"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "elections",
+      "candidate_a_sentence": "He didn't get the job, even though he had more example than the other elections.",
+      "candidate_b": "nominees",
+      "candidate_b_sentence": "He didn't get the job, even though he had more education than the other nominees."
+    },
+    {
+      "uid": "R10-084-core-word::pos11",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The team meets every Monday to review what went wrong the previous week.",
+      "original_word": "previous",
+      "profile_spec": {
+        "name": "R10-084-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "previous",
+          "monday"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "past",
+      "candidate_a_sentence": "The team meets every Monday to review what went wrong the past week.",
+      "candidate_b": "old",
+      "candidate_b_sentence": "The team meets every Monday to review what went wrong the old week."
+    },
+    {
+      "uid": "R10-084-core-multi_sound::pos6",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The team meets every Monday to review what went wrong the previous week.",
+      "original_word": "review",
+      "profile_spec": {
+        "name": "R10-084-core-multi_sound:multi_sound",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "critique",
+      "candidate_a_sentence": "The team meets every Monday to critique what went faulty the previous week.",
+      "candidate_b": "inspect",
+      "candidate_b_sentence": "The team meets every Monday to inspect what went wrong the previous week."
+    },
+    {
+      "uid": "R10-084-core-multi_sound::pos9",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=reformulated \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-085-core-word::pos3",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-085-core-word::pos11",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-085-calib-single_word::pos11",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline re-selected the same replacement even after exclusion (inflection/case variant only, not a genuinely different word)"
+    },
+    {
+      "uid": "R10-085-calib-word_plus_sound::pos11",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline re-selected the same replacement even after exclusion (inflection/case variant only, not a genuinely different word)"
+    },
+    {
+      "uid": "R10-086-core-word::pos6",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Make sure you arrive at the airport at least two hours before departure.",
+      "original_word": "airport",
+      "profile_spec": {
+        "name": "R10-086-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "departure",
+          "airport"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "airline",
+      "candidate_a_sentence": "Make sure you arrive at the airline at least two hours before leaving.",
+      "candidate_b": "airfield",
+      "candidate_b_sentence": "Make sure you arrive at the airfield at least two hours before going."
+    },
+    {
+      "uid": "R10-086-core-word::pos12",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Make sure you arrive at the airport at least two hours before departure.",
+      "original_word": "departure",
+      "profile_spec": {
+        "name": "R10-086-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "departure",
+          "airport"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "leaving",
+      "candidate_a_sentence": "Make sure you arrive at the airline at least two hours before leaving.",
+      "candidate_b": "going",
+      "candidate_b_sentence": "Make sure you arrive at the airfield at least two hours before going."
+    },
+    {
+      "uid": "R10-087-core-multi_sound::pos7",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-087-core-multi_sound::pos12",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-088-core-sparse_common_sound::pos7",
+      "outcome": "second_candidate_found",
+      "original_sentence": "We didn't have enough time to see everything, so we skipped the museum.",
+      "original_word": "see",
+      "profile_spec": {
+        "name": "R10-088-core-sparse_common_sound:sparse_common_sound",
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "watch",
+      "candidate_a_sentence": "We didn't have enough time to watch everything, so we missed the museum.",
+      "candidate_b": "view",
+      "candidate_b_sentence": "We didn't have enough time to view everything, so we missed the museum."
+    },
+    {
+      "uid": "R10-088-core-sparse_common_sound::pos12",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-089-core-word::pos1",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-089-core-word::pos6",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-089-core-multi_sound::pos1",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-089-core-multi_sound::pos3",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-091-core-word::pos4",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-091-core-word::pos9",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-091-core-multi_sound::pos1",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-091-core-multi_sound::pos4",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-091-calib-single_word::pos9",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-091-calib-word_plus_sound::pos9",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-091-calib-sparse_common_sound::pos4",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-091-calib-dense_mixed_generic::pos1",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-091-calib-dense_mixed_generic::pos4",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-092-core-word::pos12",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-093-core-word::pos9",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The soup tastes better the next day once the flavors have had time to develop.",
+      "original_word": "flavors",
+      "profile_spec": {
+        "name": "R10-093-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "develop",
+          "flavors"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "flavours",
+      "candidate_a_sentence": "The soup tastes better the next day once the flavours have had time to produce.",
+      "candidate_b": "savors",
+      "candidate_b_sentence": "The soup tastes better the next day once the savors have had time to grow."
+    },
+    {
+      "uid": "R10-093-core-word::pos14",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The soup tastes better the next day once the flavors have had time to develop.",
+      "original_word": "develop",
+      "profile_spec": {
+        "name": "R10-093-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "develop",
+          "flavors"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "produce",
+      "candidate_a_sentence": "The soup tastes better the next day once the flavours have had time to produce.",
+      "candidate_b": "grow",
+      "candidate_b_sentence": "The soup tastes better the next day once the flavours have had time to grow."
+    },
+    {
+      "uid": "R10-094-core-word::pos4",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-094-core-word::pos12",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-096-core-word::pos9",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-096-core-single_sound::pos4",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The bakery down the street makes breads that's noticeably fresher than the supermarket's.",
+      "original_word": "street",
+      "profile_spec": {
+        "name": "R10-096-core-single_sound:single_sound",
+        "sounds": [
+          "str"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "road",
+      "candidate_a_sentence": "The bakery down the road makes breads that's noticeably fresher than the supermarket's.",
+      "candidate_b": "neighborhood",
+      "candidate_b_sentence": "The bakery down the neighborhood makes breads that's noticeably fresher than the supermarket's."
+    },
+    {
+      "uid": "R10-097-core-word::pos1",
+      "outcome": "second_candidate_found",
+      "original_sentence": "She apologized for showing up late to the party.",
+      "original_word": "apologized",
+      "profile_spec": {
+        "name": "R10-097-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "apologized"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "apologised",
+      "candidate_a_sentence": "She apologised for showing up late to the party.",
+      "candidate_b": "excused",
+      "candidate_b_sentence": "She excused for showing up late to the party."
+    },
+    {
+      "uid": "R10-097-calib-single_word::pos1",
+      "outcome": "second_candidate_found",
+      "original_sentence": "She apologized for showing up late to the party.",
+      "original_word": "apologized",
+      "profile_spec": {
+        "name": "R10-097-calib-single_word:single_word",
+        "sounds": [],
+        "words": [
+          "apologized"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "apologised",
+      "candidate_a_sentence": "She apologised for showing up late to the party.",
+      "candidate_b": "excused",
+      "candidate_b_sentence": "She excused for showing up late to the party."
+    },
+    {
+      "uid": "R10-097-calib-word_plus_sound::pos1",
+      "outcome": "second_candidate_found",
+      "original_sentence": "She apologized for showing up late to the party.",
+      "original_word": "apologized",
+      "profile_spec": {
+        "name": "R10-097-calib-word_plus_sound:word_plus_sound",
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "apologized"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "apologised",
+      "candidate_a_sentence": "She apologised for showing up late to the party.",
+      "candidate_b": "excused",
+      "candidate_b_sentence": "She excused for showing up late to the party."
+    },
+    {
+      "uid": "R10-098-core-word::pos2",
+      "outcome": "second_candidate_found",
+      "original_sentence": "It's considered impolite to interrupts someone while they're speaking.",
+      "original_word": "considered",
+      "profile_spec": {
+        "name": "R10-098-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "considered",
+          "interrupt"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "taken",
+      "candidate_a_sentence": "It's taken impolite to interrupts someone while they're speaking.",
+      "candidate_b": "regarded",
+      "candidate_b_sentence": "It's regarded impolite to interrupts someone while they're speaking."
+    },
+    {
+      "uid": "R10-098-core-dense_mixed_generic::pos6",
+      "outcome": "second_candidate_found",
+      "original_sentence": "It's considered impolite to interrupts someone while they're speaking.",
+      "original_word": "someone",
+      "profile_spec": {
+        "name": "R10-098-core-dense_mixed_generic:dense_mixed_generic",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "people",
+      "candidate_a_sentence": "It's considered impolite to interrupts people while they're talking.",
+      "candidate_b": "person",
+      "candidate_b_sentence": "It's considered impolite to interrupts person while they're addressing."
+    },
+    {
+      "uid": "R10-098-core-dense_mixed_generic::pos10",
+      "outcome": "second_candidate_found",
+      "original_sentence": "It's considered impolite to interrupts someone while they're speaking.",
+      "original_word": "speaking",
+      "profile_spec": {
+        "name": "R10-098-core-dense_mixed_generic:dense_mixed_generic",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "talking",
+      "candidate_a_sentence": "It's considered impolite to interrupts people while they're talking.",
+      "candidate_b": "addressing",
+      "candidate_b_sentence": "It's considered impolite to interrupts person while they're addressing."
+    },
+    {
+      "uid": "R10-099-core-word::pos6",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-099-core-word::pos10",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-100-core-word::pos3",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-100-core-word::pos5",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-100-core-multi_sound::pos12",
+      "outcome": "second_candidate_found",
+      "original_sentence": "They've been friends since childhood, even though they don't see each other often now.",
+      "original_word": "see",
+      "profile_spec": {
+        "name": "R10-100-core-multi_sound:multi_sound",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "find",
+      "candidate_a_sentence": "They've been friends since childhood, even though they don't find each other often now.",
+      "candidate_b": "play",
+      "candidate_b_sentence": "They've been friends since childhood, even though they don't play each other often now."
+    },
+    {
+      "uid": "R10-101-core-word::pos2",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-101-core-word::pos7",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-101-core-sparse_common_sound::pos2",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Everyone was surprised when she declined the invitation.",
+      "original_word": "surprised",
+      "profile_spec": {
+        "name": "R10-101-core-sparse_common_sound:sparse_common_sound",
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "shocked",
+      "candidate_a_sentence": "Everyone was shocked when she declined the invitation.",
+      "candidate_b": "impressed",
+      "candidate_b_sentence": "Everyone was impressed when she declined the invitation."
+    },
+    {
+      "uid": "R10-102-core-word::pos5",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-102-core-dense_mixed_generic::pos8",
+      "outcome": "second_candidate_found",
+      "original_sentence": "It's normal to feels nervous before meeting someone for the first time.",
+      "original_word": "someone",
+      "profile_spec": {
+        "name": "R10-102-core-dense_mixed_generic:dense_mixed_generic",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "person",
+      "candidate_a_sentence": "It's normal to feels nervous before meeting person for the first time.",
+      "candidate_b": "individual",
+      "candidate_b_sentence": "It's normal to feels nervous before meeting individual for the first time."
+    },
+    {
+      "uid": "R10-103-core-word::pos6",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The old house had a narrow staircase that creaked with every step.",
+      "original_word": "staircase",
+      "profile_spec": {
+        "name": "R10-103-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "staircase",
+          "creaked"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "stairs",
+      "candidate_a_sentence": "The old house had a narrow stairs that noised with every step.",
+      "candidate_b": "stairway",
+      "candidate_b_sentence": "The old house had a narrow stairway that noised with every step."
+    },
+    {
+      "uid": "R10-103-core-word::pos8",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The old house had a narrow staircase that creaked with every step.",
+      "original_word": "creaked",
+      "profile_spec": {
+        "name": "R10-103-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "staircase",
+          "creaked"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "noised",
+      "candidate_a_sentence": "The old house had a narrow stairs that noised with every step.",
+      "candidate_b": "whined",
+      "candidate_b_sentence": "The old house had a narrow stairway that whined with every step."
+    },
+    {
+      "uid": "R10-103-calib-single_word::pos6",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The old house had a narrow staircase that creaked with every step.",
+      "original_word": "staircase",
+      "profile_spec": {
+        "name": "R10-103-calib-single_word:single_word",
+        "sounds": [],
+        "words": [
+          "staircase"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "stairs",
+      "candidate_a_sentence": "The old house had a narrow stairs that creaked with every step.",
+      "candidate_b": "stairway",
+      "candidate_b_sentence": "The old house had a narrow stairway that creaked with every step."
+    },
+    {
+      "uid": "R10-103-calib-word_plus_sound::pos6",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The old house had a narrow staircase that creaked with every step.",
+      "original_word": "staircase",
+      "profile_spec": {
+        "name": "R10-103-calib-word_plus_sound:word_plus_sound",
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "staircase"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "stairs",
+      "candidate_a_sentence": "The old house had a narrow stairs that creaked with every step.",
+      "candidate_b": "stairway",
+      "candidate_b_sentence": "The old house had a narrow stairway that creaked with every step."
+    },
+    {
+      "uid": "R10-104-core-word::pos5",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-104-core-dense_mixed_generic::pos3",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-104-core-dense_mixed_generic::pos5",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-105-core-sparse_common_sound::pos4",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-105-core-sparse_common_sound::pos10",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-106-core-word::pos5",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-106-core-word::pos11",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-107-core-word::pos6",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The car's engine made a strange noise whenever it idled for too long.",
+      "original_word": "strange",
+      "profile_spec": {
+        "name": "R10-107-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "whenever",
+          "strange"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "weird",
+      "candidate_a_sentence": "The car's engine made a weird noise whenever it idled for too long.",
+      "candidate_b": "other",
+      "candidate_b_sentence": "The car's engine made a other noise whenever it idled for too long."
+    },
+    {
+      "uid": "R10-107-core-dense_mixed_generic::pos6",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The car's engine made a strange noise whenever it idled for too long.",
+      "original_word": "strange",
+      "profile_spec": {
+        "name": "R10-107-core-dense_mixed_generic:dense_mixed_generic",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "weird",
+      "candidate_a_sentence": "The car's engine made a weird noise whenever it idled for too long.",
+      "candidate_b": "other",
+      "candidate_b_sentence": "The car's engine made a other noise whenever it idled for too long."
+    },
+    {
+      "uid": "R10-108-core-word::pos9",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-108-core-word::pos13",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-109-calib-single_word::pos8",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Turn off the power before you attempt to replace the light fixture.",
+      "original_word": "replace",
+      "profile_spec": {
+        "name": "R10-109-calib-single_word:single_word",
+        "sounds": [],
+        "words": [
+          "replace"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "substitute",
+      "candidate_a_sentence": "Turn off the power before you attempt to substitute the light fixture.",
+      "candidate_b": "regenerate",
+      "candidate_b_sentence": "Turn off the power before you attempt to regenerate the light fixture."
+    },
+    {
+      "uid": "R10-109-calib-word_plus_sound::pos8",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Turn off the power before you attempt to replace the light fixture.",
+      "original_word": "replace",
+      "profile_spec": {
+        "name": "R10-109-calib-word_plus_sound:word_plus_sound",
+        "sounds": [
+          "pr"
+        ],
+        "words": [
+          "replace"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "substitute",
+      "candidate_a_sentence": "Turn off the power before you attempt to substitute the light fixture.",
+      "candidate_b": "regenerate",
+      "candidate_b_sentence": "Turn off the power before you attempt to regenerate the light fixture."
+    },
+    {
+      "uid": "R10-111-core-word::pos4",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Press and hold the button for five seconds until the light turns green.",
+      "original_word": "button",
+      "profile_spec": {
+        "name": "R10-111-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "seconds",
+          "button"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "click",
+      "candidate_a_sentence": "Press and hold the click for five times until the light turns green.",
+      "candidate_b": "push",
+      "candidate_b_sentence": "Press and hold the push for five times until the light turns green."
+    },
+    {
+      "uid": "R10-111-core-word::pos7",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-112-core-dense_mixed_generic::pos5",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-113-core-dense_mixed_generic::pos7",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Assemble the shelf according to the numbered steps in the manual.",
+      "original_word": "steps",
+      "profile_spec": {
+        "name": "R10-113-core-dense_mixed_generic:dense_mixed_generic",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "paces",
+      "candidate_a_sentence": "Assemble the shelf according to the numbered paces in the manual.",
+      "candidate_b": "footsteps",
+      "candidate_b_sentence": "Assemble the shelf according to the numbered footsteps in the manual."
+    },
+    {
+      "uid": "R10-114-core-word::pos2",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-114-core-word::pos3",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-114-core-sparse_common_sound::pos3",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-115-calib-single_word::pos8",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-115-calib-word_plus_sound::pos8",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-115-calib-multi_sound::pos1",
+      "outcome": "second_candidate_found",
+      "original_sentence": "I think the new update make the ape harder to use, not easier.",
+      "original_word": "think",
+      "profile_spec": {
+        "name": "R10-115-calib-multi_sound:multi_sound",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "believe",
+      "candidate_a_sentence": "I believe the new update make the ape harder to use, not easier.",
+      "candidate_b": "mean",
+      "candidate_b_sentence": "I mean the new update make the ape harder to use, not easier."
+    },
+    {
+      "uid": "R10-115-calib-dense_mixed_generic::pos1",
+      "outcome": "second_candidate_found",
+      "original_sentence": "I think the new update make the ape harder to use, not easier.",
+      "original_word": "think",
+      "profile_spec": {
+        "name": "R10-115-calib-dense_mixed_generic:dense_mixed_generic",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "believe",
+      "candidate_a_sentence": "I believe the new update make the ape harder to use, not easier.",
+      "candidate_b": "mean",
+      "candidate_b_sentence": "I mean the new update make the ape harder to use, not easier."
+    },
+    {
+      "uid": "R10-118-core-word::pos3",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-118-core-word::pos13",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-120-core-word::pos0",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-121-core-word::pos6",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-121-core-word::pos10",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-121-calib-single_word::pos6",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-121-calib-word_plus_sound::pos6",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-122-core-word::pos10",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Most of the town's residents work in the two factories nearby.",
+      "original_word": "factories",
+      "profile_spec": {
+        "name": "R10-122-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "factories"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "manufacturings",
+      "candidate_a_sentence": "Most of the town's residents work in the two manufacturings nearby.",
+      "candidate_b": "manufactories",
+      "candidate_b_sentence": "Most of the town's residents work in the two manufactories nearby."
+    },
+    {
+      "uid": "R10-123-core-word::pos7",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-123-core-word::pos10",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-123-core-sparse_common_sound::pos8",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-124-core-multi_sound::pos8",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-124-core-multi_sound::pos11",
+      "outcome": "second_candidate_found",
+      "original_sentence": "There are more public parks on the east side of the city than on the west.",
+      "original_word": "city",
+      "profile_spec": {
+        "name": "R10-124-core-multi_sound:multi_sound",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "town",
+      "candidate_a_sentence": "There are more public parks on the east part of the town than on the west.",
+      "candidate_b": "municipality",
+      "candidate_b_sentence": "There are more public parks on the east part of the municipality than on the west."
+    },
+    {
+      "uid": "R10-125-core-word::pos1",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-125-core-word::pos14",
+      "outcome": "second_candidate_found",
+      "original_sentence": "The store doesn't open until ten, but the caf\u00e9 next door opens earlier.",
+      "original_word": "earlier",
+      "profile_spec": {
+        "name": "R10-125-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "doesn't",
+          "earlier",
+          "store"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "newer",
+      "candidate_a_sentence": "The shop doesn't open until ten, but the caf\u00e9 next door opens newer.",
+      "candidate_b": "earliest",
+      "candidate_b_sentence": "The shop doesn't open until ten, but the caf\u00e9 next door opens earliest."
+    },
+    {
+      "uid": "R10-125-core-multi_sound::pos1",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-127-calib-multi_sound::pos20",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-127-calib-dense_mixed_generic::pos20",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-128-core-word::pos4",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-128-core-sparse_common_sound::pos4",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=reformulated \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-128-core-sparse_common_sound::pos8",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Hugh Fleming had four surviving children from his first marriage. He was 59 at the time of his second marriage to Grace, and died when Alexander was seven.",
+      "original_word": "second",
+      "profile_spec": {
+        "name": "R10-128-core-sparse_common_sound:sparse_common_sound",
+        "sounds": [
+          "s"
+        ],
+        "words": [],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "2nd",
+      "candidate_a_sentence": "Hugh Fleming had four lasting children from his first marriage. He was 59 at the time of his 2nd marriage to Grace, and died when Alexander was seven.",
+      "candidate_b": "2d",
+      "candidate_b_sentence": "Hugh Fleming had four surviving children from his first marriage. He was 59 at the time of his 2d marriage to Grace, and died when Alexander was seven."
+    },
+    {
+      "uid": "R10-129-core-word::pos14",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year scholarship to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.",
+      "original_word": "scholarship",
+      "profile_spec": {
+        "name": "R10-129-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "scholarship",
+          "institution",
+          "polytechnic"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "studies",
+      "candidate_a_sentence": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year studies to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.",
+      "candidate_b": "aid",
+      "candidate_b_sentence": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year aid to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution."
+    },
+    {
+      "uid": "R10-129-core-dense_mixed_generic::pos14",
+      "outcome": "second_candidate_found",
+      "original_sentence": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year scholarship to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.",
+      "original_word": "scholarship",
+      "profile_spec": {
+        "name": "R10-129-core-dense_mixed_generic:dense_mixed_generic",
+        "sounds": [
+          "s",
+          "th",
+          "r"
+        ],
+        "words": [
+          "important",
+          "significant"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "learning",
+      "candidate_a_sentence": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year learning to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution.",
+      "candidate_b": "aid",
+      "candidate_b_sentence": "Fleming went to Loudoun Moor School and Darvel School, and earned a two-year aid to Kilmarnock Academy before moving to London, where he attended the Royal Polytechnic Institution."
+    },
+    {
+      "uid": "R10-131-core-word::pos11",
+      "outcome": "second_candidate_found",
+      "original_sentence": "His elder brother, Tom, was already a physician and suggested that he should follow the same career.",
+      "original_word": "suggested",
+      "profile_spec": {
+        "name": "R10-131-core-word:sentence_specific_word",
+        "sounds": [],
+        "words": [
+          "suggested"
+        ],
+        "phrases": []
+      },
+      "profile_source_file": "r10_raw_results.json",
+      "candidate_a": "indicated",
+      "candidate_a_sentence": "His elder brother, Tom, was already a physician and indicated that he should follow the same career.",
+      "candidate_b": "informed",
+      "candidate_b_sentence": "His elder brother, Tom, was already a physician and informed that he should follow the same career."
+    },
+    {
+      "uid": "R10-133-core-word::pos13",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-133-calib-single_word::pos13",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-133-calib-word_plus_sound::pos13",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-133-calib-multi_sound::pos11",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-133-calib-sparse_common_sound::pos11",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    },
+    {
+      "uid": "R10-133-calib-dense_mixed_generic::pos11",
+      "outcome": "no_second_candidate",
+      "reason": "pipeline status=could_not_safely_reformulate \u2014 no substitution survived at that position once the original candidate was excluded (likely escalated, skipped, or the original was the only viable candidate)"
+    }
+  ]
+}

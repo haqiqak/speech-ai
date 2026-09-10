@@ -1,0 +1,156 @@
+{
+  "sample_idx": [
+    1,
+    2,
+    5,
+    6,
+    7,
+    8,
+    12,
+    13,
+    14,
+    15,
+    17,
+    26,
+    27,
+    32,
+    34,
+    35,
+    37,
+    40,
+    41,
+    43,
+    45,
+    47,
+    51,
+    54,
+    55
+  ],
+  "original_judgments": [
+    {
+      "id": 1,
+      "preferred": "B",
+      "reason": "Both are grammatical. 'Way' is generic and loses the 'deliberate technique/approach' sense of 'strategy'. 'Scheme' keeps that deliberate-plan sense more precisely, despite a mild negative-connotation risk ('scheming') the original doesn't carry."
+    },
+    {
+      "id": 2,
+      "preferred": "B",
+      "reason": "A ('places') is a severe, nonsensical substitution \u2014 locations have nothing to do with an ontology's attributes. B ('constructs') stays correctly within the abstract/conceptual technical register the sentence needs."
+    },
+    {
+      "id": 5,
+      "preferred": "A",
+      "reason": "A produces an awkward duplicate ('gas gas emissions') but the surviving phrase 'gas emissions' stays coherent and climate-relevant. B ('building gas emissions') is not a real, coherent technical concept \u2014 a larger meaning break despite reading more smoothly on the surface."
+    },
+    {
+      "id": 6,
+      "preferred": "A",
+      "reason": "Same pattern as the other 'greenhouse' case in this set: A's 'gas gases are trapping heat' is repetitive but keeps a coherent, climate-relevant claim; B's 'building gases' is not an established or coherent concept, a larger meaning break."
+    },
+    {
+      "id": 7,
+      "preferred": "B",
+      "reason": "Both grammatical. 'Welcome' subtly shifts toward a hosting-specific connotation. 'Salutation' is the more precise, commonly interchangeable synonym for 'greeting' in this listing-of-parts context."
+    },
+    {
+      "id": 8,
+      "preferred": "B",
+      "reason": "'Natural languages' collides with an unrelated, well-established linguistics term (human vs. constructed/formal language) \u2014 actively misleading in a sentence about linguistics. 'Naive' is an odd word choice for describing a language, but at least gestures toward the 'unsophisticated/simple' sense 'primitive' originally carried."
+    },
+    {
+      "id": 12,
+      "preferred": "B",
+      "reason": "A ('new food') is an unrelated, severe meaning substitution that destroys the food-safety-relevant distinction the sentence depends on (raw = uncooked, not 'new'). B ('uncooked') is essentially the exact intended meaning."
+    },
+    {
+      "id": 13,
+      "preferred": "B",
+      "reason": "Another genericness-bias case: 'buildings' is far too broad (loses the food-service meaning entirely, and reads oddly next to 'other food establishments'). 'Eateries' is accurate, natural, and fits the sentence."
+    },
+    {
+      "id": 14,
+      "preferred": "A",
+      "reason": "'Esteem' is an imperfect but plausible, neutral-to-positive substitute. 'Notoriety' specifically implies negative fame \u2014 an incorrect connotation shift in a positive, professional-networking context."
+    },
+    {
+      "id": 15,
+      "preferred": "A",
+      "reason": "'Detailed reasoning' is natural and stays in a related 'thoroughness' sense even without capturing sequentiality. 'Gradual reasoning' is an unusual, less coherent collocation that drifts toward an unrelated temporal-pace meaning."
+    },
+    {
+      "id": 17,
+      "preferred": "B",
+      "reason": "A creates an awkward, confusing duplicate word ('absorbed and absorbed'). B avoids the repetition and 'imbibed' is a plausible, if slightly formal, near-synonym for taking in nutrients."
+    },
+    {
+      "id": 26,
+      "preferred": "B",
+      "reason": "A ('cloudless terms') uses the contract/agreement sense of 'terms', nonsensical for weather description. B ('cloudless states') stays closer to the intended condition/status meaning, even if slightly awkward."
+    },
+    {
+      "id": 27,
+      "preferred": "A",
+      "reason": "'Quits' is the natural, common way to describe a program/algorithm terminating. 'Discontinues' is accurate but carries a register mismatch, more typical of product lines than execution halting."
+    },
+    {
+      "id": 32,
+      "preferred": "A",
+      "reason": "'Prof' preserves the specific role meaning (professor) despite being informal in register. 'Academic' is broader \u2014 loses the specific 'teacher explaining a concept' role implication."
+    },
+    {
+      "id": 34,
+      "preferred": "B",
+      "reason": "'Examined' preserves the 'engaged with course material' sense of 'studied' more closely. 'Considered' drifts toward 'pondered', a mild sense weakening."
+    },
+    {
+      "id": 35,
+      "preferred": "B",
+      "reason": "A ('take their reports') is close to a meaning reversal \u2014 take and submit are near-opposite transfer directions. B ('propose their reports') is imprecise but at least preserves an offering/presenting directionality."
+    },
+    {
+      "id": 37,
+      "preferred": "A",
+      "reason": "'The past week' is completely natural and standard. 'The old week' is not idiomatic English \u2014 weeks aren't described as 'old' this way."
+    },
+    {
+      "id": 40,
+      "preferred": "A",
+      "reason": "'Down the road' is completely natural and idiomatic. 'Down the neighborhood' is a non-standard, awkward collocation (you'd say 'in the neighborhood')."
+    },
+    {
+      "id": 41,
+      "preferred": "A",
+      "reason": "A is essentially the same word (British spelling variant 'apologised'), perfectly natural. B ('excused for') has a real grammar error \u2014 'excused' normally needs a reflexive object ('excused herself')."
+    },
+    {
+      "id": 43,
+      "preferred": "A",
+      "reason": "'Find each other' is an imperfect but plausible reading (locating time to meet). 'Play each other' introduces a wrong competitive/sports sense entirely inappropriate for old friends socializing."
+    },
+    {
+      "id": 45,
+      "preferred": "tie",
+      "reason": "Both substitutions introduce the identical missing-article grammar error ('meeting person'/'meeting individual' instead of 'meeting A person'/'AN individual') \u2014 no quality difference between the two words themselves."
+    },
+    {
+      "id": 47,
+      "preferred": "A",
+      "reason": "A ('a weird noise') is natural, accurate, near-perfect. B ('a other noise') has both a grammar error (a/an mismatch) and a meaning shift toward 'different/additional' rather than 'unusual'."
+    },
+    {
+      "id": 51,
+      "preferred": "A",
+      "reason": "'Believe' is a precise, natural synonym for 'think' as an opinion marker. 'Mean' serves a different discourse function (clarifying/rephrasing a prior statement), a real functional meaning shift."
+    },
+    {
+      "id": 54,
+      "preferred": "B",
+      "reason": "A ('opens newer') is nonsensical \u2014 'newer' relates to recency of existence, not time-of-day, a wrong-sense substitution. B ('opens earliest') has a comparative/superlative mismatch but stays within the correct 'opening time' semantic domain."
+    },
+    {
+      "id": 55,
+      "preferred": "B",
+      "reason": "A ('earned a two-year studies') has a real singular/plural agreement error. B ('earned a two-year aid') is a little ambiguous in its 'to' attachment but avoids that grammar problem and stays closer to the 'financial support' meaning of scholarship."
+    }
+  ]
+}
