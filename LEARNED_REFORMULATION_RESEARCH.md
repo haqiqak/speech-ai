@@ -66,14 +66,22 @@ dangerous-reversal rate (`VALIDATION.md` §55).
 
 ## Where this lives
 
-All Stage LR work happens on the `stage-lr` branch (opened as
+Stage LR work happened on the `stage-lr` branch (opened as
 `research/stage8-learned-reformulation` per `DECISION_LOG.md`
-2026-08-30-B, renamed to `stage-lr` per 2026-08-30-C), not on `main`.
-`main` stays the frozen, shipped implementation partners build against —
-see `HANDOFF.md`'s freeze banner. Promotion of any Stage LR result to
-`main` is a separate, later, explicitly-ratified decision, following the
-same discipline that closed the Architecture Go/No-Go arc — not an
-automatic merge once something looks better on a training corpus.
+2026-08-30-B, renamed to `stage-lr` per 2026-08-30-C), kept off `main`
+for as long as it remained unresolved. It was paused 2026-09-10 —
+neither reopening condition below was cleared; see
+`STAGE_LR_CLOSEOUT_REPORT.md` for the complete account — and the
+`stage-lr` branch was then merged into `main` the same day, purely to
+archive this research where it's discoverable rather than stranded on a
+branch. **That merge is not the "promotion" this section originally
+warned against.** No Stage LR result was ratified as beating the frozen
+baseline; `main`'s actual reformulation pipeline code was verified
+byte-identical immediately before and after the merge. If any future
+Stage LR (or successor) result *does* clear a reopening condition, that
+would still be the separate, explicitly-ratified decision described
+below — this merge only settles where the research record lives, not
+whether the freeze holds.
 
 ## Matter 1 — phoneme-as-constraint representation audit (2026-08-30)
 
