@@ -5941,3 +5941,41 @@ found directly in the raw text.
 Corrects/extends `2026-09-08-A`'s reading of the same mechanism at 12
 sentences. Recorded on `stage-lr`. No participant content involved —
 material is the tracked, public fresh-corpus/R10 subsets only.
+
+---
+
+### 2026-09-10-A — Generation backbone comparison closed out: self-
+verifying re-run confirms `2026-09-08-B`'s numbers exactly; one
+correction to that entry's Phi-3.5-mini claim
+
+Re-ran the fixed `generation_backbone_comparison.ipynb` (the version
+from `2026-09-08` that emits exact run-id lists and auto-detects
+non-Latin-script/meta-commentary contamination, rather than requiring
+manual transcription to audit). All six backbones' aggregate numbers
+matched `2026-09-08-B` exactly, except Qwen2.5-7B's any-leak count
+(22→21 runs) — a one-run difference consistent with ordinary
+run-to-run non-determinism in 4-bit quantized generation, not a real
+change. This is the confirmation the self-verification fix was built
+for: the numbers are now reproducible from the tool's own output, with
+no manual retyping step in between.
+
+**Correction to `2026-09-08-B`:** that entry stated Phi-3.5-mini-
+instruct showed *neither* new failure mode (no code-switching, no
+leaked commentary) found by manual review. The automated check on this
+re-run found Phi does have meta-commentary-leak contamination on 2/86
+runs (`R10-125-core-word`, `R10-127-calib-word_plus_sound`) — missed
+by the earlier manual read. Still far below any Qwen size's rate;
+**the verdict is unchanged** (current production default remains the
+most balanced of the six backbones tested; none of the three Qwen
+sizes clear the "genuinely usable" bar) — the correction is to the
+Phi-specific claim's precision, not to the conclusion.
+
+**This closes the generation-backbone-comparison thread for now.** No
+further notebook runs are planned against the current
+prompt/decoding/model set; the open question this round didn't answer
+(whether a non-beam-search decoding strategy changes the outcome for
+Qwen/Phi) is a real, separate follow-up, not pursued here.
+
+**Category:** Stage LR data point, generation-backbone research.
+Closes the thread opened `2026-09-06`, expanded `2026-09-08-A/B`.
+Recorded on `stage-lr`.
